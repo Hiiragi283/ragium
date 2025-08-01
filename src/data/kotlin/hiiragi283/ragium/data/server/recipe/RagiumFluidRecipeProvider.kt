@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -12,6 +12,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -21,20 +22,52 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         sap()
     }
 
+    private fun melting() {
+        // Magma Block <-> Lava
+        meltAndFreeze(
+            output,
+            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            Items.MAGMA_BLOCK,
+            Tags.Fluids.LAVA,
+            Fluids.LAVA,
+            125,
+        )
+        // Ice <-> Water
+        meltAndFreeze(
+            output,
+            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            Items.ICE,
+            Tags.Fluids.WATER,
+            Fluids.WATER,
+            1000,
+        )
+        // Honey Block <-> Honey
+        meltAndFreeze(
+            output,
+            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            Items.HONEY_BLOCK,
+            Tags.Fluids.HONEY,
+            RagiumFluidContents.HONEY.get(),
+            1000,
+        )
+    }
+
     private fun crudeOil() {
         // Coal -> Crude Oil
-        createMelting()
-            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
-            .itemInput(Items.COAL)
-            .saveSuffixed(output, "_from_coal")
+        HTItemWithFluidToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(Items.COAL),
+                HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
+            ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
-        createMelting()
-            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 500)
-            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .saveSuffixed(output, "_from_soul")
+        HTItemWithFluidToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(ItemTags.SOUL_FIRE_BASE_BLOCKS),
+                HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 500),
+            ).saveSuffixed(output, "_from_soul")
 
         // Crude Oil + clay -> Polymer Resin
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.CLAY_BALL),
                 HTIngredientHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
@@ -42,43 +75,47 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             ).saveSuffixed(output, "_from_crude_oil")
 
         // Crude Oil -> LPG + Naphtha + Tar
-        createDistillation()
-            .fluidOutput(RagiumFluidContents.NAPHTHA, 375)
-            .fluidOutput(RagiumFluidContents.LPG, 375)
-            .itemOutput(RagiumItems.TAR)
-            .fluidInput(RagiumFluidContents.CRUDE_OIL, 1000)
-            .saveSuffixed(output, "_from_crude_oil")
+        distillation(
+            output,
+            RagiumFluidContents.CRUDE_OIL.commonTag to 1000,
+            HTResultHelper.item(RagiumItems.TAR),
+            HTResultHelper.fluid(RagiumFluidContents.NAPHTHA, 375),
+            HTResultHelper.fluid(RagiumFluidContents.LPG, 375),
+        )
         // LPG + Coal -> 4x Polymer Resin
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.COAL),
                 HTIngredientHelper.fluid(RagiumFluidContents.LPG, 125),
                 HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
             ).saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
-        createDistillation()
-            .fluidOutput(RagiumFluidContents.DIESEL, 375)
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
-            .fluidInput(RagiumFluidContents.NAPHTHA, 1000)
-            .saveSuffixed(output, "_from_naphtha")
+        distillation(
+            output,
+            RagiumFluidContents.NAPHTHA.commonTag to 1000,
+            HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
+            HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375),
+        )
         // Diesel + Crimson Crystal -> Crimson Fuel
     }
 
     private fun sap() {
         // XX Log -> Wood Dust + Sap
-        createMelting()
-            .fluidOutput(RagiumFluidContents.SAP, 125)
-            .itemInput(ItemTags.LOGS_THAT_BURN)
-            .saveSuffixed(output, "_from_log")
+        HTItemWithFluidToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(ItemTags.LOGS_THAT_BURN),
+                HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
+            ).saveSuffixed(output, "_from_log")
         // Sap -> Syrup
-        createDistillation()
-            .itemOutput(Items.SLIME_BALL)
-            .fluidOutput(RagiumFluidContents.SYRUP, 750)
-            .fluidOutput(Fluids.WATER, 250)
-            .fluidInput(RagiumFluidContents.SAP, 1000)
-            .saveSuffixed(output, "_from_sap")
+        distillation(
+            output,
+            RagiumFluidContents.SAP.commonTag to 1000,
+            null,
+            HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750),
+            HTResultHelper.fluid(Fluids.WATER, 250),
+        )
         // Syrup -> Sugar
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumFluidContents.SYRUP, 250),
@@ -86,16 +123,18 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             ).saveSuffixed(output, "_from_syrup")
 
         // Crimson Stem -> Crimson Sap
-        createMelting()
-            .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 125)
-            .itemInput(ItemTags.CRIMSON_STEMS)
-            .saveSuffixed(output, "_from_stems")
+        HTItemWithFluidToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(ItemTags.CRIMSON_STEMS),
+                HTResultHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 125),
+            ).saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
-        createDistillation()
-            .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
-            .fluidOutput(RagiumFluidContents.SAP, 125)
-            .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
-            .saveSuffixed(output, "_from_crimson_sap")
+        distillation(
+            output,
+            RagiumFluidContents.CRIMSON_SAP.commonTag to 1000,
+            HTResultHelper.item(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL),
+            HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
+        )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
@@ -103,36 +142,22 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Warped Stem -> Warped Sap
-        createMelting()
-            .fluidOutput(RagiumFluidContents.WARPED_SAP, 125)
-            .itemInput(ItemTags.WARPED_STEMS)
-            .saveSuffixed(output, "_from_stems")
+        HTItemWithFluidToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(ItemTags.WARPED_STEMS),
+                HTResultHelper.fluid(RagiumFluidContents.WARPED_SAP, 125),
+            ).saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
-        createDistillation()
-            .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
-            .fluidOutput(RagiumFluidContents.SAP, 125)
-            .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
-            .saveSuffixed(output, "_from_warped_sap")
+        distillation(
+            output,
+            RagiumFluidContents.WARPED_SAP.commonTag to 1000,
+            HTResultHelper.item(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL),
+            HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
+        )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
             .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
-    }
-
-    //    Extracting    //
-
-    private fun melting() {
-        // Magma Block -> Cobblestone + Lava
-        createMelting()
-            .fluidOutput(Fluids.LAVA, 125)
-            .itemInput(Items.MAGMA_BLOCK)
-            .saveSuffixed(output, "_from_magma_block")
-
-        // Exp Berries -> Liquid Exp
-        createMelting()
-            .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
-            .itemInput(RagiumItems.EXP_BERRIES)
-            .saveSuffixed(output, "_from_berries")
     }
 }

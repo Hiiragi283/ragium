@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTDoubleRecipeInput, HTPressingRecipe>(
-        RagiumRecipeTypesNew.PRESSING.get(),
+        RagiumRecipeTypes.PRESSING.get(),
         RagiumBlockEntityTypes.FORMING_PRESS,
         pos,
         state,

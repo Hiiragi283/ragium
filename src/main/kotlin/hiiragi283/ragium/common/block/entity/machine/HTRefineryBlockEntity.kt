@@ -2,18 +2,18 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
+import hiiragi283.ragium.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTRefineryMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -28,7 +28,7 @@ import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTUniversalRecipeInput, HTRefiningRecipe>(
+    HTProcessorBlockEntity<HTSingleFluidRecipeInput, HTRefiningRecipe>(
         RagiumRecipeTypes.REFINING.get(),
         RagiumBlockEntityTypes.REFINERY,
         pos,
@@ -57,30 +57,24 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
-        HTUniversalRecipeInput.fromFluids(tankIn.fluid)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleFluidRecipeInput = HTSingleFluidRecipeInput(tankIn.fluid)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTRefiningRecipe): Boolean {
-        // アウトプットに搬出できるか判定する
-        val firstOutput: FluidStack = recipe.fluidOutputs[0].get()
-        if (!tankOut.canFill(firstOutput, true)) {
-            return false
-        }
-        return true
-    }
+    // アウトプットに搬出できるか判定する
+    override fun canProgressRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput, recipe: HTRefiningRecipe): Boolean =
+        tankOut.canFill(recipe.fluidResults[0].get(), true)
 
     override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTUniversalRecipeInput,
+        input: HTSingleFluidRecipeInput,
         recipe: HTRefiningRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        val firstOutput: FluidStack = recipe.fluidOutputs[0].get()
+        val firstOutput: FluidStack = recipe.fluidResults[0].get()
         tankOut.fill(firstOutput, IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
-        tankIn.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
+        tankIn.drain(recipe.ingredient, IFluidHandler.FluidAction.EXECUTE)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS)
     }

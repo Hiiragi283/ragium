@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTDoubleRecipeInput, HTAlloyingRecipe>(
-        RagiumRecipeTypesNew.ALLOYING.get(),
+        RagiumRecipeTypes.ALLOYING.get(),
         RagiumBlockEntityTypes.ALLOY_SMELTER,
         pos,
         state,

@@ -2,13 +2,17 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -61,8 +65,13 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.INFUSING,
-            RagiumRecipeCodecs.itemWithFluidToItem(::HTInfusingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToItem(::HTInfusingRecipe),
+            RagiumRecipeCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTInfusingRecipe),
+            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTItemResult.STREAM_CODEC, ::HTInfusingRecipe),
+        )
+        register(
+            RagiumRecipeSerializers.MELTING,
+            RagiumRecipeCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
+            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTFluidResult.STREAM_CODEC, ::HTMeltingRecipe),
         )
         register(
             RagiumRecipeSerializers.PRESSING,
@@ -70,9 +79,14 @@ object RagiumMiscRegister {
             RagiumRecipeStreamCodecs.itemWithCatalystToItem(::HTPressingRecipe),
         )
         register(
+            RagiumRecipeSerializers.REFINING,
+            RagiumRecipeCodecs.fluidToObj(::HTRefiningRecipe),
+            RagiumRecipeStreamCodecs.fluidToObj(::HTRefiningRecipe),
+        )
+        register(
             RagiumRecipeSerializers.SOLIDIFYING,
-            RagiumRecipeCodecs.itemWithFluidToItem(::HTSolidifyingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToItem(::HTSolidifyingRecipe),
+            RagiumRecipeCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
+            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTItemResult.STREAM_CODEC, ::HTSolidifyingRecipe),
         )
     }
 
@@ -82,11 +96,13 @@ object RagiumMiscRegister {
             helper.register(holder.id, RecipeType.simple<R>(holder.id))
         }
 
-        register(RagiumRecipeTypesNew.ALLOYING)
-        register(RagiumRecipeTypesNew.CRUSHING)
-        register(RagiumRecipeTypesNew.EXTRACTING)
-        register(RagiumRecipeTypesNew.INFUSING)
-        register(RagiumRecipeTypesNew.PRESSING)
-        register(RagiumRecipeTypesNew.SOLIDIFYING)
+        register(RagiumRecipeTypes.ALLOYING)
+        register(RagiumRecipeTypes.CRUSHING)
+        register(RagiumRecipeTypes.EXTRACTING)
+        register(RagiumRecipeTypes.INFUSING)
+        register(RagiumRecipeTypes.MELTING)
+        register(RagiumRecipeTypes.PRESSING)
+        register(RagiumRecipeTypes.REFINING)
+        register(RagiumRecipeTypes.SOLIDIFYING)
     }
 }

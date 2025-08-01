@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
@@ -23,7 +23,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTExtractingRecipe>(
-        RagiumRecipeTypesNew.EXTRACTING.get(),
+        RagiumRecipeTypes.EXTRACTING.get(),
         RagiumBlockEntityTypes.EXTRACTOR,
         pos,
         state,

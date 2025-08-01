@@ -2,10 +2,10 @@
   "type": "ragium:melting",
   "item_ingredient": {
     "count": 1,
-    "tag": "minecraft:soul_fire_base_blocks"
+    "item": "minecraft:honey_block"
   },
   "result": {
-    "amount": 500,
-    "id": "ragium:crude_oil"
+    "amount": 1000,
+    "id": "ragium:honey"
   }
 }

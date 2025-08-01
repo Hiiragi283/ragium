@@ -1,16 +1,14 @@
 {
   "type": "ragium:refining",
-  "fluid_input": {
+  "fluid_result": {
+    "amount": 375,
+    "id": "ragium:fuel"
+  },
+  "ingredient": {
     "amount": 1000,
     "tag": "c:naphtha"
   },
-  "fluid_output": [
-    {
-      "amount": 375,
-      "id": "ragium:fuel"
-    }
-  ],
-  "item_output": {
+  "item_result": {
     "count": 1,
     "id": "#c:dusts/sulfur"
   }

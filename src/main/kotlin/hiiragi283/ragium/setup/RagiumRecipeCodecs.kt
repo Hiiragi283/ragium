@@ -5,19 +5,23 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOrElement
+import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
-import hiiragi283.ragium.api.recipe.HTItemWithFluidToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 
 object RagiumRecipeCodecs {
     @JvmStatic
@@ -84,13 +88,29 @@ object RagiumRecipeCodecs {
     }
 
     @JvmStatic
-    fun <R : HTItemWithFluidToItemRecipe> itemWithFluidToItem(factory: HTItemWithFluidToItemRecipeBuilder.Factory<R>): MapCodec<R> =
+    fun <R : HTRecipeResult<*, *>, B : HTItemWithFluidToObjRecipe<R>> itemWithFluidToObj(
+        codec: Codec<R>,
+        factory: HTItemWithFluidToObjRecipeBuilder.Factory<R, B>,
+    ): MapCodec<B> = RecordCodecBuilder.mapCodec { instance ->
+        instance
+            .group(
+                HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemWithFluidToObjRecipe<R>::itemIngredient),
+                HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemWithFluidToObjRecipe<R>::fluidIngredient),
+                codec.fieldOf("result").forGetter(HTItemWithFluidToObjRecipe<R>::result),
+            ).apply(instance, factory::create)
+    }
+
+    @JvmStatic
+    fun <R : HTFluidToObjRecipe> fluidToObj(factory: HTFluidToObjRecipeBuilder.Factory<R>): MapCodec<R> =
         RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemWithFluidToItemRecipe::itemIngredient),
-                    HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemWithFluidToItemRecipe::fluidIngredient),
-                    HTItemResult.CODEC.fieldOf("result").forGetter(HTItemWithFluidToItemRecipe::result),
+                    HTFluidIngredient.CODEC.fieldOf("ingredient").forGetter(HTFluidToObjRecipe::ingredient),
+                    HTItemResult.CODEC.optionalFieldOf("item_result").forGetter(HTFluidToObjRecipe::itemResult),
+                    HTFluidResult.CODEC
+                        .listOrElement(1, 4)
+                        .fieldOf("fluid_result")
+                        .forGetter(HTFluidToObjRecipe::fluidResults),
                 ).apply(instance, factory::create)
         }
 }

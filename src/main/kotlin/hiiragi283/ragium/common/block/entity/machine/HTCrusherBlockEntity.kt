@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTCrushingRecipe>(
-        RagiumRecipeTypesNew.CRUSHING.get(),
+        RagiumRecipeTypes.CRUSHING.get(),
         RagiumBlockEntityTypes.CRUSHER,
         pos,
         state,

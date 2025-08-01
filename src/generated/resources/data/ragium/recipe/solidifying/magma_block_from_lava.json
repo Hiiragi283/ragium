@@ -1,0 +1,15 @@
+{
+  "type": "ragium:solidifying",
+  "fluid_ingredient": {
+    "amount": 125,
+    "tag": "c:lava"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "tag": "c:glass_blocks"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:magma_block"
+  }
+}

@@ -6,12 +6,12 @@
     }
   ],
   "type": "ragium:melting",
-  "fluid_output": {
-    "amount": 250,
-    "id": "#c:milk"
-  },
-  "item_input": {
+  "item_ingredient": {
     "count": 1,
     "item": "farmersdelight:milk_bottle"
+  },
+  "result": {
+    "amount": 1000,
+    "id": "#c:milk"
   }
 }

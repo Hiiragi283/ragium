@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTSolidifyingRecipe>(
-        RagiumRecipeTypesNew.SOLIDIFYING.get(),
+        RagiumRecipeTypes.SOLIDIFYING.get(),
         RagiumBlockEntityTypes.SOLIDIFIER,
         pos,
         state,
@@ -60,13 +60,9 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
         HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), tank.fluid)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTSolidifyingRecipe): Boolean {
-        // アウトプットに搬出できるか判定する
-        if (!insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty) {
-            return false
-        }
-        return true
-    }
+    // アウトプットに搬出できるか判定する
+    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTSolidifyingRecipe): Boolean =
+        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,

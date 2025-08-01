@@ -55,6 +55,8 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
 
     fun casing(): HTShapedRecipeBuilder = pattern("AAA", "ABA", "CCC")
 
+    fun mosaic4(): HTShapedRecipeBuilder = pattern("AB", "BA")
+
     //    RecipeBuilder    //
 
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow

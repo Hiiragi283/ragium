@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -13,7 +12,7 @@ import java.util.*
 
 class HTInfusingRecipe(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: HTItemResult) :
     HTItemWithFluidToItemRecipe(
-        RagiumRecipeTypesNew.INFUSING.get(),
+        RagiumRecipeTypes.INFUSING.get(),
         Optional.of(itemIngredient),
         Optional.of(fluidIngredient),
         result,

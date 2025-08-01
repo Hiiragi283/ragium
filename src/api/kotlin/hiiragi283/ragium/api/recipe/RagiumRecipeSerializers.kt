@@ -5,7 +5,9 @@ import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
@@ -31,8 +33,16 @@ object RagiumRecipeSerializers {
         create(RagiumConst.INFUSING)
 
     @JvmField
+    val MELTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMeltingRecipe>> =
+        create(RagiumConst.MELTING)
+
+    @JvmField
     val PRESSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTPressingRecipe>> =
         create(RagiumConst.PRESSING)
+
+    @JvmField
+    val REFINING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
+        create(RagiumConst.REFINING)
 
     @JvmField
     val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSolidifyingRecipe>> =

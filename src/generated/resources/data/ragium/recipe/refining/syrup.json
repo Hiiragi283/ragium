@@ -1,10 +1,6 @@
 {
   "type": "ragium:refining",
-  "fluid_input": {
-    "amount": 1000,
-    "tag": "c:sap"
-  },
-  "fluid_output": [
+  "fluid_result": [
     {
       "amount": 750,
       "id": "ragium:syrup"
@@ -14,8 +10,8 @@
       "id": "minecraft:water"
     }
   ],
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:slime_ball"
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:sap"
   }
 }

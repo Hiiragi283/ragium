@@ -12,14 +12,13 @@ import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
@@ -69,8 +68,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
 
-        RagiumRecipeSerializers.REGISTER.register(eventBus)
-        RagiumRecipeTypes.REGISTER.register(eventBus)
+        RagiumCustomRecipeSerializers.REGISTER.register(eventBus)
 
         RagiumMenuTypes.REGISTER.register(eventBus)
 

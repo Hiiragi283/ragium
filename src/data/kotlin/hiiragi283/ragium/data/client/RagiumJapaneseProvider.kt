@@ -133,12 +133,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "合金炉")
-        addBlock(RagiumBlocks.Machines.FORMING_PRESS, "成型機")
+        addBlock(RagiumBlocks.Machines.FORMING_PRESS, "プレス機")
         addBlock(RagiumBlocks.Machines.MELTER, "溶融炉")
         addBlock(RagiumBlocks.Machines.REFINERY, "精製機")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "成型機")
 
-        addBlock(RagiumBlocks.Machines.INFUSER, "神秘的注入機")
+        addBlock(RagiumBlocks.Machines.INFUSER, "液体注入機")
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
         addBlock(RagiumBlocks.Casings.STONE, "石材筐体")

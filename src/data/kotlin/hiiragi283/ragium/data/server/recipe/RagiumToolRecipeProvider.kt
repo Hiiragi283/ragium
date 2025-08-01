@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
-import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
+import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.resources.ResourceKey

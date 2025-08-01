@@ -1,20 +1,24 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
-import hiiragi283.ragium.api.recipe.HTItemWithFluidToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -68,15 +72,28 @@ object RagiumRecipeStreamCodecs {
     )
 
     @JvmStatic
-    fun <R : HTItemWithFluidToItemRecipe> itemWithFluidToItem(
-        factory: HTItemWithFluidToItemRecipeBuilder.Factory<R>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
+    fun <R1 : HTRecipeResult<*, *>, R2 : HTItemWithFluidToObjRecipe<R1>> itemWithFluidToObj(
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        factory: HTItemWithFluidToObjRecipeBuilder.Factory<R1, R2>,
+    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
         HTItemIngredient.STREAM_CODEC.toOptional(),
-        HTItemWithFluidToItemRecipe::itemIngredient,
+        HTItemWithFluidToObjRecipe<R1>::itemIngredient,
         HTFluidIngredient.STREAM_CODEC.toOptional(),
-        HTItemWithFluidToItemRecipe::fluidIngredient,
-        HTItemResult.STREAM_CODEC,
-        HTItemWithFluidToItemRecipe::result,
+        HTItemWithFluidToObjRecipe<R1>::fluidIngredient,
+        streamCodec,
+        HTItemWithFluidToObjRecipe<R1>::result,
         factory::create,
     )
+
+    @JvmStatic
+    fun <R : HTFluidToObjRecipe> fluidToObj(factory: HTFluidToObjRecipeBuilder.Factory<R>): StreamCodec<RegistryFriendlyByteBuf, R> =
+        StreamCodec.composite(
+            HTFluidIngredient.STREAM_CODEC,
+            HTFluidToObjRecipe::ingredient,
+            HTItemResult.STREAM_CODEC.toOptional(),
+            HTFluidToObjRecipe::itemResult,
+            HTFluidResult.STREAM_CODEC.listOf(),
+            HTFluidToObjRecipe::fluidResults,
+            factory::create,
+        )
 }

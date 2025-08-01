@@ -14,23 +14,22 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
-import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
-import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
+import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
@@ -45,7 +44,6 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -153,7 +151,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addMachineRecipes() {
         // Alloying
-        RagiumRecipeTypesNew.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
+        RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
             registry.addRecipe(
                 HTAlloyingEmiRecipe(
                     id,
@@ -164,7 +162,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.ALLOY_SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.ALLOYING))
         // Crushing
-        RagiumRecipeTypesNew.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCrushingRecipe ->
+        RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
                 HTDecomposeEmiRecipe.crushing(
                     id,
@@ -182,7 +180,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
         // Extracting
-        RagiumRecipeTypesNew.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTExtractingRecipe ->
+        RagiumRecipeTypes.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTExtractingRecipe ->
             registry.addRecipe(
                 HTDecomposeEmiRecipe.extracting(
                     id,
@@ -193,7 +191,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.EXTRACTOR.get(), HTRecipeHandler(RagiumEmiCategories.EXTRACTING))
         // Infusing
-        RagiumRecipeTypesNew.INFUSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTInfusingRecipe ->
+        RagiumRecipeTypes.INFUSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTInfusingRecipe ->
             registry.addRecipe(
                 HTItemWithFluidToItemEmiRecipe.infusing(
                     id,
@@ -205,18 +203,18 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.INFUSER.get(), HTRecipeHandler(RagiumEmiCategories.INFUSING))
         // Melting
-        forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
+        RagiumRecipeTypes.MELTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTMeltingRecipe ->
             registry.addRecipe(
                 HTMeltingEmiRecipe(
                     id,
-                    recipe.ingredient.toEmi(),
-                    recipe.output.toEmi(),
+                    recipe.itemIngredient.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
         // Pressing
-        RagiumRecipeTypesNew.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTPressingRecipe ->
+        RagiumRecipeTypes.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTPressingRecipe ->
             registry.addRecipe(
                 HTPressingEmiRecipe(
                     id,
@@ -228,12 +226,12 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.FORMING_PRESS.get(), HTRecipeHandler(RagiumEmiCategories.PRESSING))
         // Refining
-        forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTRefiningRecipe ->
+        RagiumRecipeTypes.REFINING.forEach(recipeManager) { id: ResourceLocation, recipe: HTRefiningRecipe ->
             registry.addRecipe(
                 HTRefiningEmiRecipe(
                     id.withPrefix("/"),
                     recipe.ingredient.toEmi(),
-                    recipe.fluidOutputs[0].toEmi(),
+                    recipe.fluidResults[0].toEmi(),
                 ),
             )
 
@@ -241,14 +239,14 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTDistillationEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.itemOutput.map(HTItemOutput::toEmi),
-                    recipe.fluidOutputs.map(HTFluidOutput::toEmi),
+                    recipe.itemResult.map(HTItemResult::toEmi),
+                    recipe.fluidResults.map(HTFluidResult::toEmi),
                 ),
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.REFINERY.get(), HTRecipeHandler(RagiumEmiCategories.REFINING))
         // Solidifying
-        RagiumRecipeTypesNew.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
+        RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
             registry.addRecipe(
                 HTItemWithFluidToItemEmiRecipe.solidifying(
                     id,

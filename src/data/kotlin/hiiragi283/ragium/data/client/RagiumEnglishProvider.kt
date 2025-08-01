@@ -151,7 +151,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.Machines.REFINERY, "Refinery")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "Solidifier")
 
-        addBlock(RagiumBlocks.Machines.INFUSER, "Arcane Infuser")
+        addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
         addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")

@@ -1,16 +1,10 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
-import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
-import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
+import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -18,7 +12,7 @@ import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
-object RagiumRecipeSerializers {
+object RagiumCustomRecipeSerializers {
     @JvmField
     val REGISTER: DeferredRegister<RecipeSerializer<*>> =
         DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
@@ -26,29 +20,6 @@ object RagiumRecipeSerializers {
     @JvmStatic
     private fun <T : Recipe<*>, S : RecipeSerializer<T>> register(name: String, serializer: S): Supplier<S> =
         REGISTER.register(name) { _: ResourceLocation -> serializer }
-
-    @JvmStatic
-    private fun <T : Recipe<*>> register(
-        name: String,
-        codec: MapCodec<T>,
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>,
-    ): Supplier<RecipeSerializer<T>> = REGISTER.register(name) { _: ResourceLocation ->
-        object : RecipeSerializer<T> {
-            override fun codec(): MapCodec<T> = codec
-
-            override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, T> = streamCodec
-        }
-    }
-
-    //    Machine    //
-
-    @JvmField
-    val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
-        register(RagiumConst.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
-
-    @JvmField
-    val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =
-        register(RagiumConst.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
 
     //    Custom    //
 

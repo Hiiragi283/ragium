@@ -1,11 +1,11 @@
 {
   "type": "ragium:melting",
-  "fluid_output": {
-    "amount": 50,
-    "id": "ragium:experience"
-  },
-  "item_input": {
+  "item_ingredient": {
     "count": 1,
     "item": "ragium:exp_berries"
+  },
+  "result": {
+    "amount": 50,
+    "id": "ragium:experience"
   }
 }

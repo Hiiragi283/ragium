@@ -1,8 +1,8 @@
-package hiiragi283.ragium.common.recipe.custom
+package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.isOf
+import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -47,5 +47,5 @@ class HTEternalTicketRecipe(category: CraftingBookCategory) : CustomRecipe(categ
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ETERNAL_TICKET.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.ETERNAL_TICKET.get()
 }

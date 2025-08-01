@@ -5,17 +5,20 @@ import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-object RagiumRecipeTypesNew {
+object RagiumRecipeTypes {
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTDoubleRecipeInput, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
@@ -29,7 +32,13 @@ object RagiumRecipeTypesNew {
     val INFUSING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTInfusingRecipe> = create(RagiumConst.INFUSING)
 
     @JvmField
+    val MELTING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
+
+    @JvmField
     val PRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTPressingRecipe> = create(RagiumConst.PRESSING)
+
+    @JvmField
+    val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
     val SOLIDIFYING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTSolidifyingRecipe> = create(RagiumConst.SOLIDIFYING)

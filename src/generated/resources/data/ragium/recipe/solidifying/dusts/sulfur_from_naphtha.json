@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "tag": "c:naphtha"
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:dusts/sulfur"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "type": "ragium:melting",
-  "fluid_output": {
-    "amount": 125,
-    "id": "ragium:crude_oil"
-  },
-  "item_input": {
+  "item_ingredient": {
     "count": 1,
     "item": "minecraft:coal"
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:crude_oil"
   }
 }

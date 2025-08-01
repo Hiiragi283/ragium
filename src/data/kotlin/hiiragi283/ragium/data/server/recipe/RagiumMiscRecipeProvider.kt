@@ -90,6 +90,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL),
             ).save(output)
         // Azure Steel
+        HTShapedRecipeBuilder(RagiumItems.Gems.AZURE_SHARD, 2)
+            .mosaic4()
+            .define('A', Tags.Items.GEMS_AMETHYST)
+            .define('B', Tags.Items.GEMS_LAPIS)
+            .save(output)
+
         HTShapedRecipeBuilder(RagiumItems.Compounds.AZURE_STEEL)
             .hollow4()
             .define('A', RagiumCommonTags.Items.GEMS_AZURE)

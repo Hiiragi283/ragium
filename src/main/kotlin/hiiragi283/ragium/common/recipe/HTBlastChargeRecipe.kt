@@ -1,9 +1,9 @@
-package hiiragi283.ragium.common.recipe.custom
+package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -46,5 +46,5 @@ class HTBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(categor
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height > 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BLAST_CHARGE.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.BLAST_CHARGE.get()
 }

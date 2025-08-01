@@ -6,13 +6,13 @@ import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -25,14 +25,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     override fun buildRecipeInternal() {
         // Chocolate
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
                 HTIngredientHelper.milk(250),
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_CHOCOLATE),
             ).saveSuffixed(output, "_from_milk")
 
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
@@ -100,7 +100,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
 
-        HTItemWithFluidToItemRecipeBuilder
+        HTItemWithFluidToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),

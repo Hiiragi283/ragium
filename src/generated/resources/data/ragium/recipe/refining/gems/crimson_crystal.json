@@ -1,16 +1,14 @@
 {
   "type": "ragium:refining",
-  "fluid_input": {
+  "fluid_result": {
+    "amount": 125,
+    "id": "ragium:sap"
+  },
+  "ingredient": {
     "amount": 1000,
     "tag": "c:crimson_sap"
   },
-  "fluid_output": [
-    {
-      "amount": 125,
-      "id": "ragium:sap"
-    }
-  ],
-  "item_output": {
+  "item_result": {
     "count": 1,
     "id": "#c:gems/crimson_crystal"
   }
