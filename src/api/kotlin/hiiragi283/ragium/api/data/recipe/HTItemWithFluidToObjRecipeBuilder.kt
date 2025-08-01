@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -36,12 +36,12 @@ class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*, *>, R2 : HTItemWi
         )
 
         @JvmStatic
-        fun melting(
+        fun mixing(
             itemIngredient: HTItemIngredient,
             result: HTFluidResult,
-        ): HTItemWithFluidToObjRecipeBuilder<HTFluidResult, HTMeltingRecipe> = HTItemWithFluidToObjRecipeBuilder(
+        ): HTItemWithFluidToObjRecipeBuilder<HTFluidResult, HTMixingRecipe> = HTItemWithFluidToObjRecipeBuilder(
             RagiumConst.MELTING,
-            ::HTMeltingRecipe,
+            ::HTMixingRecipe,
             Optional.of(itemIngredient),
             Optional.empty(),
             result,

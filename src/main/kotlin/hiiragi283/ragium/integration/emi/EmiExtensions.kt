@@ -28,7 +28,7 @@ fun Optional<HTItemIngredient>.toCatalystEmi(): EmiIngredient = map { ingredient
     ingredient
         .getMatchingStacks()
         .map(EmiStack::of)
-        .onEach { stack ->
+        .onEach { stack: EmiStack ->
             stack.remainder = stack
             stack.amount = 1
         }

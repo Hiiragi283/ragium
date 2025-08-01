@@ -10,19 +10,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
 
-class HTInfusingRecipe(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: HTItemResult) :
+class HTInfusingRecipe(itemIngredient: Optional<HTItemIngredient>, fluidIngredient: Optional<HTFluidIngredient>, result: HTItemResult) :
     HTItemWithFluidToItemRecipe(
         RagiumRecipeTypes.INFUSING.get(),
-        Optional.of(itemIngredient),
-        Optional.of(fluidIngredient),
+        itemIngredient,
+        fluidIngredient,
         result,
     ) {
-    constructor(
-        itemIngredient: Optional<HTItemIngredient>,
-        fluidIngredient: Optional<HTFluidIngredient>,
-        result: HTItemResult,
-    ) : this(itemIngredient.get(), fluidIngredient.orElseThrow(), result)
-
     override fun testItem(ingredient: HTItemIngredient, stack: ItemStack): Boolean = ingredient.test(stack)
 
     override fun testFluid(ingredient: HTFluidIngredient, stack: FluidStack): Boolean = ingredient.test(stack)

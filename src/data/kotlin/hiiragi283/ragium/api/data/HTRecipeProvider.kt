@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
@@ -78,7 +79,7 @@ abstract class HTRecipeProvider : IConditionBuilder {
         amount: Int,
     ) {
         // Melting
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(itemOut),
                 HTResultHelper.fluid(fluidOut, amount),

@@ -6,7 +6,7 @@
     }
   ],
   "type": "ragium:melting",
-  "item_ingredient": {
+  "ingredient": {
     "count": 1,
     "item": "farmersdelight:milk_bottle"
   },

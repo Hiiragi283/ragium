@@ -13,7 +13,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumReplicationRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -66,8 +65,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         )
     }
 
-    @JvmStatic
-    private fun register(holder: DeferredItem<*>, vararg instances: MatterValue) {
+    /*private fun register(holder: DeferredItem<*>, vararg instances: MatterValue) {
         val id: ResourceLocation = holder.id
         register(
             ResourceLocation.fromNamespaceAndPath(
@@ -75,9 +73,9 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
                 "matter_values/${id.namespace}/items/${id.path}",
             ),
             Ingredient.of(holder),
-            *instances,
+     *instances,
         )
-    }
+    }*/
 
     @JvmStatic
     private fun register(tagKey: TagKey<Item>, vararg instances: MatterValue) {

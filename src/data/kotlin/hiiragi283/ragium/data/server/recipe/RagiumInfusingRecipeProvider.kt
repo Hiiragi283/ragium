@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
@@ -137,7 +138,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider() {
                 HTResultHelper.item(Items.EXPERIENCE_BOTTLE),
             ).save(output)
 
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(Items.EXPERIENCE_BOTTLE),
                 HTResultHelper.fluid(RagiumFluidContents.EXPERIENCE, 250),
@@ -160,7 +161,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider() {
 
     private fun exp() {
         // Exp Berries -> Liquid Exp
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(RagiumItems.EXP_BERRIES),
                 HTResultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),

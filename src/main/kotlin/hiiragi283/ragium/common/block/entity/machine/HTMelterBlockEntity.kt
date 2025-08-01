@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -24,12 +23,12 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTMeltingRecipe>(
+    HTProcessorBlockEntity<SingleRecipeInput, HTMeltingRecipe>(
         RagiumRecipeTypes.MELTING.get(),
         RagiumBlockEntityTypes.MELTER,
         pos,
@@ -56,10 +55,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), FluidStack.EMPTY)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTMeltingRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         if (!tank.canFill(recipe.result.get(), true)) {
             return false
@@ -71,13 +69,13 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTItemWithFluidRecipeInput,
+        input: SingleRecipeInput,
         recipe: HTMeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
         tank.fill(recipe.result.get(), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.itemIngredient, false)
+        inventory.consumeStackInSlot(0, recipe.ingredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
     }

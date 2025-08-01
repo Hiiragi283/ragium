@@ -3,14 +3,14 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
@@ -38,14 +38,16 @@ object RagiumRecipeStreamCodecs {
     )
 
     @JvmStatic
-    fun <R : HTItemToItemRecipe> itemToItem(factory: HTItemToItemRecipeBuilder.Factory<R>): StreamCodec<RegistryFriendlyByteBuf, R> =
-        StreamCodec.composite(
-            HTItemIngredient.STREAM_CODEC,
-            HTItemToItemRecipe::ingredient,
-            HTItemResult.STREAM_CODEC,
-            HTItemToItemRecipe::result,
-            factory::create,
-        )
+    fun <R1 : HTRecipeResult<*, *>, R2 : HTItemToObjRecipe<R1>> itemToObj(
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        factory: HTItemToObjRecipeBuilder.Factory<R1, R2>,
+    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
+        HTItemIngredient.STREAM_CODEC,
+        HTItemToObjRecipe<R1>::ingredient,
+        streamCodec,
+        HTItemToObjRecipe<R1>::result,
+        factory::create,
+    )
 
     @JvmStatic
     fun <R : HTCombineItemToItemRecipe> combineItemToItem(

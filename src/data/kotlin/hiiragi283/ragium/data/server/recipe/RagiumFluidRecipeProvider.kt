@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -54,13 +55,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
     private fun crudeOil() {
         // Coal -> Crude Oil
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(Items.COAL),
                 HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ItemTags.SOUL_FIRE_BASE_BLOCKS),
                 HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 500),
@@ -101,7 +102,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
     private fun sap() {
         // XX Log -> Wood Dust + Sap
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ItemTags.LOGS_THAT_BURN),
                 HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
@@ -123,7 +124,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             ).saveSuffixed(output, "_from_syrup")
 
         // Crimson Stem -> Crimson Sap
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ItemTags.CRIMSON_STEMS),
                 HTResultHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 125),
@@ -142,7 +143,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Warped Stem -> Warped Sap
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ItemTags.WARPED_STEMS),
                 HTResultHelper.fluid(RagiumFluidContents.WARPED_SAP, 125),

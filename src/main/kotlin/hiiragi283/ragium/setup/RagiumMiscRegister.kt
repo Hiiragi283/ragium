@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
@@ -60,8 +61,8 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.EXTRACTING,
-            RagiumRecipeCodecs.itemToItem(::HTExtractingRecipe),
-            RagiumRecipeStreamCodecs.itemToItem(::HTExtractingRecipe),
+            RagiumRecipeCodecs.itemToObj(HTItemResult.CODEC, ::HTExtractingRecipe),
+            RagiumRecipeStreamCodecs.itemToObj(HTItemResult.STREAM_CODEC, ::HTExtractingRecipe),
         )
         register(
             RagiumRecipeSerializers.INFUSING,
@@ -70,8 +71,13 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.MELTING,
-            RagiumRecipeCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTFluidResult.STREAM_CODEC, ::HTMeltingRecipe),
+            RagiumRecipeCodecs.itemToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
+            RagiumRecipeStreamCodecs.itemToObj(HTFluidResult.STREAM_CODEC, ::HTMeltingRecipe),
+        )
+        register(
+            RagiumRecipeSerializers.MIXING,
+            RagiumRecipeCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
+            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTFluidResult.STREAM_CODEC, ::HTMixingRecipe),
         )
         register(
             RagiumRecipeSerializers.PRESSING,
@@ -101,6 +107,7 @@ object RagiumMiscRegister {
         register(RagiumRecipeTypes.EXTRACTING)
         register(RagiumRecipeTypes.INFUSING)
         register(RagiumRecipeTypes.MELTING)
+        register(RagiumRecipeTypes.MIXING)
         register(RagiumRecipeTypes.PRESSING)
         register(RagiumRecipeTypes.REFINING)
         register(RagiumRecipeTypes.SOLIDIFYING)

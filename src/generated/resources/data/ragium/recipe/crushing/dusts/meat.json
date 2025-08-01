@@ -1,0 +1,22 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:foods/raw_meat"
+      },
+      {
+        "tag": "c:foods/raw_fish"
+      },
+      {
+        "item": "minecraft:rotten_flesh"
+      }
+    ],
+    "count": 1
+  },
+  "results": {
+    "count": 1,
+    "id": "#c:dusts/meat"
+  }
+}

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
@@ -31,6 +32,9 @@ abstract class HTItemWithFluidToObjRecipe<R : HTRecipeResult<*, *>>(
     abstract fun testFluid(ingredient: HTFluidIngredient, stack: FluidStack): Boolean
 
     final override fun matches(input: HTItemWithFluidRecipeInput, level: Level): Boolean = test(input)
+
+    final override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
+        if (test(input)) getResultItem(registries) else ItemStack.EMPTY
 
     final override fun getType(): RecipeType<*> = recipeType
 }

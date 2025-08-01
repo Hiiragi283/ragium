@@ -1,6 +1,6 @@
 {
   "type": "ragium:melting",
-  "item_ingredient": {
+  "ingredient": {
     "count": 1,
     "item": "minecraft:magma_block"
   },

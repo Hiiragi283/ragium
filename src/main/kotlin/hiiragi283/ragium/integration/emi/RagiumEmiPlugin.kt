@@ -14,6 +14,7 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
@@ -26,6 +27,7 @@ import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
@@ -50,12 +52,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -98,7 +97,9 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addCustomRecipe() {
         // Crafting
-        forEachRecipes(RecipeType.CRAFTING) { id: ResourceLocation, recipe: CraftingRecipe? ->
+        val crafting: HTDeferredRecipeType<CraftingInput, CraftingRecipe> =
+            HTDeferredRecipeType.createType(vanillaId("crafting"))
+        crafting.forEach(recipeManager) { id: ResourceLocation, recipe: CraftingRecipe? ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
                     addRecipeSafe(
@@ -207,7 +208,7 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addRecipe(
                 HTMeltingEmiRecipe(
                     id,
-                    recipe.itemIngredient.toItemEmi(),
+                    recipe.ingredient.toEmi(),
                     recipe.result.toEmi(),
                 ),
             )
@@ -383,21 +384,6 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     //    Extension    //
-
-    private inline fun <I : RecipeInput, R : Recipe<I>> forEachRecipes(recipeType: RecipeType<R>, action: (ResourceLocation, R) -> Unit) {
-        for (holder: RecipeHolder<R> in recipeManager.getAllRecipesFor(recipeType)) {
-            val id: ResourceLocation = holder.id
-            val recipe: R = holder.value
-            action(id, recipe)
-        }
-    }
-
-    /**
-     * @see dev.emi.emi.VanillaPlugin.addRecipeSafe
-     */
-    private inline fun <T : Recipe<*>> addRecipeSafe(recipe: T, factory: (T) -> EmiRecipe) {
-        addRecipeSafe(EmiPort.getId(recipe)) { factory(recipe) }
-    }
 
     private inline fun addRecipeSafe(id: ResourceLocation, factory: (ResourceLocation) -> EmiRecipe) {
         runCatching {

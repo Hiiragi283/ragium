@@ -7,13 +7,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
@@ -25,14 +25,16 @@ import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 
 object RagiumRecipeCodecs {
     @JvmStatic
-    fun <R : HTItemToItemRecipe> itemToItem(factory: HTItemToItemRecipeBuilder.Factory<R>): MapCodec<R> =
-        RecordCodecBuilder.mapCodec { instance ->
-            instance
-                .group(
-                    HTItemIngredient.CODEC.fieldOf("ingredient").forGetter(HTItemToItemRecipe::ingredient),
-                    HTItemResult.CODEC.fieldOf("result").forGetter(HTItemToItemRecipe::result),
-                ).apply(instance, factory::create)
-        }
+    fun <R1 : HTRecipeResult<*, *>, R2 : HTItemToObjRecipe<R1>> itemToObj(
+        codec: Codec<R1>,
+        factory: HTItemToObjRecipeBuilder.Factory<R1, R2>,
+    ): MapCodec<R2> = RecordCodecBuilder.mapCodec { instance ->
+        instance
+            .group(
+                HTItemIngredient.CODEC.fieldOf("ingredient").forGetter(HTItemToObjRecipe<R1>::ingredient),
+                codec.fieldOf("result").forGetter(HTItemToObjRecipe<R1>::result),
+            ).apply(instance, factory::create)
+    }
 
     @JvmStatic
     fun <R : HTItemToChancedItemRecipe> itemToChancedItem(factory: HTItemToChancedItemRecipeBuilder.Factory<R>): MapCodec<R> =
@@ -88,15 +90,15 @@ object RagiumRecipeCodecs {
     }
 
     @JvmStatic
-    fun <R : HTRecipeResult<*, *>, B : HTItemWithFluidToObjRecipe<R>> itemWithFluidToObj(
-        codec: Codec<R>,
-        factory: HTItemWithFluidToObjRecipeBuilder.Factory<R, B>,
-    ): MapCodec<B> = RecordCodecBuilder.mapCodec { instance ->
+    fun <R1 : HTRecipeResult<*, *>, R2 : HTItemWithFluidToObjRecipe<R1>> itemWithFluidToObj(
+        codec: Codec<R1>,
+        factory: HTItemWithFluidToObjRecipeBuilder.Factory<R1, R2>,
+    ): MapCodec<R2> = RecordCodecBuilder.mapCodec { instance ->
         instance
             .group(
-                HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemWithFluidToObjRecipe<R>::itemIngredient),
-                HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemWithFluidToObjRecipe<R>::fluidIngredient),
-                codec.fieldOf("result").forGetter(HTItemWithFluidToObjRecipe<R>::result),
+                HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemWithFluidToObjRecipe<R1>::itemIngredient),
+                HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemWithFluidToObjRecipe<R1>::fluidIngredient),
+                codec.fieldOf("result").forGetter(HTItemWithFluidToObjRecipe<R1>::result),
             ).apply(instance, factory::create)
     }
 

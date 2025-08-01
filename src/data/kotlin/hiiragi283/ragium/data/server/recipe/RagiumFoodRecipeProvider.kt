@@ -17,8 +17,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     val disabledByDelight: ICondition = not(modLoaded(RagiumConst.FARMERS_DELIGHT))
@@ -83,17 +85,18 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     private fun meat() {
         // Minced Meat
         HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.FOODS_RAW_MEAT))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
-            .saveSuffixed(output, "_from_meat")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.FOODS_RAW_FISH))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
-            .saveSuffixed(output, "_from_fish")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.ROTTEN_FLESH))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
-            .saveSuffixed(output, "_from_rotten")
+            .crushing(
+                HTIngredientHelper.item(
+                    CompoundIngredient(
+                        listOf(
+                            Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
+                            Ingredient.of(Tags.Items.FOODS_RAW_FISH),
+                            Ingredient.of(Items.ROTTEN_FLESH),
+                        ),
+                    ),
+                ),
+            ).addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
+            .save(output)
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")

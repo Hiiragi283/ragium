@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.buildTable
@@ -18,43 +18,43 @@ import net.neoforged.neoforge.common.Tags
 object RagiumExtractingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Vanilla
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.GRAVELS),
                 HTResultHelper.item(Items.FLINT),
             ).saveSuffixed(output, "_from_gravel")
 
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
                 HTResultHelper.item(Items.REDSTONE),
             ).saveSuffixed(output, "_from_red_sandstone")
 
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
                 HTResultHelper.item(Items.BROWN_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
 
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Items.RED_MUSHROOM_BLOCK),
                 HTResultHelper.item(Items.RED_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.STORAGE_BLOCKS_REDSTONE),
                 HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
                 HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
-        HTItemToItemRecipeBuilder
+        HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.GUNPOWDERS),
                 HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
@@ -94,7 +94,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
             val flowerHolder: Holder.Reference<Item> = flower.asItemHolder()
             val flowerName: String = flowerHolder.idOrNull?.path ?: return@forEach
 
-            HTItemToItemRecipeBuilder
+            HTItemToObjRecipeBuilder
                 .extracting(
                     HTIngredientHelper.item(flower),
                     HTResultHelper.item(dye, count),

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -31,7 +32,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
                 HTResultHelper.item(ModItems.MILK_BOTTLE.get()),
             ).save(output)
 
-        HTItemWithFluidToObjRecipeBuilder
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ModItems.MILK_BOTTLE.get()),
                 HTResultHelper.fluid(Tags.Fluids.MILK, 1000),

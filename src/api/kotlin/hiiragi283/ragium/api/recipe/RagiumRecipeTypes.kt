@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
@@ -32,7 +33,10 @@ object RagiumRecipeTypes {
     val INFUSING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTInfusingRecipe> = create(RagiumConst.INFUSING)
 
     @JvmField
-    val MELTING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
+    val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
+
+    @JvmField
+    val MIXING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
 
     @JvmField
     val PRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTPressingRecipe> = create(RagiumConst.PRESSING)
