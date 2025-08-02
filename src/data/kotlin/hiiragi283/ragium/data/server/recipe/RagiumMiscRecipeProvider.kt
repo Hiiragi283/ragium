@@ -227,6 +227,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Basic
         basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(Items.FLINT))
         basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
+        basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.DISPENSER))
         basicMachine(RagiumBlocks.Machines.FORMING_PRESS, Ingredient.of(Items.PISTON))
         // Advanced

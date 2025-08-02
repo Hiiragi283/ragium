@@ -6,10 +6,9 @@ import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
+import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -74,8 +73,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTDecomposeProcessMenu = HTDecomposeProcessMenu(
-        RagiumMenuTypes.CRUSHER,
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTCrusherMenu = HTCrusherMenu(
         containerId,
         playerInventory,
         blockPos,

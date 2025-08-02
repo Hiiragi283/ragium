@@ -9,19 +9,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTSingleProcessMenu(
+class HTItemToItemMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
-) : HTDefinitionContainerMenu(
-        menuType,
-        containerId,
-        inventory,
-        pos,
-        definition,
-    ) {
+) : HTDefinitionContainerMenu(menuType, containerId, inventory, pos, definition) {
     companion object {
         @JvmStatic
         private fun empty(
@@ -29,20 +23,26 @@ class HTSingleProcessMenu(
             containerId: Int,
             inventory: Inventory,
             registryBuf: RegistryFriendlyByteBuf?,
-        ): HTSingleProcessMenu = HTSingleProcessMenu(menuType, containerId, inventory, decodePos(registryBuf), HTMenuDefinition.empty(2))
+        ): HTItemToItemMenu = HTItemToItemMenu(
+            menuType,
+            containerId,
+            inventory,
+            decodePos(registryBuf),
+            HTMenuDefinition.empty(2),
+        )
 
         @JvmStatic
-        fun infuser(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTSingleProcessMenu =
-            empty(RagiumMenuTypes.INFUSER, containerId, inventory, registryBuf)
+        fun extractor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
+            empty(RagiumMenuTypes.EXTRACTOR, containerId, inventory, registryBuf)
     }
 
     init {
         // inputs
-        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addOutputSlot(2, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv(inventory)
         // register property

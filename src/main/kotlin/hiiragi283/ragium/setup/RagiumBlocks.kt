@@ -322,6 +322,7 @@ object RagiumBlocks {
         // Basic
         CRUSHER(RagiumBlockEntityTypes.CRUSHER),
         BLOCK_BREAKER(RagiumBlockEntityTypes.BLOCK_BREAKER),
+        ENGRAVER(RagiumBlockEntityTypes.ENGRAVER),
         EXTRACTOR(RagiumBlockEntityTypes.EXTRACTOR),
         FORMING_PRESS(RagiumBlockEntityTypes.FORMING_PRESS),
 

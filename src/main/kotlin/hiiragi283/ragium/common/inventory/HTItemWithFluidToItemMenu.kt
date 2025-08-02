@@ -9,13 +9,12 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTCombineProcessMenu(
+class HTItemWithFluidToItemMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
-    slotPos: DoubleArray,
 ) : HTDefinitionContainerMenu(menuType, containerId, inventory, pos, definition) {
     companion object {
         @JvmStatic
@@ -24,39 +23,30 @@ class HTCombineProcessMenu(
             containerId: Int,
             inventory: Inventory,
             registryBuf: RegistryFriendlyByteBuf?,
-            slotPos: DoubleArray,
-        ): HTCombineProcessMenu = HTCombineProcessMenu(
+        ): HTItemWithFluidToItemMenu = HTItemWithFluidToItemMenu(
             menuType,
             containerId,
             inventory,
             decodePos(registryBuf),
-            HTMenuDefinition.empty(6),
-            slotPos,
+            HTMenuDefinition.empty(2),
         )
 
-        @JvmField
-        val ALLOY_POS: DoubleArray = doubleArrayOf(1.5, 0.0, 2.5, 0.0)
-
-        @JvmField
-        val PRESS_POS: DoubleArray = doubleArrayOf(2.0, 0.0, 2.0, 2.0)
+        @JvmStatic
+        fun infuser(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemWithFluidToItemMenu =
+            empty(RagiumMenuTypes.INFUSER, containerId, inventory, registryBuf)
 
         @JvmStatic
-        fun alloy(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTCombineProcessMenu =
-            empty(RagiumMenuTypes.ALLOY_SMELTER, containerId, inventory, registryBuf, ALLOY_POS)
-
-        @JvmStatic
-        fun press(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTCombineProcessMenu =
-            empty(RagiumMenuTypes.FORMING_PRESS, containerId, inventory, registryBuf, PRESS_POS)
+        fun solidifier(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemWithFluidToItemMenu =
+            empty(RagiumMenuTypes.SOLIDIFIER, containerId, inventory, registryBuf)
     }
 
     init {
-        // inputs
-        addInputSlot(0, HTSlotHelper.getSlotPosX(slotPos[0]), HTSlotHelper.getSlotPosY(slotPos[1]))
-        addInputSlot(1, HTSlotHelper.getSlotPosX(slotPos[2]), HTSlotHelper.getSlotPosY(slotPos[3]))
+        addFluidSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addOutputSlot(2, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv(inventory)
         // register property

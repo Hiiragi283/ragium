@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/engraver",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/engraver"
+    },
+    "facing=south": {
+      "model": "ragium:block/engraver",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/engraver",
+      "y": 270
+    }
+  }
+}

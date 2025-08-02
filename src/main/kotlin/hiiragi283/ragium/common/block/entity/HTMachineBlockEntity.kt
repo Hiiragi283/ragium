@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
+import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.BlockPos
@@ -18,6 +20,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import kotlin.collections.forEach
 
@@ -106,4 +109,16 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    Menu    //
 
     final override fun getDisplayName(): Component = blockState.block.name
+
+    //    Extension    //
+
+    protected fun insertToOutput(range: IntRange, output: ItemStack, simulate: Boolean): ItemStack {
+        val filter: HTItemFilter = object : HTItemFilter {
+            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot in range
+
+            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = false
+        }
+        val fixedInventory = HTFilteredItemHandler(inventory, filter)
+        return ItemHandlerHelper.insertItem(fixedInventory, output, simulate)
+    }
 }

@@ -159,6 +159,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
         registerBasic(RagiumMenuTypes.CRUSHER)
+        registerBasic(RagiumMenuTypes.ENGRAVER)
         registerBasic(RagiumMenuTypes.EXTRACTOR)
         registerBasic(RagiumMenuTypes.FLUID_COLLECTOR)
         registerBasic(RagiumMenuTypes.FORMING_PRESS)

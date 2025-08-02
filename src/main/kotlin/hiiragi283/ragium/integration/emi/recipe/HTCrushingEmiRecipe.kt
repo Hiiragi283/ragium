@@ -9,34 +9,9 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 
-class HTDecomposeEmiRecipe(
-    private val category: EmiRecipeCategory,
-    id: ResourceLocation,
-    textureId: ResourceLocation,
-    val ingredient: EmiIngredient,
-    val results: List<EmiStack>,
-) : HTMachineEmiRecipe(id, textureId) {
-    companion object {
-        @JvmStatic
-        fun crushing(id: ResourceLocation, ingredient: EmiIngredient, results: List<EmiStack>): HTDecomposeEmiRecipe = HTDecomposeEmiRecipe(
-            RagiumEmiCategories.CRUSHING,
-            id,
-            RagiumAPI.id("textures/gui/container/crusher.png"),
-            ingredient,
-            results,
-        )
-
-        @JvmStatic
-        fun extracting(id: ResourceLocation, ingredient: EmiIngredient, result: EmiStack): HTDecomposeEmiRecipe = HTDecomposeEmiRecipe(
-            RagiumEmiCategories.EXTRACTING,
-            id,
-            RagiumAPI.id("textures/gui/container/extractor.png"),
-            ingredient,
-            listOf(result),
-        )
-    }
-
-    override fun getCategory(): EmiRecipeCategory = category
+class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/crusher.png")) {
+    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.CRUSHING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
 

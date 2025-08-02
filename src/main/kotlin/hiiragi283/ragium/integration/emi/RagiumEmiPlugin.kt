@@ -8,6 +8,7 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -32,14 +33,14 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTItemWithItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -73,6 +74,8 @@ class RagiumEmiPlugin : EmiPlugin {
     override fun register(registry: EmiRegistry) {
         // Category, Workstation
         RagiumEmiCategories.register(registry)
+
+        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, EmiStack.of(RagiumBlocks.Machines.ENGRAVER))
         // Recipe
         this.registry = registry
         recipeManager = registry.recipeManager
@@ -154,7 +157,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Alloying
         RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
             registry.addRecipe(
-                HTAlloyingEmiRecipe(
+                HTItemWithItemToItemEmiRecipe.alloying(
                     id,
                     recipe.ingredients.map(HTItemIngredient::toEmi),
                     recipe.result.toEmi(),
@@ -165,7 +168,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Crushing
         RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
-                HTDecomposeEmiRecipe.crushing(
+                HTCrushingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.resultMap.map { (result: HTItemResult, chance: Float) ->
@@ -180,10 +183,12 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
+        // Engraving
+        registry.addRecipeHandler(RagiumMenuTypes.ENGRAVER.get(), HTRecipeHandler(VanillaEmiRecipeCategories.STONECUTTING))
         // Extracting
         RagiumRecipeTypes.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTExtractingRecipe ->
             registry.addRecipe(
-                HTDecomposeEmiRecipe.extracting(
+                HTItemToItemEmiRecipe.extracting(
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.result.toEmi(),
@@ -217,7 +222,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Pressing
         RagiumRecipeTypes.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTPressingRecipe ->
             registry.addRecipe(
-                HTPressingEmiRecipe(
+                HTItemWithItemToItemEmiRecipe.pressing(
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.catalyst.toItemEmi(),

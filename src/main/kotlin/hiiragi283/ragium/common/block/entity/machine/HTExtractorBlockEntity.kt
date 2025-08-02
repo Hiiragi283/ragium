@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
+import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -28,7 +28,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory = HTItemStackHandler(5, this::setChanged)
+    override val inventory = HTItemStackHandler(2, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
 
     //    Ticking    //
@@ -37,7 +37,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTExtractingRecipe): Boolean =
-        insertToOutput(1..4, recipe.assemble(input, level.registryAccess()), true).isEmpty
+        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -47,7 +47,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTExtractingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(1..4, recipe.assemble(input, level.registryAccess()), false)
+        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient, false)
         // サウンドを流す
@@ -65,7 +65,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTDecomposeProcessMenu = HTDecomposeProcessMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemToItemMenu = HTItemToItemMenu(
         RagiumMenuTypes.EXTRACTOR,
         containerId,
         playerInventory,

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.inventory.HTCombineProcessMenu
+import hiiragi283.ragium.common.inventory.HTItemWithItemToItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -92,12 +92,13 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTCombineProcessMenu = HTCombineProcessMenu(
-        RagiumMenuTypes.ALLOY_SMELTER,
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-        HTCombineProcessMenu.ALLOY_POS,
-    )
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemWithItemToItemMenu =
+        HTItemWithItemToItemMenu(
+            RagiumMenuTypes.ALLOY_SMELTER,
+            containerId,
+            playerInventory,
+            blockPos,
+            createDefinition(inventory),
+            HTItemWithItemToItemMenu.ALLOY_POS,
+        )
 }

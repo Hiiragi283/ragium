@@ -11,11 +11,12 @@ import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTSolidifierMenu
+import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -91,10 +92,12 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
         HTFilteredFluidHandler(listOf(tank), HTFluidFilter.FILL_ONLY)
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSolidifierMenu = HTSolidifierMenu(
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemWithFluidToItemMenu =
+        HTItemWithFluidToItemMenu(
+            RagiumMenuTypes.SOLIDIFIER,
+            containerId,
+            playerInventory,
+            blockPos,
+            createDefinition(inventory),
+        )
 }

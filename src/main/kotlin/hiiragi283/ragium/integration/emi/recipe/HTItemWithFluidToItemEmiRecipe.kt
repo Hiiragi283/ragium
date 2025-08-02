@@ -26,7 +26,7 @@ class HTItemWithFluidToItemEmiRecipe(
         ): HTItemWithFluidToItemEmiRecipe = HTItemWithFluidToItemEmiRecipe(
             RagiumEmiCategories.INFUSING,
             id,
-            RagiumAPI.id("textures/gui/container/solidifier.png"),
+            RagiumAPI.id("textures/gui/container/infuser.png"),
             fluidIngredient,
             itemIngredient,
             results,
