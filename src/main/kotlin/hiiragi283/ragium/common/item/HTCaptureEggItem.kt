@@ -1,8 +1,10 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.Direction
 import net.minecraft.core.Position
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
@@ -37,6 +39,9 @@ class HTCaptureEggItem(properties: Properties) :
             level.addFreshEntity(egg)
         }
         player.awardStat(Stats.ITEM_USED.get(this))
+        if (player is ServerPlayer) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
+        }
         stack.consume(1, player)
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }

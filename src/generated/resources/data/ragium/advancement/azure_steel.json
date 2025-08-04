@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:root",
+  "parent": "ragium:azure_shard",
   "criteria": {
-    "has_azure_ticket": {
+    "has_c_ingots_azure_steel": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:azure_ticket"
+            "items": "#c:ingots/azure_steel"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.azure_ticket.desc"
+      "translate": "advancements.ragium.azure_steel.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:azure_ticket"
+      "id": "ragium:azure_steel_ingot"
     },
     "title": {
-      "translate": "advancements.ragium.azure_ticket.title"
+      "translate": "advancements.ragium.azure_steel.title"
     }
   },
   "requirements": [
     [
-      "has_azure_ticket"
+      "has_c_ingots_azure_steel"
     ]
   ],
   "sends_telemetry_event": true

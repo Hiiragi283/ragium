@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:azure_shard",
+  "parent": "ragium:azure_steel",
   "criteria": {
     "has_azure_tool": {
       "conditions": {

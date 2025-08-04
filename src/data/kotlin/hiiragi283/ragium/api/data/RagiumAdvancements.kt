@@ -30,10 +30,10 @@ object RagiumAdvancements {
     //    Azure    //
 
     @JvmField
-    val AZURE_TICKET: ResourceKey<Advancement> = create("azure_ticket")
+    val AZURE_SHARD: ResourceKey<Advancement> = create("azure_shard")
 
     @JvmField
-    val AZURE_SHARD: ResourceKey<Advancement> = create("azure_shard")
+    val AZURE_STEEL: ResourceKey<Advancement> = create("azure_steel")
 
     @JvmField
     val AZURE_GEARS: ResourceKey<Advancement> = create("azure_gears")
@@ -52,12 +52,18 @@ object RagiumAdvancements {
     val WARPED_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.WARPED_CRYSTAL)
 
     @JvmField
+    val DIM_ANCHOR: ResourceKey<Advancement> = create("dimensional_anchor")
+
+    @JvmField
     val TELEPORT_TICKET: ResourceKey<Advancement> = create("teleport_ticket")
 
     //    Eldritch    //
 
     @JvmField
     val ELDRITCH_PEARL: ResourceKey<Advancement> = create(RagiumConst.ELDRITCH_PEARL)
+
+    @JvmField
+    val ELDRITCH_EGG: ResourceKey<Advancement> = create("eldritch_egg")
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")

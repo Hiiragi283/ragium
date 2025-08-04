@@ -15,9 +15,9 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
+import hiiragi283.ragium.common.block.HTGlassBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
-import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -255,19 +255,19 @@ object RagiumBlocks {
         SPONGE_CAKE_SETS,
     )
 
-    enum class Glasses(factory: (BlockBehaviour.Properties) -> Block, blastProof: Boolean) :
+    enum class Glasses(isTinted: Boolean, canPlayerThrough: Boolean, blastProof: Boolean) :
         HTBlockHolderLike,
         HTTaggedHolder<Block> {
-        QUARTZ(::TransparentBlock, false),
-        SOUL(::HTSoulGlassBlock, false),
-        OBSIDIAN(::TransparentBlock, true),
+        QUARTZ(false, false, false),
+        SOUL(false, true, false),
+        OBSIDIAN(false, false, true),
         ;
 
-        override val holder: DeferredBlock<*> = register(
-            "${name.lowercase()}_glass",
-            glass().apply { if (blastProof) strength(5f, 1200f) },
-            factory,
-        )
+        override val holder: DeferredBlock<*> = register("${name.lowercase()}_glass", glass()) { prop: BlockBehaviour.Properties ->
+            if (blastProof) prop.strength(5f, 1200f)
+            HTGlassBlock(isTinted, canPlayerThrough, prop)
+        }
+
         override val tagKey: TagKey<Block> = blockTagKey(commonId(RagiumConst.GLASS_BLOCKS, name.lowercase()))
     }
 
@@ -315,7 +315,7 @@ object RagiumBlocks {
         ;
 
         override val holder: DeferredBlock<*> =
-            register("${name.lowercase()}_machine_frame", properties.noCollission(), ::TransparentBlock)
+            register("${name.lowercase()}_machine_frame", properties.noOcclusion(), ::TransparentBlock)
     }
 
     enum class Machines(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
@@ -351,8 +351,8 @@ object RagiumBlocks {
         override val holder: DeferredBlock<*> = register("${name.lowercase()}_casing", properties)
     }
 
-    enum class Devices(supplier: () -> DeferredBlock<*>) : HTBlockHolderLike {
-        MILK_DRAIN({ register("milk_drain", copyOf(Blocks.COBBLESTONE), ::HTMilkDrainBlock) }),
+    enum class Devices(override val holder: DeferredBlock<*>) : HTBlockHolderLike {
+        MILK_DRAIN(RagiumBlockEntityTypes.MILK_DRAIN, copyOf(Blocks.COBBLESTONE), ::HTMilkDrainBlock),
 
         // Basic
         ITEM_BUFFER(RagiumBlockEntityTypes.ITEM_BUFFER),
@@ -369,11 +369,17 @@ object RagiumBlocks {
         CEU(RagiumBlockEntityTypes.CEU),
         ;
 
-        constructor(type: HTDeferredBlockEntityType<out HTBlockEntity>) : this({
-            registerEntity(type, machineProperty(), HTEntityBlock.create(type))
-        })
+        constructor(type: HTDeferredBlockEntityType<out HTBlockEntity>) : this(
+            type,
+            machineProperty(),
+            HTEntityBlock.create(type),
+        )
 
-        override val holder: DeferredBlock<*> = supplier()
+        constructor(
+            type: HTDeferredBlockEntityType<out HTBlockEntity>,
+            properties: BlockBehaviour.Properties,
+            factory: (BlockBehaviour.Properties) -> HTEntityBlock<*>,
+        ) : this(registerEntity(type, properties, factory))
     }
 
     //    Storages    //

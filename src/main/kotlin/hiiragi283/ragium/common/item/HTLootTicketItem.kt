@@ -4,9 +4,11 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
@@ -39,6 +41,9 @@ class HTLootTicketItem(properties: Properties) : Item(properties) {
             if (lootItems.isEmpty()) return InteractionResultHolder.pass(stack)
             for (stackIn: ItemStack in lootItems) {
                 dropStackAt(player, stackIn)
+            }
+            if (player is ServerPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
             }
             stack.consume(1, player)
             level.playSound(

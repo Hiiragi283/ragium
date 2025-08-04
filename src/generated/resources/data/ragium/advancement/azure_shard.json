@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:azure_ticket",
+  "parent": "ragium:root",
   "criteria": {
     "has_c_gems_azure": {
       "conditions": {

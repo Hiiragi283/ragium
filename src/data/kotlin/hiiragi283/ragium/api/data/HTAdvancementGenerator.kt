@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
@@ -105,9 +104,6 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
 
     protected fun Advancement.Builder.hasItemsIn(key: String, tagKey: TagKey<Item>): Advancement.Builder =
         hasItem(key, ItemPredicate.Builder.item().of(tagKey))
-
-    protected fun Advancement.Builder.useItem(key: String, item: ItemLike): Advancement.Builder =
-        addCriterion(key, ConsumeItemTrigger.TriggerInstance.usedItem(item))
 
     protected fun Advancement.Builder.save(key: ResourceKey<Advancement>): AdvancementHolder = save(output, key.location().toString())
 }

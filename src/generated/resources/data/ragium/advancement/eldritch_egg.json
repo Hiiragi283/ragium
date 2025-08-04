@@ -1,10 +1,10 @@
 {
-  "parent": "ragium:ragi_crystal",
+  "parent": "ragium:eldritch_pearl",
   "criteria": {
-    "use_ragi_ticket": {
+    "use_eldritch_egg": {
       "conditions": {
         "item": {
-          "items": "ragium:ragi_ticket"
+          "items": "ragium:eldritch_egg"
         }
       },
       "trigger": "minecraft:consume_item"
@@ -12,20 +12,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.ragi_ticket.desc"
+      "translate": "advancements.ragium.eldritch_egg.desc"
     },
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_ticket"
+      "id": "ragium:eldritch_egg"
     },
     "title": {
-      "translate": "advancements.ragium.ragi_ticket.title"
+      "translate": "advancements.ragium.eldritch_egg.title"
     }
   },
   "requirements": [
     [
-      "use_ragi_ticket"
+      "use_eldritch_egg"
     ]
   ],
   "sends_telemetry_event": true
