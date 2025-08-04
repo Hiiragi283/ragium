@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreVariants
+import hiiragi283.ragium.util.HTOreVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -57,16 +57,16 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
             .addBlock(RagiumBlocks.RESONANT_DEBRIS)
 
-        fun setupOres(ores: Iterable<HTOreVariants.HolderLike>, tagKey: TagKey<Block>) {
-            for (ore: HTOreVariants.HolderLike in ores) {
+        fun setupOres(ores: Iterable<HTOreVariant.HolderLike>, tagKey: TagKey<Block>) {
+            for (ore: HTOreVariant.HolderLike in ores) {
                 pickaxe.addBlock(ore)
                 tag(tagKey).addBlock(ore)
 
                 when (ore.variant) {
-                    HTOreVariants.STONE -> Tags.Blocks.ORES_IN_GROUND_STONE
-                    HTOreVariants.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
-                    HTOreVariants.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
-                    HTOreVariants.END -> blockTagKey(commonId("ores_in_ground/end_stone"))
+                    HTOreVariant.STONE -> Tags.Blocks.ORES_IN_GROUND_STONE
+                    HTOreVariant.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                    HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                    HTOreVariant.END -> blockTagKey(commonId("ores_in_ground/end_stone"))
                 }.let(::tag).addBlock(ore)
             }
 

@@ -33,9 +33,12 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.EffectCure
+import net.neoforged.neoforge.common.EffectCures
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -216,6 +219,14 @@ object RagiumRuntimeEvents {
                     level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    fun onEffectRemove(event: MobEffectEvent.Remove) {
+        val cure: EffectCure = event.cure ?: return
+        if (cure == EffectCures.MILK && RagiumAPI.getConfig().disableMilkCure()) {
+            event.isCanceled = true
         }
     }
 }

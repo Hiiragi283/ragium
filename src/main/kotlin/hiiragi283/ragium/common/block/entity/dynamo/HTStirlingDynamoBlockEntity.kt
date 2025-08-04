@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity(RagiumBlockEntityTypes.STIRLING_DYNAMO, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
-    override val energyUsage: Int = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
+    override val energyUsage: Int = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     private var lastBurnTime = 0
 

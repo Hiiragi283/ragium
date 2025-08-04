@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTOreVariants
+import hiiragi283.ragium.util.HTOreVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -61,11 +61,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Ore
-        val ores: List<HTOreVariants.HolderLike> = buildList {
+        val ores: List<HTOreVariant.HolderLike> = buildList {
             addAll(RagiumBlocks.RaginiteOres.entries)
             addAll(RagiumBlocks.RagiCrystalOres.entries)
         }
-        for (ore: HTOreVariants.HolderLike in ores) {
+        for (ore: HTOreVariant.HolderLike in ores) {
             val textureId: String = when (ore) {
                 is RagiumBlocks.RaginiteOres -> RagiumConst.RAGINITE
                 is RagiumBlocks.RagiCrystalOres -> RagiumConst.RAGI_CRYSTAL

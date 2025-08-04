@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -56,14 +56,14 @@ abstract class HTDrumBlockEntity(
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumConfig.COMMON.smallDrumCapacity.get(), RagiumBlockEntityTypes.SMALL_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlockEntityTypes.SMALL_DRUM, pos, state)
 
     class Medium(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumConfig.COMMON.mediumDrumCapacity.get(), RagiumBlockEntityTypes.MEDIUM_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlockEntityTypes.MEDIUM_DRUM, pos, state)
 
     class Large(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumConfig.COMMON.largeDrumCapacity.get(), RagiumBlockEntityTypes.LARGE_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlockEntityTypes.LARGE_DRUM, pos, state)
 
     class Huge(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumConfig.COMMON.hugeDrumCapacity.get(), RagiumBlockEntityTypes.HUGE_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlockEntityTypes.HUGE_DRUM, pos, state)
 }

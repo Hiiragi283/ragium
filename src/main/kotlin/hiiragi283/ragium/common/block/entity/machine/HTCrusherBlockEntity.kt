@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -29,7 +29,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override val inventory = HTItemStackHandler(5, this::setChanged)
-    override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
+    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
 

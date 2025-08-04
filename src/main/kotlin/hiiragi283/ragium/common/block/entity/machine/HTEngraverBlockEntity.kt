@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
@@ -29,7 +29,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override val inventory = HTItemStackHandler(6, this::setChanged)
-    override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
+    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
 

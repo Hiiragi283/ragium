@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 
-enum class HTOreVariants(val pattern: String, val stoneTex: String) {
+enum class HTOreVariant(val pattern: String, val stoneTex: String) {
     STONE("%s_ore", "block/stone") {
         override fun createProperties(): BlockBehaviour.Properties = BlockBehaviour.Properties
             .of()
@@ -42,6 +42,6 @@ enum class HTOreVariants(val pattern: String, val stoneTex: String) {
     abstract fun createProperties(): BlockBehaviour.Properties
 
     interface HolderLike : HTBlockHolderLike {
-        val variant: HTOreVariants
+        val variant: HTOreVariant
     }
 }

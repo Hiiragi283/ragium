@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -46,15 +46,14 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 範囲内のExp Orbを取得する
-        blockPos.getRangedAABB(RagiumConfig.COMMON.entityCollectorRange.get())
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
-            blockPos.getRangedAABB(RagiumConfig.COMMON.entityCollectorRange.get()),
+            blockPos.getRangedAABB(RagiumAPI.getConfig().getEntityCollectorRange()),
         )
         if (expOrbs.isEmpty()) return TriState.DEFAULT
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.get()
+            val fluidAmount: Int = entity.value * RagiumAPI.getConfig().getExpCollectorMultiplier()
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
             if (tank.canFill(stack, true)) {
                 tank.fill(stack, IFluidHandler.FluidAction.EXECUTE)

@@ -23,7 +23,7 @@ import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreVariants
+import hiiragi283.ragium.util.HTOreVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
@@ -155,11 +155,11 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    enum class RaginiteOres(override val variant: HTOreVariants) : HTOreVariants.HolderLike {
-        STONE(HTOreVariants.STONE),
-        DEEP(HTOreVariants.DEEP),
-        NETHER(HTOreVariants.NETHER),
-        END(HTOreVariants.END),
+    enum class RaginiteOres(override val variant: HTOreVariant) : HTOreVariant.HolderLike {
+        STONE(HTOreVariant.STONE),
+        DEEP(HTOreVariant.DEEP),
+        NETHER(HTOreVariant.NETHER),
+        END(HTOreVariant.END),
         ;
 
         override val holder: DeferredBlock<*> = register(
@@ -168,11 +168,11 @@ object RagiumBlocks {
         )
     }
 
-    enum class RagiCrystalOres(override val variant: HTOreVariants) : HTOreVariants.HolderLike {
-        STONE(HTOreVariants.STONE),
-        DEEP(HTOreVariants.DEEP),
-        NETHER(HTOreVariants.NETHER),
-        END(HTOreVariants.END),
+    enum class RagiCrystalOres(override val variant: HTOreVariant) : HTOreVariant.HolderLike {
+        STONE(HTOreVariant.STONE),
+        DEEP(HTOreVariant.DEEP),
+        NETHER(HTOreVariant.NETHER),
+        END(HTOreVariant.END),
         ;
 
         override val holder: DeferredBlock<*> = register(

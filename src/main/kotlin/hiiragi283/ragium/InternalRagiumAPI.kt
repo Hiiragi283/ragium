@@ -74,6 +74,9 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Platform    //
 
+    override fun getConfig(): RagiumAPI.Config = RagiumConfig
+    
+
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)

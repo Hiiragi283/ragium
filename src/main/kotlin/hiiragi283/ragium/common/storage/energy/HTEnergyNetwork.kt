@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.storage.energy
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
 import hiiragi283.ragium.api.util.HTSavedDataType
@@ -20,7 +19,7 @@ internal class HTEnergyNetwork(private var amount: Int, private var capacity: In
     IEnergyStorageModifiable {
     companion object {
         @JvmStatic
-        private fun getInitialCapacity(): Int = RagiumConfig.COMMON.defaultNetworkCapacity.get()
+        private fun getInitialCapacity(): Int = RagiumAPI.getConfig().getDefaultNetworkCapacity()
 
         @JvmField
         val CODEC: Codec<HTEnergyNetwork> = RecordCodecBuilder.create { instance ->

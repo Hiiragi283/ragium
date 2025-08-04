@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -83,7 +83,7 @@ abstract class HTContainerMenu(
         y: Int,
         width: Int = 16,
         height: Int = 16,
-        capacity: Int = RagiumConfig.COMMON.machineTankCapacity.get(),
+        capacity: Int = RagiumAPI.getConfig().getDefaultTankCapacity(),
     ) {
         fluidSlots.put(index, HTFluidSlot(x, y, width, height, capacity))
     }

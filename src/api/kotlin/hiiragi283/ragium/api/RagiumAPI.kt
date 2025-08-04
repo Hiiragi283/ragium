@@ -50,6 +50,9 @@ interface RagiumAPI {
             }
             return instance
         }
+
+        @JvmStatic
+        fun getConfig(): Config = getInstance().getConfig()
     }
 
     //    Addon    //
@@ -101,6 +104,44 @@ interface RagiumAPI {
      * エネルギーネットワークのマネージャを返します。
      */
     fun getEnergyNetworkManager(): HTEnergyNetworkManager
+
+    //    Config    //
+
+    fun getConfig(): Config
+
+    interface Config {
+        // Machine
+        fun getDefaultTankCapacity(): Int
+
+        fun getBasicMachineEnergyUsage(): Int
+
+        fun getAdvancedMachineEnergyUsage(): Int
+
+        // Collector
+        fun getEntityCollectorRange(): Int
+
+        fun getExpCollectorMultiplier(): Int
+
+        fun getMilkDrainMultiplier(): Int
+
+        // Drum
+        fun getSmallDrumCapacity(): Int
+
+        fun getMediumDrumCapacity(): Int
+
+        fun getLargeDrumCapacity(): Int
+
+        fun getHugeDrumCapacity(): Int
+
+        // Network
+        fun getDefaultNetworkCapacity(): Int
+
+        // Recipe
+        fun getTagOutputPriority(): List<String>
+
+        // World
+        fun disableMilkCure(): Boolean
+    }
 
     //    Platform    //
 

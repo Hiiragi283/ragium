@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
@@ -25,7 +25,7 @@ object HTTagHelper {
 
     @JvmStatic
     fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
-        for (modId: String in RagiumConfig.COMMON.tagOutputModIds.get()) {
+        for (modId: String in RagiumAPI.getConfig().getTagOutputPriority()) {
             val foundHolder: Holder<T>? = getFirstHolder(holderSet, modId)
             if (foundHolder != null) return Optional.of(foundHolder)
         }

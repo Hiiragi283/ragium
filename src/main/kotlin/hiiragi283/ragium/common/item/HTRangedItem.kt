@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -24,7 +24,7 @@ abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1
     protected fun getRange(stack: ItemStack, level: Level?): Int {
         // val enchLookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
         val enchLevel: Int = 0 // stack.getAllEnchantments(enchLookup).getHighestLevel(RagiumModTags.Enchantments.RANGE)
-        return RagiumConfig.COMMON.entityCollectorRange.get() * (enchLevel + 1)
+        return RagiumAPI.getConfig().getEntityCollectorRange() * (enchLevel + 1)
     }
 
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {

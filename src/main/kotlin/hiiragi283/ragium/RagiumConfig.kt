@@ -1,15 +1,18 @@
-package hiiragi283.ragium.api
+package hiiragi283.ragium
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
+import net.neoforged.fml.ModContainer
+import net.neoforged.fml.config.ModConfig
 import net.neoforged.neoforge.common.ModConfigSpec
 import org.apache.commons.lang3.tuple.Pair
 
-object RagiumConfig {
-    @JvmField
-    val COMMON_SPEC: ModConfigSpec
+object RagiumConfig : RagiumAPI.Config {
+    @JvmStatic
+    private val COMMON_SPEC: ModConfigSpec
 
-    @JvmField
-    val COMMON: Common
+    @JvmStatic
+    private val COMMON: Common
 
     init {
         val commonPair: Pair<Common, ModConfigSpec> = ModConfigSpec.Builder().configure(::Common)
@@ -17,9 +20,48 @@ object RagiumConfig {
         COMMON = commonPair.left
     }
 
+    @JvmStatic
+    fun register(container: ModContainer) {
+        container.registerConfig(ModConfig.Type.COMMON, COMMON_SPEC)
+    }
+
+    //    RagiumAPI    //
+
+    // Machine
+    override fun getDefaultTankCapacity(): Int = COMMON.machineTankCapacity.get()
+
+    override fun getBasicMachineEnergyUsage(): Int = COMMON.basicMachineEnergyUsage.get()
+
+    override fun getAdvancedMachineEnergyUsage(): Int = COMMON.advancedMachineEnergyUsage.get()
+
+    // Collector
+    override fun getEntityCollectorRange(): Int = COMMON.entityCollectorRange.get()
+
+    override fun getExpCollectorMultiplier(): Int = COMMON.expCollectorMultiplier.get()
+
+    override fun getMilkDrainMultiplier(): Int = COMMON.milkDrainMultiplier.get()
+
+    // Drum
+    override fun getSmallDrumCapacity(): Int = COMMON.smallDrumCapacity.get()
+
+    override fun getMediumDrumCapacity(): Int = COMMON.mediumDrumCapacity.get()
+
+    override fun getLargeDrumCapacity(): Int = COMMON.largeDrumCapacity.get()
+
+    override fun getHugeDrumCapacity(): Int = COMMON.hugeDrumCapacity.get()
+
+    // Network
+    override fun getDefaultNetworkCapacity(): Int = COMMON.defaultNetworkCapacity.get()
+
+    // Recipe
+    override fun getTagOutputPriority(): List<String> = COMMON.tagOutputModIds.get()
+
+    // World
+    override fun disableMilkCure(): Boolean = COMMON.disableMilkCure.get()
+
     //    Common    //
 
-    class Common(builder: ModConfigSpec.Builder) {
+    private class Common(builder: ModConfigSpec.Builder) {
         //    Machine    //
 
         @JvmField
@@ -69,7 +111,7 @@ object RagiumConfig {
         //    World    //
 
         @JvmField
-        val dropTraderCatalog: ModConfigSpec.BooleanValue
+        val disableMilkCure: ModConfigSpec.BooleanValue
 
         init {
             // Machine
@@ -124,7 +166,7 @@ object RagiumConfig {
                 .defineList(
                     "tagOutputModIds",
                     listOf(
-                        RagiumAPI.MOD_ID,
+                        RagiumAPI.Companion.MOD_ID,
                         RagiumConst.MINECRAFT,
                         "alltheores",
                     ),
@@ -134,7 +176,7 @@ object RagiumConfig {
             builder.pop()
             // World
             builder.push("world")
-            dropTraderCatalog = builder.define("dropTraderCatalog", true)
+            disableMilkCure = builder.define("disableMilkCure", false)
             builder.pop()
             // Done!
             builder.build()

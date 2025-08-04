@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
@@ -49,7 +49,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
-            blockPos.getRangedAABB(RagiumConfig.COMMON.entityCollectorRange.get()),
+            blockPos.getRangedAABB(RagiumAPI.getConfig().getEntityCollectorRange()),
         )
         if (itemEntities.isEmpty()) return TriState.DEFAULT
         // それぞれのItem Entityに対して回収を行う

@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.extension.itemTagKey
@@ -459,10 +458,10 @@ object RagiumItems {
             )
         }
 
-        register(RagiumConfig.COMMON.smallDrumCapacity.get(), RagiumBlocks.Drums.SMALL)
-        register(RagiumConfig.COMMON.mediumDrumCapacity.get(), RagiumBlocks.Drums.MEDIUM)
-        register(RagiumConfig.COMMON.largeDrumCapacity.get(), RagiumBlocks.Drums.LARGE)
-        register(RagiumConfig.COMMON.hugeDrumCapacity.get(), RagiumBlocks.Drums.HUGE)
+        register(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlocks.Drums.SMALL)
+        register(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlocks.Drums.MEDIUM)
+        register(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlocks.Drums.LARGE)
+        register(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlocks.Drums.HUGE)
     }
 
     @SubscribeEvent

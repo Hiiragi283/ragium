@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
@@ -35,9 +35,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override val inventory: HTItemHandler = HTItemStackHandler(0, this::setChanged)
-    private val tankIn = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
-    private val tankOut = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
-    override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
+    private val tankIn = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tankOut = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write("${RagiumConst.TANK}_in", tankIn)

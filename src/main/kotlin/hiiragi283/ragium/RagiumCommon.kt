@@ -2,7 +2,6 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
 import hiiragi283.ragium.api.network.HTCustomPayload
@@ -28,7 +27,6 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
-import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -76,7 +74,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onModConstruct(eventBus, dist)
         }
 
-        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+        RagiumConfig.register(container)
 
         LOGGER.info("Ragium loaded!")
     }
