@@ -33,10 +33,10 @@ class HTDistillationEmiRecipe(
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(0))
         // Input
-        widgets.addInput(ingredient, getPosition(1), getPosition(0))
+        widgets.addSlot(ingredient, getPosition(1), getPosition(0))
         // Outputs
-        widgets.addOutput(itemResult.getOrNull(), getPosition(4), getPosition(0))
-        widgets.addOutput(fluidResults.getOrNull(0), getPosition(5), getPosition(0))
-        widgets.addOutput(fluidResults.getOrNull(1), getPosition(6), getPosition(0))
+        widgets.addOutput(itemResult.getOrNull() ?: EmiStack.EMPTY, getPosition(4), getPosition(0)).drawBack(true)
+        widgets.addOutput(fluidResults.getOrNull(0) ?: EmiStack.EMPTY, getPosition(5), getPosition(0)).drawBack(true)
+        widgets.addOutput(fluidResults.getOrNull(1) ?: EmiStack.EMPTY, getPosition(6), getPosition(0)).drawBack(true)
     }
 }

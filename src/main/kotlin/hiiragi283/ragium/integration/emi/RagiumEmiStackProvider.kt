@@ -4,10 +4,10 @@ import dev.emi.emi.api.EmiStackProvider
 import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.stack.EmiStackInteraction
-import hiiragi283.ragium.api.inventory.HTFluidSlot
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.gui.screen.HTContainerScreen
+import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.screen.HTContainerScreen
-import hiiragi283.ragium.api.screen.HTDefinitionContainerScreen
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.inventory.Slot
 
@@ -23,11 +23,11 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
                 }
             }
             // Get stack from tanks
-            if (screen is HTDefinitionContainerScreen<*>) {
-                for ((index: Int, slot: HTFluidSlot) in screen.menu.fluidSlots.entries) {
-                    if (HTSlotHelper.isIn(x, screen.startX + slot.x, slot.width)) {
-                        if (HTSlotHelper.isIn(y, screen.startY + slot.y, slot.height)) {
-                            return EmiStackInteraction(NeoForgeEmiStack.of(screen.getFluidStack(index)), null, false)
+            if (screen is HTFluidScreen) {
+                for (widget: HTFluidWidget in screen.iterator()) {
+                    if (HTSlotHelper.isIn(x, widget.x, widget.width)) {
+                        if (HTSlotHelper.isIn(y, widget.y, widget.height)) {
+                            return EmiStackInteraction(NeoForgeEmiStack.of(widget.stack), null, false)
                         }
                     }
                 }

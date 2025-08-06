@@ -1,24 +1,11 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
-class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val filter: HTFluidFilter) : HTFluidHandler {
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult {
-        for (index: Int in tankRange.toList().reversed()) {
-            val tank: FluidTank = delegate[index]
-            if (FluidUtil.interactWithFluidHandler(player, hand, tank)) {
-                return ItemInteractionResult.sidedSuccess(level.isClientSide)
-            }
-        }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-    }
+class HTFilteredFluidHandler(private val delegate: List<IFluidTank>, private val filter: HTFluidFilter) : IFluidHandler {
+    constructor(tank: IFluidTank, filter: HTFluidFilter) : this(listOf(tank), filter)
 
     override fun getTanks(): Int = delegate.size
 
@@ -29,7 +16,7 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = delegate[tank].isFluidValid(stack)
 
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int {
-        for (tank: FluidTank in delegate) {
+        for (tank: IFluidTank in delegate) {
             if (!filter.canFill(tank, resource)) continue
             val filled: Int = tank.fill(resource, action)
             if (filled > 0) return filled
@@ -38,7 +25,7 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     }
 
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        for (tank: FluidTank in delegate) {
+        for (tank: IFluidTank in delegate) {
             if (!filter.canDrain(tank, resource)) continue
             val drained: FluidStack = tank.drain(resource, action)
             if (!drained.isEmpty) return drained
@@ -47,7 +34,7 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     }
 
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack {
-        for (tank: FluidTank in delegate) {
+        for (tank: IFluidTank in delegate) {
             if (!filter.canDrain(tank, maxDrain)) continue
             val drained: FluidStack = tank.drain(maxDrain, action)
             if (!drained.isEmpty) return drained

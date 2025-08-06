@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.block.entity
 
-import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import net.minecraft.core.BlockPos
@@ -19,7 +18,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 interface HTBlockEntityExtension : HTHandlerBlockEntity {
     val upgrades: HTItemHandler
@@ -61,9 +59,8 @@ interface HTBlockEntityExtension : HTHandlerBlockEntity {
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
         // 液体コンテナで触ると搬出入を行う
-        val fluidHandler: IFluidHandler? = getFluidHandler(null)
-        return when (fluidHandler) {
-            is HTFluidHandler -> fluidHandler.interactWith(level, player, hand)
+        return when (this) {
+            is HTFluidInteractable -> interactWith(level, player, hand)
             else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
         }
     }

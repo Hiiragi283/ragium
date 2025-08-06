@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -75,17 +75,10 @@ abstract class HTContainerMenu(
 
     //    Extensions    //
 
-    val fluidSlots: MutableMap<Int, HTFluidSlot> = mutableMapOf()
+    fun <T> usePosition(action: (Level, BlockPos) -> T): T = action(level, pos)
 
-    protected fun addFluidSlot(
-        index: Int,
-        x: Int,
-        y: Int,
-        width: Int = 16,
-        height: Int = 16,
-        capacity: Int = RagiumAPI.getConfig().getDefaultTankCapacity(),
-    ) {
-        fluidSlots.put(index, HTFluidSlot(x, y, width, height, capacity))
+    fun getHandlerBlockEntity(): HTHandlerBlockEntity? = usePosition { level: Level, pos: BlockPos ->
+        level.getBlockEntity(pos) as? HTHandlerBlockEntity
     }
 
     protected fun addPlayerInv(inventory: Inventory, yOffset: Int = 0, immovable: Boolean = false) {

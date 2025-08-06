@@ -11,7 +11,7 @@ open class HTRecipeHandler<T : HTContainerMenu>(private val category: EmiRecipeC
         // Inputs
         addAll(getCraftingSlots(handler))
         // Player Inventory
-        for (i in (0 until 36)) {
+        for (i: Int in (0 until 36)) {
             add(handler.getSlot(i + handler.playerStartIndex))
         }
     }

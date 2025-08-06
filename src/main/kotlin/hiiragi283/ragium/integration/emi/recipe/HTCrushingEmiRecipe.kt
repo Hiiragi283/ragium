@@ -20,15 +20,15 @@ class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, v
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, getPosition(1), getPosition(0)).drawBack(false)
+        widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
         widgets
-            .addInput(EmiIngredient.of(RagiumFluidContents.LUBRICANT.commonTag), getPosition(1), getPosition(2))
+            .addSlot(EmiIngredient.of(RagiumFluidContents.LUBRICANT.commonTag), getPosition(1), getPosition(2))
             .catalyst(true)
             .drawBack(false)
         // Output
-        widgets.addOutput(0, getPosition(4), getPosition(0.5))
-        widgets.addOutput(1, getPosition(5), getPosition(0.5))
-        widgets.addOutput(2, getPosition(4), getPosition(1.5))
-        widgets.addOutput(3, getPosition(5), getPosition(1.5))
+        widgets.addOutput(results.getOrNull(0), getPosition(4), getPosition(0.5))
+        widgets.addOutput(results.getOrNull(1), getPosition(5), getPosition(0.5))
+        widgets.addOutput(results.getOrNull(2), getPosition(4), getPosition(1.5))
+        widgets.addOutput(results.getOrNull(3), getPosition(5), getPosition(1.5))
     }
 }

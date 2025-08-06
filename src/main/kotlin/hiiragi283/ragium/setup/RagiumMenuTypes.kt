@@ -6,13 +6,12 @@ import hiiragi283.ragium.api.registry.HTMenuTypeRegister
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
-import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
+import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
-import hiiragi283.ragium.common.inventory.HTRefineryMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 
 object RagiumMenuTypes {
@@ -39,7 +38,7 @@ object RagiumMenuTypes {
     val EXTRACTOR: HTDeferredMenuType<HTItemToItemMenu> = REGISTER.registerType("extractor", HTItemToItemMenu::extractor)
 
     @JvmField
-    val FLUID_COLLECTOR: HTDeferredMenuType<HTFluidCollectorMenu> = REGISTER.registerType("fluid_collector", ::HTFluidCollectorMenu)
+    val FLUID_COLLECTOR: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("fluid_collector", HTFluidOnlyMenu::collector)
 
     @JvmField
     val FORMING_PRESS: HTDeferredMenuType<HTItemWithItemToItemMenu> = REGISTER.registerType(
@@ -57,7 +56,7 @@ object RagiumMenuTypes {
     val MELTER: HTDeferredMenuType<HTMelterMenu> = REGISTER.registerType("melter", ::HTMelterMenu)
 
     @JvmField
-    val REFINERY: HTDeferredMenuType<HTRefineryMenu> = REGISTER.registerType("refinery", ::HTRefineryMenu)
+    val REFINERY: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("refinery", HTFluidOnlyMenu::refinery)
 
     @JvmField
     val SINGLE_ITEM: HTDeferredMenuType<HTSingleItemMenu> = REGISTER.registerType("single_item", ::HTSingleItemMenu)

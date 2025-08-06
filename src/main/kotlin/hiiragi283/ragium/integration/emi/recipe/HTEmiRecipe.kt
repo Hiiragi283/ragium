@@ -14,15 +14,13 @@ interface HTEmiRecipe : EmiRecipe {
 
     fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
-    fun WidgetHolder.addInput(ingredient: EmiIngredient, x: Int, y: Int): SlotWidget = addSlot(ingredient, x, y)
-
     fun WidgetHolder.addOutput(
-        stack: EmiStack?,
+        result: EmiIngredient?,
         x: Int,
         y: Int,
         large: Boolean = false,
     ): SlotWidget = when {
-        large -> addSlot(stack ?: EmiStack.EMPTY, x - 4, y - 4).large(true)
-        else -> addSlot(stack ?: EmiStack.EMPTY, x, y)
-    }.recipeContext(this@HTEmiRecipe)
+        large -> addSlot(result ?: EmiStack.EMPTY, x - 4, y - 4).large(true)
+        else -> addSlot(result ?: EmiStack.EMPTY, x, y)
+    }.recipeContext(this@HTEmiRecipe).drawBack(false)
 }

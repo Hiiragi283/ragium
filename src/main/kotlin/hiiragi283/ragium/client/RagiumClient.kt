@@ -7,9 +7,13 @@ import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.HTPotionBundle
-import hiiragi283.ragium.client.screen.HTBasicMachineScreen
-import hiiragi283.ragium.client.screen.HTEnergyNetworkAccessScreen
-import hiiragi283.ragium.client.screen.HTItemCollectorScreen
+import hiiragi283.ragium.client.screen.gui.HTBasicMachineScreen
+import hiiragi283.ragium.client.screen.gui.HTEnergyNetworkAccessScreen
+import hiiragi283.ragium.client.screen.gui.HTFluidCollectorScreen
+import hiiragi283.ragium.client.screen.gui.HTItemCollectorScreen
+import hiiragi283.ragium.client.screen.gui.HTItemWithFluidToItemScreen
+import hiiragi283.ragium.client.screen.gui.HTMelterScreen
+import hiiragi283.ragium.client.screen.gui.HTRefineryScreen
 import hiiragi283.ragium.client.screen.tooltip.HTClientPotionTooltip
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -62,7 +66,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
         // Exp Berry Bush
         event.register(
-            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                 if (tint != 0) return@register -1
                 when {
                     getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
@@ -73,7 +77,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         )
         // Water Collector
         event.register(
-            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                 if (tint != 0) return@register -1
                 if (getter != null && pos != null) {
                     return@register BiomeColors.getAverageWaterColor(getter, pos)
@@ -107,7 +111,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
         // Water Collector
         event.register(
-            { stack: ItemStack, tint: Int ->
+            { _: ItemStack, tint: Int ->
                 if (tint == 0) 0x3f76e4 else -1
             },
             RagiumBlocks.Devices.WATER_COLLECTOR,
@@ -161,16 +165,16 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.CRUSHER)
         registerBasic(RagiumMenuTypes.ENGRAVER)
         registerBasic(RagiumMenuTypes.EXTRACTOR)
-        registerBasic(RagiumMenuTypes.FLUID_COLLECTOR)
         registerBasic(RagiumMenuTypes.FORMING_PRESS)
-        registerBasic(RagiumMenuTypes.INFUSER)
-        registerBasic(RagiumMenuTypes.MELTER)
-        registerBasic(RagiumMenuTypes.REFINERY)
         registerBasic(RagiumMenuTypes.SINGLE_ITEM)
-        registerBasic(RagiumMenuTypes.SOLIDIFIER)
 
-        event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
+        event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
+        event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen::infuser)
+        event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
+        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+        event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
+        event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen::solidifier)
 
         LOGGER.info("Registered Screens!")
     }

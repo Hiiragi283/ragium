@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
@@ -21,9 +22,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -33,7 +37,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlockEntityTypes.MELTER,
         pos,
         state,
-    ) {
+    ),
+    HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
     private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
@@ -50,20 +55,16 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
         super.sendUpdatePacket(serverLevel, consumer)
-        consumer(HTFluidSlotUpdatePacket(0, tank.fluid))
+        consumer(HTFluidSlotUpdatePacket(blockPos, 0, tank.fluid))
     }
 
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean {
-        // アウトプットに搬出できるか判定する
-        if (!tank.canFill(recipe.result.get(), true)) {
-            return false
-        }
-        return true
-    }
+    // アウトプットに搬出できるか判定する
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean =
+        tank.canFill(recipe.result.get(), true)
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -84,6 +85,11 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
         HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
+
+    //    HTFluidInteractable    //
+
+    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
+        interactWith(player, hand, getFluidHandler(null))
 
     //    Menu    //
 

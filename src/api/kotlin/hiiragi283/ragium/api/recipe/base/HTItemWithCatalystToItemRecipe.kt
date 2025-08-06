@@ -18,5 +18,10 @@ abstract class HTItemWithCatalystToItemRecipe(
     final override fun testSecondItem(stack: ItemStack): Boolean =
         catalyst.map { ingredient1: HTItemIngredient -> ingredient1.testOnlyType(stack) }.orElse(stack.isEmpty)
 
-    final override fun isIncomplete(): Boolean = ingredients.isEmpty() || result.hasNoMatchingStack
+    final override fun isIncomplete(): Boolean {
+        val bool1: Boolean = ingredient.hasNoMatchingStacks()
+        val bool2: Boolean = catalyst.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
+        val bool3: Boolean = result.hasNoMatchingStack
+        return bool1 || bool2 || bool3
+    }
 }

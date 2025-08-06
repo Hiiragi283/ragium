@@ -17,12 +17,10 @@ import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.fml.ModList
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.client.ClientTooltipFlag
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
 import java.text.NumberFormat
 import java.util.function.Consumer
@@ -80,17 +78,6 @@ fun energyText(storage: IEnergyStorage): MutableComponent = Component.translatab
     intText(storage.energyStored),
     intText(storage.maxEnergyStored),
 )
-
-/**
- * 指定した[stack]からツールチップを生成します
- * @param consumer 生成したツールチップを受けとるブロック
- */
-fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
-    val fluidHandler: IFluidHandlerItem = stack.getCapability(Capabilities.FluidHandler.ITEM) ?: return
-    for (i: Int in fluidHandler.tankRange) {
-        addFluidTooltip(fluidHandler.getFluidInTank(i), consumer, flag)
-    }
-}
 
 /**
  * 指定した[stack]からツールチップを生成します

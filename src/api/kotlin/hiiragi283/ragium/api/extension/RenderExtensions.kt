@@ -2,30 +2,30 @@
 
 package hiiragi283.ragium.api.extension
 
+import com.mojang.blaze3d.systems.RenderSystem
+import com.mojang.blaze3d.vertex.BufferUploader
+import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.blaze3d.vertex.Tesselator
+import com.mojang.blaze3d.vertex.VertexFormat
 import net.minecraft.ChatFormatting
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.resources.model.BakedModel
 import net.minecraft.core.Vec3i
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.FastColor
 import net.minecraft.util.Mth
-import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.model.data.ModelData
-import net.neoforged.neoforge.fluids.FluidStack
 import org.joml.Matrix4f
 import org.joml.Quaternionf
 
@@ -49,21 +49,6 @@ fun PoseStack.scale(x: Number, y: Number, z: Number) {
 
 fun PoseStack.scale(pos: Vec3) {
     scale(pos.x, pos.y, pos.z)
-}
-
-//    TextureAtlasSprite    //
-
-fun getSprite(id: ResourceLocation, atlasId: ResourceLocation): TextureAtlasSprite = Minecraft
-    .getInstance()
-    .getTextureAtlas(atlasId)
-    .apply(id)
-
-fun getBlockSprite(id: ResourceLocation): TextureAtlasSprite = getSprite(id, InventoryMenu.BLOCK_ATLAS)
-
-fun FluidStack.getSpriteAndColor(): Pair<TextureAtlasSprite, Int> {
-    val extension: IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(fluid)
-    val sprite: TextureAtlasSprite = getBlockSprite(extension.getStillTexture(this))
-    return sprite to extension.getTintColor(this)
 }
 
 //    Rendering    //
@@ -105,6 +90,41 @@ fun renderItem(
         0,
     )
     poseStack.popPose()
+}
+
+inline fun setShaderColor(color: Int, action: () -> Unit) {
+    val red: Float = FastColor.ARGB32.red(color) / 255f
+    val green: Float = FastColor.ARGB32.green(color) / 255f
+    val blue: Float = FastColor.ARGB32.blue(color) / 255f
+    val alpha: Float = FastColor.ARGB32.alpha(color) / 255f
+    RenderSystem.setShaderColor(red, green, blue, alpha)
+    action()
+    RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+}
+
+/**
+ * @see [de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.drawQuad]
+ */
+fun drawQuad(
+    x: Float,
+    y: Float,
+    width: Float,
+    height: Float,
+    minU: Float,
+    minV: Float,
+    maxU: Float,
+    maxV: Float,
+) {
+    Tesselator
+        .getInstance()
+        .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
+        .apply {
+            addVertex(x, y + height, 0f).setUv(minU, maxV)
+            addVertex(x + width, y + height, 0f).setUv(maxU, maxV)
+            addVertex(x + width, y, 0f).setUv(maxU, minV)
+            addVertex(x, y, 0f).setUv(minU, minV)
+        }.buildOrThrow()
+        .let(BufferUploader::drawWithShader)
 }
 
 /*fun HTMultiblockController.renderMultiblock(

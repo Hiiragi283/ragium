@@ -2,14 +2,13 @@ package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTItemToItemMenu(
+class HTFluidOnlyMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
@@ -23,26 +22,20 @@ class HTItemToItemMenu(
             containerId: Int,
             inventory: Inventory,
             registryBuf: RegistryFriendlyByteBuf?,
-        ): HTItemToItemMenu = HTItemToItemMenu(
-            menuType,
-            containerId,
-            inventory,
-            decodePos(registryBuf),
-            HTMenuDefinition.empty(2),
-        )
+        ): HTFluidOnlyMenu = HTFluidOnlyMenu(menuType, containerId, inventory, decodePos(registryBuf), HTMenuDefinition.empty(0))
 
         @JvmStatic
-        fun extractor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
-            empty(RagiumMenuTypes.EXTRACTOR, containerId, inventory, registryBuf)
+        fun collector(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTFluidOnlyMenu =
+            empty(RagiumMenuTypes.FLUID_COLLECTOR, containerId, inventory, registryBuf)
+
+        @JvmStatic
+        fun refinery(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTFluidOnlyMenu =
+            empty(RagiumMenuTypes.REFINERY, containerId, inventory, registryBuf)
     }
 
     init {
-        // inputs
-        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
-        // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv(inventory)
         // register property

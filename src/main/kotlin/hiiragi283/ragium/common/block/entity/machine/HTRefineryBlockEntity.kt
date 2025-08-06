@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
@@ -9,19 +10,23 @@ import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTRefineryMenu
+import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
@@ -33,7 +38,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlockEntityTypes.REFINERY,
         pos,
         state,
-    ) {
+    ),
+    HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler(0, this::setChanged)
     private val tankIn = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     private val tankOut = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
@@ -51,8 +57,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
         super.sendUpdatePacket(serverLevel, consumer)
-        consumer(HTFluidSlotUpdatePacket(0, tankIn.fluid))
-        consumer(HTFluidSlotUpdatePacket(1, tankOut.fluid))
+        consumer(HTFluidSlotUpdatePacket(blockPos, 0, tankIn.fluid))
+        consumer(HTFluidSlotUpdatePacket(blockPos, 1, tankOut.fluid))
     }
 
     //    Ticking    //
@@ -79,7 +85,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS)
     }
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(
+    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTFilteredFluidHandler(
         listOf(tankIn, tankOut),
         object : HTFluidFilter {
             override fun canFill(tank: IFluidTank, stack: FluidStack): Boolean = tank == tankIn
@@ -90,12 +96,23 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         },
     )
 
+    //    HTFluidInteractable    //
+
+    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult {
+        // 初めにアウトプットからの取り出しを試みる
+        val result: ItemInteractionResult = interactWith(player, hand, HTFilteredFluidHandler(tankOut, HTFluidFilter.DRAIN_ONLY))
+        if (result.consumesAction()) return result
+        // 次にインプットとのやり取りを試みる
+        return interactWith(player, hand, tankIn)
+    }
+
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTRefineryMenu = HTRefineryMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidOnlyMenu = HTFluidOnlyMenu(
+        RagiumMenuTypes.REFINERY,
         containerId,
         playerInventory,
         blockPos,
-        createDefinition(inventory),
+        createDefinition(),
     )
 }

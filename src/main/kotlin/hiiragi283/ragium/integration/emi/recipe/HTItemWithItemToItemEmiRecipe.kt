@@ -56,9 +56,9 @@ class HTItemWithItemToItemEmiRecipe(
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredients[0], getPosition(slotPos[0]), getPosition(slotPos[1])).drawBack(false)
-        widgets.addInput(ingredients[1], getPosition(slotPos[2]), getPosition(slotPos[3])).drawBack(false)
+        widgets.addSlot(ingredients[0], getPosition(slotPos[0]), getPosition(slotPos[1])).drawBack(false)
+        widgets.addSlot(ingredients[1], getPosition(slotPos[2]), getPosition(slotPos[3])).drawBack(false)
         // Output
-        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
+        widgets.addOutput(result, getPosition(4.5), getPosition(1), true)
     }
 }

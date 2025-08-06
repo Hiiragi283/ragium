@@ -57,9 +57,17 @@ class HTItemWithFluidToItemEmiRecipe(
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(fluidIngredient, getPosition(1), getPosition(0)).drawBack(false)
-        widgets.addInput(itemIngredient, getPosition(1), getPosition(2)).drawBack(false)
+        widgets
+            .addTank(
+                fluidIngredient,
+                getPosition(0.5),
+                getPosition(0),
+                18,
+                18 * 3,
+                RagiumAPI.getConfig().getDefaultTankCapacity(),
+            ).drawBack(false)
+        widgets.addSlot(itemIngredient, getPosition(1.5), getPosition(1)).drawBack(false)
         // Output
-        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
+        widgets.addOutput(result, getPosition(4.5), getPosition(1), true)
     }
 }

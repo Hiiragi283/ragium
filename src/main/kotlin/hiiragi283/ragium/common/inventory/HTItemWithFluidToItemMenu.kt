@@ -41,7 +41,6 @@ class HTItemWithFluidToItemMenu(
     }
 
     init {
-        addFluidSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // upgrades
         addUpgradeSlots()

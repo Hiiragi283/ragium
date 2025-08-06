@@ -1,28 +1,18 @@
-package hiiragi283.ragium.api.screen
+package hiiragi283.ragium.api.gui.screen
 
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
-import hiiragi283.ragium.api.inventory.HTFluidSlot
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
-    abstract val texture: ResourceLocation
-
     abstract val progressPosX: Int
     abstract val progressPosY: Int
 
@@ -30,30 +20,15 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     open val progressSizeY: Int = 16
     open val progressTex: ResourceLocation = vanillaId("container/furnace/burn_progress")
 
-    private var fluidCache: MutableMap<Int, FluidStack> = mutableMapOf()
-
     override fun init() {
         super.init()
-        for ((index: Int, _) in menu.fluidSlots) {
-            val stack: FluidStack = menu
-                .usePosition { level: Level, pos: BlockPos ->
-                    (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getFluidHandler(null)
-                }?.getFluidInTank(index) ?: continue
-            fluidCache.put(index, stack)
-        }
+        // Energy Widget
+        addRenderableWidget(
+            createEnergyWidget({ menu.getHandlerBlockEntity()?.getEnergyStorage(null) }),
+        )
     }
 
-    fun getFluidStack(index: Int): FluidStack = fluidCache[index] ?: FluidStack.EMPTY
-
-    fun setFluidStack(index: Int, stack: FluidStack) {
-        if (stack.isEmpty) {
-            fluidCache.remove(index)
-        } else {
-            fluidCache[index] = stack
-        }
-    }
-
-    override fun render(
+    /*override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
         mouseY: Int,
@@ -74,7 +49,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         }
         // energy amount
         renderEnergyTooltip(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0), mouseX, mouseY)
-    }
+    }*/
 
     override fun renderBg(
         guiGraphics: GuiGraphics,
@@ -83,15 +58,15 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         mouseY: Int,
     ) {
         // background
-        guiGraphics.blit(texture, startX, startY, 0, 0, imageWidth, imageHeight)
+        super.renderBg(guiGraphics, partialTick, mouseX, mouseY)
         // progress bar
         renderProgress(guiGraphics)
         // fluids
-        menu.fluidSlots.forEach { (index: Int, slot: HTFluidSlot) ->
+        /*menu.fluidSlots.forEach { (index: Int, slot: HTFluidSlot) ->
             renderFluid(guiGraphics, getFluidStack(index), slot)
-        }
+        }*/
         // energy
-        renderEnergy(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(3))
+        // renderEnergy(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(3))
     }
 
     protected open fun renderProgress(guiGraphics: GuiGraphics) {
@@ -106,9 +81,5 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
             Mth.ceil(menu.progress * progressSizeX),
             progressSizeY,
         )
-    }
-
-    override fun getEnergyNetwork(menu: T): IEnergyStorage? = menu.usePosition { level: Level, pos: BlockPos ->
-        (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getEnergyStorage(null)
     }
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.integration.emi.recipe
 
 import dev.emi.emi.api.render.EmiTexture
-import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.resources.ResourceLocation
@@ -27,11 +26,4 @@ abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val 
         )
         widgets.addArrow(getPosition(2.5), getPosition(1))
     }
-
-    protected fun WidgetHolder.addOutput(
-        index: Int,
-        x: Int,
-        y: Int,
-        large: Boolean = false,
-    ): SlotWidget = addOutput(outputs.getOrNull(index), x, y, large).drawBack(false)
 }

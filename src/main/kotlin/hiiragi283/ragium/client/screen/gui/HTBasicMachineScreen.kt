@@ -1,8 +1,8 @@
-package hiiragi283.ragium.client.screen
+package hiiragi283.ragium.client.screen.gui
 
+import hiiragi283.ragium.api.gui.screen.HTDefinitionContainerScreen
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.screen.HTDefinitionContainerScreen
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTBasicMachineScreen(
+open class HTBasicMachineScreen(
     override val texture: ResourceLocation,
     menu: HTDefinitionContainerMenu,
     inventory: Inventory,

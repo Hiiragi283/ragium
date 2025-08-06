@@ -1,0 +1,90 @@
+package hiiragi283.ragium.api.gui.component
+
+import com.mojang.blaze3d.systems.RenderSystem
+import hiiragi283.ragium.api.extension.drawQuad
+import hiiragi283.ragium.api.extension.getClientTooltipFlag
+import hiiragi283.ragium.api.extension.setShaderColor
+import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.network.chat.Component
+import net.minecraft.util.Mth
+import net.minecraft.world.item.TooltipFlag
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
+import kotlin.math.min
+
+@OnlyIn(Dist.CLIENT)
+abstract class HTSpriteWidget(
+    x: Int,
+    y: Int,
+    width: Int,
+    height: Int,
+    message: Component,
+) : HTAbstractWidget(x, y, width, height, message) {
+    final override fun renderWidget(
+        guiGraphics: GuiGraphics,
+        mouseX: Int,
+        mouseY: Int,
+        partialTick: Float,
+    ) {
+        // Render sprite
+        renderSprite()
+        // Render tooltip
+        renderTooltip(x, y, mouseX, mouseY, width, height) {
+            guiGraphics.renderComponentTooltip(
+                font,
+                buildList { collectTooltips(this::add, getClientTooltipFlag()) },
+                mouseX,
+                mouseY,
+            )
+        }
+    }
+
+    /**
+     * @see [de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.draw]
+     */
+    private fun renderSprite() {
+        if (!shouldRender()) return
+        val sprite: TextureAtlasSprite = getSprite() ?: return
+        val color: Int = getColor()
+
+        val minU: Float = sprite.u0
+        val maxU: Float = sprite.u1
+        val minV: Float = sprite.v0
+        val maxV: Float = sprite.v1
+        val delta: Float = maxV - minV
+        val fillLevel: Float = getLevel() * height
+
+        RenderSystem.setShaderTexture(0, sprite.atlasLocation())
+        RenderSystem.defaultBlendFunc()
+        setShaderColor(color) {
+            RenderSystem.enableBlend()
+            val times: Int = 1 + (Mth.ceil(fillLevel) / width)
+            for (i: Int in (0 until times)) {
+                val subHeight: Float = min(width.toFloat(), fillLevel - (width * i))
+                val offsetY: Float = height - width * i - subHeight
+                drawQuad(
+                    x.toFloat(),
+                    y + offsetY,
+                    width.toFloat(),
+                    subHeight,
+                    minU,
+                    maxV - delta * (subHeight / width),
+                    maxU,
+                    maxV,
+                )
+            }
+            RenderSystem.disableBlend()
+        }
+    }
+
+    protected abstract fun shouldRender(): Boolean
+
+    protected abstract fun getSprite(): TextureAtlasSprite?
+
+    protected abstract fun getColor(): Int
+
+    protected abstract fun getLevel(): Float
+
+    protected abstract fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag)
+}

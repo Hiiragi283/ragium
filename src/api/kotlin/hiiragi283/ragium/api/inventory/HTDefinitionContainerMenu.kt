@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
@@ -28,8 +27,6 @@ abstract class HTDefinitionContainerMenu(
             val fixedTotalTicks: Int = totalTick % maxTicks
             return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
         }
-
-    fun <T> usePosition(action: (Level, BlockPos) -> T): T = action(level, pos)
 
     private var slotCount: Int = 0
     private val inputSlot: MutableList<Int> = mutableListOf()
