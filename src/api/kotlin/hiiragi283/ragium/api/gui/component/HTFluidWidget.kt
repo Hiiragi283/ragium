@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.gui.component
 
 import hiiragi283.ragium.api.extension.addFluidTooltip
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.InventoryMenu
@@ -28,10 +27,8 @@ class HTFluidWidget(
     ) {
     override fun shouldRender(): Boolean = !stack.isEmpty
 
-    override fun getSprite(): TextureAtlasSprite? = Minecraft
-        .getInstance()
-        .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-        .apply(IClientFluidTypeExtensions.of(stack.fluid).getStillTexture(stack))
+    override fun getSprite(): TextureAtlasSprite? =
+        getSprite(IClientFluidTypeExtensions.of(stack.fluid).getStillTexture(stack), InventoryMenu.BLOCK_ATLAS)
 
     override fun getColor(): Int = IClientFluidTypeExtensions.of(stack.fluid).getTintColor(stack)
 

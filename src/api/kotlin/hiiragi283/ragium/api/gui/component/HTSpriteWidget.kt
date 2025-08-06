@@ -4,9 +4,11 @@ import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.extension.drawQuad
 import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.setShaderColor
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
@@ -77,6 +79,11 @@ abstract class HTSpriteWidget(
             RenderSystem.disableBlend()
         }
     }
+
+    protected fun getSprite(id: ResourceLocation, atlas: ResourceLocation): TextureAtlasSprite? = Minecraft
+        .getInstance()
+        .getTextureAtlas(atlas)
+        .apply(id)
 
     protected abstract fun shouldRender(): Boolean
 

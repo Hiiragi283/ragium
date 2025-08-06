@@ -7,11 +7,12 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -63,32 +64,16 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         )
     }
 
-    fun createFluidWidget(
-        stack: FluidStack,
-        capacity: Int,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int,
-    ): HTFluidWidget = HTFluidWidget(
-        stack,
-        capacity,
-        startX + x,
-        startY + y,
-        width,
-        height,
-    )
-
     fun createEnergyWidget(
-        networkGetter: () -> IEnergyStorage?,
+        key: ResourceKey<Level>,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
     ): HTEnergyNetworkWidget = HTEnergyNetworkWidget(
-        networkGetter,
+        key,
         startX + x,
         startY + y,
-        18,
-        56,
+        16,
+        18 * 3 - 2,
     )
 
     /*protected fun renderFluid(guiGraphics: GuiGraphics, stack: FluidStack, slot: HTFluidSlot) {
