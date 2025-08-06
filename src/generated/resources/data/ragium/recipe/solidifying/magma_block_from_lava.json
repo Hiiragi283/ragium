@@ -1,12 +1,12 @@
 {
   "type": "ragium:solidifying",
-  "fluid_ingredient": {
-    "amount": 125,
-    "tag": "c:lava"
-  },
-  "item_ingredient": {
+  "catalyst": {
     "count": 1,
     "tag": "c:glass_blocks"
+  },
+  "ingredient": {
+    "amount": 125,
+    "tag": "c:lava"
   },
   "result": {
     "count": 1,

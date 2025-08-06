@@ -1,6 +1,6 @@
 {
   "type": "ragium:solidifying",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 1000,
     "tag": "c:naphtha"
   },

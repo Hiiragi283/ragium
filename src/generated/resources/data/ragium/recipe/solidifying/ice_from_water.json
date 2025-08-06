@@ -1,12 +1,12 @@
 {
   "type": "ragium:solidifying",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "tag": "c:water"
-  },
-  "item_ingredient": {
+  "catalyst": {
     "count": 1,
     "tag": "c:glass_blocks"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:water"
   },
   "result": {
     "count": 1,

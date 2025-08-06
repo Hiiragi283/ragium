@@ -91,8 +91,8 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.SOLIDIFYING,
-            RagiumRecipeCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTItemResult.STREAM_CODEC, ::HTSolidifyingRecipe),
+            RagiumRecipeCodecs.fluidWithCatalystToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
+            RagiumRecipeStreamCodecs.fluidWithCatalystToObj(HTItemResult.STREAM_CODEC, ::HTSolidifyingRecipe),
         )
     }
 

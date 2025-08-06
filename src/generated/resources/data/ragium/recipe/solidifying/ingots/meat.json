@@ -1,6 +1,6 @@
 {
   "type": "ragium:solidifying",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 250,
     "tag": "c:meat"
   },

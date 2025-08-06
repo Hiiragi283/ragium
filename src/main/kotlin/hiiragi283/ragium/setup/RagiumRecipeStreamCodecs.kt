@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
@@ -9,6 +10,7 @@ import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
+import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
@@ -70,6 +72,20 @@ object RagiumRecipeStreamCodecs {
         HTItemWithCatalystToItemRecipe::catalyst,
         HTItemResult.STREAM_CODEC,
         HTItemWithCatalystToItemRecipe::result,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R1 : HTRecipeResult<*, *>, R2 : HTFluidWithCatalystToObjRecipe<R1>> fluidWithCatalystToObj(
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        factory: HTFluidWithCatalystToObjRecipeBuilder.Factory<R1, R2>,
+    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
+        HTFluidIngredient.STREAM_CODEC,
+        HTFluidWithCatalystToObjRecipe<R1>::ingredient,
+        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTFluidWithCatalystToObjRecipe<R1>::catalyst,
+        streamCodec,
+        HTFluidWithCatalystToObjRecipe<R1>::result,
         factory::create,
     )
 

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
@@ -34,7 +35,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_CHOCOLATE),
             ).saveSuffixed(output, "_from_milk")
 
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
@@ -103,7 +104,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
 
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),

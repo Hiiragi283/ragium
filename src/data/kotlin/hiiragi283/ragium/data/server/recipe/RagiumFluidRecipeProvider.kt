@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
@@ -116,7 +117,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             HTResultHelper.fluid(Fluids.WATER, 250),
         )
         // Syrup -> Sugar
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumFluidContents.SYRUP, 250),

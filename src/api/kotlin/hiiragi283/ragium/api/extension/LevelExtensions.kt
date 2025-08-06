@@ -1,18 +1,13 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
-import net.minecraft.resources.ResourceKey
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -30,23 +25,6 @@ fun BlockPos.getRangedAABB(radius: Number): AABB = toCenterVec3().getRangedAABB(
 fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble(), radius.toDouble(), radius.toDouble())
 
 //    Level    //
-
-/**
- * 指定した[Level]に対応する[ServerLevel]を返します。
- * @return 指定した[Level]が`null`，または対応する[ServerLevel]がない場合は`null`
- */
-fun Level?.convertToServer(): ServerLevel? {
-    if (this is ServerLevel) return this
-    val dimension: ResourceKey<Level> = this?.dimension() ?: return null
-    return RagiumAPI.getInstance().getCurrentServer()?.getLevel(dimension)
-}
-
-fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
-    removeBlock(pos, false)
-    if (!getFluidState(pos).isEmpty) {
-        setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
-    }
-}
 
 /**
  * 指定した[item]を[entity]の足元にドロップします。

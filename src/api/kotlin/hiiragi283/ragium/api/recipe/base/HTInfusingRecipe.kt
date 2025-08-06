@@ -21,12 +21,5 @@ class HTInfusingRecipe(itemIngredient: Optional<HTItemIngredient>, fluidIngredie
 
     override fun testFluid(ingredient: HTFluidIngredient, stack: FluidStack): Boolean = ingredient.test(stack)
 
-    override fun isIncomplete(): Boolean {
-        val bool1: Boolean = itemIngredient.map(HTItemIngredient::hasNoMatchingStacks).orElse(true)
-        val bool2: Boolean = fluidIngredient.map(HTFluidIngredient::hasNoMatchingStacks).orElse(true)
-        val bool3: Boolean = itemIngredient.isEmpty && fluidIngredient.isEmpty
-        return bool1 || bool2 || bool3
-    }
-
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INFUSING.get()
 }

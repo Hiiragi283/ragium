@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -85,7 +85,7 @@ abstract class HTRecipeProvider : IConditionBuilder {
                 HTResultHelper.fluid(fluidOut, amount),
             ).save(output)
         // Solidifying
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluidIn, amount),
@@ -106,7 +106,7 @@ abstract class HTRecipeProvider : IConditionBuilder {
         HTFluidToObjRecipeBuilder.refining(ingredient, itemResult, *fluidResults).save(output)
         // Solidifying
         itemResult?.let { result: HTItemResult ->
-            HTItemWithFluidToObjRecipeBuilder
+            HTFluidWithCatalystToObjRecipeBuilder
                 .solidifying(null, ingredient, result)
                 .saveSuffixed(output, suffix)
         }

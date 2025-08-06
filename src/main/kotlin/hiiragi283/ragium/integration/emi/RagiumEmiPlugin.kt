@@ -256,8 +256,8 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addRecipe(
                 HTItemWithFluidToItemEmiRecipe.solidifying(
                     id,
-                    recipe.fluidIngredient.toFluidEmi(),
-                    recipe.itemIngredient.toCatalystEmi(),
+                    recipe.ingredient.toEmi(),
+                    recipe.catalyst.toCatalystEmi(),
                     recipe.result.toEmi(),
                 ),
             )

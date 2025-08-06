@@ -66,7 +66,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Server    //
 
-    override fun getRandomGameProfile(): GameProfile = GameProfile(UUID.randomUUID(), "[${RagiumAPI.MOD_NAME}]")
+    override fun getRandomGameProfile(uuid: UUID): GameProfile = GameProfile(uuid, "[${RagiumAPI.MOD_NAME}]")
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
@@ -74,8 +74,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Platform    //
 
-    override fun getConfig(): RagiumAPI.Config = RagiumConfig
-    
+    override fun getConfigImpl(): RagiumAPI.Config = RagiumConfig
 
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 

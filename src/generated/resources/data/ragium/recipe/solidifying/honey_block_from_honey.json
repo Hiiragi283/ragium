@@ -1,12 +1,12 @@
 {
   "type": "ragium:solidifying",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "tag": "c:honey"
-  },
-  "item_ingredient": {
+  "catalyst": {
     "count": 1,
     "tag": "c:glass_blocks"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:honey"
   },
   "result": {
     "count": 1,

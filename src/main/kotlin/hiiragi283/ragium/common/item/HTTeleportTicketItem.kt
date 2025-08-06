@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.item
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.globalPosText
 import hiiragi283.ragium.api.extension.toCenterVec3
@@ -50,14 +49,12 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         // サーバー側のみで実行
         if (level.isClientSide) return stack
         // 実行者がプレイヤーの場合のみ実行
-        if (livingEntity is Player) {
+        if (livingEntity is ServerPlayer) {
             // テレポートに成功したらチケットを消費
             val sound: SoundEvent = when {
                 tryToTeleport(livingEntity, stack) -> {
                     stack.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND)
-                    if (livingEntity is ServerPlayer) {
-                        CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
-                    }
+                    CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
                     SoundEvents.PLAYER_TELEPORT
                 }
 
@@ -76,10 +73,9 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         return stack
     }
 
-    private fun tryToTeleport(player: Player, stack: ItemStack): Boolean {
+    private fun tryToTeleport(player: ServerPlayer, stack: ItemStack): Boolean {
         val globalPos: GlobalPos = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
-        val targetLevel: ServerLevel =
-            RagiumAPI.getInstance().getCurrentServer()?.getLevel(globalPos.dimension) ?: return false
+        val targetLevel: ServerLevel = player.server.getLevel(globalPos.dimension) ?: return false
         // テレポート可能か判定する
         return canTeleportTo(targetLevel, globalPos)
             .ifError {

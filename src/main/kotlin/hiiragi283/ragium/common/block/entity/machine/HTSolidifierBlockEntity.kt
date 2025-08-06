@@ -75,7 +75,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        tank.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)
+        tank.drain(recipe.ingredient, IFluidHandler.FluidAction.EXECUTE)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }

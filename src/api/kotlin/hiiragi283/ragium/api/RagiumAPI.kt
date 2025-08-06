@@ -52,7 +52,7 @@ interface RagiumAPI {
         }
 
         @JvmStatic
-        fun getConfig(): Config = getInstance().getConfig()
+        fun getConfig(): Config = getInstance().getConfigImpl()
     }
 
     //    Addon    //
@@ -75,18 +75,37 @@ interface RagiumAPI {
     fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile())
 
     /**
+     * [uuid]から[FakePlayer]を返します。
+     */
+    fun getFakePlayer(level: ServerLevel, uuid: UUID): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile(uuid))
+
+    /**
      * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
      */
-    fun getRandomGameProfile(): GameProfile
+    fun getRandomGameProfile(): GameProfile = getRandomGameProfile(UUID.randomUUID())
+
+    /**
+     * [uuid]から[GameProfile]を返します。
+     */
+    fun getRandomGameProfile(uuid: UUID): GameProfile
 
     /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
      * @return サーバーまたはプレイヤーが存在しない場合は`null`
      */
-    fun getPlayer(uuid: UUID?): ServerPlayer? {
-        val uuid1: UUID = uuid ?: return null
-        return getCurrentServer()?.playerList?.getPlayer(uuid1)
-    }
+    fun getPlayer(uuid: UUID): ServerPlayer? = getCurrentServer()?.playerList?.getPlayer(uuid)
+
+    /**
+     * [uuid]と[server]から[ServerPlayer]を返します。
+     * @return プレイヤーが存在しない場合は`null`
+     */
+    fun getPlayer(uuid: UUID, server: MinecraftServer): ServerPlayer? = server.playerList.getPlayer(uuid)
+
+    /**
+     * [uuid]と[level]から[ServerPlayer]を返します。
+     * @return プレイヤーが存在しない場合は[getFakePlayer]
+     */
+    fun getPlayerOrFake(uuid: UUID, level: ServerLevel): ServerPlayer = getPlayer(uuid, level.server) ?: getFakePlayer(level, uuid)
 
     /**
      * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。
@@ -107,7 +126,7 @@ interface RagiumAPI {
 
     //    Config    //
 
-    fun getConfig(): Config
+    fun getConfigImpl(): Config
 
     interface Config {
         // Machine
