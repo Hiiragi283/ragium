@@ -200,7 +200,5 @@ interface RagiumAPI {
         capacity: Int?,
         x: Int,
         y: Int,
-        width: Int,
-        height: Int,
     ): HTFluidWidget
 }

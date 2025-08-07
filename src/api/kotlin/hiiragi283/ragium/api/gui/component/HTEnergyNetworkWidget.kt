@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.gui.component
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.energyText
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -13,14 +14,23 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergyNetworkWidget(
-    private val key: ResourceKey<Level>,
-    x: Int,
-    y: Int,
-    width: Int,
-    height: Int,
-) : HTSpriteWidget(x, y, width, height, Component.empty()) {
+class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int) :
+    HTSpriteWidget(x, y - 1, 16, 18 * 3 - 2, Component.empty()) {
     fun getNetwork(): IEnergyStorage? = RagiumAPI.getInstance().getEnergyNetworkManager().getNetworkFromKey(key)
+
+    override fun renderBackground(guiGraphics: GuiGraphics) {
+        guiGraphics.blit(
+            RagiumAPI.id("textures/gui/energy_gauge.png"),
+            x - 1,
+            y,
+            0f,
+            0f,
+            width + 2,
+            height + 2,
+            width + 2,
+            height + 2,
+        )
+    }
 
     override fun shouldRender(): Boolean {
         val network: IEnergyStorage = getNetwork() ?: return false

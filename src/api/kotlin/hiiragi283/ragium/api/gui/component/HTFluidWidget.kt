@@ -1,8 +1,11 @@
 package hiiragi283.ragium.api.gui.component
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addFluidTooltip
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
@@ -11,23 +14,37 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-abstract class HTFluidWidget(
-    x: Int,
-    y: Int,
-    width: Int,
-    height: Int,
-    message: Component,
-) : HTSpriteWidget(
+abstract class HTFluidWidget(x: Int, y: Int, message: Component) :
+    HTSpriteWidget(
         x,
         y,
-        width,
-        height,
+        16,
+        18 * 3 - 2,
         message,
     ) {
+    companion object {
+        @JvmField
+        val TEXTURE_ID: ResourceLocation = RagiumAPI.id("textures/gui/tank.png")
+    }
+
     abstract var stack: FluidStack
     abstract val capacity: Int
 
     //    HTSpriteWidget    //
+
+    override fun renderBackground(guiGraphics: GuiGraphics) {
+        guiGraphics.blit(
+            TEXTURE_ID,
+            x - 1,
+            y - 1,
+            0f,
+            0f,
+            width + 2,
+            height + 2,
+            width + 2,
+            height + 2,
+        )
+    }
 
     override fun shouldRender(): Boolean = !stack.isEmpty
 

@@ -1,11 +1,13 @@
 package hiiragi283.ragium.api.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -38,6 +40,12 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         mouseY: Int,
     ) {
         guiGraphics.blit(texture, startX, startY, 0, 0, imageWidth, imageHeight)
+
+        for (renderable: Renderable in renderables) {
+            if (renderable is HTBackgroundRenderable) {
+                renderable.renderBackground(guiGraphics)
+            }
+        }
     }
 
     //    Extensions    //
@@ -46,21 +54,13 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
 
     val startY: Int get() = (height - imageHeight) / 2
 
-    fun createFluidTankWidget(
-        index: Int,
-        x: Int,
-        y: Int,
-        width: Int = 16,
-        height: Int = 18 * 3 - 2,
-    ): HTFluidWidget {
+    fun createFluidTankWidget(index: Int, x: Int, y: Int): HTFluidWidget {
         val handler: IFluidHandler? = menu.getHandlerBlockEntity()?.getFluidHandler(null)
         return RagiumAPI.getInstance().createFluidTankWidget(
             handler?.getFluidInTank(index),
             handler?.getTankCapacity(index),
             startX + x,
             startY + y,
-            width,
-            height,
         )
     }
 
@@ -72,8 +72,6 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         key,
         startX + x,
         startY + y,
-        16,
-        18 * 3 - 2,
     )
 
     /*protected fun renderFluid(guiGraphics: GuiGraphics, stack: FluidStack, slot: HTFluidSlot) {

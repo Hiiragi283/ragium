@@ -12,12 +12,8 @@ class HTFluidTankWidget(
     override val capacity: Int,
     x: Int,
     y: Int,
-    width: Int,
-    height: Int,
 ) : HTFluidWidget(
         x,
         y,
-        width,
-        height,
         Component.empty(),
     )

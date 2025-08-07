@@ -108,14 +108,10 @@ class InternalRagiumAPI : RagiumAPI {
         capacity: Int?,
         x: Int,
         y: Int,
-        width: Int,
-        height: Int,
     ): HTFluidWidget = HTFluidTankWidget(
         stack ?: FluidStack.EMPTY,
         capacity ?: 0,
         x,
         y,
-        width,
-        height,
     )
 }

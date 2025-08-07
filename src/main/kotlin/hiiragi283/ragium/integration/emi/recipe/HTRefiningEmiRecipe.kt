@@ -19,25 +19,8 @@ class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, v
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets
-            .addTank(
-                ingredient,
-                getPosition(1),
-                getPosition(0),
-                18,
-                18 * 2,
-                RagiumAPI.getConfig().getDefaultTankCapacity(),
-            ).drawBack(false)
+        widgets.addTank(ingredient, getPosition(1), getPosition(0)).drawBack(false)
         // Output
-        widgets
-            .addTank(
-                result,
-                getPosition(4.5),
-                getPosition(0),
-                18,
-                18 * 3,
-                RagiumAPI.getConfig().getDefaultTankCapacity(),
-            ).drawBack(false)
-            .recipeContext(this)
+        widgets.addTank(result, getPosition(5), getPosition(0)).drawBack(false).recipeContext(this)
     }
 }

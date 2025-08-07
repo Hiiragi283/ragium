@@ -21,15 +21,6 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
         // Input
         widgets.addSlot(ingredient, getPosition(1), getPosition(0.5)).drawBack(false)
         // Output
-        widgets
-            .addTank(
-                result,
-                getPosition(4.5),
-                getPosition(0),
-                18,
-                18 * 3,
-                RagiumAPI.getConfig().getDefaultTankCapacity(),
-            ).drawBack(false)
-            .recipeContext(this)
+        widgets.addTank(result, getPosition(4.5), getPosition(0)).drawBack(false).recipeContext(this)
     }
 }

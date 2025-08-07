@@ -22,7 +22,8 @@ abstract class HTSpriteWidget(
     width: Int,
     height: Int,
     message: Component,
-) : HTAbstractWidget(x, y, width, height, message) {
+) : HTAbstractWidget(x, y, width, height, message),
+    HTBackgroundRenderable {
     final override fun renderWidget(
         guiGraphics: GuiGraphics,
         mouseX: Int,

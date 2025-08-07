@@ -21,14 +21,7 @@ class HTRefineryScreen(menu: HTDefinitionContainerMenu, inventory: Inventory, ti
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(
-                createFluidTankWidget(
-                    0,
-                    HTSlotHelper.getSlotPosX(2),
-                    HTSlotHelper.getSlotPosY(0),
-                    height = 18 * 2 - 2,
-                ),
-            )
+            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)))
         fluidWidget1 =
             addRenderableWidget(createFluidTankWidget(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
     }
