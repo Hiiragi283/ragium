@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.gui.screen
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTContainerMenu
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 @OnlyIn(Dist.CLIENT)
@@ -46,7 +46,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
 
     val startY: Int get() = (height - imageHeight) / 2
 
-    fun createFluidWidget(
+    fun createFluidTankWidget(
         index: Int,
         x: Int,
         y: Int,
@@ -54,9 +54,9 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         height: Int = 18 * 3 - 2,
     ): HTFluidWidget {
         val handler: IFluidHandler? = menu.getHandlerBlockEntity()?.getFluidHandler(null)
-        return HTFluidWidget(
-            handler?.getFluidInTank(index) ?: FluidStack.EMPTY,
-            handler?.getTankCapacity(index) ?: 0,
+        return RagiumAPI.getInstance().createFluidTankWidget(
+            handler?.getFluidInTank(index),
+            handler?.getTankCapacity(index),
             startX + x,
             startY + y,
             width,

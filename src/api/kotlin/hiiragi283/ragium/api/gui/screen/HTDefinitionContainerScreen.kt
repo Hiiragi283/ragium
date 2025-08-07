@@ -23,7 +23,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     override fun init() {
         super.init()
         // Energy Widget
-        addRenderableWidget(createEnergyWidget(menu.level.dimension()))
+        addRenderableWidget(createEnergyWidget(menu.dimension))
     }
 
     /*override fun render(

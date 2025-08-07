@@ -30,7 +30,7 @@ abstract class HTSpriteWidget(
         partialTick: Float,
     ) {
         // Render sprite
-        renderSprite()
+        renderSprite(guiGraphics)
         // Render tooltip
         renderTooltip(x, y, mouseX, mouseY, width, height) {
             guiGraphics.renderComponentTooltip(
@@ -45,7 +45,7 @@ abstract class HTSpriteWidget(
     /**
      * @see [de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.draw]
      */
-    private fun renderSprite() {
+    private fun renderSprite(guiGraphics: GuiGraphics) {
         if (!shouldRender()) return
         val sprite: TextureAtlasSprite = getSprite() ?: return
         val color: Int = getColor()
@@ -66,6 +66,7 @@ abstract class HTSpriteWidget(
                 val subHeight: Float = min(width.toFloat(), fillLevel - (width * i))
                 val offsetY: Float = height - width * i - subHeight
                 drawQuad(
+                    guiGraphics,
                     x.toFloat(),
                     y + offsetY,
                     width.toFloat(),

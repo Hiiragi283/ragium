@@ -6,6 +6,8 @@ import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -25,6 +27,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
+import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
 
 interface RagiumAPI {
@@ -188,4 +191,16 @@ interface RagiumAPI {
      * @see [HTItemResult.getFirstHolderFromTag]
      */
     fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item>
+
+    /**
+     * @see [HTContainerScreen.createFluidTankWidget]
+     */
+    fun createFluidTankWidget(
+        stack: FluidStack?,
+        capacity: Int?,
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+    ): HTFluidWidget
 }

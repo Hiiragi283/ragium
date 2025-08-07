@@ -9,12 +9,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
@@ -30,6 +32,7 @@ import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.fml.ModList
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
@@ -99,4 +102,20 @@ class InternalRagiumAPI : RagiumAPI {
         }
         return holder
     }
+
+    override fun createFluidTankWidget(
+        stack: FluidStack?,
+        capacity: Int?,
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+    ): HTFluidWidget = HTFluidTankWidget(
+        stack ?: FluidStack.EMPTY,
+        capacity ?: 0,
+        x,
+        y,
+        width,
+        height,
+    )
 }

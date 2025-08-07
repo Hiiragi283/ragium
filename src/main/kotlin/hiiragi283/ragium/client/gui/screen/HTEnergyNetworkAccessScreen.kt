@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.screen.gui
+package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
@@ -18,6 +18,6 @@ class HTEnergyNetworkAccessScreen(menu: HTEnergyNetworkAccessMenu, inventory: In
     override fun init() {
         super.init()
         // Energy Widget
-        addRenderableWidget(createEnergyWidget(menu.level.dimension(), HTSlotHelper.getSlotPosX(4)))
+        addRenderableWidget(createEnergyWidget(menu.dimension, HTSlotHelper.getSlotPosX(4)))
     }
 }

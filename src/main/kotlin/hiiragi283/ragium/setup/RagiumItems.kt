@@ -25,6 +25,8 @@ import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
+import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
+import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.ChatFormatting
@@ -49,10 +51,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.energy.ComponentEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
-import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
@@ -423,11 +422,11 @@ object RagiumItems {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        event.registerItem(
+        /*event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? -> FluidBucketWrapper(stack) },
-            *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
-        )
+         *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
+        )*/
 
         registerEnergy(event, DRILL, 160000)
 
@@ -440,7 +439,7 @@ object RagiumItems {
     fun registerEnergy(event: RegisterCapabilitiesEvent, item: ItemLike, capacity: Int) {
         event.registerItem(
             Capabilities.EnergyStorage.ITEM,
-            { stack: ItemStack, _: Void? -> ComponentEnergyStorage(stack, RagiumDataComponents.ENERGY.get(), capacity) },
+            { stack: ItemStack, _: Void? -> HTComponentEnergyStorage(stack, capacity) },
             item,
         )
     }
@@ -452,7 +451,7 @@ object RagiumItems {
                 Capabilities.FluidHandler.ITEM,
                 { stack: ItemStack, _: Void? ->
                     val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                    FluidHandlerItemStack(RagiumDataComponents.FLUID_CONTENT, stack, capacity * modifier)
+                    HTComponentFluidHandler(stack, capacity * modifier)
                 },
                 item,
             )

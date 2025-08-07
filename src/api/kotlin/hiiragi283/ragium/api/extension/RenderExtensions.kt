@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.Tesselator
 import com.mojang.blaze3d.vertex.VertexFormat
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.Font
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
@@ -103,9 +104,10 @@ inline fun setShaderColor(color: Int, action: () -> Unit) {
 }
 
 /**
- * @see [de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.drawQuad]
+ * @see [me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture]
  */
 fun drawQuad(
+    guiGraphics: GuiGraphics,
     x: Float,
     y: Float,
     width: Float,
@@ -115,14 +117,15 @@ fun drawQuad(
     maxU: Float,
     maxV: Float,
 ) {
+    val matrix4f: Matrix4f = guiGraphics.pose().last().pose()
     Tesselator
         .getInstance()
         .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
         .apply {
-            addVertex(x, y + height, 0f).setUv(minU, maxV)
-            addVertex(x + width, y + height, 0f).setUv(maxU, maxV)
-            addVertex(x + width, y, 0f).setUv(maxU, minV)
-            addVertex(x, y, 0f).setUv(minU, minV)
+            addVertex(matrix4f, x, y + height, 0f).setUv(minU, maxV)
+            addVertex(matrix4f, x + width, y + height, 0f).setUv(maxU, maxV)
+            addVertex(matrix4f, x + width, y, 0f).setUv(maxU, minV)
+            addVertex(matrix4f, x, y, 0f).setUv(minU, minV)
         }.buildOrThrow()
         .let(BufferUploader::drawWithShader)
 }

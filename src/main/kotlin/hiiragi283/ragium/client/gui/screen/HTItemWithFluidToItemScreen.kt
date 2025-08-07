@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.screen.gui
+package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
@@ -45,7 +45,7 @@ class HTItemWithFluidToItemScreen(
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
     }
 
     //    HTFluidScreen    //

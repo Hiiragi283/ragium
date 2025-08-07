@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.screen.gui
+package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
@@ -22,7 +22,7 @@ class HTRefineryScreen(menu: HTDefinitionContainerMenu, inventory: Inventory, ti
         super.init()
         fluidWidget =
             addRenderableWidget(
-                createFluidWidget(
+                createFluidTankWidget(
                     0,
                     HTSlotHelper.getSlotPosX(2),
                     HTSlotHelper.getSlotPosY(0),
@@ -30,7 +30,7 @@ class HTRefineryScreen(menu: HTDefinitionContainerMenu, inventory: Inventory, ti
                 ),
             )
         fluidWidget1 =
-            addRenderableWidget(createFluidWidget(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidTankWidget(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
     }
 
     //    HTFluidScreen    //
