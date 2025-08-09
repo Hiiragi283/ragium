@@ -1,8 +1,9 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
-import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -18,6 +19,10 @@ class HTItemToObjRecipeBuilder<R1 : HTRecipeResult<*, *>, R2 : HTItemToObjRecipe
     val result: R1,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
+        @JvmStatic
+        fun compressing(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult, HTCompressingRecipe> =
+            HTItemToObjRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe, ingredient, result)
+
         @JvmStatic
         fun extracting(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult, HTExtractingRecipe> =
             HTItemToObjRecipeBuilder(RagiumConst.EXTRACTING, ::HTExtractingRecipe, ingredient, result)

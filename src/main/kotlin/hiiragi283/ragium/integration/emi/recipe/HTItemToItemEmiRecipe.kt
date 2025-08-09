@@ -20,6 +20,15 @@ class HTItemToItemEmiRecipe(
     ) {
     companion object {
         @JvmStatic
+        fun compressing(id: ResourceLocation, ingredient: EmiIngredient, result: EmiStack): HTItemToItemEmiRecipe = HTItemToItemEmiRecipe(
+            id,
+            RagiumAPI.id("textures/gui/container/compressor.png"),
+            RagiumEmiCategories.COMPRESSING,
+            ingredient,
+            result,
+        )
+
+        @JvmStatic
         fun extracting(id: ResourceLocation, ingredient: EmiIngredient, result: EmiStack): HTItemToItemEmiRecipe = HTItemToItemEmiRecipe(
             id,
             RagiumAPI.id("textures/gui/container/extractor.png"),

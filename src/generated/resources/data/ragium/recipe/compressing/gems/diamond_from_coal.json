@@ -1,0 +1,19 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "minecraft:coal"
+      },
+      {
+        "tag": "c:dusts/coal"
+      }
+    ],
+    "count": 64
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:gems/diamond"
+  }
+}

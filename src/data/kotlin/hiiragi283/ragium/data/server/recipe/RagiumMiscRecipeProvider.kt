@@ -227,9 +227,10 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Basic
         basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(Items.FLINT))
         basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
+        basicMachine(RagiumBlocks.Machines.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.DISPENSER))
-        basicMachine(RagiumBlocks.Machines.FORMING_PRESS, Ingredient.of(Items.PISTON))
+        basicMachine(RagiumBlocks.Machines.FORMING_PRESS, Ingredient.of(ItemTags.ANVIL))
         // Advanced
         advancedMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
         advancedMachine(RagiumBlocks.Machines.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)

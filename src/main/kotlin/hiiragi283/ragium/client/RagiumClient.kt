@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
+import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
@@ -163,11 +164,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
         registerBasic(RagiumMenuTypes.CRUSHER)
         registerBasic(RagiumMenuTypes.ENGRAVER)
-        registerBasic(RagiumMenuTypes.EXTRACTOR)
         registerBasic(RagiumMenuTypes.FORMING_PRESS)
         registerBasic(RagiumMenuTypes.SINGLE_ITEM)
 
+        event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen::compressor)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
+        event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen::infuser)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)

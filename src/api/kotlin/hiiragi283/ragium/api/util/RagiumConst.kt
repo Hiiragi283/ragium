@@ -57,6 +57,7 @@ object RagiumConst {
     //    Recipes    //
 
     const val ALLOYING = "alloying"
+    const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"
     const val INFUSING = "infusing"

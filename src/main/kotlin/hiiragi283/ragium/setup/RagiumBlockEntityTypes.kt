@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTStirlingDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
@@ -74,6 +75,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTick("block_breaker", ::HTBlockBreakerBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> = registerTick("compressor", ::HTCompressorBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
@@ -180,6 +184,7 @@ object RagiumBlockEntityTypes {
 
         add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
         add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
+        add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
         add(ENGRAVER, RagiumBlocks.Machines.ENGRAVER)
         add(EXTRACTOR, RagiumBlocks.Machines.EXTRACTOR)
         add(FORMING_PRESS, RagiumBlocks.Machines.FORMING_PRESS)
@@ -234,6 +239,7 @@ object RagiumBlockEntityTypes {
 
         registerHandlers(CRUSHER)
         registerHandlers(BLOCK_BREAKER)
+        registerHandlers(COMPRESSOR)
         registerHandlers(ENGRAVER)
         registerHandlers(EXTRACTOR)
 

@@ -21,7 +21,7 @@ data class HTProgressBar(
         fun arrow(x: Int, y: Int): HTProgressBar = HTProgressBar(vanillaId("container/furnace/burn_progress"), x, y, 24, 16)
 
         @JvmStatic
-        fun burn(x: Int, y: Int): HTProgressBar = HTProgressBar(vanillaId("container/furnace/lit_progress"), x, y, 16, 16)
+        fun burn(x: Int, y: Int): HTProgressBar = HTProgressBar(RagiumAPI.id("container/burn_progress"), x, y, 16, 16)
 
         @JvmStatic
         fun infuse(x: Int, y: Int): HTProgressBar = HTProgressBar(RagiumAPI.id("container/infuse_progress"), x, y, 24, 16)

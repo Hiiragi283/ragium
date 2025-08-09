@@ -10,6 +10,9 @@ object RagiumEmiCategories {
     val ALLOYING = HTEmiRecipeCategory(RagiumConst.ALLOYING, RagiumBlocks.Machines.ALLOY_SMELTER)
 
     @JvmField
+    val COMPRESSING = HTEmiRecipeCategory(RagiumConst.COMPRESSING, RagiumBlocks.Machines.COMPRESSOR)
+
+    @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumConst.CRUSHING, RagiumBlocks.Machines.CRUSHER)
 
     @JvmField
@@ -37,6 +40,7 @@ object RagiumEmiCategories {
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
         // Machines
         ALLOYING,
+        COMPRESSING,
         CRUSHING,
         DISTILLATION,
         EXTRACTING,

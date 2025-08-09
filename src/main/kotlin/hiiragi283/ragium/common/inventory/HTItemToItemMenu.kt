@@ -32,6 +32,10 @@ class HTItemToItemMenu(
         )
 
         @JvmStatic
+        fun compressor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
+            empty(RagiumMenuTypes.COMPRESSOR, containerId, inventory, registryBuf)
+
+        @JvmStatic
         fun extractor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
             empty(RagiumMenuTypes.EXTRACTOR, containerId, inventory, registryBuf)
     }

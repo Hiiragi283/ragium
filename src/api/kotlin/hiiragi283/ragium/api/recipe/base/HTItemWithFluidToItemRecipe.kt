@@ -6,14 +6,12 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeType
 import java.util.*
 
 abstract class HTItemWithFluidToItemRecipe(
-    recipeType: RecipeType<*>,
-    itemIngredient: Optional<HTItemIngredient>,
-    fluidIngredient: Optional<HTFluidIngredient>,
-    result: HTItemResult,
-) : HTItemWithFluidToObjRecipe<HTItemResult>(recipeType, itemIngredient, fluidIngredient, result) {
+    override val itemIngredient: Optional<HTItemIngredient>,
+    override val fluidIngredient: Optional<HTFluidIngredient>,
+    override val result: HTItemResult,
+) : HTItemWithFluidToObjRecipe<HTItemResult> {
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.get()
 }

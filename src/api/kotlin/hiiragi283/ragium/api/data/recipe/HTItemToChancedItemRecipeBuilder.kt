@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.RagiumConst

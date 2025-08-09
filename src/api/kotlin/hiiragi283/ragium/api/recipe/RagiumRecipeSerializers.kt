@@ -1,15 +1,16 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
-import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
-import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
-import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
-import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
-import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
+import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
@@ -20,6 +21,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val ALLOYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTAlloyingRecipe>> =
         create(RagiumConst.ALLOYING)
+
+    @JvmField
+    val COMPRESSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCompressingRecipe>> =
+        create(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =

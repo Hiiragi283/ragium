@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe.base
+package hiiragi283.ragium.api.recipe.impl
 
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers

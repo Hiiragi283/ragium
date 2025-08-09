@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
@@ -35,7 +35,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTSolidifyingRecipe>(
+    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTFluidWithCatalystToItemRecipe>(
         RagiumRecipeTypes.SOLIDIFYING.get(),
         RagiumBlockEntityTypes.SOLIDIFIER,
         pos,
@@ -67,15 +67,18 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), tank.fluid)
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTSolidifyingRecipe): Boolean =
-        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty
+    override fun canProgressRecipe(
+        level: ServerLevel,
+        input: HTItemWithFluidRecipeInput,
+        recipe: HTFluidWithCatalystToItemRecipe,
+    ): Boolean = insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         input: HTItemWithFluidRecipeInput,
-        recipe: HTSolidifyingRecipe,
+        recipe: HTFluidWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), false)

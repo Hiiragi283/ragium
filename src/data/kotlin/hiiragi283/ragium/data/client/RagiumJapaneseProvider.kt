@@ -108,6 +108,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addBlock(RagiumBlocks.Machines.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "ブロック採掘機")
+        addBlock(RagiumBlocks.Machines.COMPRESSOR, "圧縮機")
         addBlock(RagiumBlocks.Machines.ENGRAVER, "彫刻機")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
 

@@ -16,7 +16,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTRefineryScreen(menu: HTFluidOnlyMenu, inventory: Inventory, title: Component) :
     HTMachineScreen<HTFluidOnlyMenu>(RagiumAPI.id("textures/gui/container/refinery.png"), menu, inventory, title),
     HTFluidScreen {
-    override val progressBar: HTProgressBar = HTProgressBar.burn(HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosX(1))
+    override val progressBar: HTProgressBar = HTProgressBar.burn(HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosX(2))
 
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget

@@ -25,6 +25,9 @@ object RagiumMenuTypes {
     )
 
     @JvmField
+    val COMPRESSOR: HTDeferredMenuType<HTItemToItemMenu> = REGISTER.registerType("compressor", HTItemToItemMenu::compressor)
+
+    @JvmField
     val CRUSHER: HTDeferredMenuType<HTCrusherMenu> = REGISTER.registerType("crusher", ::HTCrusherMenu)
 
     @JvmField

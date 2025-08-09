@@ -117,6 +117,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addBlock(RagiumBlocks.Machines.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "Block Breaker")
+        addBlock(RagiumBlocks.Machines.COMPRESSOR, "Compressor")
         addBlock(RagiumBlocks.Machines.ENGRAVER, "Engraver")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
 

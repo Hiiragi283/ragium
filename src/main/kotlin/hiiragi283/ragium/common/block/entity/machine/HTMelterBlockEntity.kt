@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, HTMeltingRecipe>(
+    HTProcessorBlockEntity<SingleRecipeInput, HTItemToFluidRecipe>(
         RagiumRecipeTypes.MELTING.get(),
         RagiumBlockEntityTypes.MELTER,
         pos,
@@ -63,18 +63,18 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean =
-        tank.canFill(recipe.result.get(), true)
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToFluidRecipe): Boolean =
+        tank.canFill(recipe.assembleFluid(input, level.registryAccess()), true)
 
     override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTMeltingRecipe,
+        recipe: HTItemToFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        tank.fill(recipe.result.get(), IFluidHandler.FluidAction.EXECUTE)
+        tank.fill(recipe.assembleFluid(input, level.registryAccess()), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient, false)
         // サウンドを流す

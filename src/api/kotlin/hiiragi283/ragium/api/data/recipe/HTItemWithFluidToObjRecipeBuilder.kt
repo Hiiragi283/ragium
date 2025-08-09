@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
-import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult

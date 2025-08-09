@@ -3,15 +3,16 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
-import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
-import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
-import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
-import hiiragi283.ragium.api.recipe.base.HTRefiningRecipe
-import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
+import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
@@ -53,6 +54,11 @@ object RagiumMiscRegister {
             RagiumRecipeSerializers.ALLOYING,
             RagiumRecipeCodecs.combineItemToItem(::HTAlloyingRecipe),
             RagiumRecipeStreamCodecs.combineItemToItem(::HTAlloyingRecipe),
+        )
+        register(
+            RagiumRecipeSerializers.COMPRESSING,
+            RagiumRecipeCodecs.itemToObj(HTItemResult.CODEC, ::HTCompressingRecipe),
+            RagiumRecipeStreamCodecs.itemToObj(HTItemResult.STREAM_CODEC, ::HTCompressingRecipe),
         )
         register(
             RagiumRecipeSerializers.CRUSHING,
@@ -104,6 +110,7 @@ object RagiumMiscRegister {
 
         register(RagiumRecipeTypes.ALLOYING)
         register(RagiumRecipeTypes.CRUSHING)
+        register(RagiumRecipeTypes.COMPRESSING)
         register(RagiumRecipeTypes.EXTRACTING)
         register(RagiumRecipeTypes.INFUSING)
         register(RagiumRecipeTypes.MELTING)

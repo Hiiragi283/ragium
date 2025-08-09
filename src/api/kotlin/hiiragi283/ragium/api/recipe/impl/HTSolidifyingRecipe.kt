@@ -1,20 +1,17 @@
-package hiiragi283.ragium.api.recipe.base
+package hiiragi283.ragium.api.recipe.impl
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import java.util.*
 
 class HTSolidifyingRecipe(ingredient: HTFluidIngredient, catalyst: Optional<HTItemIngredient>, result: HTItemResult) :
-    HTFluidWithCatalystToItemRecipe(
-        RagiumRecipeTypes.SOLIDIFYING.get(),
-        ingredient,
-        catalyst,
-        result,
-    ) {
+    HTFluidWithCatalystToItemRecipe(ingredient, catalyst, result) {
     override fun isIncomplete(): Boolean {
         val bool1: Boolean = ingredient.hasNoMatchingStacks()
         val bool2: Boolean = catalyst.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
@@ -22,4 +19,6 @@ class HTSolidifyingRecipe(ingredient: HTFluidIngredient, catalyst: Optional<HTIt
     }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING.get()
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.SOLIDIFYING.get()
 }

@@ -215,7 +215,7 @@ class RagiumItemTagsProvider(
             .addItem(RagiumItems.POLYMER_RESIN)
             .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.ORITECH, "polymer_resin"))
 
-        val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))     
+        val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))
         tag(plastics)
             .addOptionalTag(RagiumModTags.Items.PLASTICS)
         tag(RagiumModTags.Items.PLASTICS)
