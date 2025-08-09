@@ -2,8 +2,8 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems

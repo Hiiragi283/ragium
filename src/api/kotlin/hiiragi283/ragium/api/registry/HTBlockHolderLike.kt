@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.util.HTMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
@@ -33,7 +34,7 @@ interface HTBlockHolderLike :
 
     override fun <T : Any> getData(type: DataMapType<Block, T>): T? = holder.getData(type)
 
-    interface Typed<V : HTVariantKey> : HTBlockHolderLike {
-        val variant: V
-    }
+    interface Materialized :
+        HTBlockHolderLike,
+        HTMaterialType.Provider
 }

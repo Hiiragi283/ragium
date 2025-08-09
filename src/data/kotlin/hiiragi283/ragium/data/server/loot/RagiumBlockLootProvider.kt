@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
+import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -72,27 +74,29 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
 
         // Ore
-        RagiumBlocks.RaginiteOres.entries.forEach { ores: RagiumBlocks.RaginiteOres ->
-            add(ores.get()) { block: Block ->
-                createSilkTouchDispatchTable(
-                    block,
-                    applyExplosionDecay(
+        for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {
+            val factory: (Block) -> LootTable.Builder = when (ore.material) {
+                HTMaterialType.RAGINITE -> { block: Block ->
+                    createSilkTouchDispatchTable(
                         block,
-                        LootItem
-                            .lootTableItem(RagiumItems.Dusts.RAGINITE)
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
-                    ),
-                )
+                        applyExplosionDecay(
+                            block,
+                            LootItem
+                                .lootTableItem(RagiumItems.Dusts.RAGINITE)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                        ),
+                    )
+                }
+                HTMaterialType.RAGI_CRYSTAL -> { block: Block ->
+                    createOreDrop(
+                        block,
+                        RagiumItems.Gems.RAGI_CRYSTAL.get(),
+                    )
+                }
+                else -> break
             }
-        }
-        RagiumBlocks.RagiCrystalOres.entries.forEach { ores: RagiumBlocks.RagiCrystalOres ->
-            add(ores.get()) { block: Block ->
-                createOreDrop(
-                    block,
-                    RagiumItems.Gems.RAGI_CRYSTAL.get(),
-                )
-            }
+            add(ore.get(), factory)
         }
 
         // Food

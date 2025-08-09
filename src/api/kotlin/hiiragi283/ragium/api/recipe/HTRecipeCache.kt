@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.recipe
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe

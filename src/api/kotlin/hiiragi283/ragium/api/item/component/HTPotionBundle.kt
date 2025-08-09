@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.item.component
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.listOf

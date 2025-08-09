@@ -30,8 +30,10 @@ object RagiumCreativeTabs {
         output.accept(RagiumBlocks.CRIMSON_SOIL)
         output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
-        output.acceptItems<RagiumBlocks.RaginiteOres>()
-        output.acceptItems<RagiumBlocks.RagiCrystalOres>()
+        output.acceptItems<RagiumBlocks.Ores>()
+        output.acceptItems<RagiumBlocks.DeepOres>()
+        output.acceptItems<RagiumBlocks.NetherOres>()
+        output.acceptItems<RagiumBlocks.EndOres>()
         output.accept(RagiumBlocks.RESONANT_DEBRIS)
         // Storage Blocks
         output.acceptItems<RagiumBlocks.StorageBlocks>()
@@ -103,11 +105,11 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
+            output.acceptItems<RagiumItems.AzureSteelArmors>()
             output.acceptItems<RagiumItems.AzureSteelTools>()
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
+            output.acceptItems<RagiumItems.DeepSteelArmors>()
             output.acceptItems<RagiumItems.DeepSteelTools>()
 
             output.accept(RagiumItems.DRILL)
@@ -125,14 +127,14 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ENDER_BUNDLE)
             output.accept(RagiumItems.ELDRITCH_EGG)
             // Foods
-            output.accept(RagiumItems.CHOCOLATE_INGOT)
+            output.accept(RagiumItems.Ingots.CHOCOLATE)
 
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
             output.accept(RagiumItems.MINCED_MEAT)
-            output.accept(RagiumItems.MEAT_INGOT)
-            output.accept(RagiumItems.COOKED_MEAT_INGOT)
+            output.accept(RagiumItems.Ingots.MEAT)
+            output.accept(RagiumItems.Ingots.COOKED_MEAT)
             output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)

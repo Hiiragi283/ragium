@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.util.HTMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
@@ -38,4 +39,8 @@ interface HTItemHolderLike :
     interface Typed<V : HTVariantKey> : HTItemHolderLike {
         val variant: V
     }
+
+    interface Materialized :
+        HTItemHolderLike,
+        HTMaterialType.Provider
 }

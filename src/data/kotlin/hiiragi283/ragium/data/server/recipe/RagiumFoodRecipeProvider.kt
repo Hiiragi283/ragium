@@ -99,7 +99,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
             .save(output)
         // Meat Ingot
-        HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
+        HTShapedRecipeBuilder(RagiumItems.Ingots.MEAT, 3)
             .pattern("AAA")
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
@@ -112,7 +112,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).save(output)
 
         HTCookingRecipeBuilder
-            .smoking(RagiumItems.COOKED_MEAT_INGOT)
+            .smoking(RagiumItems.Ingots.COOKED_MEAT)
             .addIngredient(RagiumCommonTags.Items.INGOTS_MEAT)
             .setExp(0.35f)
             .save(output)

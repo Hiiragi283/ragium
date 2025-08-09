@@ -1,7 +1,7 @@
 package hiiragi283.ragium.util.variant
 
+import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.util.HTLanguageType
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.world.item.Item

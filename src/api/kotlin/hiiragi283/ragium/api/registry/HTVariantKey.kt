@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.util.HTLanguageType
+import hiiragi283.ragium.api.data.HTLanguageType
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 

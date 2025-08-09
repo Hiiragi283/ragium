@@ -82,7 +82,7 @@ class HTMaterialFamily(
             check(itemMap.put(variant, null) == null) { "Duplicated entry found!" }
         }
 
-        fun setDefaultedEntry(variant: Variant, item: ItemSup): Builder = apply {
+        fun setDefaultedEntry(variant: Variant, item: ItemSup?): Builder = apply {
             check(itemMap.put(variant, item) == null) { "Duplicated entry found!" }
         }
 
@@ -117,10 +117,10 @@ class HTMaterialFamily(
 
     //    Entry    //
 
-    enum class EntryType(val isVanilla: Boolean, val isMod: Boolean) {
-        VANILLA(true, false),
-        RAGIUM(false, false),
-        MOD(false, true),
+    enum class EntryType {
+        VANILLA,
+        RAGIUM,
+        MOD,
     }
 
     //    Variant    //

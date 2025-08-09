@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.variant.HTOreVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -51,17 +51,21 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
             .addBlock(RagiumBlocks.RESONANT_DEBRIS)
 
-        fun setupOres(ores: Iterable<HTBlockHolderLike.Typed<HTOreVariant>>, tagKey: TagKey<Block>) {
-            for (ore: HTBlockHolderLike.Typed<HTOreVariant> in ores) {
+        fun addOres(ores: Iterable<HTBlockHolderLike.Materialized>, groundTag: TagKey<Block>) {
+            for (ore: HTBlockHolderLike.Materialized in ores) {
                 pickaxe.addBlock(ore)
-                tag(tagKey).addBlock(ore)
-                tag(ore.variant.tagKey).addBlock(ore)
+                tag(ore.material.blockTag(RagiumConst.ORES)).addBlock(ore)
+                tag(groundTag).addBlock(ore)
             }
-            tag(Tags.Blocks.ORES).addTag(tagKey)
         }
+        addOres(RagiumBlocks.Ores.entries, Tags.Blocks.ORES_IN_GROUND_STONE)
+        addOres(RagiumBlocks.DeepOres.entries, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
+        addOres(RagiumBlocks.NetherOres.entries, Tags.Blocks.ORES_IN_GROUND_NETHERRACK)
+        addOres(RagiumBlocks.EndOres.entries, RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE)
 
-        setupOres(RagiumBlocks.RagiCrystalOres.entries, RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
-        setupOres(RagiumBlocks.RaginiteOres.entries, RagiumCommonTags.Blocks.ORES_RAGINITE)
+        tag(Tags.Blocks.ORES)
+            .addTag(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
+            .addTag(RagiumCommonTags.Blocks.ORES_RAGINITE)
 
         addBlock(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
 

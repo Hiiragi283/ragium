@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -68,24 +69,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        addBlocks<RagiumBlocks.RaginiteOres>("ラギナイト")
-        addBlocks<RagiumBlocks.RagiCrystalOres>("ラギクリスタリル")
-
+        addMaterialBlocks<RagiumBlocks.Ores>("%s鉱石")
+        addMaterialBlocks<RagiumBlocks.DeepOres>("深層%s鉱石")
+        addMaterialBlocks<RagiumBlocks.NetherOres>("ネザー%s鉱石")
+        addMaterialBlocks<RagiumBlocks.EndOres>("エンド%s鉱石")
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL, "ラギクリスタリルブロック")
-        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL, "深紅の結晶ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL, "歪んだ結晶ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.ELDRITCH_PEARL, "異質な真珠ブロック")
-
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY, "ラギ合金ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY, "発展ラギ合金ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL, "紺鉄ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL, "深層鋼ブロック")
-
-        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE, "チョコレートブロック")
-        addBlock(RagiumBlocks.StorageBlocks.MEAT, "肉ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.COOKED_MEAT, "焼肉ブロック")
+        addMaterialBlocks<RagiumBlocks.StorageBlocks>("%sブロック")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationJp("らぎストーンレンガ", this)
@@ -204,37 +194,15 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.TAR, "タール")
 
-        addItem(RagiumItems.Gems.RAGI_CRYSTAL, "ラギクリスタリル")
-        addItem(RagiumItems.Gems.AZURE_SHARD, "紺碧の欠片")
-        addItem(RagiumItems.Gems.CRIMSON_CRYSTAL, "深紅の結晶")
-        addItem(RagiumItems.Gems.WARPED_CRYSTAL, "歪んだ結晶")
-        addItem(RagiumItems.Gems.ELDRITCH_PEARL, "異質な真珠")
-
-        addItem(RagiumItems.Compounds.RAGI_ALLOY, "ラギ合金混合物")
-        addItem(RagiumItems.Compounds.ADVANCED_RAGI_ALLOY, "発展ラギ合金混合物")
-        addItem(RagiumItems.Compounds.AZURE_STEEL, "紺鉄混合物")
-
-        addItem(RagiumItems.Ingots.RAGI_ALLOY, "ラギ合金インゴット")
-        addItem(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY, "発展ラギ合金インゴット")
-        addItem(RagiumItems.Ingots.AZURE_STEEL, "紺鉄インゴット")
-        addItem(RagiumItems.Ingots.DEEP_STEEL, "深層鋼インゴット")
-
-        addItem(RagiumItems.Nuggets.RAGI_ALLOY, "ラギ合金ナゲット")
-        addItem(RagiumItems.Nuggets.ADVANCED_RAGI_ALLOY, "発展ラギ合金ナゲット")
-        addItem(RagiumItems.Nuggets.AZURE_STEEL, "紺鉄ナゲット")
-        addItem(RagiumItems.Nuggets.DEEP_STEEL, "深層鋼ナゲット")
-
-        addItem(RagiumItems.Dusts.ASH, "灰")
-        addItem(RagiumItems.Dusts.CINNABAR, "辰砂の粉")
-        addItem(RagiumItems.Dusts.OBSIDIAN, "黒曜石の粉")
-        addItem(RagiumItems.Dusts.RAGINITE, "ラギナイトの粉")
-        addItem(RagiumItems.Dusts.SALTPETER, "硝石の粉")
-        addItem(RagiumItems.Dusts.SAW, "おがくず")
-        addItem(RagiumItems.Dusts.SULFUR, "硫黄の粉")
+        addMaterialItems<RagiumItems.Gems>("%s")
+        addMaterialItems<RagiumItems.Compounds>("%s混合物")
+        addMaterialItems<RagiumItems.Ingots>("%sインゴット")
+        addMaterialItems<RagiumItems.Nuggets>("%sナゲット")
+        addMaterialItems<RagiumItems.Dusts>("%sの粉")
 
         // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
-        RagiumItems.DEEP_STEEL_ARMORS.addTranslationJp("深層鋼", this)
+        addItems<RagiumItems.AzureSteelArmors>(HTMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelArmors>(HTMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
@@ -243,8 +211,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.DRILL, "電動ドリル")
 
         addItems<RagiumItems.ForgeHammers>("鍛造ハンマー")
-        addItems<RagiumItems.AzureSteelTools>("紺鉄")
-        addItems<RagiumItems.DeepSteelTools>("深層鋼")
+        addItems<RagiumItems.AzureSteelTools>(HTMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelTools>(HTMaterialType.DEEP_STEEL)
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
@@ -256,13 +224,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.SLOT_COVER, "スロットカバー")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         // Food
-        addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
 
         addItem(RagiumItems.MINCED_MEAT, "ひき肉")
-        addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
-        addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
         addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "カットスイートベリーケーキ")
@@ -287,11 +252,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
         // addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
+        addMaterialItems<RagiumItems.Circuits>("%s回路")
+
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        addItem(RagiumItems.Circuits.ADVANCED, "発展回路")
-        addItem(RagiumItems.Circuits.BASIC, "基本回路")
-        addItem(RagiumItems.Circuits.ELITE, "精鋭回路")
-        addItem(RagiumItems.Circuits.ULTIMATE, "究極回路")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")

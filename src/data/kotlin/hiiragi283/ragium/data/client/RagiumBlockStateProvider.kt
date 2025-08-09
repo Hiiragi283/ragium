@@ -9,10 +9,8 @@ import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.variant.HTOreVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -22,7 +20,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.function.Supplier
-import kotlin.enums.enumEntries
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
@@ -58,8 +55,26 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Ore
-        registerOres<RagiumBlocks.RaginiteOres>(RagiumConst.RAGINITE)
-        registerOres<RagiumBlocks.RagiCrystalOres>(RagiumConst.RAGI_CRYSTAL)
+        for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {
+            val textureId: String = RagiumAPI.id("block/${ore.material.serializedName}").toString()
+            val storeTex: String = when (ore) {
+                is RagiumBlocks.Ores -> "block/stone"
+                is RagiumBlocks.DeepOres -> "block/deepslate"
+                is RagiumBlocks.NetherOres -> "block/netherrack"
+                is RagiumBlocks.EndOres -> "block/end_stone"
+                else -> break
+            }
+            simpleBlock(
+                ore.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .texture("layer0", vanillaId(storeTex))
+                        .texture("layer1", textureId)
+                        .renderType("cutout"),
+                ),
+            )
+        }
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
         // Log
@@ -172,22 +187,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     }
 
     //    Extensions    //
-
-    inline fun <reified B> registerOres(texturePath: String) where B : HTBlockHolderLike.Typed<HTOreVariant>, B : Enum<B> {
-        val textureId: String = RagiumAPI.id("block/$texturePath").toString()
-        for (ore: B in enumEntries<B>()) {
-            simpleBlock(
-                ore.get(),
-                ConfiguredModel(
-                    models()
-                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
-                        .texture("layer0", vanillaId(ore.variant.stoneTex))
-                        .texture("layer1", textureId)
-                        .renderType("cutout"),
-                ),
-            )
-        }
-    }
 
     /*private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 

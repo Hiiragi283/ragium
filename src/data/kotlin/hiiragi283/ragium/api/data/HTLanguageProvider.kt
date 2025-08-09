@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.util.HTLanguageType
+import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.Util
@@ -29,10 +29,24 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     LanguageProvider(output, RagiumAPI.MOD_ID, type.name.lowercase()) {
     //    Extension    //
 
-    inline fun <reified B> addBlocks(value: String) where B : HTBlockHolderLike.Typed<out HTVariantKey>, B : Enum<B> {
-        val map: Map<Block, HTVariantKey> = enumEntries<B>().associate { typed: B -> typed.get() to typed.variant }
-        for ((block: Block, variant: HTVariantKey) in map) {
-            add(block, variant.translate(type, value))
+    inline fun <reified B> addMaterialBlocks(pattern: String) where B : HTBlockHolderLike.Materialized, B : Enum<B> {
+        val map: Map<Block, HTMaterialType> = enumEntries<B>().associate { typed: B -> typed.get() to typed.material }
+        for ((block: Block, material: HTMaterialType) in map) {
+            add(block, material.translate(type, pattern))
+        }
+    }
+
+    inline fun <reified I> addMaterialItems(pattern: String) where I : HTItemHolderLike.Materialized, I : Enum<I> {
+        val map: Map<Item, HTMaterialType> = enumEntries<I>().associate { typed: I -> typed.get() to typed.material }
+        for ((item: Item, material: HTMaterialType) in map) {
+            add(item, material.translate(type, pattern))
+        }
+    }
+
+    inline fun <reified I> addItems(material: HTMaterialType) where I : HTItemHolderLike.Typed<out HTVariantKey>, I : Enum<I> {
+        val map: Map<Item, HTVariantKey> = enumEntries<I>().associate { typed: I -> typed.get() to typed.variant }
+        for ((item: Item, variant: HTVariantKey) in map) {
+            add(item, variant.translate(type, material.translate(type)))
         }
     }
 

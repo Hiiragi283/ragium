@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.screen.tooltip
 
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.util.HTPotionBundle
+import hiiragi283.ragium.api.item.component.HTPotionBundle
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent

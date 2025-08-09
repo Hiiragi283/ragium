@@ -104,9 +104,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
                 .fluid(content.get())
         }
 
-        // Armors
-        RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
-        RagiumItems.DEEP_STEEL_ARMORS.addItemModels(this)
         // Tools
         handheldItem(RagiumItems.BLAST_CHARGE.asItem())
 

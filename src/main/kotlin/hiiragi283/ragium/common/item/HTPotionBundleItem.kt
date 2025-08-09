@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.util.HTPotionBundle
+import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand

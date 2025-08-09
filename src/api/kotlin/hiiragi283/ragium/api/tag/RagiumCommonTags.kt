@@ -42,9 +42,6 @@ object RagiumCommonTags {
         val ORES_IN_GROUND_END_STONE: TagKey<Block> = commonTag("ores_in_ground", "end_stone")
 
         @JvmStatic
-        private fun commonTag(path: String): TagKey<Block> = blockTagKey(commonId(path))
-
-        @JvmStatic
         private fun commonTag(prefix: String, value: String): TagKey<Block> = blockTagKey(commonId(prefix, value))
     }
 

@@ -2,8 +2,8 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.util.HTPotionBundle
+import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTPotionBundle
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries

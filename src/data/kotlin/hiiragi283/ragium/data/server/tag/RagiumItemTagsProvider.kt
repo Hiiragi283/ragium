@@ -13,7 +13,7 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTArmorSets
+import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
@@ -96,9 +96,6 @@ class RagiumItemTagsProvider(
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
             addItem(Tags.Items.INGOTS, ingot.tagKey, ingot)
         }
-        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_CHOCOLATE, RagiumItems.CHOCOLATE_INGOT)
-        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_MEAT, RagiumItems.MEAT_INGOT)
-        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
         // Nuggets
         for (nugget: RagiumItems.Nuggets in RagiumItems.Nuggets.entries) {
             addItem(Tags.Items.NUGGETS, nugget.tagKey, nugget)
@@ -131,7 +128,6 @@ class RagiumItemTagsProvider(
             .addItem(RagiumItems.FEVER_CHERRY)
             .addItem(RagiumItems.ICE_CREAM)
             .addItem(RagiumItems.ICE_CREAM_SODA)
-            .addItem(RagiumItems.MEAT_INGOT)
             .addItem(RagiumItems.MELON_PIE)
             .addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .addItem(RagiumItems.WARPED_WART)
@@ -170,14 +166,13 @@ class RagiumItemTagsProvider(
             .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Armors
-        fun registerArmors(armorSets: HTArmorSets) {
-            tag(ItemTags.HEAD_ARMOR).addItem(armorSets.helmetItem)
-            tag(ItemTags.CHEST_ARMOR).addItem(armorSets.chestplateItem)
-            tag(ItemTags.LEG_ARMOR).addItem(armorSets.leggingsItem)
-            tag(ItemTags.FOOT_ARMOR).addItem(armorSets.bootsItem)
+        val armors: List<HTItemHolderLike.Typed<HTArmorVariant>> = buildList {
+            addAll(RagiumItems.AzureSteelArmors.entries)
+            addAll(RagiumItems.DeepSteelArmors.entries)
         }
-        registerArmors(RagiumItems.AZURE_STEEL_ARMORS)
-        registerArmors(RagiumItems.DEEP_STEEL_ARMORS)
+        for (armor: HTItemHolderLike.Typed<HTArmorVariant> in armors) {
+            tag(armor.variant.tagKey).addItem(armor)
+        }
 
         // Tools
         val tools: List<HTItemHolderLike.Typed<HTToolVariant>> = buildList {

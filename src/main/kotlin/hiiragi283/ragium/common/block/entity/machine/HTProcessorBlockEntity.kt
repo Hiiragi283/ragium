@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.util.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
@@ -74,9 +74,9 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
             exportFluids(level, pos)
         }
         if (result.isTrue) {
-            val input: I = this.lastInput ?: return
-            val recipe: R = this.lastRecipe ?: return
-            serverTickPost(level, pos, state, input, recipe)
+            if (lastInput != null && lastRecipe != null) {
+                serverTickPost(level, pos, state, lastInput!!, lastRecipe!!)
+            }
             resetProgress()
         }
     }

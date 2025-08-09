@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -76,24 +77,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        addBlocks<RagiumBlocks.RaginiteOres>("Raginite")
-        addBlocks<RagiumBlocks.RagiCrystalOres>("Ragi-Crystal")
-
+        addMaterialBlocks<RagiumBlocks.Ores>("%s Ore")
+        addMaterialBlocks<RagiumBlocks.DeepOres>("Deepslate %s Ore")
+        addMaterialBlocks<RagiumBlocks.NetherOres>("Nether %s Ore")
+        addMaterialBlocks<RagiumBlocks.EndOres>("End %s Ore")
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL, "Block of Ragi-Crystal")
-        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL, "Block of Crimson Crystal")
-        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL, "Block of Warped Crystal")
-        addBlock(RagiumBlocks.StorageBlocks.ELDRITCH_PEARL, "Block of Eldritch Pearl")
-
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY, "Block of Ragi-Alloy")
-        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY, "Block of Advanced Ragi-Alloy")
-        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL, "Block of Azure Steel")
-        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL, "Block of Deep Steel")
-
-        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE, "Block of Chocolate")
-        addBlock(RagiumBlocks.StorageBlocks.MEAT, "Block of Meat")
-        addBlock(RagiumBlocks.StorageBlocks.COOKED_MEAT, "Block of Cooked Meat")
+        addMaterialBlocks<RagiumBlocks.StorageBlocks>("Block of %s")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationEn("Ragi-Stone Brick", this)
@@ -213,36 +203,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.TAR, "Tar")
 
-        addItem(RagiumItems.Gems.RAGI_CRYSTAL, "Ragi-Crystal")
-        addItem(RagiumItems.Gems.AZURE_SHARD, "Azure Shard")
-        addItem(RagiumItems.Gems.CRIMSON_CRYSTAL, "Crimson Crystal")
-        addItem(RagiumItems.Gems.WARPED_CRYSTAL, "Warped Crystal")
-        addItem(RagiumItems.Gems.ELDRITCH_PEARL, "Eldritch Pearl")
-
-        addItem(RagiumItems.Compounds.RAGI_ALLOY, "Ragi-Alloy Compound")
-        addItem(RagiumItems.Compounds.ADVANCED_RAGI_ALLOY, "Advanced Ragi-Alloy Compound")
-        addItem(RagiumItems.Compounds.AZURE_STEEL, "Azure Steel Compound")
-
-        addItem(RagiumItems.Ingots.RAGI_ALLOY, "Ragi-Alloy Ingot")
-        addItem(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY, "Advanced Ragi-Alloy Ingot")
-        addItem(RagiumItems.Ingots.AZURE_STEEL, "Azure Steel Ingot")
-        addItem(RagiumItems.Ingots.DEEP_STEEL, "Deep Steel Ingot")
-
-        addItem(RagiumItems.Nuggets.RAGI_ALLOY, "Ragi-Alloy Nugget")
-        addItem(RagiumItems.Nuggets.ADVANCED_RAGI_ALLOY, "Advanced Ragi-Alloy Nugget")
-        addItem(RagiumItems.Nuggets.AZURE_STEEL, "Azure Steel Nugget")
-        addItem(RagiumItems.Nuggets.DEEP_STEEL, "Deep Steel Nugget")
-
-        addItem(RagiumItems.Dusts.ASH, "Ash")
-        addItem(RagiumItems.Dusts.CINNABAR, "Cinnabar Dust")
-        addItem(RagiumItems.Dusts.OBSIDIAN, "Obsidian Dust")
-        addItem(RagiumItems.Dusts.RAGINITE, "Raginite Dust")
-        addItem(RagiumItems.Dusts.SALTPETER, "Saltpeter Dust")
-        addItem(RagiumItems.Dusts.SAW, "Sawdust")
-        addItem(RagiumItems.Dusts.SULFUR, "Sulfur Dust")
+        addMaterialItems<RagiumItems.Gems>("%s")
+        addMaterialItems<RagiumItems.Compounds>("%s Compound")
+        addMaterialItems<RagiumItems.Ingots>("%s Ingot")
+        addMaterialItems<RagiumItems.Nuggets>("%s Nugget")
+        addMaterialItems<RagiumItems.Dusts>("%s Dust")
         // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
-        RagiumItems.DEEP_STEEL_ARMORS.addTranslationEn("Deep Steel", this)
+        addItems<RagiumItems.AzureSteelArmors>(HTMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelArmors>(HTMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
@@ -251,8 +219,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.DRILL, "Electric Drill")
 
         addItems<RagiumItems.ForgeHammers>("Forge Hammer")
-        addItems<RagiumItems.AzureSteelTools>("Azure Steel")
-        addItems<RagiumItems.DeepSteelTools>("Deep Steel")
+        addItems<RagiumItems.AzureSteelTools>(HTMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelTools>(HTMaterialType.DEEP_STEEL)
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
@@ -264,13 +232,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.SLOT_COVER, "Slot Cover")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         // Food
-        addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 
         addItem(RagiumItems.MINCED_MEAT, "Minced Meat")
-        addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
-        addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
         addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "Slice of Sweet Berries Cake")
@@ -285,11 +250,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
+        addMaterialItems<RagiumItems.Circuits>("%s Circuit")
+
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        addItem(RagiumItems.Circuits.ADVANCED, "Advanced Circuit")
-        addItem(RagiumItems.Circuits.BASIC, "Basic Circuit")
-        addItem(RagiumItems.Circuits.ELITE, "Elite Circuit")
-        addItem(RagiumItems.Circuits.ULTIMATE, "Ultimate Circuit")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
