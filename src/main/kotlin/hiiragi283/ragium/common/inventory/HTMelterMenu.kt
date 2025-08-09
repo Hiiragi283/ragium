@@ -18,14 +18,16 @@ class HTMelterMenu(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.empty(1),
+        HTMenuDefinition.empty(2),
     )
 
     init {
         // inputs
-        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
+        // outputs
+        addInputSlot(1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // player inventory
         addPlayerInv(inventory)
         // register property

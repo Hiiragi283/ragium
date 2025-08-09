@@ -151,6 +151,8 @@
   "chemical.ragium.raginite": "ラギナイト",
   "chemical.ragium.warped_sap": "歪んだ樹液",
   "config.jade.plugin_ragium.output_side": "搬出面",
+  "config.jade.plugin_ragium.owner": "機械の所有者",
+  "config.jade.plugin_ragium.progress": "進行度",
   "enchantment.ragium.capacity": "容量増加",
   "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します。",
   "enchantment.ragium.noise_canceling": "ノイズキャンセリング",

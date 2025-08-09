@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Position
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -30,7 +30,6 @@ fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble
 
 /**
  * 指定した[item]を[entity]の足元にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
     dropStackAt(entity, ItemStack(item, count))
@@ -38,11 +37,14 @@ fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
 
 /**
  * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(entity: Entity, stack: ItemStack) {
     if (entity is Player) {
-        ItemHandlerHelper.giveItemToPlayer(entity, stack)
+        if (entity.isFakePlayer) {
+            dropStackAt(entity.level(), entity.position(), stack)
+        } else {
+            ItemHandlerHelper.giveItemToPlayer(entity, stack)
+        }
     } else {
         val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
         val remainStack: ItemStack = when {
@@ -54,21 +56,7 @@ fun dropStackAt(entity: Entity, stack: ItemStack) {
 }
 
 /**
- * 指定した[item]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
- */
-fun dropStackAt(
-    level: Level,
-    pos: BlockPos,
-    item: ItemLike,
-    count: Int = 1,
-) {
-    dropStackAt(level, pos, ItemStack(item, count))
-}
-
-/**
  * 指定した[stack]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
     dropStackAt(level, pos.toVec3(), stack)
@@ -76,10 +64,9 @@ fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
 
 /**
  * 指定した[stack]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(level: Level, pos: Vec3, stack: ItemStack) {
-    Containers.dropItemStack(level, pos.x, pos.y, pos.z, stack)
+fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
+    Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
 
 //    Capability    //

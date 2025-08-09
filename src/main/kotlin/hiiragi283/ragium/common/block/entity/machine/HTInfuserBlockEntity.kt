@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
@@ -28,11 +27,9 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToItemRecipe>(
@@ -43,6 +40,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     ),
     HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler(2, this::setChanged)
+    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(1))
     private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
@@ -68,7 +66,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTItemWithFluidToItemRecipe): Boolean =
-        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty
+        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -88,22 +86,13 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }.sum()*/
         // 実際にアウトプットに搬出する
-        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), false)
+        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         tank.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)
-        inventory.consumeStackInSlot(0, recipe.itemIngredient, false)
+        inventory.extractItem(0, recipe.itemIngredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
-
-    override fun getItemHandler(direction: Direction?): IItemHandler = HTFilteredItemHandler(
-        inventory,
-        object : HTItemFilter {
-            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot == 0
-
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot == 1
-        },
-    )
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
         HTFilteredFluidHandler(listOf(tank), HTFluidFilter.FILL_ONLY)

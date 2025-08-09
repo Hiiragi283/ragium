@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
@@ -41,6 +42,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ),
     HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler(0, this::setChanged)
+    override val itemFilter: HTItemFilter = HTItemFilter.EMPTY
     private val tankIn = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     private val tankOut = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()

@@ -13,13 +13,29 @@ interface HTItemHandler :
     val isEmpty: Boolean
     val slotRange: IntRange get() = (0 until slots)
 
-    fun consumeStackInSlot(slot: Int, catalyst: Optional<HTItemIngredient>, applyDamage: Boolean) {
-        catalyst.ifPresent { ingredient: HTItemIngredient -> consumeStackInSlot(slot, ingredient, applyDamage) }
+    fun extractItem(slot: Int, catalyst: Optional<HTItemIngredient>, simulate: Boolean): ItemStack {
+        val stackIn: ItemStack = getStackInSlot(slot)
+        return catalyst
+            .map { ingredient: HTItemIngredient -> extractItem(slot, ingredient.getRequiredAmount(stackIn), simulate) }
+            .orElse(ItemStack.EMPTY)
     }
 
-    fun consumeStackInSlot(slot: Int, ingredient: HTItemIngredient, applyDamage: Boolean)
+    fun extractItem(slot: Int, ingredient: HTItemIngredient, simulate: Boolean): ItemStack {
+        val stackIn: ItemStack = getStackInSlot(slot)
+        return extractItem(slot, ingredient.getRequiredAmount(stackIn), simulate)
+    }
 
-    fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean)
+    fun getRemainingStack(slot: Int, count: Int): ItemStack {
+        val stackIn: ItemStack = getStackInSlot(slot)
+        if (stackIn.hasCraftingRemainingItem()) {
+            val remain: ItemStack = stackIn.craftingRemainingItem
+            stackIn.shrink(count)
+            return remain
+        } else {
+            stackIn.shrink(count)
+            return ItemStack.EMPTY
+        }
+    }
 
     fun getStackView(): Iterable<ItemStack>
 

@@ -20,7 +20,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import kotlin.collections.forEach
 
@@ -30,6 +29,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    Storage    //
 
     protected abstract val inventory: HTItemHandler
+    protected abstract val itemFilter: HTItemFilter
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.INVENTORY, inventory)
@@ -93,13 +93,15 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     private var externalNetwork: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
-        val network: IEnergyStorage = RagiumAPI.Companion
+        val network: IEnergyStorage = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
             .getNetwork(level) ?: return
         this.network = network
         this.externalNetwork = wrapNetworkToExternal(network)
     }
+
+    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, itemFilter)
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 
@@ -113,12 +115,16 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    Extension    //
 
     protected fun insertToOutput(range: IntRange, output: ItemStack, simulate: Boolean): ItemStack {
-        val filter: HTItemFilter = object : HTItemFilter {
-            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot in range
-
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = false
-        }
+        val filter: HTItemFilter = HTItemFilter.simple(range.toList().toIntArray(), intArrayOf())
         val fixedInventory = HTFilteredItemHandler(inventory, filter)
         return ItemHandlerHelper.insertItem(fixedInventory, output, simulate)
+    }
+
+    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack {
+        if (itemFilter is HTItemFilter.Simple) {
+            val fixedInventory = HTFilteredItemHandler(inventory, (itemFilter as HTItemFilter.Simple).reverse())
+            return ItemHandlerHelper.insertItem(fixedInventory, output, simulate)
+        }
+        return output
     }
 }

@@ -6,25 +6,21 @@ import net.neoforged.neoforge.items.IItemHandler
 interface HTItemFilter {
     companion object {
         @JvmField
-        val ALWAYS: HTItemFilter = Impl(canInsert = true, canExtract = true)
+        val EMPTY: HTItemFilter = simple(intArrayOf(), intArrayOf())
 
-        @JvmField
-        val INSERT_ONLY: HTItemFilter = Impl(canInsert = true, canExtract = false)
-
-        @JvmField
-        val EXTRACT_ONLY: HTItemFilter = Impl(canInsert = false, canExtract = true)
-
-        @JvmField
-        val VIEW_ONLY: HTItemFilter = Impl(canInsert = false, canExtract = false)
+        @JvmStatic
+        fun simple(inputs: IntArray, outputs: IntArray): Simple = Simple(inputs, outputs)
     }
 
     fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean
 
     fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean
 
-    private class Impl(private val canInsert: Boolean, private val canExtract: Boolean) : HTItemFilter {
-        override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = canInsert
+    class Simple(val inputs: IntArray, val outputs: IntArray) : HTItemFilter {
+        fun reverse(): Simple = Simple(outputs, inputs)
 
-        override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = canExtract
+        override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot in inputs
+
+        override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot in outputs
     }
 }

@@ -35,7 +35,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
         HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(ModItems.MILK_BOTTLE.get()),
-                HTResultHelper.fluid(Tags.Fluids.MILK, 1000),
+                HTResultHelper.fluid(Tags.Fluids.MILK, 250),
             ).saveSuffixed(output, "_from_bottle")
     }
 

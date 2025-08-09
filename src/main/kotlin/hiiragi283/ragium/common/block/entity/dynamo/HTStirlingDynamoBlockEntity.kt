@@ -1,18 +1,15 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -20,7 +17,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity(RagiumBlockEntityTypes.STIRLING_DYNAMO, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler(2, this::setChanged)
+    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf())
     override val energyUsage: Int = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     private var lastBurnTime = 0
@@ -35,7 +33,7 @@ class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         val burnTime: Int = if (usedEnergy == 0) {
             val stack: ItemStack = inventory.getStackInSlot(0)
             val burnTime: Int = stack.getBurnTime(null)
-            inventory.consumeStackInSlot(0, 1, false)
+            inventory.insertItem(1, inventory.getRemainingStack(0, 1), false)
             burnTime
         } else {
             lastBurnTime
@@ -56,11 +54,9 @@ class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         return TriState.TRUE
     }
 
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
-
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = HTSingleItemMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSingleItemMenu = HTSingleItemMenu(
         containerId,
         playerInventory,
         blockPos,

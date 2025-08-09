@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -19,7 +17,6 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
@@ -29,6 +26,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override val inventory = HTItemStackHandler(6, this::setChanged)
+    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(2, 3, 4, 5))
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
@@ -53,7 +51,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean =
-        insertToOutput(2..5, recipe.assemble(input, level.registryAccess()), true).isEmpty
+        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -63,21 +61,12 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: StonecutterRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(2..5, recipe.assemble(input, level.registryAccess()), false)
+        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, 1, false)
+        inventory.extractItem(0, 1, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS)
     }
-
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(
-        inventory,
-        object : HTItemFilter {
-            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot == 0
-
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot > 1
-        },
-    )
 
     //    Menu    //
 

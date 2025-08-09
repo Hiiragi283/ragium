@@ -151,6 +151,8 @@
   "chemical.ragium.raginite": "Raginite",
   "chemical.ragium.warped_sap": "Warped Sap",
   "config.jade.plugin_ragium.output_side": "Output Side",
+  "config.jade.plugin_ragium.owner": "Machine Owner",
+  "config.jade.plugin_ragium.progress": "Progress",
   "enchantment.ragium.capacity": "Capacity",
   "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages.",
   "enchantment.ragium.noise_canceling": "Noise Canceling",

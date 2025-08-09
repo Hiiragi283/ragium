@@ -96,13 +96,13 @@ interface RagiumAPI {
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
      * @return サーバーまたはプレイヤーが存在しない場合は`null`
      */
-    fun getPlayer(uuid: UUID): ServerPlayer? = getCurrentServer()?.playerList?.getPlayer(uuid)
+    fun getPlayer(uuid: UUID): ServerPlayer? = getPlayer(uuid, getCurrentServer())
 
     /**
      * [uuid]と[server]から[ServerPlayer]を返します。
      * @return プレイヤーが存在しない場合は`null`
      */
-    fun getPlayer(uuid: UUID, server: MinecraftServer): ServerPlayer? = server.playerList.getPlayer(uuid)
+    fun getPlayer(uuid: UUID, server: MinecraftServer?): ServerPlayer? = server?.playerList?.getPlayer(uuid)
 
     /**
      * [uuid]と[level]から[ServerPlayer]を返します。

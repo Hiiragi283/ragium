@@ -70,8 +70,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         second: Int,
     ) {
         if (recipe.ingredients[0].test(input.getItem(first)) && recipe.ingredients[1].test(input.getItem(second))) {
-            inventory.consumeStackInSlot(first, recipe.ingredients[0], false)
-            inventory.consumeStackInSlot(second, recipe.ingredients[1], false)
+            inventory.extractItem(first, recipe.ingredients[0], false)
+            inventory.extractItem(second, recipe.ingredients[1], false)
         }
     }
 

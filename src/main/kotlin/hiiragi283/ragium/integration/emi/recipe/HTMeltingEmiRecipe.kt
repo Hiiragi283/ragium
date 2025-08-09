@@ -7,6 +7,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 
 class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val result: EmiStack) :
     HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/melter.png")) {
@@ -19,8 +20,20 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addSlot(ingredient, getPosition(1), getPosition(0.5)).drawBack(false)
+        widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
         // Output
+        widgets
+            .addOutput(
+                EmiIngredient.of(
+                    ingredient.emiStacks
+                        .map(EmiStack::getItemStack)
+                        .map(ItemStack::getCraftingRemainingItem)
+                        .map(EmiStack::of),
+                ),
+                getPosition(1),
+                getPosition(2),
+            ).drawBack(false)
+
         widgets.addTank(result, getPosition(4.5), getPosition(0)).drawBack(false).recipeContext(this)
     }
 }
