@@ -58,8 +58,10 @@ class HTItemWithFluidToItemEmiRecipe(
         super.addWidgets(widgets)
         // Input
         widgets.addTank(fluidIngredient, getPosition(0.5), getPosition(0)).drawBack(false)
-        widgets.addSlot(itemIngredient, getPosition(1.5), getPosition(1)).drawBack(false)
+        widgets.addSlot(itemIngredient, getPosition(2), getPosition(1)).drawBack(false)
         // Output
-        widgets.addOutput(result, getPosition(4.5), getPosition(1), true)
+        widgets.addOutput(result, getPosition(5.5), getPosition(1), true)
     }
+
+    override val arrowPosX: Int = getPosition(3.5)
 }

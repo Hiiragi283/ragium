@@ -93,12 +93,7 @@ abstract class HTContainerMenu(
         }
         // hotbar
         for (index: Int in 0..8) {
-            addSlot(
-                when {
-                    immovable && index == inventory.selected -> ::HTImmovableSlot
-                    else -> ::Slot
-                }(inventory, index, HTSlotHelper.getSlotPosX(index), HTSlotHelper.getSlotPosY(7) - 2 + yOffset),
-            )
+            addSlot(Slot(inventory, index, HTSlotHelper.getSlotPosX(index), HTSlotHelper.getSlotPosY(7) - 2 + yOffset))
         }
     }
 

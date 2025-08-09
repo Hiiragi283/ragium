@@ -18,12 +18,15 @@ abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val 
                 textureId,
                 HTSlotHelper.getSlotPosX(1) - 1,
                 HTSlotHelper.getSlotPosY(0) - 1,
-                getPosition(6),
+                getPosition(7),
                 getPosition(3),
             ),
             0,
             0,
         )
-        widgets.addArrow(getPosition(2.5), getPosition(1))
+        widgets.addArrow(arrowPosX, arrowPosY)
     }
+
+    protected open val arrowPosX: Int = getPosition(2.5)
+    protected open val arrowPosY: Int = getPosition(1)
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.screen.HTDefinitionContainerScreen
+import hiiragi283.ragium.api.gui.screen.HTProgressBar
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.screens.MenuScreens
@@ -11,20 +12,22 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTBasicMachineScreen(
+open class HTMachineScreen<T : HTDefinitionContainerMenu>(
     override val texture: ResourceLocation,
-    menu: HTDefinitionContainerMenu,
+    menu: T,
     inventory: Inventory,
     title: Component,
-) : HTDefinitionContainerScreen<HTDefinitionContainerMenu>(menu, inventory, title) {
+) : HTDefinitionContainerScreen<T>(menu, inventory, title) {
     companion object {
         @JvmStatic
-        fun create(texture: ResourceLocation): MenuScreens.ScreenConstructor<HTDefinitionContainerMenu, HTBasicMachineScreen> =
+        fun create(
+            texture: ResourceLocation,
+        ): MenuScreens.ScreenConstructor<HTDefinitionContainerMenu, HTMachineScreen<HTDefinitionContainerMenu>> =
             MenuScreens.ScreenConstructor { menu: HTDefinitionContainerMenu, inventory: Inventory, title: Component ->
-                HTBasicMachineScreen(texture, menu, inventory, title)
+                HTMachineScreen(texture, menu, inventory, title)
             }
     }
 
-    override val progressPosX: Int = HTSlotHelper.getSlotPosX(3.5)
-    override val progressPosY: Int = HTSlotHelper.getSlotPosY(1)
+    override val progressBar: HTProgressBar =
+        HTProgressBar.arrow(HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(1))
 }

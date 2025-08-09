@@ -41,11 +41,11 @@ class HTItemWithFluidToItemMenu(
     }
 
     init {
-        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addOutputSlot(1, HTSlotHelper.getSlotPosX(6.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv(inventory)
         // register property

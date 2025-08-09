@@ -3,8 +3,8 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
-import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.common.inventory.HTMelterMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
@@ -12,8 +12,8 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-class HTMelterScreen(menu: HTDefinitionContainerMenu, inventory: Inventory, title: Component) :
-    HTBasicMachineScreen(RagiumAPI.id("textures/gui/container/melter.png"), menu, inventory, title),
+class HTMelterScreen(menu: HTMelterMenu, inventory: Inventory, title: Component) :
+    HTMachineScreen<HTMelterMenu>(RagiumAPI.id("textures/gui/container/melter.png"), menu, inventory, title),
     HTFluidScreen {
     private lateinit var fluidWidget: HTFluidWidget
 

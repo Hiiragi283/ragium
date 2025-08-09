@@ -3,8 +3,9 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
-import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
+import hiiragi283.ragium.api.gui.screen.HTProgressBar
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -15,30 +16,35 @@ import net.neoforged.neoforge.fluids.FluidStack
 @OnlyIn(Dist.CLIENT)
 class HTItemWithFluidToItemScreen(
     texture: ResourceLocation,
-    menu: HTDefinitionContainerMenu,
+    factory: (Int, Int) -> HTProgressBar,
+    menu: HTItemWithFluidToItemMenu,
     inventory: Inventory,
     title: Component,
-) : HTBasicMachineScreen(texture, menu, inventory, title),
+) : HTMachineScreen<HTItemWithFluidToItemMenu>(texture, menu, inventory, title),
     HTFluidScreen {
     companion object {
         @JvmStatic
-        fun infuser(menu: HTDefinitionContainerMenu, inventory: Inventory, title: Component): HTItemWithFluidToItemScreen =
+        fun infuser(menu: HTItemWithFluidToItemMenu, inventory: Inventory, title: Component): HTItemWithFluidToItemScreen =
             HTItemWithFluidToItemScreen(
                 RagiumAPI.id("textures/gui/container/infuser.png"),
+                HTProgressBar::infuse,
                 menu,
                 inventory,
                 title,
             )
 
         @JvmStatic
-        fun solidifier(menu: HTDefinitionContainerMenu, inventory: Inventory, title: Component): HTItemWithFluidToItemScreen =
+        fun solidifier(menu: HTItemWithFluidToItemMenu, inventory: Inventory, title: Component): HTItemWithFluidToItemScreen =
             HTItemWithFluidToItemScreen(
                 RagiumAPI.id("textures/gui/container/solidifier.png"),
+                HTProgressBar::arrow,
                 menu,
                 inventory,
                 title,
             )
     }
+
+    override val progressBar: HTProgressBar = factory(HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(1))
 
     private lateinit var fluidWidget: HTFluidWidget
 

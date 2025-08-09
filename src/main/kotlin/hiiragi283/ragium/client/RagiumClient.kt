@@ -7,11 +7,11 @@ import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.HTPotionBundle
-import hiiragi283.ragium.client.gui.screen.HTBasicMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
+import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTClientPotionTooltip
@@ -22,7 +22,6 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
@@ -154,11 +153,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        fun registerBasic(
-            menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>,
-            texture: ResourceLocation = menuType.id.withPath { "textures/gui/container/$it.png" },
-        ) {
-            event.register(menuType.get(), HTBasicMachineScreen.create(texture))
+        fun registerBasic(menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>) {
+            event.register(
+                menuType.get(),
+                HTMachineScreen.create(menuType.id.withPath { "textures/gui/container/$it.png" }),
+            )
         }
 
         registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
