@@ -6,15 +6,15 @@ import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
+import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.network.handling.IPayloadContext
 
-class HTFluidSlotUpdatePacket(val pos: BlockPos, val index: Int, val stack: FluidStack) : HTCustomPayload {
+class HTFluidSlotUpdatePacket(val pos: BlockPos, val index: Int, val stack: FluidStack) : HTCustomPayload.S2C {
     companion object {
         @JvmField
         val TYPE = CustomPacketPayload.Type<HTFluidSlotUpdatePacket>(RagiumAPI.id("fluid_slot_update"))
@@ -33,8 +33,8 @@ class HTFluidSlotUpdatePacket(val pos: BlockPos, val index: Int, val stack: Flui
 
     override fun type(): CustomPacketPayload.Type<HTFluidSlotUpdatePacket> = TYPE
 
-    override fun handle(context: IPayloadContext) {
-        val screen: Screen = Minecraft.getInstance().screen ?: return
+    override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
+        val screen: Screen = minecraft.screen ?: return
         if (screen is HTContainerScreen<*>) {
             if (screen.menu.pos != pos) return
             if (screen is HTFluidScreen) {

@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
-import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.AdvancementHolder
@@ -12,6 +12,7 @@ import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
+import kotlin.enums.enumEntries
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
@@ -94,12 +95,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             )
         val azureGears: AdvancementHolder = create(RagiumAdvancements.AZURE_GEARS, azureSteel) {
             display {
-                setIcon(RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem)
+                setIcon(RagiumItems.AzureSteelTools.PICKAXE)
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", (RagiumItems.AZURE_STEEL_TOOLS.itemHolders))
+            hasAnyItem("has_azure_tool", enumEntries<RagiumItems.AzureSteelTools>())
         }
     }
 

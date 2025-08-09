@@ -38,6 +38,9 @@ object RagiumCommonTags {
         @JvmField
         val ORES_DEEP_SCRAP: TagKey<Block> = commonTag(RagiumConst.ORES, "deep_scrap")
 
+        @JvmField
+        val ORES_IN_GROUND_END_STONE: TagKey<Block> = commonTag("ores_in_ground", "end_stone")
+
         @JvmStatic
         private fun commonTag(path: String): TagKey<Block> = blockTagKey(commonId(path))
 
@@ -79,6 +82,9 @@ object RagiumCommonTags {
 
         @JvmField
         val FUELS_BIO_BLOCK: TagKey<Item> = commonTag("fuels/block/bio")
+
+        @JvmField
+        val ORES_IN_GROUND_END_STONE: TagKey<Item> = commonTag("ores_in_ground", "end_stone")
 
         @JvmField
         val PAPER: TagKey<Item> = commonTag("paper")

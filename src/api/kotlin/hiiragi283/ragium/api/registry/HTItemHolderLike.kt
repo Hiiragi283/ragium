@@ -34,4 +34,8 @@ interface HTItemHolderLike :
     override fun getKey(): ResourceKey<Item>? = holder.key
 
     override fun <T : Any> getData(type: DataMapType<Item, T>): T? = holder.getData(type)
+
+    interface Typed<V : HTVariantKey> : HTItemHolderLike {
+        val variant: V
+    }
 }

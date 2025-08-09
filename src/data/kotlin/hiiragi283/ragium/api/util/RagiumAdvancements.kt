@@ -1,7 +1,6 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -69,5 +68,5 @@ object RagiumAdvancements {
     val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")
 
     @JvmStatic
-    private fun create(path: String): ResourceKey<Advancement> = ResourceKey.create(Registries.ADVANCEMENT, RagiumAPI.id(path))
+    private fun create(path: String): ResourceKey<Advancement> = ResourceKey.create(Registries.ADVANCEMENT, RagiumAPI.Companion.id(path))
 }

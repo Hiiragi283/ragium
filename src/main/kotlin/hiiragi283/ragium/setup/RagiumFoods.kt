@@ -84,12 +84,6 @@ object RagiumFoods {
     }
 
     @JvmStatic
-    val RAGI_CHERRY_POPSICLE: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
-        alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0)
-    }
-
-    @JvmStatic
     val RAGI_CHERRY_PULP: FoodProperties = HTFoodBuilder.create {
         nutrition = 1
         saturation = FoodConstants.FOOD_SATURATION_POOR

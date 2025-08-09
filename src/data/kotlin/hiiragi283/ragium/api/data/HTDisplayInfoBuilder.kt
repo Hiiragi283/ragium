@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.descKey
 import hiiragi283.ragium.api.extension.titleKey
+import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import java.util.*
 
+@HTDslMarker
 class HTDisplayInfoBuilder {
     companion object {
         @JvmStatic

@@ -23,7 +23,7 @@ import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreVariant
+import hiiragi283.ragium.util.variant.HTOreVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
@@ -155,7 +155,7 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    enum class RaginiteOres(override val variant: HTOreVariant) : HTOreVariant.HolderLike {
+    enum class RaginiteOres(override val variant: HTOreVariant) : HTBlockHolderLike.Typed<HTOreVariant> {
         STONE(HTOreVariant.STONE),
         DEEP(HTOreVariant.DEEP),
         NETHER(HTOreVariant.NETHER),
@@ -168,7 +168,7 @@ object RagiumBlocks {
         )
     }
 
-    enum class RagiCrystalOres(override val variant: HTOreVariant) : HTOreVariant.HolderLike {
+    enum class RagiCrystalOres(override val variant: HTOreVariant) : HTBlockHolderLike.Typed<HTOreVariant> {
         STONE(HTOreVariant.STONE),
         DEEP(HTOreVariant.DEEP),
         NETHER(HTOreVariant.NETHER),

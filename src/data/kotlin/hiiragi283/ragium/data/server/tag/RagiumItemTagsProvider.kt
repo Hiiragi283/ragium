@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -13,7 +14,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTArmorSets
-import hiiragi283.ragium.util.HTToolSets
+import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
@@ -44,19 +45,6 @@ class RagiumItemTagsProvider(
         RagiumAPI.MOD_ID,
         helper,
     ) {
-    private fun IntrinsicTagAppender<Item>.addItem(item: ItemLike): IntrinsicTagAppender<Item> = apply {
-        add(item.asItem())
-    }
-
-    private fun addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) {
-        tag(parent).addTag(child)
-        tag(child).addItem(item)
-    }
-
-    private fun copyTo(tagKey: TagKey<Block>) {
-        copy(tagKey, itemTagKey(tagKey.location))
-    }
-
     override fun addTags(provider: HolderLookup.Provider) {
         copy()
 
@@ -70,6 +58,10 @@ class RagiumItemTagsProvider(
 
     private fun copy() {
         copy(Tags.Blocks.ORES, Tags.Items.ORES)
+        copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
+        copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE)
+        copy(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, Tags.Items.ORES_IN_GROUND_NETHERRACK)
+        copy(RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE, RagiumCommonTags.Items.ORES_IN_GROUND_END_STONE)
         copy(RagiumCommonTags.Blocks.ORES_RAGINITE, RagiumCommonTags.Items.ORES_RAGINITE)
         copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
@@ -188,15 +180,13 @@ class RagiumItemTagsProvider(
         registerArmors(RagiumItems.DEEP_STEEL_ARMORS)
 
         // Tools
-        fun registerTools(toolSets: HTToolSets) {
-            tag(ItemTags.AXES).addItem(toolSets.axeItem)
-            tag(ItemTags.HOES).addItem(toolSets.hoeItem)
-            tag(ItemTags.PICKAXES).addItem(toolSets.pickaxeItem)
-            tag(ItemTags.SHOVELS).addItem(toolSets.shovelItem)
-            tag(ItemTags.SWORDS).addItem(toolSets.swordItem)
+        val tools: List<HTItemHolderLike.Typed<HTToolVariant>> = buildList {
+            addAll(RagiumItems.AzureSteelTools.entries)
+            addAll(RagiumItems.DeepSteelTools.entries)
         }
-        registerTools(RagiumItems.AZURE_STEEL_TOOLS)
-        registerTools(RagiumItems.DEEP_STEEL_TOOLS)
+        for (tool: HTItemHolderLike.Typed<HTToolVariant> in tools) {
+            tag(tool.variant.tagKey).addItem(tool)
+        }
 
         for (hammer: RagiumItems.ForgeHammers in RagiumItems.ForgeHammers.entries) {
             tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(hammer)
@@ -262,5 +252,20 @@ class RagiumItemTagsProvider(
         tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
             .addOptionalTag(RagiumCommonTags.Items.PLASTICS)
             .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
+    }
+
+    //    Extensions    //
+
+    fun IntrinsicTagAppender<Item>.addItem(item: ItemLike): IntrinsicTagAppender<Item> = apply {
+        add(item.asItem())
+    }
+
+    private fun addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) {
+        tag(parent).addTag(child)
+        tag(child).addItem(item)
+    }
+
+    private fun copyTo(tagKey: TagKey<Block>) {
+        copy(tagKey, itemTagKey(tagKey.location))
     }
 }

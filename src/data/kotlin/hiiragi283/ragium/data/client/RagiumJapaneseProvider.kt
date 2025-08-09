@@ -1,14 +1,8 @@
 package hiiragi283.ragium.data.client
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.RagiumAdvancements
-import hiiragi283.ragium.api.extension.addAdvancement
-import hiiragi283.ragium.api.extension.addEnchantment
-import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addInfo
-import hiiragi283.ragium.api.extension.addItemGroup
-import hiiragi283.ragium.api.extension.addMatterType
+import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -20,9 +14,8 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.common.data.LanguageProvider
 
-class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
+class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
     override fun addTranslations() {
         advancement()
         block()
@@ -75,15 +68,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        addBlock(RagiumBlocks.RaginiteOres.STONE, "ラギナイト鉱石")
-        addBlock(RagiumBlocks.RaginiteOres.DEEP, "深層ラギナイト鉱石")
-        addBlock(RagiumBlocks.RaginiteOres.NETHER, "ネザーラギナイト鉱石")
-        addBlock(RagiumBlocks.RaginiteOres.END, "エンドラギナイト鉱石")
-
-        addBlock(RagiumBlocks.RagiCrystalOres.STONE, "ラギクリスタリル鉱石")
-        addBlock(RagiumBlocks.RagiCrystalOres.DEEP, "深層ラギクリスタリル鉱石")
-        addBlock(RagiumBlocks.RagiCrystalOres.NETHER, "ネザーラギクリスタリル鉱石")
-        addBlock(RagiumBlocks.RagiCrystalOres.END, "エンドラギクリスタリル鉱石")
+        addBlocks<RagiumBlocks.RaginiteOres>("ラギナイト")
+        addBlocks<RagiumBlocks.RagiCrystalOres>("ラギクリスタリル")
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
@@ -253,17 +239,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
-        RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
-        RagiumItems.DEEP_STEEL_TOOLS.addTranslationJp("深層鋼", this)
 
         addItem(RagiumItems.DRILL, "電動ドリル")
 
-        addItem(RagiumItems.ForgeHammers.IRON, "鉄の鍛造ハンマー")
-        addItem(RagiumItems.ForgeHammers.DIAMOND, "ダイヤモンドの鍛造ハンマー")
-        addItem(RagiumItems.ForgeHammers.NETHERITE, "ネザライトの鍛造ハンマー")
-        addItem(RagiumItems.ForgeHammers.RAGI_ALLOY, "ラギ合金の鍛造ハンマー")
-        addItem(RagiumItems.ForgeHammers.AZURE_STEEL, "紺鉄の鍛造ハンマー")
-        addItem(RagiumItems.ForgeHammers.DEEP_STEEL, "深層鋼の鍛造ハンマー")
+        addItems<RagiumItems.ForgeHammers>("鍛造ハンマー")
+        addItems<RagiumItems.AzureSteelTools>("紺鉄")
+        addItems<RagiumItems.DeepSteelTools>("深層鋼")
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")

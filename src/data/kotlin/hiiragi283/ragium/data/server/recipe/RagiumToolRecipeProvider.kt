@@ -167,8 +167,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         crafting(RagiumItems.ForgeHammers.DIAMOND, Tags.Items.GEMS_DIAMOND)
         crafting(RagiumItems.ForgeHammers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
 
-        createNetheriteUpgrade(RagiumItems.ForgeHammers.NETHERITE, RagiumItems.ForgeHammers.DIAMOND)
-            .save(output)
+        createNetheriteUpgrade(RagiumItems.ForgeHammers.NETHERITE, RagiumItems.ForgeHammers.DIAMOND).save(output)
         addAzureSmithing(RagiumItems.ForgeHammers.AZURE_STEEL, RagiumItems.ForgeHammers.IRON)
         addDeepSmithing(RagiumItems.ForgeHammers.DEEP_STEEL, RagiumItems.ForgeHammers.AZURE_STEEL)
     }

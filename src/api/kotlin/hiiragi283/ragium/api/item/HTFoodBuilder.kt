@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.item
 
 import com.google.common.base.Suppliers
+import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
@@ -21,6 +22,7 @@ import kotlin.jvm.optionals.getOrNull
  * @param convertTo 食べ終わった後に手に入る[ItemStack]
  * @param effects 食べた時の効果の一覧
  */
+@HTDslMarker
 class HTFoodBuilder private constructor() {
     companion object {
         @JvmStatic
@@ -39,7 +41,7 @@ class HTFoodBuilder private constructor() {
     }
 
     var nutrition: Int = 0
-    var saturation: Float = 1f
+    var saturation: Float = 0f
     var alwaysEat: Boolean = false
     var eatSeconds: Float = 1.6f
     var convertTo: ItemStack? = null

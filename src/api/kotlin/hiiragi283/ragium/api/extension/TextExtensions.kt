@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.item.HTEnergyItem
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
-import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
@@ -14,10 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import net.neoforged.api.distmarker.Dist
-import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.fml.ModList
-import net.neoforged.neoforge.client.ClientTooltipFlag
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
@@ -113,13 +109,3 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: Tool
 fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
     HTEnergyItem.getStorage(stack)?.let(::energyText)?.let(consumer::accept)
 }
-
-//    TooltipFlag    //
-
-@OnlyIn(Dist.CLIENT)
-fun getClientTooltipFlag(): TooltipFlag = ClientTooltipFlag.of(
-    when (Minecraft.getInstance().options.advancedItemTooltips) {
-        true -> TooltipFlag.ADVANCED
-        false -> TooltipFlag.NORMAL
-    },
-)

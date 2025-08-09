@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -15,14 +14,14 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.function.Supplier
+import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
+import kotlin.enums.enumEntries
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -41,11 +40,29 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumBlocks.EXP_BERRY_BUSH)
             remove(RagiumBlocks.WARPED_WART)
 
-            removeAll(RagiumBlocks.Dynamos.entries.map(HTBlockHolderLike::holder))
-        }.map(Supplier<out Block>::get).forEach(::simpleBlockItem)
+            removeAll { holder: DeferredBlock<*> ->
+                for (dynamo: RagiumBlocks.Dynamos in RagiumBlocks.Dynamos.entries) {
+                    if (dynamo.key?.let(holder::`is`) ?: false) {
+                        return@removeAll true
+                    }
+                }
+                false
+            }
+        }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addItemModels(this)
+        }
+    }
+
+    inline fun <reified I> MutableList<DeferredItem<*>>.removeEntries() where I : HTItemHolderLike, I : Enum<I> {
+        removeAll { holder: DeferredItem<*> ->
+            for (entries: I in enumEntries<I>()) {
+                if (entries.key?.let(holder::`is`) ?: false) {
+                    return@removeAll true
+                }
+            }
+            false
         }
     }
 
@@ -53,14 +70,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            removeAll(RagiumItems.Compounds.entries.map(HTItemHolderLike::holder))
+            removeEntries<RagiumItems.Compounds>()
 
             remove(RagiumItems.BLAST_CHARGE)
-            removeAll(RagiumItems.ForgeHammers.entries.map(HTItemHolderLike::holder))
+            removeEntries<RagiumItems.ForgeHammers>()
+            removeEntries<RagiumItems.AzureSteelTools>()
+            removeEntries<RagiumItems.DeepSteelTools>()
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
-        }.map(Supplier<out Item>::get).forEach(::basicItem)
+        }.map(DeferredItem<*>::getId).forEach(::basicItem)
 
         for (compound: RagiumItems.Compounds in RagiumItems.Compounds.entries) {
             val baseId: String = when (compound) {
@@ -89,13 +108,12 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
         RagiumItems.DEEP_STEEL_ARMORS.addItemModels(this)
         // Tools
-        RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
-        RagiumItems.DEEP_STEEL_TOOLS.addItemModels(this)
-
         handheldItem(RagiumItems.BLAST_CHARGE.asItem())
 
-        RagiumItems.ForgeHammers.entries
-            .map(HTItemHolderLike::id)
-            .forEach(::handheldItem)
+        buildList {
+            addAll(RagiumItems.ForgeHammers.entries)
+            addAll(RagiumItems.AzureSteelTools.entries)
+            addAll(RagiumItems.DeepSteelTools.entries)
+        }.map(HTItemHolderLike::id).forEach(::handheldItem)
     }
 }

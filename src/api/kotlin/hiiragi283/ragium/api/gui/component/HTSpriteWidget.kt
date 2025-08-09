@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.gui.component
 
 import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.extension.drawQuad
-import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.setShaderColor
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -13,6 +12,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
+import net.neoforged.neoforge.client.ClientTooltipFlag
 import kotlin.math.min
 
 @OnlyIn(Dist.CLIENT)
@@ -36,7 +36,7 @@ abstract class HTSpriteWidget(
         renderTooltip(x, y, mouseX, mouseY, width, height) {
             guiGraphics.renderComponentTooltip(
                 font,
-                buildList { collectTooltips(this::add, getClientTooltipFlag()) },
+                buildList { collectTooltips(this::add, getTooltipFlag()) },
                 mouseX,
                 mouseY,
             )
@@ -81,6 +81,13 @@ abstract class HTSpriteWidget(
             RenderSystem.disableBlend()
         }
     }
+
+    protected fun getTooltipFlag(): TooltipFlag = ClientTooltipFlag.of(
+        when (Minecraft.getInstance().options.advancedItemTooltips) {
+            true -> TooltipFlag.ADVANCED
+            false -> TooltipFlag.NORMAL
+        },
+    )
 
     protected fun getSprite(id: ResourceLocation, atlas: ResourceLocation): TextureAtlasSprite? = Minecraft
         .getInstance()

@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTOreVariant
+import hiiragi283.ragium.util.variant.HTOreVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -22,14 +22,20 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.function.Supplier
+import kotlin.enums.enumEntries
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
     override fun registerStatesAndModels() {
         // Simple Blocks
-        val holderLikes: List<HTBlockHolderLike> = buildList {
+        buildList {
+            add(RagiumBlocks.CRIMSON_SOIL)
+            add(RagiumBlocks.SILT)
+
             addAll(RagiumBlocks.StorageBlocks.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
+
+            add(RagiumBlocks.Casings.DEVICE.holder)
 
             add(RagiumBlocks.Devices.CEU)
             add(RagiumBlocks.Devices.ENI)
@@ -37,15 +43,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.Devices.ITEM_BUFFER)
             add(RagiumBlocks.Devices.SPRINKLER)
             add(RagiumBlocks.Devices.DIM_ANCHOR)
-        }
-
-        buildList {
-            add(RagiumBlocks.CRIMSON_SOIL)
-            add(RagiumBlocks.SILT)
-
-            add(RagiumBlocks.Casings.DEVICE.holder)
-
-            addAll(holderLikes.map(HTBlockHolderLike::holder))
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         layeredBlock(
@@ -61,27 +58,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Ore
-        val ores: List<HTOreVariant.HolderLike> = buildList {
-            addAll(RagiumBlocks.RaginiteOres.entries)
-            addAll(RagiumBlocks.RagiCrystalOres.entries)
-        }
-        for (ore: HTOreVariant.HolderLike in ores) {
-            val textureId: String = when (ore) {
-                is RagiumBlocks.RaginiteOres -> RagiumConst.RAGINITE
-                is RagiumBlocks.RagiCrystalOres -> RagiumConst.RAGI_CRYSTAL
-                else -> continue
-            }.let(RagiumAPI::id).withPrefix("block/").toString()
-            simpleBlock(
-                ore.get(),
-                ConfiguredModel(
-                    models()
-                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
-                        .texture("layer0", vanillaId(ore.variant.stoneTex))
-                        .texture("layer1", textureId)
-                        .renderType("cutout"),
-                ),
-            )
-        }
+        registerOres<RagiumBlocks.RaginiteOres>(RagiumConst.RAGINITE)
+        registerOres<RagiumBlocks.RagiCrystalOres>(RagiumConst.RAGI_CRYSTAL)
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
         // Log
@@ -194,6 +172,22 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     }
 
     //    Extensions    //
+
+    inline fun <reified B> registerOres(texturePath: String) where B : HTBlockHolderLike.Typed<HTOreVariant>, B : Enum<B> {
+        val textureId: String = RagiumAPI.id("block/$texturePath").toString()
+        for (ore: B in enumEntries<B>()) {
+            simpleBlock(
+                ore.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .texture("layer0", vanillaId(ore.variant.stoneTex))
+                        .texture("layer1", textureId)
+                        .renderType("cutout"),
+                ),
+            )
+        }
+    }
 
     /*private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 

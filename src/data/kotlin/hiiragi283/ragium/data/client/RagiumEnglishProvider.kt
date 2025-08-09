@@ -1,14 +1,8 @@
 package hiiragi283.ragium.data.client
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.RagiumAdvancements
-import hiiragi283.ragium.api.extension.addAdvancement
-import hiiragi283.ragium.api.extension.addEnchantment
-import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addInfo
-import hiiragi283.ragium.api.extension.addItemGroup
-import hiiragi283.ragium.api.extension.addMatterType
+import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -20,9 +14,8 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.common.data.LanguageProvider
 
-class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
+class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
     override fun addTranslations() {
         advancement()
         block()
@@ -83,15 +76,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        addBlock(RagiumBlocks.RaginiteOres.STONE, "Raginite Ore")
-        addBlock(RagiumBlocks.RaginiteOres.DEEP, "Deepslate Raginite Ore")
-        addBlock(RagiumBlocks.RaginiteOres.NETHER, "Nether Raginite Ore")
-        addBlock(RagiumBlocks.RaginiteOres.END, "End Raginite Ore")
-
-        addBlock(RagiumBlocks.RagiCrystalOres.STONE, "Ragi-Crystal Ore")
-        addBlock(RagiumBlocks.RagiCrystalOres.DEEP, "Deepslate Ragi-Crystal Ore")
-        addBlock(RagiumBlocks.RagiCrystalOres.NETHER, "Nether Ragi-Crystal Ore")
-        addBlock(RagiumBlocks.RagiCrystalOres.END, "End Ragi-Crystal Ore")
+        addBlocks<RagiumBlocks.RaginiteOres>("Raginite")
+        addBlocks<RagiumBlocks.RagiCrystalOres>("Ragi-Crystal")
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
@@ -261,17 +247,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
-        RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
-        RagiumItems.DEEP_STEEL_TOOLS.addTranslationEn("Deep Steel", this)
 
         addItem(RagiumItems.DRILL, "Electric Drill")
 
-        addItem(RagiumItems.ForgeHammers.IRON, "Iron Forge Hammer")
-        addItem(RagiumItems.ForgeHammers.DIAMOND, "Diamond Forge Hammer")
-        addItem(RagiumItems.ForgeHammers.NETHERITE, "Netherite Forge Hammer")
-        addItem(RagiumItems.ForgeHammers.RAGI_ALLOY, "Ragi-Alloy Forge Hammer")
-        addItem(RagiumItems.ForgeHammers.AZURE_STEEL, "Azure Steel Forge Hammer")
-        addItem(RagiumItems.ForgeHammers.DEEP_STEEL, "Deep Steel Forge Hammer")
+        addItems<RagiumItems.ForgeHammers>("Forge Hammer")
+        addItems<RagiumItems.AzureSteelTools>("Azure Steel")
+        addItems<RagiumItems.DeepSteelTools>("Deep Steel")
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")

@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
-import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.setup.RagiumArmorMaterials
@@ -18,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
+import hiiragi283.ragium.setup.RagiumPayloadRegister
 import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
@@ -31,7 +31,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
-import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -106,18 +105,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
-        val registrar: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)
+        val registrar = RagiumPayloadRegister(event.registrar(RagiumAPI.MOD_ID))
 
-        registrar.playToClient(
-            HTBlockEntityUpdatePacket.TYPE,
-            HTBlockEntityUpdatePacket.STREAM_CODEC,
-            HTCustomPayload::handle,
-        )
-        registrar.playToClient(
-            HTFluidSlotUpdatePacket.TYPE,
-            HTFluidSlotUpdatePacket.STREAM_CODEC,
-            HTCustomPayload::handle,
-        )
+        registrar.registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
+        registrar.registerS2C(HTFluidSlotUpdatePacket.TYPE, HTFluidSlotUpdatePacket.STREAM_CODEC)
 
         LOGGER.info("Registered packets!")
     }

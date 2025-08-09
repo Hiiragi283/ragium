@@ -12,6 +12,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
+import kotlin.enums.enumEntries
 
 object RagiumCreativeTabs {
     @JvmField
@@ -22,52 +23,52 @@ object RagiumCreativeTabs {
     val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
         "blocks",
         "crusher",
-    ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Natural Resources
         output.accept(RagiumBlocks.ASH_LOG)
         output.accept(RagiumBlocks.SILT)
         output.accept(RagiumBlocks.CRIMSON_SOIL)
         output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
-        output.acceptItems(RagiumBlocks.RaginiteOres.entries)
-        output.acceptItems(RagiumBlocks.RagiCrystalOres.entries)
+        output.acceptItems<RagiumBlocks.RaginiteOres>()
+        output.acceptItems<RagiumBlocks.RagiCrystalOres>()
         output.accept(RagiumBlocks.RESONANT_DEBRIS)
         // Storage Blocks
-        output.acceptItems(RagiumBlocks.StorageBlocks.entries)
+        output.acceptItems<RagiumBlocks.StorageBlocks>()
         // Machines
-        output.acceptItems(RagiumBlocks.Dynamos.entries)
+        output.acceptItems<RagiumBlocks.Dynamos>()
 
-        output.acceptItems(RagiumBlocks.Frames.entries)
-        output.acceptItems(RagiumBlocks.Machines.entries)
+        output.acceptItems<RagiumBlocks.Frames>()
+        output.acceptItems<RagiumBlocks.Machines>()
 
-        output.acceptItems(RagiumBlocks.Casings.entries)
-        output.acceptItems(RagiumBlocks.Devices.entries)
+        output.acceptItems<RagiumBlocks.Casings>()
+        output.acceptItems<RagiumBlocks.Devices>()
 
-        output.acceptItems(RagiumBlocks.Drums.entries)
+        output.acceptItems<RagiumBlocks.Drums>()
         // Decorations
         for (items: List<Item> in RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems)) {
             output.acceptItems(items)
         }
 
-        output.acceptItems(RagiumBlocks.Glasses.entries)
-        output.acceptItems(RagiumBlocks.LEDBlocks.entries)
+        output.acceptItems<RagiumBlocks.Glasses>()
+        output.acceptItems<RagiumBlocks.LEDBlocks>()
     }
 
     @JvmField
     val INGREDIENTS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
         "ingredients",
         "ragi_alloy_ingot",
-    ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Gems
-        output.acceptItems(RagiumItems.Gems.entries)
+        output.acceptItems<RagiumItems.Gems>()
         // Ingots
-        output.acceptItems(RagiumItems.Compounds.entries)
-        output.acceptItems(RagiumItems.Ingots.entries)
-        output.acceptItems(RagiumItems.Nuggets.entries)
+        output.acceptItems<RagiumItems.Compounds>()
+        output.acceptItems<RagiumItems.Ingots>()
+        output.acceptItems<RagiumItems.Nuggets>()
 
-        output.acceptItems(RagiumItems.Dusts.entries)
+        output.acceptItems<RagiumItems.Dusts>()
         // Ingredients
         output.accept(RagiumItems.RAGI_COKE)
         output.accept(RagiumItems.COMPRESSED_SAWDUST)
@@ -88,7 +89,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
         output.accept(RagiumItems.CIRCUIT_BOARD)
-        output.acceptItems(RagiumItems.Circuits.entries)
+        output.acceptItems<RagiumItems.Circuits>()
     }
 
     @JvmField
@@ -96,18 +97,18 @@ object RagiumCreativeTabs {
         register(
             "items",
             "ragi_ticket",
-        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+        ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.acceptItems(RagiumItems.ForgeHammers.entries)
+            output.acceptItems<RagiumItems.ForgeHammers>()
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptItems(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
-            output.acceptItems(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
+            output.acceptItems<RagiumItems.AzureSteelTools>()
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptItems(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
-            output.acceptItems(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
+            output.acceptItems<RagiumItems.DeepSteelTools>()
 
             output.accept(RagiumItems.DRILL)
 
@@ -148,7 +149,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.acceptItems(RagiumItems.Tickets.entries)
+            output.acceptItems<RagiumItems.Tickets>()
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
         }
 
@@ -169,5 +170,10 @@ object RagiumCreativeTabs {
     @JvmStatic
     private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
         items.forEach(this::accept)
+    }
+
+    @JvmStatic
+    inline fun <reified I> CreativeModeTab.Output.acceptItems() where I : ItemLike, I : Enum<I> {
+        enumEntries<I>().forEach(this::accept)
     }
 }

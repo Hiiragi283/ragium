@@ -19,7 +19,6 @@ import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDrillItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
-import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
@@ -28,7 +27,8 @@ import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.util.HTArmorSets
-import hiiragi283.ragium.util.HTToolSets
+import hiiragi283.ragium.util.variant.HTForgeHammerVariant
+import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -41,8 +41,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -76,6 +74,8 @@ object RagiumItems {
         Dusts.entries
 
         ForgeHammers.entries
+        AzureSteelTools.entries
+        DeepSteelTools.entries
         Tickets.entries
 
         Circuits.entries
@@ -84,9 +84,6 @@ object RagiumItems {
 
         AZURE_STEEL_ARMORS.init(eventBus)
         DEEP_STEEL_ARMORS.init(eventBus)
-
-        AZURE_STEEL_TOOLS.init(eventBus)
-        DEEP_STEEL_TOOLS.init(eventBus)
     }
 
     @JvmStatic
@@ -240,26 +237,45 @@ object RagiumItems {
         register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTDeepSteelTemplateItem() })
 
     @JvmField
-    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolTiers.AZURE_STEEL, RagiumConst.AZURE_STEEL)
-
-    @JvmField
-    val DEEP_STEEL_TOOLS = HTToolSets(RagiumToolTiers.DEEP_STEEL, RagiumConst.DEEP_STEEL)
-
-    @JvmField
     val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
 
-    enum class ForgeHammers(tier: Tier) : HTItemHolderLike {
-        IRON(Tiers.IRON),
-        DIAMOND(Tiers.DIAMOND),
-        NETHERITE(Tiers.NETHERITE),
-        RAGI_ALLOY(RagiumToolTiers.RAGI_ALLOY),
-        AZURE_STEEL(RagiumToolTiers.AZURE_STEEL),
-        DEEP_STEEL(RagiumToolTiers.DEEP_STEEL),
+    enum class ForgeHammers(override val variant: HTForgeHammerVariant) : HTItemHolderLike.Typed<HTForgeHammerVariant> {
+        IRON(HTForgeHammerVariant.IRON),
+        DIAMOND(HTForgeHammerVariant.DIAMOND),
+        NETHERITE(HTForgeHammerVariant.NETHERITE),
+        RAGI_ALLOY(HTForgeHammerVariant.RAGI_ALLOY),
+        AZURE_STEEL(HTForgeHammerVariant.AZURE_STEEL),
+        DEEP_STEEL(HTForgeHammerVariant.DEEP_STEEL),
+        ;
+
+        override val holder: DeferredItem<*> = register("${variant.serializedName}_hammer", variant.factory)
+    }
+
+    enum class AzureSteelTools(override val variant: HTToolVariant) : HTItemHolderLike.Typed<HTToolVariant> {
+        SHOVEL(HTToolVariant.SHOVEL),
+        PICKAXE(HTToolVariant.PICKAXE),
+        AXE(HTToolVariant.AXE),
+        HOE(HTToolVariant.HOE),
+        SWORD(HTToolVariant.SWORD),
         ;
 
         override val holder: DeferredItem<*> = register(
-            "${name.lowercase()}_hammer",
-            { prop: Item.Properties -> HTForgeHammerItem(tier, prop) },
+            "${RagiumConst.AZURE_STEEL}_${variant.serializedName}",
+            variant.createFactory(RagiumToolTiers.AZURE_STEEL),
+        )
+    }
+
+    enum class DeepSteelTools(override val variant: HTToolVariant) : HTItemHolderLike.Typed<HTToolVariant> {
+        SHOVEL(HTToolVariant.SHOVEL),
+        PICKAXE(HTToolVariant.PICKAXE),
+        AXE(HTToolVariant.AXE),
+        HOE(HTToolVariant.HOE),
+        SWORD(HTToolVariant.SWORD),
+        ;
+
+        override val holder: DeferredItem<*> = register(
+            "${RagiumConst.DEEP_STEEL}_${variant.serializedName}",
+            variant.createFactory(RagiumToolTiers.DEEP_STEEL),
         )
     }
 
@@ -491,18 +507,18 @@ object RagiumItems {
         setColor(Tickets.ETERNAL, ChatFormatting.YELLOW)
 
         // Tools
-        fun setEnch(item: DeferredItem<*>, ench: ResourceKey<Enchantment>, level: Int = 1) {
+        fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             event.modify(item) { builder: DataComponentPatch.Builder ->
                 builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(ench, level))
             }
         }
-        setEnch(AZURE_STEEL_TOOLS.shovelItem, Enchantments.SILK_TOUCH)
-        setEnch(AZURE_STEEL_TOOLS.pickaxeItem, Enchantments.SILK_TOUCH)
-        setEnch(AZURE_STEEL_TOOLS.axeItem, Enchantments.SILK_TOUCH)
-        setEnch(AZURE_STEEL_TOOLS.hoeItem, Enchantments.SILK_TOUCH)
+        setEnch(AzureSteelTools.AXE, Enchantments.SILK_TOUCH)
+        setEnch(AzureSteelTools.HOE, Enchantments.SILK_TOUCH)
+        setEnch(AzureSteelTools.PICKAXE, Enchantments.SILK_TOUCH)
+        setEnch(AzureSteelTools.SHOVEL, Enchantments.SILK_TOUCH)
 
-        setEnch(DEEP_STEEL_TOOLS.pickaxeItem, Enchantments.FORTUNE, 5)
-        setEnch(DEEP_STEEL_TOOLS.swordItem, RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(DeepSteelTools.PICKAXE, Enchantments.FORTUNE, 5)
+        setEnch(DeepSteelTools.SWORD, RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(DEEP_STEEL_ARMORS.chestplateItem, RagiumEnchantments.SONIC_PROTECTION)
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
