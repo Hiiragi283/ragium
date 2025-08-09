@@ -55,7 +55,7 @@ enum class HTToolVariant(private val enUsPattern: String, private val jaJpPatter
             register.registerItem(
                 "${material.serializedName}_sword",
                 { prop: Item.Properties -> SwordItem(tier, prop) },
-                Item.Properties().attributes(SwordItem.createAttributes(tier,  3f, -2.4f)),
+                Item.Properties().attributes(SwordItem.createAttributes(tier, 3f, -2.4f)),
             )
     },
     ;

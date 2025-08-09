@@ -58,7 +58,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(Items.COAL),
+                HTIngredientHelper.item(HTIngredientHelper.coal()),
                 HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
@@ -87,7 +87,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // LPG + Coal -> 4x Polymer Resin
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
-                HTIngredientHelper.item(Items.COAL),
+                HTIngredientHelper.item(HTIngredientHelper.coal()),
                 HTIngredientHelper.fluid(RagiumFluidContents.LPG, 125),
                 HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
             ).saveSuffixed(output, "_from_lpg")

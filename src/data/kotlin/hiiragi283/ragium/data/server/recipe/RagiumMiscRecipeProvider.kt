@@ -46,7 +46,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER),
+                HTIngredientHelper.ingotOrDust("copper"),
                 HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 2),
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY),
             ).save(output)
@@ -72,7 +72,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(Tags.Items.INGOTS_GOLD),
+                HTIngredientHelper.ingotOrDust("gold"),
                 HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 4),
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY),
             ).save(output)
@@ -85,7 +85,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(Tags.Items.GEMS_DIAMOND),
+                HTIngredientHelper.gemOrDust("diamond"),
                 HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 6),
                 HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL),
             ).save(output)
@@ -110,14 +110,14 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(Tags.Items.GEMS_AMETHYST),
-                HTIngredientHelper.item(Tags.Items.GEMS_LAPIS),
+                HTIngredientHelper.gemOrDust("amethyst"),
+                HTIngredientHelper.gemOrDust("lapis"),
                 HTResultHelper.item(RagiumCommonTags.Items.GEMS_AZURE, 2),
             ).save(output)
 
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(Tags.Items.INGOTS_IRON),
+                HTIngredientHelper.ingotOrDust("iron"),
                 HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_AZURE, 2),
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_AZURE_STEEL),
             ).save(output)
@@ -167,7 +167,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
             .addIngredient(RagiumCommonTags.Items.DUSTS_SULFUR)
             .addIngredient(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .addIngredient(Items.CHARCOAL)
+            .addIngredient(HTIngredientHelper.charcoal())
             .addIngredient(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .saveSuffixed(output, "_with_hammer")
     }
@@ -317,7 +317,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             ).define('A', input)
             .define('B', Tags.Items.GLASS_BLOCKS_CHEAP)
             .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('D', RagiumModTags.Items.PLASTICS)
             .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .save(output)
     }
@@ -331,7 +331,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             ).define('A', input)
             .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
             .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('D', RagiumModTags.Items.PLASTICS)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
             .save(output)
     }
@@ -345,7 +345,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             ).define('A', input)
             .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
             .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('D', RagiumModTags.Items.PLASTICS)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
     }

@@ -12,7 +12,7 @@
       "item": "ragium:device_casing"
     },
     "D": {
-      "tag": "c:plates/plastic"
+      "tag": "ragium:plastics"
     },
     "E": {
       "tag": "c:circuits/basic"

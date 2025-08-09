@@ -87,9 +87,6 @@ object RagiumCommonTags {
         val PAPER: TagKey<Item> = commonTag("paper")
 
         @JvmField
-        val PLASTICS: TagKey<Item> = commonTag("plastics")
-
-        @JvmField
         val SILICON: TagKey<Item> = commonTag("silicon")
 
         // Circuits
@@ -125,7 +122,16 @@ object RagiumCommonTags {
         val DUSTS_RAGINITE: TagKey<Item> = commonTag(DUSTS, RagiumConst.RAGINITE)
 
         @JvmField
+        val DUSTS_CHARCOAL: TagKey<Item> = commonTag(DUSTS, "charcoal")
+
+        @JvmField
         val DUSTS_CINNABAR: TagKey<Item> = commonTag(DUSTS, "cinnabar")
+
+        @JvmField
+        val DUSTS_COAL: TagKey<Item> = commonTag(DUSTS, "coal")
+
+        @JvmField
+        val DUSTS_COKE: TagKey<Item> = commonTag(DUSTS, "coke")
 
         @JvmField
         val DUSTS_SALTPETER: TagKey<Item> = commonTag(DUSTS, "saltpeter")

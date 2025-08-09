@@ -22,7 +22,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .pressing(
                 HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
                 null,
-                HTResultHelper.item(RagiumCommonTags.Items.PLATES_PLASTIC),
+                HTResultHelper.item(RagiumModTags.Items.PLASTICS),
             ).save(output)
         // Synthetic Fiber
         HTItemWithCatalystToItemRecipeBuilder
@@ -81,7 +81,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
         // Circuit Board
         HTCombineItemToItemRecipeBuilder
             .alloying(
-                HTIngredientHelper.item(RagiumCommonTags.Items.PLATES_PLASTIC),
+                HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
                 HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE),
                 HTResultHelper.item(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
@@ -158,7 +158,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
                 "CCC",
             ).define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LUMINOUS_PASTE)
-            .define('C', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('C', RagiumModTags.Items.PLASTICS)
             .save(output)
     }
 }

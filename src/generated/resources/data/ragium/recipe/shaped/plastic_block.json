@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:plastics"
+      "tag": "ragium:plastics"
     },
     "B": {
       "tag": "c:tools/forge_hammer"

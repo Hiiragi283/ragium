@@ -11,8 +11,16 @@
     "chemical": "ragium:azure"
   },
   "item_input": {
-    "count": 1,
-    "tag": "c:ingots/netherite"
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/netherite"
+      },
+      {
+        "tag": "c:ingots/netherite"
+      }
+    ],
+    "count": 1
   },
   "output": {
     "count": 1,

@@ -1,8 +1,16 @@
 {
   "type": "ragium:melting",
   "ingredient": {
-    "count": 1,
-    "item": "minecraft:coal"
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "minecraft:coal"
+      },
+      {
+        "tag": "c:dusts/coal"
+      }
+    ],
+    "count": 1
   },
   "result": {
     "amount": 125,

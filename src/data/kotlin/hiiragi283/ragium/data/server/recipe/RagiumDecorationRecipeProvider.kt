@@ -45,7 +45,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         // Plastic Block
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_SETS.base, 4, CraftingBookCategory.BUILDING)
             .hollow4()
-            .define('A', RagiumCommonTags.Items.PLASTICS)
+            .define('A', RagiumModTags.Items.PLASTICS)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Blue Nether Bricks

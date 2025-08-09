@@ -1,16 +1,29 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.Tags
+import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
 import rearth.oritech.api.recipe.FoundryRecipeBuilder
 import rearth.oritech.api.recipe.ParticleCollisionRecipeBuilder
 
 object RagiumOritechRecipeProvider : HTRecipeProvider() {
+    private fun gemOrDust(name: String): Ingredient = CompoundIngredient.of(
+        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
+        Ingredient.of(itemTagKey(commonId(RagiumConst.GEMS, name))),
+    )
+
+    private fun ingotOrDust(name: String): Ingredient = CompoundIngredient.of(
+        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
+        Ingredient.of(itemTagKey(commonId(RagiumConst.INGOTS, name))),
+    )
+
     override fun buildRecipeInternal() {
         foundry()
         atomicForge()
@@ -21,7 +34,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
         FoundryRecipeBuilder
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .input(Tags.Items.INGOTS_COPPER)
+            .input(ingotOrDust("copper"))
             .result(RagiumItems.Ingots.RAGI_ALLOY.get())
             .time(160)
             .export(output, RagiumConst.RAGI_ALLOY)
@@ -29,15 +42,15 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
         FoundryRecipeBuilder
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .input(Tags.Items.INGOTS_GOLD)
+            .input(ingotOrDust("gold"))
             .result(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.get())
             .time(160)
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
-            .input(Tags.Items.GEMS_AMETHYST)
-            .input(Tags.Items.GEMS_LAPIS)
+            .input(gemOrDust("amethyst"))
+            .input(gemOrDust("lapis"))
             .result(RagiumItems.Gems.AZURE_SHARD.get(), 2)
             .time(160)
             .export(output, "azure_shard")
@@ -45,7 +58,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
         FoundryRecipeBuilder
             .build()
             .input(RagiumCommonTags.Items.GEMS_AZURE)
-            .input(Tags.Items.INGOTS_IRON)
+            .input(ingotOrDust("iron"))
             .result(RagiumItems.Ingots.AZURE_STEEL.get())
             .time(160)
             .export(output, RagiumConst.AZURE_STEEL)
@@ -53,7 +66,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
         FoundryRecipeBuilder
             .build()
             .input(RagiumItems.DEEP_SCRAP)
-            .input(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .input(ingotOrDust(RagiumConst.AZURE_STEEL))
             .result(RagiumItems.Ingots.DEEP_STEEL.get())
             .time(160)
             .export(output, RagiumConst.DEEP_STEEL)
@@ -70,7 +83,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
-            .input(Tags.Items.GEMS_DIAMOND)
+            .input(gemOrDust("diamond"))
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .result(RagiumItems.Gems.RAGI_CRYSTAL.get())

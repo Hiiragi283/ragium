@@ -88,12 +88,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         HTItemToChancedItemRecipeBuilder
             .crushing(
                 HTIngredientHelper.item(
-                    CompoundIngredient(
-                        listOf(
-                            Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
-                            Ingredient.of(Tags.Items.FOODS_RAW_FISH),
-                            Ingredient.of(Items.ROTTEN_FLESH),
-                        ),
+                    CompoundIngredient.of(
+                        Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
+                        Ingredient.of(Tags.Items.FOODS_RAW_FISH),
+                        Ingredient.of(Items.ROTTEN_FLESH),
                     ),
                 ),
             ).addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))

@@ -2,7 +2,10 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -18,13 +21,30 @@ import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.Tags
+import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private val itemHelper: IItemStackIngredientCreator = IMekanismAccess.INSTANCE.itemStackIngredientCreator()
     private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
+
+    private fun gemOrDust(name: String, count: Int = 1): ItemStackIngredient = itemHelper.from(
+        CompoundIngredient.of(
+            Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
+            Ingredient.of(itemTagKey(commonId(RagiumConst.GEMS, name))),
+        ),
+        count,
+    )
+
+    private fun ingotOrDust(name: String, count: Int = 1): ItemStackIngredient = itemHelper.from(
+        CompoundIngredient.of(
+            Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
+            Ingredient.of(itemTagKey(commonId(RagiumConst.INGOTS, name))),
+        ),
+        count,
+    )
 
     override fun buildRecipeInternal() {
         chemicalConversion()
@@ -124,7 +144,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Raginite + Copper -> Ragi-Alloy
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(Tags.Items.INGOTS_COPPER),
+                ingotOrDust("copper"),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 40),
                 RagiumItems.Ingots.RAGI_ALLOY.toStack(),
                 false,
@@ -132,7 +152,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Raginite + Gold -> Advanced Ragi-Alloy
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(Tags.Items.INGOTS_GOLD),
+                ingotOrDust("gold"),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 80),
                 RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.toStack(),
                 false,
@@ -140,7 +160,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Raginite + Diamond -> Ragi-Crystal
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(Tags.Items.GEMS_DIAMOND),
+                gemOrDust("diamond"),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 60),
                 RagiumItems.Gems.RAGI_CRYSTAL.toStack(),
                 false,
@@ -149,7 +169,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Azure + Iron -> Azure Steel
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(Tags.Items.INGOTS_IRON),
+                ingotOrDust("iron"),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 40),
                 RagiumItems.Ingots.AZURE_STEEL.toStack(),
                 false,
@@ -165,7 +185,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Azure + Netherite Ingot -> Deep Ingot
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(Tags.Items.INGOTS_NETHERITE),
+                ingotOrDust("netherite"),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 160),
                 RagiumItems.Ingots.DEEP_STEEL.toStack(),
                 false,

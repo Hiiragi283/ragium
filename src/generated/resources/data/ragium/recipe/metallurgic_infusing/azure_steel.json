@@ -11,8 +11,16 @@
     "chemical": "ragium:azure"
   },
   "item_input": {
-    "count": 1,
-    "tag": "c:ingots/iron"
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:ingots/iron"
+      }
+    ],
+    "count": 1
   },
   "output": {
     "count": 1,

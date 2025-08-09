@@ -15,9 +15,14 @@
     {
       "tag": "c:gems/azure"
     },
-    {
-      "tag": "c:ingots/iron"
-    }
+    [
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:ingots/iron"
+      }
+    ]
   ],
   "results": [
     {

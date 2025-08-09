@@ -1,12 +1,5 @@
 {
   "values": [
-    {
-      "id": "#c:plastics",
-      "required": false
-    },
-    {
-      "id": "#c:plates/plastic",
-      "required": false
-    }
+    "#ragium:plastics"
   ]
 }

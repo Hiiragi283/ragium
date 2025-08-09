@@ -2,8 +2,16 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 1,
-      "tag": "c:ingots/iron"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/iron"
+        },
+        {
+          "tag": "c:ingots/iron"
+        }
+      ],
+      "count": 1
     },
     {
       "count": 2,

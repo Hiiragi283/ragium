@@ -8,9 +8,14 @@
     {
       "tag": "c:dusts/saltpeter"
     },
-    {
-      "item": "minecraft:charcoal"
-    },
+    [
+      {
+        "item": "minecraft:charcoal"
+      },
+      {
+        "tag": "c:dusts/charcoal"
+      }
+    ],
     {
       "tag": "c:tools/forge_hammer"
     }

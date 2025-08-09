@@ -12,9 +12,14 @@
   },
   "fluidOutputs": [],
   "ingredients": [
-    {
-      "tag": "c:gems/diamond"
-    },
+    [
+      {
+        "tag": "c:dusts/diamond"
+      },
+      {
+        "tag": "c:gems/diamond"
+      }
+    ],
     {
       "tag": "c:dusts/raginite"
     },

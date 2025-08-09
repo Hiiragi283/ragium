@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -214,8 +215,13 @@ class RagiumItemTagsProvider(
             .addItem(RagiumItems.POLYMER_RESIN)
             .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.ORITECH, "polymer_resin"))
 
-        tag(RagiumCommonTags.Items.PLASTICS).addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
-        tag(RagiumCommonTags.Items.PLATES_PLASTIC).addOptionalTag(RagiumCommonTags.Items.PLASTICS)
+        val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))     
+        tag(plastics)
+            .addOptionalTag(RagiumModTags.Items.PLASTICS)
+        tag(RagiumModTags.Items.PLASTICS)
+            .addOptionalTag(plastics)
+            .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
+            .addOptionalTag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
 
         tag(Tags.Items.LEATHERS).addItem(RagiumItems.SYNTHETIC_LEATHER)
         tag(Tags.Items.STRINGS).addItem(RagiumItems.SYNTHETIC_FIBER)
@@ -245,8 +251,7 @@ class RagiumItemTagsProvider(
 
     private fun pneumatic() {
         tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
-            .addOptionalTag(RagiumCommonTags.Items.PLASTICS)
-            .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
+            .addTag(RagiumModTags.Items.PLASTICS)
     }
 
     //    Extensions    //

@@ -15,9 +15,14 @@
     {
       "tag": "c:dusts/raginite"
     },
-    {
-      "tag": "c:ingots/gold"
-    }
+    [
+      {
+        "tag": "c:dusts/gold"
+      },
+      {
+        "tag": "c:ingots/gold"
+      }
+    ]
   ],
   "results": [
     {

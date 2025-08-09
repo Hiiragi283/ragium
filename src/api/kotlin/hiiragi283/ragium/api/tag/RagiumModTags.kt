@@ -60,6 +60,9 @@ object RagiumModTags {
         val LED_BLOCKS: TagKey<Item> = create("led_blocks")
 
         @JvmField
+        val PLASTICS: TagKey<Item> = create("plastics")
+
+        @JvmField
         val POLYMER_RESIN: TagKey<Item> = create("polymer_resin")
 
         @JvmField
