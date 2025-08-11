@@ -132,7 +132,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).define('A', Tags.Items.BUCKETS_MILK)
             .define('B', Items.SUGAR)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.SPONGE_CAKE_SETS.slab)
+            .define('D', RagiumBlocks.Slabs.SPONGE_CAKE)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapedRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -143,7 +143,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).define('A', RagiumCommonTags.Items.FOODS_CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.SPONGE_CAKE_SETS.slab)
+            .define('D', RagiumBlocks.Slabs.SPONGE_CAKE)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)

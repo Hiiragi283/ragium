@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -48,9 +47,10 @@ object RagiumCreativeTabs {
 
         output.acceptItems<RagiumBlocks.Drums>()
         // Decorations
-        for (items: List<Item> in RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems)) {
-            output.acceptItems(items)
-        }
+        output.acceptItems(RagiumBlocks.DECORATION_MAP.values)
+        output.acceptItems<RagiumBlocks.Slabs>()
+        output.acceptItems<RagiumBlocks.Stairs>()
+        output.acceptItems<RagiumBlocks.Walls>()
 
         output.acceptItems<RagiumBlocks.Glasses>()
         output.acceptItems<RagiumBlocks.LEDBlocks>()

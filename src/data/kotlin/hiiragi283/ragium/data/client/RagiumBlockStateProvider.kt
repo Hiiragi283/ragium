@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
-import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.data.PackOutput
@@ -29,6 +28,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
+            addAll(RagiumBlocks.DECORATION_MAP.values)
             addAll(RagiumBlocks.StorageBlocks.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
 
@@ -48,11 +48,20 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumAPI.id("block/mysterious_obsidian"),
         )
 
-        RagiumBlocks.Glasses.entries.forEach(::cutoutSimpleBlock)
-
-        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
-            sets.addBlockStates(this)
+        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
+            val textureName: ResourceLocation = slab.variant.textureName
+            slabBlock(slab.holder.get(), textureName, textureName)
         }
+        for (stair: RagiumBlocks.Stairs in RagiumBlocks.Stairs.entries) {
+            val textureName: ResourceLocation = stair.variant.textureName
+            stairsBlock(stair.holder.get(), textureName)
+        }
+        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
+            val textureName: ResourceLocation = wall.variant.textureName
+            wallBlock(wall.holder.get(), textureName)
+        }
+
+        RagiumBlocks.Glasses.entries.forEach(::cutoutSimpleBlock)
 
         // Ore
         for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {

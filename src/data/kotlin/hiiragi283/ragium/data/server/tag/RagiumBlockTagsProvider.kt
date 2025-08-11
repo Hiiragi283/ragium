@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -77,15 +76,18 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             tag(BlockTags.BEACON_BASE_BLOCKS).addBlock(block)
         }
 
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
-            val builder: IntrinsicTagAppender<Block> = when (sets) {
-                RagiumBlocks.SPONGE_CAKE_SETS -> hoe
-                else -> pickaxe
-            }
-            sets.blockHolders.forEach(builder::addBlock)
-            tag(BlockTags.STAIRS).addBlock(sets.stairs)
-            tag(BlockTags.SLABS).addBlock(sets.slab)
-            tag(BlockTags.WALLS).addBlock(sets.wall)
+        RagiumBlocks.DECORATION_MAP.values.forEach(pickaxe::addBlock)
+        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
+            pickaxe.addBlock(slab)
+            tag(BlockTags.SLABS).addBlock(slab)
+        }
+        for (stairs: RagiumBlocks.Stairs in RagiumBlocks.Stairs.entries) {
+            pickaxe.addBlock(stairs)
+            tag(BlockTags.STAIRS).addBlock(stairs)
+        }
+        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
+            pickaxe.addBlock(wall)
+            tag(BlockTags.WALLS).addBlock(wall)
         }
 
         pickaxe.addBlocks<RagiumBlocks.Casings>()
@@ -150,7 +152,8 @@ private fun IntrinsicTagAppender<Block>.addBlock(holder: DeferredBlock<*>): Intr
 
 private fun IntrinsicTagAppender<Block>.addBlock(holderLike: HTBlockHolderLike): IntrinsicTagAppender<Block> = addBlock(holderLike.holder)
 
-private inline fun <reified B> IntrinsicTagAppender<Block>.addBlocks(): IntrinsicTagAppender<Block> where B : HTBlockHolderLike, B : Enum<B> =
+private inline fun <reified B> IntrinsicTagAppender<Block>.addBlocks(): IntrinsicTagAppender<Block>
+where B : HTBlockHolderLike, B : Enum<B> =
     apply {
         enumEntries<B>().mapNotNull(HTBlockHolderLike::getKey).forEach(::add)
     }

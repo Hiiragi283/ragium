@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTBlockSet
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -32,6 +32,17 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
     private val generated: ModelFile = modelFile(vanillaId("item/generated"))
 
+    inline fun <reified I> MutableList<DeferredBlock<*>>.removeBlocks() where I : HTBlockHolderLike, I : Enum<I> {
+        removeAll { holder: DeferredBlock<*> ->
+            for (entries: I in enumEntries<I>()) {
+                if (entries.key?.let(holder::`is`) ?: false) {
+                    return@removeAll true
+                }
+            }
+            false
+        }
+    }
+
     private fun registerBlocks() {
         // Blocks
         buildList {
@@ -40,22 +51,17 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumBlocks.EXP_BERRY_BUSH)
             remove(RagiumBlocks.WARPED_WART)
 
-            removeAll { holder: DeferredBlock<*> ->
-                for (dynamo: RagiumBlocks.Dynamos in RagiumBlocks.Dynamos.entries) {
-                    if (dynamo.key?.let(holder::`is`) ?: false) {
-                        return@removeAll true
-                    }
-                }
-                false
-            }
+            removeBlocks<RagiumBlocks.Walls>()
+            removeBlocks<RagiumBlocks.Dynamos>()
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
-        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
-            sets.addItemModels(this)
+        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
+            withExistingParent(wall.id.path, vanillaId("block/wall_inventory"))
+                .texture("wall", wall.variant.textureName)
         }
     }
 
-    inline fun <reified I> MutableList<DeferredItem<*>>.removeEntries() where I : HTItemHolderLike, I : Enum<I> {
+    inline fun <reified I> MutableList<DeferredItem<*>>.removeItems() where I : HTItemHolderLike, I : Enum<I> {
         removeAll { holder: DeferredItem<*> ->
             for (entries: I in enumEntries<I>()) {
                 if (entries.key?.let(holder::`is`) ?: false) {
@@ -70,12 +76,12 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            removeEntries<RagiumItems.Compounds>()
+            removeItems<RagiumItems.Compounds>()
 
             remove(RagiumItems.BLAST_CHARGE)
-            removeEntries<RagiumItems.ForgeHammers>()
-            removeEntries<RagiumItems.AzureSteelTools>()
-            removeEntries<RagiumItems.DeepSteelTools>()
+            removeItems<RagiumItems.ForgeHammers>()
+            removeItems<RagiumItems.AzureSteelTools>()
+            removeItems<RagiumItems.DeepSteelTools>()
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)

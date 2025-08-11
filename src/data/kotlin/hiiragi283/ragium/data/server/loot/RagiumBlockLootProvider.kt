@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -49,8 +48,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Decorations
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
-            sets.addBlockLoot()
+        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
+            add(slab.get(), ::createSlabItemTable)
         }
 
         // Log
@@ -213,15 +212,4 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                     ),
             ),
         )
-
-    private fun HTBuildingBlockSets.addBlockLoot() {
-        // Base
-        dropSelf(this.base)
-        // Stairs
-        dropSelf(this.stairs)
-        // Slab
-        add(this.slab.get(), ::createSlabItemTable)
-        // Wall
-        dropSelf(this.wall)
-    }
 }

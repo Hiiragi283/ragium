@@ -43,6 +43,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
+    inline fun <reified B> addBlocks(value: String) where B : HTBlockHolderLike.Typed<out HTVariantKey>, B : Enum<B> {
+        val map: Map<Block, HTVariantKey> = enumEntries<B>().associate { typed: B -> typed.get() to typed.variant }
+        for ((block: Block, variant: HTVariantKey) in map) {
+            add(block, variant.translate(type, value))
+        }
+    }
+
     inline fun <reified I> addItems(material: HTMaterialType) where I : HTItemHolderLike.Typed<out HTVariantKey>, I : Enum<I> {
         val map: Map<Item, HTVariantKey> = enumEntries<I>().associate { typed: I -> typed.get() to typed.variant }
         for ((item: Item, variant: HTVariantKey) in map) {

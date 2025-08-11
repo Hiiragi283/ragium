@@ -1,6 +1,7 @@
 package hiiragi283.ragium.util
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
@@ -24,8 +25,11 @@ object RagiumChunkLoader : LoadingValidationCallback {
     private val controller = TicketController(RagiumAPI.id("chunk_loader"), this)
 
     override fun validateTickets(level: ServerLevel, ticketHelper: TicketHelper) {
-        ticketHelper.blockTickets.forEach { pos: BlockPos, ticketSet: TicketSet ->
-            val blockEntity: BlockEntity = level.getBlockEntity(pos) ?: return@forEach
+        ticketHelper.blockTickets.forEach { (pos: BlockPos, _: TicketSet) ->
+            val blockEntity: BlockEntity? = level.getBlockEntity(pos)
+            if (blockEntity !is HTDimensionalAnchorBlockEntity) {
+                ticketHelper.removeAllTickets(pos)
+            }
         }
     }
 

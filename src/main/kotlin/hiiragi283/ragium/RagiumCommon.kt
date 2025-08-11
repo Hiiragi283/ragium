@@ -29,7 +29,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -47,7 +46,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         NeoForgeMod.enableMilkFluid()
 
         eventBus.addListener(::commonSetup)
-        eventBus.addListener(::construct)
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
         eventBus.addListener(::registerRegistries)
@@ -82,8 +80,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerRegistries(event: NewRegistryEvent) {
         LOGGER.info("Registered new registries!")
     }
-
-    private fun construct(event: FMLConstructModEvent) {}
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {

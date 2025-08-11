@@ -21,14 +21,17 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
-import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.TransparentBlock
+import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
@@ -60,9 +63,9 @@ object RagiumBlocks {
 
         Drums.entries
 
-        for (sets: HTBuildingBlockSets in DECORATIONS) {
-            sets.init(eventBus)
-        }
+        Slabs.entries
+        Stairs.entries
+        Walls.entries
 
         REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
@@ -103,6 +106,9 @@ object RagiumBlocks {
 
     @JvmStatic
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
+
+    @JvmStatic
+    private fun copyOf(block: Block, mapColor: MapColor): BlockBehaviour.Properties = copyOf(block).mapColor(mapColor)
 
     @JvmStatic
     private fun glass(): BlockBehaviour.Properties = copyOf(Blocks.GLASS)
@@ -231,52 +237,90 @@ object RagiumBlocks {
 
     //    Buildings    //
 
-    @JvmStatic
-    private val RAGI_STONE_PROPERTY: BlockBehaviour.Properties = copyOf(Blocks.STONE).mapColor(MapColor.COLOR_RED)
+    @JvmField
+    val RAGI_STONE: DeferredBlock<Block> = register("ragi_stone", copyOf(Blocks.STONE, MapColor.COLOR_RED))
 
     @JvmField
-    val RAGI_STONE_SETS = HTBuildingBlockSets("ragi_stone", RAGI_STONE_PROPERTY)
+    val RAGI_STONE_BRICKS: DeferredBlock<Block> = register("ragi_stone_bricks", copyOf(Blocks.STONE, MapColor.COLOR_RED))
 
     @JvmField
-    val RAGI_STONE_BRICKS_SETS = HTBuildingBlockSets("ragi_stone_bricks", RAGI_STONE_PROPERTY, prefix = "ragi_stone_brick")
+    val RAGI_STONE_SQUARE: DeferredBlock<Block> = register("ragi_stone_square", copyOf(Blocks.STONE, MapColor.COLOR_RED))
 
     @JvmField
-    val RAGI_STONE_SQUARE_SETS = HTBuildingBlockSets("ragi_stone_square", RAGI_STONE_PROPERTY)
+    val AZURE_TILES: DeferredBlock<Block> = register("azure_tiles", copyOf(Blocks.STONE, MapColor.TERRACOTTA_BLUE))
 
     @JvmField
-    val AZURE_TILE_SETS = HTBuildingBlockSets(
-        "azure_tiles",
-        copyOf(Blocks.STONE).mapColor(MapColor.TERRACOTTA_BLUE),
-        prefix = "azure_tile",
+    val EMBER_STONE: DeferredBlock<Block> =
+        register("ember_stone", copyOf(Blocks.AMETHYST_BLOCK, MapColor.COLOR_ORANGE))
+
+    @JvmField
+    val PLASTIC_BLOCK: DeferredBlock<Block> = register("plastic_block", copyOf(Blocks.COPPER_BLOCK, MapColor.NONE))
+
+    @JvmField
+    val BLUE_NETHER_BRICKS: DeferredBlock<Block> =
+        register("blue_nether_bricks", copyOf(Blocks.NETHER_BRICKS, MapColor.COLOR_BLUE))
+
+    @JvmField
+    val SPONGE_CAKE: DeferredBlock<Block> = register("sponge_cake", copyOf(Blocks.YELLOW_WOOL))
+
+    @JvmField
+    val DECORATION_MAP: Map<HTDecorationVariant, DeferredBlock<Block>> = mapOf(
+        HTDecorationVariant.RAGI_STONE to RAGI_STONE,
+        HTDecorationVariant.RAGI_STONE_BRICK to RAGI_STONE_BRICKS,
+        HTDecorationVariant.RAGI_STONE_SQUARE to RAGI_STONE_SQUARE,
+        HTDecorationVariant.AZURE_TILE to AZURE_TILES,
+        HTDecorationVariant.EMBER_STONE to EMBER_STONE,
+        HTDecorationVariant.PLASTIC_BLOCK to PLASTIC_BLOCK,
+        HTDecorationVariant.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
+        HTDecorationVariant.SPONGE_CAKE to SPONGE_CAKE,
     )
 
-    @JvmField
-    val EMBER_STONE_SETS = HTBuildingBlockSets("ember_stone", copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_ORANGE))
+    enum class Slabs(override val variant: HTDecorationVariant) : HTBlockHolderLike.Typed<HTDecorationVariant> {
+        RAGI_STONE(HTDecorationVariant.RAGI_STONE),
+        RAGI_STONE_BRICK(HTDecorationVariant.RAGI_STONE_BRICK),
+        RAGI_STONE_SQUARE(HTDecorationVariant.RAGI_STONE_SQUARE),
+        AZURE_TILE(HTDecorationVariant.AZURE_TILE),
+        EMBER_STONE(HTDecorationVariant.EMBER_STONE),
+        PLASTIC_BLOCK(HTDecorationVariant.PLASTIC_BLOCK),
+        BLUE_NETHER_BRICK(HTDecorationVariant.BLUE_NETHER_BRICK),
+        SPONGE_CAKE(HTDecorationVariant.SPONGE_CAKE),
+        ;
 
-    @JvmField
-    val PLASTIC_SETS = HTBuildingBlockSets("plastic_block", copyOf(Blocks.COPPER_BLOCK).mapColor(DyeColor.WHITE))
+        override val holder: DeferredBlock<SlabBlock> =
+            register("${variant.serializedName}_slab", variant.properties, ::SlabBlock)
+    }
 
-    @JvmField
-    val BLUE_NETHER_BRICK_SETS = HTBuildingBlockSets(
-        "blue_nether_bricks",
-        copyOf(Blocks.NETHER_BRICKS).mapColor(MapColor.COLOR_BLUE),
-        prefix = "blue_nether_brick",
-    )
+    enum class Stairs(override val variant: HTDecorationVariant, base: DeferredBlock<*>) : HTBlockHolderLike.Typed<HTDecorationVariant> {
+        RAGI_STONE(HTDecorationVariant.RAGI_STONE, this@RagiumBlocks.RAGI_STONE),
+        RAGI_STONE_BRICK(HTDecorationVariant.RAGI_STONE_BRICK, this@RagiumBlocks.RAGI_STONE_BRICKS),
+        RAGI_STONE_SQUARE(HTDecorationVariant.RAGI_STONE_SQUARE, this@RagiumBlocks.RAGI_STONE_SQUARE),
+        AZURE_TILE(HTDecorationVariant.AZURE_TILE, this@RagiumBlocks.AZURE_TILES),
+        EMBER_STONE(HTDecorationVariant.EMBER_STONE, this@RagiumBlocks.EMBER_STONE),
+        PLASTIC_BLOCK(HTDecorationVariant.PLASTIC_BLOCK, this@RagiumBlocks.PLASTIC_BLOCK),
+        BLUE_NETHER_BRICK(HTDecorationVariant.BLUE_NETHER_BRICK, this@RagiumBlocks.BLUE_NETHER_BRICKS),
+        SPONGE_CAKE(HTDecorationVariant.SPONGE_CAKE, this@RagiumBlocks.SPONGE_CAKE),
+        ;
 
-    @JvmField
-    val SPONGE_CAKE_SETS = HTBuildingBlockSets("sponge_cake", copyOf(Blocks.YELLOW_WOOL))
+        override val holder: DeferredBlock<StairBlock> = register(
+            "${variant.serializedName}_stairs",
+            variant.properties,
+        ) { prop: BlockBehaviour.Properties -> StairBlock(base.get().defaultBlockState(), prop) }
+    }
 
-    @JvmField
-    val DECORATIONS: List<HTBuildingBlockSets> = listOf(
-        RAGI_STONE_SETS,
-        RAGI_STONE_BRICKS_SETS,
-        RAGI_STONE_SQUARE_SETS,
-        AZURE_TILE_SETS,
-        EMBER_STONE_SETS,
-        PLASTIC_SETS,
-        BLUE_NETHER_BRICK_SETS,
-        SPONGE_CAKE_SETS,
-    )
+    enum class Walls(override val variant: HTDecorationVariant) : HTBlockHolderLike.Typed<HTDecorationVariant> {
+        RAGI_STONE(HTDecorationVariant.RAGI_STONE),
+        RAGI_STONE_BRICK(HTDecorationVariant.RAGI_STONE_BRICK),
+        RAGI_STONE_SQUARE(HTDecorationVariant.RAGI_STONE_SQUARE),
+        AZURE_TILE(HTDecorationVariant.AZURE_TILE),
+        EMBER_STONE(HTDecorationVariant.EMBER_STONE),
+        PLASTIC_BLOCK(HTDecorationVariant.PLASTIC_BLOCK),
+        BLUE_NETHER_BRICK(HTDecorationVariant.BLUE_NETHER_BRICK),
+        SPONGE_CAKE(HTDecorationVariant.SPONGE_CAKE),
+        ;
+
+        override val holder: DeferredBlock<WallBlock> =
+            register("${variant.serializedName}_wall", variant.properties.forceSolidOn(), ::WallBlock)
+    }
 
     enum class Glasses(
         override val material: HTMaterialType,
