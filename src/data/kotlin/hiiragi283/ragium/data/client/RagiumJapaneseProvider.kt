@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialType
-import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon

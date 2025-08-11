@@ -4,6 +4,7 @@ import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.descKey
 import hiiragi283.ragium.api.extension.titleKey
+import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import net.minecraft.Util
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
@@ -63,9 +63,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     }
 
     fun addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
-        val translationKey: String = Util.makeDescriptionId("enchantment", key.location())
-        add(translationKey, value)
-        add("$translationKey.desc", desc)
+        add(key.toDescriptionKey("enchantment"), value)
+        add(key.toDescriptionKey("enchantment", "desc"), desc)
     }
 
     fun addFluid(content: HTFluidContent<*, *, *>, value: String) {
@@ -80,7 +79,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     }
 
     fun addItemGroup(group: DeferredHolder<CreativeModeTab, CreativeModeTab>, value: String) {
-        add(Util.makeDescriptionId("itemGroup", group.id), value)
+        add(group.id.toDescriptionKey("itemGroup"), value)
     }
 
     fun addMatterType(type: IMatterType, value: String) {

@@ -1,9 +1,8 @@
-package hiiragi283.ragium.data.server
+package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.AdvancementHolder
@@ -15,12 +14,12 @@ import net.minecraft.network.chat.Component
 import kotlin.enums.enumEntries
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
-    override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
+    override fun createRoot(): AdvancementHolder = root(RagiumAdvancements.ROOT) {
         display {
             setIcon(RagiumItems.ForgeHammers.RAGI_ALLOY)
-            title = Component.literal(RagiumAPI.MOD_NAME)
+            title = Component.literal(RagiumAPI.Companion.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
-            backGround = RagiumAPI.id("textures/block/plastic_block.png")
+            backGround = RagiumAPI.Companion.id("textures/block/plastic_block.png")
             showToast = false
             showChat = false
         }
@@ -34,7 +33,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         warped()
         eldritch()
 
-        create(RagiumAdvancements.ETERNAL_TICKET, root) {
+        child(RagiumAdvancements.ETERNAL_TICKET, root) {
             display {
                 setIcon(RagiumItems.Tickets.ETERNAL)
                 setTitleFromKey(RagiumAdvancements.ETERNAL_TICKET)
@@ -67,7 +66,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.Gems.RAGI_CRYSTAL,
             RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL,
         )
-        val ragiTicket: AdvancementHolder = create(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
+        val ragiTicket: AdvancementHolder = child(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
             display {
                 setIcon(RagiumItems.Tickets.RAGI)
                 setTitleFromKey(RagiumAdvancements.RAGI_TICKET)
@@ -93,7 +92,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 RagiumItems.Ingots.AZURE_STEEL,
                 RagiumCommonTags.Items.INGOTS_AZURE_STEEL,
             )
-        val azureGears: AdvancementHolder = create(RagiumAdvancements.AZURE_GEARS, azureSteel) {
+        val azureGears: AdvancementHolder = child(RagiumAdvancements.AZURE_GEARS, azureSteel) {
             display {
                 setIcon(RagiumItems.AzureSteelTools.PICKAXE)
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
@@ -111,7 +110,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.Gems.CRIMSON_CRYSTAL,
             RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL,
         )
-        val crimsonSoil: AdvancementHolder = create(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
+        val crimsonSoil: AdvancementHolder = child(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
             display {
                 setIcon(RagiumBlocks.CRIMSON_SOIL)
                 setTitleFromKey(RagiumAdvancements.CRIMSON_SOIL)
@@ -129,7 +128,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.Gems.WARPED_CRYSTAL,
             RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL,
         )
-        val dimAnchor: AdvancementHolder = create(RagiumAdvancements.DIM_ANCHOR, warpedCrystal) {
+        val dimAnchor: AdvancementHolder = child(RagiumAdvancements.DIM_ANCHOR, warpedCrystal) {
             display {
                 setIcon(RagiumBlocks.Devices.DIM_ANCHOR)
                 setTitleFromKey(RagiumAdvancements.DIM_ANCHOR)
@@ -141,7 +140,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(RagiumBlocks.Devices.DIM_ANCHOR.get()),
             )
         }
-        val teleportTicket: AdvancementHolder = create(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
+        val teleportTicket: AdvancementHolder = child(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
             display {
                 setIcon(RagiumItems.Tickets.TELEPORT)
                 setTitleFromKey(RagiumAdvancements.TELEPORT_TICKET)
@@ -159,7 +158,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.Gems.ELDRITCH_PEARL,
             RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL,
         )
-        val eldritchEgg: AdvancementHolder = create(RagiumAdvancements.ELDRITCH_EGG, eldritchPearl) {
+        val eldritchEgg: AdvancementHolder = child(RagiumAdvancements.ELDRITCH_EGG, eldritchPearl) {
             display {
                 setIcon(RagiumItems.ELDRITCH_EGG)
                 setTitleFromKey(RagiumAdvancements.ELDRITCH_EGG)
@@ -168,7 +167,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             addCriterion("use_eldritch_egg", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.ELDRITCH_EGG))
         }
-        val mysteriousObsidian: AdvancementHolder = create(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {
+        val mysteriousObsidian: AdvancementHolder = child(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {
             display {
                 setIcon(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
                 setTitleFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)

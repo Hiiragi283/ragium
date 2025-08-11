@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.Util
+import hiiragi283.ragium.api.extension.toDescriptionKey
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -30,7 +30,7 @@ enum class HTTransferIO(val canInsert: Boolean, val canExtract: Boolean, val col
     }
 
     @JvmField
-    val translationKey: String = Util.makeDescriptionId("transfer_io", RagiumAPI.id(name.lowercase()))
+    val translationKey: String = RagiumAPI.id(name.lowercase()).toDescriptionKey("transfer_io")
 
     val description: MutableComponent get() = Component.translatable(translationKey)
 

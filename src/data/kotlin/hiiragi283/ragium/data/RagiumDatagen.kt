@@ -7,9 +7,9 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
-import hiiragi283.ragium.data.server.RagiumAdvancementGenerator
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancementGenerator
 import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider

@@ -2,12 +2,9 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
-import net.minecraft.Util
 import net.minecraft.advancements.Advancement
-import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
@@ -18,21 +15,9 @@ import net.neoforged.neoforge.registries.DeferredHolder
 
 //    Advancement    //
 
-private fun translationKey(key: ResourceKey<Advancement>): String = Util.makeDescriptionId("advancements", key.location())
+fun ResourceKey<Advancement>.titleKey(): String = toDescriptionKey("advancements", "title")
 
-fun ResourceKey<Advancement>.titleKey(): String = "${translationKey(this)}.title"
-
-fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
-
-//    TagAppender    //
-
-fun <B : TagsProvider.TagAppender<Block>> B.addBlock(holderLike: HTBlockHolderLike): B = apply {
-    addBlock(holderLike.holder)
-}
-
-fun <B : TagsProvider.TagAppender<Block>> B.addBlock(holder: DeferredBlock<*>): B = apply {
-    holder.unwrapKey().ifPresent(::add)
-}
+fun ResourceKey<Advancement>.descKey(): String = toDescriptionKey("advancements", "desc")
 
 //    ModelFile    //
 
@@ -44,8 +29,8 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(path: String, layer0: Re
         .texture("layer1", layer1)
         .renderType("cutout")
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(id: ResourceLocation, layer0: ResourceLocation, layer1: ResourceLocation): T =
-    layeredModel(id.path, layer0, layer1)
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation): T =
+    layeredModel(holder.id.path, layer0, layer1)
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: HTBlockHolderLike, layer0: ResourceLocation, layer1: ResourceLocation): T =
     layeredModel(holder.id.path, layer0, layer1)
@@ -58,7 +43,7 @@ fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLo
     simpleBlock(
         holder.get(),
         ConfiguredModel(
-            models().layeredModel(holder.id, layer0, layer1),
+            models().layeredModel(holder, layer0, layer1),
         ),
     )
 }

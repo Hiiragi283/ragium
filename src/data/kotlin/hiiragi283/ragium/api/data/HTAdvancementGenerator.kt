@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
+import hiiragi283.ragium.api.data.advancement.HTDisplayInfoBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.advancements.Advancement
@@ -37,32 +39,14 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
 
     //    Extension    //
 
-    protected fun create(key: ResourceKey<Advancement>, builderAction: Advancement.Builder.() -> Unit): AdvancementHolder =
-        Advancement.Builder
-            .advancement()
-            .apply(builderAction)
-            .save(key)
+    protected fun root(key: ResourceKey<Advancement>, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
+        HTAdvancementBuilder.root().apply(builderAction).save(output, key)
 
-    @Suppress("DEPRECATION", "removal")
-    protected fun create(
-        key: ResourceKey<Advancement>,
-        parent: ResourceLocation,
-        builderAction: Advancement.Builder.() -> Unit,
-    ): AdvancementHolder = Advancement.Builder
-        .advancement()
-        .parent(parent)
-        .apply(builderAction)
-        .save(key)
-
-    protected fun create(
+    protected fun child(
         key: ResourceKey<Advancement>,
         parent: AdvancementHolder,
-        builderAction: Advancement.Builder.() -> Unit,
-    ): AdvancementHolder = Advancement.Builder
-        .advancement()
-        .parent(parent)
-        .apply(builderAction)
-        .save(key)
+        builderAction: HTAdvancementBuilder.() -> Unit,
+    ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
 
     protected fun createSimple(
         key: ResourceKey<Advancement>,
@@ -72,7 +56,7 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
     ): AdvancementHolder {
         val id: ResourceLocation = item.asItemHolder().idOrThrow
-        return create(key, parent) {
+        return child(key, parent) {
             display {
                 setIcon(item)
                 setTitleFromKey(key)
@@ -87,23 +71,18 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
         }
     }
 
-    protected inline fun Advancement.Builder.display(builderAction: HTDisplayInfoBuilder.() -> Unit): Advancement.Builder =
-        display(HTDisplayInfoBuilder.create(builderAction))
-
-    protected fun Advancement.Builder.hasItem(key: String, predicate: ItemPredicate.Builder): Advancement.Builder =
+    protected fun HTAdvancementBuilder.hasItem(key: String, predicate: ItemPredicate.Builder): HTAdvancementBuilder =
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(predicate))
 
-    protected fun Advancement.Builder.hasAnyItem(key: String, items: List<ItemLike>): Advancement.Builder =
+    protected fun HTAdvancementBuilder.hasAnyItem(key: String, items: List<ItemLike>): HTAdvancementBuilder =
         hasAnyItem(key, *items.toTypedArray())
 
-    protected fun Advancement.Builder.hasAnyItem(key: String, vararg items: ItemLike): Advancement.Builder =
+    protected fun HTAdvancementBuilder.hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
         hasItem(key, ItemPredicate.Builder.item().of(*items))
 
-    protected fun Advancement.Builder.hasAllItem(key: String, vararg items: ItemLike): Advancement.Builder =
+    protected fun HTAdvancementBuilder.hasAllItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(*items))
 
-    protected fun Advancement.Builder.hasItemsIn(key: String, tagKey: TagKey<Item>): Advancement.Builder =
+    protected fun HTAdvancementBuilder.hasItemsIn(key: String, tagKey: TagKey<Item>): HTAdvancementBuilder =
         hasItem(key, ItemPredicate.Builder.item().of(tagKey))
-
-    protected fun Advancement.Builder.save(key: ResourceKey<Advancement>): AdvancementHolder = save(output, key.location().toString())
 }

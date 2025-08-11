@@ -3,6 +3,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.util.RagiumConst
+import net.minecraft.Util
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -46,6 +47,16 @@ fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, 
 
 val <T : Any> DeferredRegister<T>.values: List<T> get() = entries.map(Supplier<out T>::get)
 
+fun ResourceKey<*>.toDescriptionKey(prefix: String, suffix: String? = null): String = location().toDescriptionKey(prefix, suffix)
+
+fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): String = buildString {
+    append(Util.makeDescriptionId(prefix, this@toDescriptionKey))
+    if (suffix != null) {
+        append('.')
+        append(suffix)
+    }
+}
+
 //    Holder    //
 
 /**
@@ -82,10 +93,6 @@ val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
 val DeferredItem<*>.itemId: ResourceLocation get() = id.withPrefix("item/")
 
 //    HolderSet    //
-
-fun blockHolderSet(vararg blocks: Block): HolderSet.Direct<Block> = HolderSet.direct(Block::asBlockHolder, *blocks)
-
-fun blockHolderSet(blocks: Collection<Block>): HolderSet.Direct<Block> = HolderSet.direct(Block::asBlockHolder, blocks)
 
 /**
  * この[HolderSet]を[Component]に変換します。

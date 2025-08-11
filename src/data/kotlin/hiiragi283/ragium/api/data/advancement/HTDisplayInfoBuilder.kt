@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.extension.descKey
 import hiiragi283.ragium.api.extension.titleKey
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import java.util.*
+import java.util.Optional
 
 @HTDslMarker
 class HTDisplayInfoBuilder {

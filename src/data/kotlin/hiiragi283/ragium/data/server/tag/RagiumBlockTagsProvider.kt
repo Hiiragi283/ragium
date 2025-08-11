@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addBlock
 import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -13,13 +12,16 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider.IntrinsicTagAppender
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 import java.util.function.Supplier
+import kotlin.enums.enumEntries
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     IntrinsicHolderTagsProvider<Block>(
@@ -86,15 +88,13 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             tag(BlockTags.WALLS).addBlock(sets.wall)
         }
 
-        buildList {
-            addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.Devices.entries)
-            addAll(RagiumBlocks.Drums.entries)
-            addAll(RagiumBlocks.Dynamos.entries)
-            addAll(RagiumBlocks.Frames.entries)
-            addAll(RagiumBlocks.Glasses.entries)
-            addAll(RagiumBlocks.Machines.entries)
-        }.forEach(pickaxe::addBlock)
+        pickaxe.addBlocks<RagiumBlocks.Casings>()
+        pickaxe.addBlocks<RagiumBlocks.Devices>()
+        pickaxe.addBlocks<RagiumBlocks.Drums>()
+        pickaxe.addBlocks<RagiumBlocks.Dynamos>()
+        pickaxe.addBlocks<RagiumBlocks.Frames>()
+        pickaxe.addBlocks<RagiumBlocks.Glasses>()
+        pickaxe.addBlocks<RagiumBlocks.Machines>()
 
         // Shovel
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -110,7 +110,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             addBlock(Tags.Blocks.GLASS_BLOCKS, glass.tagKey, glass)
         }
         // LED
-        RagiumBlocks.LEDBlocks.entries.forEach(tag(RagiumModTags.Blocks.LED_BLOCKS)::addBlock)
+        tag(RagiumModTags.Blocks.LED_BLOCKS).addBlocks<RagiumBlocks.LEDBlocks>()
         // Stone
         tag(Tags.Blocks.OBSIDIANS).addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         tag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS).addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
@@ -143,3 +143,14 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(child).add(block.get())
     }
 }
+
+private fun IntrinsicTagAppender<Block>.addBlock(holder: DeferredBlock<*>): IntrinsicTagAppender<Block> = apply {
+    holder.unwrapKey().ifPresent(::add)
+}
+
+private fun IntrinsicTagAppender<Block>.addBlock(holderLike: HTBlockHolderLike): IntrinsicTagAppender<Block> = addBlock(holderLike.holder)
+
+private inline fun <reified B> IntrinsicTagAppender<Block>.addBlocks(): IntrinsicTagAppender<Block> where B : HTBlockHolderLike, B : Enum<B> =
+    apply {
+        enumEntries<B>().mapNotNull(HTBlockHolderLike::getKey).forEach(::add)
+    }

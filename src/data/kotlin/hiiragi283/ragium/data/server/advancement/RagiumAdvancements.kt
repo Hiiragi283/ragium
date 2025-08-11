@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
