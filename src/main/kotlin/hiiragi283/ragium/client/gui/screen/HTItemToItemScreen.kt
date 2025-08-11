@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.gui.screen.HTProgressBar
+import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import net.minecraft.network.chat.Component
@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTItemToItemScreen(
     texture: ResourceLocation,
-    factory: (Int, Int) -> HTProgressBar,
+    private val factory: (() -> Float, Int, Int) -> HTProgressWidget,
     menu: HTItemToItemMenu,
     inventory: Inventory,
     title: Component,
@@ -22,7 +22,7 @@ class HTItemToItemScreen(
         @JvmStatic
         fun compressor(menu: HTItemToItemMenu, inventory: Inventory, title: Component): HTItemToItemScreen = HTItemToItemScreen(
             RagiumAPI.id("textures/gui/container/compressor.png"),
-            HTProgressBar::infuse,
+            HTProgressWidget::infuse,
             menu,
             inventory,
             title,
@@ -31,12 +31,14 @@ class HTItemToItemScreen(
         @JvmStatic
         fun extractor(menu: HTItemToItemMenu, inventory: Inventory, title: Component): HTItemToItemScreen = HTItemToItemScreen(
             RagiumAPI.id("textures/gui/container/extractor.png"),
-            HTProgressBar::arrow,
+            HTProgressWidget::arrow,
             menu,
             inventory,
             title,
         )
     }
 
-    override val progressBar: HTProgressBar = factory(HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(1))
+    override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
+        consumer(factory(menu::progress, startX + HTSlotHelper.getSlotPosX(3.5), startY + HTSlotHelper.getSlotPosY(1)))
+    }
 }

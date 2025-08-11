@@ -46,17 +46,6 @@ abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     protected abstract fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
 
-    final override fun serverTickPost(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        result: TriState,
-    ) {
-        if (result.isFalse) return
-        exportItems(level, pos)
-        exportFluids(level, pos)
-    }
-
     //    Menu    //
 
     final override fun getDisplayName(): Component = blockState.block.name

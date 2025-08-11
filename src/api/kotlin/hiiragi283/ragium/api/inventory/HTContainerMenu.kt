@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -11,6 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 
 abstract class HTContainerMenu(
     menuType: HTDeferredMenuType<*>,
@@ -77,9 +77,9 @@ abstract class HTContainerMenu(
     val level: Level get() = player.level()
     val dimension: ResourceKey<Level> get() = level.dimension()
 
-    fun getHandlerBlockEntity(): HTHandlerBlockEntity? = level.getBlockEntity(pos) as? HTHandlerBlockEntity
+    val blockEntity: BlockEntity? get() = level.getBlockEntity(pos)
 
-    protected fun addPlayerInv(inventory: Inventory, yOffset: Int = 0, immovable: Boolean = false) {
+    protected fun addPlayerInv(inventory: Inventory, yOffset: Int = 0) {
         // inventory
         for (index: Int in 0..26) {
             addSlot(

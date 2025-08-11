@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.gui.screen
 
+import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
+import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -10,12 +12,15 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
-    abstract val progressBar: HTProgressBar
+    protected lateinit var energyWidget: HTEnergyNetworkWidget
+        private set
 
     override fun init() {
         super.init()
+        // Progress Widget
+        addProgressBar(::addRenderableOnly)
         // Energy Widget
-        addRenderableWidget(createEnergyWidget(menu.dimension))
+        energyWidget = addRenderableWidget(createEnergyWidget(menu.dimension))
     }
 
     override fun renderBg(
@@ -26,11 +31,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     ) {
         // background
         super.renderBg(guiGraphics, partialTick, mouseX, mouseY)
-        // progress bar
-        renderProgress(guiGraphics)
     }
 
-    protected open fun renderProgress(guiGraphics: GuiGraphics) {
-        progressBar.render(guiGraphics, this, menu.progress)
-    }
+    protected abstract fun addProgressBar(consumer: (HTProgressWidget) -> Unit)
 }

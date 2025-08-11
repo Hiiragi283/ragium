@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
-import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
@@ -26,8 +25,7 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
-    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf())
+    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     /**
@@ -83,13 +81,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.DEFAULT
     }
-
-    override fun serverTickPost(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        result: TriState,
-    ) {}
 
     //    Menu    //
 

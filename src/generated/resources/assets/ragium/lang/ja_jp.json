@@ -151,8 +151,6 @@
   "chemical.ragium.raginite": "ラギナイト",
   "chemical.ragium.warped_sap": "歪んだ樹液",
   "config.jade.plugin_ragium.output_side": "搬出面",
-  "config.jade.plugin_ragium.owner": "機械の所有者",
-  "config.jade.plugin_ragium.progress": "進行度",
   "enchantment.ragium.capacity": "容量増加",
   "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します。",
   "enchantment.ragium.noise_canceling": "ノイズキャンセリング",
@@ -337,6 +335,10 @@
   "tag.item.ragium.led_blocks": "LEDブロック",
   "tag.item.ragium.polymer_resin": "高分子樹脂",
   "tag.item.ragium.work_in_progress": "開発中",
+  "transfer_io.ragium.both": "モード：双方",
+  "transfer_io.ragium.input_only": "モード：搬入",
+  "transfer_io.ragium.none": "モード：なし",
+  "transfer_io.ragium.output_only": "モード：搬出",
   "upgrade.azure_steel_upgrade": "紺鉄強化",
   "upgrade.deep_steel_upgrade": "深層鋼強化"
 }

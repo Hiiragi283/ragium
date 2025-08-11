@@ -151,8 +151,6 @@
   "chemical.ragium.raginite": "Raginite",
   "chemical.ragium.warped_sap": "Warped Sap",
   "config.jade.plugin_ragium.output_side": "Output Side",
-  "config.jade.plugin_ragium.owner": "Machine Owner",
-  "config.jade.plugin_ragium.progress": "Progress",
   "enchantment.ragium.capacity": "Capacity",
   "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages.",
   "enchantment.ragium.noise_canceling": "Noise Canceling",
@@ -337,6 +335,10 @@
   "tag.item.ragium.led_blocks": "LED Blocks",
   "tag.item.ragium.polymer_resin": "Polymer Resins",
   "tag.item.ragium.work_in_progress": "Work In Progress",
+  "transfer_io.ragium.both": "Mode: Both",
+  "transfer_io.ragium.input_only": "Mode: Input",
+  "transfer_io.ragium.none": "Mode: None",
+  "transfer_io.ragium.output_only": "Mode: Output",
   "upgrade.azure_steel_upgrade": "Azure Steel Upgrade",
   "upgrade.deep_steel_upgrade": "Deep Steel Upgrade"
 }

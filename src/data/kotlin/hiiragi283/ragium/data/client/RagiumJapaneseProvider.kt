@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
+import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumAdvancements
@@ -439,6 +440,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
         add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
         add(RagiumTranslationKeys.TOOLTIP_WIP, "この要素は開発中です！！")
+
+        add(HTTransferIO.INPUT_ONLY.translationKey, "モード：搬入")
+        add(HTTransferIO.OUTPUT_ONLY.translationKey, "モード：搬出")
+        add(HTTransferIO.BOTH.translationKey, "モード：双方")
+        add(HTTransferIO.NONE.translationKey, "モード：なし")
     }
 
     private fun information() {

@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
@@ -39,8 +38,11 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ),
     HTFluidInteractable {
-    override val inventory: HTItemHandler = HTItemStackHandler(2, this::setChanged)
-    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(1))
+    override val inventory: HTItemHandler = HTItemStackHandler
+        .Builder(2)
+        .addInput(0)
+        .addOutput(1)
+        .build(::setChanged)
     private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 

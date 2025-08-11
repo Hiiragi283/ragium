@@ -2,8 +2,8 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
-import hiiragi283.ragium.api.gui.screen.HTProgressBar
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import net.minecraft.network.chat.Component
@@ -16,8 +16,6 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTRefineryScreen(menu: HTFluidOnlyMenu, inventory: Inventory, title: Component) :
     HTMachineScreen<HTFluidOnlyMenu>(RagiumAPI.id("textures/gui/container/refinery.png"), menu, inventory, title),
     HTFluidScreen {
-    override val progressBar: HTProgressBar = HTProgressBar.burn(HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosX(2))
-
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget
 
@@ -27,6 +25,10 @@ class HTRefineryScreen(menu: HTFluidOnlyMenu, inventory: Inventory, title: Compo
             addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)))
         fluidWidget1 =
             addRenderableWidget(createFluidTankWidget(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0)))
+    }
+
+    override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
+        consumer(HTProgressWidget.burn(menu::progress, startX + HTSlotHelper.getSlotPosX(4), startY + HTSlotHelper.getSlotPosX(2)))
     }
 
     //    HTFluidScreen    //

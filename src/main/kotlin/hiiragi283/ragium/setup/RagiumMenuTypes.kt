@@ -13,10 +13,17 @@ import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
+import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 
 object RagiumMenuTypes {
     @JvmField
     val REGISTER = HTMenuTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmField
+    val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu> =
+        REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu)
+
+    //    Machine    //
 
     @JvmField
     val ALLOY_SMELTER: HTDeferredMenuType<HTItemWithItemToItemMenu> = REGISTER.registerType(

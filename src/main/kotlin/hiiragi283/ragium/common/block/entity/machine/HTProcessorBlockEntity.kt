@@ -69,10 +69,6 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         state: BlockState,
         result: TriState,
     ) {
-        if (!result.isFalse) {
-            exportItems(level, pos)
-            exportFluids(level, pos)
-        }
         if (result.isTrue) {
             if (lastInput != null && lastRecipe != null) {
                 serverTickPost(level, pos, state, lastInput!!, lastRecipe!!)

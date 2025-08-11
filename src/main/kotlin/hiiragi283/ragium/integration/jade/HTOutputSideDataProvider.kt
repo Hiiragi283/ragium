@@ -2,7 +2,6 @@ package hiiragi283.ragium.integration.jade
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.integration.jade.base.HTBlockDataProvider
 import net.minecraft.core.Direction
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -28,7 +27,7 @@ object HTOutputSideDataProvider : HTBlockDataProvider<Direction>() {
         )
     }
 
-    override fun streamData(accessor: BlockAccessor): Direction? = (accessor.blockEntity as? HTBlockEntity)?.outputSide
+    override fun streamData(accessor: BlockAccessor): Direction? = null
 
     override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, Direction> = Direction.STREAM_CODEC.cast()
 

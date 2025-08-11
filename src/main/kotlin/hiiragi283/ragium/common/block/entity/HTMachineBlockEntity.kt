@@ -1,23 +1,30 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
+import hiiragi283.ragium.common.storage.HTTransferIOCache
+import hiiragi283.ragium.common.storage.item.HTDirectionalItemHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
@@ -25,18 +32,44 @@ import kotlin.collections.forEach
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
+    HTHandlerBlockEntity,
     MenuProvider {
     //    Storage    //
 
     protected abstract val inventory: HTItemHandler
-    protected abstract val itemFilter: HTItemFilter
+    val transferIOCache = HTTransferIOCache()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.INVENTORY, inventory)
+        writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
         reader.read(RagiumConst.INVENTORY, inventory)
+        reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
+    }
+
+    override fun onRightClickedWithWrench(
+        stack: ItemStack,
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): ItemInteractionResult {
+        if (!level.isClientSide) {
+            player.openMenu(
+                object : MenuProvider {
+                    override fun getDisplayName(): Component = Component.literal("Slot Configuration")
+
+                    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSlotConfigurationMenu =
+                        HTSlotConfigurationMenu(containerId, playerInventory, pos, createDefinition())
+                },
+                pos,
+            )
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }
 
     final override fun dropInventory(consumer: (ItemStack) -> Unit) {
@@ -101,7 +134,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         this.externalNetwork = wrapNetworkToExternal(network)
     }
 
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, itemFilter)
+    override fun getItemHandler(direction: Direction?): HTDirectionalItemHandler =
+        HTDirectionalItemHandler(inventory, direction, transferIOCache)
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 
@@ -114,17 +148,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Extension    //
 
-    protected fun insertToOutput(range: IntRange, output: ItemStack, simulate: Boolean): ItemStack {
-        val filter: HTItemFilter = HTItemFilter.simple(range.toList().toIntArray(), intArrayOf())
-        val fixedInventory = HTFilteredItemHandler(inventory, filter)
-        return ItemHandlerHelper.insertItem(fixedInventory, output, simulate)
-    }
-
-    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack {
-        if (itemFilter is HTItemFilter.Simple) {
-            val fixedInventory = HTFilteredItemHandler(inventory, (itemFilter as HTItemFilter.Simple).reverse())
-            return ItemHandlerHelper.insertItem(fixedInventory, output, simulate)
-        }
-        return output
-    }
+    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack =
+        ItemHandlerHelper.insertItem(inventory.toFilteredReverse(), output, simulate)
 }

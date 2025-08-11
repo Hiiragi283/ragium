@@ -43,7 +43,7 @@ object RagiumConst {
     //    Nbt    //
 
     const val NETWORK = "network"
-    const val TARGET_SIDE = "target_side"
+    const val TRANSFER_IO = "transfer_io"
     const val UPGRADES = "upgrades"
 
     const val INVENTORY = "inventory"

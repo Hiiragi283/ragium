@@ -28,7 +28,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun canProgressRecipe(level: ServerLevel, input: HTDoubleRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
-        if (!insertToOutput(2..2, recipe.assemble(input, level.registryAccess()), true).isEmpty) {
+        if (!insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty) {
             return false
         }
         // インプットから正確な個数を引けるか判定する
@@ -48,7 +48,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTCombineItemToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(2..2, recipe.assemble(input, level.registryAccess()), false)
+        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         consumeItem(input, recipe, 0, 1)
         consumeItem(input, recipe, 1, 0)

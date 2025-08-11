@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
@@ -21,7 +22,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 @OnlyIn(Dist.CLIENT)
 abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     AbstractContainerScreen<T>(menu, inventory, title) {
-    abstract val texture: ResourceLocation
+    abstract val texture: ResourceLocation?
 
     override fun render(
         guiGraphics: GuiGraphics,
@@ -39,7 +40,9 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         mouseX: Int,
         mouseY: Int,
     ) {
-        guiGraphics.blit(texture, startX, startY, 0, 0, imageWidth, imageHeight)
+        texture?.let {
+            guiGraphics.blit(it, startX, startY, 0, 0, imageWidth, imageHeight)
+        }
 
         for (renderable: Renderable in renderables) {
             if (renderable is HTBackgroundRenderable) {
@@ -55,7 +58,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
     val startY: Int get() = (height - imageHeight) / 2
 
     fun createFluidTankWidget(index: Int, x: Int, y: Int): HTFluidWidget {
-        val handler: IFluidHandler? = menu.getHandlerBlockEntity()?.getFluidHandler(null)
+        val handler: IFluidHandler? = (menu.blockEntity as? HTHandlerBlockEntity)?.getFluidHandler(null)
         return RagiumAPI.getInstance().createFluidTankWidget(
             handler?.getFluidInTank(index),
             handler?.getTankCapacity(index),

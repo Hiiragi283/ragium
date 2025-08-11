@@ -60,7 +60,7 @@ abstract class HTSpriteWidget(
 
         RenderSystem.setShaderTexture(0, sprite.atlasLocation())
         RenderSystem.defaultBlendFunc()
-        setShaderColor(color) {
+        setShaderColor(guiGraphics, color) {
             RenderSystem.enableBlend()
             val times: Int = 1 + (Mth.ceil(fillLevel) / width)
             for (i: Int in (0 until times)) {

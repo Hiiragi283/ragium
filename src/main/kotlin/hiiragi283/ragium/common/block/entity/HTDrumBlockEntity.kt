@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -14,13 +13,15 @@ import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.SimpleFluidContent
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTDrumBlockEntity(
     capacity: Int,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTBlockEntity(type, pos, state) {
+) : HTBlockEntity(type, pos, state),
+    HTHandlerBlockEntity {
     private val tank = HTFluidTank(capacity, this::setChanged)
 
     //    Save & Load    //
@@ -48,10 +49,7 @@ abstract class HTDrumBlockEntity(
         tank
     }
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(
-        listOf(tank),
-        HTFluidFilter.ALWAYS,
-    )
+    override fun getFluidHandler(direction: Direction?): IFluidHandler = tank
 
     //    Impl    //
 

@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
-import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.core.BlockPos
@@ -22,8 +22,11 @@ abstract class HTItemToItemBlockEntity(
     pos: BlockPos,
     state: BlockState,
 ) : HTProcessorBlockEntity<SingleRecipeInput, HTItemToItemRecipe>(recipeType, type, pos, state) {
-    final override val inventory = HTItemStackHandler(2, this::setChanged)
-    final override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(1))
+    final override val inventory: HTItemHandler = HTItemStackHandler
+        .Builder(2)
+        .addInput(0)
+        .addOutput(1)
+        .build(::setChanged)
 
     //    Ticking    //
 

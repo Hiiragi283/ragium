@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
+import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumAdvancements
@@ -437,6 +438,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
         add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "Press Shift to show info")
         add(RagiumTranslationKeys.TOOLTIP_WIP, "This content is work in progress!!")
+
+        add(HTTransferIO.INPUT_ONLY.translationKey, "Mode: Input")
+        add(HTTransferIO.OUTPUT_ONLY.translationKey, "Mode: Output")
+        add(HTTransferIO.BOTH.translationKey, "Mode: Both")
+        add(HTTransferIO.NONE.translationKey, "Mode: None")
     }
 
     private fun information() {

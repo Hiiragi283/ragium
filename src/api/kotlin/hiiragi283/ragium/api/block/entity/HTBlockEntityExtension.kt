@@ -1,11 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -19,9 +15,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 
-interface HTBlockEntityExtension : HTHandlerBlockEntity {
+interface HTBlockEntityExtension {
     val upgrades: HTItemHandler
-    var outputSide: Direction?
 
     /**
      * [net.minecraft.world.level.block.entity.BlockEntity.setBlockState]の後で呼び出されます。
@@ -46,24 +41,27 @@ interface HTBlockEntityExtension : HTHandlerBlockEntity {
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-    ): ItemInteractionResult {
-        // レンチでクリックすると出力面を設定
-        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            this.outputSide = hitResult.direction
-            level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS)
-            return ItemInteractionResult.sidedSuccess(level.isClientSide)
-        } else if (stack.`is`(RagiumCommonTags.Items.PAPER)) {
-            // 紙でクリックすると出力面を消去
-            this.outputSide = null
-            level.playSound(null, pos, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS)
-            return ItemInteractionResult.sidedSuccess(level.isClientSide)
+    ): ItemInteractionResult = when {
+        // レンチでクリックすると搬入出を設定
+        stack.`is`(Tags.Items.TOOLS_WRENCH) -> {
+            onRightClickedWithWrench(stack, state, level, pos, player, hand, hitResult)
         }
         // 液体コンテナで触ると搬出入を行う
-        return when (this) {
+        else -> when (this) {
             is HTFluidInteractable -> interactWith(level, player, hand)
             else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
         }
     }
+
+    fun onRightClickedWithWrench(
+        stack: ItemStack,
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
     /**
      * ブロックが右クリックされたときに呼ばれます。

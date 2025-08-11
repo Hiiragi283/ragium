@@ -2,7 +2,6 @@
 
 package hiiragi283.ragium.api.extension
 
-import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.BufferUploader
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.PoseStack
@@ -93,14 +92,14 @@ fun renderItem(
     poseStack.popPose()
 }
 
-inline fun setShaderColor(color: Int, action: () -> Unit) {
+inline fun setShaderColor(guiGraphics: GuiGraphics, color: Int, action: () -> Unit) {
     val red: Float = FastColor.ARGB32.red(color) / 255f
     val green: Float = FastColor.ARGB32.green(color) / 255f
     val blue: Float = FastColor.ARGB32.blue(color) / 255f
     val alpha: Float = FastColor.ARGB32.alpha(color) / 255f
-    RenderSystem.setShaderColor(red, green, blue, alpha)
+    guiGraphics.setColor(red, green, blue, alpha)
     action()
-    RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+    guiGraphics.setColor(1f, 1f, 1f, 1f)
 }
 
 /**

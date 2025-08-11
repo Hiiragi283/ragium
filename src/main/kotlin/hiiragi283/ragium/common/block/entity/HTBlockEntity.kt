@@ -4,29 +4,20 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.ExtraCodecs
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.INBTSerializable
-import net.neoforged.neoforge.fluids.FluidUtil
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
 import org.slf4j.Logger
 import java.util.*
 
@@ -36,7 +27,6 @@ import java.util.*
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
     HTBlockEntityExtension,
-    HTHandlerBlockEntity,
     HTNbtCodec {
     companion object {
         @JvmField
@@ -57,15 +47,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         loadAdditional(tag, lookupProvider)
     }
 
-    override val upgrades = HTItemStackHandler(4, ::onUpgradeUpdated)
+    override val upgrades: HTItemStackHandler = HTItemStackHandler.Builder(4).build(::onUpgradeUpdated)
 
     @Suppress("unused")
     private fun onUpgradeUpdated(index: Int) {
         reloadUpgrades()
         setChanged()
     }
-
-    override var outputSide: Direction? = null
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -85,8 +73,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 tag.put(key, serializable.serializeNBT(registries))
             }
         }
-        // Target Side
-        writer.writeNullable(Direction.CODEC, RagiumConst.TARGET_SIDE, outputSide)
         // Upgrades
         writer.write(RagiumConst.UPGRADES, upgrades)
         // Custom
@@ -103,10 +89,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 serializable.deserializeNBT(registries, tag.getCompound(key))
             }
         }
-        // Target Side
-        reader
-            .read(Direction.CODEC, RagiumConst.TARGET_SIDE)
-            .ifSuccess { direction: Direction -> outputSide = direction }
         // Upgrades
         reader.read(RagiumConst.UPGRADES, upgrades)
         // Custom
@@ -123,40 +105,5 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun setLevel(level: Level) {
         super.setLevel(level)
         afterLevelInit(level)
-    }
-
-    //    Extension    //
-
-    /**
-     * 対象となるブロックにアイテムを移動します
-     */
-    protected fun exportItems(level: ServerLevel, pos: BlockPos) {
-        val handler: IItemHandler = getItemHandler(null) ?: return
-        val targetSide: Direction = this.outputSide ?: return
-        val outputHandler: IItemHandler? =
-            level.getCapability(Capabilities.ItemHandler.BLOCK, pos.relative(targetSide), targetSide.opposite)
-        if (outputHandler != null) {
-            for (slot: Int in (0 until handler.slots)) {
-                var stack: ItemStack = handler.extractItem(slot, 64, true)
-                if (stack.isEmpty) continue
-                stack = handler.getStackInSlot(slot)
-                if (ItemHandlerHelper.insertItem(outputHandler, stack, false).isEmpty) {
-                    handler.extractItem(slot, stack.count, false)
-                }
-            }
-        }
-    }
-
-    /**
-     * 対象となるブロックに液体を移動します
-     */
-    protected fun exportFluids(level: ServerLevel, pos: BlockPos) {
-        val handler: IFluidHandler = getFluidHandler(null) ?: return
-        val targetSide: Direction = this.outputSide ?: return
-        val outputHandler: IFluidHandler? =
-            level.getCapability(Capabilities.FluidHandler.BLOCK, pos.relative(targetSide), targetSide.opposite)
-        if (outputHandler != null) {
-            FluidUtil.tryFluidTransfer(outputHandler, handler, Int.MAX_VALUE, true)
-        }
     }
 }

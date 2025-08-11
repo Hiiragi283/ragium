@@ -15,6 +15,7 @@ import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
+import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTClientPotionTooltip
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -175,6 +176,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
+        event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
         event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen::solidifier)
 
         LOGGER.info("Registered Screens!")

@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -24,8 +24,12 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory = HTItemStackHandler(5, this::setChanged)
-    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(1, 2, 3, 4))
+    override val inventory: HTItemHandler =
+        HTItemStackHandler
+            .Builder(5)
+            .addInput(0)
+            .addOutput(1..4)
+            .build(::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //

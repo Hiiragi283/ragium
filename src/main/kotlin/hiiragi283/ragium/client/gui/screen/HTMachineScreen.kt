@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.screen
 
+import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTDefinitionContainerScreen
-import hiiragi283.ragium.api.gui.screen.HTProgressBar
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.screens.MenuScreens
@@ -28,6 +28,13 @@ open class HTMachineScreen<T : HTDefinitionContainerMenu>(
             }
     }
 
-    override val progressBar: HTProgressBar =
-        HTProgressBar.arrow(HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(1))
+    override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
+        consumer(
+            HTProgressWidget.arrow(
+                menu::progress,
+                startX + HTSlotHelper.getSlotPosX(3.5),
+                startY + HTSlotHelper.getSlotPosY(1),
+            ),
+        )
+    }
 }

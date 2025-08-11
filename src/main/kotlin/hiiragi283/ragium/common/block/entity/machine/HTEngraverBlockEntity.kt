@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -25,8 +25,11 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory = HTItemStackHandler(6, this::setChanged)
-    override val itemFilter: HTItemFilter = HTItemFilter.simple(intArrayOf(0), intArrayOf(2, 3, 4, 5))
+    override val inventory: HTItemHandler = HTItemStackHandler
+        .Builder(6)
+        .addInput(0)
+        .addOutput(2..5)
+        .build(::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
@@ -40,6 +43,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         var matchedRecipe: StonecutterRecipe? = null
         for (holder: RecipeHolder<StonecutterRecipe> in allRecipes) {
             val recipe: StonecutterRecipe = holder.value
+            if (!recipe.matches(input, level)) continue
             val result: ItemStack = recipe.assemble(input, level.registryAccess())
             if (ItemStack.isSameItemSameComponents(inventory.getStackInSlot(1), result)) {
                 matchedRecipe = recipe

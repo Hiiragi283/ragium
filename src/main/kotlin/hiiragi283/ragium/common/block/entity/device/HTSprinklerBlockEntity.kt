@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
@@ -23,7 +24,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
+    HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state),
+    HTHandlerBlockEntity {
     private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

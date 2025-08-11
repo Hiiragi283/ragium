@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -31,7 +32,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
-    HTFluidInteractable {
+    HTFluidInteractable,
+    HTHandlerBlockEntity {
     private val tank = HTFluidTank(Int.MAX_VALUE, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

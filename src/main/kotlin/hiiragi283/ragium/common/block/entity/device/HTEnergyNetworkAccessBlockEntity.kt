@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConst
@@ -23,8 +24,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(type, pos, state) {
-    private val inventory: HTItemStackHandler = object : HTItemStackHandler(2, this::setChanged) {
+    HTDeviceBlockEntity(type, pos, state),
+    HTHandlerBlockEntity {
+    private val inventory: HTItemStackHandler = object : HTItemStackHandler(2) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
             val energyStorage: IEnergyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return false
             return when (slot) {
@@ -33,6 +35,13 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
                 else -> false
             }
         }
+
+        override fun onContentsChanged(slot: Int) {
+            this@HTEnergyNetworkAccessBlockEntity.setChanged()
+        }
+
+        override val inputSlots: IntArray = intArrayOf(0)
+        override val outputSlots: IntArray = intArrayOf(1)
     }
     protected abstract val network: IEnergyStorage?
 

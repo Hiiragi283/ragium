@@ -28,7 +28,7 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTDoubleRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
-        insertToOutput(2..2, recipe.assemble(input, level.registryAccess()), true).isEmpty
+        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -38,7 +38,7 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(2..2, recipe.assemble(input, level.registryAccess()), false)
+        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         inventory.extractItem(0, recipe.ingredient, false)
         inventory.extractItem(1, recipe.catalyst, false)

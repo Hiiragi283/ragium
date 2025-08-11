@@ -11,7 +11,16 @@ interface HTItemHandler :
     IItemHandler,
     INBTSerializable<CompoundTag> {
     val isEmpty: Boolean
+    val inputSlots: IntArray
+    val outputSlots: IntArray
+
+    //    Extensions    //
+
     val slotRange: IntRange get() = (0 until slots)
+
+    fun toFiltered(): IItemHandler = HTFilteredItemHandler(this, inputSlots, outputSlots)
+
+    fun toFilteredReverse(): IItemHandler = HTFilteredItemHandler(this, outputSlots, inputSlots)
 
     fun extractItem(slot: Int, catalyst: Optional<HTItemIngredient>, simulate: Boolean): ItemStack {
         val stackIn: ItemStack = getStackInSlot(slot)

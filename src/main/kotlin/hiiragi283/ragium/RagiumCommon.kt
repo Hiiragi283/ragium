@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
+import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.setup.RagiumArmorMaterials
@@ -109,6 +110,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         registrar.registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
         registrar.registerS2C(HTFluidSlotUpdatePacket.TYPE, HTFluidSlotUpdatePacket.STREAM_CODEC)
+
+        registrar.registerC2S(HTTransferIOUpdatePayload.TYPE, HTTransferIOUpdatePayload.STREAM_CODEC)
 
         LOGGER.info("Registered packets!")
     }
