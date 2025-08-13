@@ -6,14 +6,23 @@
     }
   ],
   "type": "immersiveengineering:arc_furnace",
-  "additives": [],
+  "additives": [
+    {
+      "basePredicate": {
+        "tag": "c:dusts/raginite"
+      },
+      "count": 4
+    }
+  ],
   "energy": 102400,
-  "input": {
-    "basePredicate": {
-      "tag": "c:dusts/raginite"
+  "input": [
+    {
+      "tag": "c:dusts/gold"
     },
-    "count": 4
-  },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
   "results": [
     {
       "tag": "c:ingots/advanced_ragi_alloy"

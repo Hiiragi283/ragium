@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.item
 
-import hiiragi283.ragium.api.extension.asPlayer
 import hiiragi283.ragium.api.extension.dropStackAt
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component
@@ -44,7 +43,7 @@ open class HTConsumableItem(
             return super.finishUsingItem(stack, level, livingEntity)
         } else {
             // そうでない場合はアイテムの消費の条件を達成する
-            val player: Player? = livingEntity.asPlayer()
+            val player: Player? = livingEntity as? Player
             if (player is ServerPlayer) {
                 CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
             }

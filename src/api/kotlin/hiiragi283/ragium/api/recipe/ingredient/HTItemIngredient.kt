@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
-import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.data.BiCodec
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
@@ -10,12 +9,11 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
 data class HTItemIngredient private constructor(private val delegate: SizedIngredient) : HTIngredient<ItemStack> {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemIngredient> =
-            SizedIngredient.FLAT_CODEC.xmap(::HTItemIngredient, HTItemIngredient::delegate)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
-            SizedIngredient.STREAM_CODEC.map(::HTItemIngredient, HTItemIngredient::delegate)
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodec
+            .of(
+                SizedIngredient.FLAT_CODEC,
+                SizedIngredient.STREAM_CODEC,
+            ).xmap(::HTItemIngredient, HTItemIngredient::delegate)
 
         @JvmStatic
         fun of(ingredient: SizedIngredient): HTItemIngredient {

@@ -2,16 +2,11 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
-import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
-import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import java.util.Optional
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 object HTTagHelper {
@@ -35,11 +30,4 @@ object HTTagHelper {
     @JvmStatic
     private fun <T : Any> getFirstHolder(holderSet: HolderSet<T>, namespace: String): Holder<T>? =
         holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == namespace }
-
-    @JvmStatic
-    fun <T : Any> streamCodec(registryKey: ResourceKey<out Registry<T>>): StreamCodec<ByteBuf, TagKey<T>> =
-        ResourceLocation.STREAM_CODEC.map(
-            { id: ResourceLocation -> TagKey.create(registryKey, id) },
-            TagKey<T>::location,
-        )
 }

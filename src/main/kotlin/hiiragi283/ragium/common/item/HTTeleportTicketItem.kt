@@ -1,14 +1,13 @@
 package hiiragi283.ragium.common.item
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.globalPosText
 import hiiragi283.ragium.api.extension.toCenterVec3
+import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
-import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -39,7 +38,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         // 右クリックしたブロックの座標を保持する
         context.itemInHand.set(
             RagiumDataComponents.TELEPORT_POS,
-            GlobalPos(level.dimension(), pos.above()),
+            HTTeleportPos(level.dimension(), pos.above()),
         )
         return InteractionResult.sidedSuccess(false)
     }
@@ -73,10 +72,10 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
     }
 
     private fun tryToTeleport(player: ServerPlayer, stack: ItemStack): Boolean {
-        val globalPos: GlobalPos = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
-        val targetLevel: ServerLevel = player.server.getLevel(globalPos.dimension) ?: return false
+        val teleportPos: HTTeleportPos = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
+        val targetLevel: ServerLevel = player.server.getLevel(teleportPos.dimension) ?: return false
         // テレポート可能か判定する
-        return canTeleportTo(targetLevel, globalPos)
+        return canTeleportTo(targetLevel, teleportPos)
             .ifError {
                 player.displayClientMessage(
                     Component.translatable(it.message()).withStyle(ChatFormatting.RED),
@@ -85,7 +84,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
             }.map {
                 // 実際にテレポートを行う
                 if (player.connection.isAcceptingMessages) {
-                    player.changeDimension(toTransition(targetLevel, globalPos, player))
+                    player.changeDimension(toTransition(targetLevel, teleportPos, player))
                     player.resetFallDistance()
                     player.resetCurrentImpulseContext()
                     CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
@@ -96,22 +95,23 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
             .orElse(false)
     }
 
-    private fun canTeleportTo(serverLevel: ServerLevel, globalPos: GlobalPos): DataResult<Unit> {
+    private fun canTeleportTo(serverLevel: ServerLevel, teleportPos: HTTeleportPos): DataResult<Unit> {
         // 指定した座標が読み込まれていなければエラー
-        if (!serverLevel.isLoaded(globalPos.pos)) {
+        if (!serverLevel.isLoaded(teleportPos.pos)) {
             return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
         }
         return DataResult.success(Unit)
     }
 
-    private fun toTransition(serverLevel: ServerLevel, globalPos: GlobalPos, target: Entity): DimensionTransition = DimensionTransition(
-        serverLevel,
-        globalPos.pos.toCenterVec3(),
-        target.deltaMovement,
-        target.yRot,
-        target.xRot,
-        DimensionTransition.DO_NOTHING,
-    )
+    private fun toTransition(serverLevel: ServerLevel, teleportPos: HTTeleportPos, target: Entity): DimensionTransition =
+        DimensionTransition(
+            serverLevel,
+            teleportPos.pos.toCenterVec3(),
+            target.deltaMovement,
+            target.yRot,
+            target.xRot,
+            DimensionTransition.DO_NOTHING,
+        )
 
     override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = 20 * 2
 
@@ -126,7 +126,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        stack.get(RagiumDataComponents.TELEPORT_POS)?.let(::globalPosText)?.let(tooltips::add)
+        stack.get(RagiumDataComponents.TELEPORT_POS)?.getDescription()?.let(tooltips::add)
     }
 
     override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumDataComponents.TELEPORT_POS)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.data.MapBiCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
@@ -37,68 +38,57 @@ object RagiumMiscRegister {
     private fun recipeSerializers(helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>>) {
         fun <R : Recipe<*>> register(
             holder: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<R>>,
-            codec: MapCodec<R>,
-            streamCodec: StreamCodec<RegistryFriendlyByteBuf, R>,
+            codec: MapBiCodec<RegistryFriendlyByteBuf, R>,
         ) {
             helper.register(
                 holder.id,
                 object : RecipeSerializer<R> {
-                    override fun codec(): MapCodec<R> = codec
+                    override fun codec(): MapCodec<R> = codec.codec
 
-                    override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, R> = streamCodec
+                    override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, R> = codec.streamCodec
                 },
             )
         }
 
         register(
             RagiumRecipeSerializers.ALLOYING,
-            RagiumRecipeCodecs.combineItemToItem(::HTAlloyingRecipe),
-            RagiumRecipeStreamCodecs.combineItemToItem(::HTAlloyingRecipe),
+            RagiumRecipeBiCodecs.combineItemToItem(::HTAlloyingRecipe),
         )
         register(
             RagiumRecipeSerializers.COMPRESSING,
-            RagiumRecipeCodecs.itemToObj(HTItemResult.CODEC, ::HTCompressingRecipe),
-            RagiumRecipeStreamCodecs.itemToObj(HTItemResult.STREAM_CODEC, ::HTCompressingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTCompressingRecipe),
         )
         register(
             RagiumRecipeSerializers.CRUSHING,
-            RagiumRecipeCodecs.itemToChancedItem(::HTCrushingRecipe),
-            RagiumRecipeStreamCodecs.itemToChancedItem(::HTCrushingRecipe),
+            RagiumRecipeBiCodecs.itemToChancedItem(::HTCrushingRecipe),
         )
         register(
             RagiumRecipeSerializers.EXTRACTING,
-            RagiumRecipeCodecs.itemToObj(HTItemResult.CODEC, ::HTExtractingRecipe),
-            RagiumRecipeStreamCodecs.itemToObj(HTItemResult.STREAM_CODEC, ::HTExtractingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTExtractingRecipe),
         )
         register(
             RagiumRecipeSerializers.INFUSING,
-            RagiumRecipeCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTInfusingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTItemResult.STREAM_CODEC, ::HTInfusingRecipe),
+            RagiumRecipeBiCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTInfusingRecipe),
         )
         register(
             RagiumRecipeSerializers.MELTING,
-            RagiumRecipeCodecs.itemToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
-            RagiumRecipeStreamCodecs.itemToObj(HTFluidResult.STREAM_CODEC, ::HTMeltingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
         )
         register(
             RagiumRecipeSerializers.MIXING,
-            RagiumRecipeCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
-            RagiumRecipeStreamCodecs.itemWithFluidToObj(HTFluidResult.STREAM_CODEC, ::HTMixingRecipe),
+            RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
         )
         register(
             RagiumRecipeSerializers.PRESSING,
-            RagiumRecipeCodecs.itemWithCatalystToItem(::HTPressingRecipe),
-            RagiumRecipeStreamCodecs.itemWithCatalystToItem(::HTPressingRecipe),
+            RagiumRecipeBiCodecs.itemWithCatalystToItem(::HTPressingRecipe),
         )
         register(
             RagiumRecipeSerializers.REFINING,
-            RagiumRecipeCodecs.fluidToObj(::HTRefiningRecipe),
-            RagiumRecipeStreamCodecs.fluidToObj(::HTRefiningRecipe),
+            RagiumRecipeBiCodecs.fluidToObj(::HTRefiningRecipe),
         )
         register(
             RagiumRecipeSerializers.SOLIDIFYING,
-            RagiumRecipeCodecs.fluidWithCatalystToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
-            RagiumRecipeStreamCodecs.fluidWithCatalystToObj(HTItemResult.STREAM_CODEC, ::HTSolidifyingRecipe),
+            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
         )
     }
 

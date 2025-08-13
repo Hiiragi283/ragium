@@ -18,6 +18,7 @@ class HTArcFurnaceRecipeBuilder private constructor() :
             fun builder(): HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder()
         }
 
+        private var count = 0
         private val builder: AlloyRecipeBuilder = AlloyRecipeBuilder.builder()
         private val builder1: ArcFurnaceRecipeBuilder = ArcFurnaceRecipeBuilder.builder()
 
@@ -25,7 +26,12 @@ class HTArcFurnaceRecipeBuilder private constructor() :
 
         override fun input(input: IngredientWithSize): HTArcFurnaceRecipeBuilder = apply {
             builder.input(input)
-            builder1.input(input)
+            if (count == 0) {
+                builder1.input(input)
+            } else {
+                builder1.additive(input)
+            }
+            count++
         }
 
         override fun output(output: TagOutput): HTArcFurnaceRecipeBuilder = apply {

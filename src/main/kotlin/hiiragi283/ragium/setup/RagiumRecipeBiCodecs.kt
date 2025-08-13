@@ -1,5 +1,8 @@
 package hiiragi283.ragium.setup
 
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.data.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
@@ -7,8 +10,6 @@ import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
-import hiiragi283.ragium.api.extension.listOf
-import hiiragi283.ragium.api.extension.optionalOf
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
@@ -22,42 +23,48 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
 
-object RagiumRecipeStreamCodecs {
-    @JvmStatic
-    fun <R : HTItemToChancedItemRecipe> itemToChancedItem(
-        factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC,
-        HTItemToChancedItemRecipe::ingredient,
-        HTItemResult.STREAM_CODEC.listOf(),
-        HTItemToChancedItemRecipe::results,
-        ByteBufCodecs.FLOAT.listOf(),
-        HTItemToChancedItemRecipe::chances,
-        factory::create,
-    )
-
+object RagiumRecipeBiCodecs {
     @JvmStatic
     fun <R1 : HTRecipeResult<*, *>, R2 : HTItemToObjRecipe<R1>> itemToObj(
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        codec: BiCodec<RegistryFriendlyByteBuf, R1>,
         factory: HTItemToObjRecipeBuilder.Factory<R1, R2>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("ingredient"),
         HTItemToObjRecipe<R1>::ingredient,
-        streamCodec,
+        codec.fieldOf("result"),
         HTItemToObjRecipe<R1>::result,
         factory::create,
     )
 
     @JvmStatic
+    fun <R : HTItemToChancedItemRecipe> itemToChancedItem(
+        factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec
+        .composite(
+            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTItemToChancedItemRecipe::ingredient,
+            HTItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
+            HTItemToChancedItemRecipe::results,
+            BiCodec.floatRange(0f, 1f).listOrElement(0, 4).optionalFieldOf("chances", listOf(1f)),
+            HTItemToChancedItemRecipe::chances,
+            factory::create,
+        ).validate { recipe: R ->
+            if (recipe.chances.isNotEmpty()) {
+                if (recipe.chances.size != recipe.results.size) {
+                    return@validate DataResult.error { "Requires the same count of results and its chances!" }
+                }
+            }
+            DataResult.success(recipe)
+        }
+
+    @JvmStatic
     fun <R : HTCombineItemToItemRecipe> combineItemToItem(
         factory: HTCombineItemToItemRecipeBuilder.Factory<R>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC.listOf(),
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.listOf(2, 2).fieldOf("ingredients"),
         HTCombineItemToItemRecipe::ingredients,
-        HTItemResult.STREAM_CODEC,
+        HTItemResult.CODEC.fieldOf("result"),
         HTCombineItemToItemRecipe::result,
         factory::create,
     )
@@ -65,52 +72,52 @@ object RagiumRecipeStreamCodecs {
     @JvmStatic
     fun <R : HTItemWithCatalystToItemRecipe> itemWithCatalystToItem(
         factory: HTItemWithCatalystToItemRecipeBuilder.Factory<R>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("ingredient"),
         HTItemWithCatalystToItemRecipe::ingredient,
-        HTItemIngredient.STREAM_CODEC.optionalOf(),
+        HTItemIngredient.CODEC.optionalFieldOf("catalyst"),
         HTItemWithCatalystToItemRecipe::catalyst,
-        HTItemResult.STREAM_CODEC,
+        HTItemResult.CODEC.fieldOf("result"),
         HTItemWithCatalystToItemRecipe::result,
         factory::create,
     )
 
     @JvmStatic
     fun <R1 : HTRecipeResult<*, *>, R2 : HTFluidWithCatalystToObjRecipe<R1>> fluidWithCatalystToObj(
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        codec: BiCodec<RegistryFriendlyByteBuf, R1>,
         factory: HTFluidWithCatalystToObjRecipeBuilder.Factory<R1, R2>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
-        HTFluidIngredient.STREAM_CODEC,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
+        HTFluidIngredient.CODEC.fieldOf("ingredient"),
         HTFluidWithCatalystToObjRecipe<R1>::ingredient,
-        HTItemIngredient.STREAM_CODEC.optionalOf(),
+        HTItemIngredient.CODEC.optionalFieldOf("catalyst"),
         HTFluidWithCatalystToObjRecipe<R1>::catalyst,
-        streamCodec,
+        codec.fieldOf("result"),
         HTFluidWithCatalystToObjRecipe<R1>::result,
         factory::create,
     )
 
     @JvmStatic
     fun <R1 : HTRecipeResult<*, *>, R2 : HTItemWithFluidToObjRecipe<R1>> itemWithFluidToObj(
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
+        codec: BiCodec<RegistryFriendlyByteBuf, R1>,
         factory: HTItemWithFluidToObjRecipeBuilder.Factory<R1, R2>,
-    ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC.optionalOf(),
+    ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.optionalFieldOf("item_ingredient"),
         HTItemWithFluidToObjRecipe<R1>::itemIngredient,
-        HTFluidIngredient.STREAM_CODEC.optionalOf(),
+        HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient"),
         HTItemWithFluidToObjRecipe<R1>::fluidIngredient,
-        streamCodec,
+        codec.fieldOf("result"),
         HTItemWithFluidToObjRecipe<R1>::result,
         factory::create,
     )
 
     @JvmStatic
-    fun <R : HTFluidToObjRecipe> fluidToObj(factory: HTFluidToObjRecipeBuilder.Factory<R>): StreamCodec<RegistryFriendlyByteBuf, R> =
-        StreamCodec.composite(
-            HTFluidIngredient.STREAM_CODEC,
+    fun <R : HTFluidToObjRecipe> fluidToObj(factory: HTFluidToObjRecipeBuilder.Factory<R>): MapBiCodec<RegistryFriendlyByteBuf, R> =
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf("ingredient"),
             HTFluidToObjRecipe::ingredient,
-            HTItemResult.STREAM_CODEC.optionalOf(),
+            HTItemResult.CODEC.optionalFieldOf("item_result"),
             HTFluidToObjRecipe::itemResult,
-            HTFluidResult.STREAM_CODEC.listOf(),
+            HTFluidResult.CODEC.listOrElement(1, 4).fieldOf("fluid_results"),
             HTFluidToObjRecipe::fluidResults,
             factory::create,
         )

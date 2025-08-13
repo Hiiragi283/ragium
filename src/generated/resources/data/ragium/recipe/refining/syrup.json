@@ -1,6 +1,6 @@
 {
   "type": "ragium:refining",
-  "fluid_result": [
+  "fluid_results": [
     {
       "amount": 750,
       "id": "ragium:syrup"

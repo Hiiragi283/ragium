@@ -6,14 +6,23 @@
     }
   ],
   "type": "immersiveengineering:arc_furnace",
-  "additives": [],
+  "additives": [
+    {
+      "basePredicate": {
+        "tag": "c:dusts/raginite"
+      },
+      "count": 6
+    }
+  ],
   "energy": 102400,
-  "input": {
-    "basePredicate": {
-      "tag": "c:dusts/raginite"
+  "input": [
+    {
+      "tag": "c:dusts/diamond"
     },
-    "count": 6
-  },
+    {
+      "tag": "c:gems/diamond"
+    }
+  ],
   "results": [
     {
       "tag": "c:gems/ragi_crystal"

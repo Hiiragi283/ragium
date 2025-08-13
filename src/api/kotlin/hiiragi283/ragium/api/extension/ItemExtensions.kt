@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -43,5 +42,3 @@ val ItemStack.isMaxCount: Boolean get() = count == maxStackSize
 // val ItemStack.isIgnored: Boolean get() = this.`is`(RagiumModTags.Items.IGNORED_IN_RECIPES)
 
 // val ItemStack.isEmptyOrIgnored: Boolean get() = this.isEmpty || this.isIgnored
-
-fun ItemStack.isOf(holderLike: HTItemHolderLike): Boolean = `is`(holderLike.asItem())

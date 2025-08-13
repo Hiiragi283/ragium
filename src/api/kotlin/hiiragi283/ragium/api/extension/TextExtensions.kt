@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.item.HTEnergyItem
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
-import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
@@ -66,8 +65,6 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
         location.toString(),
     )
 }
-
-fun globalPosText(value: GlobalPos): MutableComponent = bracketText(joinedText(levelText(value.dimension), blockPosText(value.pos)))
 
 fun energyText(storage: IEnergyStorage): MutableComponent = Component.translatable(
     RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE,

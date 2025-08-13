@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe.result
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.api.tag.HTTagHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -21,13 +20,16 @@ abstract class HTRecipeResult<T : Any, S : Any>(
 
     protected fun getFirstHolder(): DataResult<out Holder<T>> = entry.map(::getFirstHolderFromId, ::getFirstHolderFromTag)
 
-    protected open fun getFirstHolderFromId(id: ResourceLocation): DataResult<out Holder<T>> =
-        registry.getHolder(id).toDataResult { "Missing id in ${registry.key()}: $id" }
+    protected fun getFirstHolderFromId(id: ResourceLocation): DataResult<out Holder<T>> = registry
+        .getHolder(id)
+        .map(DataResult<Holder<T>>::success)
+        .orElse(DataResult.error { "Missing id in ${registry.key()}: $id" })
 
-    protected open fun getFirstHolderFromTag(tagKey: TagKey<T>): DataResult<out Holder<T>> = registry
+    protected fun getFirstHolderFromTag(tagKey: TagKey<T>): DataResult<out Holder<T>> = registry
         .getTag(tagKey)
         .flatMap(HTTagHelper::getFirstHolder)
-        .toDataResult { "Missing tag in ${registry.key()}: ${tagKey.location}" }
+        .map(DataResult<Holder<T>>::success)
+        .orElse(DataResult.error { "Missing tag in ${registry.key()}: ${tagKey.location}" })
 
     protected abstract val registry: Registry<T>
 

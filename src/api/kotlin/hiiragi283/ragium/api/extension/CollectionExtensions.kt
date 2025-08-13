@@ -40,11 +40,6 @@ inline fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(
     return value
 }
 
-fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.asPairMap(): Map<Pair<R, C>, V> =
-    entries.associate { (row: R, column: C, value: V) -> (row to column) to value }
+fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.rowValues(row: R): Collection<V> = row(row).values
 
-fun <R : Any, C : Any, V : Any> Map<Pair<R, C>, V>.toTable(): HTTable<R, C, V> = buildTable {
-    for ((pair: Pair<R, C>, value: V) in this@toTable) {
-        put(pair.first, pair.second, value)
-    }
-}
+fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.columnValues(column: C): Collection<V> = column(column).values

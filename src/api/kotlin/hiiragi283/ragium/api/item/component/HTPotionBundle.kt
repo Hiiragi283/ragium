@@ -1,9 +1,7 @@
 package hiiragi283.ragium.api.item.component
 
-import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.listOf
+import hiiragi283.ragium.api.data.BiCodec
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.inventory.tooltip.TooltipComponent
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -18,11 +16,11 @@ class HTPotionBundle private constructor(private val items: List<ItemStack>) : T
         val EMPTY = HTPotionBundle(listOf())
 
         @JvmField
-        val CODEC: Codec<HTPotionBundle> = ItemStack.CODEC.listOf().xmap(::HTPotionBundle, HTPotionBundle::items)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTPotionBundle> =
-            ItemStack.STREAM_CODEC.listOf().map(::HTPotionBundle, HTPotionBundle::items)
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTPotionBundle> =
+            BiCodec
+                .of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
+                .listOf()
+                .xmap(::HTPotionBundle, HTPotionBundle::items)
     }
 
     fun getItemUnsafe(index: Int): ItemStack = items.getOrNull(index) ?: ItemStack.EMPTY

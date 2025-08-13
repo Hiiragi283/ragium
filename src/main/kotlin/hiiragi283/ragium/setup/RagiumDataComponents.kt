@@ -3,16 +3,15 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTPotionBundle
-import net.minecraft.core.GlobalPos
+import hiiragi283.ragium.api.item.component.HTTeleportPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
-import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -33,18 +32,14 @@ object RagiumDataComponents {
     }
 
     @JvmStatic
-    private fun <T : Any> register(
-        name: String,
-        codec: BiCodec<RegistryFriendlyByteBuf, T>,
-    ): Supplier<DataComponentType<T>> = register(name, codec.codec, codec.streamCodec)
-    
-    @JvmField
-    val BLAST_POWER: Supplier<DataComponentType<Float>> =
-        register("blast_power", ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT.cast())
+    private fun <T : Any> register(name: String, codec: BiCodec<RegistryFriendlyByteBuf, T>): Supplier<DataComponentType<T>> =
+        register(name, codec.codec, codec.streamCodec)
 
     @JvmField
-    val ENERGY: Supplier<DataComponentType<Int>> =
-        register("energy", ExtraCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT.cast())
+    val BLAST_POWER: Supplier<DataComponentType<Float>> = register("blast_power", BiCodecs.POSITIVE_FLOAT.cast())
+
+    @JvmField
+    val ENERGY: Supplier<DataComponentType<Int>> = register("energy", BiCodecs.NON_NEGATIVE_INT.cast())
 
     @JvmField
     val FLUID_CONTENT: Supplier<DataComponentType<SimpleFluidContent>> =
@@ -55,19 +50,15 @@ object RagiumDataComponents {
         register("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC.cast())
 
     @JvmField
-    val IS_ACTIVE: Supplier<DataComponentType<Boolean>> = register("is_active", Codec.BOOL, ByteBufCodecs.BOOL.cast())
+    val IS_ACTIVE: Supplier<DataComponentType<Boolean>> = register("is_active", BiCodec.BOOL.cast())
 
     @JvmField
-    val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceKey<LootTable>>> = register(
-        "loot_table_id",
-        ResourceKey.codec(Registries.LOOT_TABLE),
-        ResourceKey.streamCodec(Registries.LOOT_TABLE).cast(),
-    )
+    val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceKey<LootTable>>> =
+        register("loot_table_id", BiCodecs.resourceKey(Registries.LOOT_TABLE).cast())
 
     @JvmField
-    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> = register("potion_bundle", HTPotionBundle.CODEC_NEW)
+    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> = register("potion_bundle", HTPotionBundle.CODEC)
 
     @JvmField
-    val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =
-        register("teleport_pos", GlobalPos.CODEC, GlobalPos.STREAM_CODEC.cast())
+    val TELEPORT_POS: Supplier<DataComponentType<HTTeleportPos>> = register("teleport_pos", HTTeleportPos.CODEC.cast())
 }
