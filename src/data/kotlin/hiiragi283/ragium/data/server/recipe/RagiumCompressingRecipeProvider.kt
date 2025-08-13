@@ -4,10 +4,86 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
+        // Sand -> Sandstone
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Tags.Items.SANDS_COLORLESS, 4),
+                HTResultHelper.item(Items.SANDSTONE),
+            ).save(output)
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Tags.Items.SANDS_RED, 4),
+                HTResultHelper.item(Items.RED_SANDSTONE),
+            ).save(output)
+
+        // Clay -> Mud
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.CLAY),
+                HTResultHelper.item(Items.MUD),
+            ).save(output)
+        // Mud -> Packed Mud
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.MUD),
+                HTResultHelper.item(Items.PACKED_MUD),
+            ).save(output)
+
+        // Snow -> Ice
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.SNOW_BLOCK, 4),
+                HTResultHelper.item(Items.ICE),
+            ).save(output)
+
+        // Moss
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(
+                    CompoundIngredient.of(
+                        Ingredient.of(Items.VINE),
+                        Ingredient.of(Items.MOSS_CARPET),
+                    ),
+                    8,
+                ),
+                HTResultHelper.item(Items.MOSS_BLOCK),
+            ).save(output)
+        // Sculk
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.SCULK_VEIN, 8),
+                HTResultHelper.item(Items.SCULK),
+            ).save(output)
+
+        // TNT
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.GUNPOWDER, 4),
+                HTResultHelper.item(Items.TNT),
+            ).save(output)
+
+        // Paper
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Tags.Items.CROPS_SUGAR_CANE),
+                HTResultHelper.item(Items.PAPER, 2),
+            ).save(output)
+
+        // Sawdust -> Compressed
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_WOOD, 8),
+                HTResultHelper.item(RagiumItems.COMPRESSED_SAWDUST),
+            ).save(output)
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(

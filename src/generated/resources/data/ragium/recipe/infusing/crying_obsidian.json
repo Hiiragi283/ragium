@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 4000,
+    "tag": "c:eldritch_flux"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "tag": "c:obsidians/normal"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:crying_obsidian"
+  }
+}

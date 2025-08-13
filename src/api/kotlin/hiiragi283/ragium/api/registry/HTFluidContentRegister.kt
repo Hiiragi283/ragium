@@ -1,10 +1,15 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.DispenserBlock
 import net.minecraft.world.level.block.LiquidBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -101,7 +106,7 @@ class HTFluidContentRegister(modId: String) {
             Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET),
         )
 
-        val content: HTFluidContent<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = HTFluidContent(
+        val content: ContentImpl<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = ContentImpl(
             typeHolder,
             stillFluid,
             flowFluid,
@@ -110,5 +115,30 @@ class HTFluidContentRegister(modId: String) {
         )
         contentCache.add(content)
         return content
+    }
+
+    private class ContentImpl<TYPE : FluidType, STILL : Fluid, FLOW : Fluid>(
+        val typeHolder: DeferredHolder<FluidType, TYPE>,
+        val stillHolder: DeferredHolder<Fluid, STILL>,
+        val flowHolder: DeferredHolder<Fluid, FLOW>,
+        val blockHolder: DeferredBlock<*>,
+        val bucketHolder: DeferredItem<*>,
+    ) : HTFluidContent<TYPE, STILL, FLOW> {
+        override val id: ResourceLocation = stillHolder.id
+        private val commonId: ResourceLocation = commonId(id.path)
+
+        override val commonTag: TagKey<Fluid> = fluidTagKey(commonId)
+
+        override val bucketTag: TagKey<Item> = itemTagKey(commonId.withPrefix("buckets/"))
+
+        override fun getType(): TYPE = typeHolder.get()
+
+        override fun getStill(): STILL = stillHolder.get()
+
+        override fun getFlow(): FLOW = flowHolder.get()
+
+        override fun getBlock(): Block = blockHolder.get()
+
+        override fun getBucket(): Item = bucketHolder.get()
     }
 }

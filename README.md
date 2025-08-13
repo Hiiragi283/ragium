@@ -1,18 +1,15 @@
-<h1 align="center">Ragium</h1>
-<h1 align="center">
-  <img alt="Modrinth Game Versions" src="https://img.shields.io/modrinth/game-versions/__?style=for-the-badge">
-  <br>
-  <a href="https://www.curseforge.com/minecraft/mc-mods/ragium"><img alt="CurseForge" src="https://cf.way2muchnoise.eu/__.svg?badge_style=for_the_badge"></a>
-  <a href="https://modrinth.com/mod/ragium"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/__?style=for-the-badge&logo=modrinth&logoColor=1c1c1c&label=%20&labelColor=5ca424&color=2d2d2d"></a>
-</h1>
+# Ragium
 
-## Supported Versions
+This mod aims to automate resource production and expand upon vanilla features.
+Key elements include:
 
-| MC Version | Supported | Support Plan |
-|:----------:|:---------:|:------------:|
-|   1.21.x   |     ❌     |      ⭕       |
-|   1.21.1   |     ⭕     |      ⭕       |
-|  < 1.21.1  |     ❌     |      ❌       |
+- Exploration: Visit existing biomes and structures to gather new resources.
+- Electrification: Enhance crafting, farming, combat, and transportation using the power of electricity.
+
+このmodは資源生産の自動化とバニラ要素の拡張を目的としています。
+主な要素として以下のものがあります
+- 探索 ... 既存のバイオームや構造物を訪れ，新たな資源を集める
+- 電動化 ... クラフトや農業，戦闘，移動などを電気の力で改良する
 
 ## Dependencies Mods
 
@@ -33,11 +30,6 @@
 |                     [Mekanism](https://modrinth.com/mod/mekanism)                      |         ⭕          |        ⭕        |         Add new items and chemicals         |
 | [PneumaticCraft: Repressurized](https://modrinth.com/mod/pneumaticcraft-repressurized) |         ❌          |        ⭕        |                                             |
 |                  [Replication](https://modrinth.com/mod/replication)                   |         ⭕          |        ❌        |             Add new matter type             |
-
-## Features
-
-- Basic tech machines (Crusher, Extractor, Refinery, ...) but WIRELESS BY DEFAULT!
-- Some utility Items (Item Magnet, Damage Trap, Teleporter, Spawn Egg converter, ...)
 
 ## Images
 

@@ -11,7 +11,6 @@ import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredHolder
 
 //    Advancement    //
 
@@ -36,8 +35,6 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: HTBlockHolderLik
     layeredModel(holder.id.path, layer0, layer1)
 
 //    BlockModelProvider    //
-
-fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id.toString())
 
 fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
     simpleBlock(

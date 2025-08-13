@@ -57,8 +57,8 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Extensions    //
 
     private fun IntrinsicTagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-        content.stillHolder.unwrapKey().ifPresent(this::add)
-        content.flowHolder.unwrapKey().ifPresent(this::add)
+        add(content.getStill())
+        add(content.getFlow())
     }
 
     private fun tag(content: HTFluidContent<*, *, *>): IntrinsicTagAppender<Fluid> = tag(content.commonTag)

@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.pathfinder.PathType
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
@@ -167,7 +166,7 @@ object RagiumFluidContents {
     fun registerInteractions() {
         registerInteraction(
             CRUDE_OIL,
-            NeoForgeMod.LAVA_TYPE.value(),
+            HTFluidContent.LAVA.getType(),
             Blocks.AIR.defaultBlockState(),
             Blocks.SOUL_SAND.defaultBlockState(),
         )

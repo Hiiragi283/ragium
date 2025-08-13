@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:crimson_sap"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:soul_soil"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:crimson_soil"
+  }
+}

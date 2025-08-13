@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
@@ -98,7 +97,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         }
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            getBuilder(content.bucketHolder)
+            getBuilder(content.id.withSuffix("_bucket").path)
                 .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())

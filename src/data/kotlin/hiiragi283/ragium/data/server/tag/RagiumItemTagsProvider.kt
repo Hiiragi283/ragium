@@ -188,7 +188,7 @@ class RagiumItemTagsProvider(
 
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            addItem(Tags.Items.BUCKETS, content.bucketTag, content.bucketHolder)
+            addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
         }
 
         // Parts

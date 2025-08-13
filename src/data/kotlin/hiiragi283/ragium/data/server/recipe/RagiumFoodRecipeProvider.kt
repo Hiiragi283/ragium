@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.Items
@@ -49,6 +50,13 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Tags.Items.EGGS)
             .save(output)
 
+        // Ice Cream
+        HTItemWithFluidToObjRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(Items.SNOWBALL),
+                HTIngredientHelper.milk(250),
+                HTResultHelper.item(RagiumItems.ICE_CREAM),
+            ).save(output)
         // Ice Cream Soda
         save(
             RagiumAPI.id("shapeless/ice_cream_soda"),
@@ -64,6 +72,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         cherry()
+        honey()
         meat()
         sponge()
     }
@@ -82,6 +91,23 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', Tags.Items.STORAGE_BLOCKS_GOLD)
             .define('B', RagiumItems.RAGI_CHERRY)
             .save(output)
+    }
+
+    private fun honey() {
+        // Honey Block <-> Honey
+        meltAndFreeze(
+            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            Items.HONEY_BLOCK,
+            RagiumFluidContents.HONEY,
+            1000,
+        )
+        // Honey Bottle <-> Honey
+        extractAndInfuse(
+            HTIngredientHelper.item(Items.GLASS_BOTTLE),
+            Items.HONEY_BOTTLE,
+            RagiumFluidContents.HONEY,
+            250,
+        )
     }
 
     private fun meat() {

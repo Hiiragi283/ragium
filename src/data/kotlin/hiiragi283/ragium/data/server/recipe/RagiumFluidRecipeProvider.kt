@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -27,30 +28,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
     private fun melting() {
         // Magma Block <-> Lava
         meltAndFreeze(
-            output,
             HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
             Items.MAGMA_BLOCK,
-            Tags.Fluids.LAVA,
-            Fluids.LAVA,
+            HTFluidContent.LAVA,
             125,
-        )
-        // Ice <-> Water
-        meltAndFreeze(
-            output,
-            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.ICE,
-            Tags.Fluids.WATER,
-            Fluids.WATER,
-            1000,
-        )
-        // Honey Block <-> Honey
-        meltAndFreeze(
-            output,
-            HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.HONEY_BLOCK,
-            Tags.Fluids.HONEY,
-            RagiumFluidContents.HONEY.get(),
-            1000,
         )
     }
 
@@ -102,6 +83,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun sap() {
+        // Bio Fuel + Water -> polymer Resin
+        HTItemWithFluidToObjRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.FUELS_BIO_BLOCK),
+                HTIngredientHelper.water(250),
+                HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+            ).saveSuffixed(output, "_from_bio")
+
         // XX Log -> Wood Dust + Sap
         HTItemToObjRecipeBuilder
             .melting(

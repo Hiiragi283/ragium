@@ -5,12 +5,16 @@ import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.advancements.Advancement
@@ -100,27 +104,46 @@ sealed class HTRecipeProvider : IConditionBuilder {
         Ingredient.of(HTMaterialVariant.INGOT.itemTagKey(name)),
     )
 
-    fun meltAndFreeze(
-        output: RecipeOutput,
+    protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,
-        itemOut: ItemLike,
-        fluidIn: TagKey<Fluid>,
-        fluidOut: Fluid,
+        solid: ItemLike,
+        fluid: HTFluidContent<*, *, *>,
         amount: Int,
     ) {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(itemOut),
-                HTResultHelper.fluid(fluidOut, amount),
-            ).save(output)
+                HTIngredientHelper.item(solid),
+                HTResultHelper.fluid(fluid, amount),
+            ).saveSuffixed(output, "_from_${solid.asItemHolder().idOrThrow.path}")
         // Solidifying
         HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 catalyst,
-                HTIngredientHelper.fluid(fluidIn, amount),
-                HTResultHelper.item(itemOut),
-            ).saveSuffixed(output, "_from_${fluidIn.location.path}")
+                HTIngredientHelper.fluid(fluid, amount),
+                HTResultHelper.item(solid),
+            ).saveSuffixed(output, "_from_${fluid.id.path}")
+    }
+
+    protected fun extractAndInfuse(
+        empty: HTItemIngredient,
+        filled: ItemLike,
+        fluid: HTFluidContent<*, *, *>,
+        amount: Int,
+    ) {
+        // Melting
+        HTItemToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(filled),
+                HTResultHelper.fluid(fluid, amount),
+            ).saveSuffixed(output, "_from_${filled.asItemHolder().idOrThrow.path}")
+        // Infusing
+        HTItemWithFluidToObjRecipeBuilder
+            .infusing(
+                empty,
+                HTIngredientHelper.fluid(fluid, amount),
+                HTResultHelper.item(filled),
+            ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
     protected fun distillation(
