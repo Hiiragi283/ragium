@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
 
@@ -18,7 +17,7 @@ abstract class HTItemWithFluidToFluidRecipe(
     override val result: HTFluidResult,
 ) : HTItemWithFluidToObjRecipe<HTFluidResult>,
     HTFluidRecipe<HTItemWithFluidRecipeInput> {
-    final override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack = result.get()
+    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): FluidStack = result.getOrEmpty()
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 }

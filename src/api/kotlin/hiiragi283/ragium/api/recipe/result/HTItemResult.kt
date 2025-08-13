@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.result
 
 import com.mojang.datafixers.util.Either
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import net.minecraft.core.Holder
@@ -35,6 +36,13 @@ class HTItemResult(entry: Either<ResourceLocation, TagKey<Item>>, amount: Int, c
 
     override val registry: Registry<Item> get() = BuiltInRegistries.ITEM
 
-    override fun createStack(holder: Holder<Item>, amount: Int, components: DataComponentPatch): ItemStack =
-        ItemStack(holder, amount, components)
+    override fun createStack(holder: Holder<Item>, amount: Int, components: DataComponentPatch): DataResult<ItemStack> {
+        val stack = ItemStack(holder, amount, components)
+        return when {
+            stack.isEmpty -> DataResult.error { "Empty Item Stack is not valid for recipe result!" }
+            else -> DataResult.success(stack)
+        }
+    }
+
+    override val emptyStack: ItemStack get() = ItemStack.EMPTY
 }

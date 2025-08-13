@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
@@ -184,20 +185,22 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addRecipeHandler(RagiumMenuTypes.COMPRESSOR.get(), HTRecipeHandler(RagiumEmiCategories.COMPRESSING))
         // Crushing
         RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToChancedItemRecipe ->
-            registry.addRecipe(
-                HTCrushingEmiRecipe(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.resultMap.map { (result: HTItemResult, chance: Float) ->
-                        result
-                            .getStackResult()
-                            .mapOrElse(
-                                { stack: ItemStack -> EmiStack.of(stack).setChance(chance) },
-                                ::createErrorStack,
-                            )
-                    },
-                ),
-            )
+            if (recipe is HTItemToChancedItemRecipeBase) {
+                registry.addRecipe(
+                    HTCrushingEmiRecipe(
+                        id,
+                        recipe.ingredient.toEmi(),
+                        recipe.results.mapIndexed { index: Int, result: HTItemResult ->
+                            result
+                                .getStackResult()
+                                .mapOrElse(
+                                    { stack: ItemStack -> EmiStack.of(stack).setChance(recipe.chances[index]) },
+                                    ::createErrorStack,
+                                )
+                        },
+                    ),
+                )
+            }
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
         // Engraving

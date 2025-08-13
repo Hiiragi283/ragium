@@ -7,7 +7,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
 abstract class HTCombineItemToItemRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult) : HTDoubleItemToItemRecipe {
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.get()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty()
 
     final override fun testFirstItem(stack: ItemStack): Boolean = ingredients[0].test(stack)
 

@@ -67,7 +67,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput, recipe: HTRefiningRecipe): Boolean =
-        tankOut.canFill(recipe.fluidResults[0].get(), true)
+        tankOut.canFill(recipe.assembleFluid(input, level.registryAccess()), true)
 
     override fun serverTickPost(
         level: ServerLevel,
@@ -77,8 +77,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTRefiningRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        val firstOutput: FluidStack = recipe.fluidResults[0].get()
-        tankOut.fill(firstOutput, IFluidHandler.FluidAction.EXECUTE)
+        tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         tankIn.drain(recipe.ingredient, IFluidHandler.FluidAction.EXECUTE)
         // サウンドを流す

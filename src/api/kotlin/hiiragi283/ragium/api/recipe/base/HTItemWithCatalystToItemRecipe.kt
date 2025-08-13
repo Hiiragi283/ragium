@@ -12,7 +12,7 @@ abstract class HTItemWithCatalystToItemRecipe(
     val catalyst: Optional<HTItemIngredient>,
     val result: HTItemResult,
 ) : HTDoubleItemToItemRecipe {
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.get()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty()
 
     final override fun testFirstItem(stack: ItemStack): Boolean = ingredient.test(stack)
 

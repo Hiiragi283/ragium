@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
 
 abstract class HTFluidToObjRecipe(
@@ -15,10 +16,11 @@ abstract class HTFluidToObjRecipe(
     val ingredient: HTFluidIngredient,
     val itemResult: Optional<HTItemResult>,
     val fluidResults: List<HTFluidResult>,
-) : HTRecipe<HTSingleFluidRecipeInput> {
-    override fun test(input: HTSingleFluidRecipeInput): Boolean = !isIncomplete && ingredient.test(input.fluid)
+) : HTRecipe<HTSingleFluidRecipeInput>,
+    HTFluidRecipe<HTSingleFluidRecipeInput> {
+    final override fun test(input: HTSingleFluidRecipeInput): Boolean = !isIncomplete && ingredient.test(input.fluid)
 
-    override fun isIncomplete(): Boolean {
+    final override fun isIncomplete(): Boolean {
         val bool1: Boolean = ingredient.hasNoMatchingStacks()
         val bool2: Boolean = itemResult.map(HTItemResult::hasNoMatchingStack).orElse(false)
         val bool3: Boolean = fluidResults.isEmpty()
@@ -26,12 +28,16 @@ abstract class HTFluidToObjRecipe(
         return bool1 || bool2 || bool3 || bool4
     }
 
-    override fun matches(input: HTSingleFluidRecipeInput, level: Level): Boolean = test(input)
+    final override fun matches(input: HTSingleFluidRecipeInput, level: Level): Boolean = test(input)
 
-    override fun assemble(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
+    final override fun assembleFluid(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
+        if (test(input)) fluidResults[0].getOrEmpty() else FluidStack.EMPTY
+
+    final override fun assemble(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemResult.map(HTItemResult::get).orElse(ItemStack.EMPTY)
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
+        itemResult.map(HTItemResult::getOrEmpty).orElse(ItemStack.EMPTY)
 
-    override fun getType(): RecipeType<*> = recipeType
+    final override fun getType(): RecipeType<*> = recipeType
 }

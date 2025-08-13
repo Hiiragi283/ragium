@@ -18,16 +18,6 @@ abstract class HTItemStackHandler(size: Int) :
         }
     }
 
-    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = when (slot) {
-        !in inputSlots -> stack
-        else -> super.insertItem(slot, stack, simulate)
-    }
-
-    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = when (slot) {
-        !in outputSlots -> ItemStack.EMPTY
-        else -> super<ItemStackHandler>.extractItem(slot, amount, simulate)
-    }
-
     override fun onLoad() {
         slotRange.forEach(::onContentsChanged)
     }

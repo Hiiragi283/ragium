@@ -12,7 +12,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTItemToFluidRecipe(override val ingredient: HTItemIngredient, override val result: HTFluidResult) :
     HTItemToObjRecipe<HTFluidResult>,
     HTFluidRecipe<SingleRecipeInput> {
-    final override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack = result.get()
+    final override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack = result.getOrEmpty()
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 }

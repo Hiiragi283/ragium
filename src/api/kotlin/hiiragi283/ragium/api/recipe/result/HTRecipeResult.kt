@@ -9,13 +9,12 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import java.util.function.Function
-import java.util.function.Supplier
 
 abstract class HTRecipeResult<T : Any, S : Any>(
     protected val entry: Either<ResourceLocation, TagKey<T>>,
     protected val amount: Int,
     protected val components: DataComponentPatch,
-) : Supplier<S> {
+) {
     val id: ResourceLocation = entry.map(Function.identity(), TagKey<*>::location)
 
     protected fun getFirstHolder(): DataResult<out Holder<T>> = entry.map(::getFirstHolderFromId, ::getFirstHolderFromTag)
@@ -33,11 +32,15 @@ abstract class HTRecipeResult<T : Any, S : Any>(
 
     protected abstract val registry: Registry<T>
 
-    fun getStackResult(): DataResult<S> = getFirstHolder().map { holder: Holder<T> -> createStack(holder, amount, components) }
+    fun getStackResult(): DataResult<S> = getFirstHolder().flatMap { holder: Holder<T> -> createStack(holder, amount, components) }
 
     val hasNoMatchingStack: Boolean get() = getStackResult().isError
 
-    protected abstract fun createStack(holder: Holder<T>, amount: Int, components: DataComponentPatch): S
+    protected abstract fun createStack(holder: Holder<T>, amount: Int, components: DataComponentPatch): DataResult<S>
 
-    override fun get(): S = getStackResult().orThrow
+    // override fun get(): S = getStackResult().orThrow
+
+    fun getOrEmpty(): S = getStackResult().mapOrElse(Function.identity()) { emptyStack }
+
+    protected abstract val emptyStack: S
 }

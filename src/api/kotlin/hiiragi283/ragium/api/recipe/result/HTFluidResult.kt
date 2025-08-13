@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.result
 
 import com.mojang.datafixers.util.Either
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import net.minecraft.core.Holder
@@ -32,6 +33,13 @@ class HTFluidResult(entry: Either<ResourceLocation, TagKey<Fluid>>, amount: Int,
     override val registry: Registry<Fluid>
         get() = BuiltInRegistries.FLUID
 
-    override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): FluidStack =
-        FluidStack(holder, amount, components)
+    override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): DataResult<FluidStack> {
+        val stack = FluidStack(holder, amount, components)
+        return when {
+            stack.isEmpty -> DataResult.error { "Empty Fluid Stack is not valid for recipe result!" }
+            else -> DataResult.success(stack)
+        }
+    }
+
+    override val emptyStack: FluidStack get() = FluidStack.EMPTY
 }

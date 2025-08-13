@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
@@ -14,6 +13,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
@@ -38,8 +38,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
-        for (result: HTItemResult in recipe.results) {
-            if (!insertToOutput(result.get(), true).isEmpty) {
+        for (stackIn: ItemStack in recipe.getPreviewItems(input)) {
+            if (!insertToOutput(stackIn, true).isEmpty) {
                 return false
             }
         }
@@ -54,11 +54,13 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemToChancedItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        for (index: Int in recipe.results.indices) {
-            insertToOutput(recipe.getChancedResult(index), false)
+        for ((stack: ItemStack, chance: Float) in recipe.getResultItems(input)) {
+            if (chance > level.random.nextFloat()) {
+                insertToOutput(stack, false)
+            }
         }
         // インプットを減らす
-        inventory.extractItem(0, recipe.ingredient, false)
+        inventory.extractItem(0, recipe.getIngredientCount(input), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
     }

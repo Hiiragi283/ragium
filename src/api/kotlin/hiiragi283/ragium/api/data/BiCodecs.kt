@@ -19,6 +19,9 @@ object BiCodecs {
     val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.NON_NEGATIVE_INT, ByteBufCodecs.INT)
 
     @JvmField
+    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.POSITIVE_INT, ByteBufCodecs.INT)
+
+    @JvmField
     val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.of(ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT)
 
     @JvmField

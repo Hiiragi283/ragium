@@ -12,10 +12,10 @@ import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
-import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -38,16 +38,16 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmStatic
-    fun <R : HTItemToChancedItemRecipe> itemToChancedItem(
+    fun <R : HTItemToChancedItemRecipeBase> itemToChancedItem(
         factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec
         .composite(
             HTItemIngredient.CODEC.fieldOf("ingredient"),
-            HTItemToChancedItemRecipe::ingredient,
+            HTItemToChancedItemRecipeBase::ingredient,
             HTItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
-            HTItemToChancedItemRecipe::results,
+            HTItemToChancedItemRecipeBase::results,
             BiCodec.floatRange(0f, 1f).listOrElement(0, 4).optionalFieldOf("chances", listOf(1f)),
-            HTItemToChancedItemRecipe::chances,
+            HTItemToChancedItemRecipeBase::chances,
             factory::create,
         ).validate { recipe: R ->
             if (recipe.chances.isNotEmpty()) {
