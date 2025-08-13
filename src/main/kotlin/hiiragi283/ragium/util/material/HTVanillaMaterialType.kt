@@ -13,8 +13,11 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
     // Gem
     DIAMOND("Diamond", "ダイアモンド"),
     EMERALD("Emerald", "エメラルド"),
+    QUARTZ("Quartz", "水晶"),
 
     // Other
+    SOUL("Soul", "ソウル"),
+    OBSIDIAN("Obsidian", "黒曜石"),
     ;
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

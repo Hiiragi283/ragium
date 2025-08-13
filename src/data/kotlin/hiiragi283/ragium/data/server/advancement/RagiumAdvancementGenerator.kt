@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
+import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -100,7 +101,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.column(RagiumMaterialType.AZURE_STEEL).values)
+            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialType.AZURE_STEEL))
         }
     }
 

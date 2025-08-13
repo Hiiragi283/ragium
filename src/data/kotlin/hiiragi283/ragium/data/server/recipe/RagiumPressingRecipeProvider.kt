@@ -8,12 +8,16 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumCircuitType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumPressingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -61,7 +65,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun circuits() {
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.Circuits.BASIC)
+        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.BASIC))
             .pattern(
                 "AAA",
                 "BCB",
@@ -71,7 +75,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Tags.Items.INGOTS_IRON)
             .save(output)
         // Advanced
-        HTShapedRecipeBuilder(RagiumItems.Circuits.ADVANCED)
+        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.ADVANCED))
             .cross4()
             .define('A', Tags.Items.INGOTS_GOLD)
             .define('B', Tags.Items.DUSTS_GLOWSTONE)
@@ -86,12 +90,13 @@ object RagiumPressingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
 
-        for (circuit: RagiumItems.Circuits in RagiumItems.Circuits.entries) {
-            val input: TagKey<Item> = when (circuit) {
-                RagiumItems.Circuits.BASIC -> Tags.Items.INGOTS_COPPER
-                RagiumItems.Circuits.ADVANCED -> Tags.Items.INGOTS_GOLD
-                RagiumItems.Circuits.ELITE -> RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL
-                RagiumItems.Circuits.ULTIMATE -> RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL
+        for ((tier: HTMaterialType, circuit: DeferredItem<*>) in RagiumItems.MATERIALS.row(HTMaterialVariant.CIRCUIT)) {
+            val input: TagKey<Item> = when (tier) {
+                RagiumCircuitType.BASIC -> Tags.Items.INGOTS_COPPER
+                RagiumCircuitType.ADVANCED -> Tags.Items.INGOTS_GOLD
+                RagiumCircuitType.ELITE -> RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL
+                RagiumCircuitType.ULTIMATE -> RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL
+                else -> continue
             }
 
             HTItemWithCatalystToItemRecipeBuilder

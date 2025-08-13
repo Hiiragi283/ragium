@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -28,6 +28,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
@@ -73,8 +74,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
 
         // Ore
-        for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {
-            val factory: (Block) -> LootTable.Builder = when (ore.material) {
+        RagiumBlocks.ORES.forEach { (_, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+            val factory: (Block) -> LootTable.Builder = when (material) {
                 RagiumMaterialType.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
                         block,
@@ -94,7 +95,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                         RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).get(),
                     )
                 }
-                else -> break
+                else -> return@forEach
             }
             add(ore.get(), factory)
         }

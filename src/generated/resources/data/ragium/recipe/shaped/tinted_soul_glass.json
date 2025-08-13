@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": [
+      {
+        "tag": "c:dusts/amethyst"
+      },
+      {
+        "tag": "c:gems/amethyst"
+      }
+    ],
+    "B": {
+      "tag": "c:glass_blocks/soul"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:tinted_soul_glass"
+  }
+}

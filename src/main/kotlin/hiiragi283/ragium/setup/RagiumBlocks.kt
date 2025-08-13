@@ -4,11 +4,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTFacingEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
+import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.api.registry.HTTaggedHolder
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
@@ -21,9 +22,9 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -49,10 +50,6 @@ object RagiumBlocks {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
-        ORES
-        StorageBlocks.entries
-
-        Glasses.entries
         LEDBlocks.entries
 
         Casings.entries
@@ -159,83 +156,120 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    enum class Ores(override val material: HTMaterialType) : HTBlockHolderLike.Materialized {
-        RAGINITE(RagiumMaterialType.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialType.RAGI_CRYSTAL),
-        ;
-
-        override val holder: DeferredBlock<*> = register(
-            "${material.serializedName}_ore",
-            copyOf(Blocks.DIAMOND_ORE),
-        )
-    }
-
-    enum class DeepOres(override val material: HTMaterialType) : HTBlockHolderLike.Materialized {
-        RAGINITE(RagiumMaterialType.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialType.RAGI_CRYSTAL),
-        ;
-
-        override val holder: DeferredBlock<*> = register(
-            "deepslate_${material.serializedName}_ore",
-            copyOf(Blocks.DEEPSLATE_DIAMOND_ORE),
-        )
-    }
-
-    enum class NetherOres(override val material: HTMaterialType) : HTBlockHolderLike.Materialized {
-        RAGINITE(RagiumMaterialType.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialType.RAGI_CRYSTAL),
-        ;
-
-        override val holder: DeferredBlock<*> = register(
-            "nether_${material.serializedName}_ore",
-            copyOf(Blocks.NETHER_QUARTZ_ORE),
-        )
-    }
-
-    enum class EndOres(override val material: HTMaterialType) : HTBlockHolderLike.Materialized {
-        RAGINITE(RagiumMaterialType.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialType.RAGI_CRYSTAL),
-        ;
-
-        override val holder: DeferredBlock<*> = register(
-            "end_${material.serializedName}_ore",
-            copyOf(Blocks.END_STONE),
-        )
+    @JvmField
+    val ORES: HTTable<HTMaterialVariant, RagiumMaterialType, DeferredBlock<*>> = buildTable {
+        listOf(
+            HTMaterialVariant.ORE,
+            HTMaterialVariant.DEEP_ORE,
+            HTMaterialVariant.NETHER_ORE,
+            HTMaterialVariant.END_ORE,
+        ).forEach { variant: HTMaterialVariant ->
+            val pattern: String = when (variant) {
+                HTMaterialVariant.ORE -> "%s_ore"
+                HTMaterialVariant.DEEP_ORE -> "deepslate_%s_ore"
+                HTMaterialVariant.NETHER_ORE -> "nether_%s_ore"
+                HTMaterialVariant.END_ORE -> "end_%s_ore"
+                else -> return@forEach
+            }
+            val stone: Block = when (variant) {
+                HTMaterialVariant.ORE -> Blocks.DIAMOND_ORE
+                HTMaterialVariant.DEEP_ORE -> Blocks.DEEPSLATE_DIAMOND_ORE
+                HTMaterialVariant.NETHER_ORE -> Blocks.NETHER_QUARTZ_ORE
+                HTMaterialVariant.END_ORE -> Blocks.END_STONE
+                else -> null
+            } ?: return@forEach
+            put(
+                variant,
+                RagiumMaterialType.RAGINITE,
+                register(pattern.replace("%s", RagiumMaterialType.RAGINITE.serializedName), copyOf(stone)),
+            )
+            put(
+                variant,
+                RagiumMaterialType.RAGI_CRYSTAL,
+                register(pattern.replace("%s", RagiumMaterialType.RAGI_CRYSTAL.serializedName), copyOf(stone)),
+            )
+        }
     }
 
     @JvmField
-    val ORES: List<HTBlockHolderLike.Materialized> = buildList {
-        addAll(Ores.entries)
-        addAll(DeepOres.entries)
-        addAll(NetherOres.entries)
-        addAll(EndOres.entries)
+    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, DeferredBlock<*>> = buildTable {
+        // Storage Blocks
+        mapOf(
+            // Gems
+            RagiumMaterialType.RAGI_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.COLOR_PINK),
+            RagiumMaterialType.CRIMSON_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.CRIMSON_STEM),
+            RagiumMaterialType.WARPED_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.WARPED_STEM),
+            RagiumMaterialType.ELDRITCH_PEARL to copyOf(Blocks.SHROOMLIGHT, MapColor.COLOR_PURPLE),
+            // Ingots
+            RagiumMaterialType.RAGI_ALLOY to copyOf(Blocks.COPPER_BLOCK, MapColor.COLOR_RED),
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
+            RagiumMaterialType.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
+            RagiumMaterialType.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
+            // Foods
+            RagiumMaterialType.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
+            RagiumMaterialType.MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
+            RagiumMaterialType.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
+        ).forEach { (material: RagiumMaterialType, properties: BlockBehaviour.Properties) ->
+            put(HTMaterialVariant.STORAGE_BLOCK, material, register("${material.serializedName}_block", properties))
+        }
+
+        // Glasses
+        fun glass(
+            material: HTMaterialType,
+            properties: BlockBehaviour.Properties,
+            canPlayerThrough: Boolean,
+            blastProof: Boolean,
+        ) {
+            put(
+                HTMaterialVariant.GLASS_BLOCK,
+                material,
+                register(
+                    "${material.serializedName}_glass",
+                    properties.apply { if (blastProof) strength(5f, 1200f) },
+                    HTGlassBlock.create(false, canPlayerThrough),
+                ),
+            )
+        }
+
+        glass(HTVanillaMaterialType.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
+        glass(HTVanillaMaterialType.SOUL, glass(), canPlayerThrough = true, blastProof = false)
+        glass(HTVanillaMaterialType.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
+
+        // Tinted Glasses
+        fun tintedGlass(
+            material: HTMaterialType,
+            properties: BlockBehaviour.Properties,
+            canPlayerThrough: Boolean,
+            blastProof: Boolean,
+        ) {
+            put(
+                HTMaterialVariant.TINTED_GLASS_BLOCK,
+                material,
+                register(
+                    "tinted_${material.serializedName}_glass",
+                    properties.apply { if (blastProof) strength(5f, 1200f) },
+                    HTGlassBlock.create(true, canPlayerThrough),
+                ),
+            )
+        }
+
+        tintedGlass(HTVanillaMaterialType.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
+        tintedGlass(HTVanillaMaterialType.SOUL, glass(), canPlayerThrough = true, blastProof = false)
+        tintedGlass(HTVanillaMaterialType.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
     }
 
-    enum class StorageBlocks(override val material: HTMaterialType, properties: BlockBehaviour.Properties) :
-        HTBlockHolderLike.Materialized,
-        HTTaggedHolder<Block> {
-        // Gems
-        RAGI_CRYSTAL(RagiumMaterialType.RAGI_CRYSTAL, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_PINK)),
-        CRIMSON_CRYSTAL(RagiumMaterialType.CRIMSON_CRYSTAL, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.CRIMSON_STEM)),
-        WARPED_CRYSTAL(RagiumMaterialType.WARPED_CRYSTAL, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.WARPED_STEM)),
-        ELDRITCH_PEARL(RagiumMaterialType.ELDRITCH_PEARL, copyOf(Blocks.SHROOMLIGHT).mapColor(MapColor.COLOR_PURPLE)),
+    @JvmStatic
+    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): DeferredBlock<*> = MATERIALS.get(variant, material)
+        ?: error("Unregistered ${variant.serializedName} block for ${material.serializedName}")
 
-        // Ingots
-        RAGI_ALLOY(RagiumMaterialType.RAGI_ALLOY, copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_RED)),
-        ADVANCED_RAGI_ALLOY(RagiumMaterialType.ADVANCED_RAGI_ALLOY, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_ORANGE)),
-        AZURE_STEEL(RagiumMaterialType.AZURE_STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)),
-        DEEP_STEEL(RagiumMaterialType.DEEP_STEEL, copyOf(Blocks.NETHERITE_BLOCK).mapColor(MapColor.COLOR_CYAN)),
+    @JvmStatic
+    fun getStorageBlock(material: HTMaterialType): DeferredBlock<*> = getMaterial(HTMaterialVariant.STORAGE_BLOCK, material)
 
-        // Others
-        CHOCOLATE(RagiumMaterialType.CHOCOLATE, copyOf(Blocks.MUD).mapColor(MapColor.TERRACOTTA_BROWN)),
-        MEAT(RagiumMaterialType.MEAT, copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK)),
-        COOKED_MEAT(RagiumMaterialType.COOKED_MEAT, copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK)),
-        ;
+    @JvmStatic
+    fun getGlass(material: HTMaterialType): DeferredBlock<*> = getMaterial(HTMaterialVariant.GLASS_BLOCK, material)
 
-        private val lowerName: String = name.lowercase()
-        override val holder: DeferredBlock<*> = register("${lowerName}_block", properties)
-        override val tagKey: TagKey<Block> = HTMaterialVariant.STORAGE_BLOCK.blockTagKey(material)
-    }
+    @JvmStatic
+    fun getTintedGlass(material: HTMaterialType): DeferredBlock<*> = getMaterial(HTMaterialVariant.TINTED_GLASS_BLOCK, material)
 
     //    Buildings    //
 
@@ -322,26 +356,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<WallBlock> =
             register("${variant.serializedName}_wall", variant.properties.forceSolidOn(), ::WallBlock)
-    }
-
-    enum class Glasses(
-        override val material: HTMaterialType,
-        isTinted: Boolean,
-        canPlayerThrough: Boolean,
-        blastProof: Boolean,
-    ) : HTBlockHolderLike.Materialized,
-        HTTaggedHolder<Block> {
-        QUARTZ(RagiumMaterialType.QUARTZ, false, false, false),
-        SOUL(RagiumMaterialType.SOUL, false, true, false),
-        OBSIDIAN(RagiumMaterialType.OBSIDIAN, false, false, true),
-        ;
-
-        private val lowerName: String = name.lowercase()
-        override val holder: DeferredBlock<*> = register("${lowerName}_glass", glass()) { prop: BlockBehaviour.Properties ->
-            if (blastProof) prop.strength(5f, 1200f)
-            HTGlassBlock(isTinted, canPlayerThrough, prop)
-        }
-        override val tagKey: TagKey<Block> = HTMaterialVariant.GLASS_BLOCK.blockTagKey(lowerName)
     }
 
     enum class LEDBlocks(val color: DyeColor) : HTBlockHolderLike {

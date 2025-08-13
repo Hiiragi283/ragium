@@ -24,11 +24,6 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     AZURE_STEEL("Azure Steel", "紺鉄"),
     DEEP_STEEL("Deep Steel", "深層鋼"),
 
-    // Glass
-    QUARTZ("Quartz", "水晶"),
-    SOUL("Soul", "ソウル"),
-    OBSIDIAN("Obsidian", "黒曜石"),
-
     // Food
     CHOCOLATE("Chocolate", "チョコレート"),
     MEAT("Meat", "生肉"),

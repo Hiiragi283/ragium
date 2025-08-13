@@ -5,9 +5,8 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.copyTo
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
@@ -76,9 +75,11 @@ class RagiumItemTagsProvider(
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
         buildList {
-            addAll(RagiumBlocks.Glasses.entries)
-            addAll(RagiumBlocks.StorageBlocks.entries)
-        }.map(HTTaggedHolder<Block>::tagKey).forEach(::copyTo)
+            addAll(RagiumBlocks.MATERIALS.rowKeys.map(HTMaterialVariant::blockCommonTag))
+            RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, _) ->
+                add(variant.blockTagKey(material))
+            }
+        }.forEach(::copyTo)
 
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
         copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
@@ -96,7 +97,7 @@ class RagiumItemTagsProvider(
     private fun materials() {
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_MEAT, RagiumItems.MINCED_MEAT)
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            addItem(variant.commonTag, variant.itemTagKey(material), item)
+            addItem(variant.itemCommonTag, variant.itemTagKey(material), item)
         }
         addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
 
@@ -159,19 +160,15 @@ class RagiumItemTagsProvider(
             .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Armors
-        val armors: List<HTItemHolderLike.Typed<HTArmorVariant>> = buildList {
-            addAll(RagiumItems.AzureSteelArmors.entries)
-            addAll(RagiumItems.DeepSteelArmors.entries)
-        }
-        for (armor: HTItemHolderLike.Typed<HTArmorVariant> in armors) {
-            tag(armor.variant.tagKey).addItem(armor)
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: DeferredItem<*>) ->
+            tag(variant.tagKey).addItem(item)
         }
 
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
             tag(variant.tagKey).addItem(item)
         }
-        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.row(HTToolVariant.HAMMER).values) {
+        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTToolVariant.HAMMER)) {
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }
 
@@ -211,10 +208,6 @@ class RagiumItemTagsProvider(
 
         tag(Tags.Items.LEATHERS).addItem(RagiumItems.SYNTHETIC_LEATHER)
         tag(Tags.Items.STRINGS).addItem(RagiumItems.SYNTHETIC_FIBER)
-        // Circuits
-        for (circuit: RagiumItems.Circuits in RagiumItems.Circuits.entries) {
-            addItem(RagiumCommonTags.Items.CIRCUITS, circuit.tagKey, circuit)
-        }
         // Other
         tag(ItemTags.BEACON_PAYMENT_ITEMS).addTags(*RagiumCommonTags.Items.BEACON_PAYMENTS)
 

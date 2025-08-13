@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
-import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.extension.optionalOf
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
@@ -68,7 +68,7 @@ object RagiumRecipeStreamCodecs {
     ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
         HTItemIngredient.STREAM_CODEC,
         HTItemWithCatalystToItemRecipe::ingredient,
-        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTItemIngredient.STREAM_CODEC.optionalOf(),
         HTItemWithCatalystToItemRecipe::catalyst,
         HTItemResult.STREAM_CODEC,
         HTItemWithCatalystToItemRecipe::result,
@@ -82,7 +82,7 @@ object RagiumRecipeStreamCodecs {
     ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
         HTFluidIngredient.STREAM_CODEC,
         HTFluidWithCatalystToObjRecipe<R1>::ingredient,
-        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTItemIngredient.STREAM_CODEC.optionalOf(),
         HTFluidWithCatalystToObjRecipe<R1>::catalyst,
         streamCodec,
         HTFluidWithCatalystToObjRecipe<R1>::result,
@@ -94,9 +94,9 @@ object RagiumRecipeStreamCodecs {
         streamCodec: StreamCodec<RegistryFriendlyByteBuf, R1>,
         factory: HTItemWithFluidToObjRecipeBuilder.Factory<R1, R2>,
     ): StreamCodec<RegistryFriendlyByteBuf, R2> = StreamCodec.composite(
-        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTItemIngredient.STREAM_CODEC.optionalOf(),
         HTItemWithFluidToObjRecipe<R1>::itemIngredient,
-        HTFluidIngredient.STREAM_CODEC.toOptional(),
+        HTFluidIngredient.STREAM_CODEC.optionalOf(),
         HTItemWithFluidToObjRecipe<R1>::fluidIngredient,
         streamCodec,
         HTItemWithFluidToObjRecipe<R1>::result,
@@ -108,7 +108,7 @@ object RagiumRecipeStreamCodecs {
         StreamCodec.composite(
             HTFluidIngredient.STREAM_CODEC,
             HTFluidToObjRecipe::ingredient,
-            HTItemResult.STREAM_CODEC.toOptional(),
+            HTItemResult.STREAM_CODEC.optionalOf(),
             HTFluidToObjRecipe::itemResult,
             HTFluidResult.STREAM_CODEC.listOf(),
             HTFluidToObjRecipe::fluidResults,

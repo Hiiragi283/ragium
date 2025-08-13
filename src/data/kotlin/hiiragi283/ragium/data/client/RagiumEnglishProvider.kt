@@ -14,7 +14,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
@@ -78,13 +78,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        addMaterialBlocks<RagiumBlocks.Ores>("%s Ore")
-        addMaterialBlocks<RagiumBlocks.DeepOres>("Deepslate %s Ore")
-        addMaterialBlocks<RagiumBlocks.NetherOres>("Nether %s Ore")
-        addMaterialBlocks<RagiumBlocks.EndOres>("End %s Ore")
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
-
-        addMaterialBlocks<RagiumBlocks.StorageBlocks>("Block of %s")
 
         addBlock(RagiumBlocks.RAGI_STONE, "Ragi-Stone")
         addBlock(RagiumBlocks.RAGI_STONE_BRICKS, "Ragi-Stone Bricks")
@@ -97,10 +91,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlocks<RagiumBlocks.Slabs>("Slab")
         addBlocks<RagiumBlocks.Stairs>("Stairs")
         addBlocks<RagiumBlocks.Walls>("Wall")
-
-        addBlock(RagiumBlocks.Glasses.QUARTZ, "Quartz Glass")
-        addBlock(RagiumBlocks.Glasses.SOUL, "Soul Glass")
-        addBlock(RagiumBlocks.Glasses.OBSIDIAN, "Obsidian Glass")
 
         addBlock(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
         addBlock(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
@@ -211,16 +201,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addMaterials()
         // Armor
-        addItems<RagiumItems.AzureSteelArmors>(RagiumMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelArmors>(RagiumMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
 
         addItem(RagiumItems.DRILL, "Electric Drill")
-
-        addTools()
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
@@ -250,8 +236,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
-        addMaterialItems<RagiumItems.Circuits>("%s Circuit")
-
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
@@ -467,9 +451,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         )
 
         val nonSilkTouch = "Can be harvested without Silk Touch."
-        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
-        addInfo(RagiumBlocks.Glasses.QUARTZ, nonSilkTouch)
-        addInfo(RagiumBlocks.Glasses.SOUL, "Only passable with Players.", "And $nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ), nonSilkTouch)
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL), "Only passable with Players.", "And $nonSilkTouch")
 
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")

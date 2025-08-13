@@ -8,7 +8,9 @@ import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -75,22 +77,35 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTIngredientHelper.item(Items.QUARTZ_BLOCK),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-                HTResultHelper.item(RagiumBlocks.Glasses.QUARTZ),
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
             ).save(output)
         // Soul Glass
         HTCombineItemToItemRecipeBuilder
             .alloying(
                 HTIngredientHelper.item(Items.SOUL_SAND),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-                HTResultHelper.item(RagiumBlocks.Glasses.SOUL),
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToItemRecipeBuilder
             .alloying(
                 HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-                HTResultHelper.item(RagiumBlocks.Glasses.OBSIDIAN),
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
             ).save(output)
+
+        // Normal -> Tinted
+        listOf(
+            HTVanillaMaterialType.QUARTZ,
+            HTVanillaMaterialType.SOUL,
+            HTVanillaMaterialType.OBSIDIAN,
+        ).forEach { material: HTVanillaMaterialType ->
+            HTShapedRecipeBuilder(RagiumBlocks.getTintedGlass(material))
+                .hollow4()
+                .define('A', gemOrDust("amethyst"))
+                .define('B', HTMaterialVariant.GLASS_BLOCK.itemTagKey(material))
+                .save(output)
+        }
     }
 
     private fun registerBuildings(variant: HTDecorationVariant) {

@@ -84,6 +84,20 @@ fun BlockStateProvider.altTextureBlock(holder: HTBlockHolderLike, all: ResourceL
     )
 }
 
+fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>, texId: ResourceLocation = holder.blockId) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("cutout")),
+    )
+}
+
+fun BlockStateProvider.translucentSimpleBlock(holder: DeferredBlock<*>, texId: ResourceLocation = holder.blockId) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("translucent")),
+    )
+}
+
 fun BlockStateProvider.cutoutSimpleBlock(holder: HTBlockHolderLike, texId: ResourceLocation = holder.blockId) {
     simpleBlock(
         holder.get(),

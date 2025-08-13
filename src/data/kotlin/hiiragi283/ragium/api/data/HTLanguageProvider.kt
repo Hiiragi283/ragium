@@ -8,25 +8,26 @@ import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import kotlin.enums.enumEntries
@@ -35,20 +36,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     LanguageProvider(output, RagiumAPI.MOD_ID, type.name.lowercase()) {
     //    Extension    //
 
-    inline fun <reified B> addMaterialBlocks(pattern: String) where B : HTBlockHolderLike.Materialized, B : Enum<B> {
-        val map: Map<Block, HTMaterialType> = enumEntries<B>().associate { typed: B -> typed.get() to typed.material }
-        for ((block: Block, material: HTMaterialType) in map) {
-            add(block, pattern.replace("%s", material.getTranslatedName(type)))
-        }
-    }
-
-    inline fun <reified I> addMaterialItems(pattern: String) where I : HTItemHolderLike.Materialized, I : Enum<I> {
-        val map: Map<Item, HTMaterialType> = enumEntries<I>().associate { typed: I -> typed.get() to typed.material }
-        for ((item: Item, material: HTMaterialType) in map) {
-            add(item, pattern.replace("%s", material.getTranslatedName(type)))
-        }
-    }
-
     inline fun <reified B> addBlocks(value: String) where B : HTBlockHolderLike.Typed<out HTVariantKey>, B : Enum<B> {
         val map: Map<Block, HTVariantKey> = enumEntries<B>().associate { typed: B -> typed.get() to typed.variant }
         for ((block: Block, variant: HTVariantKey) in map) {
@@ -56,20 +43,23 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    inline fun <reified I> addItems(material: HTMaterialType) where I : HTItemHolderLike.Typed<out HTVariantKey>, I : Enum<I> {
-        val map: Map<Item, HTVariantKey> = enumEntries<I>().associate { typed: I -> typed.get() to typed.variant }
-        for ((item: Item, variant: HTVariantKey) in map) {
-            add(item, variant.translate(type, material.getTranslatedName(type)))
-        }
-    }
-
     fun addMaterials() {
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
+            addBlock(block, material.translate(type, variant))
+        }
+
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
+            addBlock(block, material.translate(type, variant))
+        }
+
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             addItem(item, material.translate(type, variant))
         }
-    }
 
-    fun addTools() {
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, item: DeferredItem<*>) ->
+            addItem(item, variant.translate(type, material.getTranslatedName(type)))
+        }
+
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             addItem(item, variant.translate(type, material.getTranslatedName(type)))
         }

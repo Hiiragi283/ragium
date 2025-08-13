@@ -49,19 +49,20 @@ object RagiumMaterialFamilies {
     val COOKED_MEAT: HTMaterialFamily = ingotAlloy(RagiumMaterialType.COOKED_MEAT)
 
     @JvmStatic
+    private fun getBlock(type: RagiumMaterialType): (HTMaterialVariant) -> Supplier<out ItemLike>? = { variant ->
+        RagiumBlocks.MATERIALS.get(variant, type)
+    }
+
+    @JvmStatic
     private fun getItem(type: RagiumMaterialType): (HTMaterialVariant) -> Supplier<out ItemLike>? = { variant ->
         RagiumItems.MATERIALS.get(variant, type)
     }
 
     @JvmStatic
-    private fun firstBlock(type: RagiumMaterialType): RagiumBlocks.StorageBlocks? =
-        RagiumBlocks.StorageBlocks.entries.firstOrNull { it.material == type }
-
-    @JvmStatic
     private fun gem(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
         .gem(RagiumItems.getGem(type))
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
-        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
         .build(type.serializedName)
 
     @JvmStatic
@@ -69,7 +70,7 @@ object RagiumMaterialFamilies {
         .ingot(RagiumItems.getIngot(type))
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
-        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
         .build(type.serializedName)
 
     @JvmStatic
@@ -77,6 +78,6 @@ object RagiumMaterialFamilies {
         .ingotAlloy(RagiumItems.getIngot(type))
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
-        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
         .build(type.serializedName)
 }

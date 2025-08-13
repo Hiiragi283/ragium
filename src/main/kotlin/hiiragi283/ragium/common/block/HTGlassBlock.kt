@@ -13,6 +13,13 @@ import net.minecraft.world.phys.shapes.VoxelShape
 
 class HTGlassBlock(private val isTinted: Boolean, private val canPlayerThrough: Boolean, properties: Properties) :
     TransparentBlock(properties) {
+    companion object {
+        @JvmStatic
+        fun create(isTinted: Boolean, canPlayerThrough: Boolean): (Properties) -> HTGlassBlock = { prop: Properties ->
+            HTGlassBlock(isTinted, canPlayerThrough, prop)
+        }
+    }
+
     override fun getCollisionShape(
         state: BlockState,
         level: BlockGetter,

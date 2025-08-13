@@ -2,11 +2,14 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asBlockHolder
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -19,7 +22,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
-import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
@@ -51,30 +53,8 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
             .addBlock(RagiumBlocks.RESONANT_DEBRIS)
-
-        fun addOres(ores: Iterable<HTBlockHolderLike.Materialized>, groundTag: TagKey<Block>) {
-            for (ore: HTBlockHolderLike.Materialized in ores) {
-                pickaxe.addBlock(ore)
-                tag(HTMaterialVariant.ORE.blockTagKey(ore.material)).addBlock(ore)
-                tag(groundTag).addBlock(ore)
-            }
-        }
-        addOres(RagiumBlocks.Ores.entries, Tags.Blocks.ORES_IN_GROUND_STONE)
-        addOres(RagiumBlocks.DeepOres.entries, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
-        addOres(RagiumBlocks.NetherOres.entries, Tags.Blocks.ORES_IN_GROUND_NETHERRACK)
-        addOres(RagiumBlocks.EndOres.entries, RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE)
-
-        tag(Tags.Blocks.ORES)
-            .addTag(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
-            .addTag(RagiumCommonTags.Blocks.ORES_RAGINITE)
-
-        addBlock(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
-
-        for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
-            pickaxe.addBlock(block)
-            addBlock(Tags.Blocks.STORAGE_BLOCKS, block.tagKey, block)
-            tag(BlockTags.BEACON_BASE_BLOCKS).addBlock(block)
-        }
+        RagiumBlocks.ORES.values.forEach(pickaxe::addBlock)
+        RagiumBlocks.MATERIALS.values.forEach(pickaxe::addBlock)
 
         RagiumBlocks.DECORATION_MAP.values.forEach(pickaxe::addBlock)
         for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
@@ -95,7 +75,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         pickaxe.addBlocks<RagiumBlocks.Drums>()
         pickaxe.addBlocks<RagiumBlocks.Dynamos>()
         pickaxe.addBlocks<RagiumBlocks.Frames>()
-        pickaxe.addBlocks<RagiumBlocks.Glasses>()
         pickaxe.addBlocks<RagiumBlocks.Machines>()
 
         // Shovel
@@ -107,9 +86,27 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     }
 
     private fun category() {
-        // Glass
-        for (glass: RagiumBlocks.Glasses in RagiumBlocks.Glasses.entries) {
-            addBlock(Tags.Blocks.GLASS_BLOCKS, glass.tagKey, glass)
+        // Ore
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+            addBlock(variant, material, ore)
+            val groundTag: TagKey<Block> = when (variant) {
+                HTMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE
+                HTMaterialVariant.DEEP_ORE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                HTMaterialVariant.NETHER_ORE -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                HTMaterialVariant.END_ORE -> RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE
+                else -> return@forEach
+            }
+            tag(groundTag).addBlock(ore)
+        }
+
+        tag(Tags.Blocks.ORES).addTag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
+        tag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP).addBlock(RagiumBlocks.RESONANT_DEBRIS)
+        // Material
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
+            if (variant == HTMaterialVariant.STORAGE_BLOCK) {
+                tag(BlockTags.BEACON_BASE_BLOCKS).addBlock(block)
+            }
+            addBlock(variant, material, block)
         }
         // LED
         tag(RagiumModTags.Blocks.LED_BLOCKS).addBlocks<RagiumBlocks.LEDBlocks>()
@@ -122,10 +119,10 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(BlockTags.FALL_DAMAGE_RESETTING).addBlock(RagiumBlocks.EXP_BERRY_BUSH)
         tag(BlockTags.SWORD_EFFICIENT).addBlock(RagiumBlocks.EXP_BERRY_BUSH)
         // Others
-        tag(BlockTags.HOGLIN_REPELLENTS).addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL)
-        tag(BlockTags.INFINIBURN_OVERWORLD).addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL)
-        tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL)
-        tag(BlockTags.STRIDER_WARM_BLOCKS).addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL)
+        tag(BlockTags.HOGLIN_REPELLENTS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
+        tag(BlockTags.INFINIBURN_OVERWORLD).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
+        tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
+        tag(BlockTags.STRIDER_WARM_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
         tag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)
             .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -140,9 +137,12 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     //    Extensions    //
 
-    private fun addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: Supplier<out Block>) {
-        tag(parent).addTag(child)
-        tag(child).add(block.get())
+    private fun addBlock(variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) {
+        val tagKey: TagKey<Block> = variant.blockTagKey(material)
+        if (variant.generateTag) {
+            tag(variant.blockCommonTag).addTag(tagKey)
+        }
+        tag(tagKey).addBlock(block)
     }
 }
 

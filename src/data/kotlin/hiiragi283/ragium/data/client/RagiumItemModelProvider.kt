@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -65,20 +64,9 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         }
     }
 
-    inline fun <reified I> MutableList<DeferredItem<*>>.removeItems() where I : HTItemHolderLike, I : Enum<I> {
-        removeAll { holder: DeferredItem<*> ->
-            for (entries: I in enumEntries<I>()) {
-                if (entries.key?.let(holder::`is`) ?: false) {
-                    return@removeAll true
-                }
-            }
-            false
-        }
-    }
-
     private fun registerItems() {
         val compounds: Map<HTMaterialType, DeferredItem<*>> = RagiumItems.MATERIALS.row(HTMaterialVariant.COMPOUND)
-        val tools = RagiumItems.TOOLS.values
+        val tools: Collection<DeferredItem<*>> = RagiumItems.TOOLS.values
 
         buildList {
             addAll(RagiumItems.REGISTER.entries)

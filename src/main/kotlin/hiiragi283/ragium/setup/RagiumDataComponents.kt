@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTPotionBundle
 import net.minecraft.core.GlobalPos
@@ -31,6 +32,12 @@ object RagiumDataComponents {
         builder.persistent(codec).networkSynchronized(streamCodec)
     }
 
+    @JvmStatic
+    private fun <T : Any> register(
+        name: String,
+        codec: BiCodec<RegistryFriendlyByteBuf, T>,
+    ): Supplier<DataComponentType<T>> = register(name, codec.codec, codec.streamCodec)
+    
     @JvmField
     val BLAST_POWER: Supplier<DataComponentType<Float>> =
         register("blast_power", ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT.cast())
@@ -44,11 +51,8 @@ object RagiumDataComponents {
         register("fluid_content", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 
     @JvmField
-    val INTRINSIC_ENCHANTMENT: Supplier<DataComponentType<HTIntrinsicEnchantment>> = register(
-        "intrinsic_enchantment",
-        HTIntrinsicEnchantment.CODEC,
-        HTIntrinsicEnchantment.STREAM_CODEC.cast(),
-    )
+    val INTRINSIC_ENCHANTMENT: Supplier<DataComponentType<HTIntrinsicEnchantment>> =
+        register("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC.cast())
 
     @JvmField
     val IS_ACTIVE: Supplier<DataComponentType<Boolean>> = register("is_active", Codec.BOOL, ByteBufCodecs.BOOL.cast())
@@ -61,8 +65,7 @@ object RagiumDataComponents {
     )
 
     @JvmField
-    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> =
-        register("potion_bundle", HTPotionBundle.CODEC, HTPotionBundle.STREAM_CODEC)
+    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> = register("potion_bundle", HTPotionBundle.CODEC_NEW)
 
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =

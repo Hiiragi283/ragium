@@ -52,9 +52,6 @@ object RagiumModTags {
 
     object Items {
         @JvmField
-        val COMPOUNDS: TagKey<Item> = create(RagiumConst.COMPOUNDS)
-
-        @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField

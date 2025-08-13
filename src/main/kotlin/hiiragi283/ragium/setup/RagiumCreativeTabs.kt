@@ -1,16 +1,21 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.columnValues
+import hiiragi283.ragium.api.extension.rowValues
+import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumCircuitType
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -45,13 +50,10 @@ object RagiumCreativeTabs {
         output.accept(RagiumBlocks.CRIMSON_SOIL)
         output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
-        output.acceptItems<RagiumBlocks.Ores>()
-        output.acceptItems<RagiumBlocks.DeepOres>()
-        output.acceptItems<RagiumBlocks.NetherOres>()
-        output.acceptItems<RagiumBlocks.EndOres>()
+        RagiumBlocks.ORES.values.forEach(output::accept)
         output.accept(RagiumBlocks.RESONANT_DEBRIS)
         // Storage Blocks
-        output.acceptItems<RagiumBlocks.StorageBlocks>()
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
         // Machines
         output.acceptItems<RagiumBlocks.Dynamos>()
 
@@ -68,7 +70,8 @@ object RagiumCreativeTabs {
         output.acceptItems<RagiumBlocks.Stairs>()
         output.acceptItems<RagiumBlocks.Walls>()
 
-        output.acceptItems<RagiumBlocks.Glasses>()
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
         output.acceptItems<RagiumBlocks.LEDBlocks>()
     }
 
@@ -81,8 +84,7 @@ object RagiumCreativeTabs {
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Materials
         HTMaterialVariant.CREATIVE_TAG_ORDER
-            .map(RagiumItems.MATERIALS::row)
-            .flatMap(Map<HTMaterialType, DeferredItem<*>>::values)
+            .flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
         // Ingredients
         output.accept(RagiumItems.RAGI_COKE)
@@ -103,7 +105,9 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
         output.accept(RagiumItems.CIRCUIT_BOARD)
-        output.acceptItems<RagiumItems.Circuits>()
+        RagiumCircuitType.entries
+            .flatMap(RagiumItems.MATERIALS::columnValues)
+            .forEach(output::accept)
     }
 
     @JvmField
@@ -114,29 +118,26 @@ object RagiumCreativeTabs {
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
+            output.accept(RagiumItems.RAGI_MAGNET)
+
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
+            output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
+
+            output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems<RagiumItems.AzureSteelArmors>()
-            HTToolVariant.entries
-                .mapNotNull(RagiumItems.TOOLS.column(RagiumMaterialType.AZURE_STEEL)::get)
-                .forEach(output::accept)
+            output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
+            output.acceptFromTable(RagiumItems.TOOLS, RagiumMaterialType.AZURE_STEEL)
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems<RagiumItems.DeepSteelArmors>()
-            HTToolVariant.entries
-                .mapNotNull(RagiumItems.TOOLS.column(RagiumMaterialType.DEEP_STEEL)::get)
-                .forEach(output::accept)
+            output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)
+            output.acceptFromTable(RagiumItems.TOOLS, RagiumMaterialType.DEEP_STEEL)
 
             output.accept(RagiumItems.DRILL)
 
             output.accept(RagiumItems.POTION_BUNDLE)
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
-
-            output.accept(RagiumItems.RAGI_MAGNET)
-            output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
-            output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumItems.BLAST_CHARGE)
 
@@ -187,6 +188,15 @@ object RagiumCreativeTabs {
             .build()
     }
 
+    inline fun <reified V> CreativeModeTab.Output.acceptFromTable(
+        table: HTTable<V, HTMaterialType, DeferredItem<*>>,
+        material: HTMaterialType,
+    ) where V : HTVariantKey, V : Enum<V> {
+        enumEntries<V>()
+            .mapNotNull(table.column(material)::get)
+            .forEach(this::accept)
+    }
+
     @JvmStatic
     private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
         items.forEach(this::accept)
@@ -201,20 +211,23 @@ object RagiumCreativeTabs {
 
     @JvmStatic
     private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        event.insertAfter(
-            ItemStack(Items.IRON_PICKAXE),
-            RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON).toStack(),
-            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-        )
-        event.insertAfter(
-            ItemStack(Items.DIAMOND_PICKAXE),
-            RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND).toStack(),
-            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-        )
-        event.insertAfter(
-            ItemStack(Items.NETHERITE_PICKAXE),
-            RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE).toStack(),
-            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-        )
+        // 道具タブに鍛造ハンマーを追加する
+        if (event.tabKey == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.insertAfter(
+                ItemStack(Items.IRON_PICKAXE),
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON).toStack(),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+            event.insertAfter(
+                ItemStack(Items.DIAMOND_PICKAXE),
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND).toStack(),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+            event.insertAfter(
+                ItemStack(Items.NETHERITE_PICKAXE),
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE).toStack(),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+        }
     }
 }

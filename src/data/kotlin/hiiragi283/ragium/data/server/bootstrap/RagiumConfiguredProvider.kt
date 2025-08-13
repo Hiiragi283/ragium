@@ -1,7 +1,9 @@
 package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.data.HTWorldGenData
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BlockTags
@@ -22,13 +24,15 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                 listOf(
                     OreConfiguration.target(
                         TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        RagiumBlocks.Ores.RAGINITE
+                        RagiumBlocks.ORES
+                            .get(HTMaterialVariant.ORE, RagiumMaterialType.RAGINITE)!!
                             .get()
                             .defaultBlockState(),
                     ),
                     OreConfiguration.target(
                         TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        RagiumBlocks.DeepOres.RAGINITE
+                        RagiumBlocks.ORES
+                            .get(HTMaterialVariant.DEEP_ORE, RagiumMaterialType.RAGINITE)!!
                             .get()
                             .defaultBlockState(),
                     ),

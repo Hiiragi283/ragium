@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.item
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.globalPosText
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -85,12 +84,11 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
                 )
             }.map {
                 // 実際にテレポートを行う
-                val serverPlayer: ServerPlayer = player.asServerPlayer() ?: return@map false
-                if (serverPlayer.connection.isAcceptingMessages) {
-                    serverPlayer.changeDimension(toTransition(targetLevel, globalPos, player))
-                    serverPlayer.resetFallDistance()
-                    serverPlayer.resetCurrentImpulseContext()
-                    CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack)
+                if (player.connection.isAcceptingMessages) {
+                    player.changeDimension(toTransition(targetLevel, globalPos, player))
+                    player.resetFallDistance()
+                    player.resetCurrentImpulseContext()
+                    CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
                     return@map true
                 }
                 return@map false

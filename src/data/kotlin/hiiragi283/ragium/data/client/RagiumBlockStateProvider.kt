@@ -5,11 +5,16 @@ import hiiragi283.ragium.api.extension.altModelBlock
 import hiiragi283.ragium.api.extension.altTextureBlock
 import hiiragi283.ragium.api.extension.cubeColumn
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.layeredBlock
+import hiiragi283.ragium.api.extension.rowValues
+import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -18,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
@@ -29,7 +35,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SILT)
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK))
             addAll(RagiumBlocks.LEDBlocks.entries)
 
             add(RagiumBlocks.Casings.DEVICE.holder)
@@ -61,24 +67,26 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             wallBlock(wall.holder.get(), textureName)
         }
 
-        RagiumBlocks.Glasses.entries.forEach(::cutoutSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
+        Blocks.TINTED_GLASS
 
         // Ore
-        for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {
-            val textureId: String = RagiumAPI.id("block/${ore.material.serializedName}").toString()
-            val storeTex: String = when (ore) {
-                is RagiumBlocks.Ores -> "block/stone"
-                is RagiumBlocks.DeepOres -> "block/deepslate"
-                is RagiumBlocks.NetherOres -> "block/netherrack"
-                is RagiumBlocks.EndOres -> "block/end_stone"
-                else -> break
-            }
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+            val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
+            val stoneTex: String = when (variant) {
+                HTMaterialVariant.ORE -> "block/stone"
+                HTMaterialVariant.DEEP_ORE -> "block/deepslate"
+                HTMaterialVariant.NETHER_ORE -> "block/netherrack"
+                HTMaterialVariant.END_ORE -> "block/end_stone"
+                else -> null
+            } ?: return@forEach
             simpleBlock(
                 ore.get(),
                 ConfiguredModel(
                     models()
                         .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
-                        .texture("layer0", vanillaId(storeTex))
+                        .texture("layer0", vanillaId(stoneTex))
                         .texture("layer1", textureId)
                         .renderType("cutout"),
                 ),

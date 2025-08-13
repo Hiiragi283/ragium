@@ -14,7 +14,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
@@ -70,13 +70,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        addMaterialBlocks<RagiumBlocks.Ores>("%s鉱石")
-        addMaterialBlocks<RagiumBlocks.DeepOres>("深層%s鉱石")
-        addMaterialBlocks<RagiumBlocks.NetherOres>("ネザー%s鉱石")
-        addMaterialBlocks<RagiumBlocks.EndOres>("エンド%s鉱石")
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
-
-        addMaterialBlocks<RagiumBlocks.StorageBlocks>("%sブロック")
 
         addBlock(RagiumBlocks.RAGI_STONE, "らぎストーン")
         addBlock(RagiumBlocks.RAGI_STONE_BRICKS, "らぎストーンレンガ")
@@ -89,10 +83,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlocks<RagiumBlocks.Slabs>("ハーフブロック")
         addBlocks<RagiumBlocks.Stairs>("階段")
         addBlocks<RagiumBlocks.Walls>("壁")
-
-        addBlock(RagiumBlocks.Glasses.QUARTZ, "クォーツガラス")
-        addBlock(RagiumBlocks.Glasses.SOUL, "ソウルガラス")
-        addBlock(RagiumBlocks.Glasses.OBSIDIAN, "黒曜石ガラス")
 
         addBlock(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
         addBlock(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
@@ -202,16 +192,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addMaterials()
         // Armor
-        addItems<RagiumItems.AzureSteelArmors>(RagiumMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelArmors>(RagiumMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
 
         addItem(RagiumItems.DRILL, "電動ドリル")
-
-        addTools()
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
@@ -251,8 +237,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
         // addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
-        addMaterialItems<RagiumItems.Circuits>("%s回路")
-
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
@@ -468,9 +452,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         )
 
         val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
-        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
-        addInfo(RagiumBlocks.Glasses.QUARTZ, nonSilkTouch)
-        addInfo(RagiumBlocks.Glasses.SOUL, "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ), nonSilkTouch)
+        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL), "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
 
         addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         addInfo(RagiumItems.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
