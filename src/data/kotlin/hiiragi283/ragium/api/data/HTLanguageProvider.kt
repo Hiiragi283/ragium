@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
@@ -91,6 +92,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     fun addMatterType(type: IMatterType, value: String) {
         add("${RagiumConst.REPLICATION}.matter_type.${type.name}", value)
+    }
+
+    fun addChemical(chemical: DeferredChemical<*>, value: String) {
+        add(chemical.translationKey, value)
     }
 
     //    English    //

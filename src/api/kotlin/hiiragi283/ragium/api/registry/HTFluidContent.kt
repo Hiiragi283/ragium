@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
@@ -35,4 +37,8 @@ class HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid>(
     fun getBucket(): Item = bucketHolder.get()
 
     fun toStack(amount: Int): FluidStack = FluidStack(stillHolder, amount)
+
+    fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)
+
+    fun toIngredient(amount: Int): SizedFluidIngredient = SizedFluidIngredient.of(commonTag, amount)
 }

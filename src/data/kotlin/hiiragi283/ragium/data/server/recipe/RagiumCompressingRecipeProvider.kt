@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import net.neoforged.neoforge.common.Tags
 
-object RagiumCompressingRecipeProvider : HTRecipeProvider() {
+object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Coal -> Diamond
         HTItemToObjRecipeBuilder

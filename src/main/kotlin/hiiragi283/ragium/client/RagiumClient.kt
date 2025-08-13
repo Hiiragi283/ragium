@@ -151,6 +151,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))
         register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
 
+        register(RagiumFluidContents.ELDRITCH_FLUX, Color(0x660066))
+
         LOGGER.info("Registered client extensions!")
     }
 

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:enriching",
+  "input": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ],
+    "count": 1
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:enriched_azure"
+  }
+}

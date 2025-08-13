@@ -76,7 +76,6 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.COMPRESSED_SAWDUST)
         output.accept(RagiumItems.TAR)
         output.accept(RagiumItems.DEEP_SCRAP)
-        output.accept(RagiumItems.ELDRITCH_ORB)
         output.accept(RagiumItems.ELDER_HEART)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)

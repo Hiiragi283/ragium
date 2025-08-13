@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "immersiveengineering:refinery",
+  "energy": 240,
+  "input0": {
+    "amount": 100,
+    "tag": "c:crimson_sap"
+  },
+  "input1": {
+    "amount": 100,
+    "tag": "c:warped_sap"
+  },
+  "result": {
+    "amount": 100,
+    "id": "ragium:eldritch_flux"
+  }
+}

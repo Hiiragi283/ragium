@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumPressingRecipeProvider : HTRecipeProvider() {
+object RagiumPressingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Plastic Plate
         HTItemWithCatalystToItemRecipeBuilder

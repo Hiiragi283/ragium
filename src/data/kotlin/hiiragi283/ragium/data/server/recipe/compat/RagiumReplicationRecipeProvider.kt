@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.registries.DeferredHolder
 
-object RagiumReplicationRecipeProvider : HTRecipeProvider() {
+object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumConst.REPLICATION) {
     override fun buildRecipeInternal() {
         matter()
     }

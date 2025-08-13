@@ -186,6 +186,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SYRUP, "Syrup")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumFluidContents.ELDRITCH_FLUX, "Eldritch Flux")
     }
 
     private fun item() {
@@ -204,7 +206,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
-        addItem(RagiumItems.ELDRITCH_ORB, "Eldritch Orb")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.TAR, "Tar")
 
@@ -504,10 +505,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun mekanism() {
-        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "Raginite")
-        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "Azure Essence")
-        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "Crimson Sap")
-        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "Warped Sap")
+        addChemical(RagiumMekanismAddon.CHEMICAL_RAGINITE, "Raginite")
+        addChemical(RagiumMekanismAddon.CHEMICAL_AZURE, "Azure Essence")
+        addChemical(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, "Crimson Sap")
+        addChemical(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, "Warped Sap")
+        addChemical(RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX, "Eldritch Flux")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "count": 1,
+    "tag": "c:ender_pearls"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:eldritch_flux"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:eldritch_pearl"
+  }
+}

@@ -25,7 +25,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
 
-object RagiumToolRecipeProvider : HTRecipeProvider() {
+object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         HTShapedRecipeBuilder(RagiumItems.DRILL)
             .pattern(

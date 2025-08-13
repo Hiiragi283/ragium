@@ -31,21 +31,6 @@ class HTItemWithFluidToItemEmiRecipe(
             itemIngredient,
             results,
         )
-
-        @JvmStatic
-        fun solidifying(
-            id: ResourceLocation,
-            fluidIngredient: EmiIngredient,
-            itemIngredient: EmiIngredient,
-            results: EmiStack,
-        ): HTItemWithFluidToItemEmiRecipe = HTItemWithFluidToItemEmiRecipe(
-            RagiumEmiCategories.SOLIDIFYING,
-            id,
-            RagiumAPI.id("textures/gui/container/solidifier.png"),
-            fluidIngredient,
-            itemIngredient,
-            results,
-        )
     }
 
     override fun getCategory(): EmiRecipeCategory = category

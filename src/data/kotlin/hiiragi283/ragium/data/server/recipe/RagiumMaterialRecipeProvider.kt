@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object RagiumMaterialRecipeProvider : HTRecipeProvider() {
+object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         HTMaterialFamily.instances.values.forEach(::registerFamilies)
 

@@ -14,8 +14,16 @@
       "count": 1
     },
     {
-      "count": 2,
-      "tag": "c:gems/azure"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/azure"
+        },
+        {
+          "tag": "c:gems/azure"
+        }
+      ],
+      "count": 2
     }
   ],
   "result": {

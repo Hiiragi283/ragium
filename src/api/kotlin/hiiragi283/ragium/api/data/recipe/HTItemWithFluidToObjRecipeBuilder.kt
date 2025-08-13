@@ -37,12 +37,13 @@ class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*, *>, R2 : HTItemWi
         @JvmStatic
         fun mixing(
             itemIngredient: HTItemIngredient,
+            fluidIngredient: HTFluidIngredient,
             result: HTFluidResult,
         ): HTItemWithFluidToObjRecipeBuilder<HTFluidResult, HTMixingRecipe> = HTItemWithFluidToObjRecipeBuilder(
             RagiumConst.MELTING,
             ::HTMixingRecipe,
             Optional.of(itemIngredient),
-            Optional.empty(),
+            Optional.of(fluidIngredient),
             result,
         )
     }

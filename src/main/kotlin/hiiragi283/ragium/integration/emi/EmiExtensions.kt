@@ -24,17 +24,9 @@ fun Optional<HTItemIngredient>.toItemEmi(): EmiIngredient = map(HTItemIngredient
 
 fun Optional<HTFluidIngredient>.toFluidEmi(): EmiIngredient = map(HTFluidIngredient::toEmi).orElse(EmiStack.EMPTY)
 
-fun Optional<HTItemIngredient>.toCatalystEmi(): EmiIngredient = map { ingredient: HTItemIngredient ->
-    ingredient
-        .getMatchingStacks()
-        .map(EmiStack::of)
-        .onEach { stack: EmiStack ->
-            stack.remainder = stack
-            stack.amount = 1
-        }
-}.map(EmiIngredient::of).orElse(EmiStack.EMPTY)
-
 //    EmiStack    //
+
+fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
 fun HTItemResult.toEmi(): EmiStack = this.getStackResult().mapOrElse(EmiStack::of, ::createErrorStack)
 

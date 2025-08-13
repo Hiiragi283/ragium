@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.DispenseFluidContainer
 import net.neoforged.neoforge.fluids.FluidType
@@ -45,20 +46,25 @@ class HTFluidContentRegister(modId: String) {
         typeRegister.register(eventBus)
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
-    }
 
-    fun registerDispensers() {
-        for (item: DeferredItem<*> in itemEntries) {
-            DispenserBlock.registerBehavior(item, DispenseFluidContainer.getInstance())
+        eventBus.addListener<FMLCommonSetupEvent> {
+            for (item: DeferredItem<*> in itemEntries) {
+                DispenserBlock.registerBehavior(item, DispenseFluidContainer.getInstance())
+            }
         }
     }
 
     fun register(
         name: String,
         properties: FluidType.Properties,
-        typeFactory: (FluidType.Properties) -> FluidType = ::FluidType,
-    ): HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> {
-        val typeHolder: DeferredHolder<FluidType, FluidType> =
+    ): HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(name, properties, ::FluidType)
+
+    fun <T : FluidType> register(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> T,
+    ): HTFluidContent<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> {
+        val typeHolder: DeferredHolder<FluidType, T> =
             typeRegister.register(name) { _: ResourceLocation -> typeFactory(properties) }
 
         val stillId: ResourceLocation = ResourceLocation.fromNamespaceAndPath(fluidRegister.namespace, name)
@@ -95,7 +101,7 @@ class HTFluidContentRegister(modId: String) {
             Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET),
         )
 
-        val content: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = HTFluidContent(
+        val content: HTFluidContent<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = HTFluidContent(
             typeHolder,
             stillFluid,
             flowFluid,

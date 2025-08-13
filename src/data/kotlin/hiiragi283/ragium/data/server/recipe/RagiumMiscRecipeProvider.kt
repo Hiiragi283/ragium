@@ -3,14 +3,18 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -18,7 +22,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object RagiumMiscRecipeProvider : HTRecipeProvider() {
+object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         materials()
 
@@ -118,7 +122,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTCombineItemToItemRecipeBuilder
             .alloying(
                 HTIngredientHelper.ingotOrDust("iron"),
-                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_AZURE, 2),
+                HTIngredientHelper.gemOrDust(RagiumConst.AZURE, 2),
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_AZURE_STEEL),
             ).save(output)
         // Sawdust
@@ -134,18 +138,32 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
         // Eldritch Pearl
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_ORB)
+        HTShapedRecipeBuilder(RagiumItems.Gems.ELDRITCH_PEARL)
             .cross4()
             .define('A', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
             .define('B', RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
             .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .save(output)
 
-        HTCombineItemToItemRecipeBuilder
-            .alloying(
-                HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL),
-                HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL),
-                HTResultHelper.item(RagiumItems.ELDRITCH_ORB, 6),
+        HTItemWithFluidToObjRecipeBuilder
+            .mixing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL),
+                HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 1000),
+                HTResultHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
+            ).save(output)
+
+        HTItemWithFluidToObjRecipeBuilder
+            .mixing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 1000),
+                HTResultHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
+            ).saveSuffixed(output, "_alt")
+
+        HTFluidWithCatalystToObjRecipeBuilder
+            .solidifying(
+                HTIngredientHelper.item(Tags.Items.ENDER_PEARLS),
+                HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
+                HTResultHelper.item(RagiumItems.Gems.ELDRITCH_PEARL),
             ).save(output)
         // Deep Steel
         HTCookingRecipeBuilder

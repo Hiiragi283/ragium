@@ -83,13 +83,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
-            RagiumFluidContents.REGISTER.registerDispensers()
-
             RagiumItems.REGISTER.values
                 .filter { item: Item -> item is ProjectileItem }
                 .associateWith(::ProjectileDispenseBehavior)
                 .forEach(DispenserBlock::registerBehavior)
         }
+        event.enqueueWork(RagiumFluidContents::registerInteractions)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onCommonSetup(event)

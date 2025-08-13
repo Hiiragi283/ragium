@@ -112,9 +112,6 @@ object RagiumItems {
     val TAR: DeferredItem<Item> = register("tar")
 
     @JvmField
-    val ELDRITCH_ORB: DeferredItem<Item> = register("eldritch_orb")
-
-    @JvmField
     val DEEP_SCRAP: DeferredItem<Item> = register("deep_scrap")
 
     // Gems

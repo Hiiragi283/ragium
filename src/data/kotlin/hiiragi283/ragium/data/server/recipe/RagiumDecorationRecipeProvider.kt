@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object RagiumDecorationRecipeProvider : HTRecipeProvider() {
+object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Ragi-Stone
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE, 8, CraftingBookCategory.BUILDING)

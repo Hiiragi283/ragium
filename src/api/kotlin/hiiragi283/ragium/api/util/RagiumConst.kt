@@ -4,6 +4,7 @@ object RagiumConst {
     //    Materials    //
 
     const val ADVANCED_RAGI_ALLOY = "advanced_ragi_alloy"
+    const val AZURE = "azure"
     const val AZURE_STEEL = "azure_steel"
     const val CHOCOLATE = "chocolate"
     const val COOKED_MEAT = "cooked_meat"
@@ -36,6 +37,7 @@ object RagiumConst {
     const val MINECRAFT = "minecraft"
     const val MODERN = "modern_industrialization"
     const val ORITECH = "oritech"
+    const val PNEUMATIC = "pneumaticcraft"
     const val RAILCRAFT = "railcraft"
     const val REPLICATION = "replication"
     const val TWILIGHT = "twilightforest"

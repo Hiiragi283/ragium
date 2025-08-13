@@ -1,0 +1,15 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "tag": "c:warped_sap"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "tag": "c:gems/crimson_crystal"
+  },
+  "result": {
+    "amount": 1000,
+    "id": "ragium:eldritch_flux"
+  }
+}

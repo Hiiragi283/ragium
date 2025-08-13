@@ -29,7 +29,7 @@
           "tag": "c:coal_coke"
         },
         {
-          "tag": "c:dusts/coke"
+          "tag": "c:dusts/coal_coke"
         }
       ],
       "count": 1

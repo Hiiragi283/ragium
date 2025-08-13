@@ -1,33 +1,38 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
+import rearth.oritech.api.recipe.CentrifugeFluidRecipeBuilder
 import rearth.oritech.api.recipe.FoundryRecipeBuilder
 import rearth.oritech.api.recipe.ParticleCollisionRecipeBuilder
 
-object RagiumOritechRecipeProvider : HTRecipeProvider() {
-    private fun gemOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
-        Ingredient.of(itemTagKey(commonId(RagiumConst.GEMS, name))),
-    )
-
-    private fun ingotOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
-        Ingredient.of(itemTagKey(commonId(RagiumConst.INGOTS, name))),
-    )
-
+object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.ORITECH) {
     override fun buildRecipeInternal() {
+        centrifuge()
         foundry()
         atomicForge()
         particle()
+    }
+
+    private fun centrifuge() {
+        CentrifugeFluidRecipeBuilder
+            .build()
+            .input(gemOrDust(RagiumConst.CRIMSON_CRYSTAL))
+            .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag)
+            .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX.get())
+            .export(output, "eldritch_flux")
+
+        CentrifugeFluidRecipeBuilder
+            .build()
+            .input(gemOrDust(RagiumConst.WARPED_CRYSTAL))
+            .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag)
+            .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX.get())
+            .export(output, "eldritch_flux_alt")
     }
 
     private fun foundry() {
@@ -36,7 +41,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(ingotOrDust("copper"))
             .result(RagiumItems.Ingots.RAGI_ALLOY.get())
-            .time(160)
             .export(output, RagiumConst.RAGI_ALLOY)
 
         FoundryRecipeBuilder
@@ -44,7 +48,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(ingotOrDust("gold"))
             .result(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.get())
-            .time(160)
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
@@ -52,15 +55,13 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(gemOrDust("amethyst"))
             .input(gemOrDust("lapis"))
             .result(RagiumItems.Gems.AZURE_SHARD.get(), 2)
-            .time(160)
             .export(output, "azure_shard")
 
         FoundryRecipeBuilder
             .build()
-            .input(RagiumCommonTags.Items.GEMS_AZURE)
+            .input(gemOrDust(RagiumConst.AZURE))
             .input(ingotOrDust("iron"))
             .result(RagiumItems.Ingots.AZURE_STEEL.get())
-            .time(160)
             .export(output, RagiumConst.AZURE_STEEL)
 
         FoundryRecipeBuilder
@@ -68,16 +69,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumItems.DEEP_SCRAP)
             .input(ingotOrDust(RagiumConst.AZURE_STEEL))
             .result(RagiumItems.Ingots.DEEP_STEEL.get())
-            .time(160)
             .export(output, RagiumConst.DEEP_STEEL)
-
-        FoundryRecipeBuilder
-            .build()
-            .input(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
-            .input(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
-            .result(RagiumItems.ELDRITCH_ORB.get(), 6)
-            .time(160)
-            .export(output, "eldritch_orb")
     }
 
     private fun atomicForge() {

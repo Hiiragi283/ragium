@@ -23,6 +23,7 @@ import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -37,10 +38,12 @@ import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTFluidWithCatalystToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemWithItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -56,6 +59,8 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -230,6 +235,17 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
+        // Mixing
+        RagiumRecipeTypes.MIXING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToFluidRecipe ->
+            registry.addRecipe(
+                HTMixingEmiRecipe(
+                    id,
+                    recipe.fluidIngredient.toFluidEmi(),
+                    recipe.itemIngredient.toItemEmi(),
+                    recipe.result.toEmi(),
+                ),
+            )
+        }
         // Pressing
         RagiumRecipeTypes.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
             registry.addRecipe(
@@ -265,10 +281,10 @@ class RagiumEmiPlugin : EmiPlugin {
         // Solidifying
         RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
             registry.addRecipe(
-                HTItemWithFluidToItemEmiRecipe.solidifying(
+                HTFluidWithCatalystToItemEmiRecipe.solidifying(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.catalyst.toCatalystEmi(),
+                    recipe.catalyst.toItemEmi(),
                     recipe.result.toEmi(),
                 ),
             )
@@ -330,44 +346,24 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addInteractions() {
         // Water Well
-        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/water_well")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.Devices.WATER_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(Fluids.WATER))
-                .build()
+        addInteraction(EmiStack.of(Fluids.WATER), prefix = "fluid_generator") {
+            leftInput(EmiStack.of(RagiumBlocks.Devices.WATER_COLLECTOR))
+            rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
-        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/lava_well")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.Devices.LAVA_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(Fluids.LAVA))
-                .build()
+        addInteraction(EmiStack.of(Fluids.LAVA), prefix = "fluid_generator") {
+            leftInput(EmiStack.of(RagiumBlocks.Devices.LAVA_COLLECTOR))
+            rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
-        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/milk_drain")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.Devices.MILK_DRAIN))
-                .rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
-                .output(EmiStack.of(NeoForgeMod.MILK.get()))
-                .build()
+        addInteraction(EmiStack.of(NeoForgeMod.MILK.get()), prefix = "fluid_generator") {
+            leftInput(EmiStack.of(RagiumBlocks.Devices.MILK_DRAIN))
+            rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
         }
         // Exp Collector
-        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/exp_collector")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.Devices.EXP_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
-                .build()
+        addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
+            leftInput(EmiStack.of(RagiumBlocks.Devices.EXP_COLLECTOR))
+            rightInput(EmiStack.EMPTY, false)
         }
 
         // Bottled Bee
@@ -377,25 +373,59 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // Cauldron Interaction
-        addInteraction(EmiStack.of(Items.MUSHROOM_STEW), RagiumAPI.id("/world/cauldron/mushroom_stew")) {
+        addInteraction(EmiStack.of(Items.MUSHROOM_STEW), prefix = "cauldron") {
             leftInput(EmiStack.of(Items.BOWL))
             rightInput(EmiStack.of(Items.CAULDRON), true)
             rightInput(EmiStack.of(RagiumFluidContents.MUSHROOM_STEW.get()), false)
         }
+
+        // World Vaporization
+        addInteraction(EmiStack.of(Items.SLIME_BALL)) {
+            leftInput(EmiStack.of(RagiumFluidContents.SAP.getBucket()))
+            rightInput(EmiStack.EMPTY, false)
+        }
+        addInteraction(EmiStack.of(Items.SUGAR)) {
+            leftInput(EmiStack.of(RagiumFluidContents.SYRUP.getBucket()))
+            rightInput(EmiStack.EMPTY, false)
+        }
+        addInteraction(EmiStack.of(RagiumItems.Gems.CRIMSON_CRYSTAL)) {
+            leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_SAP.getBucket()))
+            rightInput(EmiStack.EMPTY, false)
+        }
+        addInteraction(EmiStack.of(RagiumItems.Gems.WARPED_CRYSTAL)) {
+            leftInput(EmiStack.of(RagiumFluidContents.WARPED_SAP.getBucket()))
+            rightInput(EmiStack.EMPTY, false)
+        }
+
+        // Crude Oil + Lava -> Magma Block / Soul Sand
+        addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL.get(), Fluids.LAVA)
     }
 
     private fun addInteraction(
         output: EmiStack,
         id: ResourceLocation = output.id,
+        prefix: String = "interaction",
         builderAction: EmiWorldInteractionRecipe.Builder.() -> Unit,
     ) {
-        addRecipeSafe(id.withPrefix("/world/interaction/")) { id1: ResourceLocation ->
+        addRecipeSafe(RagiumAPI.id("/world/$prefix/${id.toString().replace(':', '/')}")) { id1: ResourceLocation ->
             EmiWorldInteractionRecipe
                 .builder()
                 .apply(builderAction)
                 .id(id1)
                 .output(output)
                 .build()
+        }
+    }
+
+    private fun addFluidInteraction(output: ItemLike, source: Fluid, flowing: Fluid) {
+        val outputStack: EmiStack = EmiStack.of(output)
+
+        val sourceStack: EmiStack = EmiStack.of(source, 1000)
+        val flowingStack: EmiStack = EmiStack.of(flowing, 1000)
+
+        addInteraction(outputStack, prefix = "fluid_interaction") {
+            leftInput(sourceStack.copyAsCatalyst())
+            rightInput(flowingStack.copyAsCatalyst(), false)
         }
     }
 

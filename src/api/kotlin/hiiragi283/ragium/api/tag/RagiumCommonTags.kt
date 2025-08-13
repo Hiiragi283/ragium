@@ -131,7 +131,7 @@ object RagiumCommonTags {
         val DUSTS_COAL: TagKey<Item> = commonTag(DUSTS, "coal")
 
         @JvmField
-        val DUSTS_COKE: TagKey<Item> = commonTag(DUSTS, "coke")
+        val DUSTS_COKE: TagKey<Item> = commonTag(DUSTS, "coal_coke")
 
         @JvmField
         val DUSTS_SALTPETER: TagKey<Item> = commonTag(DUSTS, "saltpeter")

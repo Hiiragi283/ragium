@@ -12,9 +12,14 @@
   },
   "fluidOutputs": [],
   "ingredients": [
-    {
-      "tag": "c:gems/azure"
-    },
+    [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ],
     [
       {
         "tag": "c:dusts/iron"

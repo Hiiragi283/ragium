@@ -28,6 +28,9 @@ object RagiumEmiCategories {
     val MELTING = HTEmiRecipeCategory(RagiumConst.MELTING, RagiumBlocks.Machines.MELTER)
 
     @JvmField
+    val MIXING = HTEmiRecipeCategory(RagiumConst.MIXING, RagiumBlocks.Machines.MELTER)
+
+    @JvmField
     val PRESSING = HTEmiRecipeCategory(RagiumConst.PRESSING, RagiumBlocks.Machines.FORMING_PRESS)
 
     @JvmField
@@ -46,6 +49,7 @@ object RagiumEmiCategories {
         EXTRACTING,
         INFUSING,
         MELTING,
+        MIXING,
         PRESSING,
         REFINING,
         SOLIDIFYING,

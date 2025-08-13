@@ -23,7 +23,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
-object RagiumFoodRecipeProvider : HTRecipeProvider() {
+object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     val disabledByDelight: ICondition = not(modLoaded(RagiumConst.FARMERS_DELIGHT))
 
     override fun buildRecipeInternal() {

@@ -30,18 +30,19 @@ object RagiumMekanismAddon : RagiumAddon {
     val CHEMICAL_REGISTER = ChemicalDeferredRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val CHEMICAL_RAGINITE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse("raginite", 0xFF0033)
+    val CHEMICAL_RAGINITE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse(RagiumConst.RAGINITE, 0xFF0033)
 
     @JvmField
-    val CHEMICAL_AZURE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse("azure", 0x9999cc)
+    val CHEMICAL_AZURE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc)
 
     @JvmField
-    val CHEMICAL_CRIMSON_SAP: DeferredChemical<Chemical> =
-        CHEMICAL_REGISTER.register(RagiumChemicalConstants.CRIMSON_SAP)
+    val CHEMICAL_CRIMSON_SAP: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("crimson_sap", 0x660000)
 
     @JvmField
-    val CHEMICAL_WARPED_SAP: DeferredChemical<Chemical> =
-        CHEMICAL_REGISTER.register(RagiumChemicalConstants.WARPED_SAP)
+    val CHEMICAL_WARPED_SAP: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("warped_sap", 0x006666)
+
+    @JvmField
+    val CHEMICAL_ELDRITCH_FLUX: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("eldritch_flux", 0x660066)
 
     //    Item    //
 

@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:chemical_infusing",
+  "left_input": {
+    "amount": 1,
+    "chemical": "ragium:crimson_sap"
+  },
+  "output": {
+    "amount": 1,
+    "id": "ragium:eldritch_flux"
+  },
+  "right_input": {
+    "amount": 1,
+    "chemical": "ragium:warped_sap"
+  }
+}

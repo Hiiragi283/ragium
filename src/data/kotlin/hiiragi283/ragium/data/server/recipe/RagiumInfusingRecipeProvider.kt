@@ -21,7 +21,7 @@ import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
 
-object RagiumInfusingRecipeProvider : HTRecipeProvider() {
+object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         /*HTInfusingRecipeBuilder()
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)

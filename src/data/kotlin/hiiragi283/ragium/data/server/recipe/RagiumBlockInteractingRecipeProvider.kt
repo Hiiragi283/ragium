@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 
-object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
+object RagiumBlockInteractingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // blockGetter = provider.lookupOrThrow(Registries.BLOCK)
 

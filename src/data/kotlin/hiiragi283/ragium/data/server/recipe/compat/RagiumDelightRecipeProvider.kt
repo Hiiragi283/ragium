@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -18,7 +19,7 @@ import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
-object RagiumDelightRecipeProvider : HTRecipeProvider() {
+object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FARMERS_DELIGHT) {
     override fun buildRecipeInternal() {
         crafting()
         cookingPot()

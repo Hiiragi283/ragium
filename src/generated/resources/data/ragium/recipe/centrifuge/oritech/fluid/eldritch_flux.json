@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "oritech"
+    }
+  ],
+  "type": "oritech:centrifuge_fluid",
+  "fluidInput": {
+    "amount": 1000,
+    "fluid": "#c:warped_sap"
+  },
+  "fluidOutputs": [
+    {
+      "amount": 1000,
+      "fluid": "ragium:eldritch_flux"
+    }
+  ],
+  "ingredients": [
+    [
+      {
+        "tag": "c:dusts/crimson_crystal"
+      },
+      {
+        "tag": "c:gems/crimson_crystal"
+      }
+    ]
+  ],
+  "results": [],
+  "time": 100
+}

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.data.server.material.RagiumMaterialFamilies
 import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
@@ -15,8 +14,8 @@ import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMiscRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
-import hiiragi283.ragium.data.server.recipe.compat.RagiumArsRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumImmersiveRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumOritechRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumReplicationRecipeProvider
@@ -33,7 +32,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumMaterialFamilies
         ModMaterialFamilies
 
-        // RagiumBlockInteractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
@@ -46,10 +44,10 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumPressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
-        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.ARS_NOUVEAU)
-        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.FARMERS_DELIGHT)
-        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.MEKANISM)
-        RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.ORITECH)
-        RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.REPLICATION)
+        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumImmersiveRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
     }
 }

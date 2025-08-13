@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumCrushingRecipeProvider : HTRecipeProvider() {
+object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Vanilla
         HTItemToChancedItemRecipeBuilder
