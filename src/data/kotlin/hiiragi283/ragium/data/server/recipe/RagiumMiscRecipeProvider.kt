@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -36,15 +37,15 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun materials() {
         // Ragi-Alloy
-        HTShapedRecipeBuilder(RagiumItems.Compounds.RAGI_ALLOY)
+        HTShapedRecipeBuilder(RagiumItems.getCompound(RagiumMaterialType.RAGI_ALLOY))
             .hollow4()
             .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('B', Tags.Items.INGOTS_COPPER)
             .save(output)
 
         HTCookingRecipeBuilder
-            .blasting(RagiumItems.Ingots.RAGI_ALLOY)
-            .addIngredient(RagiumItems.Compounds.RAGI_ALLOY)
+            .blasting(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY))
+            .addIngredient(RagiumItems.getCompound(RagiumMaterialType.RAGI_ALLOY))
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
@@ -61,7 +62,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', ItemTags.COALS)
             .save(output)
         // Advanced Ragi-Alloy
-        HTShapedRecipeBuilder(RagiumItems.Compounds.ADVANCED_RAGI_ALLOY)
+        HTShapedRecipeBuilder(RagiumItems.getCompound(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .cross8()
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
@@ -69,8 +70,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .blasting(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY)
-            .addIngredient(RagiumItems.Compounds.ADVANCED_RAGI_ALLOY)
+            .blasting(RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .addIngredient(RagiumItems.getCompound(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
@@ -81,7 +82,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY),
             ).save(output)
         // Ragi-Crystal
-        HTShapedRecipeBuilder(RagiumItems.Gems.RAGI_CRYSTAL)
+        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
             .hollow8()
             .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('B', Tags.Items.GEMS_DIAMOND)
@@ -94,21 +95,21 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL),
             ).save(output)
         // Azure Steel
-        HTShapedRecipeBuilder(RagiumItems.Gems.AZURE_SHARD, 2)
+        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
             .mosaic4()
             .define('A', Tags.Items.GEMS_AMETHYST)
             .define('B', Tags.Items.GEMS_LAPIS)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.Compounds.AZURE_STEEL)
+        HTShapedRecipeBuilder(RagiumItems.getCompound(RagiumMaterialType.AZURE_STEEL))
             .hollow4()
             .define('A', RagiumCommonTags.Items.GEMS_AZURE)
             .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
 
         HTCookingRecipeBuilder
-            .blasting(RagiumItems.Ingots.AZURE_STEEL)
-            .addIngredient(RagiumItems.Compounds.AZURE_STEEL)
+            .blasting(RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL))
+            .addIngredient(RagiumItems.getCompound(RagiumMaterialType.AZURE_STEEL))
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
@@ -129,7 +130,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', RagiumCommonTags.Items.DUSTS_WOOD)
-            .define('B', RagiumItems.Dusts.SAW)
+            .define('B', RagiumItems.getDust(RagiumMaterialType.WOOD))
             .save(output)
 
         HTCookingRecipeBuilder
@@ -138,7 +139,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
         // Eldritch Pearl
-        HTShapedRecipeBuilder(RagiumItems.Gems.ELDRITCH_PEARL)
+        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
             .cross4()
             .define('A', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
             .define('B', RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
@@ -163,7 +164,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
             .solidifying(
                 HTIngredientHelper.item(Tags.Items.ENDER_PEARLS),
                 HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
-                HTResultHelper.item(RagiumItems.Gems.ELDRITCH_PEARL),
+                HTResultHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL),
             ).save(output)
         // Deep Steel
         HTCookingRecipeBuilder
@@ -171,7 +172,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
             .save(output)
 
-        HTShapelessRecipeBuilder(RagiumItems.Ingots.DEEP_STEEL)
+        HTShapelessRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
             .addIngredient(RagiumItems.DEEP_SCRAP)
             .addIngredient(RagiumItems.DEEP_SCRAP)
             .addIngredient(RagiumItems.DEEP_SCRAP)

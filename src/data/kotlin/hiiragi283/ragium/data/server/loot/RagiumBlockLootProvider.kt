@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
-import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -61,7 +61,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                     .withPool(
                         LootPool
                             .lootPool()
-                            .add(LootItem.lootTableItem(RagiumItems.Dusts.ASH))
+                            .add(LootItem.lootTableItem(RagiumItems.getDust(RagiumMaterialType.ASH)))
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
                             .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
                     ),
@@ -75,22 +75,23 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         // Ore
         for (ore: HTBlockHolderLike.Materialized in RagiumBlocks.ORES) {
             val factory: (Block) -> LootTable.Builder = when (ore.material) {
-                HTMaterialType.RAGINITE -> { block: Block ->
+                RagiumMaterialType.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
                         block,
                         applyExplosionDecay(
                             block,
                             LootItem
-                                .lootTableItem(RagiumItems.Dusts.RAGINITE)
+                                .lootTableItem(RagiumItems.getDust(RagiumMaterialType.RAGINITE))
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
                         ),
                     )
                 }
-                HTMaterialType.RAGI_CRYSTAL -> { block: Block ->
+
+                RagiumMaterialType.RAGI_CRYSTAL -> { block: Block ->
                     createOreDrop(
                         block,
-                        RagiumItems.Gems.RAGI_CRYSTAL.get(),
+                        RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).get(),
                     )
                 }
                 else -> break

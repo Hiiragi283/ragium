@@ -8,6 +8,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -38,8 +39,6 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConst.COMMON, path)
-
-fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefix/$value")
 
 fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, function: (ResourceLocation) -> I) {
     register(holder.id.path, function)
@@ -132,3 +131,5 @@ fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.IT
  * [TagKey]の名前を返します。
  */
 fun TagKey<*>.getName(): MutableComponent = Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")
+
+fun <T : Any> TagKey<*>.copyTo(registry: ResourceKey<out Registry<T>>): TagKey<T> = TagKey.create(registry, location)

@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -15,6 +14,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
@@ -209,14 +209,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.TAR, "Tar")
 
-        addMaterialItems<RagiumItems.Gems>("%s")
-        addMaterialItems<RagiumItems.Compounds>("%s Compound")
-        addMaterialItems<RagiumItems.Ingots>("%s Ingot")
-        addMaterialItems<RagiumItems.Nuggets>("%s Nugget")
-        addMaterialItems<RagiumItems.Dusts>("%s Dust")
+        addMaterials()
         // Armor
-        addItems<RagiumItems.AzureSteelArmors>(HTMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelArmors>(HTMaterialType.DEEP_STEEL)
+        addItems<RagiumItems.AzureSteelArmors>(RagiumMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelArmors>(RagiumMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
@@ -224,9 +220,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addItem(RagiumItems.DRILL, "Electric Drill")
 
-        addItems<RagiumItems.ForgeHammers>("Forge Hammer")
-        addItems<RagiumItems.AzureSteelTools>(HTMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelTools>(HTMaterialType.DEEP_STEEL)
+        addTools()
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")

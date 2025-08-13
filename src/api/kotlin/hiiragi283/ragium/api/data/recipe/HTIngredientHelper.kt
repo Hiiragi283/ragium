@@ -1,12 +1,10 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import net.minecraft.tags.TagKey
@@ -69,15 +67,15 @@ object HTIngredientHelper {
 
     @JvmStatic
     fun gemOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
-        itemTagKey(commonId(RagiumConst.DUSTS, name)),
-        itemTagKey(commonId(RagiumConst.GEMS, name)),
+        HTMaterialVariant.DUST.itemTagKey(name),
+        HTMaterialVariant.GEM.itemTagKey(name),
         count = count,
     )
 
     @JvmStatic
     fun ingotOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
-        itemTagKey(commonId(RagiumConst.DUSTS, name)),
-        itemTagKey(commonId(RagiumConst.INGOTS, name)),
+        HTMaterialVariant.DUST.itemTagKey(name),
+        HTMaterialVariant.INGOT.itemTagKey(name),
         count = count,
     )
 

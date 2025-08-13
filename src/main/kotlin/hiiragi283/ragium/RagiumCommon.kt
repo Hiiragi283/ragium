@@ -61,7 +61,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumArmorMaterials.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
-        RagiumCreativeTabs.REGISTER.register(eventBus)
+        RagiumCreativeTabs.init(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
 
         RagiumCustomRecipeSerializers.REGISTER.register(eventBus)

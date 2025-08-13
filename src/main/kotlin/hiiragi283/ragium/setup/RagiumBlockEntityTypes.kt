@@ -31,15 +31,12 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import org.slf4j.Logger
 import java.util.function.Supplier
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumBlockEntityTypes {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
@@ -52,6 +49,9 @@ object RagiumBlockEntityTypes {
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
         REGISTER.register(eventBus)
+
+        eventBus.addListener(::addSupportedBlock)
+        eventBus.addListener(::registerBlockCapabilities)
     }
 
     @JvmStatic
@@ -174,8 +174,8 @@ object RagiumBlockEntityTypes {
 
     //    Event    //
 
-    @SubscribeEvent
-    fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
+    @JvmStatic
+    private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
         fun add(type: HTDeferredBlockEntityType<*>, block: Supplier<out Block>) {
             event.modify(type.get(), block.get())
         }
@@ -215,8 +215,8 @@ object RagiumBlockEntityTypes {
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
-    @SubscribeEvent
-    fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+    @JvmStatic
+    private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         fun <T> registerHandlers(holder: HTDeferredBlockEntityType<T>) where T : BlockEntity, T : HTHandlerBlockEntity {
             val type: BlockEntityType<T> = holder.get()
             event.registerBlockEntity(

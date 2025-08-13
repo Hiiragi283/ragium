@@ -9,10 +9,13 @@ import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -152,8 +155,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun forgeHammers() {
-        fun crafting(hammer: ItemLike, input: TagKey<Item>) {
-            HTShapedRecipeBuilder(hammer, category = CraftingBookCategory.EQUIPMENT)
+        fun hammer(material: HTMaterialType): DeferredItem<*> = RagiumItems.getForgeHammer(material)
+
+        fun crafting(material: HTMaterialType, input: TagKey<Item>) {
+            HTShapedRecipeBuilder(hammer(material), category = CraftingBookCategory.EQUIPMENT)
                 .pattern(
                     " AA",
                     "BBA",
@@ -163,13 +168,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
 
-        crafting(RagiumItems.ForgeHammers.IRON, Tags.Items.INGOTS_IRON)
-        crafting(RagiumItems.ForgeHammers.DIAMOND, Tags.Items.GEMS_DIAMOND)
-        crafting(RagiumItems.ForgeHammers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+        crafting(HTVanillaMaterialType.IRON, Tags.Items.INGOTS_IRON)
+        crafting(HTVanillaMaterialType.DIAMOND, Tags.Items.GEMS_DIAMOND)
+        crafting(RagiumMaterialType.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
 
-        createNetheriteUpgrade(RagiumItems.ForgeHammers.NETHERITE, RagiumItems.ForgeHammers.DIAMOND).save(output)
-        addAzureSmithing(RagiumItems.ForgeHammers.AZURE_STEEL, RagiumItems.ForgeHammers.IRON)
-        addDeepSmithing(RagiumItems.ForgeHammers.DEEP_STEEL, RagiumItems.ForgeHammers.AZURE_STEEL)
+        createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
+        addAzureSmithing(hammer(RagiumMaterialType.AZURE_STEEL), hammer(HTVanillaMaterialType.IRON))
+        addDeepSmithing(hammer(RagiumMaterialType.DEEP_STEEL), hammer(RagiumMaterialType.AZURE_STEEL))
     }
 
     private fun tickets() {

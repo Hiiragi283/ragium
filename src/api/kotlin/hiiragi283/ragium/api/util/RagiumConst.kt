@@ -78,6 +78,7 @@ object RagiumConst {
     //    Tag Prefixes    //
 
     const val CIRCUITS = "circuits"
+    const val COMPOUNDS = "compounds"
     const val DUSTS = "dusts"
     const val ENRICHED = "enriched"
     const val GEMS = "gems"

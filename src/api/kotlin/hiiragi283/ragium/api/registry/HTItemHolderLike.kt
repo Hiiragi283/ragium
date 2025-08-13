@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.util.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey

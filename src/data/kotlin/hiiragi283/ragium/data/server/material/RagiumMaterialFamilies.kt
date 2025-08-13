@@ -1,86 +1,82 @@
 package hiiragi283.ragium.data.server.material
 
-import hiiragi283.ragium.api.util.HTMaterialFamily
-import hiiragi283.ragium.api.util.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
+import net.minecraft.world.level.ItemLike
+import java.util.function.Supplier
 
 object RagiumMaterialFamilies {
     // Gems
     @JvmField
-    val RAGI_CRYSTAL: HTMaterialFamily = gem(HTMaterialType.RAGI_CRYSTAL)
+    val RAGI_CRYSTAL: HTMaterialFamily = gem(RagiumMaterialType.RAGI_CRYSTAL)
 
     @JvmField
-    val AZURE: HTMaterialFamily = gem(HTMaterialType.AZURE)
+    val AZURE: HTMaterialFamily = gem(RagiumMaterialType.AZURE)
 
     @JvmField
-    val CRIMSON_CRYSTAL: HTMaterialFamily = gem(HTMaterialType.CRIMSON_CRYSTAL)
+    val CRIMSON_CRYSTAL: HTMaterialFamily = gem(RagiumMaterialType.CRIMSON_CRYSTAL)
 
     @JvmField
-    val WARPED_CRYSTAL: HTMaterialFamily = gem(HTMaterialType.WARPED_CRYSTAL)
+    val WARPED_CRYSTAL: HTMaterialFamily = gem(RagiumMaterialType.WARPED_CRYSTAL)
 
     @JvmField
-    val ELDRITCH_PEARL: HTMaterialFamily = gem(HTMaterialType.ELDRITCH_PEARL)
+    val ELDRITCH_PEARL: HTMaterialFamily = gem(RagiumMaterialType.ELDRITCH_PEARL)
 
     // Ingots
     @JvmField
-    val RAGI_ALLOY: HTMaterialFamily = ingotAlloy(HTMaterialType.RAGI_ALLOY)
+    val RAGI_ALLOY: HTMaterialFamily = ingotAlloy(RagiumMaterialType.RAGI_ALLOY)
 
     @JvmField
-    val ADVANCED_RAGI_ALLOY: HTMaterialFamily = ingotAlloy(HTMaterialType.ADVANCED_RAGI_ALLOY)
+    val ADVANCED_RAGI_ALLOY: HTMaterialFamily = ingotAlloy(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
 
     @JvmField
-    val AZURE_STEEL: HTMaterialFamily = ingotAlloy(HTMaterialType.AZURE_STEEL)
+    val AZURE_STEEL: HTMaterialFamily = ingotAlloy(RagiumMaterialType.AZURE_STEEL)
 
     @JvmField
-    val DEEP_STEEL: HTMaterialFamily = ingotAlloy(HTMaterialType.DEEP_STEEL)
+    val DEEP_STEEL: HTMaterialFamily = ingotAlloy(RagiumMaterialType.DEEP_STEEL)
 
     // Others
     @JvmField
-    val CHOCOLATE: HTMaterialFamily = ingotAlloy(HTMaterialType.CHOCOLATE)
+    val CHOCOLATE: HTMaterialFamily = ingotAlloy(RagiumMaterialType.CHOCOLATE)
 
     @JvmField
-    val MEAT: HTMaterialFamily = ingotAlloy(HTMaterialType.MEAT)
+    val MEAT: HTMaterialFamily = ingotAlloy(RagiumMaterialType.MEAT)
 
     @JvmField
-    val COOKED_MEAT: HTMaterialFamily = ingotAlloy(HTMaterialType.COOKED_MEAT)
+    val COOKED_MEAT: HTMaterialFamily = ingotAlloy(RagiumMaterialType.COOKED_MEAT)
 
     @JvmStatic
-    private fun gem(type: HTMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
-        .gem(HTMaterialType.getFromVariant<RagiumItems.Gems>(type))
-        .setDefaultedEntry(
-            HTMaterialFamily.Variant.DUSTS,
-            HTMaterialType.getFromVariant<RagiumItems.Dusts>(type),
-        ).setDefaultedEntry(
-            HTMaterialFamily.Variant.STORAGE_BLOCKS,
-            HTMaterialType.getFromVariant<RagiumBlocks.StorageBlocks>(type),
-        ).build(type.serializedName)
+    private fun getItem(type: RagiumMaterialType): (HTMaterialVariant) -> Supplier<out ItemLike>? = { variant ->
+        RagiumItems.MATERIALS.get(variant, type)
+    }
 
     @JvmStatic
-    private fun ingot(type: HTMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(HTMaterialType.getFromVariant<RagiumItems.Ingots>(type))
-        .setDefaultedEntry(
-            HTMaterialFamily.Variant.DUSTS,
-            HTMaterialType.getFromVariant<RagiumItems.Dusts>(type),
-        ).setDefaultedEntry(
-            HTMaterialFamily.Variant.NUGGETS,
-            HTMaterialType.getFromVariant<RagiumItems.Nuggets>(type),
-        ).setDefaultedEntry(
-            HTMaterialFamily.Variant.STORAGE_BLOCKS,
-            HTMaterialType.getFromVariant<RagiumBlocks.StorageBlocks>(type),
-        ).build(type.serializedName)
+    private fun firstBlock(type: RagiumMaterialType): RagiumBlocks.StorageBlocks? =
+        RagiumBlocks.StorageBlocks.entries.firstOrNull { it.material == type }
 
     @JvmStatic
-    private fun ingotAlloy(type: HTMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
-        .ingotAlloy(HTMaterialType.getFromVariant<RagiumItems.Ingots>(type))
-        .setDefaultedEntry(
-            HTMaterialFamily.Variant.DUSTS,
-            HTMaterialType.getFromVariant<RagiumItems.Dusts>(type),
-        ).setDefaultedEntry(
-            HTMaterialFamily.Variant.NUGGETS,
-            HTMaterialType.getFromVariant<RagiumItems.Nuggets>(type),
-        ).setDefaultedEntry(
-            HTMaterialFamily.Variant.STORAGE_BLOCKS,
-            HTMaterialType.getFromVariant<RagiumBlocks.StorageBlocks>(type),
-        ).build(type.serializedName)
+    private fun gem(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
+        .gem(RagiumItems.getGem(type))
+        .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .build(type.serializedName)
+
+    @JvmStatic
+    private fun ingot(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
+        .ingot(RagiumItems.getIngot(type))
+        .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
+        .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .build(type.serializedName)
+
+    @JvmStatic
+    private fun ingotAlloy(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
+        .ingotAlloy(RagiumItems.getIngot(type))
+        .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
+        .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, firstBlock(type))
+        .build(type.serializedName)
 }

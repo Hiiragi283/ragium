@@ -1,13 +1,22 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -17,6 +26,13 @@ object RagiumCreativeTabs {
     @JvmField
     val REGISTER: DeferredRegister<CreativeModeTab> =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.register(eventBus)
+
+        eventBus.addListener(::modifyCreativeTabs)
+    }
 
     @JvmField
     val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
@@ -63,14 +79,11 @@ object RagiumCreativeTabs {
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
-        // Gems
-        output.acceptItems<RagiumItems.Gems>()
-        // Ingots
-        output.acceptItems<RagiumItems.Compounds>()
-        output.acceptItems<RagiumItems.Ingots>()
-        output.acceptItems<RagiumItems.Nuggets>()
-
-        output.acceptItems<RagiumItems.Dusts>()
+        // Materials
+        HTMaterialVariant.CREATIVE_TAG_ORDER
+            .map(RagiumItems.MATERIALS::row)
+            .flatMap(Map<HTMaterialType, DeferredItem<*>>::values)
+            .forEach(output::accept)
         // Ingredients
         output.accept(RagiumItems.RAGI_COKE)
         output.accept(RagiumItems.COMPRESSED_SAWDUST)
@@ -100,16 +113,20 @@ object RagiumCreativeTabs {
             "ragi_ticket",
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.acceptItems<RagiumItems.ForgeHammers>()
+            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptItems<RagiumItems.AzureSteelArmors>()
-            output.acceptItems<RagiumItems.AzureSteelTools>()
+            HTToolVariant.entries
+                .mapNotNull(RagiumItems.TOOLS.column(RagiumMaterialType.AZURE_STEEL)::get)
+                .forEach(output::accept)
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptItems<RagiumItems.DeepSteelArmors>()
-            output.acceptItems<RagiumItems.DeepSteelTools>()
+            HTToolVariant.entries
+                .mapNotNull(RagiumItems.TOOLS.column(RagiumMaterialType.DEEP_STEEL)::get)
+                .forEach(output::accept)
 
             output.accept(RagiumItems.DRILL)
 
@@ -126,14 +143,14 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ENDER_BUNDLE)
             output.accept(RagiumItems.ELDRITCH_EGG)
             // Foods
-            output.accept(RagiumItems.Ingots.CHOCOLATE)
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.CHOCOLATE))
 
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
             output.accept(RagiumItems.MINCED_MEAT)
-            output.accept(RagiumItems.Ingots.MEAT)
-            output.accept(RagiumItems.Ingots.COOKED_MEAT)
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.MEAT))
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
             output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)
@@ -153,6 +170,8 @@ object RagiumCreativeTabs {
             output.acceptItems<RagiumItems.Tickets>()
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
         }
+
+    //    Extensions    //
 
     @JvmStatic
     private fun register(
@@ -176,5 +195,26 @@ object RagiumCreativeTabs {
     @JvmStatic
     inline fun <reified I> CreativeModeTab.Output.acceptItems() where I : ItemLike, I : Enum<I> {
         enumEntries<I>().forEach(this::accept)
+    }
+
+    //    Events    //
+
+    @JvmStatic
+    private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+        event.insertAfter(
+            ItemStack(Items.IRON_PICKAXE),
+            RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON).toStack(),
+            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+        )
+        event.insertAfter(
+            ItemStack(Items.DIAMOND_PICKAXE),
+            RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND).toStack(),
+            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+        )
+        event.insertAfter(
+            ItemStack(Items.NETHERITE_PICKAXE),
+            RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE).toStack(),
+            CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+        )
     }
 }

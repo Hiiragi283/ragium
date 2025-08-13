@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTMaterialType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -15,6 +14,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
@@ -200,15 +200,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.TAR, "タール")
 
-        addMaterialItems<RagiumItems.Gems>("%s")
-        addMaterialItems<RagiumItems.Compounds>("%s混合物")
-        addMaterialItems<RagiumItems.Ingots>("%sインゴット")
-        addMaterialItems<RagiumItems.Nuggets>("%sナゲット")
-        addMaterialItems<RagiumItems.Dusts>("%sの粉")
-
+        addMaterials()
         // Armor
-        addItems<RagiumItems.AzureSteelArmors>(HTMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelArmors>(HTMaterialType.DEEP_STEEL)
+        addItems<RagiumItems.AzureSteelArmors>(RagiumMaterialType.AZURE_STEEL)
+        addItems<RagiumItems.DeepSteelArmors>(RagiumMaterialType.DEEP_STEEL)
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
@@ -216,9 +211,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addItem(RagiumItems.DRILL, "電動ドリル")
 
-        addItems<RagiumItems.ForgeHammers>("鍛造ハンマー")
-        addItems<RagiumItems.AzureSteelTools>(HTMaterialType.AZURE_STEEL)
-        addItems<RagiumItems.DeepSteelTools>(HTMaterialType.DEEP_STEEL)
+        addTools()
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")

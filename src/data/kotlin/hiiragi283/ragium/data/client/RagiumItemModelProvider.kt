@@ -2,16 +2,20 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBuilder
+import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -73,28 +77,30 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
     }
 
     private fun registerItems() {
+        val compounds: Map<HTMaterialType, DeferredItem<*>> = RagiumItems.MATERIALS.row(HTMaterialVariant.COMPOUND)
+        val tools = RagiumItems.TOOLS.values
+
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            removeItems<RagiumItems.Compounds>()
+            removeAll(compounds.values)
 
             remove(RagiumItems.BLAST_CHARGE)
-            removeItems<RagiumItems.ForgeHammers>()
-            removeItems<RagiumItems.AzureSteelTools>()
-            removeItems<RagiumItems.DeepSteelTools>()
+            removeAll(tools)
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.map(DeferredItem<*>::getId).forEach(::basicItem)
 
-        for (compound: RagiumItems.Compounds in RagiumItems.Compounds.entries) {
-            val baseId: String = when (compound) {
-                RagiumItems.Compounds.RAGI_ALLOY -> "copper_ingot"
-                RagiumItems.Compounds.ADVANCED_RAGI_ALLOY -> "gold_ingot"
-                RagiumItems.Compounds.AZURE_STEEL -> "iron_ingot"
+        for ((material: HTMaterialType, compound: DeferredItem<*>) in compounds) {
+            val baseId: String = when (material) {
+                RagiumMaterialType.RAGI_ALLOY -> "copper_ingot"
+                RagiumMaterialType.ADVANCED_RAGI_ALLOY -> "gold_ingot"
+                RagiumMaterialType.AZURE_STEEL -> "iron_ingot"
+                else -> continue
             }
-            val layerId: ResourceLocation = when (compound) {
-                RagiumItems.Compounds.ADVANCED_RAGI_ALLOY -> RagiumItems.Compounds.RAGI_ALLOY
+            val layerId: ResourceLocation = when (material) {
+                RagiumMaterialType.ADVANCED_RAGI_ALLOY -> compounds[RagiumMaterialType.RAGI_ALLOY]!!
                 else -> compound
             }.itemId
             getBuilder(compound.id.path)
@@ -113,10 +119,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Tools
         handheldItem(RagiumItems.BLAST_CHARGE.asItem())
 
-        buildList {
-            addAll(RagiumItems.ForgeHammers.entries)
-            addAll(RagiumItems.AzureSteelTools.entries)
-            addAll(RagiumItems.DeepSteelTools.entries)
-        }.map(HTItemHolderLike::id).forEach(::handheldItem)
+        tools.map(DeferredItem<*>::getId).forEach(::handheldItem)
     }
 }

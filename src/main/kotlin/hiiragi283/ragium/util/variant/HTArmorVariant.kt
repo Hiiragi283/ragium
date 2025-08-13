@@ -2,7 +2,7 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.util.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey

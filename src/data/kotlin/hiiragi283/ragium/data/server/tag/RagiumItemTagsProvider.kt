@@ -2,6 +2,8 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.copyTo
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -9,6 +11,8 @@ import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -19,6 +23,7 @@ import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
@@ -31,6 +36,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
 import java.util.concurrent.CompletableFuture
 
@@ -88,32 +94,18 @@ class RagiumItemTagsProvider(
     //    Material    //
 
     private fun materials() {
-        // Gems
-        for (gem: RagiumItems.Gems in RagiumItems.Gems.entries) {
-            addItem(Tags.Items.GEMS, gem.tagKey, gem)
-        }
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_MEAT, RagiumItems.MINCED_MEAT)
-        // Ingots
-        for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
-            addItem(Tags.Items.INGOTS, ingot.tagKey, ingot)
+        RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
+            addItem(variant.commonTag, variant.itemTagKey(material), item)
         }
-        // Nuggets
-        for (nugget: RagiumItems.Nuggets in RagiumItems.Nuggets.entries) {
-            addItem(Tags.Items.NUGGETS, nugget.tagKey, nugget)
-        }
-        // Dusts
-        for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
-            addItem(Tags.Items.DUSTS, dust.tagKey, dust)
-        }
-        // Plates
         addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
 
         // Mekanism Addon
-        tag(RagiumCommonTags.Items.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
-        tag(RagiumCommonTags.Items.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
+        tag(RagiumModTags.Items.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
+        tag(RagiumModTags.Items.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
         tag(MekanismTags.Items.ENRICHED)
-            .addTag(RagiumCommonTags.Items.ENRICHED_AZURE)
-            .addTag(RagiumCommonTags.Items.ENRICHED_RAGINITE)
+            .addTag(RagiumModTags.Items.ENRICHED_AZURE)
+            .addTag(RagiumModTags.Items.ENRICHED_RAGINITE)
     }
 
     private fun foods() {
@@ -176,16 +168,10 @@ class RagiumItemTagsProvider(
         }
 
         // Tools
-        val tools: List<HTItemHolderLike.Typed<HTToolVariant>> = buildList {
-            addAll(RagiumItems.AzureSteelTools.entries)
-            addAll(RagiumItems.DeepSteelTools.entries)
+        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
+            tag(variant.tagKey).addItem(item)
         }
-        for (tool: HTItemHolderLike.Typed<HTToolVariant> in tools) {
-            tag(tool.variant.tagKey).addItem(tool)
-        }
-
-        for (hammer: RagiumItems.ForgeHammers in RagiumItems.ForgeHammers.entries) {
-            tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(hammer)
+        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.row(HTToolVariant.HAMMER).values) {
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }
 
@@ -266,6 +252,6 @@ class RagiumItemTagsProvider(
     }
 
     private fun copyTo(tagKey: TagKey<Block>) {
-        copy(tagKey, itemTagKey(tagKey.location))
+        copy(tagKey, tagKey.copyTo(Registries.ITEM))
     }
 }

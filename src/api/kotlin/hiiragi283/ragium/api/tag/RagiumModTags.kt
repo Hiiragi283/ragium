@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
@@ -51,6 +52,9 @@ object RagiumModTags {
 
     object Items {
         @JvmField
+        val COMPOUNDS: TagKey<Item> = create(RagiumConst.COMPOUNDS)
+
+        @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField
@@ -75,7 +79,17 @@ object RagiumModTags {
         @JvmField
         val ALLOY_SMELTER_FLUXES_ADVANCED: TagKey<Item> = create("alloy_smelter_fluxes/advanced")
 
+        // Mekanism Integration
+        @JvmField
+        val ENRICHED_RAGINITE: TagKey<Item> = create(RagiumConst.ENRICHED, RagiumConst.RAGINITE)
+
+        @JvmField
+        val ENRICHED_AZURE: TagKey<Item> = create(RagiumConst.ENRICHED, RagiumConst.AZURE)
+
         @JvmStatic
         private fun create(path: String): TagKey<Item> = itemTagKey(RagiumAPI.id(path))
+
+        @JvmStatic
+        private fun create(prefix: String, suffix: String): TagKey<Item> = itemTagKey(RagiumAPI.id(prefix, suffix))
     }
 }

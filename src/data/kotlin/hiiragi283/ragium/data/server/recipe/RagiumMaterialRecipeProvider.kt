@@ -9,7 +9,8 @@ import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
@@ -209,12 +210,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun blockToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
         // Block -> Base
-        val blockTag: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.STORAGE_BLOCKS) ?: return
+        val blockTag: TagKey<Item> = family.getTagKey(HTMaterialVariant.STORAGE_BLOCK) ?: return
         HTShapelessRecipeBuilder(item, 9)
             .addIngredient(blockTag)
             .saveSuffixed(output, "_from_block")
         // Base -> Block
-        val block: ItemLike = family.getItem(HTMaterialFamily.Variant.STORAGE_BLOCKS) ?: return
+        val block: ItemLike = family.getItem(HTMaterialVariant.STORAGE_BLOCK) ?: return
         HTShapedRecipeBuilder(block)
             .hollow8()
             .define('A', tagKey)
@@ -224,12 +225,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun nuggetToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
         // Base -> Nugget
-        val nugget: ItemLike = family.getItem(HTMaterialFamily.Variant.NUGGETS) ?: return
+        val nugget: ItemLike = family.getItem(HTMaterialVariant.NUGGET) ?: return
         HTShapelessRecipeBuilder(nugget, 9)
             .addIngredient(tagKey)
             .saveSuffixed(output, "_from_base")
         // Nugget -> Base
-        val nuggetTag: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.NUGGETS) ?: return
+        val nuggetTag: TagKey<Item> = family.getTagKey(HTMaterialVariant.NUGGET) ?: return
         HTShapedRecipeBuilder(item)
             .hollow8()
             .define('A', nuggetTag)
@@ -238,7 +239,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun toDust(family: HTMaterialFamily, tagKey: TagKey<Item>) {
-        val dust: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.DUSTS) ?: return
+        val dust: TagKey<Item> = family.getTagKey(HTMaterialVariant.DUST) ?: return
         // Base
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(tagKey))
@@ -250,8 +251,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun rawToIngot(family: HTMaterialFamily) {
-        val ingot: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.INGOTS) ?: return
-        val raw: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.RAW_MATERIALS) ?: return
+        val ingot: TagKey<Item> = family.getTagKey(HTMaterialVariant.INGOT) ?: return
+        val raw: TagKey<Item> = family.getTagKey(HTMaterialVariant.RAW_MATERIAL) ?: return
         // Basic
         HTCombineItemToItemRecipeBuilder
             .alloying(

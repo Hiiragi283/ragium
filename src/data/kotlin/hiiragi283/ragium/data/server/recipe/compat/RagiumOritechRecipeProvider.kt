@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.Items
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
 import rearth.oritech.api.recipe.CentrifugeFluidRecipeBuilder
@@ -40,35 +41,35 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(ingotOrDust("copper"))
-            .result(RagiumItems.Ingots.RAGI_ALLOY.get())
+            .result(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY).get())
             .export(output, RagiumConst.RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(ingotOrDust("gold"))
-            .result(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.get())
+            .result(RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY).get())
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
             .input(gemOrDust("amethyst"))
             .input(gemOrDust("lapis"))
-            .result(RagiumItems.Gems.AZURE_SHARD.get(), 2)
+            .result(RagiumItems.getGem(RagiumMaterialType.AZURE).get(), 2)
             .export(output, "azure_shard")
 
         FoundryRecipeBuilder
             .build()
             .input(gemOrDust(RagiumConst.AZURE))
             .input(ingotOrDust("iron"))
-            .result(RagiumItems.Ingots.AZURE_STEEL.get())
+            .result(RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL).get())
             .export(output, RagiumConst.AZURE_STEEL)
 
         FoundryRecipeBuilder
             .build()
             .input(RagiumItems.DEEP_SCRAP)
             .input(ingotOrDust(RagiumConst.AZURE_STEEL))
-            .result(RagiumItems.Ingots.DEEP_STEEL.get())
+            .result(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL).get())
             .export(output, RagiumConst.DEEP_STEEL)
     }
 
@@ -78,7 +79,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .input(gemOrDust("diamond"))
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .result(RagiumItems.Gems.RAGI_CRYSTAL.get())
+            .result(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).get())
             .time(20)
             .export(output, RagiumConst.RAGI_CRYSTAL)
     }

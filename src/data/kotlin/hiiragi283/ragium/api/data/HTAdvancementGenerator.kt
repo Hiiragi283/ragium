@@ -74,7 +74,7 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
     protected fun HTAdvancementBuilder.hasItem(key: String, predicate: ItemPredicate.Builder): HTAdvancementBuilder =
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(predicate))
 
-    protected fun HTAdvancementBuilder.hasAnyItem(key: String, items: List<ItemLike>): HTAdvancementBuilder =
+    protected fun HTAdvancementBuilder.hasAnyItem(key: String, items: Collection<ItemLike>): HTAdvancementBuilder =
         hasAnyItem(key, *items.toTypedArray())
 
     protected fun HTAdvancementBuilder.hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =

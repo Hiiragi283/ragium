@@ -25,10 +25,11 @@ class HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid>(
     val bucketHolder: DeferredItem<*>,
 ) : Supplier<STILL> by stillHolder {
     val id: ResourceLocation = stillHolder.id
+    private val commonId: ResourceLocation = commonId(id.path)
 
-    val commonTag: TagKey<Fluid> = fluidTagKey(commonId(id.path))
+    val commonTag: TagKey<Fluid> = fluidTagKey(commonId)
 
-    val bucketTag: TagKey<Item> = itemTagKey(commonId("buckets/${id.path}"))
+    val bucketTag: TagKey<Item> = itemTagKey(commonId.withPrefix("buckets/"))
 
     fun getType(): TYPE = typeHolder.get()
 

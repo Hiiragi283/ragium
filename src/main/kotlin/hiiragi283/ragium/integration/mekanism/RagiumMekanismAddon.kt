@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import mekanism.api.chemical.Chemical
 import mekanism.common.registration.impl.ChemicalDeferredRegister
 import mekanism.common.registration.impl.DeferredChemical
@@ -82,7 +83,7 @@ object RagiumMekanismAddon : RagiumAddon {
 
             // Azure
             event.insertAfter(
-                RagiumItems.Gems.AZURE_SHARD.toStack(),
+                RagiumItems.getGem(RagiumMaterialType.AZURE).toStack(),
                 ITEM_ENRICHED_AZURE.toStack(),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )

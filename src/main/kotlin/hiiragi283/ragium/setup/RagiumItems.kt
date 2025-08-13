@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
@@ -9,8 +10,11 @@ import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTTaggedHolder
-import hiiragi283.ragium.api.util.HTMaterialType
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
@@ -25,8 +29,10 @@ import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumCircuitType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
-import hiiragi283.ragium.util.variant.HTForgeHammerVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
@@ -40,19 +46,18 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.Tier
+import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumItems {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
@@ -66,39 +71,18 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
-        Gems.entries
-        Compounds.entries
-        Ingots.entries
-        Nuggets.entries
-        Dusts.entries
-
         AzureSteelArmors.entries
         DeepSteelArmors.entries
 
-        ForgeHammers.entries
-        AzureSteelTools.entries
-        DeepSteelTools.entries
         Tickets.entries
 
         Circuits.entries
 
         REGISTER.register(eventBus)
+
+        eventBus.addListener(::registerItemCapabilities)
+        eventBus.addListener(::modifyComponents)
     }
-
-    @JvmStatic
-    private fun register(prefix: String, suffix: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
-        register("${prefix}_$suffix", properties)
-
-    @JvmStatic
-    private fun register(name: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
-        REGISTER.registerSimpleItem(name, properties)
-
-    @JvmStatic
-    private fun <T : Item> register(
-        name: String,
-        factory: (Item.Properties) -> T,
-        properties: Item.Properties = Item.Properties(),
-    ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
     //    Materials    //
 
@@ -114,80 +98,71 @@ object RagiumItems {
     @JvmField
     val DEEP_SCRAP: DeferredItem<Item> = register("deep_scrap")
 
-    // Gems
-    enum class Gems(override val material: HTMaterialType) :
-        HTItemHolderLike.Materialized,
-        HTTaggedHolder<Item> {
-        AZURE_SHARD(HTMaterialType.AZURE),
-        RAGI_CRYSTAL(HTMaterialType.RAGI_CRYSTAL),
-        CRIMSON_CRYSTAL(HTMaterialType.CRIMSON_CRYSTAL),
-        WARPED_CRYSTAL(HTMaterialType.WARPED_CRYSTAL),
-        ELDRITCH_PEARL(HTMaterialType.ELDRITCH_PEARL),
-        ;
+    @JvmField
+    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>> = buildTable {
+        // Dusts
+        put(HTMaterialVariant.DUST, RagiumMaterialType.WOOD, register("sawdust"))
+        listOf(
+            RagiumMaterialType.ASH,
+            RagiumMaterialType.RAGINITE,
+            RagiumMaterialType.OBSIDIAN,
+            RagiumMaterialType.CINNABAR,
+            RagiumMaterialType.SALTPETER,
+            RagiumMaterialType.SULFUR,
+        ).forEach { put(HTMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
+        // Gems
+        put(HTMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
+        listOf(
+            RagiumMaterialType.RAGI_CRYSTAL,
+            RagiumMaterialType.CRIMSON_CRYSTAL,
+            RagiumMaterialType.WARPED_CRYSTAL,
+            RagiumMaterialType.ELDRITCH_PEARL,
+        ).forEach { put(HTMaterialVariant.GEM, it, register(it.serializedName)) }
+        // Ingots
+        listOf(
+            RagiumMaterialType.RAGI_ALLOY,
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
+            RagiumMaterialType.AZURE_STEEL,
+        ).forEach { put(HTMaterialVariant.COMPOUND, it, register("${it.serializedName}_compound")) }
 
-        override val holder: DeferredItem<*> = register(name.lowercase())
-        override val tagKey: TagKey<Item> = material.itemTag(RagiumConst.GEMS)
+        listOf(
+            // Metals
+            RagiumMaterialType.RAGI_ALLOY,
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
+            RagiumMaterialType.AZURE_STEEL,
+            RagiumMaterialType.DEEP_STEEL,
+            // Foods
+            RagiumMaterialType.CHOCOLATE,
+            RagiumMaterialType.MEAT,
+            RagiumMaterialType.COOKED_MEAT,
+        ).forEach { put(HTMaterialVariant.INGOT, it, register("${it.serializedName}_ingot")) }
+        // Nuggets
+        listOf(
+            RagiumMaterialType.RAGI_ALLOY,
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
+            RagiumMaterialType.AZURE_STEEL,
+            RagiumMaterialType.DEEP_STEEL,
+        ).forEach { put(HTMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
     }
 
-    // Ingots
-    enum class Compounds(override val material: HTMaterialType) : HTItemHolderLike.Materialized {
-        RAGI_ALLOY(HTMaterialType.RAGI_ALLOY),
-        ADVANCED_RAGI_ALLOY(HTMaterialType.ADVANCED_RAGI_ALLOY),
-        AZURE_STEEL(HTMaterialType.AZURE_STEEL),
-        ;
+    @JvmStatic
+    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): DeferredItem<*> = MATERIALS.get(variant, material)
+        ?: error("Unregistered ${variant.serializedName} item for ${material.serializedName}")
 
-        override val holder: DeferredItem<*> = register(name.lowercase(), "compound")
-    }
+    @JvmStatic
+    fun getCompound(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.COMPOUND, material)
 
-    enum class Ingots(override val material: HTMaterialType) :
-        HTItemHolderLike.Materialized,
-        HTTaggedHolder<Item> {
-        // Metal
-        RAGI_ALLOY(HTMaterialType.RAGI_ALLOY),
-        ADVANCED_RAGI_ALLOY(HTMaterialType.ADVANCED_RAGI_ALLOY),
-        AZURE_STEEL(HTMaterialType.AZURE_STEEL),
-        DEEP_STEEL(HTMaterialType.DEEP_STEEL),
+    @JvmStatic
+    fun getDust(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.DUST, material)
 
-        // Food
-        CHOCOLATE(HTMaterialType.CHOCOLATE),
-        MEAT(HTMaterialType.MEAT),
-        COOKED_MEAT(HTMaterialType.COOKED_MEAT),
-        ;
+    @JvmStatic
+    fun getGem(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.GEM, material)
 
-        override val holder: DeferredItem<*> = register(name.lowercase(), "ingot")
-        override val tagKey: TagKey<Item> = material.itemTag(RagiumConst.INGOTS)
-    }
+    @JvmStatic
+    fun getIngot(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.INGOT, material)
 
-    // Nuggets
-    enum class Nuggets(override val material: HTMaterialType) :
-        HTItemHolderLike.Materialized,
-        HTTaggedHolder<Item> {
-        RAGI_ALLOY(HTMaterialType.RAGI_ALLOY),
-        ADVANCED_RAGI_ALLOY(HTMaterialType.ADVANCED_RAGI_ALLOY),
-        AZURE_STEEL(HTMaterialType.AZURE_STEEL),
-        DEEP_STEEL(HTMaterialType.DEEP_STEEL),
-        ;
-
-        override val holder: DeferredItem<*> = register(name.lowercase(), "nugget")
-        override val tagKey: TagKey<Item> = material.itemTag(RagiumConst.NUGGETS)
-    }
-
-    // Dusts
-    enum class Dusts(override val material: HTMaterialType, path: String? = null) :
-        HTItemHolderLike.Materialized,
-        HTTaggedHolder<Item> {
-        SAW(HTMaterialType.WOOD, "sawdust"),
-        ASH(HTMaterialType.ASH),
-        RAGINITE(HTMaterialType.RAGINITE),
-        OBSIDIAN(HTMaterialType.OBSIDIAN),
-        CINNABAR(HTMaterialType.CINNABAR),
-        SALTPETER(HTMaterialType.SALTPETER),
-        SULFUR(HTMaterialType.SULFUR),
-        ;
-
-        override val holder: DeferredItem<*> = register(path ?: "${name.lowercase()}_dust")
-        override val tagKey: TagKey<Item> = material.itemTag(RagiumConst.DUSTS)
-    }
+    @JvmStatic
+    fun getNugget(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.NUGGET, material)
 
     //    Armors    //
 
@@ -200,7 +175,7 @@ object RagiumItems {
 
         override val holder: DeferredItem<*> = variant.registerItem(
             REGISTER,
-            HTMaterialType.AZURE_STEEL,
+            RagiumMaterialType.AZURE_STEEL,
             RagiumArmorMaterials.AZURE_STEEL,
             20,
         )
@@ -215,7 +190,7 @@ object RagiumItems {
 
         override val holder: DeferredItem<*> = variant.registerItem(
             REGISTER,
-            HTMaterialType.DEEP_STEEL,
+            RagiumMaterialType.DEEP_STEEL,
             RagiumArmorMaterials.DEEP_STEEL,
             20,
         )
@@ -265,41 +240,45 @@ object RagiumItems {
     @JvmField
     val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
 
-    enum class ForgeHammers(override val variant: HTForgeHammerVariant) : HTItemHolderLike.Typed<HTForgeHammerVariant> {
-        IRON(HTForgeHammerVariant.IRON),
-        DIAMOND(HTForgeHammerVariant.DIAMOND),
-        NETHERITE(HTForgeHammerVariant.NETHERITE),
-        RAGI_ALLOY(HTForgeHammerVariant.RAGI_ALLOY),
-        AZURE_STEEL(HTForgeHammerVariant.AZURE_STEEL),
-        DEEP_STEEL(HTForgeHammerVariant.DEEP_STEEL),
-        ;
-
-        override val holder: DeferredItem<*> = register("${variant.serializedName}_hammer", variant.factory)
+    @JvmField
+    val TOOLS: HTTable<HTToolVariant, HTMaterialType, DeferredItem<*>> = buildTable {
+        // Hammer
+        mapOf(
+            Tiers.IRON to HTVanillaMaterialType.IRON,
+            Tiers.DIAMOND to HTVanillaMaterialType.DIAMOND,
+            Tiers.NETHERITE to HTVanillaMaterialType.NETHERITE,
+            RagiumToolTiers.RAGI_ALLOY to RagiumMaterialType.RAGI_ALLOY,
+        ).forEach { (tier: Tier, material: HTMaterialType) ->
+            val variant = HTToolVariant.HAMMER
+            put(variant, material, variant.registerItem(REGISTER, material, tier))
+        }
+        for (variant: HTToolVariant in HTToolVariant.entries) {
+            // Azure
+            put(
+                variant,
+                RagiumMaterialType.AZURE_STEEL,
+                variant.registerItem(REGISTER, RagiumMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL),
+            )
+            // Deep
+            put(
+                variant,
+                RagiumMaterialType.DEEP_STEEL,
+                variant.registerItem(REGISTER, RagiumMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL),
+            )
+        }
     }
 
-    enum class AzureSteelTools(override val variant: HTToolVariant) : HTItemHolderLike.Typed<HTToolVariant> {
-        SHOVEL(HTToolVariant.SHOVEL),
-        PICKAXE(HTToolVariant.PICKAXE),
-        AXE(HTToolVariant.AXE),
-        HOE(HTToolVariant.HOE),
-        SWORD(HTToolVariant.SWORD),
-        ;
+    @JvmStatic
+    fun getForgeHammer(material: HTMaterialType): DeferredItem<*> = TOOLS.get(HTToolVariant.HAMMER, material)
+        ?: error("Unregistered ${material.serializedName} forge hammer item")
 
-        override val holder: DeferredItem<*> =
-            variant.registerItem(REGISTER, HTMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
-    }
+    @JvmStatic
+    fun getAzureTool(variant: HTToolVariant): DeferredItem<*> = TOOLS.get(variant, RagiumMaterialType.AZURE_STEEL)
+        ?: error("Unregistered azure steel ${variant.serializedName} item")
 
-    enum class DeepSteelTools(override val variant: HTToolVariant) : HTItemHolderLike.Typed<HTToolVariant> {
-        SHOVEL(HTToolVariant.SHOVEL),
-        PICKAXE(HTToolVariant.PICKAXE),
-        AXE(HTToolVariant.AXE),
-        HOE(HTToolVariant.HOE),
-        SWORD(HTToolVariant.SWORD),
-        ;
-
-        override val holder: DeferredItem<*> =
-            variant.registerItem(REGISTER, HTMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
-    }
+    @JvmStatic
+    fun getDeepTool(variant: HTToolVariant): DeferredItem<*> = TOOLS.get(variant, RagiumMaterialType.DEEP_STEEL)
+        ?: error("Unregistered deep steel ${variant.serializedName} item")
 
     //    Tickets    //
 
@@ -437,20 +416,43 @@ object RagiumItems {
     enum class Circuits(override val material: HTMaterialType) :
         HTItemHolderLike.Materialized,
         HTTaggedHolder<Item> {
-        BASIC(HTMaterialType.BASIC),
-        ADVANCED(HTMaterialType.ADVANCED),
-        ELITE(HTMaterialType.ELITE),
-        ULTIMATE(HTMaterialType.ULTIMATE),
+        BASIC(RagiumCircuitType.BASIC),
+        ADVANCED(RagiumCircuitType.ADVANCED),
+        ELITE(RagiumCircuitType.ELITE),
+        ULTIMATE(RagiumCircuitType.ULTIMATE),
         ;
 
         override val holder: DeferredItem<*> = register(name.lowercase(), "circuit")
-        override val tagKey: TagKey<Item> = material.itemTag(RagiumConst.CIRCUITS)
+        override val tagKey: TagKey<Item>
+            get() = when (this) {
+                BASIC -> RagiumCommonTags.Items.CIRCUITS_BASIC
+                ADVANCED -> RagiumCommonTags.Items.CIRCUITS_ADVANCED
+                ELITE -> RagiumCommonTags.Items.CIRCUITS_ELITE
+                ULTIMATE -> RagiumCommonTags.Items.CIRCUITS_ULTIMATE
+            }
     }
+
+    //    Extensions    //
+
+    @JvmStatic
+    private fun register(prefix: String, suffix: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
+        register("${prefix}_$suffix", properties)
+
+    @JvmStatic
+    private fun register(name: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
+        REGISTER.registerSimpleItem(name, properties)
+
+    @JvmStatic
+    private fun <T : Item> register(
+        name: String,
+        factory: (Item.Properties) -> T,
+        properties: Item.Properties = Item.Properties(),
+    ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
     //    Event    //
 
-    @SubscribeEvent
-    fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+    @JvmStatic
+    private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         registerEnergy(event, DRILL, 160000)
 
         registerDrums(event)
@@ -486,8 +488,8 @@ object RagiumItems {
         register(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlocks.Drums.HUGE)
     }
 
-    @SubscribeEvent
-    fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+    @JvmStatic
+    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         // Tickets
         fun setColor(item: HTItemHolderLike, color: ChatFormatting) {
             event.modify(item) { builder: DataComponentPatch.Builder ->
@@ -519,26 +521,26 @@ object RagiumItems {
                 builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(ench, level))
             }
         }
-        setEnch(AzureSteelTools.AXE, Enchantments.SILK_TOUCH)
-        setEnch(AzureSteelTools.HOE, Enchantments.SILK_TOUCH)
-        setEnch(AzureSteelTools.PICKAXE, Enchantments.SILK_TOUCH)
-        setEnch(AzureSteelTools.SHOVEL, Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTToolVariant.AXE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTToolVariant.HOE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTToolVariant.PICKAXE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTToolVariant.SHOVEL), Enchantments.SILK_TOUCH)
 
-        setEnch(DeepSteelTools.PICKAXE, Enchantments.FORTUNE, 5)
-        setEnch(DeepSteelTools.SWORD, RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(getDeepTool(HTToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
+        setEnch(getDeepTool(HTToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(DeepSteelArmors.CHESTPLATE, RagiumEnchantments.SONIC_PROTECTION)
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
         }
 
-        event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(RagiumMaterialType.CHOCOLATE)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
         }
-        event.modify(Ingots.MEAT) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(RagiumMaterialType.MEAT)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.BEEF)
         }
-        event.modify(Ingots.COOKED_MEAT) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(RagiumMaterialType.COOKED_MEAT)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.COOKED_BEEF)
         }
 

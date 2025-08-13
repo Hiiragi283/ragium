@@ -8,7 +8,7 @@
   "type": "mekanism:oxidizing",
   "input": {
     "count": 1,
-    "tag": "c:enriched/raginite"
+    "tag": "ragium:enriched/raginite"
   },
   "output": {
     "amount": 80,

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.material
 
-import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
@@ -8,74 +9,74 @@ object VanillaMaterialFamilies {
     @JvmField
     val COPPER: HTMaterialFamily = HTMaterialFamily.Builder
         .ingot(Items::COPPER_INGOT)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::COPPER_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::RAW_COPPER)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::COPPER_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::COPPER_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_COPPER)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::COPPER_BLOCK)
         .setVanilla()
         .build("copper")
 
     @JvmField
     val IRON: HTMaterialFamily = HTMaterialFamily.Builder
         .ingot(Items::IRON_INGOT)
-        .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, Items::IRON_NUGGET)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::IRON_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::RAW_IRON)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::IRON_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.NUGGET, Items::IRON_NUGGET)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::IRON_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_IRON)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::IRON_BLOCK)
         .setVanilla()
         .build("iron")
 
     @JvmField
     val GOLD: HTMaterialFamily = HTMaterialFamily.Builder
         .ingot(Items::GOLD_INGOT)
-        .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, Items::GOLD_NUGGET)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::GOLD_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::RAW_GOLD)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::GOLD_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.NUGGET, Items::GOLD_NUGGET)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::GOLD_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_GOLD)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::GOLD_BLOCK)
         .setVanilla()
         .build("gold")
 
     @JvmField
     val COAL: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::COAL)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::COAL_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::COAL)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::COAL_BLOCK)
-        .setCustomTag(HTMaterialFamily.Variant.GEMS, ItemTags.COALS)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::COAL_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::COAL)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::COAL_BLOCK)
+        .setCustomTag(HTMaterialVariant.GEM, ItemTags.COALS)
         .setVanilla()
         .build("coal")
 
     @JvmField
     val LAPIS: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::LAPIS_LAZULI)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::LAPIS_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::LAPIS_LAZULI)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::LAPIS_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::LAPIS_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::LAPIS_LAZULI)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::LAPIS_BLOCK)
         .setVanilla()
         .build("lapis")
 
     @JvmField
     val QUARTZ: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::QUARTZ)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::NETHER_QUARTZ_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::QUARTZ)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::NETHER_QUARTZ_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::QUARTZ)
         .setVanilla()
         .build("quartz")
 
     @JvmField
     val DIAMOND: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::DIAMOND)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::DIAMOND_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::DIAMOND)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::DIAMOND_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::DIAMOND_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::DIAMOND)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::DIAMOND_BLOCK)
         .setVanilla()
         .build("diamond")
 
     @JvmField
     val EMERALD: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::EMERALD)
-        .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::EMERALD_ORE)
-        .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::EMERALD)
-        .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::EMERALD_BLOCK)
+        .setDefaultedEntry(HTMaterialVariant.ORE, Items::EMERALD_ORE)
+        .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::EMERALD)
+        .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::EMERALD_BLOCK)
         .setVanilla()
         .build("emerald")
 }

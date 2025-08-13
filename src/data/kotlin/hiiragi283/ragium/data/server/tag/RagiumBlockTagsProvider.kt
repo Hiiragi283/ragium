@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -55,7 +55,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         fun addOres(ores: Iterable<HTBlockHolderLike.Materialized>, groundTag: TagKey<Block>) {
             for (ore: HTBlockHolderLike.Materialized in ores) {
                 pickaxe.addBlock(ore)
-                tag(ore.material.blockTag(RagiumConst.ORES)).addBlock(ore)
+                tag(HTMaterialVariant.ORE.blockTagKey(ore.material)).addBlock(ore)
                 tag(groundTag).addBlock(ore)
             }
         }

@@ -50,6 +50,7 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -388,11 +389,11 @@ class RagiumEmiPlugin : EmiPlugin {
             leftInput(EmiStack.of(RagiumFluidContents.SYRUP.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }
-        addInteraction(EmiStack.of(RagiumItems.Gems.CRIMSON_CRYSTAL)) {
+        addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL))) {
             leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_SAP.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }
-        addInteraction(EmiStack.of(RagiumItems.Gems.WARPED_CRYSTAL)) {
+        addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.WARPED_CRYSTAL))) {
             leftInput(EmiStack.of(RagiumFluidContents.WARPED_SAP.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }

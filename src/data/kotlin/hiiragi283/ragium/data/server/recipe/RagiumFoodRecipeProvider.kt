@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -97,7 +98,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
             .save(output)
         // Meat Ingot
-        HTShapedRecipeBuilder(RagiumItems.Ingots.MEAT, 3)
+        HTShapedRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.MEAT), 3)
             .pattern("AAA")
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
@@ -110,7 +111,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         HTCookingRecipeBuilder
-            .smoking(RagiumItems.Ingots.COOKED_MEAT)
+            .smoking(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
             .addIngredient(RagiumCommonTags.Items.INGOTS_MEAT)
             .setExp(0.35f)
             .save(output)

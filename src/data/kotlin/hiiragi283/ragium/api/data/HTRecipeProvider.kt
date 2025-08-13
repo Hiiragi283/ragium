@@ -7,13 +7,12 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
@@ -78,7 +77,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
             RagiumConst.MINECRAFT -> RagiumAPI.id(id.path)
             else -> {
                 val path: List<String> = id.path.split("/", limit = 2)
-                RagiumAPI.id(path[0] + "/${namespace}/" + path[1])
+                RagiumAPI.id(path[0] + "/$namespace/" + path[1])
             }
         }
 
@@ -92,13 +91,13 @@ sealed class HTRecipeProvider : IConditionBuilder {
     }
 
     protected fun gemOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
-        Ingredient.of(itemTagKey(commonId(RagiumConst.GEMS, name))),
+        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
+        Ingredient.of(HTMaterialVariant.GEM.itemTagKey(name)),
     )
 
     protected fun ingotOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(itemTagKey(commonId(RagiumConst.DUSTS, name))),
-        Ingredient.of(itemTagKey(commonId(RagiumConst.INGOTS, name))),
+        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
+        Ingredient.of(HTMaterialVariant.INGOT.itemTagKey(name)),
     )
 
     fun meltAndFreeze(
