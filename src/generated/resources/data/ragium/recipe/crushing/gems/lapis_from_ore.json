@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "tag": "c:ores/diamond"
+    "tag": "c:ores/lapis"
   },
   "results": {
-    "count": 2,
-    "id": "minecraft:diamond"
+    "count": 8,
+    "id": "#c:gems/lapis"
   }
 }

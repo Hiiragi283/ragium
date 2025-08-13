@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "tag": "c:ores/quartz"
+    "tag": "c:ores/crimson_crystal"
   },
   "results": {
-    "count": 4,
-    "id": "minecraft:quartz"
+    "count": 2,
+    "id": "#c:gems/crimson_crystal"
   }
 }

@@ -10,8 +10,10 @@ import net.minecraft.client.resources.language.I18n
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.neoforged.api.distmarker.Dist
@@ -33,6 +35,7 @@ object RagiumTooltipHandler {
 
         information(stack, consumerTop, flag)
         enchantmentInfo(stack, consumerTop, provider, flag)
+        food(stack, consumer, event.context.tickRate())
         workInProgress(stack, consumer)
     }
 
@@ -72,6 +75,20 @@ object RagiumTooltipHandler {
                     Component.translatable(RagiumTranslationKeys.TOOLTIP_SHOW_INFO).withStyle(ChatFormatting.YELLOW),
                 )
             }
+        }
+    }
+
+    @JvmStatic
+    fun food(stack: ItemStack, consumer: (Component) -> Unit, tickRate: Float) {
+        val food: FoodProperties = stack.getFoodProperties(null) ?: return
+        val effects: List<FoodProperties.PossibleEffect> = food.effects
+        if (effects.isNotEmpty()) {
+            PotionContents.addPotionTooltip(
+                effects.map(FoodProperties.PossibleEffect::effect),
+                consumer,
+                1f,
+                tickRate,
+            )
         }
     }
 

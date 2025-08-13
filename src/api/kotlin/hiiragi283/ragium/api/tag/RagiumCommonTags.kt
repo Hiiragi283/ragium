@@ -30,10 +30,16 @@ object RagiumCommonTags {
         val OBSIDIANS_MYSTERIOUS: TagKey<Block> = create("obsidians", "mysterious")
 
         @JvmField
+        val ORES_RAGINITE: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.RAGINITE)
+
+        @JvmField
         val ORES_RAGI_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.RAGI_CRYSTAL)
 
         @JvmField
-        val ORES_RAGINITE: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.RAGINITE)
+        val ORES_CRIMSON_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.CRIMSON_CRYSTAL)
+
+        @JvmField
+        val ORES_WARPED_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.WARPED_CRYSTAL)
 
         @JvmField
         val ORES_DEEP_SCRAP: TagKey<Block> = create(RagiumConst.ORES, "deep_scrap")
@@ -257,6 +263,12 @@ object RagiumCommonTags {
 
         @JvmField
         val ORES_RAGI_CRYSTAL: TagKey<Item> = create(ORES, RagiumConst.RAGI_CRYSTAL)
+
+        @JvmField
+        val ORES_CRIMSON_CRYSTAL: TagKey<Item> = create(ORES, RagiumConst.CRIMSON_CRYSTAL)
+
+        @JvmField
+        val ORES_WARPED_CRYSTAL: TagKey<Item> = create(ORES, RagiumConst.WARPED_CRYSTAL)
 
         @JvmField
         val ORES_DEEP_SCRAP: TagKey<Item> = create(ORES, "deep_scrap")

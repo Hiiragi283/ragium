@@ -12,11 +12,11 @@
   "results": [
     {
       "count": 8,
-      "id": "minecraft:redstone"
+      "id": "#c:dusts/redstone"
     },
     {
       "count": 4,
-      "id": "minecraft:redstone"
+      "id": "#c:dusts/redstone"
     },
     {
       "count": 4,

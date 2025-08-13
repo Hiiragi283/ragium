@@ -10,9 +10,12 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -38,54 +41,29 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Copper
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_COPPER))
-            .addResult(HTResultHelper.item(Items.RAW_COPPER, 4))
-            .addResult(HTResultHelper.item(Items.RAW_GOLD), 1 / 4f)
+            .addResult(HTResultHelper.item(Tags.Items.RAW_MATERIALS_COPPER, 4))
+            .addResult(HTResultHelper.item(Tags.Items.RAW_MATERIALS_GOLD), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
         // Iron
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_IRON))
-            .addResult(HTResultHelper.item(Items.RAW_IRON, 2))
+            .addResult(HTResultHelper.item(Tags.Items.RAW_MATERIALS_IRON, 2))
             .addResult(HTResultHelper.item(Items.FLINT), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
         // Gold
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_GOLD))
-            .addResult(HTResultHelper.item(Items.RAW_GOLD, 2))
-            .addResult(HTResultHelper.item(Items.RAW_COPPER), 1 / 4f)
+            .addResult(HTResultHelper.item(Tags.Items.RAW_MATERIALS_GOLD, 2))
+            .addResult(HTResultHelper.item(Tags.Items.RAW_MATERIALS_COPPER), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
+
         // Redstone
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_REDSTONE))
-            .addResult(HTResultHelper.item(Items.REDSTONE, 8))
-            .addResult(HTResultHelper.item(Items.REDSTONE, 4), 1 / 2f)
+            .addResult(HTResultHelper.item(Tags.Items.DUSTS_REDSTONE, 8))
+            .addResult(HTResultHelper.item(Tags.Items.DUSTS_REDSTONE, 4), 1 / 2f)
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 4), 1 / 2f)
             .saveSuffixed(output, "_from_ore")
-        // Lapis
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.ORES_LAPIS))
-            .addResult(HTResultHelper.item(Items.LAPIS_LAZULI, 8))
-            .saveSuffixed(output, "_from_ore")
-        // Quartz
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.ORES_QUARTZ))
-            .addResult(HTResultHelper.item(Items.QUARTZ, 4))
-            .saveSuffixed(output, "_from_ore")
-        // Diamond
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.ORES_DIAMOND))
-            .addResult(HTResultHelper.item(Items.DIAMOND, 2))
-            .saveSuffixed(output, "_from_ore")
-        // Emerald
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.ORES_EMERALD))
-            .addResult(HTResultHelper.item(Items.EMERALD, 2))
-            .saveSuffixed(output, "_from_ore")
-        // Netherite
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.ORES_NETHERITE_SCRAP))
-            .addResult(HTResultHelper.item(Items.NETHERITE_SCRAP, 2))
-            .saveSuffixed(output, "_from_ore")
-
         // Raginite
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_RAGINITE))
@@ -93,10 +71,29 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 4), 1 / 2f)
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
-        // Ragi-Crystal
+
+        // Gems
+        mapOf(
+            // Vanilla
+            HTVanillaMaterialType.LAPIS to 8,
+            HTVanillaMaterialType.QUARTZ to 4,
+            HTVanillaMaterialType.DIAMOND to 2,
+            HTVanillaMaterialType.EMERALD to 2,
+            // Ragium
+            RagiumMaterialType.RAGI_CRYSTAL to 2,
+            RagiumMaterialType.CRIMSON_CRYSTAL to 2,
+            RagiumMaterialType.WARPED_CRYSTAL to 2,
+        ).forEach { (material: HTMaterialType, count: Int) ->
+            HTItemToChancedItemRecipeBuilder
+                .crushing(HTIngredientHelper.item(HTMaterialVariant.ORE.itemTagKey(material)))
+                .addResult(HTResultHelper.item(HTMaterialVariant.GEM.itemTagKey(material), count))
+                .saveSuffixed(output, "_from_ore")
+        }
+
+        // Netherite
         HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2))
+            .crushing(HTIngredientHelper.item(Tags.Items.ORES_NETHERITE_SCRAP))
+            .addResult(HTResultHelper.item(Items.NETHERITE_SCRAP, 2))
             .saveSuffixed(output, "_from_ore")
         // Deep Steel
         HTItemToChancedItemRecipeBuilder

@@ -70,6 +70,9 @@ class RagiumItemTagsProvider(
         copy(RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE, RagiumCommonTags.Items.ORES_IN_GROUND_END_STONE)
         copy(RagiumCommonTags.Blocks.ORES_RAGINITE, RagiumCommonTags.Items.ORES_RAGINITE)
         copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
+        copy(RagiumCommonTags.Blocks.ORES_CRIMSON_CRYSTAL, RagiumCommonTags.Items.ORES_CRIMSON_CRYSTAL)
+        copy(RagiumCommonTags.Blocks.ORES_WARPED_CRYSTAL, RagiumCommonTags.Items.ORES_WARPED_CRYSTAL)
+
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)

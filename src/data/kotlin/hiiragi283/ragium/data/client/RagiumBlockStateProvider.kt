@@ -11,10 +11,10 @@ import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -72,7 +72,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         Blocks.TINTED_GLASS
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, ore: DeferredBlock<*>) ->
             val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
             val stoneTex: String = when (variant) {
                 HTMaterialVariant.ORE -> "block/stone"

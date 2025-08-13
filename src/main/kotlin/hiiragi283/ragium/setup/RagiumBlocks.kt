@@ -157,7 +157,7 @@ object RagiumBlocks {
     //    Materials    //
 
     @JvmField
-    val ORES: HTTable<HTMaterialVariant, RagiumMaterialType, DeferredBlock<*>> = buildTable {
+    val ORES: HTTable<HTMaterialVariant, HTMaterialType, DeferredBlock<*>> = buildTable {
         listOf(
             HTMaterialVariant.ORE,
             HTMaterialVariant.DEEP_ORE,
@@ -178,16 +178,18 @@ object RagiumBlocks {
                 HTMaterialVariant.END_ORE -> Blocks.END_STONE
                 else -> null
             } ?: return@forEach
-            put(
-                variant,
-                RagiumMaterialType.RAGINITE,
-                register(pattern.replace("%s", RagiumMaterialType.RAGINITE.serializedName), copyOf(stone)),
-            )
-            put(
-                variant,
-                RagiumMaterialType.RAGI_CRYSTAL,
-                register(pattern.replace("%s", RagiumMaterialType.RAGI_CRYSTAL.serializedName), copyOf(stone)),
-            )
+
+            fun register(material: HTMaterialType) {
+                put(
+                    variant,
+                    material,
+                    register(pattern.replace("%s", material.serializedName), copyOf(stone)),
+                )
+            }
+            register(RagiumMaterialType.RAGINITE)
+            register(RagiumMaterialType.RAGI_CRYSTAL)
+            register(RagiumMaterialType.CRIMSON_CRYSTAL)
+            register(RagiumMaterialType.WARPED_CRYSTAL)
         }
     }
 

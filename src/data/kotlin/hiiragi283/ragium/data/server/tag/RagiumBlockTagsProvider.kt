@@ -87,7 +87,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     private fun category() {
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, ore: DeferredBlock<*>) ->
             addBlock(variant, material, ore)
             val groundTag: TagKey<Block> = when (variant) {
                 HTMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE

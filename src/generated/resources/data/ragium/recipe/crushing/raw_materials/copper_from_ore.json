@@ -11,11 +11,11 @@
   "results": [
     {
       "count": 4,
-      "id": "minecraft:raw_copper"
+      "id": "#c:raw_materials/copper"
     },
     {
       "count": 1,
-      "id": "minecraft:raw_gold"
+      "id": "#c:raw_materials/gold"
     }
   ]
 }

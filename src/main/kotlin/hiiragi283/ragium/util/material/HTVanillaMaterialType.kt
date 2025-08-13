@@ -11,11 +11,13 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
     NETHERITE("Netherite", "ネザライト"),
 
     // Gem
+    LAPIS("Lapis", "ラピス"),
+    QUARTZ("Quartz", "水晶"),
     DIAMOND("Diamond", "ダイアモンド"),
     EMERALD("Emerald", "エメラルド"),
-    QUARTZ("Quartz", "水晶"),
 
     // Other
+    REDSTONE("Redstone", "レッドストーン"),
     SOUL("Soul", "ソウル"),
     OBSIDIAN("Obsidian", "黒曜石"),
     ;

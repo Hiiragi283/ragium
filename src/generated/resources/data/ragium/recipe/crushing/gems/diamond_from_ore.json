@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "tag": "c:ores/emerald"
+    "tag": "c:ores/diamond"
   },
   "results": {
     "count": 2,
-    "id": "minecraft:emerald"
+    "id": "#c:gems/diamond"
   }
 }

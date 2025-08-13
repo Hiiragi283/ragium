@@ -6,16 +6,16 @@
   ],
   "ingredient": {
     "count": 1,
-    "tag": "c:ores/iron"
+    "tag": "c:ores/gold"
   },
   "results": [
     {
       "count": 2,
-      "id": "minecraft:raw_iron"
+      "id": "#c:raw_materials/gold"
     },
     {
       "count": 1,
-      "id": "minecraft:flint"
+      "id": "#c:raw_materials/copper"
     }
   ]
 }

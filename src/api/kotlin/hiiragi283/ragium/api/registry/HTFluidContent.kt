@@ -77,5 +77,5 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
 
     fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)
 
-    fun toIngredient(amount: Int): SizedFluidIngredient = SizedFluidIngredient.of(commonTag, amount)
+    fun toIngredient(amount: Int): SizedFluidIngredient = SizedFluidIngredient(toIngredient(), amount)
 }

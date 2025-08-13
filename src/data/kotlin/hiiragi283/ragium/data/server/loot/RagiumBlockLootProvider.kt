@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -74,7 +75,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (_, material: RagiumMaterialType, ore: DeferredBlock<*>) ->
+        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: DeferredBlock<*>) ->
             val factory: (Block) -> LootTable.Builder = when (material) {
                 RagiumMaterialType.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
@@ -89,13 +90,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                     )
                 }
 
-                RagiumMaterialType.RAGI_CRYSTAL -> { block: Block ->
-                    createOreDrop(
-                        block,
-                        RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).get(),
-                    )
-                }
-                else -> return@forEach
+                else -> { block: Block -> createOreDrop(block, RagiumItems.getGem(material).get()) }
             }
             add(ore.get(), factory)
         }

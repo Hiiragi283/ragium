@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
+import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.storage.HTTransferIOCache
-import hiiragi283.ragium.common.storage.item.HTDirectionalItemHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -134,8 +134,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         this.externalNetwork = wrapNetworkToExternal(network)
     }
 
-    override fun getItemHandler(direction: Direction?): HTDirectionalItemHandler =
-        HTDirectionalItemHandler(inventory, direction, transferIOCache)
+    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, direction, transferIOCache)
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 
