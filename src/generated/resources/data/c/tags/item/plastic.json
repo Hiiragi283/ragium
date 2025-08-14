@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#ragium:plastics",
-      "required": false
-    }
+    "ragium:plastic_plate"
   ]
 }

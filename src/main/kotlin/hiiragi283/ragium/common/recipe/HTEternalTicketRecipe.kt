@@ -19,7 +19,7 @@ class HTEternalTicketRecipe(category: CraftingBookCategory) : CustomRecipe(categ
         for (index: Int in (0 until input.size())) {
             val stackIn: ItemStack = input.getItem(index)
             if (stackIn.isEmpty) continue
-            if (stackIn.`is`(RagiumItems.Tickets.ETERNAL.get()) && !isTicket) {
+            if (stackIn.`is`(RagiumItems.ETERNAL_TICKET) && !isTicket) {
                 isTicket = true
             } else if (stackIn.isDamageableItem && !isEquipment) {
                 isEquipment = true

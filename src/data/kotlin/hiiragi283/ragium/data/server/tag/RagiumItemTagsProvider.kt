@@ -149,7 +149,7 @@ class RagiumItemTagsProvider(
     private fun categories() {
         tag(RagiumModTags.Items.CIRCUIT_BOARDS)
             .addItem(RagiumItems.CIRCUIT_BOARD)
-            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.PNEUMATIC, "unassembled_pcb"))
+            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.PNEUMATIC, "empty_pcb"))
 
         tag(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .addItem(Items.GHAST_TEAR)
@@ -206,8 +206,7 @@ class RagiumItemTagsProvider(
             .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.ORITECH, "polymer_resin"))
 
         val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))
-        tag(plastics)
-            .addOptionalTag(RagiumModTags.Items.PLASTICS)
+        tag(plastics).addItem(RagiumItems.PLASTIC_PLATE)
         tag(RagiumModTags.Items.PLASTICS)
             .addOptionalTag(plastics)
             .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
@@ -236,8 +235,7 @@ class RagiumItemTagsProvider(
     }
 
     private fun pneumatic() {
-        tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
-            .addTag(RagiumModTags.Items.PLASTICS)
+        tag(PneumaticCraftTags.Items.PLASTIC_SHEETS).addItem(RagiumItems.PLASTIC_PLATE)
     }
 
     //    Extensions    //

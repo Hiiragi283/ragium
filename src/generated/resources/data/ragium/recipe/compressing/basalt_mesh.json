@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 8,
+    "item": "minecraft:basalt"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:basalt_mesh"
+  }
+}

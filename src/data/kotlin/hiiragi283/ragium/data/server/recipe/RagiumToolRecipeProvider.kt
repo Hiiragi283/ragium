@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
@@ -178,32 +178,9 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun tickets() {
-        // Blank
-        HTShapedRecipeBuilder(RagiumItems.Tickets.BLANK, 6)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', RagiumCommonTags.Items.PAPER)
-            .define('B', Tags.Items.DYES_BLACK)
-            .define('C', Tags.Items.GEMS_DIAMOND)
-            .save(output)
-        // Azure from Lapis
-        HTShapedRecipeBuilder(RagiumItems.Tickets.AZURE)
-            .cross8()
-            .define('A', Tags.Items.STORAGE_BLOCKS_LAPIS)
-            .define('B', Tags.Items.DYES_BLUE)
-            .define('C', RagiumItems.Tickets.BLANK)
-            .saveSuffixed(output, "_from_lapis")
-
-        addTicket(RagiumItems.Tickets.RAGI, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
-        addTicket(RagiumItems.Tickets.AZURE, RagiumCommonTags.Items.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
-        addTicket(RagiumItems.Tickets.BLOODY, RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
-        addTicket(RagiumItems.Tickets.TELEPORT, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
-        addTicket(RagiumItems.Tickets.ELDRITCH, RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
-
-        addTicket(RagiumItems.Tickets.DAYBREAK, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
-        addTicket(RagiumItems.Tickets.ETERNAL, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
+        addTicket(RagiumItems.RAGI_TICKET, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
+        addTicket(RagiumItems.TELEPORT_TICKET, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
+        addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(
             RagiumAPI.id("shapeless/blast_charge"),
@@ -296,7 +273,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', corner)
             .define('B', dye)
-            .define('C', RagiumItems.Tickets.BLANK)
+            .define('C', RagiumCommonTags.Items.PAPER)
             .save(output)
     }
 
@@ -305,7 +282,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
             .cross8()
             .apply(builderAction)
-            .define('C', RagiumItems.Tickets.RAGI)
+            .define('C', RagiumItems.RAGI_TICKET)
             .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
     }
 }

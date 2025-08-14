@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.impl
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.data.recipes.RecipeOutput

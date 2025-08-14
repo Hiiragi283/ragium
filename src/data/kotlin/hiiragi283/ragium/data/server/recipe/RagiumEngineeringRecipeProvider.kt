@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -16,8 +16,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumCircuitType
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
@@ -85,6 +83,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.gemOrDust(RagiumConst.AZURE),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
             ).save(output)
+
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTResultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                HTIngredientHelper.item(Tags.Items.DYES_BLACK),
+                HTIngredientHelper.item(RagiumItems.BASALT_MESH),
+                HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
+            ).save(output)
         // Basic
         HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.BASIC))
             .pattern(
@@ -121,26 +127,26 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         for ((tier: HTMaterialType, circuit: DeferredItem<*>) in RagiumItems.MATERIALS.row(HTMaterialVariant.CIRCUIT)) {
             val dopant: HTItemIngredient = when (tier) {
                 RagiumCircuitType.BASIC -> HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE)
-                RagiumCircuitType.ADVANCED -> HTIngredientHelper.gemOrDust("lapis")
+                RagiumCircuitType.ADVANCED -> HTIngredientHelper.gemOrDust(RagiumConst.AZURE)
                 RagiumCircuitType.ELITE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
                 RagiumCircuitType.ULTIMATE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
                 else -> continue
             }
-            val wiring: TagKey<Item> = when (tier) {
+            val wiring: HTItemIngredient = when (tier) {
                 RagiumCircuitType.BASIC -> Tags.Items.INGOTS_COPPER
                 RagiumCircuitType.ADVANCED -> Tags.Items.INGOTS_GOLD
                 RagiumCircuitType.ELITE -> RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY
                 RagiumCircuitType.ULTIMATE -> Tags.Items.NETHER_STARS
                 else -> continue
+            }.let(HTIngredientHelper::item)
+            val board: HTItemIngredient = when (tier) {
+                RagiumCircuitType.BASIC -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
+                RagiumCircuitType.ADVANCED -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
+                RagiumCircuitType.ELITE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
+                RagiumCircuitType.ULTIMATE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
+                else -> continue
             }
-
-            HTCombineItemToItemRecipeBuilder
-                .alloying(
-                    HTResultHelper.item(circuit),
-                    dopant,
-                    HTIngredientHelper.item(wiring),
-                    HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS),
-                ).save(output)
+            HTCombineItemToItemRecipeBuilder.alloying(HTResultHelper.item(circuit), dopant, wiring, board).save(output)
         }
     }
 

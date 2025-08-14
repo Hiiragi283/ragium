@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.impl
 
+import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe

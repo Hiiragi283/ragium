@@ -172,17 +172,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun item() {
         // Tickets
-        addItem(RagiumItems.Tickets.BLANK, "ブランクチケット")
-
-        addItem(RagiumItems.Tickets.RAGI, "らぎチケット")
-        addItem(RagiumItems.Tickets.AZURE, "紺碧のチケット")
-        addItem(RagiumItems.Tickets.BLOODY, "血塗られたチケット")
-        addItem(RagiumItems.Tickets.TELEPORT, "テレポートチケット")
-        addItem(RagiumItems.Tickets.ELDRITCH, "異質なチケット")
-
-        addItem(RagiumItems.Tickets.DAYBREAK, "暁のチケット")
-        addItem(RagiumItems.Tickets.ETERNAL, "永遠のチケット")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
+        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
+        addItem(RagiumItems.ETERNAL_TICKET, "永遠のチケット")
         // Material
+        addItem(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.DEEP_SCRAP, "深層の欠片")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
@@ -236,6 +230,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
         // addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
+        addItem(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")

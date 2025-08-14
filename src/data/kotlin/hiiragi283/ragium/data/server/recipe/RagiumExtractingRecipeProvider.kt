@@ -2,8 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
@@ -70,12 +71,20 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(HTIngredientHelper.charcoal()),
                 HTResultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
-        // Oxidized Copper -> Green
+        // Grass -> Green
+        HTShapelessRecipeBuilder(Items.GREEN_DYE)
+            .addIngredient(Items.SHORT_GRASS)
+            .addIngredient(Items.SHORT_GRASS)
+            .addIngredient(Items.SHORT_GRASS)
+            .addIngredient(Items.SHORT_GRASS)
+            .addIngredient(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .saveSuffixed(output, "_from_grasses")
+
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Items.OXIDIZED_COPPER),
-                HTResultHelper.item(Items.GREEN_DYE, 3),
-            ).saveSuffixed(output, "_from_oxidized_copper")
+                HTIngredientHelper.item(Items.SHORT_GRASS, 4),
+                HTResultHelper.item(Items.GREEN_DYE),
+            ).saveSuffixed(output, "_from_grass")
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(

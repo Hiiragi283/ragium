@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant

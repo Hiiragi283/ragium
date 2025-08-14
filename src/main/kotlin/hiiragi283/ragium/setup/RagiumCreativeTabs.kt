@@ -105,6 +105,8 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
         output.accept(RagiumItems.CIRCUIT_BOARD)
+        output.accept(RagiumItems.BASALT_MESH)
+        output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
         RagiumCircuitType.entries
             .flatMap(RagiumItems.MATERIALS::columnValues)
             .forEach(output::accept)
@@ -168,7 +170,10 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.acceptItems<RagiumItems.Tickets>()
+            output.accept(RagiumItems.TELEPORT_TICKET)
+            output.accept(RagiumItems.ETERNAL_TICKET)
+
+            output.accept(RagiumItems.RAGI_TICKET)
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
         }
 

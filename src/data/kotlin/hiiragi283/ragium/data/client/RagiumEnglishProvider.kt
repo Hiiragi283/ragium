@@ -181,17 +181,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun item() {
         // Tickets
-        addItem(RagiumItems.Tickets.BLANK, "Blank Ticket")
-
-        addItem(RagiumItems.Tickets.RAGI, "Ragi-Ticket")
-        addItem(RagiumItems.Tickets.AZURE, "Azure Ticket")
-        addItem(RagiumItems.Tickets.BLOODY, "Bloody Ticket")
-        addItem(RagiumItems.Tickets.TELEPORT, "Teleport Ticket")
-        addItem(RagiumItems.Tickets.ELDRITCH, "Eldritch Ticket")
-
-        addItem(RagiumItems.Tickets.DAYBREAK, "Daybreak Ticket")
-        addItem(RagiumItems.Tickets.ETERNAL, "Eternal Ticket")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
+        addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
+        addItem(RagiumItems.ETERNAL_TICKET, "Eternal Ticket")
         // Material
+        addItem(RagiumItems.BASALT_MESH, "Basalt Mesh")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
@@ -235,6 +229,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
+        addItem(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")

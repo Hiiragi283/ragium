@@ -3,19 +3,19 @@
   "ingredients": [
     {
       "count": 1,
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:dyes/black"
     },
     {
       "count": 1,
-      "tag": "c:ingots/advanced_ragi_alloy"
+      "item": "ragium:basalt_mesh"
     },
     {
       "count": 1,
-      "item": "ragium:advanced_circuit_board"
+      "tag": "ragium:plastics"
     }
   ],
   "result": {
     "count": 1,
-    "id": "ragium:elite_circuit"
+    "id": "ragium:advanced_circuit_board"
   }
 }

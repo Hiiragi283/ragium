@@ -37,12 +37,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         child(RagiumAdvancements.ETERNAL_TICKET, root) {
             display {
-                setIcon(RagiumItems.Tickets.ETERNAL)
+                setIcon(RagiumItems.ETERNAL_TICKET)
                 setTitleFromKey(RagiumAdvancements.ETERNAL_TICKET)
                 setDescFromKey(RagiumAdvancements.ETERNAL_TICKET)
                 setChallenge()
             }
-            hasAllItem("has_ticket", RagiumItems.Tickets.ETERNAL)
+            hasAllItem("has_ticket", RagiumItems.ETERNAL_TICKET)
         }
     }
 
@@ -70,12 +70,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         val ragiTicket: AdvancementHolder = child(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
             display {
-                setIcon(RagiumItems.Tickets.RAGI)
+                setIcon(RagiumItems.RAGI_TICKET)
                 setTitleFromKey(RagiumAdvancements.RAGI_TICKET)
                 setDescFromKey(RagiumAdvancements.RAGI_TICKET)
                 setGoal()
             }
-            addCriterion("use_ragi_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.Tickets.RAGI))
+            addCriterion("use_ragi_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.RAGI_TICKET))
         }
     }
 
@@ -144,12 +144,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         }
         val teleportTicket: AdvancementHolder = child(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
             display {
-                setIcon(RagiumItems.Tickets.TELEPORT)
+                setIcon(RagiumItems.TELEPORT_TICKET)
                 setTitleFromKey(RagiumAdvancements.TELEPORT_TICKET)
                 setDescFromKey(RagiumAdvancements.TELEPORT_TICKET)
                 setGoal()
             }
-            addCriterion("use_teleport_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.Tickets.TELEPORT))
+            addCriterion("use_teleport_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.TELEPORT_TICKET))
         }
     }
 

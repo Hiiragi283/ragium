@@ -1,15 +1,15 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst

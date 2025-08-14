@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks

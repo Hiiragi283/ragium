@@ -2,7 +2,7 @@
   "values": [
     "ragium:circuit_board",
     {
-      "id": "pneumaticcraft:unassembled_pcb",
+      "id": "pneumaticcraft:empty_pcb",
       "required": false
     }
   ]

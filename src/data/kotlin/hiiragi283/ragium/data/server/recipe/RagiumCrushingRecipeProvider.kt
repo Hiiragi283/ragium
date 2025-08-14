@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems

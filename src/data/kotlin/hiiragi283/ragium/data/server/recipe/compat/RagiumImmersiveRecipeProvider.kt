@@ -10,8 +10,8 @@ import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilde
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst

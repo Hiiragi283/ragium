@@ -5,10 +5,10 @@
       "type": "neoforge:compound",
       "children": [
         {
-          "tag": "c:dusts/lapis"
+          "tag": "c:dusts/azure"
         },
         {
-          "tag": "c:gems/lapis"
+          "tag": "c:gems/azure"
         }
       ],
       "count": 1

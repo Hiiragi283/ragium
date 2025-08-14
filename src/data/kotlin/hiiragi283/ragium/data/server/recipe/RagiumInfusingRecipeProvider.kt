@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent

@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -90,5 +90,12 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(HTIngredientHelper.coal(), 64),
                 HTResultHelper.item(Tags.Items.GEMS_DIAMOND),
             ).saveSuffixed(output, "_from_coal")
+
+        // Basalt Mesh
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(Items.BASALT, 8),
+                HTResultHelper.item(RagiumItems.BASALT_MESH),
+            ).save(output)
     }
 }

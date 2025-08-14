@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:short_grass"
+    },
+    {
+      "item": "minecraft:short_grass"
+    },
+    {
+      "item": "minecraft:short_grass"
+    },
+    {
+      "item": "minecraft:short_grass"
+    },
+    {
+      "tag": "c:tools/forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:green_dye"
+  }
+}

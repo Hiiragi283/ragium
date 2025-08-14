@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient

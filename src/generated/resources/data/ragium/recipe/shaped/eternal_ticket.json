@@ -9,7 +9,7 @@
       "tag": "c:dyes/white"
     },
     "C": {
-      "item": "ragium:blank_ticket"
+      "tag": "c:paper"
     }
   },
   "pattern": [

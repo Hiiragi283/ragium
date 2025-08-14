@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTPotionBundle
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
@@ -67,8 +66,6 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("item_magnet"), RagiumAPI.id("ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
-
-        Tickets.entries
 
         REGISTER.register(eventBus)
 
@@ -277,19 +274,18 @@ object RagiumItems {
 
     //    Tickets    //
 
-    enum class Tickets(factory: (Item.Properties) -> Item = ::Item, properties: Item.Properties = Item.Properties()) : HTItemHolderLike {
-        BLANK,
-        RAGI(::HTLootTicketItem),
-        AZURE,
-        BLOODY,
-        TELEPORT(::HTTeleportTicketItem, Item.Properties().durability(63)),
-        ELDRITCH,
-        DAYBREAK,
-        ETERNAL,
-        ;
+    @JvmField
+    val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
 
-        override val holder: DeferredItem<*> = register("${name.lowercase()}_ticket", factory, properties)
-    }
+    @JvmField
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register(
+        "teleport_ticket",
+        ::HTTeleportTicketItem,
+        Item.Properties().durability(63),
+    )
+
+    @JvmField
+    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket")
 
     //    Foods    //
 
@@ -354,26 +350,10 @@ object RagiumItems {
     @JvmField
     val AMBROSIA: DeferredItem<Item> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))
 
-    //    Molds    //
-
-    /*enum class Molds(val tagKey: TagKey<Item>) : ItemLike {
-        BLANK(RagiumItemTags.MOLDS_BLANK),
-        BALL(RagiumItemTags.MOLDS_BALL),
-        BLOCK(RagiumItemTags.MOLDS_BLOCK),
-        GEAR(RagiumItemTags.MOLDS_GEAR),
-        INGOT(RagiumItemTags.MOLDS_INGOT),
-        PLATE(RagiumItemTags.MOLDS_PLATE),
-        ROD(RagiumItemTags.MOLDS_ROD),
-        WIRE(RagiumItemTags.MOLDS_WIRE),
-        ;
-
-        val path = "${name.lowercase()}_mold"
-        private val holder: DeferredItem<Item> = register(path)
-
-        override fun asItem(): Item = holder.asItem()
-    }*/
-
     //    Machine Parts    //
+
+    @JvmField
+    val BASALT_MESH: DeferredItem<Item> = register("basalt_mesh")
 
     @JvmField
     val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
@@ -407,6 +387,9 @@ object RagiumItems {
 
     @JvmField
     val CIRCUIT_BOARD: DeferredItem<Item> = register("circuit_board")
+
+    @JvmField
+    val ADVANCED_CIRCUIT_BOARD: DeferredItem<Item> = register("advanced_circuit_board")
 
     //    Extensions    //
 
@@ -463,12 +446,12 @@ object RagiumItems {
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         // Tickets
-        fun setColor(item: HTItemHolderLike, color: ChatFormatting) {
+        fun setColor(item: ItemLike, color: ChatFormatting) {
             event.modify(item) { builder: DataComponentPatch.Builder ->
                 builder.set(
                     DataComponents.ITEM_NAME,
                     item
-                        .get()
+                        .asItem()
                         .description
                         .copy()
                         .withStyle(color),
@@ -476,16 +459,9 @@ object RagiumItems {
             }
         }
 
-        setColor(Tickets.BLANK, ChatFormatting.DARK_GRAY)
-
-        setColor(Tickets.RAGI, ChatFormatting.RED)
-        setColor(Tickets.AZURE, ChatFormatting.BLUE)
-        setColor(Tickets.BLOODY, ChatFormatting.DARK_RED)
-        setColor(Tickets.TELEPORT, ChatFormatting.DARK_AQUA)
-        setColor(Tickets.ELDRITCH, ChatFormatting.LIGHT_PURPLE)
-
-        setColor(Tickets.DAYBREAK, ChatFormatting.GOLD)
-        setColor(Tickets.ETERNAL, ChatFormatting.YELLOW)
+        setColor(RAGI_TICKET, ChatFormatting.RED)
+        setColor(TELEPORT_TICKET, ChatFormatting.DARK_AQUA)
+        setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
 
         // Tools
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
