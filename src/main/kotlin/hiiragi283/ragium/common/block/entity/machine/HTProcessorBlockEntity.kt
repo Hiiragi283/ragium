@@ -45,11 +45,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         this.lastInput = input
         this.lastRecipe = recipe
         // エネルギーを消費する
-        if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, false)
-        }
-        if (usedEnergy < requiredEnergy) return TriState.DEFAULT
-        usedEnergy -= requiredEnergy
+        if (!doProgress(network)) return TriState.DEFAULT
         // レシピを正常に扱えるか判定する
         if (!canProgressRecipe(level, input, recipe)) return TriState.FALSE
         return TriState.TRUE

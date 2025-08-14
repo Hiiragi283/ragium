@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:enchanting_table"
+      "item": "minecraft:hopper"
     },
     "C": {
-      "item": "ragium:elite_machine_frame"
+      "item": "ragium:advanced_machine_frame"
     },
     "D": {
-      "item": "minecraft:deepslate_tiles"
+      "item": "minecraft:polished_blackstone_bricks"
     },
     "E": {
-      "tag": "c:circuits/elite"
+      "tag": "c:circuits/advanced"
     }
   },
   "pattern": [

@@ -6,7 +6,7 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "tag": "minecraft:trim_templates"
+      "item": "minecraft:iron_bars"
     },
     "C": {
       "item": "ragium:advanced_machine_frame"

@@ -50,6 +50,8 @@ object RagiumConst {
 
     const val INVENTORY = "inventory"
     const val TANK = "tank"
+    const val TANK_IN = "tank_in"
+    const val TANK_OUT = "tank_out"
 
     const val ENERGY_CAPACITY = "energy_capacity"
     const val ENERGY_STORED = "energy_stored"

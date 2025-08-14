@@ -94,9 +94,10 @@
     "ragium:engraver",
     "ragium:extractor",
     "ragium:alloy_smelter",
+    "ragium:infuser",
     "ragium:melter",
+    "ragium:mixer",
     "ragium:refinery",
-    "ragium:solidifier",
-    "ragium:infuser"
+    "ragium:solidifier"
   ]
 }

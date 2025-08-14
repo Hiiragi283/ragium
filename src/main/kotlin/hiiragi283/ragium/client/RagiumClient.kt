@@ -14,6 +14,7 @@ import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
+import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTClientPotionTooltip
@@ -143,7 +144,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         register(RagiumFluidContents.LPG, Color(0xffcc99))
         register(RagiumFluidContents.NAPHTHA, Color(0xff9966))
         register(RagiumFluidContents.DIESEL, Color(0xff3300))
-        register(RagiumFluidContents.CRIMSON_DIESEL, Color(0x663333))
+        register(RagiumFluidContents.BLOOD_DIESEL, Color(0x663333))
         register(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
         register(RagiumFluidContents.SAP, Color(0x996633))
@@ -176,6 +177,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen::infuser)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+        event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerScreen)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
         event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen::solidifier)

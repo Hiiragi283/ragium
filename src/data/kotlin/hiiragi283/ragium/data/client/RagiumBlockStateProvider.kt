@@ -167,12 +167,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
         machine(RagiumBlocks.Machines.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(RagiumBlocks.Machines.INFUSER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.Machines.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.MIXER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.Machines.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.Machines.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-
-        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
-        machine(RagiumBlocks.Machines.INFUSER, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
         layeredBlock(

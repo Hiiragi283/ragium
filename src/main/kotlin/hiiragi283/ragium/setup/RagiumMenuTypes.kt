@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
+import hiiragi283.ragium.common.inventory.HTMixerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 
@@ -55,6 +56,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val MELTER: HTDeferredMenuType<HTMelterMenu> = REGISTER.registerType("melter", ::HTMelterMenu)
+
+    @JvmField
+    val MIXER: HTDeferredMenuType<HTMixerMenu> = REGISTER.registerType("mixer", ::HTMixerMenu)
 
     @JvmField
     val REFINERY: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("refinery", HTFluidOnlyMenu::refinery)

@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import net.minecraft.world.level.block.Block
@@ -92,6 +93,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
+
+    @JvmField
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick("mixer", ::HTMixerBlockEntity)
 
     @JvmField
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
@@ -185,11 +189,11 @@ object RagiumBlockEntityTypes {
         add(EXTRACTOR, RagiumBlocks.Machines.EXTRACTOR)
 
         add(ALLOY_SMELTER, RagiumBlocks.Machines.ALLOY_SMELTER)
+        add(INFUSER, RagiumBlocks.Machines.INFUSER)
         add(MELTER, RagiumBlocks.Machines.MELTER)
+        add(MIXER, RagiumBlocks.Machines.MIXER)
         add(REFINERY, RagiumBlocks.Machines.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.Machines.SOLIDIFIER)
-
-        add(INFUSER, RagiumBlocks.Machines.INFUSER)
 
         add(DIM_ANCHOR, RagiumBlocks.Devices.DIM_ANCHOR)
         add(ENI, RagiumBlocks.Devices.ENI)
@@ -231,6 +235,9 @@ object RagiumBlockEntityTypes {
             )
         }
         registerHandlers(STIRLING_DYNAMO)
+        registerHandlers(THERMAL_DYNAMO)
+
+        registerHandlers(BURNING_DYNAMO)
 
         registerHandlers(CRUSHER)
         registerHandlers(BLOCK_BREAKER)
@@ -239,11 +246,11 @@ object RagiumBlockEntityTypes {
         registerHandlers(EXTRACTOR)
 
         registerHandlers(ALLOY_SMELTER)
+        registerHandlers(INFUSER)
         registerHandlers(MELTER)
+        registerHandlers(MIXER)
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
-
-        registerHandlers(INFUSER)
 
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)

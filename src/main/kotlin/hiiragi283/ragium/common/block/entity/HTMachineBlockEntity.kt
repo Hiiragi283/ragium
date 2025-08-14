@@ -90,6 +90,17 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
 
+    protected fun doProgress(network: IEnergyStorage): Boolean {
+        if (usedEnergy < requiredEnergy) {
+            usedEnergy += handleEnergy(network)
+        }
+        if (usedEnergy < requiredEnergy) return false
+        usedEnergy -= requiredEnergy
+        return true
+    }
+
+    protected open fun handleEnergy(network: IEnergyStorage): Int = network.extractEnergy(energyUsage, false)
+
     final override fun serverTickPre(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         val network: IEnergyStorage = this.network ?: return TriState.FALSE
         return serverTickPre(level, pos, state, network)

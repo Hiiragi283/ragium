@@ -116,11 +116,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "Alloy Smelter")
+        addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")
         addBlock(RagiumBlocks.Machines.MELTER, "Melter")
+        addBlock(RagiumBlocks.Machines.MIXER, "Mixer")
         addBlock(RagiumBlocks.Machines.REFINERY, "Refinery")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "Solidifier")
-
-        addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
         addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
@@ -168,7 +168,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
         addFluid(RagiumFluidContents.DIESEL, "Diesel")
-        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "Crimson Diesel")
+        addFluid(RagiumFluidContents.BLOOD_DIESEL, "Bloo-Diesel")
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")

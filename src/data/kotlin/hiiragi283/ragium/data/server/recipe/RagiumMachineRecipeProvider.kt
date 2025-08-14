@@ -79,18 +79,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
         basicMachine(RagiumBlocks.Machines.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
-        basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.DISPENSER))
+        basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.HOPPER))
         // Advanced
-        advancedMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
-        advancedMachine(RagiumBlocks.Machines.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)
-        advancedMachine(
-            RagiumBlocks.Machines.REFINERY,
-            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
-            Items.POLISHED_BLACKSTONE_BRICKS,
-        )
-        advancedMachine(RagiumBlocks.Machines.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)
-        // Elite
-        eliteMachine(RagiumBlocks.Machines.INFUSER, Ingredient.of(Items.ENCHANTING_TABLE), Items.DEEPSLATE_TILES)
+        advMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
+        advMachine(RagiumBlocks.Machines.INFUSER, Ingredient.of(Items.HOPPER))
+        advMachine(RagiumBlocks.Machines.MELTER, Ingredient.of(Items.BLAST_FURNACE))
+        advMachine(RagiumBlocks.Machines.MIXER, Ingredient.of(Items.CAULDRON))
+        advMachine(RagiumBlocks.Machines.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ))
+        advMachine(RagiumBlocks.Machines.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
     }
 
     private fun basicMachine(machine: ItemLike, input: Ingredient) {
@@ -107,7 +103,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
-    private fun advancedMachine(machine: ItemLike, input: Ingredient, bottom: ItemLike) {
+    private fun advMachine(machine: ItemLike, input: Ingredient, bottom: ItemLike = Items.POLISHED_BLACKSTONE_BRICKS) {
         HTShapedRecipeBuilder(machine)
             .pattern(
                 "AAA",
@@ -118,20 +114,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumBlocks.Frames.ADVANCED)
             .define('D', bottom)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-            .save(output)
-    }
-
-    private fun eliteMachine(machine: ItemLike, input: Ingredient, bottom: ItemLike) {
-        HTShapedRecipeBuilder(machine)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DED",
-            ).define('A', RagiumCommonTags.Items.INGOTS_DEEP_STEEL)
-            .define('B', input)
-            .define('C', RagiumBlocks.Frames.ELITE)
-            .define('D', bottom)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
     }
 
@@ -183,20 +165,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumBlocks.Casings.DEVICE)
             .define('D', RagiumModTags.Items.PLASTICS)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-            .save(output)
-    }
-
-    private fun eliteDevice(device: ItemLike, input: Ingredient) {
-        HTShapedRecipeBuilder(device)
-            .pattern(
-                " A ",
-                "BCB",
-                "DED",
-            ).define('A', input)
-            .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
-            .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumModTags.Items.PLASTICS)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
     }
 

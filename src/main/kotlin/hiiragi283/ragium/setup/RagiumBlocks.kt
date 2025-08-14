@@ -417,12 +417,11 @@ object RagiumBlocks {
 
         // Advanced
         ALLOY_SMELTER(RagiumBlockEntityTypes.ALLOY_SMELTER),
+        INFUSER(RagiumBlockEntityTypes.INFUSER),
         MELTER(RagiumBlockEntityTypes.MELTER),
+        MIXER(RagiumBlockEntityTypes.MIXER),
         REFINERY(RagiumBlockEntityTypes.REFINERY),
         SOLIDIFIER(RagiumBlockEntityTypes.SOLIDIFIER),
-
-        // Elite
-        INFUSER(RagiumBlockEntityTypes.INFUSER),
         ;
 
         override val holder: DeferredBlock<*> =

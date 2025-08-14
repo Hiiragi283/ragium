@@ -107,11 +107,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "合金炉")
+        addBlock(RagiumBlocks.Machines.INFUSER, "液体注入機")
         addBlock(RagiumBlocks.Machines.MELTER, "溶融炉")
+        addBlock(RagiumBlocks.Machines.MIXER, "混合機")
         addBlock(RagiumBlocks.Machines.REFINERY, "精製機")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "成型機")
-
-        addBlock(RagiumBlocks.Machines.INFUSER, "液体注入機")
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
         addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
@@ -159,7 +159,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
         addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
-        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "深紅のディーゼル")
+        addFluid(RagiumFluidContents.BLOOD_DIESEL, "ブラッディーゼル")
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
