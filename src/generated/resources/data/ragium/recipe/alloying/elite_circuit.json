@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:gems/ragi_crystal"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:circuit_boards"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:elite_circuit"
+  }
+}

@@ -7,9 +7,8 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.*
+import java.util.Optional
 
 abstract class HTFluidToObjRecipe(
     private val recipeType: RecipeType<*>,
@@ -27,8 +26,6 @@ abstract class HTFluidToObjRecipe(
         val bool4: Boolean = fluidResults.all(HTFluidResult::hasNoMatchingStack)
         return bool1 || bool2 || bool3 || bool4
     }
-
-    final override fun matches(input: HTSingleFluidRecipeInput, level: Level): Boolean = test(input)
 
     final override fun assembleFluid(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
         if (test(input)) fluidResults[0].getOrEmpty() else FluidStack.EMPTY

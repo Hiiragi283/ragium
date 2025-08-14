@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import java.util.Optional
 
 interface HTFluidWithCatalystToObjRecipe<R : HTRecipeResult<*, *>> : HTRecipe<HTItemWithFluidRecipeInput> {
@@ -21,8 +20,6 @@ interface HTFluidWithCatalystToObjRecipe<R : HTRecipeResult<*, *>> : HTRecipe<HT
             .orElse(input.item.isEmpty)
         return !isIncomplete && bool1 && bool2
     }
-
-    override fun matches(input: HTItemWithFluidRecipeInput, level: Level): Boolean = test(input)
 
     override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "ragium:polymer_resin"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:plastic_plate"
+  }
+}

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
@@ -28,8 +27,6 @@ interface HTItemWithFluidToObjRecipe<R : HTRecipeResult<*, *>> : HTRecipe<HTItem
     fun testItem(ingredient: HTItemIngredient, stack: ItemStack): Boolean
 
     fun testFluid(ingredient: HTFluidIngredient, stack: FluidStack): Boolean
-
-    override fun matches(input: HTItemWithFluidRecipeInput, level: Level): Boolean = test(input)
 
     override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY

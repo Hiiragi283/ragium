@@ -116,7 +116,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "Alloy Smelter")
-        addBlock(RagiumBlocks.Machines.FORMING_PRESS, "Forming Press")
         addBlock(RagiumBlocks.Machines.MELTER, "Melter")
         addBlock(RagiumBlocks.Machines.REFINERY, "Refinery")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "Solidifier")
@@ -390,8 +389,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 
+        add(RagiumModTags.Items.CIRCUIT_BOARDS, "Circuit Boards")
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binders")
         add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")
+        add(RagiumModTags.Items.PLASTICS, "Plastics")
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
         add(RagiumModTags.Items.WIP, "Work In Progress")
 

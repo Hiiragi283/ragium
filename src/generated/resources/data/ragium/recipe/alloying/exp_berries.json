@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:foods/berry"
+    },
+    {
+      "count": 4,
+      "tag": "c:gems/eldritch_pearl"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:exp_berries"
+  }
+}

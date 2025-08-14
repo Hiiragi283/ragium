@@ -6,13 +6,13 @@ import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumEngineeringRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumExtractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumInfusingRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumMachineRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumMiscRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumImmersiveRecipeProvider
@@ -40,8 +40,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumInfusingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumMiscRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumPressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumMachineRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)

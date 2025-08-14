@@ -107,7 +107,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "合金炉")
-        addBlock(RagiumBlocks.Machines.FORMING_PRESS, "プレス機")
         addBlock(RagiumBlocks.Machines.MELTER, "溶融炉")
         addBlock(RagiumBlocks.Machines.REFINERY, "精製機")
         addBlock(RagiumBlocks.Machines.SOLIDIFIER, "成型機")
@@ -391,8 +390,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
+        add(RagiumModTags.Items.CIRCUIT_BOARDS, "回路基板")
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
         add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")
+        add(RagiumModTags.Items.PLASTICS, "プラスチック")
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
         add(RagiumModTags.Items.WIP, "開発中")
 

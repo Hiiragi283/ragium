@@ -1,0 +1,19 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "minecraft:charcoal"
+      },
+      {
+        "tag": "c:dusts/charcoal"
+      }
+    ],
+    "count": 1
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:brown_dye"
+  }
+}

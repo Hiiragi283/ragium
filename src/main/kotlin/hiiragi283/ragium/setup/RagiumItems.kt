@@ -93,15 +93,15 @@ object RagiumItems {
     @JvmField
     val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>> = buildTable {
         // Dusts
-        put(HTMaterialVariant.DUST, RagiumMaterialType.WOOD, register("sawdust"))
         listOf(
-            RagiumMaterialType.ASH,
             RagiumMaterialType.RAGINITE,
             HTVanillaMaterialType.OBSIDIAN,
             RagiumMaterialType.CINNABAR,
             RagiumMaterialType.SALTPETER,
             RagiumMaterialType.SULFUR,
+            RagiumMaterialType.ASH,
         ).forEach { put(HTMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
+        put(HTMaterialVariant.DUST, RagiumMaterialType.WOOD, register("sawdust"))
         // Gems
         put(HTMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
         listOf(

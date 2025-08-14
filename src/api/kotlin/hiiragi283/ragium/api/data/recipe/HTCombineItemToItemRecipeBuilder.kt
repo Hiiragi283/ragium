@@ -16,12 +16,8 @@ class HTCombineItemToItemRecipeBuilder<B : HTCombineItemToItemRecipe>(
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
-        fun alloying(
-            first: HTItemIngredient,
-            second: HTItemIngredient,
-            result: HTItemResult,
-        ): HTCombineItemToItemRecipeBuilder<HTAlloyingRecipe> =
-            HTCombineItemToItemRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, listOf(first, second), result)
+        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToItemRecipeBuilder<HTAlloyingRecipe> =
+            HTCombineItemToItemRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, listOf(*ingredients), result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id

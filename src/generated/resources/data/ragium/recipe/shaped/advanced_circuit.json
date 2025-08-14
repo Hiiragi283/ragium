@@ -5,17 +5,22 @@
     "A": {
       "tag": "c:ingots/gold"
     },
-    "B": {
-      "tag": "c:dusts/glowstone"
-    },
+    "B": [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ],
     "C": {
-      "tag": "c:circuits/basic"
+      "tag": "ragium:circuit_boards"
     }
   },
   "pattern": [
-    " A ",
+    "AAA",
     "BCB",
-    " A "
+    "AAA"
   ],
   "result": {
     "count": 1,

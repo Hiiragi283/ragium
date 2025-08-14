@@ -147,6 +147,10 @@ class RagiumItemTagsProvider(
     }
 
     private fun categories() {
+        tag(RagiumModTags.Items.CIRCUIT_BOARDS)
+            .addItem(RagiumItems.CIRCUIT_BOARD)
+            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.PNEUMATIC, "unassembled_pcb"))
+
         tag(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .addItem(Items.GHAST_TEAR)
             .addItem(Items.PHANTOM_MEMBRANE)

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "minecraft:coal"
+      },
+      {
+        "tag": "c:dusts/coal"
+      }
+    ],
+    "count": 1
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:black_dye"
+  }
+}

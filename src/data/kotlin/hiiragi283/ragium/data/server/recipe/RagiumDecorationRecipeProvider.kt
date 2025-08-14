@@ -75,23 +75,23 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Quartz Glass
         HTCombineItemToItemRecipeBuilder
             .alloying(
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
                 HTIngredientHelper.item(Items.QUARTZ_BLOCK),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
             ).save(output)
         // Soul Glass
         HTCombineItemToItemRecipeBuilder
             .alloying(
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
                 HTIngredientHelper.item(Items.SOUL_SAND),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToItemRecipeBuilder
             .alloying(
+                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
                 HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
             ).save(output)
 
         // Normal -> Tinted

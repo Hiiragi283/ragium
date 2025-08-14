@@ -66,9 +66,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Ambrosia
         HTCombineItemToItemRecipeBuilder
             .alloying(
+                HTResultHelper.item(RagiumItems.AMBROSIA),
                 HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_CHOCOLATE, 64),
                 HTIngredientHelper.item(Items.HONEY_BLOCK, 64),
-                HTResultHelper.item(RagiumItems.AMBROSIA),
             ).save(output)
 
         cherry()

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:circuit_boards"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_circuit"
+  }
+}

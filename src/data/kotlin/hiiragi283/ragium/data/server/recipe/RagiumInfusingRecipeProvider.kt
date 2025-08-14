@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.createPotionStack
@@ -109,11 +109,11 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(Items.ENCHANTED_GOLDEN_APPLE),
             ).save(output)
         // Exp Berries
-        HTItemWithCatalystToItemRecipeBuilder
-            .pressing(
-                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4),
-                HTIngredientHelper.item(Tags.Items.FOODS_BERRY),
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
                 HTResultHelper.item(RagiumItems.EXP_BERRIES),
+                HTIngredientHelper.item(Tags.Items.FOODS_BERRY),
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4),
             ).save(output)
         // Blaze Powder
         HTItemWithFluidToObjRecipeBuilder

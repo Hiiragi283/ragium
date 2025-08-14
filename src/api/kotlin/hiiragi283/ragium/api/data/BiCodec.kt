@@ -167,6 +167,8 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun listOf(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOf(min, max), streamCodec.listOf())
 
+    fun listOf(range: IntRange): BiCodec<B, List<V>> = listOf(range.first, range.last)
+
     fun listOrElement(): BiCodec<B, List<V>> = of(codec.listOrElement(), streamCodec.listOf())
 
     fun listOrElement(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOrElement(min, max), streamCodec.listOf())

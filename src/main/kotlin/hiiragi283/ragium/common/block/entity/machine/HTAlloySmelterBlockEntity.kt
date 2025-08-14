@@ -1,12 +1,15 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTMultiItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.ragium.common.inventory.HTItemWithItemToItemMenu
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -16,74 +19,48 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDoubleInputBlockEntity<HTCombineItemToItemRecipe>(
+    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
         RagiumRecipeTypes.ALLOYING.get(),
         RagiumBlockEntityTypes.ALLOY_SMELTER,
         pos,
         state,
     ) {
+    override val inventory: HTItemHandler = HTItemStackHandler
+        .Builder(4)
+        .addInput(0..2)
+        .addOutput(3)
+        .build(::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
-    //    Ticking    //
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
+        inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTDoubleRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean {
-        // アウトプットに搬出できるか判定する
-        if (!insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty) {
-            return false
-        }
-        // インプットから正確な個数を引けるか判定する
-        if (!canConsumeInput(input, recipe, 0, 1)) {
-            if (!canConsumeInput(input, recipe, 1, 0)) {
-                return false
-            }
-        }
-        return true
-    }
+    // アウトプットに搬出できるか判定する
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
+        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTDoubleRecipeInput,
+        input: HTMultiItemRecipeInput,
         recipe: HTCombineItemToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
-        // インプットを減らす
-        consumeItem(input, recipe, 0, 1)
-        consumeItem(input, recipe, 1, 0)
+        // 実際にインプットを減らす
+        val ingredients: List<HTItemIngredient> = recipe.ingredients
+        HTMultiItemToItemRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
+            inventory.extractItem(slot, ingredients[index], false)
+        }
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
-    private fun canConsumeInput(
-        input: HTDoubleRecipeInput,
-        recipe: HTCombineItemToItemRecipe,
-        first: Int,
-        second: Int,
-    ): Boolean = recipe.ingredients[0].test(input.getItem(first)) && recipe.ingredients[1].test(input.getItem(second))
-
-    private fun consumeItem(
-        input: HTDoubleRecipeInput,
-        recipe: HTCombineItemToItemRecipe,
-        first: Int,
-        second: Int,
-    ) {
-        if (recipe.ingredients[0].test(input.getItem(first)) && recipe.ingredients[1].test(input.getItem(second))) {
-            inventory.extractItem(first, recipe.ingredients[0], false)
-            inventory.extractItem(second, recipe.ingredients[1], false)
-        }
-    }
-
-    //    Menu    //
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemWithItemToItemMenu =
-        HTItemWithItemToItemMenu(
-            RagiumMenuTypes.ALLOY_SMELTER,
-            containerId,
-            playerInventory,
-            blockPos,
-            createDefinition(inventory),
-            HTItemWithItemToItemMenu.ALLOY_POS,
-        )
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTAlloySmelterMenu = HTAlloySmelterMenu(
+        containerId,
+        playerInventory,
+        blockPos,
+        createDefinition(inventory),
+    )
 }

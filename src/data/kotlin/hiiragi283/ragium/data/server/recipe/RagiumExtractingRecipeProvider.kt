@@ -60,10 +60,30 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
-        flower()
+        dyes()
     }
 
-    private fun flower() {
+    private fun dyes() {
+        // Charcoal -> Brown
+        HTItemToObjRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(HTIngredientHelper.charcoal()),
+                HTResultHelper.item(Items.BROWN_DYE),
+            ).saveSuffixed(output, "_from_charcoal")
+        // Oxidized Copper -> Green
+        HTItemToObjRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Items.OXIDIZED_COPPER),
+                HTResultHelper.item(Items.GREEN_DYE, 3),
+            ).saveSuffixed(output, "_from_oxidized_copper")
+        // Coal -> Black
+        HTItemToObjRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(HTIngredientHelper.coal()),
+                HTResultHelper.item(Items.BLACK_DYE),
+            ).saveSuffixed(output, "_from_coal")
+
+        // Flowers
         val table: HTTable<Item, Item, Int> = buildTable {
             // Small
             put(Items.DANDELION, Items.YELLOW_DYE, 2)

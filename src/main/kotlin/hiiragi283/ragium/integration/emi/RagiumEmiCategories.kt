@@ -31,9 +31,6 @@ object RagiumEmiCategories {
     val MIXING = HTEmiRecipeCategory(RagiumConst.MIXING, RagiumBlocks.Machines.MELTER)
 
     @JvmField
-    val PRESSING = HTEmiRecipeCategory(RagiumConst.PRESSING, RagiumBlocks.Machines.FORMING_PRESS)
-
-    @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumConst.REFINING, RagiumBlocks.Machines.REFINERY)
 
     @JvmField
@@ -50,7 +47,6 @@ object RagiumEmiCategories {
         INFUSING,
         MELTING,
         MIXING,
-        PRESSING,
         REFINING,
         SOLIDIFYING,
     )

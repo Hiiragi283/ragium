@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -23,7 +25,6 @@ import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MEKANISM) {
     override fun buildRecipeInternal() {
@@ -52,7 +53,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
             // Azure Shard -> Chemical
             factory(
-                gemOrDust(RagiumConst.AZURE, 1),
+                itemHelper.gemOrDust(RagiumConst.AZURE, 1),
                 RagiumMekanismAddon.CHEMICAL_AZURE.asStack(10),
             ).build(output, id("$prefix/azure/from_shard"))
             // Enriched -> Chemical
@@ -82,7 +83,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Raginite + Copper -> Ragi-Alloy
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                ingotOrDust("copper", 1),
+                itemHelper.ingotOrDust("copper", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 40),
                 RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY).toStack(),
                 false,
@@ -90,7 +91,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Raginite + Gold -> Advanced Ragi-Alloy
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                ingotOrDust("gold", 1),
+                itemHelper.ingotOrDust("gold", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 80),
                 RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY).toStack(),
                 false,
@@ -99,30 +100,26 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Raginite + Diamond -> Ragi-Crystal
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                gemOrDust("diamond", 1),
+                itemHelper.gemOrDust("diamond", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 60),
                 RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/ragi_crystal"))
         // Ore -> Crystal
-        ItemStackToItemStackRecipeBuilder
-            .enriching(
-                itemHelper.from(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL),
-                RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).toStack(2),
-            ).build(output, id("processing/ragi_crystal/from_ore"))
+        oreToGem(RagiumMaterialType.RAGI_CRYSTAL)
     }
 
     private fun azure() {
         // Enrich
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                gemOrDust(RagiumConst.AZURE, 1),
+                itemHelper.gemOrDust(RagiumConst.AZURE, 1),
                 RagiumMekanismAddon.ITEM_ENRICHED_AZURE.toStack(),
             ).build(output, id("enriching/enrich/azure"))
         // Azure + Amethyst -> Azure Shard
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                ingotOrDust("amethyst", 1),
+                itemHelper.gemOrDust("amethyst", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 10),
                 RagiumItems.getGem(RagiumMaterialType.AZURE).toStack(),
                 false,
@@ -130,7 +127,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Azure + Iron -> Azure Steel
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                gemOrDust("iron", 1),
+                itemHelper.ingotOrDust("iron", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 40),
                 RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL).toStack(),
                 false,
@@ -138,18 +135,22 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     }
 
     private fun crimson() {
+        oreToGem(RagiumMaterialType.CRIMSON_CRYSTAL)
+
         fluidCrystallizing(
             RagiumFluidContents.CRIMSON_SAP,
             RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP,
-            RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL),
+            RagiumMaterialType.CRIMSON_CRYSTAL,
         )
     }
 
     private fun warped() {
+        oreToGem(RagiumMaterialType.WARPED_CRYSTAL)
+
         fluidCrystallizing(
             RagiumFluidContents.WARPED_SAP,
             RagiumMekanismAddon.CHEMICAL_WARPED_SAP,
-            RagiumItems.getGem(RagiumMaterialType.WARPED_CRYSTAL),
+            RagiumMaterialType.WARPED_CRYSTAL,
         )
     }
 
@@ -165,7 +166,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fluidCrystallizing(
             RagiumFluidContents.ELDRITCH_FLUX,
             RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX,
-            RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL),
+            RagiumMaterialType.ELDRITCH_PEARL,
         )
     }
 
@@ -188,7 +189,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Azure + Netherite Ingot -> Deep Ingot
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                ingotOrDust("netherite", 1),
+                itemHelper.ingotOrDust("netherite", 1),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 160),
                 RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL).toStack(),
                 false,
@@ -202,14 +203,24 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
-    private fun gemOrDust(name: String, count: Int): ItemStackIngredient = itemHelper.from(gemOrDust(name), count)
+    private fun IItemStackIngredientCreator.gemOrDust(name: String, count: Int = 1): ItemStackIngredient =
+        from(this@RagiumMekanismRecipeProvider.gemOrDust(name), count)
 
-    private fun ingotOrDust(name: String, count: Int): ItemStackIngredient = itemHelper.from(ingotOrDust(name), count)
+    private fun IItemStackIngredientCreator.ingotOrDust(name: String, count: Int = 1): ItemStackIngredient =
+        from(this@RagiumMekanismRecipeProvider.ingotOrDust(name), count)
+
+    private fun oreToGem(material: HTMaterialType) {
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(HTMaterialVariant.ORE.itemTagKey(material)),
+                RagiumItems.getGem(material).toStack(2),
+            ).build(output, id("processing/${material.serializedName}/from_ore"))
+    }
 
     private fun fluidCrystallizing(
         fluid: HTFluidContent<*, *, *>,
         chemical: DeferredChemical<*>,
-        item: DeferredItem<*>,
+        material: HTMaterialType,
         toItemAmount: Int = 1000,
     ) {
         // Fluid <-> Chemical
@@ -224,7 +235,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
                 chemicalHelper.fromHolder(chemical, toItemAmount),
-                item.toStack(),
-            ).build(output, id("crystallizing/${item.id.path}"))
+                RagiumItems.getGem(material).toStack(),
+            ).build(output, id("crystallizing/${material.serializedName}"))
     }
 }

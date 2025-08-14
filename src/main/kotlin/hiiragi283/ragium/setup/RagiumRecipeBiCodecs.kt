@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.recipe.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
@@ -16,7 +15,6 @@ import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -61,24 +59,12 @@ object RagiumRecipeBiCodecs {
     @JvmStatic
     fun <R : HTCombineItemToItemRecipe> combineItemToItem(
         factory: HTCombineItemToItemRecipeBuilder.Factory<R>,
+        size: IntRange,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.listOf(2, 2).fieldOf("ingredients"),
+        HTItemIngredient.CODEC.listOf(size).fieldOf("ingredients"),
         HTCombineItemToItemRecipe::ingredients,
         HTItemResult.CODEC.fieldOf("result"),
         HTCombineItemToItemRecipe::result,
-        factory::create,
-    )
-
-    @JvmStatic
-    fun <R : HTItemWithCatalystToItemRecipe> itemWithCatalystToItem(
-        factory: HTItemWithCatalystToItemRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("ingredient"),
-        HTItemWithCatalystToItemRecipe::ingredient,
-        HTItemIngredient.CODEC.optionalFieldOf("catalyst"),
-        HTItemWithCatalystToItemRecipe::catalyst,
-        HTItemResult.CODEC.fieldOf("result"),
-        HTItemWithCatalystToItemRecipe::result,
         factory::create,
     )
 

@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTMenuTypeRegister
+import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
@@ -10,7 +11,6 @@ import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
-import hiiragi283.ragium.common.inventory.HTItemWithItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
@@ -26,10 +26,7 @@ object RagiumMenuTypes {
     //    Machine    //
 
     @JvmField
-    val ALLOY_SMELTER: HTDeferredMenuType<HTItemWithItemToItemMenu> = REGISTER.registerType(
-        "alloy_smelter",
-        HTItemWithItemToItemMenu::alloy,
-    )
+    val ALLOY_SMELTER: HTDeferredMenuType<HTAlloySmelterMenu> = REGISTER.registerType("alloy_smelter", ::HTAlloySmelterMenu)
 
     @JvmField
     val COMPRESSOR: HTDeferredMenuType<HTItemToItemMenu> = REGISTER.registerType("compressor", HTItemToItemMenu::compressor)
@@ -49,12 +46,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val FLUID_COLLECTOR: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("fluid_collector", HTFluidOnlyMenu::collector)
-
-    @JvmField
-    val FORMING_PRESS: HTDeferredMenuType<HTItemWithItemToItemMenu> = REGISTER.registerType(
-        "forming_press",
-        HTItemWithItemToItemMenu::press,
-    )
 
     @JvmField
     val INFUSER: HTDeferredMenuType<HTItemWithFluidToItemMenu> = REGISTER.registerType("infuser", HTItemWithFluidToItemMenu::infuser)

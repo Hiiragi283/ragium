@@ -23,7 +23,6 @@ import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
@@ -35,6 +34,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
@@ -42,7 +42,6 @@ import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidWithCatalystToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTItemWithItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
@@ -145,26 +144,13 @@ class RagiumEmiPlugin : EmiPlugin {
                     }
             }
         }
-        // Block Action
-        /*forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
-            if (recipe is HTBlockInteractingRecipeImpl) {
-                val firstStack: ItemStack = recipe.actions
-                    .filterIsInstance<HTBlockAction.ItemPreview>()
-                    .firstOrNull()
-                    ?.getPreviewStack() ?: return@forEachRecipes
-                addInteraction(EmiStack.of(firstStack), id) {
-                    leftInput(recipe.blocks.toEmi())
-                    rightInput(EmiIngredient.of(recipe.ingredient), false)
-                }
-            }
-        }*/
     }
 
     private fun addMachineRecipes() {
         // Alloying
         RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCombineItemToItemRecipe ->
             registry.addRecipe(
-                HTItemWithItemToItemEmiRecipe.alloying(
+                HTAlloyingEmiRecipe(
                     id,
                     recipe.ingredients.map(HTItemIngredient::toEmi),
                     recipe.result.toEmi(),
@@ -250,18 +236,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        // Pressing
-        RagiumRecipeTypes.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
-            registry.addRecipe(
-                HTItemWithItemToItemEmiRecipe.pressing(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.catalyst.toItemEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }
-        registry.addRecipeHandler(RagiumMenuTypes.FORMING_PRESS.get(), HTRecipeHandler(RagiumEmiCategories.PRESSING))
         // Refining
         RagiumRecipeTypes.REFINING.forEach(recipeManager) { id: ResourceLocation, recipe: HTRefiningRecipe ->
             registry.addRecipe(

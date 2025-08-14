@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:gems/eldritch_pearl"
+    },
+    {
+      "count": 1,
+      "tag": "c:nether_stars"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:circuit_boards"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ultimate_circuit"
+  }
+}

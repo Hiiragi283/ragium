@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -52,7 +51,7 @@ object RagiumMiscRegister {
 
         register(
             RagiumRecipeSerializers.ALLOYING,
-            RagiumRecipeBiCodecs.combineItemToItem(::HTAlloyingRecipe),
+            RagiumRecipeBiCodecs.combineItemToItem(::HTAlloyingRecipe, 2..3),
         )
         register(
             RagiumRecipeSerializers.COMPRESSING,
@@ -79,10 +78,6 @@ object RagiumMiscRegister {
             RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
         )
         register(
-            RagiumRecipeSerializers.PRESSING,
-            RagiumRecipeBiCodecs.itemWithCatalystToItem(::HTPressingRecipe),
-        )
-        register(
             RagiumRecipeSerializers.REFINING,
             RagiumRecipeBiCodecs.fluidToObj(::HTRefiningRecipe),
         )
@@ -105,7 +100,6 @@ object RagiumMiscRegister {
         register(RagiumRecipeTypes.INFUSING)
         register(RagiumRecipeTypes.MELTING)
         register(RagiumRecipeTypes.MIXING)
-        register(RagiumRecipeTypes.PRESSING)
         register(RagiumRecipeTypes.REFINING)
         register(RagiumRecipeTypes.SOLIDIFYING)
     }

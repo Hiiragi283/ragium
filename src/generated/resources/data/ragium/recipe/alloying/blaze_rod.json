@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 4,
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "count": 1,
+      "tag": "c:rods/wooden"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:blaze_rod"
+  }
+}
