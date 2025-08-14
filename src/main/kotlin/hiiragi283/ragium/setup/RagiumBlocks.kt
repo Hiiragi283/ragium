@@ -414,6 +414,7 @@ object RagiumBlocks {
         COMPRESSOR(RagiumBlockEntityTypes.COMPRESSOR),
         ENGRAVER(RagiumBlockEntityTypes.ENGRAVER),
         EXTRACTOR(RagiumBlockEntityTypes.EXTRACTOR),
+        PULVERIZER(RagiumBlockEntityTypes.PULVERIZER),
 
         // Advanced
         ALLOY_SMELTER(RagiumBlockEntityTypes.ALLOY_SMELTER),

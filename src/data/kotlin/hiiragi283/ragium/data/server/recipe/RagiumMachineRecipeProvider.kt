@@ -75,11 +75,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun machines() {
         // Basic
-        basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(Items.FLINT))
+        basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER))
         basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
         basicMachine(RagiumBlocks.Machines.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.HOPPER))
+        basicMachine(RagiumBlocks.Machines.PULVERIZER, Ingredient.of(Items.FLINT))
         // Advanced
         advMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
         advMachine(RagiumBlocks.Machines.INFUSER, Ingredient.of(Items.HOPPER))

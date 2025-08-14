@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "tag": "minecraft:logs_that_burn"
   },
-  "results": {
+  "result": {
     "count": 6,
     "id": "#c:dusts/wood"
   }

@@ -13,6 +13,8 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.vanillaId
@@ -25,6 +27,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
+import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -39,6 +42,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidWithCatalystToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
@@ -52,6 +56,8 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.Holder
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -144,6 +150,19 @@ class RagiumEmiPlugin : EmiPlugin {
                     }
             }
         }
+        // Fluid Fuel
+        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
+        for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(RagiumDataMaps.THERMAL_FUEL)) {
+            val fluid: Fluid = fluidRegistry.get(key) ?: continue
+            if (!fluid.isSource(fluid.defaultFluidState())) continue
+            registry.addRecipe(
+                HTFluidFuelEmiRecipe(
+                    key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/"),
+                    EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
+                    fuelData.time,
+                ),
+            )
+        }
     }
 
     private fun addMachineRecipes() {
@@ -171,24 +190,28 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addRecipeHandler(RagiumMenuTypes.COMPRESSOR.get(), HTRecipeHandler(RagiumEmiCategories.COMPRESSING))
         // Crushing
         RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToChancedItemRecipe ->
-            if (recipe is HTItemToChancedItemRecipeBase) {
-                registry.addRecipe(
-                    HTCrushingEmiRecipe(
-                        id,
-                        recipe.ingredient.toEmi(),
-                        recipe.results.mapIndexed { index: Int, result: HTItemResult ->
-                            result
-                                .getStackResult()
-                                .mapOrElse(
-                                    { stack: ItemStack -> EmiStack.of(stack).setChance(recipe.chances[index]) },
-                                    ::createErrorStack,
-                                )
-                        },
-                    ),
+            val recipe: HTCrushingEmiRecipe = when (recipe) {
+                is HTItemToChancedItemRecipeBase -> HTCrushingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    recipe.results.mapIndexed { index: Int, result: HTItemResult ->
+                        result
+                            .getStackResult()
+                            .mapOrElse(
+                                { stack: ItemStack -> EmiStack.of(stack).setChance(recipe.chances[index]) },
+                                ::createErrorStack,
+                            )
+                    },
                 )
+
+                is HTPulverizingRecipe -> HTCrushingEmiRecipe(id, recipe.ingredient.toEmi(), listOf(recipe.result.toEmi()))
+
+                else -> return@forEach
             }
+            registry.addRecipe(recipe)
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
+        registry.addRecipeHandler(RagiumMenuTypes.PULVERIZER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
         // Engraving
         registry.addRecipeHandler(RagiumMenuTypes.ENGRAVER.get(), HTRecipeHandler(VanillaEmiRecipeCategories.STONECUTTING))
         // Extracting
@@ -236,6 +259,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.MIXER.get(), HTRecipeHandler(RagiumEmiCategories.MIXING))
         // Refining
         RagiumRecipeTypes.REFINING.forEach(recipeManager) { id: ResourceLocation, recipe: HTRefiningRecipe ->
             registry.addRecipe(

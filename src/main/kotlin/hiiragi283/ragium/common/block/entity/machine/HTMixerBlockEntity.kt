@@ -76,7 +76,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithFluidToFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
+        tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         inventory.extractItem(0, recipe.itemIngredient, false)
         tankIn.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)

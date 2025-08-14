@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -76,6 +77,10 @@ object RagiumMiscRegister {
         register(
             RagiumRecipeSerializers.MIXING,
             RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
+        )
+        register(
+            RagiumRecipeSerializers.PULVERIZING,
+            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTPulverizingRecipe),
         )
         register(
             RagiumRecipeSerializers.REFINING,

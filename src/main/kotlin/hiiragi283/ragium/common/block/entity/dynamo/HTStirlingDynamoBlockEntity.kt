@@ -7,6 +7,8 @@ import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -34,9 +36,9 @@ class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         // 初回だけ燃料を判定する
         val burnTime: Int = if (usedEnergy == 0) {
             val stack: ItemStack = inventory.getStackInSlot(0)
-            val burnTime: Int = stack.getBurnTime(null)
+            val result: Int = stack.getBurnTime(null)
             inventory.insertItem(1, inventory.getRemainingStack(0, 1), false)
-            burnTime
+            result
         } else {
             lastBurnTime
         }
@@ -48,12 +50,18 @@ class HTStirlingDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         // エネルギーを生産する
-        if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.receiveEnergy(energyUsage, false)
-        }
-        if (usedEnergy < requiredEnergy) return TriState.DEFAULT
-        usedEnergy -= requiredEnergy
+        if (!doProgress(network)) return TriState.DEFAULT
         return TriState.TRUE
+    }
+
+    override fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        result: TriState,
+    ) {
+        // サウンドを流す
+        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
     //    Menu    //

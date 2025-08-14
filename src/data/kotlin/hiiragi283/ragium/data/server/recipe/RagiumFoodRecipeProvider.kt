@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
@@ -112,8 +112,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun meat() {
         // Minced Meat
-        HTItemToChancedItemRecipeBuilder
-            .crushing(
+        HTItemToObjRecipeBuilder
+            .pulverizing(
                 HTIngredientHelper.item(
                     CompoundIngredient.of(
                         Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
@@ -121,8 +121,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                         Ingredient.of(Items.ROTTEN_FLESH),
                     ),
                 ),
-            ).addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
-            .save(output)
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT),
+            ).save(output)
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.MEAT), 3)
             .pattern("AAA")

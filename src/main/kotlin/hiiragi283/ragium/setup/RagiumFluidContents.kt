@@ -97,9 +97,9 @@ object RagiumFluidContents {
     )
 
     @JvmField
-    val CRIMSON_DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val BLOOD_DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
-            "crimson_diesel",
+            "blood_diesel",
             defaultProperties(),
             HTExplosiveFluidType.create(6f),
         )
@@ -132,6 +132,8 @@ object RagiumFluidContents {
             defaultProperties(),
             HTNetherVaporizableFluidType.create(HTResultHelper.item(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)),
         )
+
+    //    Other    //
 
     @JvmField
     val ELDRITCH_FLUX: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =

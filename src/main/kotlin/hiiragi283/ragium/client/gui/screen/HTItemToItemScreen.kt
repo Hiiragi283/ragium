@@ -36,6 +36,15 @@ class HTItemToItemScreen(
             inventory,
             title,
         )
+
+        @JvmStatic
+        fun pulverizer(menu: HTItemToItemMenu, inventory: Inventory, title: Component): HTItemToItemScreen = HTItemToItemScreen(
+            RagiumAPI.id("textures/gui/container/pulverizer.png"),
+            HTProgressWidget::arrow,
+            menu,
+            inventory,
+            title,
+        )
     }
 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

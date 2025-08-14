@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -16,29 +17,33 @@ import net.neoforged.neoforge.common.Tags
 object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Vanilla
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(ItemTags.WOOL))
-            .addResult(HTResultHelper.item(Items.STRING, 4))
-            .saveSuffixed(output, "_from_wool")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(ItemTags.WOOL),
+                HTResultHelper.item(Items.STRING, 4),
+            ).saveSuffixed(output, "_from_wool")
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(ItemTags.WOOL_CARPETS))
             .addResult(HTResultHelper.item(Items.STRING, 2))
             .addResult(HTResultHelper.item(Items.STRING), 1 / 3f)
             .saveSuffixed(output, "_from_carpet")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.COBWEB))
-            .addResult(HTResultHelper.item(Items.STRING, 5))
-            .saveSuffixed(output, "_from_web")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.COBWEB),
+                HTResultHelper.item(Items.STRING, 4),
+            ).saveSuffixed(output, "_from_web")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.GLOWSTONE))
-            .addResult(HTResultHelper.item(Items.GLOWSTONE_DUST, 4))
-            .saveSuffixed(output, "_from_glowstone")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.GLOWSTONE),
+                HTResultHelper.item(Items.GLOWSTONE_DUST, 4),
+            ).saveSuffixed(output, "_from_glowstone")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.MAGMA_BLOCK))
-            .addResult(HTResultHelper.item(Items.MAGMA_CREAM, 4))
-            .saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.MAGMA_BLOCK),
+                HTResultHelper.item(Items.MAGMA_CREAM, 4),
+            ).saveSuffixed(output, "_from_block")
 
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Items.MUDDY_MANGROVE_ROOTS))
@@ -46,19 +51,22 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(HTResultHelper.item(Items.MANGROVE_ROOTS), 1 / 4f)
             .saveSuffixed(output, "_from_roots")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.CROPS_SUGAR_CANE))
-            .addResult(HTResultHelper.item(Items.SUGAR, 3))
-            .saveSuffixed(output, "_from_cane")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Tags.Items.CROPS_SUGAR_CANE),
+                HTResultHelper.item(Items.SUGAR, 3),
+            ).saveSuffixed(output, "_from_cane")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.RODS_BLAZE))
-            .addResult(HTResultHelper.item(Items.BLAZE_POWDER, 4))
-            .saveSuffixed(output, "_from_rod")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.RODS_BREEZE))
-            .addResult(HTResultHelper.item(Items.WIND_CHARGE, 6))
-            .saveSuffixed(output, "_from_rod")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Tags.Items.RODS_BLAZE),
+                HTResultHelper.item(Items.BLAZE_POWDER, 4),
+            ).saveSuffixed(output, "_from_rod")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Tags.Items.RODS_BREEZE),
+                HTResultHelper.item(Items.WIND_CHARGE, 6),
+            ).saveSuffixed(output, "_from_rod")
 
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Items.COARSE_DIRT))
@@ -71,15 +79,16 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(HTResultHelper.item(Items.HANGING_ROOTS), 1 / 4f)
             .saveSuffixed(output, "_from_rooted")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.NETHER_WART_BLOCK))
-            .addResult(HTResultHelper.item(Items.NETHER_WART, 9))
-            .saveSuffixed(output, "_from_block")
-
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.WARPED_WART_BLOCK))
-            .addResult(HTResultHelper.item(RagiumItems.WARPED_WART, 9))
-            .saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.NETHER_WART_BLOCK),
+                HTResultHelper.item(Items.NETHER_WART, 3),
+            ).saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.WARPED_WART_BLOCK),
+                HTResultHelper.item(RagiumItems.WARPED_WART, 3),
+            ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Items.GILDED_BLACKSTONE))
@@ -89,15 +98,17 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(HTResultHelper.item(Items.GOLD_NUGGET, 3), 1 / 4f)
             .saveSuffixed(output, "_from_gilded")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Tags.Items.OBSIDIANS_NORMAL))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4))
-            .saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Tags.Items.OBSIDIANS_NORMAL),
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4),
+            ).saveSuffixed(output, "_from_block")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(RagiumBlocks.ASH_LOG))
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_ASH, 3))
-            .saveSuffixed(output, "_from_log")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(RagiumBlocks.ASH_LOG),
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_ASH, 3),
+            ).saveSuffixed(output, "_from_log")
 
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Items.GLOW_INK_SAC))
@@ -118,10 +129,11 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             output: Int,
             suffix: String,
         ) {
-            HTItemToChancedItemRecipeBuilder
-                .crushing(HTIngredientHelper.item(tagKey, input))
-                .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_WOOD, output))
-                .saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(tagKey, input),
+                    HTResultHelper.item(RagiumCommonTags.Items.DUSTS_WOOD, output),
+                ).saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
         }
 
         wood(ItemTags.BOATS, 1, 5, "_from_boat")
@@ -172,47 +184,56 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun prismarine() {
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.SEA_LANTERN))
-            .addResult(HTResultHelper.item(Items.PRISMARINE_CRYSTALS, 9))
-            .saveSuffixed(output, "_from_sea_lantern")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.PRISMARINE_SHARD))
-            .addResult(HTResultHelper.item(Items.PRISMARINE_CRYSTALS))
-            .saveSuffixed(output, "_from_shard")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.SEA_LANTERN),
+                HTResultHelper.item(Items.PRISMARINE_CRYSTALS, 9),
+            ).saveSuffixed(output, "_from_sea_lantern")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.PRISMARINE_SHARD),
+                HTResultHelper.item(Items.PRISMARINE_CRYSTALS),
+            ).saveSuffixed(output, "_from_shard")
 
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.PRISMARINE))
-            .addResult(HTResultHelper.item(Items.PRISMARINE_SHARD, 4))
-            .saveSuffixed(output, "_from_block")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.PRISMARINE_BRICKS))
-            .addResult(HTResultHelper.item(Items.PRISMARINE_SHARD, 9))
-            .saveSuffixed(output, "_from_bricks")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.DARK_PRISMARINE))
-            .addResult(HTResultHelper.item(Items.PRISMARINE_SHARD, 8))
-            .saveSuffixed(output, "_from_dark")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.PRISMARINE),
+                HTResultHelper.item(Items.PRISMARINE_SHARD, 4),
+            ).saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.PRISMARINE_BRICKS),
+                HTResultHelper.item(Items.PRISMARINE_SHARD, 9),
+            ).saveSuffixed(output, "_from_bricks")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.DARK_PRISMARINE),
+                HTResultHelper.item(Items.PRISMARINE_SHARD, 8),
+            ).saveSuffixed(output, "_from_dark")
     }
 
     private fun snow() {
         // Snow
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.SNOW_BLOCK))
-            .addResult(HTResultHelper.item(Items.SNOWBALL, 4))
-            .saveSuffixed(output, "_from_block")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.ICE))
-            .addResult(HTResultHelper.item(Items.SNOWBALL, 4))
-            .saveSuffixed(output, "_from_ice")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.SNOW_BLOCK),
+                HTResultHelper.item(Items.SNOWBALL, 4),
+            ).saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.ICE),
+                HTResultHelper.item(Items.SNOWBALL, 4),
+            ).saveSuffixed(output, "_from_ice")
         // Ice
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.PACKED_ICE))
-            .addResult(HTResultHelper.item(Items.ICE, 9))
-            .saveSuffixed(output, "_from_packed")
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.BLUE_ICE))
-            .addResult(HTResultHelper.item(Items.PACKED_ICE, 9))
-            .saveSuffixed(output, "_from_blue")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.PACKED_ICE),
+                HTResultHelper.item(Items.ICE, 9),
+            ).saveSuffixed(output, "_from_packed")
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(Items.BLUE_ICE),
+                HTResultHelper.item(Items.PACKED_ICE, 9),
+            ).saveSuffixed(output, "_from_blue")
     }
 }

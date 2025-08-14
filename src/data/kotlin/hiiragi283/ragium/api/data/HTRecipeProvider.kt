@@ -146,12 +146,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
-    protected fun distillation(
-        output: RecipeOutput,
-        input: Pair<TagKey<Fluid>, Int>,
-        itemResult: HTItemResult?,
-        vararg fluidResults: HTFluidResult,
-    ) {
+    protected fun distillation(input: Pair<TagKey<Fluid>, Int>, itemResult: HTItemResult?, vararg fluidResults: HTFluidResult) {
         val (tagKey: TagKey<Fluid>, amount: Int) = input
         val suffix = "_from_${tagKey.location.path}"
         val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(tagKey, amount)

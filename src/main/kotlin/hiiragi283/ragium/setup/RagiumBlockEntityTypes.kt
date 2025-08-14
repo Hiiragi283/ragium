@@ -15,7 +15,9 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTBurningDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTStirlingDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTThermalDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
@@ -25,6 +27,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import net.minecraft.world.level.block.Block
@@ -63,9 +66,21 @@ object RagiumBlockEntityTypes {
     //    Dynamo    //
 
     @JvmField
+    val BURNING_DYNAMO: HTDeferredBlockEntityType<HTBurningDynamoBlockEntity> = registerTick(
+        "burning_dynamo",
+        ::HTBurningDynamoBlockEntity,
+    )
+
+    @JvmField
     val STIRLING_DYNAMO: HTDeferredBlockEntityType<HTStirlingDynamoBlockEntity> = registerTick(
         "stirling_dynamo",
         ::HTStirlingDynamoBlockEntity,
+    )
+
+    @JvmField
+    val THERMAL_DYNAMO: HTDeferredBlockEntityType<HTThermalDynamoBlockEntity> = registerTick(
+        "thermal_dynamo",
+        ::HTThermalDynamoBlockEntity,
     )
 
     //    Machine    //
@@ -96,6 +111,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick("mixer", ::HTMixerBlockEntity)
+
+    @JvmField
+    val PULVERIZER: HTDeferredBlockEntityType<HTPulverizerBlockEntity> = registerTick("pulverizer", ::HTPulverizerBlockEntity)
 
     @JvmField
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
@@ -187,6 +205,7 @@ object RagiumBlockEntityTypes {
         add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
         add(ENGRAVER, RagiumBlocks.Machines.ENGRAVER)
         add(EXTRACTOR, RagiumBlocks.Machines.EXTRACTOR)
+        add(PULVERIZER, RagiumBlocks.Machines.PULVERIZER)
 
         add(ALLOY_SMELTER, RagiumBlocks.Machines.ALLOY_SMELTER)
         add(INFUSER, RagiumBlocks.Machines.INFUSER)
@@ -244,6 +263,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(COMPRESSOR)
         registerHandlers(ENGRAVER)
         registerHandlers(EXTRACTOR)
+        registerHandlers(PULVERIZER)
 
         registerHandlers(ALLOY_SMELTER)
         registerHandlers(INFUSER)

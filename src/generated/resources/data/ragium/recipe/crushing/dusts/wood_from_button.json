@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "tag": "minecraft:wooden_buttons"
   },
-  "results": {
+  "result": {
     "count": 1,
     "id": "#c:dusts/wood"
   }

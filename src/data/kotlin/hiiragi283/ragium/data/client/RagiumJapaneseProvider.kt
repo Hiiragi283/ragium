@@ -100,11 +100,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.Frames.BASIC, "基本機械フレーム")
         addBlock(RagiumBlocks.Frames.ELITE, "精鋭機械フレーム")
 
-        addBlock(RagiumBlocks.Machines.CRUSHER, "粉砕機")
+        addBlock(RagiumBlocks.Machines.CRUSHER, "破砕機")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "ブロック採掘機")
         addBlock(RagiumBlocks.Machines.COMPRESSOR, "圧縮機")
         addBlock(RagiumBlocks.Machines.ENGRAVER, "彫刻機")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
+        addBlock(RagiumBlocks.Machines.PULVERIZER, "粉砕機")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "合金炉")
         addBlock(RagiumBlocks.Machines.INFUSER, "液体注入機")

@@ -8,12 +8,12 @@
       }
     }
   ],
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "tag": "c:gems/dark_gem"
   },
-  "results": {
+  "result": {
     "count": 1,
     "id": "#c:dusts/dark_gem"
   }

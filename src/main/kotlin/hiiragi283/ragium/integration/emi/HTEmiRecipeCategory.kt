@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.ItemLike
 
-class HTEmiRecipeCategory(path: String, val iconStack: EmiStack, private val name: Component = iconStack.name) :
+class HTEmiRecipeCategory(path: String, val iconStack: EmiStack) :
     EmiRecipeCategory(RagiumAPI.id(path), iconStack, iconStack, EmiRecipeSorting.compareOutputThenInput()) {
     constructor(path: String, icon: ItemLike) : this(path, EmiStack.of(icon))
 
-    override fun getName(): Component = name
+    override fun getName(): Component = iconStack.name
 }

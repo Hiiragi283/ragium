@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "item": "ragium:ash_log"
   },
-  "results": {
+  "result": {
     "count": 3,
     "id": "#c:dusts/ash"
   }

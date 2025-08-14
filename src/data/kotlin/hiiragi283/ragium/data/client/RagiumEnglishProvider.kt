@@ -114,6 +114,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Machines.COMPRESSOR, "Compressor")
         addBlock(RagiumBlocks.Machines.ENGRAVER, "Engraver")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
+        addBlock(RagiumBlocks.Machines.PULVERIZER, "Pulverizer")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "Alloy Smelter")
         addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")

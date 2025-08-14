@@ -3,7 +3,7 @@
   "chances": [
     1.0,
     0.5,
-    0.5
+    0.25
   ],
   "ingredient": {
     "count": 1,

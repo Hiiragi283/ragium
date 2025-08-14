@@ -2,6 +2,7 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
 import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
@@ -97,6 +98,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMaps.THERMAL_FUEL)
+
         LOGGER.info("Registered data map types!")
     }
 

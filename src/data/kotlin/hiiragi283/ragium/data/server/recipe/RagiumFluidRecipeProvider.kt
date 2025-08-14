@@ -59,7 +59,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Crude Oil -> LPG + Naphtha + Tar
         distillation(
-            output,
             RagiumFluidContents.CRUDE_OIL.commonTag to 1000,
             HTResultHelper.item(RagiumItems.TAR),
             HTResultHelper.fluid(RagiumFluidContents.NAPHTHA, 375),
@@ -74,12 +73,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
         distillation(
-            output,
             RagiumFluidContents.NAPHTHA.commonTag to 1000,
             HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
             HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375),
         )
-        // Diesel + Crimson Crystal -> Crimson Fuel
+        // Diesel + Crimson Crystal -> Bloo-Diesel
+        HTItemWithFluidToObjRecipeBuilder
+            .mixing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL),
+                HTIngredientHelper.fluid(RagiumFluidContents.DIESEL, 1000),
+                HTResultHelper.fluid(RagiumFluidContents.BLOOD_DIESEL, 1000),
+            ).save(output)
     }
 
     private fun sap() {
@@ -99,7 +103,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_log")
         // Sap -> Syrup
         distillation(
-            output,
             RagiumFluidContents.SAP.commonTag to 1000,
             null,
             HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750),
@@ -121,7 +124,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         distillation(
-            output,
             RagiumFluidContents.CRIMSON_SAP.commonTag to 1000,
             HTResultHelper.item(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL),
             HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
@@ -140,7 +142,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         distillation(
-            output,
             RagiumFluidContents.WARPED_SAP.commonTag to 1000,
             HTResultHelper.item(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL),
             HTResultHelper.fluid(RagiumFluidContents.SAP, 125),

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
@@ -238,14 +239,14 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_REDSTONE))
             .addResult(HTResultHelper.item(Tags.Items.DUSTS_REDSTONE, 8))
             .addResult(HTResultHelper.item(Tags.Items.DUSTS_REDSTONE, 4), 1 / 2f)
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 4), 1 / 2f)
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 4), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
         // Raginite
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_RAGINITE))
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 8))
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 4), 1 / 2f)
-            .addResult(HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2), 1 / 4f)
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 1), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
 
         // Gems
@@ -424,9 +425,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun toDust(family: HTMaterialFamily, tagKey: TagKey<Item>) {
         val dust: TagKey<Item> = family.getTagKey(HTMaterialVariant.DUST) ?: return
         // Base
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(tagKey))
-            .addResult(HTResultHelper.item(dust))
+        HTItemToObjRecipeBuilder
+            .pulverizing(HTIngredientHelper.item(tagKey), HTResultHelper.item(dust))
             .savePrefixed(output.withConditions(not(tagEmpty(dust))), "base/")
         // Gear
         // Plate

@@ -8,12 +8,12 @@
       }
     }
   ],
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "tag": "c:ingots/knightmetal"
   },
-  "results": {
+  "result": {
     "count": 1,
     "id": "#c:dusts/knightmetal"
   }

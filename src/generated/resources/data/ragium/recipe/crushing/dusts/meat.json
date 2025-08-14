@@ -1,5 +1,5 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "type": "neoforge:compound",
     "children": [
@@ -15,7 +15,7 @@
     ],
     "count": 1
   },
-  "results": {
+  "result": {
     "count": 1,
     "id": "#c:dusts/meat"
   }

@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "item": "minecraft:sea_lantern"
   },
-  "results": {
+  "result": {
     "count": 9,
     "id": "minecraft:prismarine_crystals"
   }

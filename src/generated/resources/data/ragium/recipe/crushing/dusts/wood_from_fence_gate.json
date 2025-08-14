@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "tag": "c:fence_gates/wooden"
   },
-  "results": {
+  "result": {
     "count": 4,
     "id": "#c:dusts/wood"
   }

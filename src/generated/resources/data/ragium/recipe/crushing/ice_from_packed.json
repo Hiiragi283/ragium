@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
     "item": "minecraft:packed_ice"
   },
-  "results": {
+  "result": {
     "count": 9,
     "id": "minecraft:ice"
   }

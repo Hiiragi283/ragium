@@ -61,6 +61,9 @@ object RagiumMenuTypes {
     val MIXER: HTDeferredMenuType<HTMixerMenu> = REGISTER.registerType("mixer", ::HTMixerMenu)
 
     @JvmField
+    val PULVERIZER: HTDeferredMenuType<HTItemToItemMenu> = REGISTER.registerType("pulverizer", HTItemToItemMenu::extractor)
+
+    @JvmField
     val REFINERY: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("refinery", HTFluidOnlyMenu::refinery)
 
     @JvmField

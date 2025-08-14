@@ -6,7 +6,7 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:flint"
+      "tag": "c:tools/forge_hammer"
     },
     "C": {
       "item": "ragium:basic_machine_frame"

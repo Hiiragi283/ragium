@@ -10,6 +10,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTDynamoBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
+    override fun handleEnergy(network: IEnergyStorage): Int = network.receiveEnergy(energyUsage, false)
+
     override fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
         HTFilteredEnergyStorage(network, HTEnergyFilter.EXTRACT_ONLY)
 }

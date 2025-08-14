@@ -38,6 +38,10 @@ class HTItemToItemMenu(
         @JvmStatic
         fun extractor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
             empty(RagiumMenuTypes.EXTRACTOR, containerId, inventory, registryBuf)
+
+        @JvmStatic
+        fun pulverizer(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
+            empty(RagiumMenuTypes.PULVERIZER, containerId, inventory, registryBuf)
     }
 
     init {

@@ -93,6 +93,7 @@
     "ragium:compressor",
     "ragium:engraver",
     "ragium:extractor",
+    "ragium:pulverizer",
     "ragium:alloy_smelter",
     "ragium:infuser",
     "ragium:melter",

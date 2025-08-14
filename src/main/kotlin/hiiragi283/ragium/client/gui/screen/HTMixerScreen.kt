@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.HTMixerMenu
@@ -21,9 +22,19 @@ class HTMixerScreen(menu: HTMixerMenu, inventory: Inventory, title: Component) :
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
         fluidWidget1 =
             addRenderableWidget(createFluidTankWidget(1, HTSlotHelper.getSlotPosX(6.5), HTSlotHelper.getSlotPosY(0)))
+    }
+
+    override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
+        consumer(
+            HTProgressWidget.arrow(
+                menu::progress,
+                startX + HTSlotHelper.getSlotPosX(4.5),
+                startY + HTSlotHelper.getSlotPosY(1),
+            ),
+        )
     }
 
     //    HTFluidScreen    //
