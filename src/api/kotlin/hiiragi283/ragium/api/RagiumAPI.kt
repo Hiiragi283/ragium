@@ -2,7 +2,6 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -16,14 +15,11 @@ import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
 
@@ -70,26 +66,6 @@ interface RagiumAPI {
     //    Server    //
 
     /**
-     * Ragiumが使用する[FakePlayer]を返します。
-     */
-    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile())
-
-    /**
-     * [uuid]から[FakePlayer]を返します。
-     */
-    fun getFakePlayer(level: ServerLevel, uuid: UUID): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile(uuid))
-
-    /**
-     * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
-     */
-    fun getRandomGameProfile(): GameProfile = getRandomGameProfile(UUID.randomUUID())
-
-    /**
-     * [uuid]から[GameProfile]を返します。
-     */
-    fun getRandomGameProfile(uuid: UUID): GameProfile
-
-    /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
      * @return サーバーまたはプレイヤーが存在しない場合は`null`
      */
@@ -100,12 +76,6 @@ interface RagiumAPI {
      * @return プレイヤーが存在しない場合は`null`
      */
     fun getPlayer(uuid: UUID, server: MinecraftServer?): ServerPlayer? = server?.playerList?.getPlayer(uuid)
-
-    /**
-     * [uuid]と[level]から[ServerPlayer]を返します。
-     * @return プレイヤーが存在しない場合は[getFakePlayer]
-     */
-    fun getPlayerOrFake(uuid: UUID, level: ServerLevel): ServerPlayer = getPlayer(uuid, level.server) ?: getFakePlayer(level, uuid)
 
     /**
      * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。

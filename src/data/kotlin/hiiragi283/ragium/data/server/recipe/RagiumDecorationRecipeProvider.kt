@@ -124,10 +124,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Base -> Stairs
         HTShapedRecipeBuilder(stairs, 4, CraftingBookCategory.BUILDING)
-            .pattern("A  ")
-            .pattern("AA ")
-            .pattern("AAA")
-            .define('A', base)
+            .pattern(
+                "A  ",
+                "AA ",
+                "AAA",
+            ).define('A', base)
             .save(output)
 
         HTStonecuttingRecipeBuilder(stairs)
@@ -135,9 +136,10 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Base -> Wall
         HTShapedRecipeBuilder(wall, 4, CraftingBookCategory.BUILDING)
-            .pattern("AAA")
-            .pattern("AAA")
-            .define('A', base)
+            .pattern(
+                "AAA",
+                "AAA",
+            ).define('A', base)
             .save(output)
 
         HTStonecuttingRecipeBuilder(wall)

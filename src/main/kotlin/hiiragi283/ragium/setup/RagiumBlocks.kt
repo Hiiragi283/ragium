@@ -409,7 +409,6 @@ object RagiumBlocks {
 
     enum class Machines(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
         // Basic
-        CRUSHER(RagiumBlockEntityTypes.CRUSHER),
         BLOCK_BREAKER(RagiumBlockEntityTypes.BLOCK_BREAKER),
         COMPRESSOR(RagiumBlockEntityTypes.COMPRESSOR),
         ENGRAVER(RagiumBlockEntityTypes.ENGRAVER),
@@ -418,6 +417,7 @@ object RagiumBlocks {
 
         // Advanced
         ALLOY_SMELTER(RagiumBlockEntityTypes.ALLOY_SMELTER),
+        CRUSHER(RagiumBlockEntityTypes.CRUSHER),
         INFUSER(RagiumBlockEntityTypes.INFUSER),
         MELTER(RagiumBlockEntityTypes.MELTER),
         MIXER(RagiumBlockEntityTypes.MIXER),

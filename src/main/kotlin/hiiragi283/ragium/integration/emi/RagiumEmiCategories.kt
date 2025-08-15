@@ -30,7 +30,7 @@ object RagiumEmiCategories {
     val COMPRESSING = HTEmiRecipeCategory(RagiumConst.COMPRESSING, RagiumBlocks.Machines.COMPRESSOR)
 
     @JvmField
-    val CRUSHING = HTEmiRecipeCategory(RagiumConst.CRUSHING, RagiumBlocks.Machines.CRUSHER)
+    val CRUSHING = HTEmiRecipeCategory(RagiumConst.CRUSHING, RagiumBlocks.Machines.PULVERIZER)
 
     @JvmField
     val DISTILLATION = HTEmiRecipeCategory("distillation", RagiumBlocks.Machines.REFINERY)
@@ -80,6 +80,6 @@ object RagiumEmiCategories {
         }
 
         CATEGORIES.forEach(::addWorkstation)
-        registry.addWorkstation(CRUSHING, EmiStack.of(RagiumBlocks.Machines.PULVERIZER))
+        registry.addWorkstation(CRUSHING, EmiStack.of(RagiumBlocks.Machines.CRUSHER))
     }
 }

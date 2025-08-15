@@ -103,11 +103,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Advanced
         HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.ADVANCED))
-            .pattern(
-                "ABA",
-                "CDC",
-                "ABA",
-            ).define('A', Tags.Items.DUSTS_GLOWSTONE)
+            .crossLayered()
+            .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', Tags.Items.INGOTS_GOLD)
             .define('C', Tags.Items.GEMS_LAPIS)
             .define('D', RagiumCommonTags.Items.CIRCUITS_BASIC)

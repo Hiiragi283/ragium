@@ -159,20 +159,20 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
-        machine(RagiumBlocks.Machines.CRUSHER, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.Machines.BLOCK_BREAKER, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.Machines.COMPRESSOR, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.Machines.ENGRAVER, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.Machines.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.Machines.BLOCK_BREAKER, basicMachine, vanillaId("block/stone"))
+        machine(RagiumBlocks.Machines.COMPRESSOR, basicMachine, basicMachine)
+        machine(RagiumBlocks.Machines.ENGRAVER, basicMachine, vanillaId("block/smooth_stone"))
+        machine(RagiumBlocks.Machines.EXTRACTOR, basicMachine, basicMachine)
         machine(RagiumBlocks.Machines.PULVERIZER, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
         machine(RagiumBlocks.Machines.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
-        machine(RagiumBlocks.Machines.INFUSER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.CRUSHER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(RagiumBlocks.Machines.INFUSER, advancedMachine, advancedMachine)
         machine(RagiumBlocks.Machines.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.Machines.MIXER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.MIXER, advancedMachine, advancedMachine)
         machine(RagiumBlocks.Machines.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.Machines.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.SOLIDIFIER, advancedMachine, advancedMachine)
 
         // Device
         layeredBlock(

@@ -12,15 +12,15 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 data class HTWorldGenData(private val name: String) {
     @JvmField
     val configuredKey: ResourceKey<ConfiguredFeature<*, *>> =
-        ResourceKey.create(Registries.CONFIGURED_FEATURE, RagiumAPI.Companion.id(name))
+        ResourceKey.create(Registries.CONFIGURED_FEATURE, RagiumAPI.id(name))
 
     @JvmField
     val placedKey: ResourceKey<PlacedFeature> =
-        ResourceKey.create(Registries.PLACED_FEATURE, RagiumAPI.Companion.id(name))
+        ResourceKey.create(Registries.PLACED_FEATURE, RagiumAPI.id(name))
 
     @JvmField
     val modifierKey: ResourceKey<BiomeModifier> =
-        ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumAPI.Companion.id(name))
+        ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumAPI.id(name))
 
     lateinit var configuredHolder: Holder<ConfiguredFeature<*, *>>
         internal set

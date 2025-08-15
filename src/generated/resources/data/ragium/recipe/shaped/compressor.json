@@ -6,22 +6,19 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:piston"
+      "tag": "c:circuits/basic"
     },
     "C": {
-      "item": "ragium:basic_machine_frame"
+      "item": "minecraft:piston"
     },
     "D": {
-      "item": "minecraft:bricks"
-    },
-    "E": {
-      "tag": "c:circuits/basic"
+      "item": "ragium:stone_casing"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DED"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "count": 1,

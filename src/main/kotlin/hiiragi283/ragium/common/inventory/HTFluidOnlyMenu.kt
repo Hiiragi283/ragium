@@ -29,6 +29,10 @@ class HTFluidOnlyMenu(
             empty(RagiumMenuTypes.FLUID_COLLECTOR, containerId, inventory, registryBuf)
 
         @JvmStatic
+        fun drum(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTFluidOnlyMenu =
+            empty(RagiumMenuTypes.DRUM, containerId, inventory, registryBuf)
+
+        @JvmStatic
         fun refinery(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTFluidOnlyMenu =
             empty(RagiumMenuTypes.REFINERY, containerId, inventory, registryBuf)
     }

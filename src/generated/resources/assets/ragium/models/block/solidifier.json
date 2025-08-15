@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/machine_base",
   "textures": {
-    "bottom": "minecraft:block/polished_blackstone_bricks",
+    "bottom": "ragium:block/advanced_machine_casing",
     "front": "ragium:block/solidifier_front",
     "top": "ragium:block/advanced_machine_casing"
   }

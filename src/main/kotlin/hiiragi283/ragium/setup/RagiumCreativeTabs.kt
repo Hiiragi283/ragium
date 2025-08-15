@@ -42,7 +42,7 @@ object RagiumCreativeTabs {
     @JvmField
     val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
         "blocks",
-        "crusher",
+        "pulverizer",
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Natural Resources
         output.accept(RagiumBlocks.ASH_LOG)

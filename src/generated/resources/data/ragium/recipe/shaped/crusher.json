@@ -3,25 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "c:circuits/advanced"
     },
     "C": {
-      "item": "ragium:basic_machine_frame"
+      "tag": "c:tools/forge_hammer"
     },
     "D": {
-      "item": "minecraft:bricks"
-    },
-    "E": {
-      "tag": "c:circuits/basic"
+      "item": "ragium:pulverizer"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DED"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "count": 1,

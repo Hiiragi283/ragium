@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
+import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
@@ -13,11 +14,13 @@ import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.storage.HTTransferIOCache
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.UUIDUtil
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
@@ -28,23 +31,36 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import java.util.UUID
 import kotlin.collections.forEach
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     HTHandlerBlockEntity,
+    HTOwnedBlockEntity,
     MenuProvider {
     //    Storage    //
+
+    private var ownerId: UUID? = null
+
+    override fun getOwnerUUID(): UUID {
+        if (ownerId == null) {
+            ownerId = UUID.randomUUID()
+        }
+        return ownerId!!
+    }
 
     protected abstract val inventory: HTItemHandler
     val transferIOCache = HTTransferIOCache()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
+        writer.writeNullable(UUIDUtil.CODEC, RagiumConst.OWNER, ownerId)
         writer.write(RagiumConst.INVENTORY, inventory)
         writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
+        reader.read(UUIDUtil.CODEC, RagiumConst.OWNER).ifSuccess { ownerId = it }
         reader.read(RagiumConst.INVENTORY, inventory)
         reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
     }
@@ -75,6 +91,17 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     final override fun dropInventory(consumer: (ItemStack) -> Unit) {
         super.dropInventory(consumer)
         inventory.getStackView().forEach(consumer)
+    }
+
+    override fun setPlacedBy(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+        super.setPlacedBy(level, pos, state, placer, stack)
+        this.ownerId = placer?.uuid
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =

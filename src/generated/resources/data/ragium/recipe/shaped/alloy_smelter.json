@@ -6,22 +6,19 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "tag": "c:circuits/advanced"
     },
     "C": {
-      "item": "ragium:advanced_machine_frame"
+      "item": "minecraft:furnace"
     },
     "D": {
-      "item": "minecraft:nether_bricks"
-    },
-    "E": {
-      "tag": "c:circuits/advanced"
+      "item": "ragium:stone_casing"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DED"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "count": 1,

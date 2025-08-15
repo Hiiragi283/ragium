@@ -47,6 +47,7 @@ object RagiumConst {
     const val NETWORK = "network"
     const val TRANSFER_IO = "transfer_io"
     const val UPGRADES = "upgrades"
+    const val OWNER = "owner"
 
     const val INVENTORY = "inventory"
     const val TANK = "tank"

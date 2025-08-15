@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
@@ -171,6 +172,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.SINGLE_ITEM)
 
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen::compressor)
+        event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)

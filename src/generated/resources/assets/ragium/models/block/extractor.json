@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/machine_base",
   "textures": {
-    "bottom": "minecraft:block/bricks",
+    "bottom": "ragium:block/basic_machine_casing",
     "front": "ragium:block/extractor_front",
     "top": "ragium:block/basic_machine_casing"
   }

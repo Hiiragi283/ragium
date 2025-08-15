@@ -54,6 +54,8 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
 
     fun cross8(): HTShapedRecipeBuilder = pattern("ABA", "BCB", "ABA")
 
+    fun crossLayered(): HTShapedRecipeBuilder = pattern("ABA", "CDC", "ABA")
+
     fun casing(): HTShapedRecipeBuilder = pattern("AAA", "ABA", "CCC")
 
     fun mosaic4(): HTShapedRecipeBuilder = pattern("AB", "BA")

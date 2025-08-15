@@ -166,7 +166,7 @@ object RagiumConfig : RagiumAPI.Config {
                 .defineList(
                     "tagOutputModIds",
                     listOf(
-                        RagiumAPI.Companion.MOD_ID,
+                        RagiumAPI.MOD_ID,
                         RagiumConst.MINECRAFT,
                         "alltheores",
                     ),

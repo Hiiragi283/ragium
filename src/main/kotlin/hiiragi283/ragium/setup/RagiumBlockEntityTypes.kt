@@ -200,7 +200,6 @@ object RagiumBlockEntityTypes {
 
         add(STIRLING_DYNAMO, RagiumBlocks.Dynamos.STIRLING)
 
-        add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
         add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
         add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
         add(ENGRAVER, RagiumBlocks.Machines.ENGRAVER)
@@ -208,6 +207,7 @@ object RagiumBlockEntityTypes {
         add(PULVERIZER, RagiumBlocks.Machines.PULVERIZER)
 
         add(ALLOY_SMELTER, RagiumBlocks.Machines.ALLOY_SMELTER)
+        add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
         add(INFUSER, RagiumBlocks.Machines.INFUSER)
         add(MELTER, RagiumBlocks.Machines.MELTER)
         add(MIXER, RagiumBlocks.Machines.MIXER)
@@ -258,7 +258,6 @@ object RagiumBlockEntityTypes {
 
         registerHandlers(BURNING_DYNAMO)
 
-        registerHandlers(CRUSHER)
         registerHandlers(BLOCK_BREAKER)
         registerHandlers(COMPRESSOR)
         registerHandlers(ENGRAVER)
@@ -266,6 +265,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(PULVERIZER)
 
         registerHandlers(ALLOY_SMELTER)
+        registerHandlers(CRUSHER)
         registerHandlers(INFUSER)
         registerHandlers(MELTER)
         registerHandlers(MIXER)

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:buckets/lava"
+  },
+  "base": {
+    "item": "ragium:device_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:lava_collector"
+  },
+  "template": {
+    "tag": "c:circuits/advanced"
+  }
+}

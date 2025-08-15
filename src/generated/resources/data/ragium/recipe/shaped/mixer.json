@@ -6,22 +6,19 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:cauldron"
+      "tag": "c:circuits/advanced"
     },
     "C": {
-      "item": "ragium:advanced_machine_frame"
+      "tag": "c:glass_blocks/quartz"
     },
     "D": {
-      "item": "minecraft:polished_blackstone_bricks"
-    },
-    "E": {
-      "tag": "c:circuits/advanced"
+      "item": "minecraft:cauldron"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DED"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "count": 1,

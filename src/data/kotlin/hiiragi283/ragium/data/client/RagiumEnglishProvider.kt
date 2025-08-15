@@ -109,7 +109,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")
         addBlock(RagiumBlocks.Frames.ELITE, "Elite Machine Frame")
 
-        addBlock(RagiumBlocks.Machines.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "Block Breaker")
         addBlock(RagiumBlocks.Machines.COMPRESSOR, "Compressor")
         addBlock(RagiumBlocks.Machines.ENGRAVER, "Engraver")
@@ -117,6 +116,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Machines.PULVERIZER, "Pulverizer")
 
         addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "Alloy Smelter")
+        addBlock(RagiumBlocks.Machines.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")
         addBlock(RagiumBlocks.Machines.MELTER, "Melter")
         addBlock(RagiumBlocks.Machines.MIXER, "Mixer")

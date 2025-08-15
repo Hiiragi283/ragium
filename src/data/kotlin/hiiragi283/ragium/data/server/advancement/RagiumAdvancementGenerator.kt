@@ -19,9 +19,9 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = root(RagiumAdvancements.ROOT) {
         display {
             setIcon(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
-            title = Component.literal(RagiumAPI.Companion.MOD_NAME)
+            title = Component.literal(RagiumAPI.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
-            backGround = RagiumAPI.Companion.id("textures/block/plastic_block.png")
+            backGround = RagiumAPI.id("textures/block/plastic_block.png")
             showToast = false
             showChat = false
         }

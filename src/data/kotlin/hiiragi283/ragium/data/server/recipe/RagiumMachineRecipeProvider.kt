@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -75,46 +74,66 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun machines() {
         // Basic
-        basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER))
-        basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
+        basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         basicMachine(RagiumBlocks.Machines.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.HOPPER))
         basicMachine(RagiumBlocks.Machines.PULVERIZER, Ingredient.of(Items.FLINT))
         // Advanced
-        advMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
-        advMachine(RagiumBlocks.Machines.INFUSER, Ingredient.of(Items.HOPPER))
-        advMachine(RagiumBlocks.Machines.MELTER, Ingredient.of(Items.BLAST_FURNACE))
-        advMachine(RagiumBlocks.Machines.MIXER, Ingredient.of(Items.CAULDRON))
-        advMachine(RagiumBlocks.Machines.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ))
-        advMachine(RagiumBlocks.Machines.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
+        advMachine(
+            RagiumBlocks.Machines.ALLOY_SMELTER,
+            Ingredient.of(Items.FURNACE),
+            Ingredient.of(RagiumBlocks.Casings.STONE),
+        )
+        advMachine(
+            RagiumBlocks.Machines.CRUSHER,
+            Ingredient.of(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER),
+            Ingredient.of(RagiumBlocks.Machines.PULVERIZER),
+        )
+        advMachine(
+            RagiumBlocks.Machines.INFUSER,
+            Ingredient.of(Items.HOPPER),
+            Ingredient.of(Items.CAULDRON),
+        )
+        advMachine(
+            RagiumBlocks.Machines.MELTER,
+            Ingredient.of(Items.BLAST_FURNACE),
+            Ingredient.of(Items.CAULDRON),
+        )
+        advMachine(
+            RagiumBlocks.Machines.MIXER,
+            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
+            Ingredient.of(Items.CAULDRON),
+        )
+        advMachine(
+            RagiumBlocks.Machines.REFINERY,
+            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
+            Ingredient.of(Items.HOPPER),
+        )
+        advMachine(
+            RagiumBlocks.Machines.SOLIDIFIER,
+            Ingredient.of(Items.IRON_BARS),
+            Ingredient.of(Items.CAULDRON),
+        )
     }
 
-    private fun basicMachine(machine: ItemLike, input: Ingredient) {
+    private fun basicMachine(machine: ItemLike, side: Ingredient) {
         HTShapedRecipeBuilder(machine)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DED",
-            ).define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .define('B', input)
-            .define('C', RagiumBlocks.Frames.BASIC)
-            .define('D', Items.BRICKS)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .crossLayered()
+            .define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+            .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('C', side)
+            .define('D', RagiumBlocks.Casings.STONE)
             .save(output)
     }
 
-    private fun advMachine(machine: ItemLike, input: Ingredient, bottom: ItemLike = Items.POLISHED_BLACKSTONE_BRICKS) {
+    private fun advMachine(machine: ItemLike, side: Ingredient, core: Ingredient) {
         HTShapedRecipeBuilder(machine)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DED",
-            ).define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .define('B', input)
-            .define('C', RagiumBlocks.Frames.ADVANCED)
-            .define('D', bottom)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .crossLayered()
+            .define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .define('C', side)
+            .define('D', core)
             .save(output)
     }
 
@@ -138,34 +157,21 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advancedDevice(RagiumBlocks.Devices.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advancedDevice(RagiumBlocks.Devices.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
         advancedDevice(RagiumBlocks.Devices.DIM_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
-        // Elite
     }
 
     private fun basicDevice(device: ItemLike, input: Ingredient) {
-        HTShapedRecipeBuilder(device)
-            .pattern(
-                " A ",
-                "BCB",
-                "DED",
-            ).define('A', input)
-            .define('B', Tags.Items.GLASS_BLOCKS_CHEAP)
-            .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumModTags.Items.PLASTICS)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
+        HTSmithingRecipeBuilder(device)
+            .addIngredient(RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .addIngredient(RagiumBlocks.Casings.DEVICE)
+            .addIngredient(input)
             .save(output)
     }
 
     private fun advancedDevice(device: ItemLike, input: Ingredient) {
-        HTShapedRecipeBuilder(device)
-            .pattern(
-                " A ",
-                "BCB",
-                "DED",
-            ).define('A', input)
-            .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
-            .define('C', RagiumBlocks.Casings.DEVICE)
-            .define('D', RagiumModTags.Items.PLASTICS)
-            .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+        HTSmithingRecipeBuilder(device)
+            .addIngredient(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .addIngredient(RagiumBlocks.Casings.DEVICE)
+            .addIngredient(input)
             .save(output)
     }
 

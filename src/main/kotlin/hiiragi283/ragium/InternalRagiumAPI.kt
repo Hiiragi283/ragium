@@ -2,7 +2,6 @@ package hiiragi283.ragium
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
@@ -28,7 +27,6 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
-import java.util.UUID
 
 class InternalRagiumAPI : RagiumAPI {
     companion object {
@@ -60,8 +58,6 @@ class InternalRagiumAPI : RagiumAPI {
         }
 
     //    Server    //
-
-    override fun getRandomGameProfile(uuid: UUID): GameProfile = GameProfile(uuid, "[${RagiumAPI.MOD_NAME}]")
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 

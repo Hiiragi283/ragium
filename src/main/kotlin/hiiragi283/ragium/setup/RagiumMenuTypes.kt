@@ -21,6 +21,9 @@ object RagiumMenuTypes {
     val REGISTER = HTMenuTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
+    val DRUM: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("drum", HTFluidOnlyMenu::drum)
+
+    @JvmField
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu> =
         REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu)
 
