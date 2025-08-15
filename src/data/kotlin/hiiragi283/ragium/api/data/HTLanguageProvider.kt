@@ -78,6 +78,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     fun addFluid(content: HTFluidContent<*, *, *>, value: String) {
         add(content.getType().descriptionId, value)
         addFluidBucket(content, value)
+        add(content.commonTag, value)
     }
 
     protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)

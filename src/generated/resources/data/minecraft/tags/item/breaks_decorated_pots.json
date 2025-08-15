@@ -1,6 +1,6 @@
 {
   "values": [
-    "#c:tools/drill",
-    "#c:tools/forge_hammer"
+    "#ragium:tools/drill",
+    "#ragium:tools/hammer"
   ]
 }

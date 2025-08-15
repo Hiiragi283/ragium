@@ -179,7 +179,7 @@ class RagiumItemTagsProvider(
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }
 
-        tag(RagiumCommonTags.Items.TOOLS_DRILL)
+        tag(RagiumModTags.Items.TOOLS_DRILL)
             .addItem(RagiumItems.DRILL)
 
         fun setupTool(tagKey: TagKey<Item>) {
@@ -190,8 +190,8 @@ class RagiumItemTagsProvider(
             tag(Tags.Items.TOOLS).addTag(tagKey)
         }
 
-        setupTool(RagiumCommonTags.Items.TOOLS_DRILL)
-        setupTool(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+        setupTool(RagiumModTags.Items.TOOLS_DRILL)
+        setupTool(RagiumModTags.Items.TOOLS_HAMMER)
 
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {

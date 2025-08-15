@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
@@ -77,7 +78,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Items.SHORT_GRASS)
             .addIngredient(Items.SHORT_GRASS)
             .addIngredient(Items.SHORT_GRASS)
-            .addIngredient(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_from_grasses")
 
         HTItemToObjRecipeBuilder

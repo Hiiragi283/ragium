@@ -9,7 +9,7 @@
       "tag": "minecraft:planks"
     },
     "C": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "ragium:tools/hammer"
     }
   },
   "pattern": [

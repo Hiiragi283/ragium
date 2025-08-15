@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:obsidians/normal"
+      "tag": "c:ingots/netherite"
     },
     "B": {
-      "tag": "c:ingots/azure_steel"
+      "item": "minecraft:smooth_stone_slab"
     },
     "C": {
-      "tag": "ragium:tools/hammer"
+      "tag": "c:glass_blocks"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "C C",
     "ABA"
   ],
   "result": {
-    "count": 4,
-    "id": "ragium:device_casing"
+    "count": 1,
+    "id": "ragium:huge_drum_upgrade"
   }
 }

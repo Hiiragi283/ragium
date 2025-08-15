@@ -49,7 +49,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
             .hollow4()
             .define('A', RagiumModTags.Items.PLASTICS)
-            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, 1, CraftingBookCategory.BUILDING)

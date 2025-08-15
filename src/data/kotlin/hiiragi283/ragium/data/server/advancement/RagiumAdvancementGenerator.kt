@@ -61,6 +61,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumCommonTags.Items.INGOTS_RAGI_ALLOY,
         )
         // Advanced
+        val advRagiAlloy: AdvancementHolder = createSimple(
+            RagiumAdvancements.ADV_RAGI_ALLOY,
+            ragiAlloy,
+            RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY),
+            RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY,
+        )
+
         // Elite
         val ragiCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGI_CRYSTAL,
@@ -68,6 +75,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL),
             RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL,
         )
+        val ragiCrystalHammer: AdvancementHolder = createSimple(
+            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
+            ragiCrystal,
+            RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL),
+        ) {
+            setGoal()
+        }
         val ragiTicket: AdvancementHolder = child(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
             display {
                 setIcon(RagiumItems.RAGI_TICKET)

@@ -24,13 +24,14 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.portal.DimensionTransition
 
-class HTTeleportTicketItem(properties: Properties) : Item(properties) {
+class HTTeleportTicketItem(properties: Properties) : Item(properties.durability(63).rarity(Rarity.RARE)) {
     override fun onItemUseFirst(stack: ItemStack, context: UseOnContext): InteractionResult {
         val level: Level = context.level
         if (level.isClientSide) return InteractionResult.PASS

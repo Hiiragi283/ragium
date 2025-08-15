@@ -2,13 +2,13 @@
   "type": "minecraft:smithing_transform",
   "addition": [],
   "base": {
-    "item": "ragium:small_drum"
+    "item": "ragium:ragi_alloy_hammer"
   },
   "result": {
     "count": 1,
-    "id": "ragium:medium_drum"
+    "id": "ragium:ragi_crystal_hammer"
   },
   "template": {
-    "tag": "c:ingots/gold"
+    "tag": "c:gems/ragi_crystal"
   }
 }

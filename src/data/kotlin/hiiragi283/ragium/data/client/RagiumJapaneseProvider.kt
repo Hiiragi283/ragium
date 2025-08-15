@@ -42,7 +42,15 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "赤い彗星", "ラギ合金インゴットを手に入れる")
+
+        addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "オレンジ色じゃねえって！", "発展ラギ合金インゴットを手に入れる")
+
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
+        addAdvancement(
+            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
+            "Destruction: Playtime",
+            "ラギクリスタリルの鍛造ハンマーを手に入れてあらゆるブロックを破壊する",
+        )
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
@@ -190,6 +198,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
+
+        addItem(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
+        addItem(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")
+        addItem(RagiumItems.HUGE_DRUM_UPGRADE, "ドラム強化（特大）")
 
         addItem(RagiumItems.DRILL, "電動ドリル")
 
@@ -395,6 +407,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "合金炉で使う基本融剤")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "合金炉で使う発展融剤")
+
+        add(RagiumModTags.Items.TOOLS_DRILL, "ドリル")
+        add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
+
+        add(RagiumModTags.Items.ENRICHED_RAGINITE, "濃縮ラギナイト")
+        add(RagiumModTags.Items.ENRICHED_AZURE, "濃縮紺碧エッセンス")
     }
 
     private fun text() {

@@ -64,6 +64,9 @@ object RagiumCreativeTabs {
         output.acceptItems<RagiumBlocks.Devices>()
 
         output.acceptItems<RagiumBlocks.Drums>()
+        output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
+        output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
+        output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
         // Decorations
         output.acceptItems(RagiumBlocks.DECORATION_MAP.values)
         output.acceptItems<RagiumBlocks.Slabs>()
@@ -120,6 +123,7 @@ object RagiumCreativeTabs {
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
+            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_MAGNET)
 
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)

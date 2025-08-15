@@ -42,7 +42,15 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "Get Raginite Dust from Raginite Ores in underground")
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "The Red Comet", "Get Ragi-Alloy Ingot")
+
+        addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "Not orange-colored!", "Get Advanced Ragi-Alloy Ingot")
+
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
+        addAdvancement(
+            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
+            "Destruction: Playtime",
+            "Get Ragi-Crystal Hammer to break ANY blocks!",
+        )
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
@@ -199,6 +207,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
+
+        addItem(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
+        addItem(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
+        addItem(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
 
         addItem(RagiumItems.DRILL, "Electric Drill")
 
@@ -394,6 +406,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "Basic Fluxes for Alloy Smelter")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "Advanced Fluxes for Alloy Smelter")
+
+        add(RagiumModTags.Items.TOOLS_DRILL, "Drills")
+        add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
+
+        add(RagiumModTags.Items.ENRICHED_RAGINITE, "Enriched Raginite")
+        add(RagiumModTags.Items.ENRICHED_AZURE, "Enriched Azure Essence")
     }
 
     private fun text() {

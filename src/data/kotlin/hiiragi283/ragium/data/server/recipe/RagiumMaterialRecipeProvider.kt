@@ -204,7 +204,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumCommonTags.Items.DUSTS_SULFUR)
             .addIngredient(RagiumCommonTags.Items.DUSTS_SALTPETER)
             .addIngredient(HTIngredientHelper.charcoal())
-            .addIngredient(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_hammer")
     }
 

@@ -175,6 +175,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
         addAzureSmithing(hammer(RagiumMaterialType.AZURE_STEEL), hammer(HTVanillaMaterialType.IRON))
         addDeepSmithing(hammer(RagiumMaterialType.DEEP_STEEL), hammer(RagiumMaterialType.AZURE_STEEL))
+
+        HTSmithingRecipeBuilder(hammer(RagiumMaterialType.RAGI_CRYSTAL))
+            .addIngredient(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .addIngredient(hammer(RagiumMaterialType.RAGI_ALLOY))
+            .save(output)
     }
 
     private fun tickets() {

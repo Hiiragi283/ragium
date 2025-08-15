@@ -16,7 +16,9 @@ import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
+import hiiragi283.ragium.common.item.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.HTDrillItem
+import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -31,7 +33,6 @@ import hiiragi283.ragium.util.material.RagiumCircuitType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
-import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -230,6 +231,16 @@ object RagiumItems {
         register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTDeepSteelTemplateItem() })
 
     @JvmField
+    val MEDIUM_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> =
+        register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
+
+    @JvmField
+    val LARGE_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> = register("large_drum_upgrade", HTDrumUpgradeItem::Large)
+
+    @JvmField
+    val HUGE_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
+
+    @JvmField
     val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
 
     @JvmField
@@ -244,6 +255,11 @@ object RagiumItems {
             val variant = HTToolVariant.HAMMER
             put(variant, material, variant.registerItem(REGISTER, material, tier))
         }
+        put(
+            HTToolVariant.HAMMER,
+            RagiumMaterialType.RAGI_CRYSTAL,
+            register("ragi_crystal_hammer", ::HTDestructionHammerItem),
+        )
         for (variant: HTToolVariant in HTToolVariant.entries) {
             // Azure
             put(
@@ -278,14 +294,10 @@ object RagiumItems {
     val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
-    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register(
-        "teleport_ticket",
-        ::HTTeleportTicketItem,
-        Item.Properties().durability(63),
-    )
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register("teleport_ticket", ::HTTeleportTicketItem)
 
     @JvmField
-    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket")
+    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket", Item.Properties().rarity(Rarity.EPIC))
 
     //    Foods    //
 
@@ -445,24 +457,6 @@ object RagiumItems {
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        // Tickets
-        fun setColor(item: ItemLike, color: ChatFormatting) {
-            event.modify(item) { builder: DataComponentPatch.Builder ->
-                builder.set(
-                    DataComponents.ITEM_NAME,
-                    item
-                        .asItem()
-                        .description
-                        .copy()
-                        .withStyle(color),
-                )
-            }
-        }
-
-        setColor(RAGI_TICKET, ChatFormatting.RED)
-        setColor(TELEPORT_TICKET, ChatFormatting.DARK_AQUA)
-        setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
-
         // Tools
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             event.modify(item) { builder: DataComponentPatch.Builder ->

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:ragi_alloy",
+  "criteria": {
+    "has_c_ingots_advanced_ragi_alloy": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/advanced_ragi_alloy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.advanced_ragi_alloy.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:advanced_ragi_alloy_ingot"
+    },
+    "title": {
+      "translate": "advancements.ragium.advanced_ragi_alloy.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_c_ingots_advanced_ragi_alloy"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

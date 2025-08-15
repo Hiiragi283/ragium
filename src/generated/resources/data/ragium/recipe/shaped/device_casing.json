@@ -9,7 +9,7 @@
       "tag": "c:ingots/azure_steel"
     },
     "C": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "ragium:tools/hammer"
     }
   },
   "pattern": [

@@ -124,7 +124,13 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
         tag(BlockTags.STRIDER_WARM_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
+        tag(RagiumModTags.Blocks.INCORRECT_FOR_DESTRUCTION_TOOL)
+
         tag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)
+            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
+
+        tag(RagiumModTags.Blocks.MINEABLE_WITH_HAMMER)
             .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
             .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
 

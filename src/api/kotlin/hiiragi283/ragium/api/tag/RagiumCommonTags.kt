@@ -316,13 +316,6 @@ object RagiumCommonTags {
         @JvmField
         val STORAGE_BLOCKS_COOKED_MEAT: TagKey<Item> = create(STORAGE_BLOCKS, RagiumConst.COOKED_MEAT)
 
-        // Tools
-        @JvmField
-        val TOOLS_DRILL: TagKey<Item> = create("tools", "drill")
-
-        @JvmField
-        val TOOLS_FORGE_HAMMER: TagKey<Item> = create("tools", "forge_hammer")
-
         @JvmStatic
         private fun create(path: String): TagKey<Item> = itemTagKey(commonId(path))
 

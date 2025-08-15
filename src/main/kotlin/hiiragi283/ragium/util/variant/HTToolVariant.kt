@@ -2,9 +2,9 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.common.item.HTForgeHammerItem
+import hiiragi283.ragium.common.item.HTHammerItem
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
@@ -60,11 +60,12 @@ enum class HTToolVariant(private val enUsPattern: String, private val jaJpPatter
                 Item.Properties().attributes(SwordItem.createAttributes(tier, 3f, -2.4f)),
             )
     },
-    HAMMER("%s Forge Hammer", "%sの鍛造ハンマー", RagiumCommonTags.Items.TOOLS_FORGE_HAMMER) {
+    HAMMER("%s Hammer", "%sのハンマー", RagiumModTags.Items.TOOLS_HAMMER) {
         override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*> =
             register.registerItem(
                 "${material.serializedName}_hammer",
-                { prop: Item.Properties -> HTForgeHammerItem(tier, prop) },
+                { prop: Item.Properties -> HTHammerItem(tier, prop) },
+                Item.Properties().attributes(DiggerItem.createAttributes(tier, 1f, -2.8f)),
             )
     }, ;
 

@@ -22,7 +22,13 @@ object RagiumAdvancements {
     val RAGI_ALLOY: ResourceKey<Advancement> = create(RagiumConst.RAGI_ALLOY)
 
     @JvmField
+    val ADV_RAGI_ALLOY: ResourceKey<Advancement> = create(RagiumConst.ADVANCED_RAGI_ALLOY)
+
+    @JvmField
     val RAGI_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.RAGI_CRYSTAL)
+
+    @JvmField
+    val RAGI_CRYSTAL_HAMMER: ResourceKey<Advancement> = create(RagiumConst.RAGI_CRYSTAL + "_hammer")
 
     @JvmField
     val RAGI_TICKET: ResourceKey<Advancement> = create("ragi_ticket")

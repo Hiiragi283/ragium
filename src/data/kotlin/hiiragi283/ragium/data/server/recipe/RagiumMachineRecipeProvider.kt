@@ -4,12 +4,17 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -27,46 +32,46 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
-            .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Stone
         HTShapedRecipeBuilder(RagiumBlocks.Casings.STONE, 4)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
-            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
         // Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.BASIC, 2)
             .hollow8()
             .define('A', Tags.Items.INGOTS_IRON)
-            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Advanced Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.ADVANCED, 2)
             .hollow8()
             .define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Elite Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.ELITE, 4)
             .hollow8()
             .define('A', Tags.Items.INGOTS_NETHERITE)
-            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
             .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_obsidian")
     }
 
@@ -87,7 +92,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         )
         advMachine(
             RagiumBlocks.Machines.CRUSHER,
-            Ingredient.of(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER),
+            Ingredient.of(RagiumModTags.Items.TOOLS_HAMMER),
             Ingredient.of(RagiumBlocks.Machines.PULVERIZER),
         )
         advMachine(
@@ -176,28 +181,51 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun drums() {
-        // Small
-        HTShapedRecipeBuilder(RagiumBlocks.Drums.SMALL)
-            .pattern(
-                "ABA",
-                "ACA",
-                "ABA",
-            ).define('A', Tags.Items.INGOTS_COPPER)
-            .define('B', Items.SMOOTH_STONE_SLAB)
-            .define('C', Tags.Items.BUCKETS_EMPTY)
-            .save(output)
-        // Medium
-        HTSmithingRecipeBuilder(RagiumBlocks.Drums.MEDIUM)
-            .addIngredient(Tags.Items.INGOTS_GOLD)
-            .addIngredient(RagiumBlocks.Drums.SMALL)
-            .save(output)
-        // Large
-        HTSmithingRecipeBuilder(RagiumBlocks.Drums.LARGE)
-            .addIngredient(Tags.Items.GEMS_DIAMOND)
-            .addIngredient(RagiumBlocks.Drums.MEDIUM)
-            .save(output)
+        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
+            val material: TagKey<Item> = when (drum) {
+                RagiumBlocks.Drums.SMALL -> Tags.Items.INGOTS_COPPER
+                RagiumBlocks.Drums.MEDIUM -> Tags.Items.INGOTS_GOLD
+                RagiumBlocks.Drums.LARGE -> Tags.Items.GEMS_DIAMOND
+                RagiumBlocks.Drums.HUGE -> continue
+            }
+
+            HTShapedRecipeBuilder(drum)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', material)
+                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('C', Tags.Items.BUCKETS_EMPTY)
+                .save(output)
+        }
         // Huge
         createNetheriteUpgrade(RagiumBlocks.Drums.HUGE, RagiumBlocks.Drums.LARGE)
             .save(output)
+        // Upgrades
+        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
+            val upgrade: DeferredItem<*> = when (drum) {
+                RagiumBlocks.Drums.SMALL -> continue
+                RagiumBlocks.Drums.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
+                RagiumBlocks.Drums.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
+                RagiumBlocks.Drums.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
+            }
+            val material: TagKey<Item> = when (drum) {
+                RagiumBlocks.Drums.SMALL -> continue
+                RagiumBlocks.Drums.MEDIUM -> Tags.Items.INGOTS_GOLD
+                RagiumBlocks.Drums.LARGE -> Tags.Items.GEMS_DIAMOND
+                RagiumBlocks.Drums.HUGE -> Tags.Items.INGOTS_NETHERITE
+            }
+
+            HTShapedRecipeBuilder(upgrade)
+                .pattern(
+                    "ABA",
+                    "C C",
+                    "ABA",
+                ).define('A', material)
+                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('C', Tags.Items.GLASS_BLOCKS)
+                .save(output)
+        }
     }
 }

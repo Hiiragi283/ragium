@@ -73,6 +73,9 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             removeAll(compounds.values)
 
             remove(RagiumItems.BLAST_CHARGE)
+            remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
+            remove(RagiumItems.LARGE_DRUM_UPGRADE)
+            remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)

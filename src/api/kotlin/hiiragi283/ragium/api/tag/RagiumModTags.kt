@@ -15,10 +15,16 @@ object RagiumModTags {
 
     object Blocks {
         @JvmField
+        val INCORRECT_FOR_DESTRUCTION_TOOL: TagKey<Block> = create("incorrect_for_destruction_tool")
+
+        @JvmField
         val LED_BLOCKS: TagKey<Block> = create("led_blocks")
 
         @JvmField
         val MINEABLE_WITH_DRILL: TagKey<Block> = create("mineable/drill")
+
+        @JvmField
+        val MINEABLE_WITH_HAMMER: TagKey<Block> = create("mineable/hammer")
 
         @JvmField
         val RESONANT_DEBRIS_REPLACEABLES: TagKey<Block> = create("deepslate_ore_replaceables")
@@ -74,10 +80,17 @@ object RagiumModTags {
 
         // Flux
         @JvmField
-        val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = create("alloy_smelter_fluxes/basic")
+        val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = create("alloy_smelter_fluxes", "basic")
 
         @JvmField
-        val ALLOY_SMELTER_FLUXES_ADVANCED: TagKey<Item> = create("alloy_smelter_fluxes/advanced")
+        val ALLOY_SMELTER_FLUXES_ADVANCED: TagKey<Item> = create("alloy_smelter_fluxes", "advanced")
+
+        // Tools
+        @JvmField
+        val TOOLS_DRILL: TagKey<Item> = create("tools", "drill")
+
+        @JvmField
+        val TOOLS_HAMMER: TagKey<Item> = create("tools", "hammer")
 
         // Mekanism Integration
         @JvmField
