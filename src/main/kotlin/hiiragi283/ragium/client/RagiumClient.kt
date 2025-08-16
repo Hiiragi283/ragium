@@ -35,6 +35,7 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
@@ -56,6 +57,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     init {
+        eventBus.addListener(::clientSetup)
+
         eventBus.addListener(::registerBlockColor)
         eventBus.addListener(::registerItemColor)
         eventBus.addListener(::registerClientExtensions)
@@ -64,6 +67,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::registerTooltipRenderer)
 
         container.registerExtensionPoint(IConfigScreenFactory::class.java, IConfigScreenFactory(::ConfigurationScreen))
+    }
+
+    private fun clientSetup(event: FMLClientSetupEvent) {
+        LOGGER.info("Loaded client setup!")
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {

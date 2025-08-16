@@ -102,6 +102,11 @@ class RagiumItemTagsProvider(
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             addItem(variant.itemCommonTag, variant.itemTagKey(material), item)
         }
+        addItem(RagiumCommonTags.Items.FUELS, RagiumCommonTags.Items.FUELS_COAL, Items.COAL)
+        addItem(RagiumCommonTags.Items.FUELS, RagiumCommonTags.Items.FUELS_CHARCOAL, Items.CHARCOAL)
+        tag(RagiumCommonTags.Items.FUELS).addTag(RagiumCommonTags.Items.FUELS_COAL_COKE)
+        tag(RagiumCommonTags.Items.FUELS_COAL_COKE).addOptionalTag(commonId(RagiumConst.COAL_COKE))
+
         addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
 
         // Mekanism Addon

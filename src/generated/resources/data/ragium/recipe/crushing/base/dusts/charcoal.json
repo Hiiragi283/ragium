@@ -4,17 +4,17 @@
       "type": "neoforge:not",
       "value": {
         "type": "neoforge:tag_empty",
-        "tag": "c:dusts/coal_coke"
+        "tag": "c:dusts/charcoal"
       }
     }
   ],
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
-    "tag": "c:fuels/coal_coke"
+    "tag": "c:fuels/charcoal"
   },
   "result": {
     "count": 1,
-    "id": "#c:dusts/coal_coke"
+    "id": "#c:dusts/charcoal"
   }
 }

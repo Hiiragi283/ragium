@@ -43,6 +43,12 @@ class HTMaterialFamily(
     class Builder private constructor(private val baseVariant: HTMaterialVariant, baseItem: ItemSup?) {
         companion object {
             @JvmStatic
+            fun fuel(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.FUEL, baseItem)
+                .setEmptyEntry(HTMaterialVariant.DUST)
+                .setEmptyEntry(HTMaterialVariant.ORE)
+                .setEmptyEntry(HTMaterialVariant.STORAGE_BLOCK)
+
+            @JvmStatic
             fun gem(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.GEM, baseItem)
                 .setEmptyEntry(HTMaterialVariant.DUST)
                 .setEmptyEntry(HTMaterialVariant.ORE)

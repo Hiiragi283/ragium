@@ -11,7 +11,7 @@
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
-    "tag": "minecraft:coals"
+    "tag": "c:fuels/coal"
   },
   "result": {
     "count": 1,

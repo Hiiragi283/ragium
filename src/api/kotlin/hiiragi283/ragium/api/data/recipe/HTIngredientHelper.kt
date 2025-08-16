@@ -3,13 +3,11 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
@@ -48,21 +46,10 @@ object HTIngredientHelper {
     )
 
     @JvmStatic
-    fun coal(): Ingredient = CompoundIngredient.of(
-        Ingredient.of(Items.COAL),
-        Ingredient.of(RagiumCommonTags.Items.DUSTS_COAL),
-    )
-
-    @JvmStatic
-    fun charcoal(): Ingredient = CompoundIngredient.of(
-        Ingredient.of(Items.CHARCOAL),
-        Ingredient.of(RagiumCommonTags.Items.DUSTS_CHARCOAL),
-    )
-
-    @JvmStatic
-    fun coalCoke(): Ingredient = CompoundIngredient.of(
-        Ingredient.of(RagiumCommonTags.Items.COAL_COKE),
-        Ingredient.of(RagiumCommonTags.Items.DUSTS_COKE),
+    fun fuelOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
+        HTMaterialVariant.DUST.itemTagKey(name),
+        HTMaterialVariant.FUEL.itemTagKey(name),
+        count = count,
     )
 
     @JvmStatic

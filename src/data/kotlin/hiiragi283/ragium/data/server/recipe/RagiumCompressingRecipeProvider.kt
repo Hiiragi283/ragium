@@ -87,7 +87,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
-                HTIngredientHelper.item(HTIngredientHelper.coal(), 64),
+                HTIngredientHelper.fuelOrDust("coal", 64),
                 HTResultHelper.item(Tags.Items.GEMS_DIAMOND),
             ).saveSuffixed(output, "_from_coal")
 

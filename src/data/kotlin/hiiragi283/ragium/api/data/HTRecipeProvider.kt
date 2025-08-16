@@ -94,6 +94,11 @@ sealed class HTRecipeProvider : IConditionBuilder {
         output.accept(recipeId, recipe, null, *conditions)
     }
 
+    protected fun fuelOrDust(name: String): Ingredient = CompoundIngredient.of(
+        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
+        Ingredient.of(HTMaterialVariant.FUEL.itemTagKey(name)),
+    )
+
     protected fun gemOrDust(name: String): Ingredient = CompoundIngredient.of(
         Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
         Ingredient.of(HTMaterialVariant.GEM.itemTagKey(name)),

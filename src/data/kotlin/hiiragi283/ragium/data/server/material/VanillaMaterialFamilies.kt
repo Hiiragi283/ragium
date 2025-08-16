@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.material
 
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
 object VanillaMaterialFamilies {
@@ -37,13 +36,18 @@ object VanillaMaterialFamilies {
 
     @JvmField
     val COAL: HTMaterialFamily = HTMaterialFamily.Builder
-        .gem(Items::COAL)
+        .fuel(Items::COAL)
         .setDefaultedEntry(HTMaterialVariant.ORE, Items::COAL_ORE)
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::COAL)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::COAL_BLOCK)
-        .setCustomTag(HTMaterialVariant.GEM, ItemTags.COALS)
         .setVanilla()
         .build("coal")
+
+    @JvmField
+    val CHARCOAL: HTMaterialFamily = HTMaterialFamily.Builder
+        .fuel(Items::CHARCOAL)
+        .setVanilla()
+        .build("charcoal")
 
     @JvmField
     val LAPIS: HTMaterialFamily = HTMaterialFamily.Builder

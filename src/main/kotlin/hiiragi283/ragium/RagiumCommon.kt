@@ -88,6 +88,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
                 .filter { item: Item -> item is ProjectileItem }
                 .associateWith(::ProjectileDispenseBehavior)
                 .forEach(DispenserBlock::registerBehavior)
+
+            RagiumFluidContents.registerInteractions()
+            LOGGER.info("Registered dispenser behaviors!")
         }
         event.enqueueWork(RagiumFluidContents::registerInteractions)
 

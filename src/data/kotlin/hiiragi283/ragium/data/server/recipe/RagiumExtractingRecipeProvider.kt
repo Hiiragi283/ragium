@@ -69,7 +69,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(HTIngredientHelper.charcoal()),
+                HTIngredientHelper.fuelOrDust("charcoal"),
                 HTResultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
         // Grass -> Green
@@ -89,7 +89,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(HTIngredientHelper.coal()),
+                HTIngredientHelper.fuelOrDust("coal"),
                 HTResultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 

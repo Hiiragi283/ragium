@@ -32,6 +32,6 @@ fun HTItemResult.toEmi(): EmiStack = this.getStackResult().mapOrElse(EmiStack::o
 
 fun HTFluidResult.toEmi(): EmiStack = this.getStackResult().mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 
-fun createErrorStack(error: DataResult.Error<*>): EmiStack = createItemStack(Items.BUCKET) {
+fun createErrorStack(error: DataResult.Error<*>): EmiStack = createItemStack(Items.BARRIER) {
     set(DataComponents.ITEM_NAME, Component.literal(error.message()))
 }.let(EmiStack::of)

@@ -10,10 +10,10 @@
     },
     [
       {
-        "item": "minecraft:charcoal"
+        "tag": "c:dusts/charcoal"
       },
       {
-        "tag": "c:dusts/charcoal"
+        "tag": "c:fuels/charcoal"
       }
     ],
     {

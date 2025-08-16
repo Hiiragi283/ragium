@@ -1,8 +1,7 @@
 package hiiragi283.ragium.data.server.material
 
-import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 
 object ModMaterialFamilies {
     //    Common Metal    //
@@ -135,8 +134,7 @@ object ModMaterialFamilies {
 
     @JvmField
     val COAL_COKE: HTMaterialFamily = HTMaterialFamily.Builder
-        .gem(null)
-        .setCustomTag(HTMaterialVariant.GEM, RagiumCommonTags.Items.COAL_COKE)
+        .fuel(null)
         .setMod()
-        .build("coal_coke")
+        .build(RagiumConst.COAL_COKE)
 }

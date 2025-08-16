@@ -81,9 +81,6 @@ object RagiumCommonTags {
 
     object Items {
         @JvmField
-        val COAL_COKE: TagKey<Item> = create("coal_coke")
-
-        @JvmField
         val FUELS_BIO: TagKey<Item> = create("fuels/bio")
 
         @JvmField
@@ -140,9 +137,6 @@ object RagiumCommonTags {
         val DUSTS_COAL: TagKey<Item> = create(DUSTS, "coal")
 
         @JvmField
-        val DUSTS_COKE: TagKey<Item> = create(DUSTS, "coal_coke")
-
-        @JvmField
         val DUSTS_SALTPETER: TagKey<Item> = create(DUSTS, "saltpeter")
 
         @JvmField
@@ -171,6 +165,19 @@ object RagiumCommonTags {
 
         @JvmField
         val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", "ragi_cherry")
+
+        // Fuels
+        @JvmField
+        val FUELS: TagKey<Item> = create(RagiumConst.FUELS)
+
+        @JvmField
+        val FUELS_COAL: TagKey<Item> = create(RagiumConst.FUELS, "coal")
+
+        @JvmField
+        val FUELS_CHARCOAL: TagKey<Item> = create(RagiumConst.FUELS, "charcoal")
+
+        @JvmField
+        val FUELS_COAL_COKE: TagKey<Item> = create(RagiumConst.FUELS, RagiumConst.COAL_COKE)
 
         // Glasses
         @JvmField

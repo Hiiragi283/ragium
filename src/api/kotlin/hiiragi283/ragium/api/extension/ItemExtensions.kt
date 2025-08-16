@@ -9,14 +9,6 @@ import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
-//    ItemLike    //
-
-/**
- * この[ItemLike]から[ItemStack]を返します。
- * @param count [ItemStack]の個数
- */
-fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
-
 //    ItemStack    //
 
 inline fun createItemStack(item: ItemLike, count: Int = 1, builderAction: MutableDataComponentHolder.() -> Unit): ItemStack =

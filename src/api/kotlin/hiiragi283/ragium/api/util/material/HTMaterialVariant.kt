@@ -38,6 +38,7 @@ enum class HTMaterialVariant(
     // Item - Custom
     CIRCUIT("%s Circuit", "%s回路", RagiumConst.CIRCUITS),
     COMPOUND("%s Compound", "%s混合物", RagiumConst.COMPOUNDS, RagiumAPI.MOD_ID),
+    FUEL("%s", "%s", RagiumConst.FUELS),
     ;
 
     companion object {

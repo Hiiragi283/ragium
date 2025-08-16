@@ -22,7 +22,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -63,7 +62,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumItems.RAGI_COKE)
             .hollow4()
             .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .define('B', ItemTags.COALS)
+            .define('B', RagiumCommonTags.Items.FUELS_COAL)
             .save(output)
         // Advanced Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.getCompound(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
@@ -203,7 +202,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
             .addIngredient(RagiumCommonTags.Items.DUSTS_SULFUR)
             .addIngredient(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .addIngredient(HTIngredientHelper.charcoal())
+            .addIngredient(fuelOrDust("charcoal"))
             .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_hammer")
     }
@@ -212,7 +211,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Coal
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.ORES_COAL))
-            .addResult(HTResultHelper.item(Items.COAL, 2))
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.FUELS_COAL, 2))
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
         // Copper
@@ -296,7 +295,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTResultHelper.item(steelTag),
                 HTIngredientHelper.ingotOrDust("iron"),
-                HTIngredientHelper.item(HTIngredientHelper.coal(), 2),
+                HTIngredientHelper.fuelOrDust("coal", 2),
             ).setTagCondition(steelTag)
             .saveSuffixed(output, "_from_coal")
 
@@ -304,7 +303,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTResultHelper.item(steelTag),
                 HTIngredientHelper.ingotOrDust("iron"),
-                HTIngredientHelper.item(HTIngredientHelper.coalCoke()),
+                HTIngredientHelper.fuelOrDust(RagiumConst.COAL_COKE),
             ).setTagCondition(steelTag)
             .saveSuffixed(output, "_from_coke")
         // Invar

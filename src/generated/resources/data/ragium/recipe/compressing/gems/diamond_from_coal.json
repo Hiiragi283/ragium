@@ -4,10 +4,10 @@
     "type": "neoforge:compound",
     "children": [
       {
-        "item": "minecraft:coal"
+        "tag": "c:dusts/coal"
       },
       {
-        "tag": "c:dusts/coal"
+        "tag": "c:fuels/coal"
       }
     ],
     "count": 64
