@@ -53,7 +53,7 @@ repositories {
     }
     maven(url = "https://cursemaven.com")
     maven(url = "https://maven.parchmentmc.org")
-    maven(url = "https://modmaven.dev/") // Pneumatic, AU
+    maven(url = "https://modmaven.dev/") // AU, Mekanism, PnC
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch
@@ -105,7 +105,7 @@ neoForge {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        create("client") {
+        create("client").apply {
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
@@ -114,7 +114,7 @@ neoForge {
             devLogin = true
         }
 
-        create("server") {
+        create("server").apply {
             server()
             programArgument("--nogui")
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
@@ -123,12 +123,12 @@ neoForge {
         // This run config launches GameTestServer and runs all registered gametests, then exits.
         // By default, the server will crash when no gametests are provided.
         // The gametest system is also enabled by default for other run configs under the /test command.
-        create("gameTestServer") {
+        create("gameTestServer").apply {
             type = "gameTestServer"
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
         }
 
-        create("data") {
+        create("data").apply {
             data()
             sourceSet = dataModule
 
@@ -206,6 +206,7 @@ dependencies {
     runtimeOnly(libs.bundles.mods.runtime)
 
     implementation(libs.immersive.get().toString() + ":datagen")
+    implementation(libs.mek.get().toString() + ":all")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

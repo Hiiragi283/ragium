@@ -190,8 +190,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         altModelBlock(RagiumBlocks.Devices.MILK_DRAIN)
 
         // Storages
-        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
-            val id: ResourceLocation = drum.blockId
+        for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS.values) {
+            val id: ResourceLocation = drum.id.withPrefix("block/")
             simpleBlock(
                 drum.get(),
                 models().cubeColumn(

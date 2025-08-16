@@ -6,10 +6,11 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import java.util.Optional
 
 interface HTItemHandler :
-    IItemHandler,
+    IItemHandlerModifiable,
     INBTSerializable<CompoundTag> {
     val isEmpty: Boolean
     val inputSlots: IntArray

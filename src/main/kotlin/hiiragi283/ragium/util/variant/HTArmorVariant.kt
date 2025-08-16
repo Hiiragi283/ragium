@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
 enum class HTArmorVariant(
-    val armorType: ArmorItem.Type,
+    private val armorType: ArmorItem.Type,
     private val enUsPattern: String,
     private val jaJpPattern: String,
     override val tagKey: TagKey<Item>,

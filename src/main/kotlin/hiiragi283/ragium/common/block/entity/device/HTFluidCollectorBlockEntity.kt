@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -10,7 +9,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -25,13 +24,11 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(type, pos, state),
-    HTFluidInteractable,
-    HTHandlerBlockEntity {
-    protected val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    HTFluidInteractable {
+    protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)
@@ -54,7 +51,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
         if (stack.isEmpty) return TriState.DEFAULT
         // 液体を搬入できるかチェック
         if (!tank.canFill(stack, false)) return TriState.DEFAULT
-        tank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
+        tank.fill(stack, false)
         playSound(level, pos)
         return TriState.TRUE
     }
@@ -63,10 +60,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     protected abstract fun playSound(level: ServerLevel, pos: BlockPos)
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(
-        listOf(tank),
-        HTFluidFilter.DRAIN_ONLY,
-    )
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.DRAIN_ONLY)
 
     //    HTFluidInteractable    //
 

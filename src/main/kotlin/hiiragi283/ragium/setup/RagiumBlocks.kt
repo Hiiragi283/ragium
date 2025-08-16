@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -55,11 +56,9 @@ object RagiumBlocks {
         Casings.entries
         Devices.entries
 
-        Dynamos.entries
+        Generators.entries
         Frames.entries
         Machines.entries
-
-        Drums.entries
 
         Slabs.entries
         Stairs.entries
@@ -385,10 +384,10 @@ object RagiumBlocks {
         ::HTSweetBerriesCakeBlock,
     )
 
-    //    Dynamos    //
+    //    Generators    //
 
-    enum class Dynamos(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
-        STIRLING(RagiumBlockEntityTypes.STIRLING_DYNAMO),
+    enum class Generators(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
+        THERMAL(RagiumBlockEntityTypes.THERMAL_GENERATOR),
         ;
 
         override val holder: DeferredBlock<*> =
@@ -473,13 +472,18 @@ object RagiumBlocks {
 
     //    Storages    //
 
-    enum class Drums(base: Block, type: HTDeferredBlockEntityType<out HTDrumBlockEntity>) : HTBlockHolderLike {
-        SMALL(Blocks.IRON_BLOCK, RagiumBlockEntityTypes.SMALL_DRUM),
-        MEDIUM(Blocks.GOLD_BLOCK, RagiumBlockEntityTypes.MEDIUM_DRUM),
-        LARGE(Blocks.DIAMOND_BLOCK, RagiumBlockEntityTypes.LARGE_DRUM),
-        HUGE(Blocks.NETHERITE_BLOCK, RagiumBlockEntityTypes.HUGE_DRUM),
-        ;
-
-        override val holder: DeferredBlock<*> = registerEntity(type, copyOf(base), HTDrumBlock.create(type))
+    @JvmField
+    val DRUMS: Map<HTDrumVariant, DeferredBlock<Block>> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+        val base: Block = when (variant) {
+            HTDrumVariant.SMALL -> Blocks.IRON_BLOCK
+            HTDrumVariant.MEDIUM -> Blocks.GOLD_BLOCK
+            HTDrumVariant.LARGE -> Blocks.DIAMOND_BLOCK
+            HTDrumVariant.HUGE -> Blocks.NETHERITE_BLOCK
+        }
+        val type: HTDeferredBlockEntityType<HTDrumBlockEntity> = RagiumBlockEntityTypes.getDrum(variant)
+        registerEntity(type, copyOf(base), HTDrumBlock.create(type))
     }
+
+    @JvmStatic
+    fun getDrum(variant: HTDrumVariant): DeferredBlock<Block> = DRUMS[variant]!!
 }

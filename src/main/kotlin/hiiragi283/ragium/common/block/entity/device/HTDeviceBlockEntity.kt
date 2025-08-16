@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import net.minecraft.core.BlockPos
@@ -16,6 +17,7 @@ abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         pos,
         state,
     ),
+    HTHandlerBlockEntity,
     MenuProvider {
     protected var currentTicks: Int = 0
         private set

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -36,7 +36,7 @@ abstract class HTDrumBlockEntity(
     HTFluidInteractable,
     HTHandlerBlockEntity,
     MenuProvider {
-    private val tank = HTFluidTank(capacity, this::setChanged)
+    private val tank = HTFluidStackTank(capacity, this::setChanged)
 
     //    Save & Load    //
 

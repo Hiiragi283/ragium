@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:stirling_dynamo"
+          "name": "ragium:thermal_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/stirling_dynamo"
+  "random_sequence": "ragium:blocks/thermal_generator"
 }

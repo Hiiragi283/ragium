@@ -102,7 +102,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Dynamo
-        addBlock(RagiumBlocks.Dynamos.STIRLING, "スターリングダイナモ")
+        addBlock(RagiumBlocks.Generators.THERMAL, "火力発電機")
         // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "発展機械フレーム")
         addBlock(RagiumBlocks.Frames.BASIC, "基本機械フレーム")
@@ -136,10 +136,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.Devices.SPRINKLER, "スプリンクラー")
         addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "水収集機")
         // Storage
-        addBlock(RagiumBlocks.Drums.SMALL, "ドラム（小）")
-        addBlock(RagiumBlocks.Drums.MEDIUM, "ドラム（中）")
-        addBlock(RagiumBlocks.Drums.LARGE, "ドラム（大）")
-        addBlock(RagiumBlocks.Drums.HUGE, "ドラム（特大）")
     }
 
     private fun enchantment() {
@@ -192,7 +188,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.TAR, "タール")
 
-        addMaterials()
+        addPatterned()
         // Armor
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")

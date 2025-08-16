@@ -2,9 +2,8 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getCapability
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -21,21 +20,28 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
 /**
  * @see [me.desht.pneumaticcraft.common.item.AbstractChestUpgradeKitItem]
  */
 abstract class HTDrumUpgradeItem(
-    private val filter: List<HTBlockHolderLike>,
+    private val filter: List<DeferredBlock<*>>,
     private val newDrum: Supplier<out Block>,
     properties: Properties,
 ) : Item(properties) {
+    constructor(
+        filter: List<HTDrumVariant>,
+        newDrum: HTDrumVariant,
+        properties: Properties,
+    ) : this(filter.map(RagiumBlocks::getDrum), RagiumBlocks.getDrum(newDrum), properties)
+
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos
         val state: BlockState = level.getBlockState(pos)
-        if (filter.any(state::isOf)) {
+        if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
                 var fluid: FluidStack = FluidStack.EMPTY
                 level.getCapability(Capabilities.FluidHandler.BLOCK, pos)?.let { handler: IFluidHandler ->
@@ -65,22 +71,22 @@ abstract class HTDrumUpgradeItem(
 
     class Medium(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(RagiumBlocks.Drums.SMALL),
-            RagiumBlocks.Drums.MEDIUM,
+            listOf(HTDrumVariant.SMALL),
+            HTDrumVariant.MEDIUM,
             properties,
         )
 
     class Large(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(RagiumBlocks.Drums.SMALL, RagiumBlocks.Drums.MEDIUM),
-            RagiumBlocks.Drums.LARGE,
+            listOf(HTDrumVariant.SMALL, HTDrumVariant.MEDIUM),
+            HTDrumVariant.LARGE,
             properties,
         )
 
     class Huge(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(RagiumBlocks.Drums.SMALL, RagiumBlocks.Drums.MEDIUM, RagiumBlocks.Drums.LARGE),
-            RagiumBlocks.Drums.HUGE,
+            listOf(HTDrumVariant.SMALL, HTDrumVariant.MEDIUM, HTDrumVariant.LARGE),
+            HTDrumVariant.HUGE,
             properties,
         )
 }

@@ -6,7 +6,9 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -15,9 +17,7 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTBurningDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTStirlingDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTThermalDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -37,6 +38,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
+import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 import java.util.function.Supplier
 
@@ -66,21 +68,14 @@ object RagiumBlockEntityTypes {
     //    Dynamo    //
 
     @JvmField
-    val BURNING_DYNAMO: HTDeferredBlockEntityType<HTBurningDynamoBlockEntity> = registerTick(
-        "burning_dynamo",
-        ::HTBurningDynamoBlockEntity,
+    val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTThermalGeneratorBlockEntity> = registerTick(
+        "thermal_generator",
+        ::HTThermalGeneratorBlockEntity,
     )
 
     @JvmField
-    val STIRLING_DYNAMO: HTDeferredBlockEntityType<HTStirlingDynamoBlockEntity> = registerTick(
-        "stirling_dynamo",
-        ::HTStirlingDynamoBlockEntity,
-    )
-
-    @JvmField
-    val THERMAL_DYNAMO: HTDeferredBlockEntityType<HTThermalDynamoBlockEntity> = registerTick(
-        "thermal_dynamo",
-        ::HTThermalDynamoBlockEntity,
+    val GENERATORS = listOf(
+        THERMAL_GENERATOR,
     )
 
     //    Machine    //
@@ -120,6 +115,26 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> = registerTick("solidifier", ::HTSolidifierBlockEntity)
+
+    @JvmField
+    val BASIC_MACHINES: List<HTDeferredBlockEntityType<out HTMachineBlockEntity>> = listOf(
+        BLOCK_BREAKER,
+        COMPRESSOR,
+        ENGRAVER,
+        EXTRACTOR,
+        PULVERIZER,
+    )
+
+    @JvmField
+    val ADVANCED_MACHINES: List<HTDeferredBlockEntityType<out HTMachineBlockEntity>> = listOf(
+        ALLOY_SMELTER,
+        CRUSHER,
+        INFUSER,
+        MELTER,
+        MIXER,
+        REFINERY,
+        SOLIDIFIER,
+    )
 
     //    Device    //
 
@@ -172,6 +187,17 @@ object RagiumBlockEntityTypes {
         ::HTWaterCollectorBlockEntity,
     )
 
+    @JvmField
+    val DEVICES: List<HTDeferredBlockEntityType<out HTDeviceBlockEntity>> = listOf(
+        ENI,
+        EXP_COLLECTOR,
+        ITEM_BUFFER,
+        LAVA_COLLECTOR,
+        MILK_DRAIN,
+        SPRINKLER,
+        WATER_COLLECTOR,
+    )
+
     //    Storage    //
 
     @JvmField
@@ -190,6 +216,14 @@ object RagiumBlockEntityTypes {
     val HUGE_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
         REGISTER.registerType("huge_drum", HTDrumBlockEntity::Huge)
 
+    @JvmStatic
+    fun getDrum(variant: HTDrumVariant): HTDeferredBlockEntityType<HTDrumBlockEntity> = when (variant) {
+        HTDrumVariant.SMALL -> SMALL_DRUM
+        HTDrumVariant.MEDIUM -> MEDIUM_DRUM
+        HTDrumVariant.LARGE -> LARGE_DRUM
+        HTDrumVariant.HUGE -> HUGE_DRUM
+    }
+
     //    Event    //
 
     @JvmStatic
@@ -198,7 +232,7 @@ object RagiumBlockEntityTypes {
             event.modify(type.get(), block.get())
         }
 
-        add(STIRLING_DYNAMO, RagiumBlocks.Dynamos.STIRLING)
+        add(THERMAL_GENERATOR, RagiumBlocks.Generators.THERMAL)
 
         add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
         add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
@@ -225,10 +259,9 @@ object RagiumBlockEntityTypes {
 
         add(CEU, RagiumBlocks.Devices.CEU)
 
-        add(SMALL_DRUM, RagiumBlocks.Drums.SMALL)
-        add(MEDIUM_DRUM, RagiumBlocks.Drums.MEDIUM)
-        add(LARGE_DRUM, RagiumBlocks.Drums.LARGE)
-        add(HUGE_DRUM, RagiumBlocks.Drums.HUGE)
+        for ((variant: HTDrumVariant, block: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
+            add(getDrum(variant), block)
+        }
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
@@ -253,39 +286,26 @@ object RagiumBlockEntityTypes {
                 HTHandlerBlockEntity::getEnergyStorage,
             )
         }
-        registerHandlers(STIRLING_DYNAMO)
-        registerHandlers(THERMAL_DYNAMO)
 
-        registerHandlers(BURNING_DYNAMO)
+        for (type in GENERATORS) {
+            registerHandlers(type)
+        }
 
-        registerHandlers(BLOCK_BREAKER)
-        registerHandlers(COMPRESSOR)
-        registerHandlers(ENGRAVER)
-        registerHandlers(EXTRACTOR)
-        registerHandlers(PULVERIZER)
+        for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in BASIC_MACHINES) {
+            registerHandlers(type)
+        }
 
-        registerHandlers(ALLOY_SMELTER)
-        registerHandlers(CRUSHER)
-        registerHandlers(INFUSER)
-        registerHandlers(MELTER)
-        registerHandlers(MIXER)
-        registerHandlers(REFINERY)
-        registerHandlers(SOLIDIFIER)
+        for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in ADVANCED_MACHINES) {
+            registerHandlers(type)
+        }
 
-        registerHandlers(ENI)
-        registerHandlers(EXP_COLLECTOR)
-        registerHandlers(ITEM_BUFFER)
-        registerHandlers(LAVA_COLLECTOR)
-        registerHandlers(MILK_DRAIN)
-        registerHandlers(SPRINKLER)
-        registerHandlers(WATER_COLLECTOR)
+        for (type: HTDeferredBlockEntityType<out HTDeviceBlockEntity> in DEVICES) {
+            registerHandlers(type)
+        }
 
         registerHandlers(CEU)
 
-        registerHandlers(SMALL_DRUM)
-        registerHandlers(MEDIUM_DRUM)
-        registerHandlers(LARGE_DRUM)
-        registerHandlers(HUGE_DRUM)
+        HTDrumVariant.entries.map(::getDrum).forEach(::registerHandlers)
 
         LOGGER.info("Registered Block Capabilities!")
     }

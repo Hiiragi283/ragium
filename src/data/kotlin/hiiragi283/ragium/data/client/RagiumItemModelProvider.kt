@@ -54,7 +54,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumBlocks.WARPED_WART)
 
             removeBlocks<RagiumBlocks.Walls>()
-            removeBlocks<RagiumBlocks.Dynamos>()
+            removeBlocks<RagiumBlocks.Generators>()
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {

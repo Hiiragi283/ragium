@@ -32,6 +32,7 @@ import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumCircuitType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -449,10 +450,10 @@ object RagiumItems {
             )
         }
 
-        register(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlocks.Drums.SMALL)
-        register(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlocks.Drums.MEDIUM)
-        register(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlocks.Drums.LARGE)
-        register(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlocks.Drums.HUGE)
+        register(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.SMALL))
+        register(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.MEDIUM))
+        register(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.LARGE))
+        register(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.HUGE))
     }
 
     @JvmStatic

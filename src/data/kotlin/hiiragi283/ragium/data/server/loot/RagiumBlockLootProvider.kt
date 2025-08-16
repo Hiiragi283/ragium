@@ -127,7 +127,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }*/
 
         // Storages
-        for (holder: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
+        for (holder: DeferredBlock<Block> in RagiumBlocks.DRUMS.values) {
             add(holder.get()) {
                 copyComponent(
                     it,

@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -21,13 +20,12 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state),
-    HTHandlerBlockEntity {
-    private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
+    private val tank: HTFluidStackTank =
+        object : HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged) {
+            override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
+        }
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)
@@ -62,22 +60,13 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
         if (!tank.canDrain(50, true)) return TriState.DEFAULT
         // ランダムチックを呼び出す
         if (BoneMealItem.applyBonemeal(ItemStack.EMPTY, level, targetPos, null)) {
-            tank.drain(stack.copyWithAmount(50), IFluidHandler.FluidAction.EXECUTE)
+            tank.drain(stack.copyWithAmount(50), false)
             return TriState.TRUE
         }
         return TriState.DEFAULT
     }
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(
-        listOf(tank),
-        object : HTFluidFilter {
-            override fun canFill(tank: IFluidTank, stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
-
-            override fun canDrain(tank: IFluidTank, stack: FluidStack): Boolean = false
-
-            override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = false
-        },
-    )
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.FILL_ONLY)
 
     //    Menu    //
 

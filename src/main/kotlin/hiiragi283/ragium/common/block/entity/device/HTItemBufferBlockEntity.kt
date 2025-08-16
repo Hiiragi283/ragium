@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
@@ -23,9 +22,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_BUFFER, pos, state),
-    HTHandlerBlockEntity {
+class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_BUFFER, pos, state) {
     private val inventory: HTItemStackHandler = HTItemStackHandler.Builder(9).addInput(0..8).build(::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

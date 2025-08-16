@@ -7,13 +7,16 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
@@ -76,6 +79,9 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     //    Machines    //
+
+    private fun generators() {
+    }
 
     private fun machines() {
         // Basic
@@ -181,12 +187,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun drums() {
-        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
-            val material: TagKey<Item> = when (drum) {
-                RagiumBlocks.Drums.SMALL -> Tags.Items.INGOTS_COPPER
-                RagiumBlocks.Drums.MEDIUM -> Tags.Items.INGOTS_GOLD
-                RagiumBlocks.Drums.LARGE -> Tags.Items.GEMS_DIAMOND
-                RagiumBlocks.Drums.HUGE -> continue
+        for ((variant: HTDrumVariant, drum: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
+            val material: TagKey<Item> = when (variant) {
+                HTDrumVariant.SMALL -> Tags.Items.INGOTS_COPPER
+                HTDrumVariant.MEDIUM -> Tags.Items.INGOTS_GOLD
+                HTDrumVariant.LARGE -> Tags.Items.GEMS_DIAMOND
+                HTDrumVariant.HUGE -> continue
             }
 
             HTShapedRecipeBuilder(drum)
@@ -200,21 +206,21 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
         // Huge
-        createNetheriteUpgrade(RagiumBlocks.Drums.HUGE, RagiumBlocks.Drums.LARGE)
+        createNetheriteUpgrade(RagiumBlocks.getDrum(HTDrumVariant.HUGE), RagiumBlocks.getDrum(HTDrumVariant.LARGE))
             .save(output)
         // Upgrades
-        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
-            val upgrade: DeferredItem<*> = when (drum) {
-                RagiumBlocks.Drums.SMALL -> continue
-                RagiumBlocks.Drums.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
-                RagiumBlocks.Drums.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
-                RagiumBlocks.Drums.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
+        for (variant: HTDrumVariant in RagiumBlocks.DRUMS.keys) {
+            val upgrade: DeferredItem<*> = when (variant) {
+                HTDrumVariant.SMALL -> continue
+                HTDrumVariant.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
+                HTDrumVariant.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
+                HTDrumVariant.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
             }
-            val material: TagKey<Item> = when (drum) {
-                RagiumBlocks.Drums.SMALL -> continue
-                RagiumBlocks.Drums.MEDIUM -> Tags.Items.INGOTS_GOLD
-                RagiumBlocks.Drums.LARGE -> Tags.Items.GEMS_DIAMOND
-                RagiumBlocks.Drums.HUGE -> Tags.Items.INGOTS_NETHERITE
+            val material: TagKey<Item> = when (variant) {
+                HTDrumVariant.SMALL -> continue
+                HTDrumVariant.MEDIUM -> Tags.Items.INGOTS_GOLD
+                HTDrumVariant.LARGE -> Tags.Items.GEMS_DIAMOND
+                HTDrumVariant.HUGE -> Tags.Items.INGOTS_NETHERITE
             }
 
             HTShapedRecipeBuilder(upgrade)

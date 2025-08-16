@@ -13,17 +13,25 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  */
 object RagiumDataMaps {
     @JvmField
-    val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> =
-        register("fuel/thermal", Registries.FLUID, HTFluidFuelData.CODEC)
+    val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
 
     @JvmField
-    val BURNING_FUEL: DataMapType<Fluid, HTFluidFuelData> =
-        register("fuel/burning", Registries.FLUID, HTFluidFuelData.CODEC)
+    val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
+
+    @JvmField
+    val FUELS: List<DataMapType<Fluid, HTFluidFuelData>> = listOf(
+        THERMAL_FUEL,
+        COMBUSTION_FUEL,
+    )
 
     @JvmStatic
-    private fun <T : Any, R : Any> register(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =
+    private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =
         DataMapType
             .builder(RagiumAPI.id(path), registryKey, codec.codec)
             .synced(codec.codec, false)
             .build()
+
+    @JvmStatic
+    private fun createFuel(path: String): DataMapType<Fluid, HTFluidFuelData> =
+        create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
 }

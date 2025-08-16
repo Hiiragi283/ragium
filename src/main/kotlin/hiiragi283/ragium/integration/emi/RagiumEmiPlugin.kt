@@ -71,6 +71,7 @@ import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 import org.slf4j.Logger
 
 @EmiEntrypoint
@@ -152,16 +153,17 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Fluid Fuel
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(RagiumDataMaps.THERMAL_FUEL)) {
-            val fluid: Fluid = fluidRegistry.get(key) ?: continue
-            if (!fluid.isSource(fluid.defaultFluidState())) continue
-            registry.addRecipe(
-                HTFluidFuelEmiRecipe(
-                    key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/"),
-                    EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
-                    fuelData.time,
-                ),
-            )
+        for (dataMapType: DataMapType<Fluid, HTFluidFuelData> in RagiumDataMaps.FUELS) {
+            for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(dataMapType)) {
+                val fluid: Fluid = fluidRegistry.get(key) ?: continue
+                if (!fluid.isSource(fluid.defaultFluidState())) continue
+                registry.addRecipe(
+                    HTFluidFuelEmiRecipe(
+                        key.location().withPrefix("/${dataMapType.id().path}/"),
+                        EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
+                    ),
+                )
+            }
         }
     }
 

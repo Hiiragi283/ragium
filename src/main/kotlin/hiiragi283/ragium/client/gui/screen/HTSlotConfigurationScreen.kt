@@ -1,8 +1,7 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
-import hiiragi283.ragium.api.gui.component.HTProgressWidget
-import hiiragi283.ragium.api.gui.screen.HTDefinitionContainerScreen
+import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
@@ -26,15 +25,12 @@ import net.neoforged.neoforge.network.PacketDistributor
 
 @OnlyIn(Dist.CLIENT)
 class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Inventory, title: Component) :
-    HTDefinitionContainerScreen<HTSlotConfigurationMenu>(
+    HTContainerScreen<HTSlotConfigurationMenu>(
         menu,
         inventory,
         title,
     ) {
     override val texture: ResourceLocation? = null
-
-    override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
-    }
 
     private fun addButton(direction: Direction, x: Int, y: Int): IOButton = IOButton(
         menu.pos,
@@ -59,8 +55,6 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
         addRenderableWidget(addButton(Direction.SOUTH, 6, 4))
         addRenderableWidget(addButton(Direction.UP, 4, 0))
         addRenderableWidget(addButton(Direction.WEST, 2, 2))
-
-        removeWidget(energyWidget)
     }
 
     override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {

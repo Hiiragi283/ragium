@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
@@ -48,7 +49,9 @@ abstract class HTDefinitionContainerMenu(
     }
 
     fun addOutputSlot(index: Int, x: Int, y: Int) {
-        addSlot(HTOutputSlot(definition.inventory, index, x, y))
+        addSlot(object : SlotItemHandler(definition.inventory, index, x, y) {
+            override fun mayPlace(stack: ItemStack): Boolean = false
+        })
         outputSlot.add(slotCount)
         slotCount++
     }

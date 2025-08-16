@@ -101,7 +101,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.THERMAL_FUEL)
+        RagiumDataMaps.FUELS.forEach(event::register)
 
         LOGGER.info("Registered data map types!")
     }

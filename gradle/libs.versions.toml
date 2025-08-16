@@ -64,7 +64,6 @@ mods-impl = [
     "guide",
     "immersive",
     "jade",
-    "mek",
     "oritech",
     "patchouli-gen",
     "pneuma",

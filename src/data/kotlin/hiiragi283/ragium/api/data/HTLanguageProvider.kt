@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.variant.HTArmorVariant
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.advancements.Advancement
@@ -43,7 +44,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    fun addMaterials() {
+    fun addPatterned() {
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
             addBlock(block, material.translate(type, variant))
         }
@@ -62,6 +63,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             addItem(item, variant.translate(type, material.getTranslatedName(type)))
+        }
+
+        for ((variant: HTDrumVariant, drum: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
+            addBlock(drum, variant.translate(type, ""))
         }
     }
 

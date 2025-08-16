@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -28,7 +28,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTItemToFluidRecipe>(
@@ -43,7 +42,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         .addInput(0)
         .addOutput(1)
         .build(::setChanged)
-    private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -77,7 +76,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemToFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        tank.fill(recipe.assembleFluid(input, level.registryAccess()), IFluidHandler.FluidAction.EXECUTE)
+        tank.fill(recipe.assembleFluid(input, level.registryAccess()), false)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
             inventory.insertItem(1, stack.craftingRemainingItem, false)
@@ -88,8 +87,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
     }
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
-        HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.DRAIN_ONLY)
 
     //    HTFluidInteractable    //
 

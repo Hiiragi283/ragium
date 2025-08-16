@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -28,7 +28,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToItemRecipe>(
@@ -43,7 +42,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         .addInput(0)
         .addOutput(1)
         .build(::setChanged)
-    private val tank = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -90,14 +89,13 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        tank.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)
+        tank.drain(recipe.fluidIngredient, false)
         inventory.extractItem(0, recipe.itemIngredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
-        HTFilteredFluidHandler(listOf(tank), HTFluidFilter.FILL_ONLY)
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.FILL_ONLY)
 
     //    HTFluidInteractable    //
 

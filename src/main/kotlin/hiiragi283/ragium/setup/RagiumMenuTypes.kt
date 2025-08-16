@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
+import hiiragi283.ragium.common.inventory.HTFuelGeneratorMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.inventory.HTItemWithFluidToItemMenu
@@ -26,6 +27,11 @@ object RagiumMenuTypes {
     @JvmField
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu> =
         REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu)
+
+    //    Generator    //
+
+    @JvmField
+    val FUEL_GENERATOR: HTDeferredMenuType<HTFuelGeneratorMenu> = REGISTER.registerType("fuel_generator", ::HTFuelGeneratorMenu)
 
     //    Machine    //
 

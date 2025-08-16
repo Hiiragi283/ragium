@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
@@ -10,7 +9,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -28,13 +27,11 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
-    HTFluidInteractable,
-    HTHandlerBlockEntity {
-    private val tank = HTFluidTank(Int.MAX_VALUE, this::setChanged)
+    HTFluidInteractable {
+    private val tank = HTFluidStackTank(Int.MAX_VALUE, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)
@@ -63,14 +60,14 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             val fluidAmount: Int = entity.value * RagiumAPI.getConfig().getExpCollectorMultiplier()
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
             if (tank.canFill(stack, true)) {
-                tank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
+                tank.fill(stack, false)
                 entity.discard()
             }
         }
         return TriState.TRUE
     }
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.DRAIN_ONLY)
 
     //    HTFluidInteractable    //
 

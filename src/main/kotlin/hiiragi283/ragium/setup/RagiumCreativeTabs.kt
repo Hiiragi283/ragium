@@ -55,7 +55,7 @@ object RagiumCreativeTabs {
         // Storage Blocks
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
         // Machines
-        output.acceptItems<RagiumBlocks.Dynamos>()
+        output.acceptItems<RagiumBlocks.Generators>()
 
         output.acceptItems<RagiumBlocks.Frames>()
         output.acceptItems<RagiumBlocks.Machines>()
@@ -63,7 +63,7 @@ object RagiumCreativeTabs {
         output.acceptItems<RagiumBlocks.Casings>()
         output.acceptItems<RagiumBlocks.Devices>()
 
-        output.acceptItems<RagiumBlocks.Drums>()
+        output.acceptItems(RagiumBlocks.DRUMS.values)
         output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
         output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
         output.accept(RagiumItems.HUGE_DRUM_UPGRADE)

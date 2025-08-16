@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTMixerMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -27,9 +27,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToFluidRecipe>(
@@ -40,8 +37,8 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     ),
     HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(::setChanged)
-    private val tankIn = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
-    private val tankOut = HTFluidTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -76,24 +73,15 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithFluidToFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), IFluidHandler.FluidAction.EXECUTE)
+        tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), false)
         // インプットを減らす
         inventory.extractItem(0, recipe.itemIngredient, false)
-        tankIn.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)
+        tankIn.drain(recipe.fluidIngredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTFilteredFluidHandler(
-        listOf(tankIn, tankOut),
-        object : HTFluidFilter {
-            override fun canFill(tank: IFluidTank, stack: FluidStack): Boolean = tank == tankIn
-
-            override fun canDrain(tank: IFluidTank, stack: FluidStack): Boolean = tank == tankOut
-
-            override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = tank == tankOut
-        },
-    )
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tankIn, tankOut)
 
     //    HTFluidInteractable    //
 

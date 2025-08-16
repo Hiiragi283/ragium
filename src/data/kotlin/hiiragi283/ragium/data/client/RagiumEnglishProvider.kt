@@ -111,7 +111,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Dynamo
-        addBlock(RagiumBlocks.Dynamos.STIRLING, "Stirling Dynamo")
+        addBlock(RagiumBlocks.Generators.THERMAL, "Thermal Power Generator")
         // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "Advanced Machine Frame")
         addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")
@@ -145,10 +145,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Devices.SPRINKLER, "Sprinkler")
         addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "Water Collector")
         // Storage
-        addBlock(RagiumBlocks.Drums.SMALL, "Small Drum")
-        addBlock(RagiumBlocks.Drums.MEDIUM, "Medium Drum")
-        addBlock(RagiumBlocks.Drums.LARGE, "Large Drum")
-        addBlock(RagiumBlocks.Drums.HUGE, "Huge Drum")
     }
 
     private fun enchantment() {
@@ -201,7 +197,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.TAR, "Tar")
 
-        addMaterials()
+        addPatterned()
         // Armor
         // Tool
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
