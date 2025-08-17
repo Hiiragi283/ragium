@@ -99,14 +99,19 @@ interface RagiumAPI {
     fun getConfigImpl(): Config
 
     interface Config {
+        // Generator
+        fun getGeneratorEnergyRate(key: String): Int
+
         // Machine
-        fun getDefaultTankCapacity(): Int
+        fun getMachineTankCapacity(key: String): Int
 
-        fun getBasicMachineEnergyUsage(): Int
+        fun getProcessorEnergyUsage(key: String): Int
 
-        fun getAdvancedMachineEnergyUsage(): Int
+        fun getDefaultNetworkCapacity(): Int
 
-        // Collector
+        // Device
+        fun getDeviceTankCapacity(): Int
+
         fun getEntityCollectorRange(): Int
 
         fun getExpCollectorMultiplier(): Int
@@ -114,16 +119,7 @@ interface RagiumAPI {
         fun getMilkDrainMultiplier(): Int
 
         // Drum
-        fun getSmallDrumCapacity(): Int
-
-        fun getMediumDrumCapacity(): Int
-
-        fun getLargeDrumCapacity(): Int
-
-        fun getHugeDrumCapacity(): Int
-
-        // Network
-        fun getDefaultNetworkCapacity(): Int
+        fun getDrumCapacity(key: String): Int
 
         // Recipe
         fun getTagOutputPriority(): List<String>

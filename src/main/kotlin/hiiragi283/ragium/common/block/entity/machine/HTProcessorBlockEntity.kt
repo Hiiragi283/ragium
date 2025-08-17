@@ -16,7 +16,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
     private val recipeCache: HTRecipeCache<I, R>,
-    variant: HTMachineVariant,
+    protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(variant, pos, state) {
@@ -26,6 +26,8 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         pos: BlockPos,
         state: BlockState,
     ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
+
+    final override val energyUsage: Int get() = variant.energyUsage
 
     private var lastInput: I? = null
     private var lastRecipe: R? = null

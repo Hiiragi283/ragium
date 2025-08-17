@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.cache.HTMultiRecipeCache
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
@@ -31,7 +30,6 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             .addInput(0)
             .addOutput(1)
             .build(this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
 

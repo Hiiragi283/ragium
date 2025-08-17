@@ -1,5 +1,6 @@
 package hiiragi283.ragium.util.variant
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
@@ -47,6 +48,9 @@ enum class HTMachineVariant(
     REFINERY(::HTRefineryBlockEntity, RagiumTierType.ADVANCED, "Refinery", "精製機"),
     SOLIDIFIER(::HTSolidifierBlockEntity, RagiumTierType.ADVANCED, "Solidifier", "成型機"),
     ;
+
+    val energyUsage: Int get() = RagiumAPI.getConfig().getProcessorEnergyUsage(serializedName)
+    val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.MACHINES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTMachineBlockEntity> =

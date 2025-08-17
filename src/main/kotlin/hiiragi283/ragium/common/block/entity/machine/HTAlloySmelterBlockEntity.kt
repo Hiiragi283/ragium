@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMultiItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
@@ -30,7 +29,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         .addInput(0..2)
         .addOutput(3)
         .build(this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
         inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
@@ -26,16 +25,12 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-abstract class HTDrumBlockEntity(
-    capacity: Int,
-    variant: HTDrumVariant,
-    pos: BlockPos,
-    state: BlockState,
-) : HTBlockEntity(variant.blockEntityHolder, pos, state),
+abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: BlockState) :
+    HTBlockEntity(variant.blockEntityHolder, pos, state),
     HTFluidInteractable,
     HTHandlerBlockEntity,
     MenuProvider {
-    private val tank = HTFluidStackTank(capacity, this)
+    private val tank = HTFluidStackTank(variant.capacity, this)
 
     //    Save & Load    //
 
@@ -77,15 +72,11 @@ abstract class HTDrumBlockEntity(
 
     //    Impl    //
 
-    class Small(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getSmallDrumCapacity(), HTDrumVariant.SMALL, pos, state)
+    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state)
 
-    class Medium(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getMediumDrumCapacity(), HTDrumVariant.MEDIUM, pos, state)
+    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state)
 
-    class Large(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getLargeDrumCapacity(), HTDrumVariant.LARGE, pos, state)
+    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state)
 
-    class Huge(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getHugeDrumCapacity(), HTDrumVariant.HUGE, pos, state)
+    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state)
 }

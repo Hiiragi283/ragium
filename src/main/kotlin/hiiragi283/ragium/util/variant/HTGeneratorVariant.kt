@@ -1,10 +1,12 @@
 package hiiragi283.ragium.util.variant
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -24,7 +26,11 @@ enum class HTGeneratorVariant(
 
     // Advanced,
     COMBUSTION(::HTCombustionGeneratorBlockEntity, RagiumTierType.ADVANCED, "Combustion", "燃焼"),
+    SOLAR(::HTSolarGeneratorBlockEntity, RagiumTierType.ADVANCED, "Solar", "太陽光"),
     ;
+
+    val energyRate: Int get() = RagiumAPI.getConfig().getGeneratorEnergyRate(serializedName)
+    val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTGeneratorBlockEntity> =

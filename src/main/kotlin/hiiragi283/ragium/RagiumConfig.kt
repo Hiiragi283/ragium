@@ -2,6 +2,10 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.neoforge.common.ModConfigSpec
@@ -27,14 +31,19 @@ object RagiumConfig : RagiumAPI.Config {
 
     //    RagiumAPI    //
 
+    // Generator
+    override fun getGeneratorEnergyRate(key: String): Int = COMMON.generatorEnergyRate[key]?.get() ?: 0
+
     // Machine
-    override fun getDefaultTankCapacity(): Int = COMMON.machineTankCapacity.get()
+    override fun getMachineTankCapacity(key: String): Int = COMMON.machineTankCapacity[key]?.get() ?: 8000
 
-    override fun getBasicMachineEnergyUsage(): Int = COMMON.basicMachineEnergyUsage.get()
+    override fun getProcessorEnergyUsage(key: String): Int = COMMON.machineEnergyUsage[key]?.get() ?: 0
 
-    override fun getAdvancedMachineEnergyUsage(): Int = COMMON.advancedMachineEnergyUsage.get()
+    override fun getDefaultNetworkCapacity(): Int = COMMON.defaultNetworkCapacity.get()
 
-    // Collector
+    // Device
+    override fun getDeviceTankCapacity(): Int = COMMON.deviceTankCapacity.get()
+
     override fun getEntityCollectorRange(): Int = COMMON.entityCollectorRange.get()
 
     override fun getExpCollectorMultiplier(): Int = COMMON.expCollectorMultiplier.get()
@@ -42,16 +51,7 @@ object RagiumConfig : RagiumAPI.Config {
     override fun getMilkDrainMultiplier(): Int = COMMON.milkDrainMultiplier.get()
 
     // Drum
-    override fun getSmallDrumCapacity(): Int = COMMON.smallDrumCapacity.get()
-
-    override fun getMediumDrumCapacity(): Int = COMMON.mediumDrumCapacity.get()
-
-    override fun getLargeDrumCapacity(): Int = COMMON.largeDrumCapacity.get()
-
-    override fun getHugeDrumCapacity(): Int = COMMON.hugeDrumCapacity.get()
-
-    // Network
-    override fun getDefaultNetworkCapacity(): Int = COMMON.defaultNetworkCapacity.get()
+    override fun getDrumCapacity(key: String): Int = COMMON.drumCapacity[key]?.get() ?: 8000
 
     // Recipe
     override fun getTagOutputPriority(): List<String> = COMMON.tagOutputModIds.get()
@@ -62,18 +62,23 @@ object RagiumConfig : RagiumAPI.Config {
     //    Common    //
 
     private class Common(builder: ModConfigSpec.Builder) {
+        //    Generator    //
+
+        @JvmField
+        val generatorEnergyRate: Map<String, ModConfigSpec.IntValue>
+
         //    Machine    //
 
         @JvmField
-        val machineTankCapacity: ModConfigSpec.IntValue
+        val machineTankCapacity: MutableMap<String, ModConfigSpec.IntValue> = mutableMapOf()
 
         @JvmField
-        val basicMachineEnergyUsage: ModConfigSpec.IntValue
+        val machineEnergyUsage: Map<String, ModConfigSpec.IntValue>
+
+        //    Device     //
 
         @JvmField
-        val advancedMachineEnergyUsage: ModConfigSpec.IntValue
-
-        //    Machine - Collector    //
+        val deviceTankCapacity: ModConfigSpec.IntValue
 
         @JvmField
         val entityCollectorRange: ModConfigSpec.IntValue
@@ -84,19 +89,10 @@ object RagiumConfig : RagiumAPI.Config {
         @JvmField
         val milkDrainMultiplier: ModConfigSpec.IntValue
 
-        //    Machine - Drum    //
+        //    Drum    //
 
         @JvmField
-        val smallDrumCapacity: ModConfigSpec.IntValue
-
-        @JvmField
-        val mediumDrumCapacity: ModConfigSpec.IntValue
-
-        @JvmField
-        val largeDrumCapacity: ModConfigSpec.IntValue
-
-        @JvmField
-        val hugeDrumCapacity: ModConfigSpec.IntValue
+        val drumCapacity: Map<String, ModConfigSpec.IntValue>
 
         //    Machine - Network    //
 
@@ -114,20 +110,59 @@ object RagiumConfig : RagiumAPI.Config {
         val disableMilkCure: ModConfigSpec.BooleanValue
 
         init {
+            // Generator
+            builder.push("generator")
+            generatorEnergyRate = HTGeneratorVariant.entries.associate { variant: HTGeneratorVariant ->
+                val name: String = variant.serializedName
+                builder.push(name)
+                // Tank Capacity
+                machineTankCapacity[name] = builder
+                    .comment("Capacity for tanks in this machine")
+                    .worldRestart()
+                    .definePositiveInt("tankCapacity", 8000)
+                // Energy Rate
+                val defaultValue: Int = when (variant.tier) {
+                    RagiumTierType.BASIC -> 32
+                    RagiumTierType.ADVANCED -> 128
+                    RagiumTierType.ELITE -> 512
+                    RagiumTierType.ULTIMATE -> 2048
+                }
+                val value: ModConfigSpec.IntValue = builder.definePositiveInt("energyRate", defaultValue)
+                builder.pop()
+                name to value
+            }
+            builder.pop()
             // Machine
             builder.push("machine")
-            machineTankCapacity = builder
-                .comment("Capacity for all tanks in machines")
-                .worldRestart()
-                .definePositiveInt("machineTankCapacity", 8000)
-            basicMachineEnergyUsage = builder
-                .comment("Energy per tick for basic machines, multiplied by processing interval ticks")
-                .definePositiveInt("basicMachineEnergy", 16)
-            advancedMachineEnergyUsage = builder
-                .comment("Energy per tick for advanced machines, multiplied by processing interval ticks")
-                .definePositiveInt("advancedMachineEnergyUsage", 64)
-            // Machine - Collector
-            builder.push("collector")
+            machineEnergyUsage = HTMachineVariant.entries.associate { variant: HTMachineVariant ->
+                val name: String = variant.serializedName
+                builder.push(name)
+                // Tank Capacity
+                machineTankCapacity[name] = builder
+                    .comment("Capacity for tanks in this machine")
+                    .worldRestart()
+                    .definePositiveInt("tankCapacity", 8000)
+                // Energy Usage
+                val defaultValue: Int = when (variant.tier) {
+                    RagiumTierType.BASIC -> 16
+                    RagiumTierType.ADVANCED -> 64
+                    RagiumTierType.ELITE -> 256
+                    RagiumTierType.ULTIMATE -> 1024
+                }
+                val value: ModConfigSpec.IntValue = builder.definePositiveInt("energyUsage", defaultValue)
+                builder.pop()
+                name to value
+            }
+
+            defaultNetworkCapacity = builder
+                .gameRestart()
+                .definePositiveInt("defaultNetworkCapacity", 1_000_000)
+            builder.pop()
+            // Device
+            builder.push("device")
+            deviceTankCapacity = builder
+                .comment("Capacity for all tanks in devices")
+                .definePositiveInt("deviceTankCapacity", 8000)
             entityCollectorRange = builder
                 .comment("Range for entity-targeted collectors")
                 .definePositiveInt("collectorRange", 5)
@@ -138,27 +173,24 @@ object RagiumConfig : RagiumAPI.Config {
                 .comment("Multiplier for collecting milk from cows in Milk Drain")
                 .definePositiveInt("milkDrainMultiplier", 50)
             builder.pop()
-            // Machine - Drum
+            // Drum
             builder.push("drum")
-            smallDrumCapacity = builder
-                .gameRestart()
-                .definePositiveInt("smallDrumCapacity", 32000)
-            mediumDrumCapacity = builder
-                .gameRestart()
-                .definePositiveInt("mediumDrumCapacity", 64000)
-            largeDrumCapacity = builder
-                .gameRestart()
-                .definePositiveInt("largeDrumCapacity", 128000)
-            hugeDrumCapacity = builder
-                .gameRestart()
-                .definePositiveInt("hugeDrumCapacity", 256000)
+            drumCapacity = HTDrumVariant.entries.associate { variant: HTDrumVariant ->
+                val name: String = variant.serializedName
+                builder.push(name)
+                val defaultValue: Int = when (variant) {
+                    HTDrumVariant.SMALL -> 16_000
+                    HTDrumVariant.MEDIUM -> 32_000
+                    HTDrumVariant.LARGE -> 64_000
+                    HTDrumVariant.HUGE -> 256_000
+                }
+                val value: ModConfigSpec.IntValue = builder
+                    .worldRestart()
+                    .definePositiveInt("capacity", defaultValue)
+                builder.pop()
+                name to value
+            }
             builder.pop()
-            // Machine - Network
-            builder.push("network")
-            defaultNetworkCapacity = builder
-                .gameRestart()
-                .definePositiveInt("defaultNetworkCapacity", 1_000_000)
-            builder.pop(2)
             // Recipe
             builder.push("recipe")
             tagOutputModIds = builder

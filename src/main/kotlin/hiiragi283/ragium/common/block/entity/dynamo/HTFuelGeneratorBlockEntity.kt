@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.network.HTNbtCodec
@@ -46,7 +45,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         override val outputSlots: IntArray = intArrayOf()
     }
     protected val tank: HTFluidStackTank =
-        object : HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this) {
+        object : HTFluidStackTank(variant.tankCapacity, this) {
             override fun isFluidValid(stack: FluidStack): Boolean = getRequiredAmount(stack) > 0
         }
 

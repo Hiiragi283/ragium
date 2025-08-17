@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
     private val tank: HTFluidStackTank =
-        object : HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this) {
+        object : HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this) {
             override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
         }
 

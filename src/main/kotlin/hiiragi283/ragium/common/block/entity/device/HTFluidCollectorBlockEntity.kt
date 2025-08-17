@@ -28,7 +28,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(type, pos, state),
     HTFluidInteractable {
-    protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
+    protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)

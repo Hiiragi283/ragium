@@ -1,5 +1,6 @@
 package hiiragi283.ragium.util.variant
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
@@ -20,6 +21,8 @@ enum class HTDrumVariant(
     LARGE(HTDrumBlockEntity::Large, "Large Drum", "ドラム（大）"),
     HUGE(HTDrumBlockEntity::Huge, "Huge Drum", "ドラム（特大）"),
     ;
+
+    val capacity: Int get() = RagiumAPI.getConfig().getDrumCapacity(serializedName)
 
     override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.DRUMS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> =

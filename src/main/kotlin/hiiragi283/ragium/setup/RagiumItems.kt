@@ -449,21 +449,16 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerDrums(event: RegisterCapabilitiesEvent) {
-        fun register(capacity: Int, item: ItemLike) {
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
             event.registerItem(
                 Capabilities.FluidHandler.ITEM,
                 { stack: ItemStack, _: Void? ->
                     val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                    HTComponentFluidHandler(stack, capacity * modifier)
+                    HTComponentFluidHandler(stack, variant.capacity * modifier)
                 },
-                item,
+                variant,
             )
         }
-
-        register(RagiumAPI.getConfig().getSmallDrumCapacity(), HTDrumVariant.SMALL)
-        register(RagiumAPI.getConfig().getMediumDrumCapacity(), HTDrumVariant.MEDIUM)
-        register(RagiumAPI.getConfig().getLargeDrumCapacity(), HTDrumVariant.LARGE)
-        register(RagiumAPI.getConfig().getHugeDrumCapacity(), HTDrumVariant.HUGE)
     }
 
     @JvmStatic

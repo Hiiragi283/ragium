@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -42,8 +41,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         .addInput(0)
         .addOutput(1)
         .build(this)
-    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
+    private val tank = HTFluidStackTank(variant.tankCapacity, this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         super.writeNbt(writer)

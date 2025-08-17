@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -18,8 +17,6 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
-
     override fun playSound(level: Level, pos: BlockPos) {
         level.playSound(null, pos, SoundEvents.ANVIL_FALL, SoundSource.BLOCKS, 0.5f, 1f)
     }

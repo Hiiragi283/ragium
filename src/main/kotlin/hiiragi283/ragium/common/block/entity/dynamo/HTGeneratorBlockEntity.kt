@@ -10,7 +10,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTGeneratorBlockEntity(protected val variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
-    final override val energyUsage: Int get() = variant.tier.getEnergyRate()
+    final override val energyUsage: Int = variant.energyRate
 
     final override fun handleEnergy(network: IEnergyStorage): Int = network.receiveEnergy(energyUsage, false)
 

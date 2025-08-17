@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -27,7 +26,7 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
+    override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
 
     init {
         requiredEnergy = energyUsage * 20

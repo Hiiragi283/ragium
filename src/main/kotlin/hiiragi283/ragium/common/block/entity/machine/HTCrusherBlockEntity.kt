@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -30,7 +29,6 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             .addInput(0)
             .addOutput(1..4)
             .build(this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
 

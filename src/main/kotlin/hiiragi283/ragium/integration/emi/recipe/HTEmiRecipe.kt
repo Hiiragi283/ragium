@@ -7,7 +7,6 @@ import dev.emi.emi.api.widget.FillingArrowWidget
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.TankWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiTextures
 
 interface HTEmiRecipe : EmiRecipe {
@@ -39,7 +38,7 @@ interface HTEmiRecipe : EmiRecipe {
             y,
             18,
             18 * 3,
-            RagiumAPI.getConfig().getDefaultTankCapacity(),
+            8000,
         )
     }
 }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -38,9 +37,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ),
     HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler.EMPTY
-    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
-    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
-    override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
+    private val tankIn = HTFluidStackTank(variant.tankCapacity, this)
+    private val tankOut = HTFluidStackTank(variant.tankCapacity, this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK_IN, tankIn)
