@@ -13,9 +13,6 @@ object RagiumAdvancements {
     @JvmField
     val CRAFTABLE_TEMPLATES: ResourceKey<Advancement> = create("craftable_templates")
 
-    @JvmField
-    val ETERNAL_TICKET: ResourceKey<Advancement> = create("eternal_ticket")
-
     //    Raginite    //
 
     @JvmField
@@ -76,6 +73,14 @@ object RagiumAdvancements {
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")
+
+    //    Iridescentium    //
+
+    @JvmField
+    val IRIDESCENTIUM: ResourceKey<Advancement> = create("iridescentium")
+
+    @JvmField
+    val ETERNAL_COMPONENT: ResourceKey<Advancement> = create("eternal_component")
 
     @JvmStatic
     private fun create(path: String): ResourceKey<Advancement> = ResourceKey.create(Registries.ADVANCEMENT, RagiumAPI.id(path))

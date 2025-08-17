@@ -217,6 +217,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_DEEP_SCRAP))
             .addResult(HTResultHelper.item(RagiumItems.DEEP_SCRAP, 2))
             .saveSuffixed(output, "_from_ore")
+        // Iridescentium
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTResultHelper.item(HTMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM),
+                HTIngredientHelper.gemOrDust(RagiumMaterialType.ELDRITCH_PEARL, 8),
+                HTIngredientHelper.item(Tags.Items.NETHER_STARS),
+            ).save(output)
         // Other
         HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
             .addIngredient(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR)

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -18,16 +19,17 @@ import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Plastic Plate
-        HTShapelessRecipeBuilder(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
-            .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
-            .save(output)
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(RagiumItems.getPlate(RagiumMaterialType.PLASTIC)),
+                HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+            ).save(output)
         // Synthetic Fiber
         HTShapelessRecipeBuilder(RagiumItems.SYNTHETIC_FIBER, 2)
             .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
@@ -136,13 +138,13 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 )
                 else -> continue
             }
-            val wiring: HTItemIngredient = when (tier) {
-                RagiumTierType.BASIC -> HTVanillaMaterialType.COPPER
-                RagiumTierType.ADVANCED -> HTVanillaMaterialType.GOLD
-                RagiumTierType.ELITE -> RagiumMaterialType.ADVANCED_RAGI_ALLOY
-                RagiumTierType.ULTIMATE -> RagiumMaterialType.DEEP_STEEL
+            val (variant: HTMaterialVariant, material: HTMaterialType) = when (tier) {
+                RagiumTierType.BASIC -> HTMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
+                RagiumTierType.ADVANCED -> HTMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                RagiumTierType.ELITE -> HTMaterialVariant.INGOT to RagiumMaterialType.ADVANCED_RAGI_ALLOY
+                RagiumTierType.ULTIMATE -> HTMaterialVariant.NUGGET to RagiumMaterialType.IRIDESCENTIUM
                 else -> continue
-            }.let { HTIngredientHelper.item(HTMaterialVariant.INGOT, it) }
+            }
             val board: HTItemIngredient = when (tier) {
                 RagiumTierType.BASIC -> RagiumItems.CIRCUIT_BOARD
                 RagiumTierType.ADVANCED -> RagiumItems.CIRCUIT_BOARD
@@ -150,15 +152,18 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 RagiumTierType.ULTIMATE -> RagiumItems.ADVANCED_CIRCUIT_BOARD
                 else -> continue
             }.let(HTIngredientHelper::item)
-            HTCombineItemToItemRecipeBuilder.alloying(HTResultHelper.item(circuit), dopant, wiring, board).save(output)
+            HTCombineItemToItemRecipeBuilder
+                .alloying(
+                    HTResultHelper.item(circuit),
+                    dopant,
+                    HTIngredientHelper.item(variant, material),
+                    board,
+                ).save(output)
         }
     }
 
     private fun components() {
-        fun register(
-            material: HTMaterialType,
-            core: HTMaterialType,
-        ) {
+        fun register(material: HTMaterialType, core: HTMaterialType) {
             // Shaped
             HTShapedRecipeBuilder(RagiumItems.getCoil(material), 4)
                 .hollow4()

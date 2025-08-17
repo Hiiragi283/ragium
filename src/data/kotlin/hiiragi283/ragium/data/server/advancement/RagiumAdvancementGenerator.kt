@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.advancement
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,7 +23,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             setIcon(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
             title = Component.literal(RagiumAPI.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
-            backGround = RagiumAPI.id("textures/block/plastic_block.png")
+            backGround = vanillaId("textures/block/smooth_stone.png")
             showToast = false
             showChat = false
         }
@@ -35,6 +36,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         crimson()
         warped()
         eldritch()
+        iridescentium()
 
         child(RagiumAdvancements.CRAFTABLE_TEMPLATES, root) {
             display {
@@ -47,10 +49,6 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
                 RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
             )
-        }
-
-        createSimple(RagiumAdvancements.ETERNAL_TICKET, root, RagiumItems.ETERNAL_TICKET) {
-            setChallenge()
         }
     }
 
@@ -200,5 +198,19 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             hasItemsIn("has_mysterious_obsidian", RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
+    }
+
+    private fun iridescentium() {
+        val iridescentium: AdvancementHolder = createSimple(
+            RagiumAdvancements.IRIDESCENTIUM,
+            root,
+            HTMaterialVariant.INGOT,
+            RagiumMaterialType.IRIDESCENTIUM,
+        )
+        val eternalComponent: AdvancementHolder = createSimple(
+            RagiumAdvancements.ETERNAL_COMPONENT,
+            iridescentium,
+            RagiumItems.ETERNAL_COMPONENT,
+        ) { setChallenge() }
     }
 }

@@ -39,17 +39,16 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
         addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "This thing craftable...!", "Craft any Upgrade Templates added by Ragium")
-        addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "Eternal Requiem", "Get Eternal Ticket for making tools unbreakable")
         // Raginite
-        addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "Get Raginite Dust from Raginite Ores in underground")
-        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "The Red Comet", "Get Ragi-Alloy Ingot")
+        addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
+        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
 
-        addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "Not orange-colored!", "Get Advanced Ragi-Alloy Ingot")
+        addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "This is red, not orange!", "Get Advanced Ragi-Alloy Ingot")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
         addAdvancement(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            "Destruction: Playtime",
+            "Hammer of Destruction",
             "Get Ragi-Crystal Hammer to break ANY blocks!",
         )
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
@@ -58,14 +57,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
         // Crimson
-        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Blood Sweat and Saps", "Get Crimson Crystal")
+        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         addAdvancement(
             RagiumAdvancements.CRIMSON_SOIL,
             "The reason why rose is red",
             "Get Crimson Soil by right-clicking Soul Soil with Bloody Ticket",
         )
         // Warped
-        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Wrapped Warp", "Get Warped Crystal")
+        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "Remote Work", "Place Dimensional Anchor to force loading the chunk")
         addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "One-way Ticket", "Use teleport ticket bound with Teleport Anchor")
         // Eldritch
@@ -76,6 +75,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
             "Who is Falling Meteorites?",
             "Get Mysterious Obsidian by right-clicking Crying Obsidian with Eldritch Ticket",
         )
+        // Iridescentium
+        addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "The sky's the limit", "Get Iridescentium Ingot")
+        addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "Eternal Requiem", "Get Eternal Component for making tools unbreakable")
     }
 
     private fun block() {
@@ -175,7 +177,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Tickets
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
-        addItem(RagiumItems.ETERNAL_TICKET, "Eternal Ticket")
         // Material
         addItem(RagiumItems.BASALT_MESH, "Basalt Mesh")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
@@ -197,6 +198,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
 
         addItem(RagiumItems.DRILL, "Electric Drill")
+
+        addItem(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")

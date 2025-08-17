@@ -12,14 +12,14 @@ import net.minecraft.world.item.component.Unbreakable
 
 class HTEternalTicketEmiRecipe(private val equipment: Item, id: ResourceLocation) :
     EmiPatternCraftingRecipe(
-        listOf(EmiStack.of(equipment), EmiStack.of(RagiumItems.ETERNAL_TICKET)),
+        listOf(EmiStack.of(equipment), EmiStack.of(RagiumItems.ETERNAL_COMPONENT)),
         EmiStack.of(equipment),
         id,
     ) {
     override fun getInputWidget(slot: Int, x: Int, y: Int): SlotWidget = SlotWidget(
         when (slot) {
             0 -> EmiStack.of(equipment)
-            1 -> EmiStack.of(RagiumItems.ETERNAL_TICKET)
+            1 -> EmiStack.of(RagiumItems.ETERNAL_COMPONENT)
             else -> EmiStack.EMPTY
         },
         x,

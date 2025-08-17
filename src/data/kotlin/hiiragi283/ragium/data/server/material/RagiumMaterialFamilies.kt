@@ -38,6 +38,9 @@ object RagiumMaterialFamilies {
     @JvmField
     val DEEP_STEEL: HTMaterialFamily = ingotAlloy(RagiumMaterialType.DEEP_STEEL)
 
+    @JvmField
+    val IRIDESCENTIUM: HTMaterialFamily = ingotAlloy(RagiumMaterialType.IRIDESCENTIUM)
+
     // Others
     @JvmField
     val CHOCOLATE: HTMaterialFamily = ingotAlloy(RagiumMaterialType.CHOCOLATE)

@@ -6,7 +6,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "ragium:textures/block/plastic_block.png",
+    "background": "minecraft:textures/block/smooth_stone.png",
     "description": {
       "translate": "advancements.ragium.root.desc"
     },

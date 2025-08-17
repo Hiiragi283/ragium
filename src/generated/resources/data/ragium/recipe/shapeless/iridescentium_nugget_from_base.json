@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/iridescentium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:iridescentium_nugget"
+  }
+}

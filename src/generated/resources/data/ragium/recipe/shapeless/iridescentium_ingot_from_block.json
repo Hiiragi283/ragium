@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "ragium:polymer_resin"
+      "tag": "c:storage_blocks/iridescentium"
     }
   ],
   "result": {
-    "count": 1,
-    "id": "ragium:plastic_plate"
+    "count": 9,
+    "id": "ragium:iridescentium_ingot"
   }
 }

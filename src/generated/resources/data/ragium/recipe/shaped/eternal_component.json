@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/iridescentium"
+    },
+    "B": {
+      "item": "minecraft:clock"
+    },
+    "C": {
+      "item": "ragium:ultimate_component"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:eternal_component"
+  }
+}

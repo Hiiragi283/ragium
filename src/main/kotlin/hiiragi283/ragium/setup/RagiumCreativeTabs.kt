@@ -113,6 +113,7 @@ object RagiumCreativeTabs {
         HTMaterialVariant.CIRCUIT_TAB_ORDER
             .flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
+        output.accept(RagiumItems.ETERNAL_COMPONENT)
     }
 
     @JvmField
@@ -174,7 +175,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
             output.accept(RagiumItems.TELEPORT_TICKET)
-            output.accept(RagiumItems.ETERNAL_TICKET)
 
             output.accept(RagiumItems.RAGI_TICKET)
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)

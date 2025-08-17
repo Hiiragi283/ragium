@@ -6,8 +6,10 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
@@ -17,17 +19,18 @@ import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTToolVariant
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -79,9 +82,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Tags.Items.EGGS)
             .save(output)
 
+        HTShapedRecipeBuilder(RagiumItems.ETERNAL_COMPONENT)
+            .cross8()
+            .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
+            .define('B', Items.CLOCK)
+            .define('C', RagiumItems.getComponent(RagiumTierType.ULTIMATE))
+            .save(output)
+
         ragiAlloy()
-        azureSteel()
-        deepSteel()
+        azureAndDeepSteel()
 
         forgeHammers()
 
@@ -89,6 +98,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         lootTickets()
     }
 
+    @JvmStatic
     private fun ragiAlloy() {
         // Basic
         HTShapedRecipeBuilder(RagiumItems.RAGI_MAGNET)
@@ -116,42 +126,47 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
-    private fun azureSteel() {
+    @JvmStatic
+    private fun azureAndDeepSteel() {
+        addUpgrades(RagiumItems.ARMORS)
+        addUpgrades(RagiumItems.TOOLS)
+
         addTemplate(
             RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
             RagiumMaterialType.AZURE_STEEL,
         )
-
-        EQUIPMENT_SUFFIXES
-            .associate { suffix: String ->
-                "iron$suffix" to RagiumConst.AZURE_STEEL + suffix
-            }.forEach { (base: String, result: String) ->
-                addAzureSmithing(
-                    DeferredItem.createItem<Item>(RagiumAPI.id(result)),
-                    DeferredItem.createItem<Item>(vanillaId(base)),
-                )
-            }
-    }
-
-    private fun deepSteel() {
         addTemplate(
             RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
             RagiumMaterialType.DEEP_STEEL,
         )
-
-        EQUIPMENT_SUFFIXES
-            .associate { suffix: String ->
-                "diamond$suffix" to RagiumConst.DEEP_STEEL + suffix
-            }.forEach { (base: String, result: String) ->
-                addDeepSmithing(
-                    DeferredItem.createItem<Item>(RagiumAPI.id(result)),
-                    DeferredItem.createItem<Item>(vanillaId(base)),
-                )
-            }
     }
 
+    @JvmStatic
+    private fun <V : HTVariantKey> addUpgrades(table: HTTable<V, HTMaterialType, out ItemLike>) {
+        table.forEach { (variant: V, material: HTMaterialType, item: ItemLike) ->
+            val base: HTVanillaMaterialType = when (material) {
+                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
+                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
+                else -> return@forEach
+            }
+            val id: ResourceLocation = when (variant) {
+                HTToolVariant.HAMMER -> RagiumAPI::id
+                else -> ::vanillaId
+            }("${base.serializedName}_${variant.serializedName}")
+            when (material) {
+                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
+                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
+                else -> return@forEach
+            }(
+                item,
+                BuiltInRegistries.ITEM.get(id),
+            )
+        }
+    }
+
+    @JvmStatic
     private fun forgeHammers() {
-        fun hammer(material: HTMaterialType): DeferredItem<*> = RagiumItems.getForgeHammer(material)
+        fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getForgeHammer(material)
 
         fun crafting(variant: HTMaterialVariant, material: HTMaterialType) {
             HTShapedRecipeBuilder(hammer(material), category = CraftingBookCategory.EQUIPMENT)
@@ -169,9 +184,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         crafting(HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
 
         createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
-        addAzureSmithing(hammer(RagiumMaterialType.AZURE_STEEL), hammer(HTVanillaMaterialType.IRON))
-        addDeepSmithing(hammer(RagiumMaterialType.DEEP_STEEL), hammer(RagiumMaterialType.AZURE_STEEL))
-
         createComponentUpgrade(
             RagiumTierType.ELITE,
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
@@ -179,18 +191,20 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         ).save(output)
     }
 
+    @JvmStatic
     private fun tickets() {
         addTicket(
             RagiumItems.RAGI_TICKET,
-            HTMaterialVariant.GEM.itemTagKey(RagiumMaterialType.RAGI_CRYSTAL),
-            Tags.Items.DYES_RED,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.RAGI_CRYSTAL,
+            DyeColor.RED,
         )
         addTicket(
             RagiumItems.TELEPORT_TICKET,
-            HTMaterialVariant.GEM.itemTagKey(RagiumMaterialType.WARPED_CRYSTAL),
-            Tags.Items.DYES_CYAN,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.WARPED_CRYSTAL,
+            DyeColor.CYAN,
         )
-        addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(
             RagiumAPI.id("shapeless/blast_charge"),
@@ -202,6 +216,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         )
     }
 
+    @JvmStatic
     private fun lootTickets() {
         // End City
         addLootTicket(BuiltInLootTables.END_CITY_TREASURE) {
@@ -226,21 +241,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     //    Extension    //
-
-    @JvmField
-    val EQUIPMENT_SUFFIXES: List<String> = listOf(
-        // Armor
-        "_helmet",
-        "_chestplate",
-        "_leggings",
-        "_boots",
-        // Tool
-        "_shovel",
-        "_pickaxe",
-        "_axe",
-        "_hoe",
-        "_sword",
-    )
 
     @JvmStatic
     private fun addTemplate(template: ItemLike, material: HTMaterialType) {
@@ -278,11 +278,16 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun addTicket(ticket: ItemLike, corner: TagKey<Item>, dye: TagKey<Item>) {
+    private fun addTicket(
+        ticket: ItemLike,
+        variant: HTMaterialVariant,
+        material: HTMaterialType,
+        dye: DyeColor,
+    ) {
         HTShapedRecipeBuilder(ticket)
             .cross8()
-            .define('A', corner)
-            .define('B', dye)
+            .define('A', variant, material)
+            .define('B', dye.tag)
             .define('C', Items.PAPER)
             .save(output)
     }

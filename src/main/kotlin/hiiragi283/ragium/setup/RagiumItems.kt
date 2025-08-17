@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
@@ -65,10 +66,6 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
-        REGISTER.addAlias(RagiumAPI.id("item_magnet"), RagiumAPI.id("ragi_magnet"))
-        REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
-        REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
-
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -125,6 +122,7 @@ object RagiumItems {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.IRIDESCENTIUM,
             // Foods
             RagiumMaterialType.CHOCOLATE,
             RagiumMaterialType.MEAT,
@@ -136,6 +134,7 @@ object RagiumItems {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.IRIDESCENTIUM,
         ).forEach { put(HTMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates
         put(HTMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
@@ -251,6 +250,9 @@ object RagiumItems {
         register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTDeepSteelTemplateItem() })
 
     @JvmField
+    val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
+
+    @JvmField
     val MEDIUM_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> =
         register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
 
@@ -315,9 +317,6 @@ object RagiumItems {
 
     @JvmField
     val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register("teleport_ticket", ::HTTeleportTicketItem)
-
-    @JvmField
-    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket", Item.Properties().rarity(Rarity.EPIC))
 
     //    Foods    //
 
@@ -484,6 +483,19 @@ object RagiumItems {
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
+        }
+
+        for (block: ItemLike in RagiumBlocks.MATERIALS.columnValues(RagiumMaterialType.IRIDESCENTIUM)) {
+            event.modify(block) { builder: DataComponentPatch.Builder ->
+                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                builder.set(DataComponents.RARITY, Rarity.RARE)
+            }
+        }
+        for (item: ItemLike in MATERIALS.columnValues(RagiumMaterialType.IRIDESCENTIUM)) {
+            event.modify(item) { builder: DataComponentPatch.Builder ->
+                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                builder.set(DataComponents.RARITY, Rarity.RARE)
+            }
         }
 
         event.modify(getIngot(RagiumMaterialType.CHOCOLATE)) { builder: DataComponentPatch.Builder ->

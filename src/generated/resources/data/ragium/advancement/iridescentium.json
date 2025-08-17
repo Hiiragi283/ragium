@@ -1,11 +1,11 @@
 {
   "parent": "ragium:root",
   "criteria": {
-    "has_eternal_ticket": {
+    "has_c_ingots_iridescentium": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:eternal_ticket"
+            "items": "#c:ingots/iridescentium"
           }
         ]
       },
@@ -14,20 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.eternal_ticket.desc"
+      "translate": "advancements.ragium.iridescentium.desc"
     },
-    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:eternal_ticket"
+      "id": "ragium:iridescentium_ingot"
     },
     "title": {
-      "translate": "advancements.ragium.eternal_ticket.title"
+      "translate": "advancements.ragium.iridescentium.title"
     }
   },
   "requirements": [
     [
-      "has_eternal_ticket"
+      "has_c_ingots_iridescentium"
     ]
   ],
   "sends_telemetry_event": true

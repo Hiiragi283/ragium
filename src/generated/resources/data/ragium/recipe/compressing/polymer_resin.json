@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 1,
+    "item": "ragium:plastic_plate"
+  },
+  "result": {
+    "count": 1,
+    "id": "#ragium:polymer_resin"
+  }
+}

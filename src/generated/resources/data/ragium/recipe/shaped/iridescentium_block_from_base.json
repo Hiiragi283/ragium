@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:nether_stars"
+      "tag": "c:ingots/iridescentium"
     },
     "B": {
-      "tag": "c:dyes/white"
-    },
-    "C": {
-      "item": "minecraft:paper"
+      "item": "ragium:iridescentium_ingot"
     }
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "BCB",
-    "ABA"
+    "AAA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:eternal_ticket"
+    "id": "ragium:iridescentium_block"
   }
 }
