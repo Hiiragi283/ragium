@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -38,20 +39,12 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTTickAwareBlockEntity(type, pos, state),
     HTHandlerBlockEntity,
     HTOwnedBlockEntity,
+    HTTransferIO.Provider,
+    HTTransferIO.Receiver,
     MenuProvider {
     //    Storage    //
 
-    private var ownerId: UUID? = null
-
-    override fun getOwnerUUID(): UUID {
-        if (ownerId == null) {
-            ownerId = UUID.randomUUID()
-        }
-        return ownerId!!
-    }
-
     protected abstract val inventory: HTItemHandler
-    val transferIOCache = HTTransferIOCache()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.writeNullable(UUIDUtil.CODEC, RagiumConst.OWNER, ownerId)
@@ -178,6 +171,27 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     protected open fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
         HTFilteredEnergyStorage(network, HTEnergyFilter.RECEIVE_ONLY)
+
+    //    HTOwnedBlockEntity    //
+
+    private var ownerId: UUID? = null
+
+    override fun getOwnerUUID(): UUID {
+        if (ownerId == null) {
+            ownerId = UUID.randomUUID()
+        }
+        return ownerId!!
+    }
+
+    //    HTTransferIOReceiver    //
+
+    private val transferIOCache = HTTransferIOCache()
+
+    override fun apply(direction: Direction): HTTransferIO = transferIOCache[direction]
+
+    override fun accept(direction: Direction, transferIO: HTTransferIO) {
+        transferIOCache[direction] = transferIO
+    }
 
     //    Menu    //
 

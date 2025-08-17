@@ -41,8 +41,8 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(2)
         .addInput(0)
         .addOutput(1)
-        .build(::setChanged)
-    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+        .build(this)
+    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

@@ -27,7 +27,7 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     init {

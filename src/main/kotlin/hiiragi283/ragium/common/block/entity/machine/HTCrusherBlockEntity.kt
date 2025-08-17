@@ -29,7 +29,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             .Builder(5)
             .addInput(0)
             .addOutput(1..4)
-            .build(::setChanged)
+            .build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //
@@ -60,7 +60,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
         // インプットを減らす
-        inventory.extractItem(0, recipe.getIngredientCount(input), false)
+        inventory.shrinkStack(0, recipe.getIngredientCount(input), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
     }

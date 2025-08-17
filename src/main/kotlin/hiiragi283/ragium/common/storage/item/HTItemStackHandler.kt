@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.ItemStackHandler
-import java.util.function.Consumer
 
 abstract class HTItemStackHandler(size: Int) :
     ItemStackHandler(size),
@@ -11,7 +11,7 @@ abstract class HTItemStackHandler(size: Int) :
     companion object {
         @JvmField
         val EMPTY: HTItemStackHandler = object : HTItemStackHandler(0) {
-            override fun onContentsChanged(slot: Int) {}
+            override fun onContentsChanged() {}
 
             override val inputSlots: IntArray = intArrayOf()
             override val outputSlots: IntArray = intArrayOf()
@@ -22,7 +22,9 @@ abstract class HTItemStackHandler(size: Int) :
         slotRange.forEach(::onContentsChanged)
     }
 
-    abstract override fun onContentsChanged(slot: Int)
+    override fun onContentsChanged(slot: Int) {
+        onContentsChanged()
+    }
 
     //    Extensions    //
 
@@ -52,13 +54,8 @@ abstract class HTItemStackHandler(size: Int) :
             outputSlots.addAll(slots)
         }
 
-        fun build(callback: Runnable): HTItemStackHandler = Simple(
-            size,
-            inputSlots.toIntArray(),
-            outputSlots.toIntArray(),
-        ) { callback.run() }
-
-        fun build(callback: Consumer<Int>): HTItemStackHandler = Simple(size, inputSlots.toIntArray(), outputSlots.toIntArray(), callback)
+        fun build(callback: HTContentListener): HTItemStackHandler =
+            Simple(size, inputSlots.toIntArray(), outputSlots.toIntArray(), callback)
     }
 
     //    Simple    //
@@ -67,10 +64,7 @@ abstract class HTItemStackHandler(size: Int) :
         size: Int,
         override val inputSlots: IntArray,
         override val outputSlots: IntArray,
-        private val callback: Consumer<Int>,
-    ) : HTItemStackHandler(size) {
-        override fun onContentsChanged(slot: Int) {
-            callback.accept(slot)
-        }
-    }
+        private val callback: HTContentListener,
+    ) : HTItemStackHandler(size),
+        HTContentListener by callback
 }

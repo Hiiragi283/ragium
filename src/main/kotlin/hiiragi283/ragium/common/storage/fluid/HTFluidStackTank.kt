@@ -1,16 +1,17 @@
 package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
-open class HTFluidStackTank(capacity: Int, private val callback: () -> Unit) :
+open class HTFluidStackTank(capacity: Int, private val callback: HTContentListener) :
     FluidTank(capacity),
     HTFluidTank {
     override fun onContentsChanged() {
-        callback()
+        callback.onContentsChanged()
     }
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {

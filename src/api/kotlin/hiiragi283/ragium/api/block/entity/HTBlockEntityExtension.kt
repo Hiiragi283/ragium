@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 
-interface HTBlockEntityExtension {
+interface HTBlockEntityExtension : HTContentListener {
     val upgrades: HTItemHandler
 
     /**

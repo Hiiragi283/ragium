@@ -29,7 +29,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(6)
         .addInput(0)
         .addOutput(2..5)
-        .build(::setChanged)
+        .build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //

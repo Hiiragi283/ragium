@@ -32,7 +32,7 @@ class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTBlock
         if (this.isRemoved) return false
         val level: ServerLevel = this.level as? ServerLevel ?: return false
         val forced: Boolean = RagiumChunkLoader.forceChunk(level, blockPos, ChunkPos(blockPos))
-        if (forced) setChanged()
+        if (forced) onContentsChanged()
         return forced
     }
 
@@ -40,7 +40,7 @@ class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTBlock
         if (this.isRemoved) return false
         val level: ServerLevel = this.level as? ServerLevel ?: return false
         val released: Boolean = RagiumChunkLoader.releaseChunk(level, blockPos, ChunkPos(blockPos))
-        if (released) setChanged()
+        if (released) onContentsChanged()
         return released
     }
 }

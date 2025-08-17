@@ -38,15 +38,15 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
     ),
     HTFluidInteractable {
     final override val inventory: HTItemHandler = object : HTItemStackHandler(1) {
-        override fun onContentsChanged(slot: Int) {
-            this@HTFuelGeneratorBlockEntity.setChanged()
+        override fun onContentsChanged() {
+            this@HTFuelGeneratorBlockEntity.onContentsChanged()
         }
 
         override val inputSlots: IntArray = intArrayOf(0)
         override val outputSlots: IntArray = intArrayOf()
     }
     protected val tank: HTFluidStackTank =
-        object : HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), ::setChanged) {
+        object : HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this) {
             override fun isFluidValid(stack: FluidStack): Boolean = getRequiredAmount(stack) > 0
         }
 

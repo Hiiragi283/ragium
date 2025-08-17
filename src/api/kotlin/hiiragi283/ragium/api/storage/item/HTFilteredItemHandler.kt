@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.storage.HTTransferIOHolder
+import hiiragi283.ragium.api.storage.HTTransferIO
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.IItemHandler
@@ -10,9 +10,9 @@ class HTFilteredItemHandler(
     private val inputSlots: IntArray,
     private val outputSlots: IntArray,
     private val direction: Direction?,
-    private val provider: HTTransferIOHolder,
+    private val provider: HTTransferIO.Provider,
 ) : IItemHandler {
-    constructor(delegate: HTItemHandler, direction: Direction?, provider: HTTransferIOHolder) : this(
+    constructor(delegate: HTItemHandler, direction: Direction?, provider: HTTransferIO.Provider) : this(
         delegate,
         delegate.inputSlots,
         delegate.outputSlots,

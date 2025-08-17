@@ -29,7 +29,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(4)
         .addInput(0..2)
         .addOutput(3)
-        .build(::setChanged)
+        .build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
@@ -51,7 +51,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTMultiItemToItemRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
-            inventory.extractItem(slot, ingredients[index], false)
+            inventory.shrinkStack(slot, ingredients[index], false)
         }
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)

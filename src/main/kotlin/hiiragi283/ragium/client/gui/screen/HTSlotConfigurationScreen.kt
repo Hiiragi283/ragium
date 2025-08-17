@@ -5,9 +5,7 @@ import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
-import hiiragi283.ragium.common.storage.HTTransferIOCache
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Tooltip
@@ -42,9 +40,7 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
         getTransferIO(direction)?.description?.let(Tooltip::create)?.let(this::setTooltip)
     }
 
-    private fun getTransferCache(): HTTransferIOCache? = (menu.blockEntity as? HTMachineBlockEntity)?.transferIOCache
-
-    private fun getTransferIO(direction: Direction): HTTransferIO? = getTransferCache()?.get(direction)
+    private fun getTransferIO(direction: Direction): HTTransferIO? = (menu.blockEntity as? HTTransferIO.Provider)?.get(direction)
 
     override fun init() {
         super.init()
@@ -74,7 +70,6 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
             super.onPress()
             val transferIO1: HTTransferIO = getTransferIO(direction)?.nextEntry ?: return
             tooltip = Tooltip.create(transferIO1.description)
-            getTransferCache()?.set(direction, transferIO1)
             PacketDistributor.sendToServer(HTTransferIOUpdatePayload(pos, direction, transferIO1))
         }
 

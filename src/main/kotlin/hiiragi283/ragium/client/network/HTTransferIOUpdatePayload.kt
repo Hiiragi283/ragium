@@ -2,8 +2,8 @@ package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTCustomPayload
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTTransferIO
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -30,9 +30,11 @@ data class HTTransferIOUpdatePayload(val pos: BlockPos, val direction: Direction
     }
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val machine: HTMachineBlockEntity = player.serverLevel().getBlockEntity(pos) as? HTMachineBlockEntity ?: return
-        machine.transferIOCache[direction] = transferIO
-        machine.setChanged()
+        val receiver: HTTransferIO.Receiver = player.serverLevel().getBlockEntity(pos) as? HTTransferIO.Receiver ?: return
+        receiver[direction] = transferIO
+        if (receiver is HTContentListener) {
+            receiver.onContentsChanged()
+        }
     }
 
     override fun type(): CustomPacketPayload.Type<HTTransferIOUpdatePayload> = TYPE

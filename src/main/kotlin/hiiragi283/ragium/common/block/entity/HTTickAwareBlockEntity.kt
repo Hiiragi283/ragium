@@ -52,7 +52,7 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     /**
      * tick処理を行うかどうか判定します。
-     * @see [setChanged]
+     * @see [onContentsChanged]
      */
     protected var shouldTick: Boolean = true
         private set
@@ -77,15 +77,15 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Sync    //
 
-    override fun setChanged() {
-        super.setChanged()
+    override fun onContentsChanged() {
+        super.onContentsChanged()
         shouldTick = true
         shouldSync = true
     }
 
     /**
      * 同期処理を行うかどうか判定します。
-     * @see [setChanged]
+     * @see [onContentsChanged]
      */
     protected var shouldSync: Boolean = false
 

@@ -41,8 +41,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(2)
         .addInput(0)
         .addOutput(1)
-        .build(::setChanged)
-    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+        .build(this)
+    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -82,7 +82,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             inventory.insertItem(1, stack.craftingRemainingItem, false)
         }
         // インプットを減らす
-        inventory.extractItem(0, recipe.ingredient, false)
+        inventory.shrinkStack(0, recipe.ingredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
     }

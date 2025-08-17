@@ -38,8 +38,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ),
     HTFluidInteractable {
     override val inventory: HTItemHandler = HTItemStackHandler.EMPTY
-    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
-    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
+    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

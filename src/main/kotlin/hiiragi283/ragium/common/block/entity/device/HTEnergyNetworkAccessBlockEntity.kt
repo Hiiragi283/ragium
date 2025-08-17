@@ -34,8 +34,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
             }
         }
 
-        override fun onContentsChanged(slot: Int) {
-            this@HTEnergyNetworkAccessBlockEntity.setChanged()
+        override fun onContentsChanged() {
+            this@HTEnergyNetworkAccessBlockEntity.onContentsChanged()
         }
 
         override val inputSlots: IntArray = intArrayOf(0)

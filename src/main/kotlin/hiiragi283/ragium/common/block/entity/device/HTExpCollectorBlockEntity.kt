@@ -31,7 +31,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
     HTFluidInteractable {
-    private val tank = HTFluidStackTank(Int.MAX_VALUE, this::setChanged)
+    private val tank = HTFluidStackTank(Int.MAX_VALUE, this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)

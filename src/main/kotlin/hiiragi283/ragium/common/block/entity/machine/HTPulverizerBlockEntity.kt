@@ -28,7 +28,7 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(2)
         .addInput(0)
         .addOutput(1)
-        .build(::setChanged)
+        .build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 
     //    Ticking    //

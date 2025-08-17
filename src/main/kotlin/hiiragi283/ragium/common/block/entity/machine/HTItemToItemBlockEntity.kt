@@ -26,7 +26,7 @@ abstract class HTItemToItemBlockEntity(
         .Builder(2)
         .addInput(0)
         .addOutput(1)
-        .build(::setChanged)
+        .build(this)
 
     //    Ticking    //
 
@@ -47,7 +47,7 @@ abstract class HTItemToItemBlockEntity(
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        inventory.extractItem(0, recipe.ingredient, false)
+        inventory.shrinkStack(0, recipe.ingredient, false)
         // サウンドを流す
         playSound(level, pos)
     }

@@ -41,8 +41,8 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder(2)
         .addInput(0)
         .addOutput(1)
-        .build(::setChanged)
-    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+        .build(this)
+    private val tank = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -90,7 +90,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         tank.drain(recipe.fluidIngredient, false)
-        inventory.extractItem(0, recipe.itemIngredient, false)
+        inventory.shrinkStack(0, recipe.itemIngredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }

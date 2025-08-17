@@ -47,13 +47,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         loadAdditional(tag, lookupProvider)
     }
 
-    override val upgrades: HTItemStackHandler = HTItemStackHandler.Builder(4).build(::onUpgradeUpdated)
-
-    @Suppress("unused")
-    private fun onUpgradeUpdated(index: Int) {
-        reloadUpgrades()
-        setChanged()
-    }
+    override val upgrades: HTItemStackHandler = HTItemStackHandler.Builder(4).build(this)
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -105,5 +99,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun setLevel(level: Level) {
         super.setLevel(level)
         afterLevelInit(level)
+    }
+
+    override fun onContentsChanged() {
+        setChanged()
+        reloadUpgrades()
     }
 }

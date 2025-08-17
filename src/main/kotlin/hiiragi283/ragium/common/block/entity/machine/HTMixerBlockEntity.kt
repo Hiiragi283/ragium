@@ -36,9 +36,9 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ),
     HTFluidInteractable {
-    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(::setChanged)
-    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
-    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
+    private val tankIn = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
+    private val tankOut = HTFluidStackTank(RagiumAPI.getConfig().getDefaultTankCapacity(), this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getAdvancedMachineEnergyUsage()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -75,7 +75,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), false)
         // インプットを減らす
-        inventory.extractItem(0, recipe.itemIngredient, false)
+        inventory.shrinkStack(0, recipe.itemIngredient, false)
         tankIn.drain(recipe.fluidIngredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)

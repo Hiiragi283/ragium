@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.storage
 
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.HTTransferIO
-import hiiragi283.ragium.api.storage.HTTransferIOHolder
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -10,13 +9,14 @@ import net.minecraft.nbt.NbtOps
 import net.neoforged.neoforge.common.util.INBTSerializable
 
 class HTTransferIOCache :
-    HTTransferIOHolder,
+    HTTransferIO.Provider,
+    HTTransferIO.Receiver,
     INBTSerializable<CompoundTag> {
     private val cache: MutableMap<Direction, HTTransferIO> = mutableMapOf()
 
     override fun apply(direction: Direction): HTTransferIO = cache[direction] ?: HTTransferIO.BOTH
 
-    operator fun set(direction: Direction, transferIO: HTTransferIO) {
+    override fun accept(direction: Direction, transferIO: HTTransferIO) {
         cache[direction] = transferIO
     }
 

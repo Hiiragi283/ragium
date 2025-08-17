@@ -23,7 +23,7 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_BUFFER, pos, state) {
-    private val inventory: HTItemStackHandler = HTItemStackHandler.Builder(9).addInput(0..8).build(::setChanged)
+    private val inventory: HTItemStackHandler = HTItemStackHandler.Builder(9).addInput(0..8).build(this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.INVENTORY, inventory)
