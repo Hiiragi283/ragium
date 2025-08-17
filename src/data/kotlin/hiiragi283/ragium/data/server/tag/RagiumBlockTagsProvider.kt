@@ -1,98 +1,89 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.asBlockHolder
+import hiiragi283.ragium.api.data.tag.HTTagBuilder
+import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
-import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
-import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider.IntrinsicTagAppender
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.common.extensions.IHolderExtension
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 import kotlin.enums.enumEntries
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
-    IntrinsicHolderTagsProvider<Block>(
-        output,
-        Registries.BLOCK,
-        provider,
-        { block: Block -> block.asBlockHolder().key },
-        RagiumAPI.MOD_ID,
-        helper,
-    ) {
-    override fun addTags(provider: HolderLookup.Provider) {
-        mineable()
-        category()
+    HTTagsProvider<Block>(output, Registries.BLOCK, provider, helper) {
+    override fun addTags(builder: HTTagBuilder<Block>) {
+        mineable(builder)
+        category(builder)
     }
 
     //    Mineable    //
 
-    private fun mineable() {
+    private fun mineable(builder: HTTagBuilder<Block>) {
         // Axe
-        tag(BlockTags.MINEABLE_WITH_AXE)
-            .addBlock(RagiumBlocks.EXP_BERRY_BUSH)
-            .addBlock(RagiumBlocks.Casings.WOODEN)
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.Casings.WOODEN)
         // Hoe
-        val hoe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_HOE)
-            .addBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
+        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
-        val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
-            .addTag(RagiumModTags.Blocks.LED_BLOCKS)
-            .addBlock(RagiumBlocks.RESONANT_DEBRIS)
-        RagiumBlocks.ORES.values.forEach(pickaxe::addBlock)
-        RagiumBlocks.MATERIALS.values.forEach(pickaxe::addBlock)
+        builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
+        builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumModTags.Blocks.LED_BLOCKS)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
 
-        RagiumBlocks.DECORATION_MAP.values.forEach(pickaxe::addBlock)
         for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
-            pickaxe.addBlock(slab)
-            tag(BlockTags.SLABS).addBlock(slab)
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, slab)
+            builder.add(BlockTags.SLABS, slab)
         }
         for (stairs: RagiumBlocks.Stairs in RagiumBlocks.Stairs.entries) {
-            pickaxe.addBlock(stairs)
-            tag(BlockTags.STAIRS).addBlock(stairs)
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, stairs)
+            builder.add(BlockTags.STAIRS, stairs)
         }
         for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
-            pickaxe.addBlock(wall)
-            tag(BlockTags.WALLS).addBlock(wall)
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, wall)
+            builder.add(BlockTags.WALLS, wall)
         }
 
-        pickaxe.addBlocks<RagiumBlocks.Casings>()
-        pickaxe.addBlocks<RagiumBlocks.Devices>()
-        pickaxe.addVariants<HTDrumVariant>()
-        pickaxe.addVariants<HTGeneratorVariant>()
-        pickaxe.addBlocks<RagiumBlocks.Frames>()
-        pickaxe.addVariants<HTMachineVariant>()
-
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.GENERATORS)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
+        builder.addBlocks<RagiumBlocks.Casings>(BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addBlocks<RagiumBlocks.Devices>(BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addBlocks<RagiumBlocks.Frames>(BlockTags.MINEABLE_WITH_PICKAXE)
         // Shovel
-        tag(BlockTags.MINEABLE_WITH_SHOVEL)
-            .addBlock(RagiumBlocks.ASH_LOG)
-            .addBlock(RagiumBlocks.CRIMSON_SOIL)
-            .addBlock(RagiumBlocks.SILT)
+        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
+        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
+        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         // Other
+        tag(RagiumModTags.Blocks.INCORRECT_FOR_DESTRUCTION_TOOL)
+
+        builder.addTag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addTag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_SHOVEL)
+
+        builder.addTag(RagiumModTags.Blocks.MINEABLE_WITH_HAMMER, BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addTag(RagiumModTags.Blocks.MINEABLE_WITH_HAMMER, BlockTags.MINEABLE_WITH_SHOVEL)
     }
 
-    private fun category() {
+    //    Category    //
+
+    private fun category(builder: HTTagBuilder<Block>) {
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, ore: DeferredBlock<*>) ->
-            addBlock(variant, material, ore)
+            builder.addBlock(variant, material, ore)
             val groundTag: TagKey<Block> = when (variant) {
                 HTMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE
                 HTMaterialVariant.DEEP_ORE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
@@ -100,75 +91,70 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                 HTMaterialVariant.END_ORE -> RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE
                 else -> return@forEach
             }
-            tag(groundTag).addBlock(ore)
+            builder.add(groundTag, ore)
         }
-
-        tag(Tags.Blocks.ORES).addTag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
-        tag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP).addBlock(RagiumBlocks.RESONANT_DEBRIS)
+        builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
+        builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
         RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
             if (variant == HTMaterialVariant.STORAGE_BLOCK) {
-                tag(BlockTags.BEACON_BASE_BLOCKS).addBlock(block)
+                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
             }
-            addBlock(variant, material, block)
+            builder.addBlock(variant, material, block)
         }
         // LED
-        tag(RagiumModTags.Blocks.LED_BLOCKS).addBlocks<RagiumBlocks.LEDBlocks>()
+        builder.addBlocks<RagiumBlocks.LEDBlocks>(RagiumModTags.Blocks.LED_BLOCKS)
         // Stone
-        tag(Tags.Blocks.OBSIDIANS).addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
-        tag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS).addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-        tag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES).addTag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+        builder.addBlock(
+            Tags.Blocks.OBSIDIANS,
+            RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
+            RagiumBlocks.MYSTERIOUS_OBSIDIAN,
+        )
+        builder.addTag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES)
         // Crop
-        tag(BlockTags.BEE_GROWABLES).addBlock(RagiumBlocks.EXP_BERRY_BUSH)
-        tag(BlockTags.FALL_DAMAGE_RESETTING).addBlock(RagiumBlocks.EXP_BERRY_BUSH)
-        tag(BlockTags.SWORD_EFFICIENT).addBlock(RagiumBlocks.EXP_BERRY_BUSH)
-        // Others
-        tag(BlockTags.HOGLIN_REPELLENTS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
-        tag(BlockTags.INFINIBURN_OVERWORLD).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
-        tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
-        tag(BlockTags.STRIDER_WARM_BLOCKS).addBlock(RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
+        builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
+        builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)
+        builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRY_BUSH)
+        // Other
+        builder.add(BlockTags.HOGLIN_REPELLENTS, RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
+        builder.add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
+        builder.add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
+        builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
-        tag(RagiumModTags.Blocks.INCORRECT_FOR_DESTRUCTION_TOOL)
-
-        tag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)
-            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
-
-        tag(RagiumModTags.Blocks.MINEABLE_WITH_HAMMER)
-            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
-
-        tag(RagiumModTags.Blocks.WIP)
-            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
-            .addBlock(RagiumBlocks.ASH_LOG)
-            .addBlock(RagiumBlocks.Casings.WOODEN)
+        // WIP
+        builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.ASH_LOG)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.Casings.WOODEN)
     }
 
     //    Extensions    //
 
-    private fun addBlock(variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) {
+    private fun HTTagBuilder<Block>.addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: IHolderExtension<Block>) {
+        addTag(parent, child)
+        add(child, block)
+    }
+
+    private fun HTTagBuilder<Block>.addBlock(variant: HTMaterialVariant, material: HTMaterialType, block: IHolderExtension<Block>) {
         val tagKey: TagKey<Block> = variant.blockTagKey(material)
         if (variant.generateTag) {
-            tag(variant.blockCommonTag).addTag(tagKey)
+            addTag(variant.blockCommonTag, tagKey)
         }
-        tag(tagKey).addBlock(block)
+        add(tagKey, block)
+    }
+
+    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, IHolderExtension<Block>>) {
+        addBlocks(tagKey, blocks.values)
+    }
+
+    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Iterable<IHolderExtension<Block>>) {
+        for (holder: IHolderExtension<Block> in blocks) {
+            add(tagKey, holder)
+        }
+    }
+
+    private inline fun <reified B> HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>) where B : IHolderExtension<Block>, B : Enum<B> {
+        for (holder: B in enumEntries<B>()) {
+            add(tagKey, holder)
+        }
     }
 }
-
-private fun IntrinsicTagAppender<Block>.addBlock(holder: DeferredBlock<*>): IntrinsicTagAppender<Block> = apply {
-    holder.unwrapKey().ifPresent(::add)
-}
-
-private fun IntrinsicTagAppender<Block>.addBlock(holderLike: HTBlockHolderLike): IntrinsicTagAppender<Block> = addBlock(holderLike.holder)
-
-private inline fun <reified B> IntrinsicTagAppender<Block>.addBlocks(): IntrinsicTagAppender<Block>
-where B : HTBlockHolderLike, B : Enum<B> =
-    apply {
-        enumEntries<B>().mapNotNull(HTBlockHolderLike::getKey).forEach(::add)
-    }
-
-private inline fun <reified B> IntrinsicTagAppender<Block>.addVariants(): IntrinsicTagAppender<Block>
-        where B : HTVariantKey.WithBE<*>, B : Enum<B> =
-    apply {
-        enumEntries<B>().mapNotNull(HTVariantKey.WithBE<*>::blockHolder).forEach(::addBlock)
-    }

@@ -1,10 +1,10 @@
 {
   "values": [
-    "ragium:lpg",
-    "ragium:flowing_lpg",
     {
       "id": "#c:fuels/lpg",
       "required": false
-    }
+    },
+    "ragium:flowing_lpg",
+    "ragium:lpg"
   ]
 }

@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -23,7 +24,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE, 8, CraftingBookCategory.BUILDING)
             .hollow8()
             .define('A', Tags.Items.STONES)
-            .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
+            .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Ragi-Stone Bricks
         HTStonecuttingRecipeBuilder(RagiumBlocks.RAGI_STONE_BRICKS)
@@ -36,7 +37,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILES, 8, CraftingBookCategory.BUILDING)
             .hollow4()
-            .define('A', RagiumCommonTags.Items.GEMS_AZURE)
+            .define('A', HTMaterialVariant.GEM, RagiumMaterialType.AZURE)
             .define('B', Items.DEEPSLATE_TILES)
             .save(output)
         // Ember Stone
@@ -90,7 +91,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToItemRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
-                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4),
+                HTIngredientHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)
 

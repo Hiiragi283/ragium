@@ -4,10 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.common.fluid.HTNetherVaporizableFluidType
 import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
@@ -122,7 +123,12 @@ object RagiumFluidContents {
         register(
             "crimson_sap",
             defaultProperties(),
-            HTNetherVaporizableFluidType.create(HTResultHelper.item(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)),
+            HTNetherVaporizableFluidType.create(
+                HTResultHelper.item(
+                    HTMaterialVariant.GEM,
+                    RagiumMaterialType.CRIMSON_CRYSTAL,
+                ),
+            ),
         )
 
     @JvmField
@@ -130,7 +136,12 @@ object RagiumFluidContents {
         register(
             "warped_sap",
             defaultProperties(),
-            HTNetherVaporizableFluidType.create(HTResultHelper.item(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)),
+            HTNetherVaporizableFluidType.create(
+                HTResultHelper.item(
+                    HTMaterialVariant.GEM,
+                    RagiumMaterialType.WARPED_CRYSTAL,
+                ),
+            ),
         )
 
     //    Other    //

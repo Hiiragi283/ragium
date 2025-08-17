@@ -1,8 +1,8 @@
 {
   "values": [
-    "ragium:nether_raginite_ore",
-    "ragium:nether_ragi_crystal_ore",
     "ragium:nether_crimson_crystal_ore",
+    "ragium:nether_ragi_crystal_ore",
+    "ragium:nether_raginite_ore",
     "ragium:nether_warped_crystal_ore"
   ]
 }

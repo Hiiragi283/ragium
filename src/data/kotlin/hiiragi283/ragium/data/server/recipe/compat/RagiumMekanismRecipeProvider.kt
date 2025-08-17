@@ -43,7 +43,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             // Dust -> Chemical
             factory(
-                itemHelper.from(RagiumCommonTags.Items.DUSTS_RAGINITE),
+                itemHelper.from(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(10),
             ).build(output, id("$prefix/raginite/from_dust"))
             // Enriched -> Chemical
@@ -72,13 +72,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ore -> Dust
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumCommonTags.Items.ORES_RAGINITE),
+                itemHelper.from(HTMaterialVariant.ORE, RagiumMaterialType.RAGINITE),
                 RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(12),
             ).build(output, id("processing/raginite/from_ore"))
         // Enrich
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumCommonTags.Items.DUSTS_RAGINITE),
+                itemHelper.from(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
                 RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
             ).build(output, id("enriching/enrich/raginite"))
         // Raginite + Copper -> Ragi-Alloy
@@ -204,6 +204,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
+    private fun IItemStackIngredientCreator.from(
+        variant: HTMaterialVariant,
+        material: HTMaterialType,
+        count: Int = 1,
+    ): ItemStackIngredient = from(variant.itemTagKey(material), count)
+
     private fun IItemStackIngredientCreator.gemOrDust(material: HTMaterialType, count: Int = 1): ItemStackIngredient =
         from(this@RagiumMekanismRecipeProvider.gemOrDust(material), count)
 
@@ -213,7 +219,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private fun oreToGem(material: HTMaterialType) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTMaterialVariant.ORE.itemTagKey(material)),
+                itemHelper.from(HTMaterialVariant.ORE, material),
                 RagiumItems.getGem(material).toStack(2),
             ).build(output, id("processing/${material.serializedName}/from_ore"))
     }

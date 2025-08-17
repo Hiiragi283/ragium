@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
 enum class HTMaterialVariant(
@@ -69,6 +70,10 @@ enum class HTMaterialVariant(
     fun itemTagKey(material: HTMaterialType): TagKey<Item> = itemTagKey(material.serializedName)
 
     fun itemTagKey(path: String): TagKey<Item> = itemTagKey(id(tagNamespace, "$tagPrefix/$path"))
+
+    fun toIngredient(material: HTMaterialType): Ingredient = Ingredient.of(itemTagKey(material))
+
+    fun toIngredient(path: String): Ingredient = Ingredient.of(itemTagKey(path))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

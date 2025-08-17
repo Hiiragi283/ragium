@@ -1,11 +1,8 @@
 {
   "values": [
+    "#c:plates/plastic",
     {
       "id": "#c:plastic",
-      "required": false
-    },
-    {
-      "id": "#c:plates/plastic",
       "required": false
     },
     {

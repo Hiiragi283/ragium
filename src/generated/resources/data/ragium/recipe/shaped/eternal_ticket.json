@@ -9,7 +9,7 @@
       "tag": "c:dyes/white"
     },
     "C": {
-      "tag": "c:paper"
+      "item": "minecraft:paper"
     }
   },
   "pattern": [

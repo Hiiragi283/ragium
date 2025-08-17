@@ -10,10 +10,11 @@ import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -113,12 +114,12 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTResultHelper.item(RagiumItems.EXP_BERRIES),
                 HTIngredientHelper.item(Tags.Items.FOODS_BERRY),
-                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4),
+                HTIngredientHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 4),
             ).save(output)
         // Blaze Powder
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
-                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
+                HTIngredientHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR),
                 HTIngredientHelper.fluid(RagiumFluidContents.EXPERIENCE, 250),
                 HTResultHelper.item(Items.BLAZE_POWDER),
             ).save(output)

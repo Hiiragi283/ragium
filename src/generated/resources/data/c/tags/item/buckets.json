@@ -1,18 +1,18 @@
 {
   "values": [
-    "#c:buckets/honey",
-    "#c:buckets/experience",
-    "#c:buckets/mushroom_stew",
-    "#c:buckets/crude_oil",
-    "#c:buckets/lpg",
-    "#c:buckets/naphtha",
-    "#c:buckets/fuel",
     "#c:buckets/blood_diesel",
+    "#c:buckets/crimson_sap",
+    "#c:buckets/crude_oil",
+    "#c:buckets/eldritch_flux",
+    "#c:buckets/experience",
+    "#c:buckets/fuel",
+    "#c:buckets/honey",
+    "#c:buckets/lpg",
     "#c:buckets/lubricant",
+    "#c:buckets/mushroom_stew",
+    "#c:buckets/naphtha",
     "#c:buckets/sap",
     "#c:buckets/syrup",
-    "#c:buckets/crimson_sap",
-    "#c:buckets/warped_sap",
-    "#c:buckets/eldritch_flux"
+    "#c:buckets/warped_sap"
   ]
 }

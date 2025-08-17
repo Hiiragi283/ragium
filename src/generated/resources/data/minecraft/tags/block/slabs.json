@@ -1,12 +1,12 @@
 {
   "values": [
-    "ragium:ragi_stone_slab",
-    "ragium:ragi_stone_brick_slab",
-    "ragium:ragi_stone_square_slab",
     "ragium:azure_tile_slab",
+    "ragium:blue_nether_brick_slab",
     "ragium:ember_stone_slab",
     "ragium:plastic_block_slab",
-    "ragium:blue_nether_brick_slab",
+    "ragium:ragi_stone_brick_slab",
+    "ragium:ragi_stone_slab",
+    "ragium:ragi_stone_square_slab",
     "ragium:sponge_cake_slab"
   ]
 }

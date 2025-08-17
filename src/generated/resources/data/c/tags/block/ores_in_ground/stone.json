@@ -1,8 +1,8 @@
 {
   "values": [
-    "ragium:raginite_ore",
-    "ragium:ragi_crystal_ore",
     "ragium:crimson_crystal_ore",
+    "ragium:ragi_crystal_ore",
+    "ragium:raginite_ore",
     "ragium:warped_crystal_ore"
   ]
 }

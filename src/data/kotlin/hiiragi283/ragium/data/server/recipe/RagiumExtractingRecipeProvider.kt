@@ -9,10 +9,11 @@ import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.idOrNull
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -47,20 +48,20 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Ragium
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Tags.Items.STORAGE_BLOCKS_REDSTONE),
-                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 3),
+                HTIngredientHelper.item(HTMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SALTPETER),
+                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.GUNPOWDERS),
-                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
+                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
         dyes()

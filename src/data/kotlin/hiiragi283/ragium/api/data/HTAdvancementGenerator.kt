@@ -4,6 +4,9 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTDisplayInfoBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
@@ -47,6 +50,20 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
         parent: AdvancementHolder,
         builderAction: HTAdvancementBuilder.() -> Unit,
     ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
+
+    protected fun createSimple(
+        key: ResourceKey<Advancement>,
+        parent: AdvancementHolder,
+        variant: HTMaterialVariant,
+        material: HTMaterialType,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ): AdvancementHolder = createSimple(
+        key,
+        parent,
+        RagiumItems.getMaterial(variant, material),
+        variant.itemTagKey(material),
+        builderAction,
+    )
 
     protected fun createSimple(
         key: ResourceKey<Advancement>,

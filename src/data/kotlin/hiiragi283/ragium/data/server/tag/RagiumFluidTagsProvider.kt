@@ -1,51 +1,49 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.asFluidHolder
+import hiiragi283.ragium.api.data.tag.HTTagBuilder
+import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.setup.RagiumFluidContents
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
-    IntrinsicHolderTagsProvider<Fluid>(
+    HTTagsProvider<Fluid>(
         output,
         Registries.FLUID,
         provider,
-        { fluid: Fluid -> fluid.asFluidHolder().key() },
-        RagiumAPI.MOD_ID,
         helper,
     ) {
-    override fun addTags(provider: HolderLookup.Provider) {
-        contents()
-        category()
+    override fun addTags(builder: HTTagBuilder<Fluid>) {
+        contents(builder)
+        category(builder)
 
-        pneumatic()
+        pneumatic(builder)
     }
 
-    private fun contents() {
+    private fun contents(builder: HTTagBuilder<Fluid>) {
         // Common Tag
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            tag(content.commonTag).addContent(content)
+            builder.addContent(content.commonTag, content)
         }
     }
 
-    private fun category() {
+    private fun category(builder: HTTagBuilder<Fluid>) {
     }
 
     //    Integrations    //
 
-    private fun pneumatic() {
+    private fun pneumatic(builder: HTTagBuilder<Fluid>) {
         fun addTag(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-            tag(tagKey).addContent(content)
-            tag(content).addOptionalTag(tagKey)
+            builder.addContent(tagKey, content)
+            builder.addTag(content.commonTag, tagKey, HTTagBuilder.DependType.OPTIONAL)
         }
 
         addTag(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
@@ -56,10 +54,8 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     //    Extensions    //
 
-    private fun IntrinsicTagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-        add(content.getStill())
-        add(content.getFlow())
+    private fun HTTagBuilder<Fluid>.addContent(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
+        add(tagKey, content.getStill(), BuiltInRegistries.FLUID::getKey)
+        add(tagKey, content.getFlow(), BuiltInRegistries.FLUID::getKey)
     }
-
-    private fun tag(content: HTFluidContent<*, *, *>): IntrinsicTagAppender<Fluid> = tag(content.commonTag)
 }

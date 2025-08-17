@@ -3,17 +3,16 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -54,33 +53,33 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.BASIC, 2)
             .hollow8()
-            .define('A', Tags.Items.INGOTS_IRON)
+            .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Advanced Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.ADVANCED, 2)
             .hollow8()
-            .define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Elite Machine
         HTShapedRecipeBuilder(RagiumBlocks.Frames.ELITE, 4)
             .hollow8()
-            .define('A', Tags.Items.INGOTS_NETHERITE)
+            .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
-            .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_obsidian")
     }
@@ -104,7 +103,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "DDD",
             ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Items.FLINT)
-            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('C', HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
             .define('D', Items.BRICKS)
             .save(output)
 
@@ -137,22 +136,22 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "DDD",
             ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .define('B', Tags.Items.GEMS_DIAMOND)
-            .define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .define('C', HTMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
         advMachine(HTMachineVariant.INFUSER, Ingredient.of(Items.HOPPER))
         advMachine(HTMachineVariant.MELTER, Ingredient.of(Items.BLAST_FURNACE))
         advMachine(HTMachineVariant.MIXER, Ingredient.of(Items.CAULDRON))
-        advMachine(HTMachineVariant.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ))
+        advMachine(HTMachineVariant.REFINERY, HTMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
         advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
     }
 
     private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
-            .define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
             .define('C', side)
             .define('D', RagiumBlocks.Casings.STONE)
             .save(output)
@@ -161,8 +160,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun advMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
-            .define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', HTMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
             .define('C', side)
             .define('D', RagiumBlocks.Casings.REINFORCED_STONE)
             .save(output)
@@ -174,7 +173,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.Devices.MILK_DRAIN)
             .pattern("A", "B", "C")
-            .define('A', Tags.Items.INGOTS_COPPER)
+            .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.COPPER)
             .define('B', Tags.Items.BARRELS_WOODEN)
             .define('C', RagiumBlocks.Casings.STONE)
             .save(output)
@@ -184,15 +183,15 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         basicDevice(RagiumBlocks.Devices.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
         basicDevice(RagiumBlocks.Devices.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
         // Advanced
-        advancedDevice(RagiumBlocks.Devices.ENI, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        advancedDevice(RagiumBlocks.Devices.ENI, HTMaterialVariant.GEM.toIngredient(HTVanillaMaterialType.DIAMOND))
         advancedDevice(RagiumBlocks.Devices.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advancedDevice(RagiumBlocks.Devices.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advancedDevice(RagiumBlocks.Devices.DIM_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
+        advancedDevice(RagiumBlocks.Devices.DIM_ANCHOR, HTMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.WARPED_CRYSTAL))
     }
 
     private fun basicDevice(device: ItemLike, input: Ingredient) {
         HTSmithingRecipeBuilder(device)
-            .addIngredient(RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .addIngredient(HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
             .addIngredient(RagiumBlocks.Casings.DEVICE)
             .addIngredient(input)
             .save(output)
@@ -200,7 +199,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun advancedDevice(device: ItemLike, input: Ingredient) {
         HTSmithingRecipeBuilder(device)
-            .addIngredient(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .addIngredient(HTMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
             .addIngredient(RagiumBlocks.Casings.DEVICE)
             .addIngredient(input)
             .save(output)
@@ -208,10 +207,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun drums() {
         for ((variant: HTDrumVariant, drum: ItemLike) in RagiumBlocks.DRUMS) {
-            val material: TagKey<Item> = when (variant) {
-                HTDrumVariant.SMALL -> Tags.Items.INGOTS_COPPER
-                HTDrumVariant.MEDIUM -> Tags.Items.INGOTS_GOLD
-                HTDrumVariant.LARGE -> Tags.Items.GEMS_DIAMOND
+            val pair: Pair<HTMaterialVariant, HTVanillaMaterialType> = when (variant) {
+                HTDrumVariant.SMALL -> HTMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
+                HTDrumVariant.MEDIUM -> HTMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTDrumVariant.LARGE -> HTMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
                 HTDrumVariant.HUGE -> continue
             }
 
@@ -220,7 +219,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ABA",
                     "ACA",
                     "ABA",
-                ).define('A', material)
+                ).define('A', pair.first, pair.second)
                 .define('B', Items.SMOOTH_STONE_SLAB)
                 .define('C', Tags.Items.BUCKETS_EMPTY)
                 .save(output)
@@ -236,11 +235,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDrumVariant.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
                 HTDrumVariant.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
             }
-            val material: TagKey<Item> = when (variant) {
+            val pair: Pair<HTMaterialVariant, HTVanillaMaterialType> = when (variant) {
                 HTDrumVariant.SMALL -> continue
-                HTDrumVariant.MEDIUM -> Tags.Items.INGOTS_GOLD
-                HTDrumVariant.LARGE -> Tags.Items.GEMS_DIAMOND
-                HTDrumVariant.HUGE -> Tags.Items.INGOTS_NETHERITE
+                HTDrumVariant.MEDIUM -> HTMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTDrumVariant.LARGE -> HTMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
+                HTDrumVariant.HUGE -> HTMaterialVariant.INGOT to HTVanillaMaterialType.NETHERITE
             }
 
             HTShapedRecipeBuilder(upgrade)
@@ -248,7 +247,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ABA",
                     "C C",
                     "ABA",
-                ).define('A', material)
+                ).define('A', pair.first, pair.second)
                 .define('B', Items.SMOOTH_STONE_SLAB)
                 .define('C', Tags.Items.GLASS_BLOCKS)
                 .save(output)

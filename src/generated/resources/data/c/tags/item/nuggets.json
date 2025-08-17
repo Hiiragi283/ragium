@@ -1,8 +1,8 @@
 {
   "values": [
-    "#c:nuggets/ragi_alloy",
     "#c:nuggets/advanced_ragi_alloy",
     "#c:nuggets/azure_steel",
-    "#c:nuggets/deep_steel"
+    "#c:nuggets/deep_steel",
+    "#c:nuggets/ragi_alloy"
   ]
 }

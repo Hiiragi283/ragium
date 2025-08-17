@@ -1,12 +1,12 @@
 {
   "values": [
-    "#c:dusts/meat",
-    "#c:dusts/raginite",
-    "#c:dusts/obsidian",
+    "#c:dusts/ash",
     "#c:dusts/cinnabar",
+    "#c:dusts/meat",
+    "#c:dusts/obsidian",
+    "#c:dusts/raginite",
     "#c:dusts/saltpeter",
     "#c:dusts/sulfur",
-    "#c:dusts/ash",
     "#c:dusts/wood"
   ]
 }

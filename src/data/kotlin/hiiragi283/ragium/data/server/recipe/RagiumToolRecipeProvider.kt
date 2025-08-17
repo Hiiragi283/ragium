@@ -7,15 +7,16 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
@@ -36,9 +37,9 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 " A ",
                 "ABA",
                 "ACA",
-            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('C', HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE)
@@ -55,13 +56,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
-            .addIngredient(Tags.Items.GEMS_EMERALD)
+            .addIngredient(HTMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
             .hollow8()
             .define('A', Tags.Items.GUNPOWDERS)
-            .define('B', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
+            .define('B', HTMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
@@ -70,12 +71,12 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ABA",
                 "AAA",
             ).define('A', Tags.Items.LEATHERS)
-            .define('B', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
+            .define('B', HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
             .hollow4()
-            .define('A', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
+            .define('A', HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .define('B', Tags.Items.EGGS)
             .save(output)
 
@@ -96,15 +97,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "A A",
                 "B B",
                 " C ",
-            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('B', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .define('C', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('C', HTMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .save(output)
 
         // Advanced
         addTemplate(
             RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY,
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
         )
 
         addAdvRagiSmithing(RagiumItems.ADVANCED_RAGI_MAGNET, RagiumItems.RAGI_MAGNET)
@@ -116,7 +117,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         // Elite
         HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
             .hollow4()
-            .define('A', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .define('A', HTMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
             .save(output)
     }
@@ -124,7 +125,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun azureSteel() {
         addTemplate(
             RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_AZURE_STEEL,
+            RagiumMaterialType.AZURE_STEEL,
         )
 
         EQUIPMENT_SUFFIXES
@@ -141,7 +142,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun deepSteel() {
         addTemplate(
             RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_DEEP_STEEL,
+            RagiumMaterialType.DEEP_STEEL,
         )
 
         EQUIPMENT_SUFFIXES
@@ -158,34 +159,42 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun forgeHammers() {
         fun hammer(material: HTMaterialType): DeferredItem<*> = RagiumItems.getForgeHammer(material)
 
-        fun crafting(material: HTMaterialType, input: TagKey<Item>) {
+        fun crafting(variant: HTMaterialVariant, material: HTMaterialType) {
             HTShapedRecipeBuilder(hammer(material), category = CraftingBookCategory.EQUIPMENT)
                 .pattern(
                     " AA",
                     "BBA",
                     " AA",
-                ).define('A', input)
+                ).define('A', variant, material)
                 .define('B', Tags.Items.RODS_WOODEN)
                 .save(output)
         }
 
-        crafting(HTVanillaMaterialType.IRON, Tags.Items.INGOTS_IRON)
-        crafting(HTVanillaMaterialType.DIAMOND, Tags.Items.GEMS_DIAMOND)
-        crafting(RagiumMaterialType.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+        crafting(HTMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+        crafting(HTMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND)
+        crafting(HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
 
         createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
         addAzureSmithing(hammer(RagiumMaterialType.AZURE_STEEL), hammer(HTVanillaMaterialType.IRON))
         addDeepSmithing(hammer(RagiumMaterialType.DEEP_STEEL), hammer(RagiumMaterialType.AZURE_STEEL))
 
         HTSmithingRecipeBuilder(hammer(RagiumMaterialType.RAGI_CRYSTAL))
-            .addIngredient(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .addIngredient(HTMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .addIngredient(hammer(RagiumMaterialType.RAGI_ALLOY))
             .save(output)
     }
 
     private fun tickets() {
-        addTicket(RagiumItems.RAGI_TICKET, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
-        addTicket(RagiumItems.TELEPORT_TICKET, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
+        addTicket(
+            RagiumItems.RAGI_TICKET,
+            HTMaterialVariant.GEM.itemTagKey(RagiumMaterialType.RAGI_CRYSTAL),
+            Tags.Items.DYES_RED,
+        )
+        addTicket(
+            RagiumItems.TELEPORT_TICKET,
+            HTMaterialVariant.GEM.itemTagKey(RagiumMaterialType.WARPED_CRYSTAL),
+            Tags.Items.DYES_CYAN,
+        )
         addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(
@@ -239,19 +248,19 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     )
 
     @JvmStatic
-    private fun addTemplate(template: ItemLike, input: TagKey<Item>) {
+    private fun addTemplate(template: ItemLike, material: HTMaterialType) {
         HTShapedRecipeBuilder(template)
             .pattern(
                 "A A",
                 "A A",
                 " A ",
-            ).define('A', input)
+            ).define('A', HTMaterialVariant.INGOT, material)
             .save(output)
 
         HTShapelessRecipeBuilder(template, 2)
             .addIngredient(template)
-            .addIngredient(input)
-            .addIngredient(input)
+            .addIngredient(HTMaterialVariant.INGOT, material)
+            .addIngredient(HTMaterialVariant.INGOT, material)
             .saveSuffixed(output, "_duplicate")
     }
 
@@ -260,7 +269,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
+            .addIngredient(HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .save(this.output)
     }
 
@@ -269,7 +278,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .save(this.output)
     }
 
@@ -278,7 +287,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_DEEP_STEEL)
+            .addIngredient(HTMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .save(this.output)
     }
 
@@ -288,7 +297,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', corner)
             .define('B', dye)
-            .define('C', RagiumCommonTags.Items.PAPER)
+            .define('C', Items.PAPER)
             .save(output)
     }
 

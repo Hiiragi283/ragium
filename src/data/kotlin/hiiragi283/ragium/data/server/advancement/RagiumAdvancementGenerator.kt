@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -58,30 +59,30 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val raginite: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGINITE,
             root,
-            RagiumItems.getDust(RagiumMaterialType.RAGINITE),
-            RagiumCommonTags.Items.DUSTS_RAGINITE,
+            HTMaterialVariant.DUST,
+            RagiumMaterialType.RAGINITE,
         )
         // Basic
         val ragiAlloy: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGI_ALLOY,
             raginite,
-            RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY),
-            RagiumCommonTags.Items.INGOTS_RAGI_ALLOY,
+            HTMaterialVariant.INGOT,
+            RagiumMaterialType.RAGI_ALLOY,
         )
         // Advanced
         val advRagiAlloy: AdvancementHolder = createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
             ragiAlloy,
-            RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY),
-            RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY,
+            HTMaterialVariant.INGOT,
+            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
         )
 
         // Elite
         val ragiCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGI_CRYSTAL,
             raginite,
-            RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL),
-            RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.RAGI_CRYSTAL,
         )
         val ragiCrystalHammer: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
@@ -106,15 +107,15 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             createSimple(
                 RagiumAdvancements.AZURE_SHARD,
                 root,
-                RagiumItems.getGem(RagiumMaterialType.AZURE),
-                RagiumCommonTags.Items.GEMS_AZURE,
+                HTMaterialVariant.GEM,
+                RagiumMaterialType.AZURE,
             )
         val azureSteel: AdvancementHolder =
             createSimple(
                 RagiumAdvancements.AZURE_STEEL,
                 azureShard,
-                RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL),
-                RagiumCommonTags.Items.INGOTS_AZURE_STEEL,
+                HTMaterialVariant.INGOT,
+                RagiumMaterialType.AZURE_STEEL,
             )
         val azureGears: AdvancementHolder = child(RagiumAdvancements.AZURE_GEARS, azureSteel) {
             display {
@@ -131,8 +132,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val crimsonCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.CRIMSON_CRYSTAL,
             root,
-            RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL),
-            RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.CRIMSON_CRYSTAL,
         )
         val crimsonSoil: AdvancementHolder = child(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
             display {
@@ -149,8 +150,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val warpedCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.WARPED_CRYSTAL,
             root,
-            RagiumItems.getGem(RagiumMaterialType.WARPED_CRYSTAL),
-            RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.WARPED_CRYSTAL,
         )
         val dimAnchor: AdvancementHolder = child(RagiumAdvancements.DIM_ANCHOR, warpedCrystal) {
             display {
@@ -179,8 +180,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val eldritchPearl: AdvancementHolder = createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
             root,
-            RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL),
-            RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL,
+            HTMaterialVariant.GEM,
+            RagiumMaterialType.ELDRITCH_PEARL,
         )
         val eldritchEgg: AdvancementHolder = child(RagiumAdvancements.ELDRITCH_EGG, eldritchPearl) {
             display {

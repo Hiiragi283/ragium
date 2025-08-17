@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -23,6 +25,8 @@ object HTResultHelper {
 
     fun item(id: ResourceLocation, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
         HTItemResult(Either.left(id), count, component)
+
+    fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemResult = item(variant.itemTagKey(material), count)
 
     fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult = HTItemResult(Either.right(tagKey), count, DataComponentPatch.EMPTY)
 
