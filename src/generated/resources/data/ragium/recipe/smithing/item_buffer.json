@@ -11,6 +11,6 @@
     "id": "ragium:item_buffer"
   },
   "template": {
-    "tag": "c:circuits/basic"
+    "item": "ragium:basic_component"
   }
 }

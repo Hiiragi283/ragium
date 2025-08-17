@@ -2,24 +2,12 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/azure"
-        },
-        {
-          "tag": "c:gems/azure"
-        }
-      ],
-      "count": 1
-    },
-    {
-      "count": 1,
-      "item": "ragium:luminous_paste"
-    },
-    {
       "count": 1,
       "tag": "ragium:plastics"
+    },
+    {
+      "count": 2,
+      "item": "ragium:luminous_paste"
     }
   ],
   "result": {

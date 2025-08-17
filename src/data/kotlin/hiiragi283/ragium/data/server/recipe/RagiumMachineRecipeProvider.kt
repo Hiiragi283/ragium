@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -146,10 +145,22 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advMachine(HTMachineVariant.REFINERY, HTMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
         advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
 
-        createAdvUpgrade(HTMachineVariant.ALLOY_SMELTER, HTMachineVariant.SMELTER).save(output)
-        createAdvUpgrade(HTMachineVariant.CRUSHER, HTMachineVariant.PULVERIZER).save(output)
+        createComponentUpgrade(
+            RagiumTierType.ADVANCED,
+            HTMachineVariant.ALLOY_SMELTER,
+            HTMachineVariant.SMELTER,
+        ).save(output)
+        createComponentUpgrade(
+            RagiumTierType.ADVANCED,
+            HTMachineVariant.CRUSHER,
+            HTMachineVariant.PULVERIZER,
+        ).save(output)
 
-        createAdvUpgrade(HTMachineVariant.MELTER, HTMachineVariant.EXTRACTOR).save(output)
+        createComponentUpgrade(
+            RagiumTierType.ADVANCED,
+            HTMachineVariant.MELTER,
+            HTMachineVariant.EXTRACTOR,
+        ).save(output)
     }
 
     private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
@@ -195,17 +206,13 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun basicDevice(device: ItemLike, input: Ingredient) {
-        HTSmithingRecipeBuilder(device)
-            .addIngredient(HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
-            .addIngredient(RagiumBlocks.Casings.DEVICE)
+        createComponentUpgrade(RagiumTierType.BASIC, device, RagiumBlocks.Casings.DEVICE)
             .addIngredient(input)
             .save(output)
     }
 
     private fun advancedDevice(device: ItemLike, input: Ingredient) {
-        HTSmithingRecipeBuilder(device)
-            .addIngredient(HTMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
-            .addIngredient(RagiumBlocks.Casings.DEVICE)
+        createComponentUpgrade(RagiumTierType.ADVANCED, device, RagiumBlocks.Casings.DEVICE)
             .addIngredient(input)
             .save(output)
     }

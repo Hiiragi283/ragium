@@ -102,7 +102,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         // Advanced
-        createAdvUpgrade(RagiumItems.ADVANCED_RAGI_MAGNET, RagiumItems.RAGI_MAGNET).save(output)
+        createComponentUpgrade(
+            RagiumTierType.ADVANCED,
+            RagiumItems.ADVANCED_RAGI_MAGNET,
+            RagiumItems.RAGI_MAGNET,
+        ).save(output)
 
         // Elite
         HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
@@ -168,10 +172,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         addAzureSmithing(hammer(RagiumMaterialType.AZURE_STEEL), hammer(HTVanillaMaterialType.IRON))
         addDeepSmithing(hammer(RagiumMaterialType.DEEP_STEEL), hammer(RagiumMaterialType.AZURE_STEEL))
 
-        HTSmithingRecipeBuilder(hammer(RagiumMaterialType.RAGI_CRYSTAL))
-            .addIngredient(HTMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
-            .addIngredient(hammer(RagiumMaterialType.RAGI_ALLOY))
-            .save(output)
+        createComponentUpgrade(
+            RagiumTierType.ELITE,
+            hammer(RagiumMaterialType.RAGI_CRYSTAL),
+            hammer(RagiumMaterialType.RAGI_ALLOY),
+        ).save(output)
     }
 
     private fun tickets() {

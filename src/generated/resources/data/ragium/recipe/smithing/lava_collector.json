@@ -11,6 +11,6 @@
     "id": "ragium:lava_collector"
   },
   "template": {
-    "tag": "c:circuits/advanced"
+    "item": "ragium:advanced_component"
   }
 }

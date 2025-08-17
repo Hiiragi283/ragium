@@ -158,25 +158,23 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         fun register(
             material: HTMaterialType,
             core: HTMaterialType,
-            result: ItemLike = RagiumItems.getCoil(material),
-            variant: HTMaterialVariant = HTMaterialVariant.INGOT,
         ) {
             // Shaped
-            HTShapedRecipeBuilder(result)
+            HTShapedRecipeBuilder(RagiumItems.getCoil(material), 4)
                 .hollow4()
-                .define('A', variant, material)
+                .define('A', HTMaterialVariant.INGOT, material)
                 .define('B', ingotOrRod(core))
                 .save(output)
         }
 
         register(RagiumMaterialType.RAGI_ALLOY, HTVanillaMaterialType.IRON)
         register(RagiumMaterialType.ADVANCED_RAGI_ALLOY, RagiumMaterialType.AZURE_STEEL)
-        register(
-            RagiumMaterialType.ELDRITCH_PEARL,
-            RagiumMaterialType.DEEP_STEEL,
-            RagiumItems.ELDRITCH_GEAR,
-            HTMaterialVariant.GEM,
-        )
+
+        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_GEAR)
+            .hollow4()
+            .define('A', HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .define('B', ingotOrRod(RagiumMaterialType.DEEP_STEEL))
+            .save(output)
 
         for (tier: RagiumTierType in RagiumTierType.entries) {
             val (variant: HTMaterialVariant, material: RagiumMaterialType) = when (tier) {

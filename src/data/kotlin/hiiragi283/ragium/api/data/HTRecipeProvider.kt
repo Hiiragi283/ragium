@@ -170,7 +170,6 @@ sealed class HTRecipeProvider : IConditionBuilder {
         .addIngredient(input)
         .addIngredient(Tags.Items.INGOTS_NETHERITE)
 
-    protected fun createAdvUpgrade(output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
-        .addIngredient(RagiumItems.getComponent(RagiumTierType.ADVANCED))
-        .addIngredient(ingredient)
+    protected fun createComponentUpgrade(tier: RagiumTierType, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
+        HTSmithingRecipeBuilder(output).addIngredient(RagiumItems.getComponent(tier)).addIngredient(ingredient)
 }

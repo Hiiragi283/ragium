@@ -11,6 +11,6 @@
     "id": "ragium:sprinkler"
   },
   "template": {
-    "tag": "c:circuits/basic"
+    "item": "ragium:basic_component"
   }
 }

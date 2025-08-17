@@ -9,6 +9,6 @@
     "id": "ragium:ragi_crystal_hammer"
   },
   "template": {
-    "tag": "c:gems/ragi_crystal"
+    "item": "ragium:elite_component"
   }
 }
