@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.ragium.api.storage.HTContentListener
 import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.fluids.FluidStack
@@ -10,10 +11,13 @@ import java.util.Optional
 
 interface HTFluidTank :
     IFluidTank,
-    INBTSerializable<CompoundTag> {
+    INBTSerializable<CompoundTag>,
+    HTContentListener {
     fun isEmpty(): Boolean
 
     fun getSpace(): Int
+
+    fun setFluid(stack: FluidStack)
 
     fun fill(stack: FluidStack, simulate: Boolean): Int = fill(stack, toAction(simulate))
 

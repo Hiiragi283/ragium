@@ -14,12 +14,12 @@ import net.neoforged.neoforge.registries.DeferredRegister
 class HTMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
     /**
      * [MenuType.MenuSupplier]から[HTDeferredMenuType]を返します。
-     * @param T [AbstractContainerMenu]を継承したクラス
+     * @param MENU [AbstractContainerMenu]を継承したクラス
      * @param name [MenuType]のID
-     * @param constructor [T]を返すブロック
+     * @param constructor [MENU]を返すブロック
      */
-    fun <T : AbstractContainerMenu> registerType(name: String, constructor: MenuType.MenuSupplier<T>): HTDeferredMenuType<T> {
-        val holder: HTDeferredMenuType<T> =
+    fun <MENU : AbstractContainerMenu> registerType(name: String, constructor: MenuType.MenuSupplier<MENU>): HTDeferredMenuType<MENU> {
+        val holder: HTDeferredMenuType<MENU> =
             HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
         register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
         return holder
@@ -27,12 +27,12 @@ class HTMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Regi
 
     /**
      * [IContainerFactory]から[HTDeferredMenuType]を返します。
-     * @param T [AbstractContainerMenu]を継承したクラス
+     * @param MENU [AbstractContainerMenu]を継承したクラス
      * @param name [MenuType]のID
-     * @param constructor [T]を返すブロック
+     * @param constructor [MENU]を返すブロック
      */
-    fun <T : AbstractContainerMenu> registerType(name: String, constructor: IContainerFactory<T>): HTDeferredMenuType<T> {
-        val holder: HTDeferredMenuType<T> =
+    fun <MENU : AbstractContainerMenu> registerType(name: String, constructor: IContainerFactory<MENU>): HTDeferredMenuType<MENU> {
+        val holder: HTDeferredMenuType<MENU> =
             HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
         register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
         return holder

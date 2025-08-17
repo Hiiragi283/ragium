@@ -1,17 +1,19 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTGeneratorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(type, pos, state) {
-    override fun handleEnergy(network: IEnergyStorage): Int = network.receiveEnergy(energyUsage, false)
+abstract class HTGeneratorBlockEntity(protected val variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
+    final override val energyUsage: Int get() = variant.energyRate()
 
-    override fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
+    final override fun handleEnergy(network: IEnergyStorage): Int = network.receiveEnergy(energyUsage, false)
+
+    final override fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
         HTFilteredEnergyStorage(network, HTEnergyFilter.EXTRACT_ONLY)
 }

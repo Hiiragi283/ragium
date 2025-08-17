@@ -14,7 +14,7 @@ class HTDeferredBlockEntityType<BE : BlockEntity> private constructor(key: Resou
     DeferredHolder<BlockEntityType<*>, BlockEntityType<BE>>(key) {
         companion object {
             @JvmStatic
-            fun <T : BlockEntity> createType(key: ResourceLocation): HTDeferredBlockEntityType<T> = createType<T>(
+            fun <T : BlockEntity> createType(key: ResourceLocation): HTDeferredBlockEntityType<T> = createType(
                 ResourceKey.create(
                     Registries.BLOCK_ENTITY_TYPE,
                     key,

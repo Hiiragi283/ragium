@@ -111,7 +111,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Dynamo
-        addBlock(RagiumBlocks.Generators.THERMAL, "Thermal Power Generator")
         // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "Advanced Machine Frame")
         addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")

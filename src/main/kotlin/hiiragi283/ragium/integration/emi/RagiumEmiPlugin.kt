@@ -55,6 +55,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
@@ -73,6 +74,9 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import org.slf4j.Logger
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.iterator
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
@@ -115,7 +119,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Crafting
         val crafting: HTDeferredRecipeType<CraftingInput, CraftingRecipe> =
             HTDeferredRecipeType.createType(vanillaId("crafting"))
-        crafting.forEach(recipeManager) { id: ResourceLocation, recipe: CraftingRecipe? ->
+        crafting.forEach(recipeManager) { id: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
                     addRecipeSafe(
@@ -152,18 +156,23 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Fluid Fuel
+        addFuelRecipes(RagiumDataMaps.COMBUSTION_FUEL, HTGeneratorVariant.COMBUSTION)
+        addFuelRecipes(RagiumDataMaps.THERMAL_FUEL, HTGeneratorVariant.THERMAL)
+    }
+
+    private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant) {
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        for (dataMapType: DataMapType<Fluid, HTFluidFuelData> in RagiumDataMaps.FUELS) {
-            for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(dataMapType)) {
-                val fluid: Fluid = fluidRegistry.get(key) ?: continue
-                if (!fluid.isSource(fluid.defaultFluidState())) continue
-                registry.addRecipe(
-                    HTFluidFuelEmiRecipe(
-                        key.location().withPrefix("/${dataMapType.id().path}/"),
-                        EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
-                    ),
-                )
-            }
+        for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(dataMapType)) {
+            val fluid: Fluid = fluidRegistry.get(key) ?: continue
+            if (!fluid.isSource(fluid.defaultFluidState())) continue
+            registry.addRecipe(
+                HTFluidFuelEmiRecipe(
+                    RagiumEmiCategories.getGenerator(variant),
+                    key.location().withPrefix("/${dataMapType.id().path}/"),
+                    EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
+                    variant.energyRate(),
+                ),
+            )
         }
     }
 

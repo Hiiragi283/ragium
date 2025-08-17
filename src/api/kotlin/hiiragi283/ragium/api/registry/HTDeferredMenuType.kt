@@ -18,11 +18,11 @@ import net.neoforged.neoforge.registries.DeferredHolder
 /**
  * Ragiumで使用する[MenuType]向けの[DeferredHolder]
  */
-class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: ResourceKey<MenuType<*>>) :
-    DeferredHolder<MenuType<*>, MenuType<T>>(key) {
+class HTDeferredMenuType<MENU : AbstractContainerMenu> private constructor(key: ResourceKey<MenuType<*>>) :
+    DeferredHolder<MenuType<*>, MenuType<MENU>>(key) {
         companion object {
             @JvmStatic
-            fun <T : AbstractContainerMenu> createType(key: ResourceLocation): HTDeferredMenuType<T> = createType(
+            fun <MENU : AbstractContainerMenu> createType(key: ResourceLocation): HTDeferredMenuType<MENU> = createType(
                 ResourceKey.create(
                     Registries.MENU,
                     key,
@@ -30,13 +30,13 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
             )
 
             @JvmStatic
-            fun <T : AbstractContainerMenu> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<T> = HTDeferredMenuType(key)
+            fun <MENU : AbstractContainerMenu> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<MENU> = HTDeferredMenuType(key)
         }
 
         /**
          * [MenuType]を[MenuConstructor]に変換します。
          */
-        fun getConstructor(): MenuConstructor = MenuConstructor { id: Int, inv: Inventory, player: Player -> get().create(id, inv) }
+        fun getConstructor(): MenuConstructor = MenuConstructor { id: Int, inv: Inventory, _: Player -> get().create(id, inv) }
 
         /**
          * 指定された[title]から[getConstructor]に基づいて[SimpleMenuProvider]を返します。

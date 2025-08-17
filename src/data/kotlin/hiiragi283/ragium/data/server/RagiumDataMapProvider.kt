@@ -68,11 +68,11 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         builder.add(RagiumFluidContents.DIESEL, 10)
         builder.add("biodiesel", 10)
-        builder.add(RagiumConst.ACTUALLY, "crystallized_canola_oil", 10)
+        builder.add(RagiumConst.ACTUALLY, "crystallized_oil", 10)
 
         builder.add(RagiumFluidContents.BLOOD_DIESEL, 5)
         builder.add("high_power_biodiesel", 5)
-        builder.add(RagiumConst.ACTUALLY, "empowered_canola_oil", 10)
+        builder.add(RagiumConst.ACTUALLY, "empowered_oil", 10)
     }
 
     private fun thermalFuels() {

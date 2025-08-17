@@ -39,7 +39,7 @@
       ],
       "amount": 50
     },
-    "actuallyadditions:crystallized_canola_oil": {
+    "actuallyadditions:crystallized_oil": {
       "neoforge:conditions": [
         {
           "type": "neoforge:mod_loaded",
@@ -48,7 +48,7 @@
       ],
       "amount": 10
     },
-    "actuallyadditions:empowered_canola_oil": {
+    "actuallyadditions:empowered_oil": {
       "neoforge:conditions": [
         {
           "type": "neoforge:mod_loaded",

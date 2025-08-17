@@ -4,7 +4,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTFilteredFluidHandler(private val delegate: List<HTFluidTank>, private val filter: HTFluidFilter) : IFluidHandler {
+class HTFilteredFluidHandler(private val delegate: List<HTFluidTank>, private val filter: HTFluidFilter) : IFluidHandlerModifiable {
     constructor(tank: HTFluidTank, filter: HTFluidFilter) : this(listOf(tank), filter)
 
     constructor(tankIn: HTFluidTank, tankOut: HTFluidTank) : this(
@@ -17,6 +17,10 @@ class HTFilteredFluidHandler(private val delegate: List<HTFluidTank>, private va
             override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = tank == tankOut
         },
     )
+
+    override fun setFluidInTank(tank: Int, stack: FluidStack) {
+        delegate[tank].fluid = stack
+    }
 
     override fun getTanks(): Int = delegate.size
 

@@ -73,7 +73,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         pickaxe.addBlocks<RagiumBlocks.Casings>()
         pickaxe.addBlocks<RagiumBlocks.Devices>()
         RagiumBlocks.DRUMS.values.forEach(pickaxe::addBlock)
-        pickaxe.addBlocks<RagiumBlocks.Generators>()
+        RagiumBlocks.GENERATORS.values.forEach(pickaxe::addBlock)
         pickaxe.addBlocks<RagiumBlocks.Frames>()
         pickaxe.addBlocks<RagiumBlocks.Machines>()
 

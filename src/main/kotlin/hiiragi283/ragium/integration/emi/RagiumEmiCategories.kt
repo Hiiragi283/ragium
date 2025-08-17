@@ -1,28 +1,25 @@
 package hiiragi283.ragium.integration.emi
 
 import dev.emi.emi.api.EmiRegistry
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.recipe.EmiRecipeSorting
-import dev.emi.emi.api.render.EmiRenderable
-import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiStack
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.client.gui.GuiGraphics
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
 
 object RagiumEmiCategories {
+    //    Generators    //
+
     @JvmField
-    val FLUID_FUEL: EmiRecipeCategory
-
-    init {
-        val flame = EmiRenderable { matrices: GuiGraphics, x: Int, y: Int, delta: Float ->
-            EmiTexture.FULL_FLAME.render(matrices, x + 1, y + 1, delta)
+    val GENERATORS: Map<HTGeneratorVariant, HTEmiRecipeCategory> =
+        HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
+            HTEmiRecipeCategory(variant.serializedName, RagiumBlocks.getGenerator(variant))
         }
-        FLUID_FUEL = EmiRecipeCategory(RagiumAPI.id("fluid_fuel"), flame, flame, EmiRecipeSorting.compareInputThenOutput())
-    }
 
-    // Machines
+    @JvmStatic
+    fun getGenerator(variant: HTGeneratorVariant): HTEmiRecipeCategory = GENERATORS[variant]!!
+
+    //    Machines    //
+
     @JvmField
     val ALLOYING = HTEmiRecipeCategory(RagiumConst.ALLOYING, RagiumBlocks.Machines.ALLOY_SMELTER)
 
@@ -71,14 +68,15 @@ object RagiumEmiCategories {
     @JvmStatic
     fun register(registry: EmiRegistry) {
         // Category
+        GENERATORS.values.forEach(registry::addCategory)
         CATEGORIES.forEach(registry::addCategory)
-        registry.addCategory(FLUID_FUEL)
 
         // Workstation
         fun addWorkstation(category: HTEmiRecipeCategory) {
             registry.addWorkstation(category, category.iconStack)
         }
 
+        GENERATORS.values.forEach(::addWorkstation)
         CATEGORIES.forEach(::addWorkstation)
         registry.addWorkstation(CRUSHING, EmiStack.of(RagiumBlocks.Machines.CRUSHER))
     }

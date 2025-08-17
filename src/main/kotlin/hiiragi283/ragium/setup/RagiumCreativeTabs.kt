@@ -55,7 +55,7 @@ object RagiumCreativeTabs {
         // Storage Blocks
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
         // Machines
-        output.acceptItems<RagiumBlocks.Generators>()
+        output.acceptItems(RagiumBlocks.GENERATORS.values)
 
         output.acceptItems<RagiumBlocks.Frames>()
         output.acceptItems<RagiumBlocks.Machines>()

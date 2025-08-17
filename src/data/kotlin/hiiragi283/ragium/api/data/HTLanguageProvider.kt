@@ -17,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.advancements.Advancement
@@ -65,6 +66,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             addItem(item, variant.translate(type, material.getTranslatedName(type)))
         }
 
+        for ((variant: HTGeneratorVariant, drum: DeferredBlock<Block>) in RagiumBlocks.GENERATORS) {
+            addBlock(drum, variant.translate(type, ""))
+        }
         for ((variant: HTDrumVariant, drum: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
             addBlock(drum, variant.translate(type, ""))
         }

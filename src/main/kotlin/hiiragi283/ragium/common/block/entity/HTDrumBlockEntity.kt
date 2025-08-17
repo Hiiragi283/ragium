@@ -5,13 +5,12 @@ import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
@@ -29,14 +28,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTDrumBlockEntity(
     capacity: Int,
-    type: HTDeferredBlockEntityType<*>,
+    variant: HTDrumVariant,
     pos: BlockPos,
     state: BlockState,
-) : HTBlockEntity(type, pos, state),
+) : HTBlockEntity(variant.blockEntityHolder, pos, state),
     HTFluidInteractable,
     HTHandlerBlockEntity,
     MenuProvider {
-    private val tank = HTFluidStackTank(capacity, this::setChanged)
+    private val tank = HTFluidStackTank(capacity, this)
 
     //    Save & Load    //
 
@@ -79,14 +78,14 @@ abstract class HTDrumBlockEntity(
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlockEntityTypes.SMALL_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getSmallDrumCapacity(), HTDrumVariant.SMALL, pos, state)
 
     class Medium(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlockEntityTypes.MEDIUM_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getMediumDrumCapacity(), HTDrumVariant.MEDIUM, pos, state)
 
     class Large(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlockEntityTypes.LARGE_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getLargeDrumCapacity(), HTDrumVariant.LARGE, pos, state)
 
     class Huge(pos: BlockPos, state: BlockState) :
-        HTDrumBlockEntity(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlockEntityTypes.HUGE_DRUM, pos, state)
+        HTDrumBlockEntity(RagiumAPI.getConfig().getHugeDrumCapacity(), HTDrumVariant.HUGE, pos, state)
 }

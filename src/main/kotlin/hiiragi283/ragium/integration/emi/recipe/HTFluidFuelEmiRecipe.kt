@@ -1,20 +1,23 @@
 package hiiragi283.ragium.integration.emi.recipe
 
-import dev.emi.emi.EmiPort
-import dev.emi.emi.EmiRenderHelper
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.integration.emi.RagiumEmiCategories
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
 /**
  * @see [dev.emi.emi.recipe.EmiFuelRecipe]
  */
-class HTFluidFuelEmiRecipe(private val id: ResourceLocation, val fluid: EmiIngredient, val time: Int) : HTEmiRecipe {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.FLUID_FUEL
+class HTFluidFuelEmiRecipe(
+    private val category: EmiRecipeCategory,
+    private val id: ResourceLocation,
+    private val fluid: EmiStack,
+    private val energyRate: Int,
+) : HTEmiRecipe {
+    override fun getCategory(): EmiRecipeCategory = category
 
     override fun getId(): ResourceLocation = id
 
@@ -22,22 +25,19 @@ class HTFluidFuelEmiRecipe(private val id: ResourceLocation, val fluid: EmiIngre
 
     override fun getOutputs(): List<EmiStack> = listOf()
 
-    override fun getDisplayWidth(): Int = 144
+    override fun getDisplayWidth(): Int = getPosition(5)
 
-    override fun getDisplayHeight(): Int = 18
+    override fun getDisplayHeight(): Int = getPosition(1)
 
     override fun supportsRecipeTree(): Boolean = false
 
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addTexture(EmiTexture.EMPTY_FLAME, 1, 1)
-        widgets.addAnimatedTexture(EmiTexture.FULL_FLAME, 1, 1, 1000 * time / 20, false, true, true)
-        widgets.addSlot(fluid, 18, 0).recipeContext(this)
+        widgets.addAnimatedTexture(EmiTexture.FULL_FLAME, 1, 1, 2000, false, true, true)
+        widgets.addSlot(fluid, getPosition(1), 0).recipeContext(this)
         widgets.addText(
-            EmiPort.translatable(
-                "emi.fuel_time.items",
-                EmiRenderHelper.TEXT_FORMAT.format((time / 200f).toDouble()),
-            ),
-            38,
+            Component.literal("$energyRate FE/t"),
+            getPosition(2) + 2,
             5,
             -1,
             true,

@@ -102,7 +102,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Dynamo
-        addBlock(RagiumBlocks.Generators.THERMAL, "火力発電機")
         // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "発展機械フレーム")
         addBlock(RagiumBlocks.Frames.BASIC, "基本機械フレーム")

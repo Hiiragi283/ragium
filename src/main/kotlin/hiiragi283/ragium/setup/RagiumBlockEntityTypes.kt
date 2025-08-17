@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
@@ -17,7 +18,7 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
@@ -31,6 +32,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -41,6 +43,7 @@ import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 import java.util.function.Supplier
+import kotlin.enums.enumEntries
 
 object RagiumBlockEntityTypes {
     @JvmStatic
@@ -52,6 +55,9 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
+
+        HTDrumVariant.entries
+        HTGeneratorVariant.entries
 
         REGISTER.register(eventBus)
 
@@ -66,17 +72,6 @@ object RagiumBlockEntityTypes {
     ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntity::serverTick)
 
     //    Dynamo    //
-
-    @JvmField
-    val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTThermalGeneratorBlockEntity> = registerTick(
-        "thermal_generator",
-        ::HTThermalGeneratorBlockEntity,
-    )
-
-    @JvmField
-    val GENERATORS = listOf(
-        THERMAL_GENERATOR,
-    )
 
     //    Machine    //
 
@@ -200,30 +195,6 @@ object RagiumBlockEntityTypes {
 
     //    Storage    //
 
-    @JvmField
-    val SMALL_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
-        REGISTER.registerType("small_drum", HTDrumBlockEntity::Small)
-
-    @JvmField
-    val MEDIUM_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
-        REGISTER.registerType("medium_drum", HTDrumBlockEntity::Medium)
-
-    @JvmField
-    val LARGE_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
-        REGISTER.registerType("large_drum", HTDrumBlockEntity::Large)
-
-    @JvmField
-    val HUGE_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
-        REGISTER.registerType("huge_drum", HTDrumBlockEntity::Huge)
-
-    @JvmStatic
-    fun getDrum(variant: HTDrumVariant): HTDeferredBlockEntityType<HTDrumBlockEntity> = when (variant) {
-        HTDrumVariant.SMALL -> SMALL_DRUM
-        HTDrumVariant.MEDIUM -> MEDIUM_DRUM
-        HTDrumVariant.LARGE -> LARGE_DRUM
-        HTDrumVariant.HUGE -> HUGE_DRUM
-    }
-
     //    Event    //
 
     @JvmStatic
@@ -232,7 +203,13 @@ object RagiumBlockEntityTypes {
             event.modify(type.get(), block.get())
         }
 
-        add(THERMAL_GENERATOR, RagiumBlocks.Generators.THERMAL)
+        fun <V : HTVariantKey.WithBE<*>> addAll(map: Map<V, DeferredBlock<*>>) {
+            for ((variant: V, block: DeferredBlock<*>) in map) {
+                event.modify(variant.blockEntityHolder.get(), block.get())
+            }
+        }
+
+        addAll(RagiumBlocks.GENERATORS)
 
         add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
         add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
@@ -259,54 +236,63 @@ object RagiumBlockEntityTypes {
 
         add(CEU, RagiumBlocks.Devices.CEU)
 
-        for ((variant: HTDrumVariant, block: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
-            add(getDrum(variant), block)
-        }
+        addAll(RagiumBlocks.DRUMS)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <T> registerHandlers(holder: HTDeferredBlockEntityType<T>) where T : BlockEntity, T : HTHandlerBlockEntity {
-            val type: BlockEntityType<T> = holder.get()
-            event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                type,
-                HTHandlerBlockEntity::getItemHandler,
-            )
-            event.registerBlockEntity(
-                Capabilities.FluidHandler.BLOCK,
-                type,
-                HTHandlerBlockEntity::getFluidHandler,
-            )
-            event.registerBlockEntity(
-                Capabilities.EnergyStorage.BLOCK,
-                type,
-                HTHandlerBlockEntity::getEnergyStorage,
-            )
-        }
-
-        for (type in GENERATORS) {
-            registerHandlers(type)
-        }
+        registerHandlers<HTGeneratorBlockEntity, HTGeneratorVariant>(event)
 
         for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in BASIC_MACHINES) {
-            registerHandlers(type)
+            registerHandlers(event, type)
         }
 
         for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in ADVANCED_MACHINES) {
-            registerHandlers(type)
+            registerHandlers(event, type)
         }
 
         for (type: HTDeferredBlockEntityType<out HTDeviceBlockEntity> in DEVICES) {
-            registerHandlers(type)
+            registerHandlers(event, type)
         }
 
-        registerHandlers(CEU)
+        registerHandlers(event, CEU)
 
-        HTDrumVariant.entries.map(::getDrum).forEach(::registerHandlers)
+        registerHandlers<HTDrumBlockEntity, HTDrumVariant>(event)
 
         LOGGER.info("Registered Block Capabilities!")
+    }
+
+    @JvmStatic
+    private fun <BE> registerHandlers(
+        event: RegisterCapabilitiesEvent,
+        holder: HTDeferredBlockEntityType<BE>,
+    ) where BE : BlockEntity, BE : HTHandlerBlockEntity {
+        val type: BlockEntityType<BE> = holder.get()
+        event.registerBlockEntity(
+            Capabilities.ItemHandler.BLOCK,
+            type,
+            HTHandlerBlockEntity::getItemHandler,
+        )
+        event.registerBlockEntity(
+            Capabilities.FluidHandler.BLOCK,
+            type,
+            HTHandlerBlockEntity::getFluidHandler,
+        )
+        event.registerBlockEntity(
+            Capabilities.EnergyStorage.BLOCK,
+            type,
+            HTHandlerBlockEntity::getEnergyStorage,
+        )
+    }
+
+    @JvmStatic
+    private inline fun <BE, reified V> registerHandlers(
+        event: RegisterCapabilitiesEvent,
+    ) where BE : BlockEntity, BE : HTHandlerBlockEntity, V : HTVariantKey.WithBE<BE>, V : Enum<V> {
+        for (variant: V in enumEntries<V>()) {
+            registerHandlers(event, variant.blockEntityHolder)
+        }
     }
 }

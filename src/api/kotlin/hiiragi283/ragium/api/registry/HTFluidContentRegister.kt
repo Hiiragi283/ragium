@@ -52,9 +52,11 @@ class HTFluidContentRegister(modId: String) {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
 
-        eventBus.addListener<FMLCommonSetupEvent> {
-            for (item: DeferredItem<*> in itemEntries) {
-                DispenserBlock.registerBehavior(item, DispenseFluidContainer.getInstance())
+        eventBus.addListener { event: FMLCommonSetupEvent ->
+            event.enqueueWork {
+                for (item: DeferredItem<*> in itemEntries) {
+                    DispenserBlock.registerBehavior(item, DispenseFluidContainer.getInstance())
+                }
             }
         }
     }
