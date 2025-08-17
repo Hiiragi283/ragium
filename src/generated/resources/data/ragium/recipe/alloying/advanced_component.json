@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    {
+      "count": 2,
+      "item": "ragium:advanced_ragi_alloy_coil"
+    },
+    {
+      "count": 1,
+      "tag": "c:circuits/advanced"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_component"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "values": [
-    "ragium:circuit_board",
-    {
-      "id": "pneumaticcraft:empty_pcb",
-      "required": false
-    }
-  ]
-}

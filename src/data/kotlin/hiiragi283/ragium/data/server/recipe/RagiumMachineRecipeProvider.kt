@@ -113,7 +113,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "BCB",
                 "DDD",
             ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', HTMaterialVariant.COIL, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', RagiumItems.getCoil(RagiumMaterialType.RAGI_ALLOY))
             .define('C', Items.FURNACE)
             .define('D', Items.BRICKS)
             .save(output)
@@ -124,7 +124,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "BCB",
                 "DDD",
             ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTMaterialVariant.COIL, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumItems.getCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .define('C', Items.BLAST_FURNACE)
             .define('D', Items.NETHER_BRICKS)
             .save(output)
@@ -145,6 +145,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advMachine(HTMachineVariant.MIXER, Ingredient.of(Items.CAULDRON))
         advMachine(HTMachineVariant.REFINERY, HTMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
         advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
+
+        createAdvUpgrade(HTMachineVariant.ALLOY_SMELTER, HTMachineVariant.SMELTER).save(output)
+        createAdvUpgrade(HTMachineVariant.CRUSHER, HTMachineVariant.PULVERIZER).save(output)
+
+        createAdvUpgrade(HTMachineVariant.MELTER, HTMachineVariant.EXTRACTOR).save(output)
     }
 
     private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {

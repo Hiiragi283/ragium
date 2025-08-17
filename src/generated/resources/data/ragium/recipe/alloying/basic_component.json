@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "tag": "c:ingots/ragi_alloy"
+    },
+    {
+      "count": 2,
+      "item": "ragium:ragi_alloy_coil"
+    },
+    {
+      "count": 1,
+      "tag": "c:circuits/basic"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_component"
+  }
+}

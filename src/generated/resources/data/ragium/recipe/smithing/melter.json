@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "c:ingots/advanced_ragi_alloy"
-  },
+  "addition": [],
   "base": {
     "item": "ragium:extractor"
   },
@@ -11,6 +9,6 @@
     "id": "ragium:melter"
   },
   "template": {
-    "item": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+    "item": "ragium:advanced_component"
   }
 }

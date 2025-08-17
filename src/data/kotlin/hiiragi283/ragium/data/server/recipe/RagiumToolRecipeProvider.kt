@@ -17,7 +17,6 @@ import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
-import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -103,16 +102,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         // Advanced
-        addTemplate(
-            RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE,
-            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
-        )
-
-        addAdvRagiSmithing(RagiumItems.ADVANCED_RAGI_MAGNET, RagiumItems.RAGI_MAGNET)
-
-        addAdvRagiSmithing(HTMachineVariant.ALLOY_SMELTER, HTMachineVariant.SMELTER)
-        addAdvRagiSmithing(HTMachineVariant.CRUSHER, HTMachineVariant.PULVERIZER)
-        addAdvRagiSmithing(HTMachineVariant.MELTER, HTMachineVariant.EXTRACTOR)
+        createAdvUpgrade(RagiumItems.ADVANCED_RAGI_MAGNET, RagiumItems.RAGI_MAGNET).save(output)
 
         // Elite
         HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
@@ -262,15 +252,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTMaterialVariant.INGOT, material)
             .addIngredient(HTMaterialVariant.INGOT, material)
             .saveSuffixed(output, "_duplicate")
-    }
-
-    @JvmStatic
-    private fun addAdvRagiSmithing(output: ItemLike, ingredient: ItemLike) {
-        HTSmithingRecipeBuilder(output)
-            .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(ingredient)
-            .addIngredient(HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .save(this.output)
     }
 
     @JvmStatic

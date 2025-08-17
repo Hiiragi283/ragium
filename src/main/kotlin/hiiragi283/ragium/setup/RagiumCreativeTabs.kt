@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
@@ -10,12 +9,12 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
@@ -89,14 +88,11 @@ object RagiumCreativeTabs {
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Materials
-        HTMaterialVariant.CREATIVE_TAG_ORDER
+        HTMaterialVariant.MATERIAL_TAB_ORDER
             .flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
         // Ingredients
-        output.accept(RagiumItems.RAGI_COKE)
-        output.accept(RagiumItems.COMPRESSED_SAWDUST)
         output.accept(RagiumItems.TAR)
-        output.accept(RagiumItems.DEEP_SCRAP)
         output.accept(RagiumItems.ELDER_HEART)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)
@@ -113,8 +109,9 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.CIRCUIT_BOARD)
         output.accept(RagiumItems.BASALT_MESH)
         output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
-        RagiumTierType.entries
-            .flatMap(RagiumItems.MATERIALS::columnValues)
+
+        HTMaterialVariant.CIRCUIT_TAB_ORDER
+            .flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
     }
 
@@ -129,7 +126,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_MAGNET)
 
-            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
             output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
 
             output.accept(RagiumItems.RAGI_LANTERN)
@@ -223,23 +219,44 @@ object RagiumCreativeTabs {
 
     @JvmStatic
     private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+        fun insertBefore(after: ItemLike, before: ItemLike) {
+            event.insertBefore(
+                ItemStack(after),
+                ItemStack(before),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+        }
+
+        fun insertAfter(before: ItemLike, after: ItemLike) {
+            event.insertAfter(
+                ItemStack(before),
+                ItemStack(after),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+        }
+
+        val key: ResourceKey<CreativeModeTab> = event.tabKey
         // 道具タブに鍛造ハンマーを追加する
-        if (event.tabKey == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.insertAfter(
-                ItemStack(Items.IRON_PICKAXE),
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON).toStack(),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+        if (key == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            insertAfter(
+                Items.IRON_PICKAXE,
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON),
             )
-            event.insertAfter(
-                ItemStack(Items.DIAMOND_PICKAXE),
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND).toStack(),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            insertAfter(
+                Items.DIAMOND_PICKAXE,
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND),
             )
-            event.insertAfter(
-                ItemStack(Items.NETHERITE_PICKAXE),
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE).toStack(),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            insertAfter(
+                Items.NETHERITE_PICKAXE,
+                RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE),
             )
+        }
+
+        if (INGREDIENTS.`is`(key)) {
+            insertAfter(RagiumItems.getDust(RagiumMaterialType.RAGINITE), RagiumItems.RAGI_COKE)
+            insertAfter(RagiumItems.getGem(RagiumMaterialType.AZURE), RagiumItems.SILICON)
+            insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), RagiumItems.ELDRITCH_GEAR)
+            insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)
         }
     }
 }

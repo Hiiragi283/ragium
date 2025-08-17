@@ -2,16 +2,12 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 1,
-      "tag": "c:dyes/black"
+      "count": 2,
+      "tag": "ragium:plastics"
     },
     {
       "count": 1,
       "item": "ragium:basalt_mesh"
-    },
-    {
-      "count": 1,
-      "tag": "ragium:plastics"
     }
   ],
   "result": {

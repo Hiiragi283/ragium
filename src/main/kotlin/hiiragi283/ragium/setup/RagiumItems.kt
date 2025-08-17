@@ -81,6 +81,9 @@ object RagiumItems {
     val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
 
     @JvmField
+    val SILICON: DeferredItem<Item> = register("silicon")
+
+    @JvmField
     val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
@@ -137,9 +140,10 @@ object RagiumItems {
         // Plates
         put(HTMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
 
-        // Circuits
+        // Circuits, Components
         for (tier: RagiumTierType in RagiumTierType.entries) {
             put(HTMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
+            put(HTMaterialVariant.COMPONENT, tier, register("${tier.serializedName}_component"))
         }
 
         // Coils
@@ -174,6 +178,12 @@ object RagiumItems {
 
     @JvmStatic
     fun getCircuit(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.CIRCUIT, tier)
+
+    @JvmStatic
+    fun getCoil(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.COIL, material)
+
+    @JvmStatic
+    fun getComponent(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.COMPONENT, tier)
 
     //    Armors    //
 
@@ -231,10 +241,6 @@ object RagiumItems {
 
     @JvmField
     val ELDRITCH_EGG: DeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
-
-    @JvmField
-    val ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
-        register("${RagiumConst.ADVANCED_RAGI_ALLOY}_upgrade_smithing_template")
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
@@ -382,7 +388,10 @@ object RagiumItems {
     val BASALT_MESH: DeferredItem<Item> = register("basalt_mesh")
 
     @JvmField
-    val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
+    val ELDER_HEART: DeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
+
+    @JvmField
+    val ELDRITCH_GEAR: DeferredItem<Item> = register("eldritch_gear", Item.Properties().rarity(Rarity.RARE))
 
     // LED
     @JvmField
@@ -433,7 +442,16 @@ object RagiumItems {
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         registerEnergy(event, DRILL, 160000)
 
-        registerDrums(event)
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                { stack: ItemStack, _: Void? ->
+                    val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+                    HTComponentFluidHandler(stack, variant.capacity * modifier)
+                },
+                variant,
+            )
+        }
 
         LOGGER.info("Registered item capabilities!")
     }
@@ -445,20 +463,6 @@ object RagiumItems {
             { stack: ItemStack, _: Void? -> HTComponentEnergyStorage(stack, capacity) },
             item,
         )
-    }
-
-    @JvmStatic
-    private fun registerDrums(event: RegisterCapabilitiesEvent) {
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            event.registerItem(
-                Capabilities.FluidHandler.ITEM,
-                { stack: ItemStack, _: Void? ->
-                    val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                    HTComponentFluidHandler(stack, variant.capacity * modifier)
-                },
-                variant,
-            )
-        }
     }
 
     @JvmStatic

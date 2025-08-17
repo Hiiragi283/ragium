@@ -6,7 +6,7 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "tag": "ragium:coils/advanced_ragi_alloy"
+      "item": "ragium:advanced_ragi_alloy_coil"
     },
     "C": {
       "item": "minecraft:blast_furnace"

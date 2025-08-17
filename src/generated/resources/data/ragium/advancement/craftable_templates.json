@@ -6,7 +6,6 @@
         "items": [
           {
             "items": [
-              "ragium:advanced_ragi_alloy_upgrade_smithing_template",
               "ragium:azure_steel_upgrade_smithing_template",
               "ragium:deep_steel_upgrade_smithing_template"
             ]
@@ -22,7 +21,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+      "id": "ragium:azure_steel_upgrade_smithing_template"
     },
     "title": {
       "translate": "advancements.ragium.craftable_templates.title"

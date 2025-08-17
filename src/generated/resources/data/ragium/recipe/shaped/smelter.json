@@ -6,7 +6,7 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "ragium:coils/ragi_alloy"
+      "item": "ragium:ragi_alloy_coil"
     },
     "C": {
       "item": "minecraft:furnace"

@@ -6,10 +6,10 @@
       "tag": "c:ingots/copper"
     },
     "B": {
-      "tag": "c:dusts/redstone"
+      "tag": "c:dusts/raginite"
     },
     "C": {
-      "tag": "ragium:circuit_boards"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [

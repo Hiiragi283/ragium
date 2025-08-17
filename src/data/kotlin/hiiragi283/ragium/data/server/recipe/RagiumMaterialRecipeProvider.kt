@@ -128,6 +128,26 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE, 2),
             ).save(output)
+
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.SILICON)
+            .addIngredient(gemOrDust(RagiumMaterialType.AZURE))
+            .setExp(0.7f)
+            .save(output)
+
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTResultHelper.item(RagiumItems.SILICON, 2),
+                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+            ).save(output)
+
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTResultHelper.item(RagiumItems.SILICON, 4),
+                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+            ).saveSuffixed(output, "_alt")
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()

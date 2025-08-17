@@ -23,7 +23,6 @@ import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
-import me.desht.pneumaticcraft.common.registry.ModItems
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -84,9 +83,8 @@ class RagiumItemTagsProvider(
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
 
-        for (variant: HTMaterialVariant in RagiumBlocks.MATERIALS.rowKeys) {
-            copy(variant.blockCommonTag, variant.itemCommonTag)
-        }
+        RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
+
         RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, _) ->
             copy(variant, material)
         }
@@ -102,7 +100,13 @@ class RagiumItemTagsProvider(
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
+    private fun copy(variant: HTMaterialVariant) {
+        if (!variant.canGenerateTag()) return
+        copy(variant.blockCommonTag!!, variant.itemCommonTag!!)
+    }
+
     private fun copy(variant: HTMaterialVariant, material: HTMaterialType) {
+        if (!variant.canGenerateTag()) return
         copy(variant.blockTagKey(material), variant.itemTagKey(material))
     }
 
@@ -113,18 +117,21 @@ class RagiumItemTagsProvider(
     //    Material    //
 
     private fun material(builder: HTTagBuilder<Item>) {
-        builder.addItem(HTMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             builder.addItem(variant, material, item)
             if (variant == HTMaterialVariant.GEM || variant == HTMaterialVariant.INGOT) {
                 tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
             }
         }
+        builder.addItem(HTMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
+
+        builder.addItem(HTMaterialVariant.GEAR, RagiumMaterialType.ELDRITCH_PEARL, RagiumItems.ELDRITCH_GEAR)
+
         builder.addItem(HTMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL)
         builder.addItem(HTMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
 
         val coalCoke: TagKey<Item> = HTMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
-        builder.addTag(HTMaterialVariant.FUEL.itemCommonTag, coalCoke)
+        builder.addTag(HTMaterialVariant.FUEL.itemCommonTag!!, coalCoke)
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
         // Mekanism Addon
         builder.addItem(
@@ -217,12 +224,10 @@ class RagiumItemTagsProvider(
             builder.addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
         }
         // Parts
+        builder.add(RagiumCommonTags.Items.SILICON, RagiumItems.SILICON)
         builder.add(Tags.Items.LEATHERS, RagiumItems.SYNTHETIC_LEATHER)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
         builder.add(Tags.Items.STRINGS, RagiumItems.SYNTHETIC_FIBER)
-
-        builder.add(RagiumModTags.Items.CIRCUIT_BOARDS, RagiumItems.CIRCUIT_BOARD)
-        builder.add(RagiumModTags.Items.CIRCUIT_BOARDS, ModItems.EMPTY_PCB, HTTagBuilder.DependType.OPTIONAL)
 
         builder.addItem(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, Items.GHAST_TEAR)
         builder.addItem(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, Items.PHANTOM_MEMBRANE)
@@ -278,11 +283,9 @@ class RagiumItemTagsProvider(
     }
 
     private fun HTTagBuilder<Item>.addItem(variant: HTMaterialVariant, material: HTMaterialType, item: ItemLike) {
+        val itemCommonTag: TagKey<Item> = variant.itemCommonTag ?: return
         val tagKey: TagKey<Item> = variant.itemTagKey(material)
-        if (variant.generateTag) {
-            addTag(variant.itemCommonTag, tagKey)
-        }
-        addItem(tagKey, item)
+        addItem(itemCommonTag, tagKey, item)
     }
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super

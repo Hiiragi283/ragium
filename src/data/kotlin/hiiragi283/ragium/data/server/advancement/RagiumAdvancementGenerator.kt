@@ -38,13 +38,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         child(RagiumAdvancements.CRAFTABLE_TEMPLATES, root) {
             display {
-                setIcon(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
+                setIcon(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
                 setTitleFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
                 setDescFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
             }
             hasAnyItem(
                 "has_upgrade",
-                RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE,
                 RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
                 RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
             )

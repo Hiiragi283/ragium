@@ -181,13 +181,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        addItem(RagiumItems.ELDRITCH_GEAR, "Eldritch Gear")
+        addItem(RagiumItems.SILICON, "Indigo Silicon")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.TAR, "Tar")
 
         addPatterned()
         // Armor
         // Tool
-        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "Advanced Ragi-Alloy Upgrade")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
 
@@ -379,7 +380,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 
-        add(RagiumModTags.Items.CIRCUIT_BOARDS, "Circuit Boards")
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binders")
         add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")
         add(RagiumModTags.Items.PLASTICS, "Plastics")

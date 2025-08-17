@@ -18,6 +18,8 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
@@ -167,4 +169,8 @@ sealed class HTRecipeProvider : IConditionBuilder {
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(Tags.Items.INGOTS_NETHERITE)
+
+    protected fun createAdvUpgrade(output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
+        .addIngredient(RagiumItems.getComponent(RagiumTierType.ADVANCED))
+        .addIngredient(ingredient)
 }

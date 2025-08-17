@@ -7,10 +7,10 @@
     },
     "B": [
       {
-        "tag": "c:ingots/iron"
+        "tag": "c:ingots/azure_steel"
       },
       {
-        "tag": "c:rods/iron"
+        "tag": "c:rods/azure_steel"
       }
     ]
   },

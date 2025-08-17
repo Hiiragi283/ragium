@@ -58,9 +58,6 @@ object RagiumModTags {
 
     object Items {
         @JvmField
-        val CIRCUIT_BOARDS: TagKey<Item> = create("circuit_boards")
-
-        @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField

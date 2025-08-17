@@ -76,7 +76,7 @@ object RagiumMekanismAddon : RagiumAddon {
         if (RagiumCreativeTabs.INGREDIENTS.`is`(event.tabKey)) {
             // Raginite
             event.insertAfter(
-                RagiumItems.RAGI_COKE.toStack(),
+                RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(),
                 ITEM_ENRICHED_RAGINITE.toStack(),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )

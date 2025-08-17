@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "tag": "c:gems/eldritch_pearl"
+    },
+    {
+      "count": 2,
+      "tag": "c:gears/eldritch_pearl"
+    },
+    {
+      "count": 1,
+      "tag": "c:circuits/ultimate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ultimate_component"
+  }
+}

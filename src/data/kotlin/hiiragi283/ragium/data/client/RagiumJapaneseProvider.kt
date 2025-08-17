@@ -172,13 +172,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.DEEP_SCRAP, "深層の欠片")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        addItem(RagiumItems.ELDRITCH_GEAR, "異質な歯車")
+        addItem(RagiumItems.SILICON, "紺碧のシリコン")
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.TAR, "タール")
 
         addPatterned()
         // Armor
         // Tool
-        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE, "発展ラギ合金強化")
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
 
@@ -380,7 +381,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
-        add(RagiumModTags.Items.CIRCUIT_BOARDS, "回路基板")
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
         add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")
         add(RagiumModTags.Items.PLASTICS, "プラスチック")
