@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
         RagiumRecipeTypes.ALLOYING.get(),
-        RagiumBlockEntityTypes.ALLOY_SMELTER,
+        HTMachineVariant.ALLOY_SMELTER,
         pos,
         state,
     ) {

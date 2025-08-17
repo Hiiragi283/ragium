@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getCapability
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -35,7 +34,7 @@ abstract class HTDrumUpgradeItem(
         filter: List<HTDrumVariant>,
         newDrum: HTDrumVariant,
         properties: Properties,
-    ) : this(filter.map(RagiumBlocks::getDrum), RagiumBlocks.getDrum(newDrum), properties)
+    ) : this(filter.map(HTDrumVariant::blockHolder), newDrum.blockHolder, properties)
 
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level

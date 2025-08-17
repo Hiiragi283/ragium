@@ -42,6 +42,10 @@ class HTItemToItemMenu(
         @JvmStatic
         fun pulverizer(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
             empty(RagiumMenuTypes.PULVERIZER, containerId, inventory, registryBuf)
+
+        @JvmStatic
+        fun smelter(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTItemToItemMenu =
+            empty(RagiumMenuTypes.SMELTER, containerId, inventory, registryBuf)
     }
 
     init {

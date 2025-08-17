@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -25,8 +25,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
 
-class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
+class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
     override val energyUsage: Int get() = RagiumAPI.getConfig().getBasicMachineEnergyUsage()
 

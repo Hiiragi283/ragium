@@ -22,12 +22,14 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -59,7 +61,6 @@ object RagiumBlocks {
         Devices.entries
 
         Frames.entries
-        Machines.entries
 
         Slabs.entries
         Stairs.entries
@@ -394,9 +395,6 @@ object RagiumBlocks {
             registerEntity(type, machineProperty(), HTFacingEntityBlock.create(type))
         }
 
-    @JvmStatic
-    fun getGenerator(variant: HTGeneratorVariant): DeferredBlock<Block> = GENERATORS[variant]!!
-
     //    Machines    //
 
     enum class Frames(properties: BlockBehaviour.Properties) : HTBlockHolderLike {
@@ -409,27 +407,12 @@ object RagiumBlocks {
             register("${name.lowercase()}_machine_frame", properties.noOcclusion(), ::TransparentBlock)
     }
 
-    enum class Machines(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
-        // Basic
-        BLOCK_BREAKER(RagiumBlockEntityTypes.BLOCK_BREAKER),
-        COMPRESSOR(RagiumBlockEntityTypes.COMPRESSOR),
-        ENGRAVER(RagiumBlockEntityTypes.ENGRAVER),
-        EXTRACTOR(RagiumBlockEntityTypes.EXTRACTOR),
-        PULVERIZER(RagiumBlockEntityTypes.PULVERIZER),
-
-        // Advanced
-        ALLOY_SMELTER(RagiumBlockEntityTypes.ALLOY_SMELTER),
-        CRUSHER(RagiumBlockEntityTypes.CRUSHER),
-        INFUSER(RagiumBlockEntityTypes.INFUSER),
-        MELTER(RagiumBlockEntityTypes.MELTER),
-        MIXER(RagiumBlockEntityTypes.MIXER),
-        REFINERY(RagiumBlockEntityTypes.REFINERY),
-        SOLIDIFIER(RagiumBlockEntityTypes.SOLIDIFIER),
-        ;
-
-        override val holder: DeferredBlock<*> =
+    @JvmField
+    val MACHINES: Map<HTMachineVariant, DeferredBlock<Block>> =
+        HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
+            val type: HTDeferredBlockEntityType<HTMachineBlockEntity> = variant.blockEntityHolder
             registerEntity(type, machineProperty(), HTHorizontalEntityBlock.create(type))
-    }
+        }
 
     //    Devices    //
 
@@ -486,7 +469,4 @@ object RagiumBlocks {
         val type: HTDeferredBlockEntityType<HTDrumBlockEntity> = variant.blockEntityHolder
         registerEntity(type, copyOf(base), HTDrumBlock.create(type))
     }
-
-    @JvmStatic
-    fun getDrum(variant: HTDrumVariant): DeferredBlock<Block> = DRUMS[variant]!!
 }

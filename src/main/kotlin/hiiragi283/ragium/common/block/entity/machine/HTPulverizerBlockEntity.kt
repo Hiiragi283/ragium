@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
         RagiumRecipeTypes.CRUSHING.get(),
-        RagiumBlockEntityTypes.PULVERIZER,
+        HTMachineVariant.PULVERIZER,
         pos,
         state,
     ) {

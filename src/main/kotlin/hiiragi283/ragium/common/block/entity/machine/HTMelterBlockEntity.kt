@@ -13,7 +13,7 @@ import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTItemToFluidRecipe>(
         RagiumRecipeTypes.MELTING.get(),
-        RagiumBlockEntityTypes.MELTER,
+        HTMachineVariant.MELTER,
         pos,
         state,
     ),

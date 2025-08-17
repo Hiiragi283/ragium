@@ -19,20 +19,9 @@ import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -40,7 +29,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.enums.enumEntries
@@ -56,8 +44,9 @@ object RagiumBlockEntityTypes {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
-        HTDrumVariant.entries
         HTGeneratorVariant.entries
+        HTMachineVariant.entries
+        HTDrumVariant.entries
 
         REGISTER.register(eventBus)
 
@@ -74,62 +63,6 @@ object RagiumBlockEntityTypes {
     //    Dynamo    //
 
     //    Machine    //
-
-    @JvmField
-    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick("alloy_smelter", ::HTAlloySmelterBlockEntity)
-
-    @JvmField
-    val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTick("block_breaker", ::HTBlockBreakerBlockEntity)
-
-    @JvmField
-    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> = registerTick("compressor", ::HTCompressorBlockEntity)
-
-    @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
-
-    @JvmField
-    val ENGRAVER: HTDeferredBlockEntityType<HTEngraverBlockEntity> = registerTick("engraver", ::HTEngraverBlockEntity)
-
-    @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
-
-    @JvmField
-    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
-
-    @JvmField
-    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
-
-    @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick("mixer", ::HTMixerBlockEntity)
-
-    @JvmField
-    val PULVERIZER: HTDeferredBlockEntityType<HTPulverizerBlockEntity> = registerTick("pulverizer", ::HTPulverizerBlockEntity)
-
-    @JvmField
-    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
-
-    @JvmField
-    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> = registerTick("solidifier", ::HTSolidifierBlockEntity)
-
-    @JvmField
-    val BASIC_MACHINES: List<HTDeferredBlockEntityType<out HTMachineBlockEntity>> = listOf(
-        BLOCK_BREAKER,
-        COMPRESSOR,
-        ENGRAVER,
-        EXTRACTOR,
-        PULVERIZER,
-    )
-
-    @JvmField
-    val ADVANCED_MACHINES: List<HTDeferredBlockEntityType<out HTMachineBlockEntity>> = listOf(
-        ALLOY_SMELTER,
-        CRUSHER,
-        INFUSER,
-        MELTER,
-        MIXER,
-        REFINERY,
-        SOLIDIFIER,
-    )
 
     //    Device    //
 
@@ -197,61 +130,45 @@ object RagiumBlockEntityTypes {
 
     //    Event    //
 
+    // Supported Blocks
     @JvmStatic
     private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
-        fun add(type: HTDeferredBlockEntityType<*>, block: Supplier<out Block>) {
-            event.modify(type.get(), block.get())
-        }
+        addAll<HTGeneratorVariant>(event)
+        addAll<HTMachineVariant>(event)
 
-        fun <V : HTVariantKey.WithBE<*>> addAll(map: Map<V, DeferredBlock<*>>) {
-            for ((variant: V, block: DeferredBlock<*>) in map) {
-                event.modify(variant.blockEntityHolder.get(), block.get())
-            }
-        }
+        add(event, DIM_ANCHOR, RagiumBlocks.Devices.DIM_ANCHOR)
+        add(event, ENI, RagiumBlocks.Devices.ENI)
+        add(event, EXP_COLLECTOR, RagiumBlocks.Devices.EXP_COLLECTOR)
+        add(event, ITEM_BUFFER, RagiumBlocks.Devices.ITEM_BUFFER)
+        add(event, LAVA_COLLECTOR, RagiumBlocks.Devices.LAVA_COLLECTOR)
+        add(event, MILK_DRAIN, RagiumBlocks.Devices.MILK_DRAIN)
+        add(event, SPRINKLER, RagiumBlocks.Devices.SPRINKLER)
+        add(event, WATER_COLLECTOR, RagiumBlocks.Devices.WATER_COLLECTOR)
 
-        addAll(RagiumBlocks.GENERATORS)
+        add(event, CEU, RagiumBlocks.Devices.CEU)
 
-        add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
-        add(COMPRESSOR, RagiumBlocks.Machines.COMPRESSOR)
-        add(ENGRAVER, RagiumBlocks.Machines.ENGRAVER)
-        add(EXTRACTOR, RagiumBlocks.Machines.EXTRACTOR)
-        add(PULVERIZER, RagiumBlocks.Machines.PULVERIZER)
-
-        add(ALLOY_SMELTER, RagiumBlocks.Machines.ALLOY_SMELTER)
-        add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
-        add(INFUSER, RagiumBlocks.Machines.INFUSER)
-        add(MELTER, RagiumBlocks.Machines.MELTER)
-        add(MIXER, RagiumBlocks.Machines.MIXER)
-        add(REFINERY, RagiumBlocks.Machines.REFINERY)
-        add(SOLIDIFIER, RagiumBlocks.Machines.SOLIDIFIER)
-
-        add(DIM_ANCHOR, RagiumBlocks.Devices.DIM_ANCHOR)
-        add(ENI, RagiumBlocks.Devices.ENI)
-        add(EXP_COLLECTOR, RagiumBlocks.Devices.EXP_COLLECTOR)
-        add(ITEM_BUFFER, RagiumBlocks.Devices.ITEM_BUFFER)
-        add(LAVA_COLLECTOR, RagiumBlocks.Devices.LAVA_COLLECTOR)
-        add(MILK_DRAIN, RagiumBlocks.Devices.MILK_DRAIN)
-        add(SPRINKLER, RagiumBlocks.Devices.SPRINKLER)
-        add(WATER_COLLECTOR, RagiumBlocks.Devices.WATER_COLLECTOR)
-
-        add(CEU, RagiumBlocks.Devices.CEU)
-
-        addAll(RagiumBlocks.DRUMS)
+        addAll<HTDrumVariant>(event)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @JvmStatic
+    private fun add(event: BlockEntityTypeAddBlocksEvent, type: HTDeferredBlockEntityType<*>, block: Supplier<out Block>) {
+        event.modify(type.get(), block.get())
+    }
+
+    @JvmStatic
+    private inline fun <reified V> addAll(event: BlockEntityTypeAddBlocksEvent) where V : HTVariantKey.WithBE<*>, V : Enum<V> {
+        for (variant: V in enumEntries<V>()) {
+            add(event, variant.blockEntityHolder, variant.blockHolder)
+        }
+    }
+
+    // Capabilities
+    @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         registerHandlers<HTGeneratorBlockEntity, HTGeneratorVariant>(event)
-
-        for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in BASIC_MACHINES) {
-            registerHandlers(event, type)
-        }
-
-        for (type: HTDeferredBlockEntityType<out HTMachineBlockEntity> in ADVANCED_MACHINES) {
-            registerHandlers(event, type)
-        }
+        registerHandlers<HTMachineBlockEntity, HTMachineVariant>(event)
 
         for (type: HTDeferredBlockEntityType<out HTDeviceBlockEntity> in DEVICES) {
             registerHandlers(event, type)

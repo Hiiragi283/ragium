@@ -76,6 +76,9 @@ object RagiumMenuTypes {
     val REFINERY: HTDeferredMenuType<HTFluidOnlyMenu> = REGISTER.registerType("refinery", HTFluidOnlyMenu::refinery)
 
     @JvmField
+    val SMELTER: HTDeferredMenuType<HTItemToItemMenu> = REGISTER.registerType("smelter", HTItemToItemMenu::smelter)
+
+    @JvmField
     val SINGLE_ITEM: HTDeferredMenuType<HTSingleItemMenu> = REGISTER.registerType("single_item", ::HTSingleItemMenu)
 
     @JvmField

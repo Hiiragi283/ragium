@@ -10,11 +10,11 @@ import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -147,7 +147,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.Frames.entries.forEach(::cutoutSimpleBlock)
 
         // Machine
-        fun machine(holder: HTBlockHolderLike, top: ResourceLocation, bottom: ResourceLocation) {
+        fun machine(variant: HTMachineVariant, top: ResourceLocation, bottom: ResourceLocation) {
+            val holder: DeferredBlock<*> = variant.blockHolder
             horizontalBlock(
                 holder.get(),
                 models()
@@ -159,20 +160,21 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
-        machine(RagiumBlocks.Machines.BLOCK_BREAKER, basicMachine, vanillaId("block/stone"))
-        machine(RagiumBlocks.Machines.COMPRESSOR, basicMachine, basicMachine)
-        machine(RagiumBlocks.Machines.ENGRAVER, basicMachine, vanillaId("block/smooth_stone"))
-        machine(RagiumBlocks.Machines.EXTRACTOR, basicMachine, basicMachine)
-        machine(RagiumBlocks.Machines.PULVERIZER, basicMachine, vanillaId("block/bricks"))
+        machine(HTMachineVariant.BLOCK_BREAKER, basicMachine, vanillaId("block/stone"))
+        machine(HTMachineVariant.COMPRESSOR, basicMachine, basicMachine)
+        machine(HTMachineVariant.ENGRAVER, basicMachine, vanillaId("block/smooth_stone"))
+        machine(HTMachineVariant.EXTRACTOR, basicMachine, basicMachine)
+        machine(HTMachineVariant.PULVERIZER, basicMachine, vanillaId("block/bricks"))
+        machine(HTMachineVariant.SMELTER, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
-        machine(RagiumBlocks.Machines.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
-        machine(RagiumBlocks.Machines.CRUSHER, advancedMachine, vanillaId("block/nether_bricks"))
-        machine(RagiumBlocks.Machines.INFUSER, advancedMachine, advancedMachine)
-        machine(RagiumBlocks.Machines.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.Machines.MIXER, advancedMachine, advancedMachine)
-        machine(RagiumBlocks.Machines.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.Machines.SOLIDIFIER, advancedMachine, advancedMachine)
+        machine(HTMachineVariant.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(HTMachineVariant.CRUSHER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(HTMachineVariant.INFUSER, advancedMachine, advancedMachine)
+        machine(HTMachineVariant.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(HTMachineVariant.MIXER, advancedMachine, advancedMachine)
+        machine(HTMachineVariant.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(HTMachineVariant.SOLIDIFIER, advancedMachine, advancedMachine)
 
         // Device
         layeredBlock(

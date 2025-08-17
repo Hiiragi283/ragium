@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTEngraverMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
         RecipeType.STONECUTTING,
-        RagiumBlockEntityTypes.ENGRAVER,
+        HTMachineVariant.ENGRAVER,
         pos,
         state,
     ) {

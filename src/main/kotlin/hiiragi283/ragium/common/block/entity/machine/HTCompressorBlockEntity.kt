@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -14,7 +14,7 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemToItemBlockEntity(
         RagiumMenuTypes.COMPRESSOR,
         RagiumRecipeTypes.COMPRESSING.get(),
-        RagiumBlockEntityTypes.COMPRESSOR,
+        HTMachineVariant.COMPRESSOR,
         pos,
         state,
     ) {

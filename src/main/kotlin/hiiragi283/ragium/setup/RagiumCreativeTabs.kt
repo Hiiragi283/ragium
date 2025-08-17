@@ -9,8 +9,11 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.util.material.RagiumCircuitType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -55,15 +58,15 @@ object RagiumCreativeTabs {
         // Storage Blocks
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
         // Machines
-        output.acceptItems(RagiumBlocks.GENERATORS.values)
+        output.acceptItems<HTGeneratorVariant>()
 
         output.acceptItems<RagiumBlocks.Frames>()
-        output.acceptItems<RagiumBlocks.Machines>()
+        output.acceptItems<HTMachineVariant>()
 
         output.acceptItems<RagiumBlocks.Casings>()
         output.acceptItems<RagiumBlocks.Devices>()
 
-        output.acceptItems(RagiumBlocks.DRUMS.values)
+        output.acceptItems<HTDrumVariant>()
         output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
         output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
         output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
@@ -110,7 +113,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.CIRCUIT_BOARD)
         output.accept(RagiumItems.BASALT_MESH)
         output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
-        RagiumCircuitType.entries
+        RagiumTierType.entries
             .flatMap(RagiumItems.MATERIALS::columnValues)
             .forEach(output::accept)
     }

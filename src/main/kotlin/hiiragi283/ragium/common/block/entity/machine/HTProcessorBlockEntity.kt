@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.recipe.cache.HTRecipeCache
+import hiiragi283.ragium.api.recipe.cache.HTSimpleRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -14,12 +15,18 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
-    recipeType: RecipeType<R>,
-    type: HTDeferredBlockEntityType<*>,
+    private val recipeCache: HTRecipeCache<I, R>,
+    variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
-) : HTMachineBlockEntity(type, pos, state) {
-    private val recipeCache: HTRecipeCache<I, R> = HTRecipeCache(recipeType)
+) : HTMachineBlockEntity(variant, pos, state) {
+    constructor(
+        recipeType: RecipeType<R>,
+        variant: HTMachineVariant,
+        pos: BlockPos,
+        state: BlockState,
+    ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
+
     private var lastInput: I? = null
     private var lastRecipe: R? = null
 

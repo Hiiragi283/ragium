@@ -178,6 +178,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.CRUSHER)
         registerBasic(RagiumMenuTypes.ENGRAVER)
         registerBasic(RagiumMenuTypes.SINGLE_ITEM)
+        registerBasic(RagiumMenuTypes.SMELTER)
 
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)

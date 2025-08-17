@@ -41,7 +41,7 @@ interface HTItemHandler :
             return 0
         }
         val countLimit: Int = getSlotLimit(slot)
-        val fixedCount: Int = min(countLimit, countLimit)
+        val fixedCount: Int = min(count, countLimit)
         if (stack.count == fixedCount || simulate) {
             return fixedCount
         }
@@ -55,8 +55,11 @@ interface HTItemHandler :
     fun growStack(slot: Int, count: Int, simulate: Boolean): Int {
         val stack: ItemStack = getStackInSlot(slot)
         val current: Int = stack.count
-        if (current == 0 || count == 0) return 0
-        val fixedCount: Int = min(count, getSlotLimit(slot) - current)
+        if (current == 0) return 0
+        val fixedCount: Int = when {
+            count > 0 -> min(count, getSlotLimit(slot) - current)
+            else -> count
+        }
         val newCount: Int = setStackSize(slot, current + fixedCount, simulate)
         return newCount - current
     }

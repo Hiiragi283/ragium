@@ -14,8 +14,8 @@ import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTSingleFluidRecipeInput, HTRefiningRecipe>(
         RagiumRecipeTypes.REFINING.get(),
-        RagiumBlockEntityTypes.REFINERY,
+        HTMachineVariant.REFINERY,
         pos,
         state,
     ),

@@ -8,16 +8,14 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -85,61 +83,66 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun machines() {
         // Basic
-        basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
-        basicMachine(RagiumBlocks.Machines.COMPRESSOR, Ingredient.of(Items.PISTON))
-        basicMachine(RagiumBlocks.Machines.ENGRAVER, Ingredient.of(Items.STONECUTTER))
-        basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.HOPPER))
-        basicMachine(RagiumBlocks.Machines.PULVERIZER, Ingredient.of(Items.FLINT))
+        basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
+        basicMachine(HTMachineVariant.ENGRAVER, Ingredient.of(Items.STONECUTTER))
+        basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
+        basicMachine(HTMachineVariant.PULVERIZER, Ingredient.of(Items.FLINT))
+        basicMachine(
+            HTMachineVariant.SMELTER,
+            Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER),
+            Ingredient.of(Items.FURNACE),
+        )
         // Advanced
         advMachine(
-            RagiumBlocks.Machines.ALLOY_SMELTER,
-            Ingredient.of(Items.FURNACE),
+            HTMachineVariant.ALLOY_SMELTER,
+            Ingredient.of(HTMachineVariant.SMELTER),
             Ingredient.of(RagiumBlocks.Casings.STONE),
         )
         advMachine(
-            RagiumBlocks.Machines.CRUSHER,
+            HTMachineVariant.CRUSHER,
             Ingredient.of(RagiumModTags.Items.TOOLS_HAMMER),
-            Ingredient.of(RagiumBlocks.Machines.PULVERIZER),
+            Ingredient.of(HTMachineVariant.PULVERIZER),
         )
         advMachine(
-            RagiumBlocks.Machines.INFUSER,
+            HTMachineVariant.INFUSER,
             Ingredient.of(Items.HOPPER),
             Ingredient.of(Items.CAULDRON),
         )
         advMachine(
-            RagiumBlocks.Machines.MELTER,
+            HTMachineVariant.MELTER,
             Ingredient.of(Items.BLAST_FURNACE),
             Ingredient.of(Items.CAULDRON),
         )
         advMachine(
-            RagiumBlocks.Machines.MIXER,
+            HTMachineVariant.MIXER,
             Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
             Ingredient.of(Items.CAULDRON),
         )
         advMachine(
-            RagiumBlocks.Machines.REFINERY,
+            HTMachineVariant.REFINERY,
             Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
             Ingredient.of(Items.HOPPER),
         )
         advMachine(
-            RagiumBlocks.Machines.SOLIDIFIER,
+            HTMachineVariant.SOLIDIFIER,
             Ingredient.of(Items.IRON_BARS),
             Ingredient.of(Items.CAULDRON),
         )
     }
 
-    private fun basicMachine(machine: ItemLike, side: Ingredient) {
-        HTShapedRecipeBuilder(machine)
+    private fun basicMachine(variant: HTMachineVariant, side: Ingredient, core: Ingredient = Ingredient.of(RagiumBlocks.Casings.STONE)) {
+        HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
             .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .define('C', side)
-            .define('D', RagiumBlocks.Casings.STONE)
+            .define('D', core)
             .save(output)
     }
 
-    private fun advMachine(machine: ItemLike, side: Ingredient, core: Ingredient) {
-        HTShapedRecipeBuilder(machine)
+    private fun advMachine(variant: HTMachineVariant, side: Ingredient, core: Ingredient) {
+        HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .define('B', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
@@ -187,7 +190,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun drums() {
-        for ((variant: HTDrumVariant, drum: DeferredBlock<Block>) in RagiumBlocks.DRUMS) {
+        for ((variant: HTDrumVariant, drum: ItemLike) in RagiumBlocks.DRUMS) {
             val material: TagKey<Item> = when (variant) {
                 HTDrumVariant.SMALL -> Tags.Items.INGOTS_COPPER
                 HTDrumVariant.MEDIUM -> Tags.Items.INGOTS_GOLD
@@ -206,11 +209,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
         // Huge
-        createNetheriteUpgrade(RagiumBlocks.getDrum(HTDrumVariant.HUGE), RagiumBlocks.getDrum(HTDrumVariant.LARGE))
+        createNetheriteUpgrade(HTDrumVariant.HUGE, HTDrumVariant.LARGE)
             .save(output)
         // Upgrades
         for (variant: HTDrumVariant in RagiumBlocks.DRUMS.keys) {
-            val upgrade: DeferredItem<*> = when (variant) {
+            val upgrade: ItemLike = when (variant) {
                 HTDrumVariant.SMALL -> continue
                 HTDrumVariant.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
                 HTDrumVariant.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE

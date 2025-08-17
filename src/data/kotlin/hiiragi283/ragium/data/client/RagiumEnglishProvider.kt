@@ -115,20 +115,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Frames.ADVANCED, "Advanced Machine Frame")
         addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")
         addBlock(RagiumBlocks.Frames.ELITE, "Elite Machine Frame")
-
-        addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "Block Breaker")
-        addBlock(RagiumBlocks.Machines.COMPRESSOR, "Compressor")
-        addBlock(RagiumBlocks.Machines.ENGRAVER, "Engraver")
-        addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
-        addBlock(RagiumBlocks.Machines.PULVERIZER, "Pulverizer")
-
-        addBlock(RagiumBlocks.Machines.ALLOY_SMELTER, "Alloy Smelter")
-        addBlock(RagiumBlocks.Machines.CRUSHER, "Crusher")
-        addBlock(RagiumBlocks.Machines.INFUSER, "Fluid Infuser")
-        addBlock(RagiumBlocks.Machines.MELTER, "Melter")
-        addBlock(RagiumBlocks.Machines.MIXER, "Mixer")
-        addBlock(RagiumBlocks.Machines.REFINERY, "Refinery")
-        addBlock(RagiumBlocks.Machines.SOLIDIFIER, "Solidifier")
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
         addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")

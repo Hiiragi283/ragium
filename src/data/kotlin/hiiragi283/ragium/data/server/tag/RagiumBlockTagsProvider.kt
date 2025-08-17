@@ -4,12 +4,16 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
+import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -72,10 +76,10 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
         pickaxe.addBlocks<RagiumBlocks.Casings>()
         pickaxe.addBlocks<RagiumBlocks.Devices>()
-        RagiumBlocks.DRUMS.values.forEach(pickaxe::addBlock)
-        RagiumBlocks.GENERATORS.values.forEach(pickaxe::addBlock)
+        pickaxe.addVariants<HTDrumVariant>()
+        pickaxe.addVariants<HTGeneratorVariant>()
         pickaxe.addBlocks<RagiumBlocks.Frames>()
-        pickaxe.addBlocks<RagiumBlocks.Machines>()
+        pickaxe.addVariants<HTMachineVariant>()
 
         // Shovel
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -162,4 +166,10 @@ private inline fun <reified B> IntrinsicTagAppender<Block>.addBlocks(): Intrinsi
 where B : HTBlockHolderLike, B : Enum<B> =
     apply {
         enumEntries<B>().mapNotNull(HTBlockHolderLike::getKey).forEach(::add)
+    }
+
+private inline fun <reified B> IntrinsicTagAppender<Block>.addVariants(): IntrinsicTagAppender<Block>
+        where B : HTVariantKey.WithBE<*>, B : Enum<B> =
+    apply {
+        enumEntries<B>().mapNotNull(HTVariantKey.WithBE<*>::blockHolder).forEach(::addBlock)
     }

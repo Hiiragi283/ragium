@@ -6,7 +6,9 @@ import dev.emi.emi.api.recipe.handler.StandardRecipeHandler
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import net.minecraft.world.inventory.Slot
 
-open class HTRecipeHandler<T : HTContainerMenu>(private val category: EmiRecipeCategory) : StandardRecipeHandler<T> {
+open class HTRecipeHandler<T : HTContainerMenu>(private val categories: List<EmiRecipeCategory>) : StandardRecipeHandler<T> {
+    constructor(vararg categories: EmiRecipeCategory) : this(categories.toList())
+
     override fun getInputSources(handler: T): List<Slot> = buildList {
         // Inputs
         addAll(getCraftingSlots(handler))
@@ -18,5 +20,5 @@ open class HTRecipeHandler<T : HTContainerMenu>(private val category: EmiRecipeC
 
     override fun getCraftingSlots(handler: T): List<Slot> = handler.inputSlots.map(handler::getSlot)
 
-    override fun supportsRecipe(recipe: EmiRecipe): Boolean = recipe.category == category
+    override fun supportsRecipe(recipe: EmiRecipe): Boolean = recipe.category in categories
 }

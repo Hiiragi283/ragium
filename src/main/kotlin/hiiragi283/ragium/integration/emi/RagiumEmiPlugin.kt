@@ -91,8 +91,6 @@ class RagiumEmiPlugin : EmiPlugin {
     override fun register(registry: EmiRegistry) {
         // Category, Workstation
         RagiumEmiCategories.register(registry)
-
-        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, EmiStack.of(RagiumBlocks.Machines.ENGRAVER))
         // Recipe
         this.registry = registry
         recipeManager = registry.recipeManager
@@ -170,7 +168,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     RagiumEmiCategories.getGenerator(variant),
                     key.location().withPrefix("/${dataMapType.id().path}/"),
                     EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
-                    variant.energyRate(),
+                    variant.tier.getEnergyRate(),
                 ),
             )
         }
@@ -291,6 +289,8 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.REFINERY.get(), HTRecipeHandler(RagiumEmiCategories.REFINING))
+        // Smelting
+        registry.addRecipeHandler(RagiumMenuTypes.SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.SMELTING))
         // Solidifying
         RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
             registry.addRecipe(

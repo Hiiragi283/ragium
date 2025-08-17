@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumCircuitType
+import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -92,7 +92,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
             ).save(output)
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.BASIC))
+        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumTierType.BASIC))
             .pattern(
                 "AAA",
                 "BCB",
@@ -102,7 +102,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumModTags.Items.CIRCUIT_BOARDS)
             .save(output)
         // Advanced
-        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.ADVANCED))
+        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumTierType.ADVANCED))
             .crossLayered()
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', Tags.Items.INGOTS_GOLD)
@@ -110,7 +110,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .saveSuffixed(output, "_from_basic")
 
-        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumCircuitType.ADVANCED))
+        HTShapedRecipeBuilder(RagiumItems.getCircuit(RagiumTierType.ADVANCED))
             .pattern(
                 "AAA",
                 "BCB",
@@ -123,24 +123,24 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Circuit by combining
         for ((tier: HTMaterialType, circuit: DeferredItem<*>) in RagiumItems.MATERIALS.row(HTMaterialVariant.CIRCUIT)) {
             val dopant: HTItemIngredient = when (tier) {
-                RagiumCircuitType.BASIC -> HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE)
-                RagiumCircuitType.ADVANCED -> HTIngredientHelper.gemOrDust(RagiumConst.AZURE)
-                RagiumCircuitType.ELITE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
-                RagiumCircuitType.ULTIMATE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
+                RagiumTierType.BASIC -> HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE)
+                RagiumTierType.ADVANCED -> HTIngredientHelper.gemOrDust(RagiumConst.AZURE)
+                RagiumTierType.ELITE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+                RagiumTierType.ULTIMATE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
                 else -> continue
             }
             val wiring: HTItemIngredient = when (tier) {
-                RagiumCircuitType.BASIC -> Tags.Items.INGOTS_COPPER
-                RagiumCircuitType.ADVANCED -> Tags.Items.INGOTS_GOLD
-                RagiumCircuitType.ELITE -> RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY
-                RagiumCircuitType.ULTIMATE -> Tags.Items.NETHER_STARS
+                RagiumTierType.BASIC -> Tags.Items.INGOTS_COPPER
+                RagiumTierType.ADVANCED -> Tags.Items.INGOTS_GOLD
+                RagiumTierType.ELITE -> RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY
+                RagiumTierType.ULTIMATE -> Tags.Items.NETHER_STARS
                 else -> continue
             }.let(HTIngredientHelper::item)
             val board: HTItemIngredient = when (tier) {
-                RagiumCircuitType.BASIC -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
-                RagiumCircuitType.ADVANCED -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
-                RagiumCircuitType.ELITE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
-                RagiumCircuitType.ULTIMATE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
+                RagiumTierType.BASIC -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
+                RagiumTierType.ADVANCED -> HTIngredientHelper.item(RagiumModTags.Items.CIRCUIT_BOARDS)
+                RagiumTierType.ELITE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
+                RagiumTierType.ULTIMATE -> HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD)
                 else -> continue
             }
             HTCombineItemToItemRecipeBuilder.alloying(HTResultHelper.item(circuit), dopant, wiring, board).save(output)

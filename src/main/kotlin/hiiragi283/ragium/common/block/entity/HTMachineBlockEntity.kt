@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
@@ -42,6 +43,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTTransferIO.Provider,
     HTTransferIO.Receiver,
     MenuProvider {
+    constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
+
     //    Storage    //
 
     protected abstract val inventory: HTItemHandler

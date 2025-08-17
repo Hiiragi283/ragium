@@ -1,6 +1,5 @@
 package hiiragi283.ragium.util.variant
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
@@ -8,32 +7,26 @@ import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionGeneratorBlockEn
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.registries.DeferredBlock
 
 enum class HTGeneratorVariant(
     factory: (BlockPos, BlockState) -> HTGeneratorBlockEntity,
-    val energyRate: () -> Int,
+    val tier: RagiumTierType,
     private val enUsPattern: String,
     private val jaJpPattern: String,
 ) : HTVariantKey.WithBE<HTGeneratorBlockEntity> {
     // Basic
-    THERMAL(
-        ::HTThermalGeneratorBlockEntity,
-        RagiumAPI.getConfig()::getBasicMachineEnergyUsage,
-        "Thermal",
-        "火力",
-    ),
+    THERMAL(::HTThermalGeneratorBlockEntity, RagiumTierType.BASIC, "Thermal", "火力"),
 
     // Advanced,
-    COMBUSTION(
-        ::HTCombustionGeneratorBlockEntity,
-        RagiumAPI.getConfig()::getAdvancedMachineEnergyUsage,
-        "Combustion",
-        "燃焼",
-    ),
+    COMBUSTION(::HTCombustionGeneratorBlockEntity, RagiumTierType.ADVANCED, "Combustion", "燃焼"),
     ;
 
+    override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTGeneratorBlockEntity> =
         RagiumBlockEntityTypes.registerTick("${serializedName}_generator", factory)
 

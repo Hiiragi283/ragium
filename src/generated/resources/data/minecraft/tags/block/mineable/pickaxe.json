@@ -94,6 +94,7 @@
     "ragium:engraver",
     "ragium:extractor",
     "ragium:pulverizer",
+    "ragium:smelter",
     "ragium:alloy_smelter",
     "ragium:crusher",
     "ragium:infuser",

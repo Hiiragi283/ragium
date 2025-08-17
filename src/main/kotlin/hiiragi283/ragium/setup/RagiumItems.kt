@@ -29,8 +29,8 @@ import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.util.material.RagiumCircuitType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
@@ -135,8 +135,8 @@ object RagiumItems {
             RagiumMaterialType.DEEP_STEEL,
         ).forEach { put(HTMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Circuits
-        for (circuit: RagiumCircuitType in RagiumCircuitType.entries) {
-            put(HTMaterialVariant.CIRCUIT, circuit, register("${circuit.serializedName}_circuit"))
+        for (tier: RagiumTierType in RagiumTierType.entries) {
+            put(HTMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
         }
     }
 
@@ -160,7 +160,7 @@ object RagiumItems {
     fun getNugget(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.NUGGET, material)
 
     @JvmStatic
-    fun getCircuit(material: RagiumCircuitType): DeferredItem<*> = getMaterial(HTMaterialVariant.CIRCUIT, material)
+    fun getCircuit(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.CIRCUIT, tier)
 
     //    Armors    //
 
@@ -450,10 +450,10 @@ object RagiumItems {
             )
         }
 
-        register(RagiumAPI.getConfig().getSmallDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.SMALL))
-        register(RagiumAPI.getConfig().getMediumDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.MEDIUM))
-        register(RagiumAPI.getConfig().getLargeDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.LARGE))
-        register(RagiumAPI.getConfig().getHugeDrumCapacity(), RagiumBlocks.getDrum(HTDrumVariant.HUGE))
+        register(RagiumAPI.getConfig().getSmallDrumCapacity(), HTDrumVariant.SMALL)
+        register(RagiumAPI.getConfig().getMediumDrumCapacity(), HTDrumVariant.MEDIUM)
+        register(RagiumAPI.getConfig().getLargeDrumCapacity(), HTDrumVariant.LARGE)
+        register(RagiumAPI.getConfig().getHugeDrumCapacity(), HTDrumVariant.HUGE)
     }
 
     @JvmStatic
