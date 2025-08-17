@@ -418,7 +418,8 @@ object RagiumBlocks {
 
     enum class Casings(properties: BlockBehaviour.Properties) : HTBlockHolderLike {
         WOODEN(copyOf(Blocks.NOTE_BLOCK)),
-        STONE(copyOf(Blocks.COBBLED_DEEPSLATE)),
+        STONE(copyOf(Blocks.COBBLESTONE)),
+        REINFORCED_STONE(copyOf(Blocks.COBBLED_DEEPSLATE)),
         DEVICE(machineProperty()),
         ;
 

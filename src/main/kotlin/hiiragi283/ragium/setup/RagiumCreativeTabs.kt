@@ -106,7 +106,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.REDSTONE_BOARD)
 
         output.accept(RagiumItems.POLYMER_RESIN)
-        output.accept(RagiumItems.PLASTIC_PLATE)
+        output.accept(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
         output.accept(RagiumItems.SYNTHETIC_FIBER)
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 

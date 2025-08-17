@@ -280,13 +280,6 @@ object RagiumCommonTags {
         @JvmField
         val ORES_DEEP_SCRAP: TagKey<Item> = create(ORES, "deep_scrap")
 
-        // Plates
-        @JvmField
-        val PLATES: TagKey<Item> = create(RagiumConst.PLATES)
-
-        @JvmField
-        val PLATES_PLASTIC: TagKey<Item> = create(RagiumConst.PLATES, "plastic")
-
         // Storage Blocks
         private const val STORAGE_BLOCKS: String = RagiumConst.STORAGE_BLOCKS
 

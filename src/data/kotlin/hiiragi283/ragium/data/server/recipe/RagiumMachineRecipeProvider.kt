@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.tags.ItemTags
@@ -36,9 +38,16 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Stone
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.STONE, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.STONE)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
+            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('C', Items.SMOOTH_STONE)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.REINFORCED_STONE)
+            .casing()
+            .define('A', Items.BASALT)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
@@ -87,67 +96,75 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(HTMachineVariant.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
-        basicMachine(HTMachineVariant.PULVERIZER, Ingredient.of(Items.FLINT))
-        basicMachine(
-            HTMachineVariant.SMELTER,
-            Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER),
-            Ingredient.of(Items.FURNACE),
-        )
+
+        HTShapedRecipeBuilder(HTMachineVariant.PULVERIZER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', Items.FLINT)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('D', Items.BRICKS)
+            .save(output)
+
+        HTShapedRecipeBuilder(HTMachineVariant.SMELTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', HTMaterialVariant.COIL, RagiumMaterialType.RAGI_ALLOY)
+            .define('C', Items.FURNACE)
+            .define('D', Items.BRICKS)
+            .save(output)
         // Advanced
-        advMachine(
-            HTMachineVariant.ALLOY_SMELTER,
-            Ingredient.of(HTMachineVariant.SMELTER),
-            Ingredient.of(RagiumBlocks.Casings.STONE),
-        )
-        advMachine(
-            HTMachineVariant.CRUSHER,
-            Ingredient.of(RagiumModTags.Items.TOOLS_HAMMER),
-            Ingredient.of(HTMachineVariant.PULVERIZER),
-        )
-        advMachine(
-            HTMachineVariant.INFUSER,
-            Ingredient.of(Items.HOPPER),
-            Ingredient.of(Items.CAULDRON),
-        )
-        advMachine(
-            HTMachineVariant.MELTER,
-            Ingredient.of(Items.BLAST_FURNACE),
-            Ingredient.of(Items.CAULDRON),
-        )
-        advMachine(
-            HTMachineVariant.MIXER,
-            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
-            Ingredient.of(Items.CAULDRON),
-        )
-        advMachine(
-            HTMachineVariant.REFINERY,
-            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
-            Ingredient.of(Items.HOPPER),
-        )
-        advMachine(
-            HTMachineVariant.SOLIDIFIER,
-            Ingredient.of(Items.IRON_BARS),
-            Ingredient.of(Items.CAULDRON),
-        )
+        HTShapedRecipeBuilder(HTMachineVariant.ALLOY_SMELTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', HTMaterialVariant.COIL, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('C', Items.BLAST_FURNACE)
+            .define('D', Items.NETHER_BRICKS)
+            .save(output)
+
+        HTShapedRecipeBuilder(HTMachineVariant.CRUSHER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', Tags.Items.GEMS_DIAMOND)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .define('D', Items.NETHER_BRICKS)
+            .save(output)
+
+        advMachine(HTMachineVariant.INFUSER, Ingredient.of(Items.HOPPER))
+        advMachine(HTMachineVariant.MELTER, Ingredient.of(Items.BLAST_FURNACE))
+        advMachine(HTMachineVariant.MIXER, Ingredient.of(Items.CAULDRON))
+        advMachine(HTMachineVariant.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ))
+        advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
     }
 
-    private fun basicMachine(variant: HTMachineVariant, side: Ingredient, core: Ingredient = Ingredient.of(RagiumBlocks.Casings.STONE)) {
+    private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
             .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .define('C', side)
-            .define('D', core)
+            .define('D', RagiumBlocks.Casings.STONE)
             .save(output)
     }
 
-    private fun advMachine(variant: HTMachineVariant, side: Ingredient, core: Ingredient) {
+    private fun advMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .define('B', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
             .define('C', side)
-            .define('D', core)
+            .define('D', RagiumBlocks.Casings.REINFORCED_STONE)
             .save(output)
     }
 

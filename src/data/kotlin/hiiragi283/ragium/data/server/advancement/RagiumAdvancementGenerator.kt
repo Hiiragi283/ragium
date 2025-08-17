@@ -35,14 +35,22 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         warped()
         eldritch()
 
-        child(RagiumAdvancements.ETERNAL_TICKET, root) {
+        child(RagiumAdvancements.CRAFTABLE_TEMPLATES, root) {
             display {
-                setIcon(RagiumItems.ETERNAL_TICKET)
-                setTitleFromKey(RagiumAdvancements.ETERNAL_TICKET)
-                setDescFromKey(RagiumAdvancements.ETERNAL_TICKET)
-                setChallenge()
+                setIcon(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
+                setTitleFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
+                setDescFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
             }
-            hasAllItem("has_ticket", RagiumItems.ETERNAL_TICKET)
+            hasAnyItem(
+                "has_upgrade",
+                RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE,
+                RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
+                RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
+            )
+        }
+
+        createSimple(RagiumAdvancements.ETERNAL_TICKET, root, RagiumItems.ETERNAL_TICKET) {
+            setChallenge()
         }
     }
 

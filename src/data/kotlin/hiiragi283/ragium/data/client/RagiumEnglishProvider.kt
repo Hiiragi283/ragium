@@ -38,6 +38,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
+        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "This thing craftable...!", "Craft any Upgrade Templates added by Ragium")
         addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "Eternal Requiem", "Get Eternal Ticket for making tools unbreakable")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "Get Raginite Dust from Raginite Ores in underground")
@@ -118,6 +119,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
         addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
+        addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "Reinforced Stone Casing")
         addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
 
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
@@ -227,7 +229,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
-        addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")

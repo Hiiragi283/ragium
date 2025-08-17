@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:cobblestones/normal"
+      "item": "minecraft:basalt"
     },
     "B": {
       "tag": "ragium:tools/hammer"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:stone_casing"
+    "id": "ragium:reinforced_stone_casing"
   }
 }

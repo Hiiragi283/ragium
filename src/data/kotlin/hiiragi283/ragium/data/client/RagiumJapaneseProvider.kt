@@ -38,6 +38,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to ようこそ Ragium へ！")
+        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "こいつ…作れるぞ！", "Ragiumで追加された鍛冶型を作る")
         addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "さあ，地獄を楽しみな！", "ツールを不可壊にするために永遠のチケットを手に入れる")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
@@ -109,6 +110,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Device
         addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
         addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
+        addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "強化石材筐体")
         addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
 
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
@@ -228,7 +230,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
-        addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")

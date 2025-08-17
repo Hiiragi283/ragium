@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.material
 
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.world.item.Items
 
 object VanillaMaterialFamilies {
@@ -12,7 +13,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_COPPER)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::COPPER_BLOCK)
         .setVanilla()
-        .build("copper")
+        .build(HTVanillaMaterialType.COPPER)
 
     @JvmField
     val IRON: HTMaterialFamily = HTMaterialFamily.Builder
@@ -22,7 +23,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_IRON)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::IRON_BLOCK)
         .setVanilla()
-        .build("iron")
+        .build(HTVanillaMaterialType.IRON)
 
     @JvmField
     val GOLD: HTMaterialFamily = HTMaterialFamily.Builder
@@ -32,7 +33,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::RAW_GOLD)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::GOLD_BLOCK)
         .setVanilla()
-        .build("gold")
+        .build(HTVanillaMaterialType.GOLD)
 
     @JvmField
     val COAL: HTMaterialFamily = HTMaterialFamily.Builder
@@ -41,13 +42,13 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::COAL)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::COAL_BLOCK)
         .setVanilla()
-        .build("coal")
+        .build(HTVanillaMaterialType.COAL)
 
     @JvmField
     val CHARCOAL: HTMaterialFamily = HTMaterialFamily.Builder
         .fuel(Items::CHARCOAL)
         .setVanilla()
-        .build("charcoal")
+        .build(HTVanillaMaterialType.CHARCOAL)
 
     @JvmField
     val LAPIS: HTMaterialFamily = HTMaterialFamily.Builder
@@ -56,7 +57,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::LAPIS_LAZULI)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::LAPIS_BLOCK)
         .setVanilla()
-        .build("lapis")
+        .build(HTVanillaMaterialType.LAPIS)
 
     @JvmField
     val QUARTZ: HTMaterialFamily = HTMaterialFamily.Builder
@@ -64,7 +65,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.ORE, Items::NETHER_QUARTZ_ORE)
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::QUARTZ)
         .setVanilla()
-        .build("quartz")
+        .build(HTVanillaMaterialType.QUARTZ)
 
     @JvmField
     val DIAMOND: HTMaterialFamily = HTMaterialFamily.Builder
@@ -73,7 +74,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::DIAMOND)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::DIAMOND_BLOCK)
         .setVanilla()
-        .build("diamond")
+        .build(HTVanillaMaterialType.DIAMOND)
 
     @JvmField
     val EMERALD: HTMaterialFamily = HTMaterialFamily.Builder
@@ -82,5 +83,5 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.RAW_MATERIAL, Items::EMERALD)
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, Items::EMERALD_BLOCK)
         .setVanilla()
-        .build("emerald")
+        .build(HTVanillaMaterialType.EMERALD)
 }

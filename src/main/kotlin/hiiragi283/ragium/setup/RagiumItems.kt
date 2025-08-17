@@ -134,10 +134,20 @@ object RagiumItems {
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
         ).forEach { put(HTMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
+        // Plates
+        put(HTMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
+
         // Circuits
         for (tier: RagiumTierType in RagiumTierType.entries) {
             put(HTMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
         }
+
+        // Coils
+        fun addCoil(material: RagiumMaterialType) {
+            put(HTMaterialVariant.COIL, material, register("${material.serializedName}_coil"))
+        }
+        addCoil(RagiumMaterialType.RAGI_ALLOY)
+        addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     @JvmStatic
@@ -158,6 +168,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getNugget(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.NUGGET, material)
+
+    @JvmStatic
+    fun getPlate(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.PLATE, material)
 
     @JvmStatic
     fun getCircuit(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.CIRCUIT, tier)
@@ -388,9 +401,6 @@ object RagiumItems {
     // Plastics
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
-
-    @JvmField
-    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     @JvmField
     val SYNTHETIC_FIBER: DeferredItem<Item> = register("synthetic_fiber")

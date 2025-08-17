@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -94,20 +95,17 @@ sealed class HTRecipeProvider : IConditionBuilder {
         output.accept(recipeId, recipe, null, *conditions)
     }
 
-    protected fun fuelOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
-        Ingredient.of(HTMaterialVariant.FUEL.itemTagKey(name)),
-    )
+    protected fun fuelOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.FUEL)
 
-    protected fun gemOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
-        Ingredient.of(HTMaterialVariant.GEM.itemTagKey(name)),
-    )
+    protected fun gemOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.GEM)
 
-    protected fun ingotOrDust(name: String): Ingredient = CompoundIngredient.of(
-        Ingredient.of(HTMaterialVariant.DUST.itemTagKey(name)),
-        Ingredient.of(HTMaterialVariant.INGOT.itemTagKey(name)),
-    )
+    protected fun ingotOrDust(material: HTMaterialType): Ingredient =
+        multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.INGOT)
+
+    protected fun ingotOrRod(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.INGOT, HTMaterialVariant.ROD)
+
+    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant): Ingredient =
+        CompoundIngredient(variants.map { it.itemTagKey(material) }.map(Ingredient::of)).toVanilla()
 
     protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,

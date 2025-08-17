@@ -6,19 +6,19 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:circuits/basic"
-    },
-    "C": {
       "item": "minecraft:flint"
     },
+    "C": {
+      "tag": "c:circuits/basic"
+    },
     "D": {
-      "item": "ragium:stone_casing"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "AAA",
+    "BCB",
+    "DDD"
   ],
   "result": {
     "count": 1,

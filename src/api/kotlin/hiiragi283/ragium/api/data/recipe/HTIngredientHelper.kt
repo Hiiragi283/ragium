@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
@@ -28,6 +29,10 @@ object HTIngredientHelper {
     fun item(item: ItemLike, count: Int = 1): HTItemIngredient = item(SizedIngredient.of(item, count))
 
     @JvmStatic
+    fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemIngredient =
+        item(variant.itemTagKey(material), count)
+
+    @JvmStatic
     fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemIngredient = item(SizedIngredient.of(tagKey, count))
 
     @JvmStatic
@@ -40,18 +45,42 @@ object HTIngredientHelper {
     fun item(ingredient: SizedIngredient): HTItemIngredient = HTItemIngredient.of(ingredient)
 
     @JvmStatic
-    fun itemTags(vararg tagKeys: TagKey<Item>, count: Int): HTItemIngredient = item(
+    fun itemTags(vararg tagKeys: TagKey<Item>, count: Int = 1): HTItemIngredient = item(
         CompoundIngredient(tagKeys.map(Ingredient::of)),
         count,
     )
 
     @JvmStatic
-    fun fuelOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
-        HTMaterialVariant.DUST.itemTagKey(name),
-        HTMaterialVariant.FUEL.itemTagKey(name),
+    fun multiVariants(material: HTMaterialType, vararg variant: HTMaterialVariant, count: Int = 1): HTItemIngredient = item(
+        CompoundIngredient(variant.map { it.itemTagKey(material) }.map(Ingredient::of)),
+        count,
+    )
+
+    @JvmStatic
+    fun fuelOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient = multiVariants(
+        material,
+        HTMaterialVariant.DUST,
+        HTMaterialVariant.FUEL,
         count = count,
     )
 
+    @JvmStatic
+    fun gemOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient = multiVariants(
+        material,
+        HTMaterialVariant.DUST,
+        HTMaterialVariant.GEM,
+        count = count,
+    )
+
+    @JvmStatic
+    fun ingotOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient = multiVariants(
+        material,
+        HTMaterialVariant.DUST,
+        HTMaterialVariant.INGOT,
+        count = count,
+    )
+
+    @Deprecated("Use gemOrDust(HTMaterialType, Int) instead of this")
     @JvmStatic
     fun gemOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
         HTMaterialVariant.DUST.itemTagKey(name),
@@ -59,6 +88,7 @@ object HTIngredientHelper {
         count = count,
     )
 
+    @Deprecated("Use ingotOrDust(HTMaterialType, Int) instead of this")
     @JvmStatic
     fun ingotOrDust(name: String, count: Int = 1): HTItemIngredient = itemTags(
         HTMaterialVariant.DUST.itemTagKey(name),

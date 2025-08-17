@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/advanced_ragi_alloy"
+  },
+  "base": {
+    "item": "ragium:pulverizer"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:crusher"
+  },
+  "template": {
+    "item": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+  }
+}

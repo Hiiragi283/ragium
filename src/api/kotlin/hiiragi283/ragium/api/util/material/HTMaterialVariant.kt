@@ -33,11 +33,14 @@ enum class HTMaterialVariant(
     GEM("%s", "%s", RagiumConst.GEMS),
     INGOT("%s Ingot", "%sインゴット", RagiumConst.INGOTS),
     NUGGET("%s Nugget", "%sナゲット", RagiumConst.NUGGETS),
+    PLATE("%s Plate", "%s板", "plates"),
     RAW_MATERIAL("Raw %s", "%sの原石", "raw_materials"),
+    ROD("%s Rod", "%s棒", "rods"),
 
     // Item - Custom
     CIRCUIT("%s Circuit", "%s回路", RagiumConst.CIRCUITS),
-    COMPOUND("%s Compound", "%s混合物", RagiumConst.COMPOUNDS, RagiumAPI.MOD_ID),
+    COIL("%s Coil", "%sコイル", "coils", RagiumAPI.MOD_ID),
+    COMPOUND("%s Compound", "%s混合物", "compounds", RagiumAPI.MOD_ID),
     FUEL("%s", "%s", RagiumConst.FUELS),
     ;
 
@@ -48,21 +51,24 @@ enum class HTMaterialVariant(
             GEM,
             COMPOUND,
             INGOT,
+            COIL,
             NUGGET,
             DUST,
         )
     }
 
-    val blockCommonTag: TagKey<Block> = blockTagKey(ResourceLocation.fromNamespaceAndPath(tagNamespace, tagPrefix))
-    val itemCommonTag: TagKey<Item> = itemTagKey(ResourceLocation.fromNamespaceAndPath(tagNamespace, tagPrefix))
+    private fun id(namespace: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, path)
+
+    val blockCommonTag: TagKey<Block> = blockTagKey(id(tagNamespace, tagPrefix))
+    val itemCommonTag: TagKey<Item> = itemTagKey(id(tagNamespace, tagPrefix))
 
     fun blockTagKey(material: HTMaterialType): TagKey<Block> = blockTagKey(material.serializedName)
 
-    fun blockTagKey(path: String): TagKey<Block> = blockTagKey(ResourceLocation.fromNamespaceAndPath(tagNamespace, "$tagPrefix/$path"))
+    fun blockTagKey(path: String): TagKey<Block> = blockTagKey(id(tagNamespace, "$tagPrefix/$path"))
 
     fun itemTagKey(material: HTMaterialType): TagKey<Item> = itemTagKey(material.serializedName)
 
-    fun itemTagKey(path: String): TagKey<Item> = itemTagKey(ResourceLocation.fromNamespaceAndPath(tagNamespace, "$tagPrefix/$path"))
+    fun itemTagKey(path: String): TagKey<Item> = itemTagKey(id(tagNamespace, "$tagPrefix/$path"))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

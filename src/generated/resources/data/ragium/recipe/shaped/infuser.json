@@ -12,7 +12,7 @@
       "item": "minecraft:hopper"
     },
     "D": {
-      "item": "minecraft:cauldron"
+      "item": "ragium:reinforced_stone_casing"
     }
   },
   "pattern": [

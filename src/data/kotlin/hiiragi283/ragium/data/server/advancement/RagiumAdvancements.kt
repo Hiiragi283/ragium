@@ -11,6 +11,9 @@ object RagiumAdvancements {
     val ROOT: ResourceKey<Advancement> = create("root")
 
     @JvmField
+    val CRAFTABLE_TEMPLATES: ResourceKey<Advancement> = create("craftable_templates")
+
+    @JvmField
     val ETERNAL_TICKET: ResourceKey<Advancement> = create("eternal_ticket")
 
     //    Raginite    //

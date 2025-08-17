@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -52,21 +53,21 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .input(ingotOrDust("copper"))
+            .input(ingotOrDust(HTVanillaMaterialType.COPPER))
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE, 2)
             .build(output, id("ragi_alloy_ingot"))
         // Gold -> Advanced Ragi-Alloy
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .input(ingotOrDust("gold"))
+            .input(ingotOrDust(HTVanillaMaterialType.GOLD))
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE, 4)
             .build(output, id("advanced_ragi_alloy_ingot"))
         // Diamond -> Ragi-Crystal
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
-            .input(gemOrDust("diamond"))
+            .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE, 6)
             .build(output, id("ragi_crystal"))
     }

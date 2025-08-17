@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -69,7 +70,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.fuelOrDust("charcoal"),
+                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
                 HTResultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
         // Grass -> Green
@@ -89,7 +90,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.fuelOrDust("coal"),
+                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
                 HTResultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 

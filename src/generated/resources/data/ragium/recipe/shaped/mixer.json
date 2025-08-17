@@ -9,10 +9,10 @@
       "tag": "c:circuits/advanced"
     },
     "C": {
-      "tag": "c:glass_blocks/quartz"
+      "item": "minecraft:cauldron"
     },
     "D": {
-      "item": "minecraft:cauldron"
+      "item": "ragium:reinforced_stone_casing"
     }
   },
   "pattern": [

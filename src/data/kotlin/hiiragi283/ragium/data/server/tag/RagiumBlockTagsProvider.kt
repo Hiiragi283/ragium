@@ -142,7 +142,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addBlock(RagiumBlocks.ASH_LOG)
             .addBlock(RagiumBlocks.Casings.WOODEN)
-            .addBlock(RagiumBlocks.Casings.STONE)
     }
 
     //    Extensions    //

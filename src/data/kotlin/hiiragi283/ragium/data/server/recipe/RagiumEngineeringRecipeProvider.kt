@@ -9,11 +9,12 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.registries.DeferredItem
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Plastic Plate
-        HTShapelessRecipeBuilder(RagiumItems.PLASTIC_PLATE)
+        HTShapelessRecipeBuilder(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
             .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
             .save(output)
         // Synthetic Fiber
@@ -64,6 +65,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         circuits()
+        coils()
         redStones()
         diode()
     }
@@ -72,7 +74,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Circuit Board
         HTShapelessRecipeBuilder(RagiumItems.CIRCUIT_BOARD)
             .addIngredient(Tags.Items.DYES_GREEN)
-            .addIngredient(gemOrDust(RagiumConst.AZURE))
+            .addIngredient(gemOrDust(RagiumMaterialType.AZURE))
             .addIngredient(ItemTags.PLANKS)
             .save(output)
 
@@ -80,7 +82,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTResultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
                 HTIngredientHelper.item(Tags.Items.DYES_GREEN),
-                HTIngredientHelper.gemOrDust(RagiumConst.AZURE),
+                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
             ).save(output)
 
@@ -116,7 +118,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 "BCB",
                 "AAA",
             ).define('A', Tags.Items.INGOTS_GOLD)
-            .define('B', gemOrDust(RagiumConst.AZURE))
+            .define('B', gemOrDust(RagiumMaterialType.AZURE))
             .define('C', RagiumModTags.Items.CIRCUIT_BOARDS)
             .save(output)
 
@@ -124,7 +126,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         for ((tier: HTMaterialType, circuit: DeferredItem<*>) in RagiumItems.MATERIALS.row(HTMaterialVariant.CIRCUIT)) {
             val dopant: HTItemIngredient = when (tier) {
                 RagiumTierType.BASIC -> HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE)
-                RagiumTierType.ADVANCED -> HTIngredientHelper.gemOrDust(RagiumConst.AZURE)
+                RagiumTierType.ADVANCED -> HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE)
                 RagiumTierType.ELITE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
                 RagiumTierType.ULTIMATE -> HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
                 else -> continue
@@ -145,6 +147,20 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             }
             HTCombineItemToItemRecipeBuilder.alloying(HTResultHelper.item(circuit), dopant, wiring, board).save(output)
         }
+    }
+
+    private fun coils() {
+        fun register(material: HTMaterialType) {
+            // Shaped
+            HTShapedRecipeBuilder(RagiumItems.getMaterial(HTMaterialVariant.COIL, material))
+                .hollow4()
+                .define('A', HTMaterialVariant.INGOT, material)
+                .define('B', ingotOrRod(HTVanillaMaterialType.IRON))
+                .save(output)
+        }
+
+        register(RagiumMaterialType.RAGI_ALLOY)
+        register(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     private fun redStones() {
@@ -206,7 +222,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToItemRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.SOLAR_PANEL),
-                HTIngredientHelper.gemOrDust(RagiumConst.AZURE),
+                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
             ).save(output)

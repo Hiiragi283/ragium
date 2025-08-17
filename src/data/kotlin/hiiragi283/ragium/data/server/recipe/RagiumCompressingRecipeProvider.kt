@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
@@ -87,7 +88,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
-                HTIngredientHelper.fuelOrDust("coal", 64),
+                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL, 64),
                 HTResultHelper.item(Tags.Items.GEMS_DIAMOND),
             ).saveSuffixed(output, "_from_coal")
 

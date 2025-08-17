@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
@@ -39,7 +40,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.fuelOrDust("coal"),
+                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
                 HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
@@ -67,7 +68,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // LPG + Coal -> 4x Polymer Resin
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
-                HTIngredientHelper.fuelOrDust("coal"),
+                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
                 HTIngredientHelper.fluid(RagiumFluidContents.LPG, 125),
                 HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
             ).saveSuffixed(output, "_from_lpg")

@@ -102,8 +102,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { material: HTVanillaMaterialType ->
             HTShapedRecipeBuilder(RagiumBlocks.getTintedGlass(material))
                 .hollow4()
-                .define('A', gemOrDust("amethyst"))
-                .define('B', HTMaterialVariant.GLASS_BLOCK.itemTagKey(material))
+                .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
+                .define('B', HTMaterialVariant.GLASS_BLOCK, material)
                 .save(output)
         }
     }

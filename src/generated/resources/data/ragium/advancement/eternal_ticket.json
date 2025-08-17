@@ -1,7 +1,7 @@
 {
   "parent": "ragium:root",
   "criteria": {
-    "has_ticket": {
+    "has_eternal_ticket": {
       "conditions": {
         "items": [
           {
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_ticket"
+      "has_eternal_ticket"
     ]
   ],
   "sends_telemetry_event": true

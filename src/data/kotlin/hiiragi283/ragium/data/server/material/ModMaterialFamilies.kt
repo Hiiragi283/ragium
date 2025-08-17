@@ -1,7 +1,9 @@
 package hiiragi283.ragium.data.server.material
 
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.util.material.RagiumMaterialType
 
 object ModMaterialFamilies {
     //    Common Metal    //
@@ -52,7 +54,7 @@ object ModMaterialFamilies {
     private fun commonMetal(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .ingot(null)
         .setMod()
-        .build(key)
+        .build(MaterialImpl(key))
 
     @JvmStatic
     fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
@@ -88,7 +90,7 @@ object ModMaterialFamilies {
     private fun commonAlloy(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .ingotAlloy(null)
         .setMod()
-        .build(key)
+        .build(MaterialImpl(key))
 
     @JvmStatic
     fun getAlloy(key: String): HTMaterialFamily = ALLOYS[key] ?: error("Unregistered material: $key")
@@ -125,7 +127,7 @@ object ModMaterialFamilies {
     private fun commonGem(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .gem(null)
         .setMod()
-        .build(key)
+        .build(MaterialImpl(key))
 
     @JvmStatic
     fun getGem(key: String): HTMaterialFamily = GEMS[key] ?: error("Unregistered material: $key")
@@ -136,5 +138,13 @@ object ModMaterialFamilies {
     val COAL_COKE: HTMaterialFamily = HTMaterialFamily.Builder
         .fuel(null)
         .setMod()
-        .build(RagiumConst.COAL_COKE)
+        .build(RagiumMaterialType.COAL_COKE)
+
+    //    MaterialImpl    //
+
+    private data class MaterialImpl(private val name: String) : HTMaterialType {
+        override fun getTranslatedName(type: HTLanguageType): String = throw UnsupportedOperationException()
+
+        override fun getSerializedName(): String = name
+    }
 }

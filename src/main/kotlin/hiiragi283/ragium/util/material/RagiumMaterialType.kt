@@ -31,6 +31,8 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
 
     // Other
     ASH("Ash", "灰"),
+    COAL_COKE("Coal Coke", "石炭コークス"),
+    PLASTIC("Plastic", "プラスチック"),
     WOOD("Wood", "木") {
         override fun translate(type: HTLanguageType, variant: HTMaterialVariant): String = if (variant == HTMaterialVariant.DUST) {
             when (type) {

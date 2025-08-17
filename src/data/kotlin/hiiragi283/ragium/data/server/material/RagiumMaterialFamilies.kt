@@ -63,7 +63,7 @@ object RagiumMaterialFamilies {
         .gem(RagiumItems.getGem(type))
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
-        .build(type.serializedName)
+        .build(type)
 
     @JvmStatic
     private fun ingot(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
@@ -71,7 +71,7 @@ object RagiumMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
-        .build(type.serializedName)
+        .build(type)
 
     @JvmStatic
     private fun ingotAlloy(type: RagiumMaterialType): HTMaterialFamily = HTMaterialFamily.Builder
@@ -79,5 +79,5 @@ object RagiumMaterialFamilies {
         .setDefaultedEntry(HTMaterialVariant.DUST, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.NUGGET, getItem(type))
         .setDefaultedEntry(HTMaterialVariant.STORAGE_BLOCK, getBlock(type))
-        .build(type.serializedName)
+        .build(type)
 }

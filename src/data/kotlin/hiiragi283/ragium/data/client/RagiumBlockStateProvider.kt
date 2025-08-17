@@ -138,10 +138,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Machine Frame
         altTextureBlock(RagiumBlocks.Casings.WOODEN, vanillaId("block/note_block"))
 
+        cubeColumn(RagiumBlocks.Casings.STONE, vanillaId("block/furnace_side"), vanillaId("block/furnace_top"))
         cubeColumn(
-            RagiumBlocks.Casings.STONE,
-            vanillaId("block/furnace_side"),
-            vanillaId("block/furnace_top"),
+            RagiumBlocks.Casings.REINFORCED_STONE,
+            vanillaId("block/blast_furnace_side"),
+            vanillaId("block/blast_furnace_top"),
         )
 
         RagiumBlocks.Frames.entries.forEach(::cutoutSimpleBlock)

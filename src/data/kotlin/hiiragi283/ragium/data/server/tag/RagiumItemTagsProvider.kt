@@ -17,6 +17,7 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
@@ -106,9 +107,6 @@ class RagiumItemTagsProvider(
         addItem(RagiumCommonTags.Items.FUELS, RagiumCommonTags.Items.FUELS_CHARCOAL, Items.CHARCOAL)
         tag(RagiumCommonTags.Items.FUELS).addTag(RagiumCommonTags.Items.FUELS_COAL_COKE)
         tag(RagiumCommonTags.Items.FUELS_COAL_COKE).addOptionalTag(commonId(RagiumConst.COAL_COKE))
-
-        addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
-
         // Mekanism Addon
         tag(RagiumModTags.Items.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
         tag(RagiumModTags.Items.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
@@ -211,10 +209,10 @@ class RagiumItemTagsProvider(
             .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.ORITECH, "polymer_resin"))
 
         val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))
-        tag(plastics).addItem(RagiumItems.PLASTIC_PLATE)
+        tag(plastics).addItem(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
         tag(RagiumModTags.Items.PLASTICS)
             .addOptionalTag(plastics)
-            .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
+            .addOptionalTag(HTMaterialVariant.PLATE.itemTagKey(RagiumMaterialType.PLASTIC))
             .addOptionalTag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
 
         tag(Tags.Items.LEATHERS).addItem(RagiumItems.SYNTHETIC_LEATHER)
@@ -240,7 +238,7 @@ class RagiumItemTagsProvider(
     }
 
     private fun pneumatic() {
-        tag(PneumaticCraftTags.Items.PLASTIC_SHEETS).addItem(RagiumItems.PLASTIC_PLATE)
+        tag(PneumaticCraftTags.Items.PLASTIC_SHEETS).addItem(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
     }
 
     //    Extensions    //

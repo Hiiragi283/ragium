@@ -15,8 +15,16 @@
       "tag": "c:ingots/copper"
     },
     {
-      "count": 1,
-      "tag": "c:ingots/tin"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/tin"
+        },
+        {
+          "tag": "c:ingots/tin"
+        }
+      ],
+      "count": 1
     }
   ],
   "result": {
