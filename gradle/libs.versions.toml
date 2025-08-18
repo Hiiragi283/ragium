@@ -20,6 +20,7 @@ curious = "9.5.1+1.21.1"
 delight = "1.21.1-1.2.8"
 dire = "6369120"
 emi = "1.1.22+1.21.1"
+fusion = "1.2.10-neoforge-mc1.21"
 guide = "21.1.13"
 immersive = "1.21.1-12.4.2-pre.20"
 jade = "15.10.2+neoforge"
@@ -42,9 +43,10 @@ curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", versio
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
+jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
-jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "maven.modrinth", name = "oritech", version.ref = "oritech" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
@@ -61,6 +63,7 @@ mods-impl = [
     "curious",
     "delight",
     "emi",
+    "fusion",
     "guide",
     "immersive",
     "jade",
