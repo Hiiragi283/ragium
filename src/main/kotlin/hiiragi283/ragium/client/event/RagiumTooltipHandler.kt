@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.idOrNull
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -41,7 +41,7 @@ object RagiumTooltipHandler {
 
     @JvmStatic
     private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        if (stack.itemHolder.idOrNull?.namespace == RagiumAPI.MOD_ID) {
+        if (stack.itemHolder.idOrThrow.namespace == RagiumAPI.MOD_ID) {
             val descKey: String = RagiumTranslationKeys.getTooltipKey(stack)
             if (!I18n.exists(descKey)) return
             if (flag.hasShiftDown()) {

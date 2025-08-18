@@ -1,9 +1,5 @@
 {
   "type": "ragium:crushing",
-  "chances": [
-    1.0,
-    0.25
-  ],
   "ingredient": {
     "count": 1,
     "tag": "c:ores/coal"
@@ -14,6 +10,7 @@
       "id": "#c:fuels/coal"
     },
     {
+      "chance": 0.25,
       "count": 1,
       "id": "#c:dusts/sulfur"
     }

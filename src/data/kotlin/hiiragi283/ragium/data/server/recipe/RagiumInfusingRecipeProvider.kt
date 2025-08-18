@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
@@ -110,7 +110,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(Items.ENCHANTED_GOLDEN_APPLE),
             ).save(output)
         // Exp Berries
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.EXP_BERRIES),
                 HTIngredientHelper.item(Tags.Items.FOODS_BERRY),

@@ -1,12 +1,14 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.keyOrThrow
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -21,10 +23,13 @@ object HTResultHelper {
 
     fun item(item: ItemLike, count: Int = 1): HTItemResult = item(ItemStack(item, count))
 
-    fun item(stack: ItemStack): HTItemResult = item(stack.itemHolder.idOrThrow, stack.count, stack.componentsPatch)
+    fun item(stack: ItemStack): HTItemResult = item(stack.itemHolder.keyOrThrow, stack.count, stack.componentsPatch)
 
     fun item(id: ResourceLocation, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
-        HTItemResult(Either.left(id), count, component)
+        item(ResourceKey.create(Registries.ITEM, id), count, component)
+
+    fun item(key: ResourceKey<Item>, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
+        HTItemResult(Either.left(key), count, component)
 
     fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemResult = item(variant.itemTagKey(material), count)
 
@@ -36,10 +41,13 @@ object HTResultHelper {
 
     fun fluid(fluid: Fluid, amount: Int): HTFluidResult = fluid(FluidStack(fluid, amount))
 
-    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.fluidHolder.idOrThrow, stack.amount, stack.componentsPatch)
+    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.fluidHolder.keyOrThrow, stack.amount, stack.componentsPatch)
 
     fun fluid(id: ResourceLocation, amount: Int, component: DataComponentPatch = DataComponentPatch.EMPTY): HTFluidResult =
-        HTFluidResult(Either.left(id), amount, component)
+        fluid(ResourceKey.create(Registries.FLUID, id), amount, component)
+
+    fun fluid(key: ResourceKey<Fluid>, amount: Int, component: DataComponentPatch = DataComponentPatch.EMPTY): HTFluidResult =
+        HTFluidResult(Either.left(key), amount, component)
 
     fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidResult = HTFluidResult(Either.right(tagKey), amount, DataComponentPatch.EMPTY)
 }

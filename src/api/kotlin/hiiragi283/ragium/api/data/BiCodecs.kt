@@ -58,6 +58,10 @@ object BiCodecs {
     )
 
     @JvmStatic
+    fun <T : Any> keyOrTag(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, Either<ResourceKey<T>, TagKey<T>>> =
+        either(resourceKey(registryKey), tagKey(registryKey))
+
+    @JvmStatic
     fun <T : Any> idOrTag(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, Either<ResourceLocation, TagKey<T>>> =
         either(RL, tagKey(registryKey))
 }

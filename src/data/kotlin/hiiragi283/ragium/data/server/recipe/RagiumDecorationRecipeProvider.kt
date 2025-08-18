@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -74,21 +74,21 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun glass() {
         // Quartz Glass
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
                 HTIngredientHelper.item(Items.QUARTZ_BLOCK),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
                 HTIngredientHelper.item(Items.SOUL_SAND),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Obsidian Glass
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
                 HTIngredientHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),

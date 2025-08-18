@@ -20,19 +20,18 @@ class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
             HTItemToChancedItemRecipeBuilder(RagiumConst.CRUSHING, ::HTCrushingRecipe, ingredient)
     }
 
-    private val results: MutableList<HTItemResult> = mutableListOf()
-    private val chances: MutableList<Float> = mutableListOf()
+    private val results: MutableList<HTItemToChancedItemRecipe.ChancedResult> = mutableListOf()
 
     fun addResult(result: HTItemResult, chance: Float = 1f): HTItemToChancedItemRecipeBuilder<R> = apply {
-        this.results.add(result)
-        this.chances.add(chance)
+        check(chance in (0f..1f)) { "Chance of result must be within 0f to 1f!" }
+        this.results.add(HTItemToChancedItemRecipe.ChancedResult(result, chance))
     }
 
     override fun getPrimalId(): ResourceLocation = results[0].id
 
-    override fun createRecipe(): Recipe<*> = factory.create(ingredient, results, chances)
+    override fun createRecipe(): Recipe<*> = factory.create(ingredient, results)
 
     fun interface Factory<R : HTItemToChancedItemRecipe> {
-        fun create(ingredient: HTItemIngredient, results: List<HTItemResult>, chances: List<Float>): R
+        fun create(ingredient: HTItemIngredient, results: List<HTItemToChancedItemRecipe.ChancedResult>): R
     }
 }

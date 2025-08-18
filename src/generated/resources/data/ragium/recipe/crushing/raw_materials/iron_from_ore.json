@@ -1,9 +1,5 @@
 {
   "type": "ragium:crushing",
-  "chances": [
-    1.0,
-    0.25
-  ],
   "ingredient": {
     "count": 1,
     "tag": "c:ores/iron"
@@ -14,6 +10,7 @@
       "id": "#c:raw_materials/iron"
     },
     {
+      "chance": 0.25,
       "count": 1,
       "id": "minecraft:flint"
     }

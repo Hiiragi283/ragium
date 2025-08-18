@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import java.util.*
 
-class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*, *>, R2 : HTItemWithFluidToObjRecipe<R1>>(
+class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTItemWithFluidToObjRecipe<R1>>(
     prefix: String,
     private val factory: Factory<R1, R2>,
     private val itemIngredient: Optional<HTItemIngredient>,
@@ -53,7 +53,7 @@ class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*, *>, R2 : HTItemWi
 
     override fun createRecipe(): Recipe<*> = factory.create(itemIngredient, fluidIngredient, result)
 
-    fun interface Factory<R1 : HTRecipeResult<*, *>, R2 : HTItemWithFluidToObjRecipe<R1>> {
+    fun interface Factory<R1 : HTRecipeResult<*>, R2 : HTItemWithFluidToObjRecipe<R1>> {
         fun create(itemIngredient: Optional<HTItemIngredient>, fluidIngredient: Optional<HTFluidIngredient>, result: R1): R2
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
-interface HTFluidWithCatalystToObjRecipe<R : HTRecipeResult<*, *>> : HTRecipe<HTItemWithFluidRecipeInput> {
+interface HTFluidWithCatalystToObjRecipe<R : HTRecipeResult<*>> : HTRecipe<HTItemWithFluidRecipeInput> {
     val ingredient: HTFluidIngredient
     val catalyst: Optional<HTItemIngredient>
     val result: R

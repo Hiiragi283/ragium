@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
@@ -53,14 +53,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Tags.Items.LEATHERS)
             .savePrefixed(output, "9x_")
         // Blaze Rod
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(Items.BLAZE_ROD),
                 HTIngredientHelper.item(Items.BLAZE_POWDER, 4),
                 HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
             ).save(output)
         // Breeze Rod
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(Items.BREEZE_ROD),
                 HTIngredientHelper.item(Items.WIND_CHARGE, 6),
@@ -76,14 +76,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun circuits() {
         // Circuit Boards
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.QUARTZ),
             ).save(output)
 
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS, 2),
@@ -152,7 +152,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 RagiumTierType.ULTIMATE -> RagiumItems.ADVANCED_CIRCUIT_BOARD
                 else -> continue
             }.let(HTIngredientHelper::item)
-            HTCombineItemToItemRecipeBuilder
+            HTCombineItemToObjRecipeBuilder
                 .alloying(
                     HTResultHelper.item(circuit),
                     dopant,
@@ -203,7 +203,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 .define('C', HTMaterialVariant.CIRCUIT, tier)
                 .save(output)
             // Alloying
-            HTCombineItemToItemRecipeBuilder
+            HTCombineItemToObjRecipeBuilder
                 .alloying(
                     HTResultHelper.item(component),
                     HTIngredientHelper.item(variant, material, 2),
@@ -221,14 +221,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
             .save(output)
 
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.REDSTONE_BOARD, 4),
                 HTIngredientHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.item(Items.SMOOTH_STONE_SLAB),
             ).save(output)
         // Repeater
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(Items.REPEATER, 2),
                 HTIngredientHelper.item(Items.REDSTONE_TORCH),
@@ -236,7 +236,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.REDSTONE_BOARD),
             ).save(output)
         // Comparator
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(Items.COMPARATOR, 2),
                 HTIngredientHelper.item(Items.REDSTONE_TORCH),
@@ -247,7 +247,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun diode() {
         // LED
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.LED, 4),
                 HTIngredientHelper.item(HTMaterialVariant.INGOT, HTVanillaMaterialType.COPPER),
@@ -269,7 +269,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         // Solar Panel
-        HTCombineItemToItemRecipeBuilder
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.SOLAR_PANEL),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),

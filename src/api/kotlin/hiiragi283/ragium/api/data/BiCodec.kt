@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -160,6 +161,8 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.fieldOf(name).orElse(defaultValue), streamCodec)
+
+    fun toMap(): MapBiCodec<B, V> = MapBiCodec.of(MapCodec.assumeMapUnsafe(codec), streamCodec)
 
     fun <S : B> cast(): BiCodec<S, V> = of(codec, streamCodec.cast())
 

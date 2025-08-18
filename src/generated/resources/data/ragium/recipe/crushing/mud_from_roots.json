@@ -1,9 +1,5 @@
 {
   "type": "ragium:crushing",
-  "chances": [
-    1.0,
-    0.25
-  ],
   "ingredient": {
     "count": 1,
     "item": "minecraft:muddy_mangrove_roots"
@@ -14,6 +10,7 @@
       "id": "minecraft:mud"
     },
     {
+      "chance": 0.25,
       "count": 1,
       "id": "minecraft:mangrove_roots"
     }

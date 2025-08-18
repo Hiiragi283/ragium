@@ -52,7 +52,7 @@ object RagiumMiscRegister {
 
         register(
             RagiumRecipeSerializers.ALLOYING,
-            RagiumRecipeBiCodecs.combineItemToItem(::HTAlloyingRecipe, 2..3),
+            RagiumRecipeBiCodecs.combineItemToObj(HTItemResult.CODEC, ::HTAlloyingRecipe, 2..3),
         )
         register(
             RagiumRecipeSerializers.COMPRESSING,

@@ -1,9 +1,5 @@
 {
   "type": "ragium:crushing",
-  "chances": [
-    1.0,
-    0.25
-  ],
   "ingredient": {
     "count": 1,
     "tag": "c:ores/gold"
@@ -14,6 +10,7 @@
       "id": "#c:raw_materials/gold"
     },
     {
+      "chance": 0.25,
       "count": 1,
       "id": "#c:raw_materials/copper"
     }

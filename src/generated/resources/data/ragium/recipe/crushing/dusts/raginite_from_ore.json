@@ -1,10 +1,5 @@
 {
   "type": "ragium:crushing",
-  "chances": [
-    1.0,
-    0.5,
-    0.25
-  ],
   "ingredient": {
     "count": 1,
     "tag": "c:ores/raginite"
@@ -15,10 +10,12 @@
       "id": "#c:dusts/raginite"
     },
     {
+      "chance": 0.5,
       "count": 4,
       "id": "#c:dusts/raginite"
     },
     {
+      "chance": 0.25,
       "count": 1,
       "id": "#c:gems/ragi_crystal"
     }

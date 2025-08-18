@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
@@ -52,9 +53,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemToChancedItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        for ((stack: ItemStack, chance: Float) in recipe.getResultItems(input)) {
+        for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                insertToOutput(stack, false)
+                insertToOutput(result.getOrEmpty(), false)
             }
         }
         // インプットを減らす

@@ -6,13 +6,13 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-interface HTItemToObjRecipe<R : HTRecipeResult<*, *>> : HTRecipe<SingleRecipeInput> {
+interface HTItemToObjRecipe<R : HTRecipeResult<*>> : HTRecipe<SingleRecipeInput> {
     val ingredient: HTItemIngredient
     val result: R
 
     override fun test(input: SingleRecipeInput): Boolean = !isIncomplete && ingredient.test(input.item())
 
-    override fun isIncomplete(): Boolean = ingredient.hasNoMatchingStacks() || result.hasNoMatchingStack
+    override fun isIncomplete(): Boolean = ingredient.hasNoMatchingStacks() || result.hasNoMatchingStack()
 
     override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY

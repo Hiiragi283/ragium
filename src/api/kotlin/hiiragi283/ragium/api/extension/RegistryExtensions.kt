@@ -27,7 +27,6 @@ import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * 名前空間が`minecraft`となる[ResourceLocation]を返します。
@@ -59,22 +58,19 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
 //    Holder    //
 
 /**
+ * [Holder]から[ResourceKey]を返します。
+ * @throws [Holder.unwrapKey]が空の場合
+ */
+val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThrow()
+
+/**
  * [Holder]から[ResourceLocation]を返します。
  * @throws [Holder.unwrapKey]が空の場合
  */
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
     is DeferredHolder<T, *> -> this.id
-    else -> unwrapKey().orElseThrow().location()
+    else -> keyOrThrow.location()
 }
-
-val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = when (this) {
-    is DeferredHolder<T, *> -> this.id
-    else -> unwrapKey().map(ResourceKey<T>::location).getOrNull()
-}
-
-fun Block.asBlockHolder(): Holder.Reference<Block> = builtInRegistryHolder()
-
-fun Fluid.asFluidHolder(): Holder.Reference<Fluid> = builtInRegistryHolder()
 
 /**
  * この[ItemLike]から[Holder]を返します。
