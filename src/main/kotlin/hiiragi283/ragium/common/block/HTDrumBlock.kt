@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
@@ -16,14 +15,7 @@ import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
-class HTDrumBlock<BE : HTDrumBlockEntity>(type: HTDeferredBlockEntityType<BE>, properties: Properties) :
-    HTEntityBlock<BE>(type, properties) {
-    companion object {
-        @JvmStatic
-        fun create(type: HTDeferredBlockEntityType<out HTDrumBlockEntity>): (Properties) -> HTDrumBlock<out HTDrumBlockEntity> =
-            { prop: Properties -> HTDrumBlock(type, prop) }
-    }
-
+class HTDrumBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTEntityBlock(type, properties) {
     override fun initDefaultState(): BlockState = stateDefinition.any()
 
     override fun getCloneItemStack(

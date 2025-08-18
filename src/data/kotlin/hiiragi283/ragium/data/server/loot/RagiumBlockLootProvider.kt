@@ -20,6 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -50,7 +51,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Decorations
-        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
+        for (slab: DeferredBlock<SlabBlock> in RagiumBlocks.SLABS.values) {
             add(slab.get(), ::createSlabItemTable)
         }
 
@@ -127,7 +128,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }*/
 
         // Storages
-        for (holder: DeferredBlock<Block> in RagiumBlocks.DRUMS.values) {
+        for (holder: DeferredBlock<*> in RagiumBlocks.DRUMS.values) {
             add(holder.get()) {
                 copyComponent(
                     it,

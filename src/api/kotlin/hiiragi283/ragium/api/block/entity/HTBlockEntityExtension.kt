@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
@@ -20,12 +21,12 @@ interface HTBlockEntityExtension : HTContentListener {
     val upgrades: HTItemHandler
 
     /**
-     * [net.minecraft.world.level.block.entity.BlockEntity.setBlockState]の後で呼び出されます。
+     * [BlockEntity.setBlockState]の後で呼び出されます。
      */
     fun afterUpdateState(state: BlockState) {}
 
     /**
-     * [net.minecraft.world.level.block.entity.BlockEntity.setLevel]の後で呼び出されます。
+     * [BlockEntity.setLevel]の後で呼び出されます。
      */
     fun afterLevelInit(level: Level) {}
 

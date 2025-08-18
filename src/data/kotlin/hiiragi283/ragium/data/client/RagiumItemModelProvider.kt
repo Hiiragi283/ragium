@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
@@ -14,8 +13,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -23,7 +24,6 @@ import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContai
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
-import kotlin.enums.enumEntries
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -34,17 +34,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
     private val generated: ModelFile = modelFile(vanillaId("item/generated"))
 
-    inline fun <reified I> MutableList<DeferredBlock<*>>.removeBlocks() where I : HTBlockHolderLike, I : Enum<I> {
-        removeAll { holder: DeferredBlock<*> ->
-            for (entries: I in enumEntries<I>()) {
-                if (entries.key?.let(holder::`is`) ?: false) {
-                    return@removeAll true
-                }
-            }
-            false
-        }
-    }
-
     private fun registerBlocks() {
         // Blocks
         buildList {
@@ -54,13 +43,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumBlocks.WARPED_WART)
 
             removeAll(RagiumBlocks.GENERATORS.values)
-
-            removeBlocks<RagiumBlocks.Walls>()
+            removeAll(RagiumBlocks.LED_BLOCKS.values)
+            removeAll(RagiumBlocks.WALLS.values)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
-        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
+        for ((variant: HTDecorationVariant, wall: DeferredBlock<WallBlock>) in RagiumBlocks.WALLS) {
             withExistingParent(wall.id.path, vanillaId("block/wall_inventory"))
-                .texture("wall", wall.variant.textureName)
+                .texture("wall", variant.textureName)
+        }
+        for (block: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
+            withExistingParent(block.id.path, RagiumAPI.id("block/led_block"))
         }
     }
 

@@ -8,25 +8,29 @@ import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.rowValues
+import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 import net.neoforged.neoforge.registries.DeferredBlock
-import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
@@ -38,10 +42,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
             addAll(RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK))
-            addAll(RagiumBlocks.LEDBlocks.entries)
 
-            add(RagiumBlocks.Casings.DEVICE.holder)
-        }.map(Supplier<out Block>::get).forEach(::simpleBlock)
+            add(RagiumBlocks.DEVICE_CASING)
+        }.forEach(::simpleBlock)
 
         layeredBlock(
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
@@ -49,17 +52,22 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumAPI.id("block/mysterious_obsidian"),
         )
 
-        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
-            val textureName: ResourceLocation = slab.variant.textureName
-            slabBlock(slab.holder.get(), textureName, textureName)
+        // Decoration
+        for ((variant: HTDecorationVariant, slab: DeferredBlock<SlabBlock>) in RagiumBlocks.SLABS) {
+            val textureName: ResourceLocation = variant.textureName
+            slabBlock(slab.get(), textureName, textureName)
         }
-        for (stair: RagiumBlocks.Stairs in RagiumBlocks.Stairs.entries) {
-            val textureName: ResourceLocation = stair.variant.textureName
-            stairsBlock(stair.holder.get(), textureName)
+        for ((variant: HTDecorationVariant, stair: DeferredBlock<StairBlock>) in RagiumBlocks.STAIRS) {
+            val textureName: ResourceLocation = variant.textureName
+            stairsBlock(stair.get(), textureName)
         }
-        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
-            val textureName: ResourceLocation = wall.variant.textureName
-            wallBlock(wall.holder.get(), textureName)
+        for ((variant: HTDecorationVariant, wall: DeferredBlock<WallBlock>) in RagiumBlocks.WALLS) {
+            val textureName: ResourceLocation = variant.textureName
+            wallBlock(wall.get(), textureName)
+        }
+
+        for (block: DeferredBlock<Block> in RagiumBlocks.LED_BLOCKS.values) {
+            altModelBlock(block, RagiumAPI.id("block/led_block"))
         }
 
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
@@ -131,16 +139,16 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         altModelBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
-        altTextureBlock(RagiumBlocks.Casings.WOODEN, vanillaId("block/note_block"))
+        altTextureBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
 
-        cubeColumn(RagiumBlocks.Casings.STONE, vanillaId("block/furnace_side"), vanillaId("block/furnace_top"))
+        cubeColumn(RagiumBlocks.STONE_CASING, vanillaId("block/furnace_side"), vanillaId("block/furnace_top"))
         cubeColumn(
-            RagiumBlocks.Casings.REINFORCED_STONE,
+            RagiumBlocks.REINFORCED_STONE_CASING,
             vanillaId("block/blast_furnace_side"),
             vanillaId("block/blast_furnace_top"),
         )
 
-        RagiumBlocks.Frames.entries.forEach(::cutoutSimpleBlock)
+        RagiumBlocks.FRAMES.forEach(::cutoutSimpleBlock)
 
         // Machine
         fun machine(variant: HTMachineVariant, top: ResourceLocation, bottom: ResourceLocation) {
@@ -173,7 +181,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.SOLIDIFIER, advancedMachine, advancedMachine)
 
         // Device
-        for ((variant: HTDeviceVariant, block: DeferredBlock<Block>) in RagiumBlocks.DEVICES) {
+        for ((variant: HTDeviceVariant, block: DeferredBlock<*>) in RagiumBlocks.DEVICES) {
             when (variant) {
                 HTDeviceVariant.WATER_COLLECTOR -> {
                     layeredBlock(
@@ -201,7 +209,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Storages
-        for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS.values) {
+        for (drum: DeferredBlock<*> in RagiumBlocks.DRUMS.values) {
             val id: ResourceLocation = drum.id.withPrefix("block/")
             simpleBlock(
                 drum.get(),

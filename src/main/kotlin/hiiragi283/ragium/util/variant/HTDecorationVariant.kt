@@ -3,11 +3,16 @@ package hiiragi283.ragium.util.variant
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
+import net.neoforged.neoforge.registries.DeferredBlock
 
 enum class HTDecorationVariant(
     val properties: BlockBehaviour.Properties,
@@ -37,6 +42,11 @@ enum class HTDecorationVariant(
         enUsPattern,
         jaJpPattern,
     )
+
+    val base: DeferredBlock<*> get() = RagiumBlocks.DECORATION_MAP[this]!!
+    val slab: DeferredBlock<SlabBlock> get() = RagiumBlocks.SLABS[this]!!
+    val stairs: DeferredBlock<StairBlock> get() = RagiumBlocks.STAIRS[this]!!
+    val wall: DeferredBlock<WallBlock> get() = RagiumBlocks.WALLS[this]!!
 
     val textureName: ResourceLocation
         get() = when (this) {

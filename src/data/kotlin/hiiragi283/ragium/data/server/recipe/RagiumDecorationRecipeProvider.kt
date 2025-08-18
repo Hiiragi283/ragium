@@ -111,9 +111,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun registerBuildings(variant: HTDecorationVariant) {
         val base: ItemLike = RagiumBlocks.DECORATION_MAP[variant] ?: return
-        val slab: ItemLike = RagiumBlocks.Slabs.entries.first { it.variant == variant }
-        val stairs: ItemLike = RagiumBlocks.Stairs.entries.first { it.variant == variant }
-        val wall: ItemLike = RagiumBlocks.Walls.entries.first { it.variant == variant }
+        val slab: ItemLike = RagiumBlocks.SLABS[variant] ?: return
+        val stairs: ItemLike = RagiumBlocks.STAIRS[variant] ?: return
+        val wall: ItemLike = RagiumBlocks.WALLS[variant] ?: return
         // Base -> Slab
         HTShapedRecipeBuilder(slab, 6)
             .pattern("AAA")

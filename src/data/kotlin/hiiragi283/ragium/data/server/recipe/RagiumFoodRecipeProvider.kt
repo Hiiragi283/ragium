@@ -20,6 +20,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -161,7 +162,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', Tags.Items.BUCKETS_MILK)
             .define('B', Items.SUGAR)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.Slabs.SPONGE_CAKE)
+            .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapedRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -172,7 +173,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', RagiumCommonTags.Items.FOODS_CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.Slabs.SPONGE_CAKE)
+            .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)

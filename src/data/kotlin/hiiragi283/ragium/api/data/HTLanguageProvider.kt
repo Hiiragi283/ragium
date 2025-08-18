@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.descKey
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.RagiumConst
@@ -29,7 +28,6 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -39,13 +37,6 @@ import kotlin.enums.enumEntries
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
     LanguageProvider(output, RagiumAPI.MOD_ID, type.name.lowercase()) {
     //    Extension    //
-
-    inline fun <reified B> addBlocks(value: String) where B : HTBlockHolderLike.Typed<out HTVariantKey>, B : Enum<B> {
-        val map: Map<Block, HTVariantKey> = enumEntries<B>().associate { typed: B -> typed.get() to typed.variant }
-        for ((block: Block, variant: HTVariantKey) in map) {
-            add(block, variant.translate(type, value))
-        }
-    }
 
     fun addPatterned() {
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->

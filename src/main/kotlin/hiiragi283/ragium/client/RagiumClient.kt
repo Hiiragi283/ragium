@@ -24,6 +24,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
@@ -46,6 +47,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 import java.awt.Color
@@ -98,6 +100,17 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             },
             HTDeviceVariant.WATER_COLLECTOR.blockHolder.get(),
         )
+        // LED Blocks
+        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            event.register(
+                { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, tint: Int ->
+                    if (tint != 0) return@register -1
+                    color.color.textColor
+                },
+                block.get(),
+            )
+        }
+
         // Cauldrons
         /*for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
             event.register(
@@ -128,8 +141,15 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             },
             HTDeviceVariant.WATER_COLLECTOR,
         )
+        // LED Blocks
+        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            event.register({ _: ItemStack, tint: Int ->
+                if (tint != 0) return@register -1
+                color.color.textColor
+            }, block.get())
+        }
 
-        // Crude Oil Bucket
+        // Buckets
         for (bucket: DeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
             event.register(DynamicFluidContainerModel.Colors(), bucket)
         }

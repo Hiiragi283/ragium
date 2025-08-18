@@ -1,14 +1,15 @@
 package hiiragi283.ragium.common.fluid
 
-import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTNetherVaporizableFluidType(drop: HTItemResult, properties: Properties) : HTVaporizableFluidType(drop, properties) {
+class HTNetherVaporizableFluidType(drop: HTRecipeResult<ItemStack>, properties: Properties) : HTVaporizableFluidType(drop, properties) {
     companion object {
         @JvmStatic
-        fun create(drop: HTItemResult): (Properties) -> HTNetherVaporizableFluidType = { prop: Properties ->
+        fun create(drop: HTRecipeResult<ItemStack>): (Properties) -> HTNetherVaporizableFluidType = { prop: Properties ->
             HTNetherVaporizableFluidType(drop, prop)
         }
     }

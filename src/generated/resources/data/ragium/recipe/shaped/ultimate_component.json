@@ -6,7 +6,7 @@
       "tag": "c:gems/eldritch_pearl"
     },
     "B": {
-      "tag": "c:gears/eldritch_pearl"
+      "item": "ragium:eldritch_gear"
     },
     "C": {
       "tag": "c:circuits/ultimate"

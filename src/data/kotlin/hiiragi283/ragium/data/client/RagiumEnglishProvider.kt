@@ -15,8 +15,11 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
+import net.neoforged.neoforge.registries.DeferredBlock
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
     override fun addTranslations() {
@@ -100,30 +103,29 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
-        addBlocks<RagiumBlocks.Slabs>("Slab")
-        addBlocks<RagiumBlocks.Stairs>("Stairs")
-        addBlocks<RagiumBlocks.Walls>("Wall")
 
-        addBlock(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.CYAN, "Cyan LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.MAGENTA, "Magenta LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
-        addBlock(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            addBlock(variant.slab, variant.translate(type, "Slab"))
+            addBlock(variant.stairs, variant.translate(type, "Stairs"))
+            addBlock(variant.wall, variant.translate(type, "Wall"))
+        }
+
+        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            addBlock(block, "${color.getTranslatedName(type)} LED Block")
+        }
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Dynamo
         // Machine
-        addBlock(RagiumBlocks.Frames.ADVANCED, "Advanced Machine Frame")
-        addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")
-        addBlock(RagiumBlocks.Frames.ELITE, "Elite Machine Frame")
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
+        addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
         // Device
-        addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
-        addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
-        addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "Reinforced Stone Casing")
-        addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
+        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
+        addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
+        addBlock(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
+        addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Storage
     }
 

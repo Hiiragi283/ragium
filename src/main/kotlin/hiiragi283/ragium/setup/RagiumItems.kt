@@ -244,11 +244,11 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
-        register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTAzureSteelTemplateItem() })
+        REGISTER.register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", ::HTAzureSteelTemplateItem)
 
     @JvmField
     val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
-        register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTDeepSteelTemplateItem() })
+        REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
 
     @JvmField
     val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))

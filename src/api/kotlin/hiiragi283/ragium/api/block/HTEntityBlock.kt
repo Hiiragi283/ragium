@@ -25,19 +25,7 @@ import net.minecraft.world.phys.BlockHitResult
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
  */
-abstract class HTEntityBlock<BE>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
-    BaseEntityBlock(properties) where BE : BlockEntity, BE : HTBlockEntityExtension {
-    companion object {
-        @JvmStatic
-        fun <BE> create(
-            type: HTDeferredBlockEntityType<BE>,
-        ): (Properties) -> HTEntityBlock<*> where BE : BlockEntity, BE : HTBlockEntityExtension = { prop: Properties ->
-            object : HTEntityBlock<BE>(type, prop) {
-                override fun initDefaultState(): BlockState = stateDefinition.any()
-            }
-        }
-    }
-
+abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties: Properties) : BaseEntityBlock(properties) {
     init {
         registerDefaultState(initDefaultState())
     }
@@ -146,12 +134,16 @@ abstract class HTEntityBlock<BE>(val type: HTDeferredBlockEntityType<BE>, proper
 
     final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)
 
+    @Suppress("UNCHECKED_CAST")
     final override fun <T : BlockEntity> getTicker(
         level: Level,
         state: BlockState,
         blockEntityType: BlockEntityType<T>,
-    ): BlockEntityTicker<T>? {
-        val ticker: BlockEntityTicker<in BE> = type.getTicker(level.isClientSide) ?: return null
-        return createTickerHelper(blockEntityType, type.get(), ticker)
+    ): BlockEntityTicker<T>? = type.getTicker(level.isClientSide) as? BlockEntityTicker<T>
+
+    //    Simple    //
+
+    class Simple(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTEntityBlock(type, properties) {
+        override fun initDefaultState(): BlockState = stateDefinition.any()
     }
 }

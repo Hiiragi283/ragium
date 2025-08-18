@@ -30,53 +30,53 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun casings() {
         // Wooden
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.WOODEN, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
             .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Stone
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.STONE)
+        HTShapedRecipeBuilder(RagiumBlocks.STONE_CASING)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.REINFORCED_STONE)
+        HTShapedRecipeBuilder(RagiumBlocks.REINFORCED_STONE_CASING)
             .casing()
             .define('A', Items.BASALT)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
         // Machine
-        HTShapedRecipeBuilder(RagiumBlocks.Frames.BASIC, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.BASIC_MACHINE_FRAME, 2)
             .hollow8()
             .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Advanced Machine
-        HTShapedRecipeBuilder(RagiumBlocks.Frames.ADVANCED, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_FRAME, 2)
             .hollow8()
             .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Elite Machine
-        HTShapedRecipeBuilder(RagiumBlocks.Frames.ELITE, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.ELITE_MACHINE_FRAME, 4)
             .hollow8()
             .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
             .define('B', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
         // Device
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE)
+        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
             .define('B', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('C', RagiumModTags.Items.TOOLS_HAMMER)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', HTMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
@@ -170,7 +170,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', HTMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
             .define('C', side)
-            .define('D', RagiumBlocks.Casings.STONE)
+            .define('D', RagiumBlocks.STONE_CASING)
             .save(output)
     }
 
@@ -180,7 +180,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .define('B', HTMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
             .define('C', side)
-            .define('D', RagiumBlocks.Casings.REINFORCED_STONE)
+            .define('D', RagiumBlocks.REINFORCED_STONE_CASING)
             .save(output)
     }
 
@@ -199,13 +199,13 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun basicDevice(device: ItemLike, input: Ingredient) {
-        createComponentUpgrade(RagiumTierType.BASIC, device, RagiumBlocks.Casings.DEVICE)
+        createComponentUpgrade(RagiumTierType.BASIC, device, RagiumBlocks.DEVICE_CASING)
             .addIngredient(input)
             .save(output)
     }
 
     private fun advancedDevice(device: ItemLike, input: Ingredient) {
-        createComponentUpgrade(RagiumTierType.ADVANCED, device, RagiumBlocks.Casings.DEVICE)
+        createComponentUpgrade(RagiumTierType.ADVANCED, device, RagiumBlocks.DEVICE_CASING)
             .addIngredient(input)
             .save(output)
     }

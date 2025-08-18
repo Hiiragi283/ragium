@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -20,7 +21,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.common.extensions.IHolderExtension
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
-import kotlin.enums.enumEntries
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     HTTagsProvider<Block>(output, Registries.BLOCK, provider, helper) {
@@ -34,7 +34,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     private fun mineable(builder: HTTagBuilder<Block>) {
         // Axe
         builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
-        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.Casings.WOODEN)
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
@@ -42,28 +42,27 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumModTags.Blocks.LED_BLOCKS)
         builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
 
-        for (slab: RagiumBlocks.Slabs in RagiumBlocks.Slabs.entries) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, slab)
-            builder.add(BlockTags.SLABS, slab)
-        }
-        for (stairs: RagiumBlocks.Stairs in RagiumBlocks.Stairs.entries) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, stairs)
-            builder.add(BlockTags.STAIRS, stairs)
-        }
-        for (wall: RagiumBlocks.Walls in RagiumBlocks.Walls.entries) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, wall)
-            builder.add(BlockTags.WALLS, wall)
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            // Slab
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, variant.slab)
+            builder.add(BlockTags.SLABS, variant.slab)
+            // Stairs
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, variant.stairs)
+            builder.add(BlockTags.STAIRS, variant.stairs)
+            // Wall
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, variant.wall)
+            builder.add(BlockTags.WALLS, variant.wall)
         }
 
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CASINGS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.FRAMES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.GENERATORS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
-        builder.addBlocks<RagiumBlocks.Casings>(BlockTags.MINEABLE_WITH_PICKAXE)
-        builder.addBlocks<RagiumBlocks.Frames>(BlockTags.MINEABLE_WITH_PICKAXE)
         // Shovel
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
@@ -106,7 +105,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             }
         }
         // LED
-        builder.addBlocks<RagiumBlocks.LEDBlocks>(RagiumModTags.Blocks.LED_BLOCKS)
+        builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
         builder.addBlock(
             Tags.Blocks.OBSIDIANS,
@@ -127,7 +126,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // WIP
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.ASH_LOG)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.Casings.WOODEN)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.WOODEN_CASING)
     }
 
     //    Extensions    //
@@ -149,12 +148,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Iterable<IHolderExtension<Block>>) {
         for (holder: IHolderExtension<Block> in blocks) {
-            add(tagKey, holder)
-        }
-    }
-
-    private inline fun <reified B> HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>) where B : IHolderExtension<Block>, B : Enum<B> {
-        for (holder: B in enumEntries<B>()) {
             add(tagKey, holder)
         }
     }

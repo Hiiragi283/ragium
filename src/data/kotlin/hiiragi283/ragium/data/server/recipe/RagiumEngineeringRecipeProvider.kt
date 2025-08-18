@@ -17,9 +17,11 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTColorVariant
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
@@ -188,11 +190,11 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 RagiumTierType.ELITE -> HTMaterialVariant.GEM to RagiumMaterialType.RAGI_CRYSTAL
                 RagiumTierType.ULTIMATE -> HTMaterialVariant.GEM to RagiumMaterialType.ELDRITCH_PEARL
             }
-            val side: Ingredient = when (tier) {
-                RagiumTierType.BASIC -> Ingredient.of(RagiumItems.getCoil(RagiumMaterialType.RAGI_ALLOY))
-                RagiumTierType.ADVANCED -> Ingredient.of(RagiumItems.getCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-                RagiumTierType.ELITE -> Ingredient.of(RagiumItems.SILICON)
-                RagiumTierType.ULTIMATE -> HTMaterialVariant.GEAR.toIngredient(RagiumMaterialType.ELDRITCH_PEARL)
+            val side: ItemLike = when (tier) {
+                RagiumTierType.BASIC -> RagiumItems.getCoil(RagiumMaterialType.RAGI_ALLOY)
+                RagiumTierType.ADVANCED -> RagiumItems.getCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+                RagiumTierType.ELITE -> RagiumItems.SILICON
+                RagiumTierType.ULTIMATE -> RagiumItems.ELDRITCH_GEAR
             }
             val component: DeferredItem<*> = RagiumItems.getComponent(tier)
             // Shaped
@@ -254,17 +256,17 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
         // LED Block
-        HTShapedRecipeBuilder(RagiumBlocks.LEDBlocks.WHITE, 8)
+        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(HTColorVariant.WHITE), 8)
             .hollow8()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
-        for (holderLike: RagiumBlocks.LEDBlocks in RagiumBlocks.LEDBlocks.entries) {
-            HTShapedRecipeBuilder(holderLike, 8)
+        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            HTShapedRecipeBuilder(block, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)
-                .define('B', holderLike.color.tag)
+                .define('B', color.dyeTag)
                 .save(output)
         }
 

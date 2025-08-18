@@ -11,15 +11,7 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class HTGlassBlock(private val isTinted: Boolean, private val canPlayerThrough: Boolean, properties: Properties) :
-    TransparentBlock(properties) {
-    companion object {
-        @JvmStatic
-        fun create(isTinted: Boolean, canPlayerThrough: Boolean): (Properties) -> HTGlassBlock = { prop: Properties ->
-            HTGlassBlock(isTinted, canPlayerThrough, prop)
-        }
-    }
-
+open class HTGlassBlock(private val canPlayerThrough: Boolean, properties: Properties) : TransparentBlock(properties) {
     override fun getCollisionShape(
         state: BlockState,
         level: BlockGetter,
@@ -34,9 +26,4 @@ class HTGlassBlock(private val isTinted: Boolean, private val canPlayerThrough: 
         }
         return super.getCollisionShape(state, level, pos, context)
     }
-
-    override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean = isTinted
-
-    override fun getLightBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Int =
-        if (isTinted) level.maxLightLevel else super.getLightBlock(state, level, pos)
 }

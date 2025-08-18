@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -11,4 +12,11 @@ import net.neoforged.neoforge.registries.DeferredRegister
 class HTBlockRegister(namespace: String) : DeferredRegister.Blocks(namespace) {
     override fun getEntries(): List<DeferredBlock<*>> =
         super.getEntries().map { holder: DeferredHolder<Block, *> -> DeferredBlock.createBlock<Block>(holder.id) }
+
+    fun <B : Block, T : Any> registerBlockWith(
+        name: String,
+        type: T,
+        properties: BlockBehaviour.Properties,
+        factory: (T, BlockBehaviour.Properties) -> B,
+    ): DeferredBlock<B> = registerBlock(name, { prop: BlockBehaviour.Properties -> factory(type, prop) }, properties)
 }

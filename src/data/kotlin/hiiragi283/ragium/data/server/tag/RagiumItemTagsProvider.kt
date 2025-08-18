@@ -21,6 +21,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
+import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
@@ -222,6 +223,10 @@ class RagiumItemTagsProvider(
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             builder.addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
+        }
+        // LED
+        for ((color: HTColorVariant, block: ItemLike) in RagiumBlocks.LED_BLOCKS) {
+            builder.addItem(color.dyedTag, block)
         }
         // Parts
         builder.add(RagiumCommonTags.Items.SILICON, RagiumItems.SILICON)

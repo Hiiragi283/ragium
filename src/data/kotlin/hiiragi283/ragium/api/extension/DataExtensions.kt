@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import net.minecraft.advancements.Advancement
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -31,21 +30,13 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(path: String, layer0: Re
 fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation): T =
     layeredModel(holder.id.path, layer0, layer1)
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: HTBlockHolderLike, layer0: ResourceLocation, layer1: ResourceLocation): T =
-    layeredModel(holder.id.path, layer0, layer1)
-
 //    BlockModelProvider    //
 
-fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
-    simpleBlock(
-        holder.get(),
-        ConfiguredModel(
-            models().layeredModel(holder, layer0, layer1),
-        ),
-    )
+fun BlockStateProvider.simpleBlock(holder: DeferredBlock<*>) {
+    simpleBlock(holder.get())
 }
 
-fun BlockStateProvider.layeredBlock(holder: HTBlockHolderLike, layer0: ResourceLocation, layer1: ResourceLocation) {
+fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(
@@ -62,19 +53,11 @@ fun BlockStateProvider.cubeColumn(
     simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, end))
 }
 
-fun BlockStateProvider.cubeColumn(holder: HTBlockHolderLike, side: ResourceLocation, top: ResourceLocation) {
-    simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, top))
+fun BlockStateProvider.altModelBlock(holder: DeferredBlock<*>, id: ResourceLocation = holder.blockId) {
+    simpleBlock(holder.get(), modelFile(id))
 }
 
-fun BlockStateProvider.altModelBlock(holder: DeferredBlock<*>) {
-    simpleBlock(holder.get(), modelFile(holder.blockId))
-}
-
-fun BlockStateProvider.altModelBlock(holder: HTBlockHolderLike) {
-    simpleBlock(holder.get(), modelFile(holder.blockId))
-}
-
-fun BlockStateProvider.altTextureBlock(holder: HTBlockHolderLike, all: ResourceLocation) {
+fun BlockStateProvider.altTextureBlock(holder: DeferredBlock<*>, all: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, all)),
@@ -92,12 +75,5 @@ fun BlockStateProvider.translucentSimpleBlock(holder: DeferredBlock<*>, texId: R
     simpleBlock(
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("translucent")),
-    )
-}
-
-fun BlockStateProvider.cutoutSimpleBlock(holder: HTBlockHolderLike, texId: ResourceLocation = holder.blockId) {
-    simpleBlock(
-        holder.get(),
-        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("cutout")),
     )
 }

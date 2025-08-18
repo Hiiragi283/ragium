@@ -8,8 +8,4 @@ interface HTMaterialType :
     HTTranslatable,
     StringRepresentable {
     fun translate(type: HTLanguageType, variant: HTMaterialVariant): String = variant.translate(type, getTranslatedName(type))
-
-    interface Provider {
-        val material: HTMaterialType
-    }
 }

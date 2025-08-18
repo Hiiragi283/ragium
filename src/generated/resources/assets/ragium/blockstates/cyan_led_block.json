@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ragium:block/cyan_led_block"
+      "model": "ragium:block/led_block"
     }
   }
 }

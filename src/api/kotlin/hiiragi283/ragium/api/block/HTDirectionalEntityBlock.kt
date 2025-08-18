@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -9,7 +8,6 @@ import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.DirectionProperty
@@ -18,8 +16,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
  * @see [HTFacingEntityBlock]
  * @see [HTHorizontalEntityBlock]
  */
-abstract class HTDirectionalEntityBlock<BE>(type: HTDeferredBlockEntityType<BE>, properties: Properties) :
-    HTEntityBlock<BE>(type, properties) where BE : BlockEntity, BE : HTBlockEntityExtension {
+abstract class HTDirectionalEntityBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTEntityBlock(type, properties) {
     protected abstract val directionProperty: DirectionProperty
 
     protected abstract fun placedFront(context: BlockPlaceContext): Direction

@@ -15,8 +15,11 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
+import net.neoforged.neoforge.registries.DeferredBlock
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
     override fun addTranslations() {
@@ -92,29 +95,28 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
-        addBlocks<RagiumBlocks.Slabs>("ハーフブロック")
-        addBlocks<RagiumBlocks.Stairs>("階段")
-        addBlocks<RagiumBlocks.Walls>("壁")
 
-        addBlock(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
-        addBlock(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
-        addBlock(RagiumBlocks.LEDBlocks.BLUE, "LEDブロック（青）")
-        addBlock(RagiumBlocks.LEDBlocks.CYAN, "LEDブロック（シアン）")
-        addBlock(RagiumBlocks.LEDBlocks.MAGENTA, "LEDブロック（マゼンタ）")
-        addBlock(RagiumBlocks.LEDBlocks.YELLOW, "LEDブロック（黄色）")
-        addBlock(RagiumBlocks.LEDBlocks.WHITE, "LEDブロック")
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            addBlock(variant.slab, variant.translate(type, "ハーフブロック"))
+            addBlock(variant.stairs, variant.translate(type, "階段"))
+            addBlock(variant.wall, variant.translate(type, "壁"))
+        }
+
+        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            addBlock(block, "${color.getTranslatedName(type)}のLEDブロック")
+        }
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Dynamo
         // Machine
-        addBlock(RagiumBlocks.Frames.ADVANCED, "発展機械フレーム")
-        addBlock(RagiumBlocks.Frames.BASIC, "基本機械フレーム")
-        addBlock(RagiumBlocks.Frames.ELITE, "精鋭機械フレーム")
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")
+        addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "精鋭機械フレーム")
         // Device
-        addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
-        addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
-        addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "強化石材筐体")
-        addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
+        addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
+        addBlock(RagiumBlocks.STONE_CASING, "石材筐体")
+        addBlock(RagiumBlocks.REINFORCED_STONE_CASING, "強化石材筐体")
+        addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Storage
     }
 

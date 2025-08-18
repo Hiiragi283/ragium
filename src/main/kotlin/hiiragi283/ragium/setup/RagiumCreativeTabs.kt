@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
@@ -60,10 +61,10 @@ object RagiumCreativeTabs {
         // Machines
         output.acceptItems<HTGeneratorVariant>()
 
-        output.acceptItems<RagiumBlocks.Frames>()
+        output.acceptItems(RagiumBlocks.FRAMES)
         output.acceptItems<HTMachineVariant>()
 
-        output.acceptItems<RagiumBlocks.Casings>()
+        output.acceptItems(RagiumBlocks.CASINGS)
         output.acceptItems<HTDeviceVariant>()
 
         output.acceptItems<HTDrumVariant>()
@@ -71,14 +72,16 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
         output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
         // Decorations
-        output.acceptItems(RagiumBlocks.DECORATION_MAP.values)
-        output.acceptItems<RagiumBlocks.Slabs>()
-        output.acceptItems<RagiumBlocks.Stairs>()
-        output.acceptItems<RagiumBlocks.Walls>()
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            output.accept(variant.base)
+            output.accept(variant.slab)
+            output.accept(variant.stairs)
+            output.accept(variant.wall)
+        }
 
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
-        output.acceptItems<RagiumBlocks.LEDBlocks>()
+        output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
     }
 
     @JvmField
