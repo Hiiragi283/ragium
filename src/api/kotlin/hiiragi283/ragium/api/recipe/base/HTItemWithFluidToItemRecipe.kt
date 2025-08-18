@@ -13,5 +13,5 @@ abstract class HTItemWithFluidToItemRecipe(
     override val fluidIngredient: Optional<HTFluidIngredient>,
     override val result: HTItemResult,
 ) : HTItemWithFluidToObjRecipe<HTItemResult> {
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
 }

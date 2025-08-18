@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.recipe.HTMultiItemToItemRecipe
+import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
+    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe<*>>(
         RagiumRecipeTypes.ALLOYING.get(),
         HTMachineVariant.ALLOY_SMELTER,
         pos,
@@ -34,7 +34,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe<*>): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun serverTickPost(
@@ -42,13 +42,13 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTMultiItemRecipeInput,
-        recipe: HTCombineItemToItemRecipe,
+        recipe: HTCombineItemToItemRecipe<*>,
     ) {
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
-        HTMultiItemToItemRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
+        HTMultiItemToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
             inventory.shrinkStack(slot, ingredients[index], false)
         }
         // サウンドを流す

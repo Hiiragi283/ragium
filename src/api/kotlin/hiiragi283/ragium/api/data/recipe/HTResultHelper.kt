@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.data.recipe
 
-import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.extension.keyOrThrow
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.core.component.DataComponentPatch
@@ -29,11 +29,11 @@ object HTResultHelper {
         item(ResourceKey.create(Registries.ITEM, id), count, component)
 
     fun item(key: ResourceKey<Item>, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
-        HTItemResult(Either.left(key), count, component)
+        HTItemResult(HTKeyOrTagEntry(key), count, component)
 
     fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemResult = item(variant.itemTagKey(material), count)
 
-    fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult = HTItemResult(Either.right(tagKey), count, DataComponentPatch.EMPTY)
+    fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult = HTItemResult(HTKeyOrTagEntry(tagKey), count, DataComponentPatch.EMPTY)
 
     //    Fluid    //
 
@@ -47,7 +47,7 @@ object HTResultHelper {
         fluid(ResourceKey.create(Registries.FLUID, id), amount, component)
 
     fun fluid(key: ResourceKey<Fluid>, amount: Int, component: DataComponentPatch = DataComponentPatch.EMPTY): HTFluidResult =
-        HTFluidResult(Either.left(key), amount, component)
+        HTFluidResult(HTKeyOrTagEntry(key), amount, component)
 
-    fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidResult = HTFluidResult(Either.right(tagKey), amount, DataComponentPatch.EMPTY)
+    fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidResult = HTFluidResult(HTKeyOrTagEntry(tagKey), amount, DataComponentPatch.EMPTY)
 }

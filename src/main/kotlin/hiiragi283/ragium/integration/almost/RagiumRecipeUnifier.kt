@@ -5,9 +5,8 @@ import com.almostreliable.unified.api.unification.recipe.RecipeJson
 import com.almostreliable.unified.api.unification.recipe.RecipeUnifier
 import com.almostreliable.unified.api.unification.recipe.UnificationHelper
 import com.google.gson.JsonObject
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
@@ -22,13 +21,13 @@ object RagiumRecipeUnifier : RecipeUnifier {
             var changed: Boolean
             val result: JsonObject = recipe.getProperty(key) as? JsonObject ?: continue
             if (result.has(RecipeConstants.ID)) {
-                val either: Either<ResourceKey<Item>, TagKey<Item>> = BiCodecs
-                    .keyOrTag(Registries.ITEM)
+                val either: HTKeyOrTagEntry<Item> = HTKeyOrTagEntry
+                    .codec(Registries.ITEM)
                     .codec
                     .parse(JsonOps.INSTANCE, result.getAsJsonPrimitive(RecipeConstants.ID))
                     .result()
                     .getOrNull() ?: continue
-                changed = either.map(
+                changed = either.entry.map(
                     { _: ResourceKey<Item> -> helper.unifyOutputItem(result) },
                     { tagKey: TagKey<Item> ->
                         helper.handleTagToItemReplacement(

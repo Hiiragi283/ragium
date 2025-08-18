@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
-interface HTMultiItemToItemRecipe : HTRecipe<HTMultiItemRecipeInput> {
+interface HTMultiItemToObjRecipe : HTRecipe<HTMultiItemRecipeInput> {
     companion object {
         @JvmStatic
         fun getMatchingSlots(ingredients: List<HTItemIngredient>, stacks: List<ItemStack>): IntArray {

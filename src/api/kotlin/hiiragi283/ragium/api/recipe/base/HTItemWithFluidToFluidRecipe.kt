@@ -17,7 +17,8 @@ abstract class HTItemWithFluidToFluidRecipe(
     override val result: HTFluidResult,
 ) : HTItemWithFluidToObjRecipe<HTFluidResult>,
     HTFluidRecipe<HTItemWithFluidRecipeInput> {
-    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): FluidStack = result.getOrEmpty()
+    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
+        result.getOrEmpty(registries)
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 }

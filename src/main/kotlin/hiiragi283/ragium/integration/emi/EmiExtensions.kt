@@ -29,9 +29,9 @@ fun Optional<HTFluidIngredient>.toFluidEmi(): EmiIngredient = map(HTFluidIngredi
 
 fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
-fun HTRecipeResult<ItemStack>.toItemEmi(): EmiStack = this.getStackResult().mapOrElse(EmiStack::of, ::createErrorStack)
+fun HTRecipeResult<ItemStack>.toItemEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStack::of, ::createErrorStack)
 
-fun HTRecipeResult<FluidStack>.toFluidEmi(): EmiStack = this.getStackResult().mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
+fun HTRecipeResult<FluidStack>.toFluidEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 
 fun createErrorStack(error: DataResult.Error<*>): EmiStack = createItemStack(Items.BARRIER) {
     set(DataComponents.ITEM_NAME, Component.literal(error.message()))

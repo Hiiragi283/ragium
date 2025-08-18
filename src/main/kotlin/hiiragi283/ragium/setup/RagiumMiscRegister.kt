@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
@@ -14,6 +15,7 @@ import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.result.HTEnchantedBookResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
@@ -52,7 +54,7 @@ object RagiumMiscRegister {
 
         register(
             RagiumRecipeSerializers.ALLOYING,
-            RagiumRecipeBiCodecs.combineItemToObj(HTItemResult.CODEC, ::HTAlloyingRecipe, 2..3),
+            RagiumRecipeBiCodecs.combineItemToObj(HTItemResult.CODEC, HTAlloyingRecipe::result, ::HTAlloyingRecipe, 2..3),
         )
         register(
             RagiumRecipeSerializers.COMPRESSING,
@@ -61,6 +63,10 @@ object RagiumMiscRegister {
         register(
             RagiumRecipeSerializers.CRUSHING,
             RagiumRecipeBiCodecs.itemToChancedItem(::HTCrushingRecipe),
+        )
+        register(
+            RagiumRecipeSerializers.ENCHANTING,
+            RagiumRecipeBiCodecs.combineItemToObj(HTEnchantedBookResult.CODEC, HTEnchantingRecipe::result, ::HTEnchantingRecipe, 1..3),
         )
         register(
             RagiumRecipeSerializers.EXTRACTING,
@@ -101,6 +107,7 @@ object RagiumMiscRegister {
         register(RagiumRecipeTypes.ALLOYING)
         register(RagiumRecipeTypes.CRUSHING)
         register(RagiumRecipeTypes.COMPRESSING)
+        register(RagiumRecipeTypes.ENCHANTING)
         register(RagiumRecipeTypes.EXTRACTING)
         register(RagiumRecipeTypes.INFUSING)
         register(RagiumRecipeTypes.MELTING)

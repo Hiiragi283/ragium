@@ -3,10 +3,12 @@ package hiiragi283.ragium.api.data
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -58,10 +60,6 @@ object BiCodecs {
     )
 
     @JvmStatic
-    fun <T : Any> keyOrTag(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, Either<ResourceKey<T>, TagKey<T>>> =
-        either(resourceKey(registryKey), tagKey(registryKey))
-
-    @JvmStatic
-    fun <T : Any> idOrTag(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, Either<ResourceLocation, TagKey<T>>> =
-        either(RL, tagKey(registryKey))
+    fun <T : Any> holder(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, Holder<T>> =
+        BiCodec.of(RegistryFixedCodec.create(registryKey), ByteBufCodecs.holderRegistry(registryKey))
 }

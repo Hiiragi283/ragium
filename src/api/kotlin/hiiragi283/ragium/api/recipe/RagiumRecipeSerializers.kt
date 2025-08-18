@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.impl.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
@@ -29,6 +30,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
         create(RagiumConst.CRUSHING)
+
+    @JvmField
+    val ENCHANTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEnchantingRecipe>> =
+        create(RagiumConst.ENCHANTING)
 
     @JvmField
     val EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =

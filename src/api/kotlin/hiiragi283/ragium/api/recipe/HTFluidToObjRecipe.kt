@@ -28,13 +28,13 @@ abstract class HTFluidToObjRecipe(
     }
 
     final override fun assembleFluid(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
-        if (test(input)) fluidResults[0].getOrEmpty() else FluidStack.EMPTY
+        if (test(input)) fluidResults[0].getOrEmpty(registries) else FluidStack.EMPTY
 
     final override fun assemble(input: HTSingleFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
-        itemResult.map(HTItemResult::getOrEmpty).orElse(ItemStack.EMPTY)
+        itemResult.map { it.getOrEmpty(registries) }.orElse(ItemStack.EMPTY)
 
     final override fun getType(): RecipeType<*> = recipeType
 }

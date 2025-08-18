@@ -8,5 +8,5 @@ import net.minecraft.world.item.ItemStack
 
 abstract class HTItemToItemRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) :
     HTItemToObjRecipe<HTItemResult> {
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
 }

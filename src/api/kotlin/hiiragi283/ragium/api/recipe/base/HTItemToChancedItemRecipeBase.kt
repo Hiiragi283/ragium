@@ -17,7 +17,8 @@ abstract class HTItemToChancedItemRecipeBase(val ingredient: HTItemIngredient, v
     final override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY
 
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = results.getOrNull(0)?.getOrEmpty() ?: ItemStack.EMPTY
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
+        results.getOrNull(0)?.getOrEmpty(registries) ?: ItemStack.EMPTY
 
     final override fun isIncomplete(): Boolean =
         ingredient.hasNoMatchingStacks() || results.isEmpty() || results.all(HTItemToChancedItemRecipe.ChancedResult::hasNoMatchingStack)

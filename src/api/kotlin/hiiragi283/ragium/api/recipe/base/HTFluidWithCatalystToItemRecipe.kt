@@ -13,5 +13,5 @@ abstract class HTFluidWithCatalystToItemRecipe(
     override val catalyst: Optional<HTItemIngredient>,
     override val result: HTItemResult,
 ) : HTFluidWithCatalystToObjRecipe<HTItemResult> {
-    final override fun getResultItem(provider: HolderLookup.Provider): ItemStack = result.getOrEmpty()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
 }

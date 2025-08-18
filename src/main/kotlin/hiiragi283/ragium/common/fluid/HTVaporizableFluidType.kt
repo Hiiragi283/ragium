@@ -26,7 +26,7 @@ open class HTVaporizableFluidType(protected val drop: HTItemResult, properties: 
         stack: FluidStack,
     ) {
         super.onVaporize(player, level, pos, stack)
-        drop.getStackResult().ifSuccess { crystal: ItemStack ->
+        drop.getStackResult(level.registryAccess()).ifSuccess { crystal: ItemStack ->
             if (player != null) {
                 dropStackAt(player, crystal)
             } else {

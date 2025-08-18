@@ -37,7 +37,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
-        for (stackIn: ItemStack in recipe.getPreviewItems(input)) {
+        for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
             if (!insertToOutput(stackIn, true).isEmpty) {
                 return false
             }
@@ -55,7 +55,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                insertToOutput(result.getOrEmpty(), false)
+                insertToOutput(result.getOrEmpty(level.registryAccess()), false)
             }
         }
         // インプットを減らす

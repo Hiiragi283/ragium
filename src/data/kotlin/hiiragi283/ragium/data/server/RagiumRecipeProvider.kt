@@ -6,6 +6,7 @@ import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumEngineeringRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumExtractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
@@ -27,6 +28,7 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
+    @Suppress("UnusedExpression")
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
         VanillaMaterialFamilies
         RagiumMaterialFamilies
@@ -35,6 +37,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumEnchantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFluidRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)

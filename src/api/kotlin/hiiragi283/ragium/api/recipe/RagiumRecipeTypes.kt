@@ -19,13 +19,16 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
-    val ALLOYING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe> = create(RagiumConst.ALLOYING)
+    val ALLOYING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe<*>> = create(RagiumConst.ALLOYING)
 
     @JvmField
     val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CRUSHING)
+
+    @JvmField
+    val ENCHANTING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe<*>> = create(RagiumConst.ENCHANTING)
 
     @JvmField
     val EXTRACTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = create(RagiumConst.EXTRACTING)

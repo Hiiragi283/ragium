@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemWithFluidToObjRecipe
-import hiiragi283.ragium.api.recipe.base.HTCombineItemToObjRecipe
+import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -51,15 +51,16 @@ object RagiumRecipeBiCodecs {
         )
 
     @JvmStatic
-    fun <R1 : HTRecipeResult<ItemStack>, R2 : HTCombineItemToObjRecipe<R1>> combineItemToObj(
+    fun <R1 : HTRecipeResult<ItemStack>, R2 : HTCombineItemToItemRecipe<R1>> combineItemToObj(
         codec: BiCodec<RegistryFriendlyByteBuf, R1>,
+        getter: (R2) -> R1,
         factory: HTCombineItemToObjRecipeBuilder.Factory<R1, R2>,
         size: IntRange,
     ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
         HTItemIngredient.CODEC.listOf(size).fieldOf("ingredients"),
-        HTCombineItemToObjRecipe<R1>::ingredients,
+        HTCombineItemToItemRecipe<R1>::ingredients,
         codec.fieldOf("result"),
-        HTCombineItemToObjRecipe<R1>::result,
+        getter,
         factory::create,
     )
 
