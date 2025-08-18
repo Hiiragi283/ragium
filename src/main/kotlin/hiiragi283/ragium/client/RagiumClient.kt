@@ -24,6 +24,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
@@ -95,7 +96,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 }
                 -1
             },
-            RagiumBlocks.Devices.WATER_COLLECTOR.get(),
+            HTDeviceVariant.WATER_COLLECTOR.blockHolder.get(),
         )
         // Cauldrons
         /*for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
@@ -125,7 +126,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             { _: ItemStack, tint: Int ->
                 if (tint == 0) 0x3f76e4 else -1
             },
-            RagiumBlocks.Devices.WATER_COLLECTOR,
+            HTDeviceVariant.WATER_COLLECTOR,
         )
 
         // Crude Oil Bucket

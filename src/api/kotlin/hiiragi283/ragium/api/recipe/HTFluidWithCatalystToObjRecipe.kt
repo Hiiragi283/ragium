@@ -23,4 +23,11 @@ interface HTFluidWithCatalystToObjRecipe<R : HTRecipeResult<*>> : HTRecipe<HTIte
 
     override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
         if (test(input)) getResultItem(registries) else ItemStack.EMPTY
+
+    override fun isIncomplete(): Boolean {
+        val bool1: Boolean = ingredient.hasNoMatchingStacks()
+        val bool2: Boolean = catalyst.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
+        val bool3: Boolean = result.hasNoMatchingStack()
+        return bool1 || bool2 || bool3
+    }
 }

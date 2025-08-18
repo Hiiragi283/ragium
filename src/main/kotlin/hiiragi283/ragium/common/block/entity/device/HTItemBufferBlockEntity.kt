@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_BUFFER, pos, state) {
+class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.ITEM_BUFFER, pos, state) {
     private val inventory: HTItemStackHandler = HTItemStackHandler.Builder(9).addInput(0..8).build(this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

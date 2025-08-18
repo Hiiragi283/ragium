@@ -24,7 +24,7 @@ enum class HTGeneratorVariant(
     // Basic
     THERMAL(::HTThermalGeneratorBlockEntity, RagiumTierType.BASIC, "Thermal", "火力"),
 
-    // Advanced,
+    // Advanced
     COMBUSTION(::HTCombustionGeneratorBlockEntity, RagiumTierType.ADVANCED, "Combustion", "燃焼"),
     SOLAR(::HTSolarGeneratorBlockEntity, RagiumTierType.ADVANCED, "Solar", "太陽光"),
     ;

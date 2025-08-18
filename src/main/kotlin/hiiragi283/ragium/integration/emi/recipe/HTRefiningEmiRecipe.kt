@@ -8,19 +8,28 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
-class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val result: EmiStack) :
-    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
+class HTRefiningEmiRecipe(
+    id: ResourceLocation,
+    val fluidIngredient: EmiIngredient,
+    val itemIngredient: EmiIngredient,
+    val result: EmiStack,
+) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.REFINING
 
-    override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
+    override fun getInputs(): List<EmiIngredient> = listOf(fluidIngredient)
+
+    override fun getCatalysts(): List<EmiIngredient> = listOf(itemIngredient)
 
     override fun getOutputs(): List<EmiStack> = listOf(result)
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addTank(ingredient, getPosition(1), getPosition(0)).drawBack(false)
+        widgets.addTank(fluidIngredient, getPosition(1), getPosition(0)).drawBack(false)
+        widgets.addSlot(itemIngredient, getPosition(3), getPosition(2)).drawBack(false).catalyst(true)
         // Output
         widgets.addTank(result, getPosition(5), getPosition(0)).drawBack(false).recipeContext(this)
     }
+
+    override val arrowPosX: Int = getPosition(3)
 }

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -21,7 +20,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO(), pos, state) {
     private val tank: HTFluidStackTank =
         object : HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this) {
             override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)

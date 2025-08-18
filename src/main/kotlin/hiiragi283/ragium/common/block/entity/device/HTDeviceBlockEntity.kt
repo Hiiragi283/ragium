@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -11,9 +11,9 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
-abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTDeviceBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(
-        type,
+        variant.blockEntityHolder,
         pos,
         state,
     ),

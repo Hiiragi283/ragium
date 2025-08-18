@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "catalyst": {
+    "count": 1,
+    "tag": "ragium:plastics"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:crude_oil"
+  },
+  "result": {
+    "amount": 375,
+    "id": "ragium:lpg"
+  }
+}

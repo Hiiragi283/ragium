@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.world.item.crafting.Recipe
@@ -43,7 +42,7 @@ object RagiumRecipeTypes {
     val MIXING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToFluidRecipe> = create(RagiumConst.MIXING)
 
     @JvmField
-    val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = create(RagiumConst.REFINING)
+    val REFINING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTRefiningRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
     val SOLIDIFYING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTFluidWithCatalystToItemRecipe> = create(RagiumConst.SOLIDIFYING)

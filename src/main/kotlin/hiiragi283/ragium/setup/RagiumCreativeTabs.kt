@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -63,7 +64,7 @@ object RagiumCreativeTabs {
         output.acceptItems<HTMachineVariant>()
 
         output.acceptItems<RagiumBlocks.Casings>()
-        output.acceptItems<RagiumBlocks.Devices>()
+        output.acceptItems<HTDeviceVariant>()
 
         output.acceptItems<HTDrumVariant>()
         output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)

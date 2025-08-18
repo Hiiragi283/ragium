@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConst
@@ -11,6 +10,7 @@ import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -25,8 +25,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
-abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(type, pos, state),
+abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
+    HTDeviceBlockEntity(variant, pos, state),
     HTFluidInteractable {
     protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
 

@@ -2,11 +2,10 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -22,8 +21,8 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.min
 
-sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(type, pos, state) {
+sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
+    HTDeviceBlockEntity(variant, pos, state) {
     private val inventory: HTItemStackHandler = object : HTItemStackHandler(2) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
             val energyStorage: IEnergyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return false
@@ -149,7 +148,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
 
     //    Creative    //
 
-    class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlockEntityTypes.CEU, pos, state) {
+    class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
         override val network: IEnergyStorage = object : IEnergyStorage {
             override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = toReceive
 
@@ -169,7 +168,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
 
     //    Simple    //
 
-    class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlockEntityTypes.ENI, pos, state) {
+    class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
         override var network: IEnergyStorage? = null
 
         override val transferRate: Int = 1000

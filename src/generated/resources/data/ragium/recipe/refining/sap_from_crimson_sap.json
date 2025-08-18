@@ -1,0 +1,11 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "tag": "c:crimson_sap"
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:sap"
+  }
+}

@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "c:storage_blocks/bone_meal"
+    "tag": "c:buckets/milk"
   },
   "base": {
     "item": "ragium:device_casing"
   },
   "result": {
     "count": 1,
-    "id": "ragium:sprinkler"
+    "id": "ragium:milk_collector"
   },
   "template": {
     "item": "ragium:basic_component"

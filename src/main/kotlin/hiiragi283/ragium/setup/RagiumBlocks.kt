@@ -16,17 +16,18 @@ import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
-import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -58,7 +59,6 @@ object RagiumBlocks {
         LEDBlocks.entries
 
         Casings.entries
-        Devices.entries
 
         Frames.entries
 
@@ -427,36 +427,12 @@ object RagiumBlocks {
         override val holder: DeferredBlock<*> = register("${name.lowercase()}_casing", properties)
     }
 
-    enum class Devices(override val holder: DeferredBlock<*>) : HTBlockHolderLike {
-        MILK_DRAIN(RagiumBlockEntityTypes.MILK_DRAIN, copyOf(Blocks.COBBLESTONE), ::HTMilkDrainBlock),
-
-        // Basic
-        ITEM_BUFFER(RagiumBlockEntityTypes.ITEM_BUFFER),
-        SPRINKLER(RagiumBlockEntityTypes.SPRINKLER),
-        WATER_COLLECTOR(RagiumBlockEntityTypes.WATER_COLLECTOR),
-
-        // Advanced
-        ENI(RagiumBlockEntityTypes.ENI),
-        EXP_COLLECTOR(RagiumBlockEntityTypes.EXP_COLLECTOR),
-        LAVA_COLLECTOR(RagiumBlockEntityTypes.LAVA_COLLECTOR),
-        DIM_ANCHOR(RagiumBlockEntityTypes.DIM_ANCHOR),
-
-        // Creative
-        CEU(RagiumBlockEntityTypes.CEU),
-        ;
-
-        constructor(type: HTDeferredBlockEntityType<out HTBlockEntity>) : this(
-            type,
-            machineProperty(),
-            HTEntityBlock.create(type),
-        )
-
-        constructor(
-            type: HTDeferredBlockEntityType<out HTBlockEntity>,
-            properties: BlockBehaviour.Properties,
-            factory: (BlockBehaviour.Properties) -> HTEntityBlock<*>,
-        ) : this(registerEntity(type, properties, factory))
-    }
+    @JvmField
+    val DEVICES: Map<HTDeviceVariant, DeferredBlock<Block>> =
+        HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
+            val type: HTDeferredBlockEntityType<HTDeviceBlockEntity> = variant.blockEntityHolder
+            registerEntity(type, machineProperty(), HTEntityBlock.create(type))
+        }
 
     //    Storages    //
 

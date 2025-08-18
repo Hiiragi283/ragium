@@ -90,7 +90,7 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.REFINING,
-            RagiumRecipeBiCodecs.fluidToObj(::HTRefiningRecipe),
+            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTFluidResult.CODEC, ::HTRefiningRecipe),
         )
         register(
             RagiumRecipeSerializers.SOLIDIFYING,

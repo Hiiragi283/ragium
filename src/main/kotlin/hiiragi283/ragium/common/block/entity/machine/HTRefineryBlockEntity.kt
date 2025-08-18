@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
-import hiiragi283.ragium.api.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -29,14 +29,14 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTSingleFluidRecipeInput, HTRefiningRecipe>(
+    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTRefiningRecipe>(
         RagiumRecipeTypes.REFINING.get(),
         HTMachineVariant.REFINERY,
         pos,
         state,
     ),
     HTFluidInteractable {
-    override val inventory: HTItemHandler = HTItemStackHandler.EMPTY
+    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).build(this)
     private val tankIn = HTFluidStackTank(variant.tankCapacity, this)
     private val tankOut = HTFluidStackTank(variant.tankCapacity, this)
 
@@ -58,17 +58,18 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleFluidRecipeInput = HTSingleFluidRecipeInput(tankIn.fluid)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
+        HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), tankIn.fluid)
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput, recipe: HTRefiningRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTRefiningRecipe): Boolean =
         tankOut.canFill(recipe.assembleFluid(input, level.registryAccess()), true)
 
     override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTSingleFluidRecipeInput,
+        input: HTItemWithFluidRecipeInput,
         recipe: HTRefiningRecipe,
     ) {
         // 実際にアウトプットに搬出する

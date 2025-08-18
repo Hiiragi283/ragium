@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -29,7 +29,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
+    HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
     HTFluidInteractable {
     private val tank = HTFluidStackTank(Int.MAX_VALUE, this)
 

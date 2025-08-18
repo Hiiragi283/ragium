@@ -56,13 +56,13 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         }
 
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.GENERATORS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
         builder.addBlocks<RagiumBlocks.Casings>(BlockTags.MINEABLE_WITH_PICKAXE)
-        builder.addBlocks<RagiumBlocks.Devices>(BlockTags.MINEABLE_WITH_PICKAXE)
         builder.addBlocks<RagiumBlocks.Frames>(BlockTags.MINEABLE_WITH_PICKAXE)
         // Shovel
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)

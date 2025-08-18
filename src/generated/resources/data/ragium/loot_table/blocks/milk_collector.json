@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:sprinkler"
+          "name": "ragium:milk_collector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/sprinkler"
+  "random_sequence": "ragium:blocks/milk_collector"
 }

@@ -30,8 +30,6 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
@@ -40,7 +38,6 @@ import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidWithCatalystToItemEmiRecipe
@@ -49,12 +46,12 @@ import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -267,18 +264,10 @@ class RagiumEmiPlugin : EmiPlugin {
         RagiumRecipeTypes.REFINING.forEach(recipeManager) { id: ResourceLocation, recipe: HTRefiningRecipe ->
             registry.addRecipe(
                 HTRefiningEmiRecipe(
-                    id.withPrefix("/"),
-                    recipe.ingredient.toEmi(),
-                    recipe.fluidResults[0].toFluidEmi(),
-                ),
-            )
-
-            registry.addRecipe(
-                HTDistillationEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.itemResult.map(HTItemResult::toItemEmi),
-                    recipe.fluidResults.map(HTFluidResult::toFluidEmi),
+                    recipe.catalyst.toItemEmi(),
+                    recipe.result.toFluidEmi(),
                 ),
             )
         }
@@ -354,22 +343,22 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addInteractions() {
         // Water Well
         addInteraction(EmiStack.of(Fluids.WATER), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(RagiumBlocks.Devices.WATER_COLLECTOR))
+            leftInput(EmiStack.of(HTDeviceVariant.WATER_COLLECTOR))
             rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
         addInteraction(EmiStack.of(Fluids.LAVA), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(RagiumBlocks.Devices.LAVA_COLLECTOR))
+            leftInput(EmiStack.of(HTDeviceVariant.LAVA_COLLECTOR))
             rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
         addInteraction(EmiStack.of(NeoForgeMod.MILK.get()), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(RagiumBlocks.Devices.MILK_DRAIN))
+            leftInput(EmiStack.of(HTDeviceVariant.MILK_COLLECTOR))
             rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
         }
         // Exp Collector
         addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(RagiumBlocks.Devices.EXP_COLLECTOR))
+            leftInput(EmiStack.of(HTDeviceVariant.EXP_COLLECTOR))
             rightInput(EmiStack.EMPTY, false)
         }
 

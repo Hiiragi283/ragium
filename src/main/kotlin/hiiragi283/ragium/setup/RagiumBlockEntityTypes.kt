@@ -10,15 +10,8 @@ import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -66,66 +59,6 @@ object RagiumBlockEntityTypes {
 
     //    Device    //
 
-    @JvmField
-    val CEU: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "creative_energy_unit",
-        HTEnergyNetworkAccessBlockEntity::Creative,
-    )
-
-    @JvmField
-    val DIM_ANCHOR: HTDeferredBlockEntityType<HTDimensionalAnchorBlockEntity> = REGISTER.registerType(
-        "dimensional_anchor",
-        ::HTDimensionalAnchorBlockEntity,
-    )
-
-    @JvmField
-    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "energy_network_interface",
-        HTEnergyNetworkAccessBlockEntity::Simple,
-    )
-
-    @JvmField
-    val EXP_COLLECTOR: HTDeferredBlockEntityType<HTExpCollectorBlockEntity> = registerTick(
-        "exp_collector",
-        ::HTExpCollectorBlockEntity,
-    )
-
-    @JvmField
-    val ITEM_BUFFER: HTDeferredBlockEntityType<HTItemBufferBlockEntity> = registerTick("item_buffer", ::HTItemBufferBlockEntity)
-
-    @JvmField
-    val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
-        "lava_collector",
-        ::HTLavaCollectorBlockEntity,
-    )
-
-    @JvmField
-    val MILK_DRAIN: HTDeferredBlockEntityType<HTMilkDrainBlockEntity> = registerTick(
-        "milk_drain",
-        ::HTMilkDrainBlockEntity,
-    )
-
-    @JvmField
-    val SPRINKLER: HTDeferredBlockEntityType<HTSprinklerBlockEntity> =
-        registerTick("sprinkler", ::HTSprinklerBlockEntity)
-
-    @JvmField
-    val WATER_COLLECTOR: HTDeferredBlockEntityType<HTWaterCollectorBlockEntity> = registerTick(
-        "water_collector",
-        ::HTWaterCollectorBlockEntity,
-    )
-
-    @JvmField
-    val DEVICES: List<HTDeferredBlockEntityType<out HTDeviceBlockEntity>> = listOf(
-        ENI,
-        EXP_COLLECTOR,
-        ITEM_BUFFER,
-        LAVA_COLLECTOR,
-        MILK_DRAIN,
-        SPRINKLER,
-        WATER_COLLECTOR,
-    )
-
     //    Storage    //
 
     //    Event    //
@@ -135,18 +68,7 @@ object RagiumBlockEntityTypes {
     private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
         addAll<HTGeneratorVariant>(event)
         addAll<HTMachineVariant>(event)
-
-        add(event, DIM_ANCHOR, RagiumBlocks.Devices.DIM_ANCHOR)
-        add(event, ENI, RagiumBlocks.Devices.ENI)
-        add(event, EXP_COLLECTOR, RagiumBlocks.Devices.EXP_COLLECTOR)
-        add(event, ITEM_BUFFER, RagiumBlocks.Devices.ITEM_BUFFER)
-        add(event, LAVA_COLLECTOR, RagiumBlocks.Devices.LAVA_COLLECTOR)
-        add(event, MILK_DRAIN, RagiumBlocks.Devices.MILK_DRAIN)
-        add(event, SPRINKLER, RagiumBlocks.Devices.SPRINKLER)
-        add(event, WATER_COLLECTOR, RagiumBlocks.Devices.WATER_COLLECTOR)
-
-        add(event, CEU, RagiumBlocks.Devices.CEU)
-
+        addAll<HTDeviceVariant>(event)
         addAll<HTDrumVariant>(event)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
@@ -169,13 +91,7 @@ object RagiumBlockEntityTypes {
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         registerHandlers<HTGeneratorBlockEntity, HTGeneratorVariant>(event)
         registerHandlers<HTMachineBlockEntity, HTMachineVariant>(event)
-
-        for (type: HTDeferredBlockEntityType<out HTDeviceBlockEntity> in DEVICES) {
-            registerHandlers(event, type)
-        }
-
-        registerHandlers(event, CEU)
-
+        registerHandlers<HTDeviceBlockEntity, HTDeviceVariant>(event)
         registerHandlers<HTDrumBlockEntity, HTDrumVariant>(event)
 
         LOGGER.info("Registered Block Capabilities!")

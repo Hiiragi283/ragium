@@ -3,12 +3,10 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
-import hiiragi283.ragium.api.recipe.HTFluidToObjRecipe
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
@@ -17,8 +15,6 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack
@@ -91,16 +87,4 @@ object RagiumRecipeBiCodecs {
         HTItemWithFluidToObjRecipe<R1>::result,
         factory::create,
     )
-
-    @JvmStatic
-    fun <R : HTFluidToObjRecipe> fluidToObj(factory: HTFluidToObjRecipeBuilder.Factory<R>): MapBiCodec<RegistryFriendlyByteBuf, R> =
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf("ingredient"),
-            HTFluidToObjRecipe::ingredient,
-            HTItemResult.CODEC.optionalFieldOf("item_result"),
-            HTFluidToObjRecipe::itemResult,
-            HTFluidResult.CODEC.listOrElement(1, 4).fieldOf("fluid_results"),
-            HTFluidToObjRecipe::fluidResults,
-            factory::create,
-        )
 }

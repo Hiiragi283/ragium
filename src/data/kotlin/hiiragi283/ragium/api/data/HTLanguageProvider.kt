@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.variant.HTArmorVariant
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -69,6 +70,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         addVariants<HTGeneratorVariant>()
         addVariants<HTMachineVariant>()
+        addVariants<HTDeviceVariant>()
         addVariants<HTDrumVariant>()
     }
 

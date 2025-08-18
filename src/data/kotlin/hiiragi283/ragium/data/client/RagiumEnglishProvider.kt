@@ -15,6 +15,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
@@ -123,16 +124,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
         addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "Reinforced Stone Casing")
         addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
-
-        addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
-        addBlock(RagiumBlocks.Devices.DIM_ANCHOR, "Dimensional Anchor")
-        addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
-        addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "Exp Collector")
-        addBlock(RagiumBlocks.Devices.ITEM_BUFFER, "Item Buffer")
-        addBlock(RagiumBlocks.Devices.LAVA_COLLECTOR, "Lava Collector")
-        addBlock(RagiumBlocks.Devices.MILK_DRAIN, "Milk Drain")
-        addBlock(RagiumBlocks.Devices.SPRINKLER, "Sprinkler")
-        addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "Water Collector")
         // Storage
     }
 
@@ -431,20 +422,20 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
 
-        addInfo(RagiumBlocks.Devices.CEU, "Unlimited Power")
-        addInfo(RagiumBlocks.Devices.DIM_ANCHOR, "Always load chunk which placed in.")
-        addInfo(RagiumBlocks.Devices.ENI, "Enabled to access Energy Network.")
-        addInfo(RagiumBlocks.Devices.EXP_COLLECTOR, "Collects around Exp Orbs.")
-        addInfo(RagiumBlocks.Devices.ITEM_BUFFER, "Item buffer with 9 slots.")
+        addInfo(HTDeviceVariant.CEU, "Unlimited Power")
+        addInfo(HTDeviceVariant.DIM_ANCHOR, "Always load chunk which placed in.")
+        addInfo(HTDeviceVariant.ENI, "Enabled to access Energy Network.")
+        addInfo(HTDeviceVariant.EXP_COLLECTOR, "Collects around Exp Orbs.")
+        addInfo(HTDeviceVariant.ITEM_BUFFER, "Item buffer with 9 slots.")
         addInfo(
-            RagiumBlocks.Devices.LAVA_COLLECTOR,
+            HTDeviceVariant.LAVA_COLLECTOR,
             "Generates Lava when ALL below conditions are met.",
             "- Placed in the Nether",
             "- Surrounded by 4 Lava sources",
         )
-        addInfo(RagiumBlocks.Devices.MILK_DRAIN, "Milking a cow on this.")
+        addInfo(HTDeviceVariant.MILK_COLLECTOR, "Milking a cow on this.")
         addInfo(
-            RagiumBlocks.Devices.WATER_COLLECTOR,
+            HTDeviceVariant.WATER_COLLECTOR,
             "Generates Lava when ANY below conditions are met.",
             "- Placed in Ocean-like or River-like biomes",
             "- Surrounded by 2 or more Water Sources",

@@ -15,6 +15,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
@@ -114,16 +115,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
         addBlock(RagiumBlocks.Casings.REINFORCED_STONE, "強化石材筐体")
         addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
-
-        addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
-        addBlock(RagiumBlocks.Devices.DIM_ANCHOR, "次元アンカー")
-        addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
-        addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "経験値収集機")
-        addBlock(RagiumBlocks.Devices.ITEM_BUFFER, "アイテムバッファ")
-        addBlock(RagiumBlocks.Devices.LAVA_COLLECTOR, "溶岩収集機")
-        addBlock(RagiumBlocks.Devices.MILK_DRAIN, "牛乳シンク")
-        addBlock(RagiumBlocks.Devices.SPRINKLER, "スプリンクラー")
-        addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "水収集機")
         // Storage
     }
 
@@ -431,20 +422,20 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
 
-        addInfo(RagiumBlocks.Devices.CEU, "無限のパワー")
-        addInfo(RagiumBlocks.Devices.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
-        addInfo(RagiumBlocks.Devices.ENI, "エネルギーネットワークにアクセスできます。")
-        addInfo(RagiumBlocks.Devices.EXP_COLLECTOR, "周囲の経験値オーブを回収します。")
-        addInfo(RagiumBlocks.Devices.ITEM_BUFFER, "9スロットのアイテムバッファとして機能します。")
+        addInfo(HTDeviceVariant.CEU, "無限のパワー")
+        addInfo(HTDeviceVariant.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
+        addInfo(HTDeviceVariant.ENI, "エネルギーネットワークにアクセスできます。")
+        addInfo(HTDeviceVariant.EXP_COLLECTOR, "周囲の経験値オーブを回収します。")
+        addInfo(HTDeviceVariant.ITEM_BUFFER, "9スロットのアイテムバッファとして機能します。")
         addInfo(
-            RagiumBlocks.Devices.LAVA_COLLECTOR,
+            HTDeviceVariant.LAVA_COLLECTOR,
             "次の条件のうち全てを満たすとき，溶岩を生産します。",
             "- ネザーに設置されている",
             "- 周囲4ブロックが溶岩源で囲われている",
         )
-        addInfo(RagiumBlocks.Devices.MILK_DRAIN, "牛を乗せると牛乳を搾り取ります。")
+        addInfo(HTDeviceVariant.MILK_COLLECTOR, "牛を乗せると牛乳を搾り取ります。")
         addInfo(
-            RagiumBlocks.Devices.WATER_COLLECTOR,
+            HTDeviceVariant.WATER_COLLECTOR,
             "次の条件のうちいずれかを満たすとき，水を生産します。",
             "- 海洋または河川系バイオームに設置されている",
             "- 周囲2ブロック以上が水源で囲われている",

@@ -2,9 +2,11 @@ package hiiragi283.ragium.api.data.recipe.impl
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTFluidWithCatalystToObjRecipe
+import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.util.RagiumConst
@@ -20,6 +22,19 @@ class HTFluidWithCatalystToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTFluid
     private val result: R1,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
+        @JvmStatic
+        fun refining(
+            itemIngredient: HTItemIngredient?,
+            fluidIngredient: HTFluidIngredient,
+            result: HTFluidResult,
+        ): HTFluidWithCatalystToObjRecipeBuilder<HTFluidResult, HTRefiningRecipe> = HTFluidWithCatalystToObjRecipeBuilder(
+            RagiumConst.REFINING,
+            ::HTRefiningRecipe,
+            fluidIngredient,
+            Optional.ofNullable(itemIngredient),
+            result,
+        )
+
         @JvmStatic
         fun solidifying(
             itemIngredient: HTItemIngredient?,

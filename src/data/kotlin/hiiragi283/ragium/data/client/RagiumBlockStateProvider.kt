@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
@@ -39,13 +41,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             addAll(RagiumBlocks.LEDBlocks.entries)
 
             add(RagiumBlocks.Casings.DEVICE.holder)
-
-            add(RagiumBlocks.Devices.CEU)
-            add(RagiumBlocks.Devices.ENI)
-            add(RagiumBlocks.Devices.EXP_COLLECTOR)
-            add(RagiumBlocks.Devices.ITEM_BUFFER)
-            add(RagiumBlocks.Devices.SPRINKLER)
-            add(RagiumBlocks.Devices.DIM_ANCHOR)
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         layeredBlock(
@@ -178,19 +173,32 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.SOLIDIFIER, advancedMachine, advancedMachine)
 
         // Device
-        layeredBlock(
-            RagiumBlocks.Devices.WATER_COLLECTOR,
-            vanillaId("block/water_still"),
-            RagiumAPI.id("block/device_overlay"),
-        )
-
-        layeredBlock(
-            RagiumBlocks.Devices.LAVA_COLLECTOR,
-            vanillaId("block/lava_still"),
-            RagiumAPI.id("block/device_overlay"),
-        )
-
-        altModelBlock(RagiumBlocks.Devices.MILK_DRAIN)
+        for ((variant: HTDeviceVariant, block: DeferredBlock<Block>) in RagiumBlocks.DEVICES) {
+            when (variant) {
+                HTDeviceVariant.WATER_COLLECTOR -> {
+                    layeredBlock(
+                        block,
+                        vanillaId("block/water_still"),
+                        RagiumAPI.id("block/device_overlay"),
+                    )
+                }
+                HTDeviceVariant.LAVA_COLLECTOR -> {
+                    layeredBlock(
+                        block,
+                        vanillaId("block/lava_still"),
+                        RagiumAPI.id("block/device_overlay"),
+                    )
+                }
+                HTDeviceVariant.MILK_COLLECTOR -> {
+                    layeredBlock(
+                        block,
+                        ResourceLocation.fromNamespaceAndPath(NeoForgeVersion.MOD_ID, "block/milk_still"),
+                        RagiumAPI.id("block/device_overlay"),
+                    )
+                }
+                else -> simpleBlock(block.get())
+            }
+        }
 
         // Storages
         for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS.values) {

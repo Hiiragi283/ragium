@@ -12,12 +12,6 @@ import java.util.*
 
 class HTSolidifyingRecipe(ingredient: HTFluidIngredient, catalyst: Optional<HTItemIngredient>, result: HTItemResult) :
     HTFluidWithCatalystToItemRecipe(ingredient, catalyst, result) {
-    override fun isIncomplete(): Boolean {
-        val bool1: Boolean = ingredient.hasNoMatchingStacks()
-        val bool2: Boolean = catalyst.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
-        return bool1 || bool2
-    }
-
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.SOLIDIFYING.get()

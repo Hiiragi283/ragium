@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
@@ -152,14 +153,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         val dimAnchor: AdvancementHolder = child(RagiumAdvancements.DIM_ANCHOR, warpedCrystal) {
             display {
-                setIcon(RagiumBlocks.Devices.DIM_ANCHOR)
+                setIcon(HTDeviceVariant.DIM_ANCHOR)
                 setTitleFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setDescFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setGoal()
             }
             addCriterion(
                 "place_dim_anchor",
-                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(RagiumBlocks.Devices.DIM_ANCHOR.get()),
+                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.blockHolder.get()),
             )
         }
         val teleportTicket: AdvancementHolder = child(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {

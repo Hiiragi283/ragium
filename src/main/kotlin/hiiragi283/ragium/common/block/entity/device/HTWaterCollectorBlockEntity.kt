@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -15,7 +15,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFluidCollectorBlockEntity(RagiumBlockEntityTypes.WATER_COLLECTOR, pos, state) {
+    HTFluidCollectorBlockEntity(HTDeviceVariant.WATER_COLLECTOR, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         var amount = 0
         // 海洋バイオームまたは河川系バイオームの場合 -> +1000 mB

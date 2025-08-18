@@ -9,6 +9,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.tags.ItemTags
@@ -186,23 +187,15 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     //    Devices    //
 
     private fun devices() {
-        // Milk Drain
-        HTShapedRecipeBuilder(RagiumBlocks.Devices.MILK_DRAIN)
-            .pattern("A", "B", "C")
-            .define('A', HTMaterialVariant.INGOT, HTVanillaMaterialType.COPPER)
-            .define('B', Tags.Items.BARRELS_WOODEN)
-            .define('C', RagiumBlocks.Casings.STONE)
-            .save(output)
-
         // Basic
-        basicDevice(RagiumBlocks.Devices.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
-        basicDevice(RagiumBlocks.Devices.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
-        basicDevice(RagiumBlocks.Devices.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
+        basicDevice(HTDeviceVariant.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
+        basicDevice(HTDeviceVariant.MILK_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_MILK))
+        basicDevice(HTDeviceVariant.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
         // Advanced
-        advancedDevice(RagiumBlocks.Devices.ENI, HTMaterialVariant.GEM.toIngredient(HTVanillaMaterialType.DIAMOND))
-        advancedDevice(RagiumBlocks.Devices.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
-        advancedDevice(RagiumBlocks.Devices.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advancedDevice(RagiumBlocks.Devices.DIM_ANCHOR, HTMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.WARPED_CRYSTAL))
+        advancedDevice(HTDeviceVariant.ENI, HTMaterialVariant.GEM.toIngredient(HTVanillaMaterialType.DIAMOND))
+        advancedDevice(HTDeviceVariant.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
+        advancedDevice(HTDeviceVariant.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
+        advancedDevice(HTDeviceVariant.DIM_ANCHOR, HTMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.WARPED_CRYSTAL))
     }
 
     private fun basicDevice(device: ItemLike, input: Ingredient) {

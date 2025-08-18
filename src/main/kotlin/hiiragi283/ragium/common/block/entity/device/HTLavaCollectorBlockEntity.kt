@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTLavaCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFluidCollectorBlockEntity(RagiumBlockEntityTypes.LAVA_COLLECTOR, pos, state) {
+    HTFluidCollectorBlockEntity(HTDeviceVariant.LAVA_COLLECTOR, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         // ネザー系バイオームにない場合は生産しない
         if (!level.getBiome(pos).`is`(BiomeTags.IS_NETHER)) return FluidStack.EMPTY

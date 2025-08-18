@@ -33,6 +33,7 @@ import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTArmorVariant
+import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTToolVariant
 import net.minecraft.core.component.DataComponentPatch
@@ -508,7 +509,7 @@ object RagiumItems {
             builder.set(DataComponents.FOOD, Foods.COOKED_BEEF)
         }
 
-        event.modify(RagiumBlocks.Devices.CEU) { builder: DataComponentPatch.Builder ->
+        event.modify(HTDeviceVariant.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 

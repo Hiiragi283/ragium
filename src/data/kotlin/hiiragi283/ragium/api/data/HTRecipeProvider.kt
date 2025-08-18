@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
@@ -19,19 +18,17 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.IConditionBuilder
 import net.neoforged.neoforge.common.crafting.CompoundIngredient
@@ -151,12 +148,20 @@ sealed class HTRecipeProvider : IConditionBuilder {
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
-    protected fun distillation(input: Pair<TagKey<Fluid>, Int>, itemResult: HTItemResult?, vararg fluidResults: HTFluidResult) {
-        val (tagKey: TagKey<Fluid>, amount: Int) = input
-        val suffix = "_from_${tagKey.location.path}"
-        val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(tagKey, amount)
+    protected fun distillation(
+        input: Pair<HTFluidContent<*, *, *>, Int>,
+        itemResult: HTItemResult?,
+        vararg results: Pair<HTFluidResult, HTItemIngredient?>,
+    ) {
+        val (content: HTFluidContent<*, *, *>, amount: Int) = input
+        val suffix = "_from_${content.id.path}"
+        val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(content, amount)
         // Refining
-        HTFluidToObjRecipeBuilder.refining(ingredient, itemResult, *fluidResults).save(output)
+        for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
+            HTFluidWithCatalystToObjRecipeBuilder
+                .refining(catalyst, ingredient, result)
+                .saveSuffixed(output, suffix)
+        }
         // Solidifying
         itemResult?.let { result: HTItemResult ->
             HTFluidWithCatalystToObjRecipeBuilder
@@ -168,7 +173,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
-        .addIngredient(Tags.Items.INGOTS_NETHERITE)
+        .addIngredient(HTMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
     protected fun createComponentUpgrade(tier: RagiumTierType, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder(output).addIngredient(RagiumItems.getComponent(tier)).addIngredient(ingredient)

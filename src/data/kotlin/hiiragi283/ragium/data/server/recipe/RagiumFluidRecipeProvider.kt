@@ -62,10 +62,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Crude Oil -> LPG + Naphtha + Tar
         distillation(
-            RagiumFluidContents.CRUDE_OIL.commonTag to 1000,
+            RagiumFluidContents.CRUDE_OIL to 1000,
             HTResultHelper.item(RagiumItems.TAR),
-            HTResultHelper.fluid(RagiumFluidContents.NAPHTHA, 375),
-            HTResultHelper.fluid(RagiumFluidContents.LPG, 375),
+            HTResultHelper.fluid(RagiumFluidContents.NAPHTHA, 375) to null,
+            HTResultHelper.fluid(RagiumFluidContents.LPG, 375) to HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
         )
         // LPG + Coal -> 4x Polymer Resin
         HTItemWithFluidToObjRecipeBuilder
@@ -76,9 +76,9 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
         distillation(
-            RagiumFluidContents.NAPHTHA.commonTag to 1000,
+            RagiumFluidContents.NAPHTHA to 1000,
             HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR),
-            HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375),
+            HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375) to null,
         )
         // Diesel + Crimson Crystal -> Bloo-Diesel
         HTItemWithFluidToObjRecipeBuilder
@@ -106,10 +106,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_log")
         // Sap -> Syrup
         distillation(
-            RagiumFluidContents.SAP.commonTag to 1000,
+            RagiumFluidContents.SAP to 1000,
             null,
-            HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750),
-            HTResultHelper.fluid(Fluids.WATER, 250),
+            HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750) to HTIngredientHelper.item(Items.SUGAR),
+            HTResultHelper.fluid(Fluids.WATER, 250) to null,
         )
         // Syrup -> Sugar
         HTFluidWithCatalystToObjRecipeBuilder
@@ -127,9 +127,9 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         distillation(
-            RagiumFluidContents.CRIMSON_SAP.commonTag to 1000,
+            RagiumFluidContents.CRIMSON_SAP to 1000,
             HTResultHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
-            HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
+            HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
         )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
@@ -145,9 +145,9 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         distillation(
-            RagiumFluidContents.WARPED_SAP.commonTag to 1000,
+            RagiumFluidContents.WARPED_SAP to 1000,
             HTResultHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL),
-            HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
+            HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
         )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
