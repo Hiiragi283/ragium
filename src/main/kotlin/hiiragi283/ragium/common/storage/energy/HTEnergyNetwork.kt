@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
-import hiiragi283.ragium.api.util.HTSavedDataType
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.world.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.ExtraCodecs
@@ -14,7 +14,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.level.saveddata.SavedData
 import kotlin.math.min
 
-internal class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
+class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     SavedData(),
     IEnergyStorageModifiable {
     companion object {

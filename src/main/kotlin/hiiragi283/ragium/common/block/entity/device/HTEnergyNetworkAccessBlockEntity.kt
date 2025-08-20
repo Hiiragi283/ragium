@@ -174,7 +174,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         override val transferRate: Int = 1000
 
         override fun afterLevelInit(level: Level) {
-            network = RagiumAPI.getInstance().getEnergyNetworkManager().getNetwork(level)
+            network = RagiumAPI.getInstance().getEnergyNetworkManager().get(level)
         }
     }
 }

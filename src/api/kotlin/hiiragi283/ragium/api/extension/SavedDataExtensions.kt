@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.util.HTSavedDataType
+import hiiragi283.ragium.api.world.HTSavedDataType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel

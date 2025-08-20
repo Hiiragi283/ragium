@@ -16,7 +16,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 @OnlyIn(Dist.CLIENT)
 class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int) :
     HTSpriteWidget(x, y - 1, 16, 18 * 3 - 2, Component.empty()) {
-    fun getNetwork(): IEnergyStorage? = RagiumAPI.getInstance().getEnergyNetworkManager().getNetworkFromKey(key)
+    fun getNetwork(): IEnergyStorage? = RagiumAPI.getInstance().getEnergyNetworkManager().getFromKey(key)
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(

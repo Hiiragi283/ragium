@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
-import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.world.HTSavedDataManager
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumItems
@@ -22,6 +22,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
@@ -61,7 +62,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun getEnergyNetworkManager(): HTEnergyNetworkManager = HTEnergyNetworkManagerImpl
+    override fun getEnergyNetworkManager(): HTSavedDataManager<IEnergyStorage> = HTEnergyNetworkManagerImpl
 
     //    Platform    //
 

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.world
 
 import com.mojang.serialization.Codec
 import net.minecraft.core.HolderLookup

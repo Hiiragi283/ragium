@@ -163,7 +163,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         val network: IEnergyStorage = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
-            .getNetwork(level) ?: return
+            .get(level) ?: return
         this.network = network
         this.externalNetwork = wrapNetworkToExternal(network)
     }

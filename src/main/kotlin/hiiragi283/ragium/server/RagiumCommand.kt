@@ -57,7 +57,7 @@ object RagiumCommand {
         val network: IEnergyStorage = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
+            .getFromServer(source.level)
         val amount: Int = network.energyStored
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
@@ -71,7 +71,7 @@ object RagiumCommand {
         val received: Int = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
+            .getFromServer(source.level)
             .receiveEnergy(value, false)
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
@@ -84,7 +84,7 @@ object RagiumCommand {
         val network: IEnergyStorageModifiable = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
+            .getFromServer(source.level)
             as? IEnergyStorageModifiable ?: return -1
         network.energyStored = value
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
