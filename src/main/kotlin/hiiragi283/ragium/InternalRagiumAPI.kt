@@ -10,9 +10,10 @@ import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.world.HTSavedDataManager
+import hiiragi283.ragium.api.world.HTLevelAttachmentManager
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManager
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
@@ -32,6 +33,10 @@ class InternalRagiumAPI : RagiumAPI {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
+
+        @JvmStatic
+        private val ENERGY_NETWORK: HTLevelAttachmentManager<HTEnergyNetwork>
+            by lazy { HTLevelAttachmentManager(RagiumAttachmentTypes.ENERGY_NETWORK.get()) }
     }
 
     //    Addon    //
@@ -62,7 +67,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun getEnergyNetworkManager(): HTSavedDataManager<IEnergyStorage> = HTEnergyNetworkManager
+    override fun getEnergyNetworkManager(): HTLevelAttachmentManager<out IEnergyStorage> = ENERGY_NETWORK
 
     //    Platform    //
 

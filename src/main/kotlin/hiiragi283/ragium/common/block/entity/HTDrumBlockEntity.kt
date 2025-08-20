@@ -57,6 +57,8 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
         tank
     }
 
+    //    HTHandlerBlockEntity    //
+
     override fun getFluidHandler(direction: Direction?): IFluidHandler = tank
 
     //    HTFluidInteractable    //

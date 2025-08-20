@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.world.HTSavedDataManager
+import hiiragi283.ragium.api.world.HTLevelAttachmentManager
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceLocation
@@ -93,7 +93,7 @@ interface RagiumAPI {
     /**
      * エネルギーネットワークのマネージャを返します。
      */
-    fun getEnergyNetworkManager(): HTSavedDataManager<IEnergyStorage>
+    fun getEnergyNetworkManager(): HTLevelAttachmentManager<out IEnergyStorage>
 
     //    Config    //
 

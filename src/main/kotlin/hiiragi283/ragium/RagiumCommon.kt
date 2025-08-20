@@ -9,6 +9,7 @@ import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.setup.RagiumArmorMaterials
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -61,12 +62,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumItems.init(eventBus)
 
         RagiumArmorMaterials.REGISTER.register(eventBus)
+        RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
-        RagiumEntityTypes.REGISTER.register(eventBus)
-
         RagiumCustomRecipeSerializers.REGISTER.register(eventBus)
-
+        RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
+import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
@@ -140,6 +141,18 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
         )
     }
 
+    // Encode & Decode
+    fun <T : Any> encode(ops: DynamicOps<T>, input: V): DataResult<T> = codec.encodeStart(ops, input)
+
+    fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<V> = codec.parse(ops, input)
+
+    fun encode(buf: B, input: V) {
+        streamCodec.encode(buf, input)
+    }
+
+    fun decode(buf: B): V = streamCodec.decode(buf)
+
+    // Convert
     fun <S : Any> xmap(to: (V) -> S, from: (S) -> V): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
     fun <S : Any> flatXmap(to: (V) -> DataResult<S>, from: (S) -> DataResult<V>): BiCodec<B, S> = of(
@@ -152,6 +165,11 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun validate(validator: (V) -> DataResult<V>): BiCodec<B, V> = flatXmap(validator, validator)
 
+    fun toMap(): MapBiCodec<B, V> = MapBiCodec.of(MapCodec.assumeMapUnsafe(codec), streamCodec)
+
+    fun <S : B> cast(): BiCodec<S, V> = of(codec, streamCodec.cast())
+
+    // MapBiCodec
     fun fieldOf(name: String): MapBiCodec<B, V> = MapBiCodec.of(codec.fieldOf(name), streamCodec)
 
     fun optionalFieldOf(name: String): MapBiCodec<B, Optional<V>> = MapBiCodec.of(codec.optionalFieldOf(name), streamCodec.toOptional())
@@ -162,10 +180,7 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.fieldOf(name).orElse(defaultValue), streamCodec)
 
-    fun toMap(): MapBiCodec<B, V> = MapBiCodec.of(MapCodec.assumeMapUnsafe(codec), streamCodec)
-
-    fun <S : B> cast(): BiCodec<S, V> = of(codec, streamCodec.cast())
-
+    // List
     fun listOf(): BiCodec<B, List<V>> = of(codec.listOf(), streamCodec.listOf())
 
     fun listOf(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOf(min, max), streamCodec.listOf())
@@ -176,6 +191,7 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun listOrElement(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOrElement(min, max), streamCodec.listOf())
 
+    // Optional
     fun toOptional(): BiCodec<B, Optional<V>> = of(ExtraCodecs.optionalEmptyMap(codec), streamCodec.toOptional())
 }
 
