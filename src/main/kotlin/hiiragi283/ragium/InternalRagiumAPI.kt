@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.world.HTSavedDataManager
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
@@ -62,7 +62,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun getEnergyNetworkManager(): HTSavedDataManager<IEnergyStorage> = HTEnergyNetworkManagerImpl
+    override fun getEnergyNetworkManager(): HTSavedDataManager<IEnergyStorage> = HTEnergyNetworkManager
 
     //    Platform    //
 

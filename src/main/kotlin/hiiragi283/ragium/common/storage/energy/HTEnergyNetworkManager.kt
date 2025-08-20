@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object HTEnergyNetworkManagerImpl : HTSavedDataManager<IEnergyStorage> {
+object HTEnergyNetworkManager : HTSavedDataManager<IEnergyStorage> {
     @JvmStatic
     private val networkMap: MutableMap<ResourceKey<Level>, IEnergyStorage> = mutableMapOf()
 
