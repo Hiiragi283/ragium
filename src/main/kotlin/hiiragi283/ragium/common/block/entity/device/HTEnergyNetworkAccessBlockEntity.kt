@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -174,7 +174,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         override val transferRate: Int = 1000
 
         override fun afterLevelInit(level: Level) {
-            network = RagiumAPI.getInstance().getEnergyNetworkManager().get(level)
+            network = level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
         }
     }
 }

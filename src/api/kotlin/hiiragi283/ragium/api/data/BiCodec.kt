@@ -139,6 +139,9 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
                 factory,
             ),
         )
+
+        @JvmStatic
+        fun <B : ByteBuf, V : Any> unit(instance: V): BiCodec<B, V> = of(Codec.unit(instance), StreamCodec.unit(instance))
     }
 
     // Encode & Decode
@@ -176,6 +179,11 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun optionalFieldOf(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.optionalFieldOf(name, defaultValue), streamCodec)
+
+    fun optionalFieldOf(name: String, defaultValue: () -> V): MapBiCodec<B, V> = optionalFieldOf(name).xmap(
+        { optional: Optional<V> -> optional.orElseGet(defaultValue) },
+        { value: V -> if (value == defaultValue()) Optional.empty() else Optional.of(value) },
+    )
 
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.fieldOf(name).orElse(defaultValue), streamCodec)

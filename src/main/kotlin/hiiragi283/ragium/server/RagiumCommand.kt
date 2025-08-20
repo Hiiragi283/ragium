@@ -3,7 +3,8 @@ package hiiragi283.ragium.server
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -54,10 +55,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val network: IEnergyStorage = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getFromServer(source.level)
+        val network: IEnergyStorage = getEnergyNetwork(source)
         val amount: Int = network.energyStored
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
@@ -67,12 +65,7 @@ object RagiumCommand {
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
-
-        val received: Int = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getFromServer(source.level)
-            .receiveEnergy(value, false)
+        val received: Int = getEnergyNetwork(source).receiveEnergy(value, false)
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
     }
@@ -80,14 +73,11 @@ object RagiumCommand {
     @JvmStatic
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-
-        val network: IEnergyStorageModifiable = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getFromServer(source.level)
-            as? IEnergyStorageModifiable ?: return -1
-        network.energyStored = value
+        getEnergyNetwork(source).energyStored = value
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
         return value
     }
+
+    @JvmStatic
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyNetwork = source.level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 }

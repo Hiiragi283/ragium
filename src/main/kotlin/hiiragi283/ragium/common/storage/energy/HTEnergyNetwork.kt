@@ -1,9 +1,12 @@
 package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
 import hiiragi283.ragium.api.util.RagiumConst
+import io.netty.buffer.ByteBuf
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Mth
@@ -16,6 +19,15 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     companion object {
         @JvmStatic
         private fun getInitialCapacity(): Int = RagiumAPI.getConfig().getDefaultNetworkCapacity()
+
+        @JvmField
+        val CODEC: BiCodec<ByteBuf, HTEnergyNetwork> = BiCodec.composite(
+            BiCodecs.NON_NEGATIVE_INT.optionalFieldOf("amount", 0),
+            HTEnergyNetwork::amount,
+            BiCodecs.POSITIVE_INT.optionalFieldOf("capacity", ::getInitialCapacity),
+            HTEnergyNetwork::capacity,
+            ::HTEnergyNetwork,
+        )
     }
 
     constructor() : this(0, getInitialCapacity())

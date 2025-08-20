@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
@@ -14,6 +13,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.storage.HTTransferIOCache
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.UUIDUtil
@@ -160,10 +160,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     private var externalNetwork: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
-        val network: IEnergyStorage = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .get(level) ?: return
+        val network: IEnergyStorage = level.getData(RagiumAttachmentTypes.ENERGY_NETWORK) ?: return
         this.network = network
         this.externalNetwork = wrapNetworkToExternal(network)
     }

@@ -11,7 +11,7 @@ import snownee.jade.api.ui.IElementHelper
 import java.util.function.Consumer
 
 abstract class HTProgressDataProvider : HTBlockDataProvider<HTProgressData>() {
-    final override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, HTProgressData> = HTProgressData.CODEC.streamCodec
+    final override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, HTProgressData> = TODO()
 
     final override fun appendTooltip(
         tooltip: ITooltip,

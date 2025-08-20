@@ -10,19 +10,19 @@ import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.world.HTLevelAttachmentManager
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.items.ItemStackHandler
@@ -33,10 +33,6 @@ class InternalRagiumAPI : RagiumAPI {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
-
-        @JvmStatic
-        private val ENERGY_NETWORK: HTLevelAttachmentManager<HTEnergyNetwork>
-            by lazy { HTLevelAttachmentManager(RagiumAttachmentTypes.ENERGY_NETWORK.get()) }
     }
 
     //    Addon    //
@@ -67,7 +63,8 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun getEnergyNetworkManager(): HTLevelAttachmentManager<out IEnergyStorage> = ENERGY_NETWORK
+    override fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage? =
+        getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Platform    //
 

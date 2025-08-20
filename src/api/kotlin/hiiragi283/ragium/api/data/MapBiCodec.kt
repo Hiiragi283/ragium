@@ -70,6 +70,9 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
                 factory,
             ),
         )
+
+        @JvmStatic
+        fun <B : ByteBuf, V : Any> unit(instance: V): MapBiCodec<B, V> = of(MapCodec.unit(instance), StreamCodec.unit(instance))
     }
 
     fun <S : Any> xmap(to: (V) -> S, from: (S) -> V): MapBiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))

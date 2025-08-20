@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.world.HTLevelAttachmentManager
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
@@ -20,6 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
@@ -93,7 +94,7 @@ interface RagiumAPI {
     /**
      * エネルギーネットワークのマネージャを返します。
      */
-    fun getEnergyNetworkManager(): HTLevelAttachmentManager<out IEnergyStorage>
+    fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage?
 
     //    Config    //
 
