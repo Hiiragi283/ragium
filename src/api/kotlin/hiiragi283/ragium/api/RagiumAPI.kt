@@ -3,23 +3,30 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.*
@@ -150,4 +157,14 @@ interface RagiumAPI {
         x: Int,
         y: Int,
     ): HTFluidWidget
+
+    /**
+     * @see [HTResultHelper.item]
+     */
+    fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult
+
+    /**
+     * @see [HTResultHelper.fluid]
+     */
+    fun createFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, component: DataComponentPatch): HTFluidResult
 }

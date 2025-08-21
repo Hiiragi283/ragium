@@ -7,20 +7,28 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.item.HTFoodBuilder
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
+import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.server.ServerLifecycleHooks
@@ -82,4 +90,10 @@ class InternalRagiumAPI : RagiumAPI {
         x,
         y,
     )
+
+    override fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult =
+        HTItemResultImpl(entry, amount, component)
+
+    override fun createFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, component: DataComponentPatch): HTFluidResult =
+        HTFluidResultImpl(entry, amount, component)
 }

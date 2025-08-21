@@ -1,9 +1,10 @@
-package hiiragi283.ragium.api.recipe.result
+package hiiragi283.ragium.common.recipe.result
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.data.MapBiCodec
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
@@ -13,13 +14,12 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import java.util.function.Function
 
-abstract class HTRecipeResultBase<T : Any, S : Any>(
-    protected val entry: HTKeyOrTagEntry<T>,
+abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
+    protected val entry: HTKeyOrTagEntry<TYPE>,
     protected val amount: Int,
     protected val components: DataComponentPatch,
-) : HTRecipeResult<S> {
+) : HTRecipeResult<STACK> {
     companion object {
         @JvmStatic
         fun <T : Any, R : HTRecipeResultBase<T, *>> createCodec(
@@ -37,17 +37,12 @@ abstract class HTRecipeResultBase<T : Any, S : Any>(
         )
     }
 
-    protected abstract fun createStack(holder: Holder<T>, amount: Int, components: DataComponentPatch): DataResult<S>
-
-    protected abstract val emptyStack: S
+    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): DataResult<STACK>
 
     //    HTRecipeResult    //
 
     final override val id: ResourceLocation = entry.id
 
-    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<S> =
-        entry.getFirstHolder(provider).flatMap { holder: Holder<T> -> createStack(holder, amount, components) }
-
-    final override fun getOrEmpty(provider: HolderLookup.Provider?): S =
-        getStackResult(provider).mapOrElse(Function.identity()) { emptyStack }
+    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
+        entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }
 }

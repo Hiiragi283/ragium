@@ -172,7 +172,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addMachineRecipes() {
         // Alloying
-        RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCombineItemToItemRecipe<*> ->
+        RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCombineItemToItemRecipe ->
             registry.addRecipe(
                 HTAlloyingEmiRecipe(
                     id,

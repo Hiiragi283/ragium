@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe<*>>(
+    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
         RagiumRecipeTypes.ALLOYING.get(),
         HTMachineVariant.ALLOY_SMELTER,
         pos,
@@ -44,7 +44,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
         inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe<*>): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun completeRecipe(
@@ -52,7 +52,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTMultiItemRecipeInput,
-        recipe: HTCombineItemToItemRecipe<*>,
+        recipe: HTCombineItemToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)

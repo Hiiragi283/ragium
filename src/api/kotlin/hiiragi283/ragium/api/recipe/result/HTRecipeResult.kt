@@ -4,12 +4,12 @@ import com.mojang.serialization.DataResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
 
-interface HTRecipeResult<S : Any> {
+interface HTRecipeResult<STACK : Any> {
     val id: ResourceLocation
 
-    fun getStackResult(provider: HolderLookup.Provider?): DataResult<S>
+    fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK>
 
-    fun getOrEmpty(provider: HolderLookup.Provider?): S
+    fun getOrEmpty(provider: HolderLookup.Provider?): STACK
 
     fun hasNoMatchingStack(): Boolean = getStackResult(null).isError
 }

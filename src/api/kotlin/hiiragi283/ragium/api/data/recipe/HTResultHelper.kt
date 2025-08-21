@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.keyOrThrow
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -29,11 +30,12 @@ object HTResultHelper {
         item(ResourceKey.create(Registries.ITEM, id), count, component)
 
     fun item(key: ResourceKey<Item>, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
-        HTItemResult(HTKeyOrTagEntry(key), count, component)
+        RagiumAPI.getInstance().createItemResult(HTKeyOrTagEntry(key), count, component)
 
     fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemResult = item(variant.itemTagKey(material), count)
 
-    fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult = HTItemResult(HTKeyOrTagEntry(tagKey), count, DataComponentPatch.EMPTY)
+    fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult =
+        RagiumAPI.getInstance().createItemResult(HTKeyOrTagEntry(tagKey), count, DataComponentPatch.EMPTY)
 
     //    Fluid    //
 
@@ -47,7 +49,8 @@ object HTResultHelper {
         fluid(ResourceKey.create(Registries.FLUID, id), amount, component)
 
     fun fluid(key: ResourceKey<Fluid>, amount: Int, component: DataComponentPatch = DataComponentPatch.EMPTY): HTFluidResult =
-        HTFluidResult(HTKeyOrTagEntry(key), amount, component)
+        RagiumAPI.getInstance().createFluidResult(HTKeyOrTagEntry(key), amount, component)
 
-    fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidResult = HTFluidResult(HTKeyOrTagEntry(tagKey), amount, DataComponentPatch.EMPTY)
+    fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidResult =
+        RagiumAPI.getInstance().createFluidResult(HTKeyOrTagEntry(tagKey), amount, DataComponentPatch.EMPTY)
 }

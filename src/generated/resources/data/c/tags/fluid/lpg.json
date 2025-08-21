@@ -1,9 +1,5 @@
 {
   "values": [
-    {
-      "id": "#c:fuels/lpg",
-      "required": false
-    },
     "ragium:flowing_lpg",
     "ragium:lpg"
   ]

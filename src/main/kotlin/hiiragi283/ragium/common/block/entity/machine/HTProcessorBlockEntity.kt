@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTPlaySoundBlockEntity
-import hiiragi283.ragium.api.recipe.cache.HTRecipeCache
-import hiiragi283.ragium.api.recipe.cache.HTSimpleRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.sounds.SimpleSoundInstance

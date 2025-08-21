@@ -8,8 +8,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTAlloyingRecipe(ingredients: List<HTItemIngredient>, result: HTItemResult) :
-    HTCombineItemToItemRecipe<HTItemResult>(ingredients, result) {
+class HTAlloyingRecipe(ingredients: List<HTItemIngredient>, result: HTItemResult) : HTCombineItemToItemRecipe(ingredients, result) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING.get()

@@ -16,10 +16,19 @@ import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.world.item.ItemStack
 
 object RagiumRecipeBiCodecs {
+    @JvmField
+    val CHANCED_ITEM_RESULT: BiCodec<RegistryFriendlyByteBuf, HTItemToChancedItemRecipe.ChancedResult> = BiCodec.composite(
+        HTItemResultImpl.CODEC.toMap(),
+        HTItemToChancedItemRecipe.ChancedResult::base,
+        BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
+        HTItemToChancedItemRecipe.ChancedResult::chance,
+        HTItemToChancedItemRecipe::ChancedResult,
+    )
+
     @JvmStatic
     fun <R1 : HTRecipeResult<*>, R2 : HTItemToObjRecipe<R1>> itemToObj(
         codec: BiCodec<RegistryFriendlyByteBuf, R1>,
@@ -39,7 +48,7 @@ object RagiumRecipeBiCodecs {
         .composite(
             HTItemIngredient.CODEC.fieldOf("ingredient"),
             HTItemToChancedItemRecipeBase::ingredient,
-            HTItemToChancedItemRecipe.ChancedResult.CODEC
+            CHANCED_ITEM_RESULT
                 .listOrElement(1, 4)
                 .fieldOf("results"),
             HTItemToChancedItemRecipeBase::results,
@@ -47,16 +56,14 @@ object RagiumRecipeBiCodecs {
         )
 
     @JvmStatic
-    fun <R1 : HTRecipeResult<ItemStack>, R2 : HTCombineItemToItemRecipe<R1>> combineItemToObj(
-        codec: BiCodec<RegistryFriendlyByteBuf, R1>,
-        getter: (R2) -> R1,
-        factory: HTCombineItemToObjRecipeBuilder.Factory<R1, R2>,
+    fun <R : HTCombineItemToItemRecipe> combineItemToObj(
+        factory: HTCombineItemToObjRecipeBuilder.Factory<R>,
         size: IntRange,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.listOf(size).fieldOf("ingredients"),
-        HTCombineItemToItemRecipe<R1>::ingredients,
-        codec.fieldOf("result"),
-        getter,
+        HTCombineItemToItemRecipe::ingredients,
+        HTItemResultImpl.CODEC.fieldOf("result"),
+        HTCombineItemToItemRecipe::result,
         factory::create,
     )
 

@@ -1,9 +1,5 @@
 {
   "values": [
-    {
-      "id": "#c:fuels/diesel",
-      "required": false
-    },
     "ragium:flowing_fuel",
     "ragium:fuel"
   ]

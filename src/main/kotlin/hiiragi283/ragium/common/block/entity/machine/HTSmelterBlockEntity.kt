@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.cache.HTMultiRecipeCache
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant

@@ -41,9 +41,9 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
         level: Level,
         pos: BlockPos,
         player: Player,
-        hitResult: BlockHitResult
+        hitResult: BlockHitResult,
     ): InteractionResult = RagiumMenuTypes.FLUID_COLLECTOR.openMenu(player, name, this, ::writeExtraContainerData)
-    
+
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {

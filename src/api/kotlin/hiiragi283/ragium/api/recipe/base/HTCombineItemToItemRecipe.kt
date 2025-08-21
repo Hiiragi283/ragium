@@ -3,12 +3,11 @@ package hiiragi283.ragium.api.recipe.base
 import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
-abstract class HTCombineItemToItemRecipe<R : HTRecipeResult<ItemStack>>(val ingredients: List<HTItemIngredient>, val result: R) :
-    HTMultiItemToObjRecipe {
+abstract class HTCombineItemToItemRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult) : HTMultiItemToObjRecipe {
     final override fun test(input: HTMultiItemRecipeInput): Boolean = HTMultiItemToObjRecipe.hasMatchingSlots(ingredients, input.items)
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)

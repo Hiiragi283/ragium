@@ -5,33 +5,24 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTEnchantedBookResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
 
-class HTCombineItemToObjRecipeBuilder<R1 : HTRecipeResult<ItemStack>, R2 : HTCombineItemToItemRecipe<R1>>(
+class HTCombineItemToObjRecipeBuilder<R : HTCombineItemToItemRecipe>(
     prefix: String,
-    private val factory: Factory<R1, R2>,
+    private val factory: Factory<R>,
     private val ingredients: List<HTItemIngredient>,
-    private val result: R1,
+    private val result: HTItemResult,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
-        fun alloying(
-            result: HTItemResult,
-            vararg ingredients: HTItemIngredient,
-        ): HTCombineItemToObjRecipeBuilder<HTItemResult, HTAlloyingRecipe> =
+        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTAlloyingRecipe> =
             HTCombineItemToObjRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, listOf(*ingredients), result)
 
         @JvmStatic
-        fun enchanting(
-            result: HTEnchantedBookResult,
-            vararg ingredients: HTItemIngredient,
-        ): HTCombineItemToObjRecipeBuilder<HTEnchantedBookResult, HTEnchantingRecipe> =
+        fun enchanting(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTEnchantingRecipe> =
             HTCombineItemToObjRecipeBuilder(RagiumConst.ENCHANTING, ::HTEnchantingRecipe, listOf(*ingredients), result)
     }
 
@@ -39,7 +30,7 @@ class HTCombineItemToObjRecipeBuilder<R1 : HTRecipeResult<ItemStack>, R2 : HTCom
 
     override fun createRecipe(): Recipe<*> = factory.create(ingredients, result)
 
-    fun interface Factory<R1 : HTRecipeResult<ItemStack>, R2 : HTCombineItemToItemRecipe<R1>> {
-        fun create(ingredients: List<HTItemIngredient>, result: R1): R2
+    fun interface Factory<R : HTCombineItemToItemRecipe> {
+        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): R
     }
 }

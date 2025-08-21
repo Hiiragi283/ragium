@@ -15,10 +15,9 @@ import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
-import hiiragi283.ragium.api.recipe.result.HTEnchantedBookResult
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
+import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -54,11 +53,11 @@ object RagiumMiscRegister {
 
         register(
             RagiumRecipeSerializers.ALLOYING,
-            RagiumRecipeBiCodecs.combineItemToObj(HTItemResult.CODEC, HTAlloyingRecipe::result, ::HTAlloyingRecipe, 2..3),
+            RagiumRecipeBiCodecs.combineItemToObj(::HTAlloyingRecipe, 2..3),
         )
         register(
             RagiumRecipeSerializers.COMPRESSING,
-            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTCompressingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTCompressingRecipe),
         )
         register(
             RagiumRecipeSerializers.CRUSHING,
@@ -66,35 +65,35 @@ object RagiumMiscRegister {
         )
         register(
             RagiumRecipeSerializers.ENCHANTING,
-            RagiumRecipeBiCodecs.combineItemToObj(HTEnchantedBookResult.CODEC, HTEnchantingRecipe::result, ::HTEnchantingRecipe, 1..3),
+            RagiumRecipeBiCodecs.combineItemToObj(::HTEnchantingRecipe, 1..3),
         )
         register(
             RagiumRecipeSerializers.EXTRACTING,
-            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTExtractingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTExtractingRecipe),
         )
         register(
             RagiumRecipeSerializers.INFUSING,
-            RagiumRecipeBiCodecs.itemWithFluidToObj(HTItemResult.CODEC, ::HTInfusingRecipe),
+            RagiumRecipeBiCodecs.itemWithFluidToObj(HTItemResultImpl.CODEC, ::HTInfusingRecipe),
         )
         register(
             RagiumRecipeSerializers.MELTING,
-            RagiumRecipeBiCodecs.itemToObj(HTFluidResult.CODEC, ::HTMeltingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTFluidResultImpl.CODEC, ::HTMeltingRecipe),
         )
         register(
             RagiumRecipeSerializers.MIXING,
-            RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResult.CODEC, ::HTMixingRecipe),
+            RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResultImpl.CODEC, ::HTMixingRecipe),
         )
         register(
             RagiumRecipeSerializers.PULVERIZING,
-            RagiumRecipeBiCodecs.itemToObj(HTItemResult.CODEC, ::HTPulverizingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTPulverizingRecipe),
         )
         register(
             RagiumRecipeSerializers.REFINING,
-            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTFluidResult.CODEC, ::HTRefiningRecipe),
+            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTFluidResultImpl.CODEC, ::HTRefiningRecipe),
         )
         register(
             RagiumRecipeSerializers.SOLIDIFYING,
-            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTItemResult.CODEC, ::HTSolidifyingRecipe),
+            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTItemResultImpl.CODEC, ::HTSolidifyingRecipe),
         )
     }
 

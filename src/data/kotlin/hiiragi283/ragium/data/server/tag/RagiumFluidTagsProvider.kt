@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.setup.RagiumFluidContents
-import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -24,8 +23,6 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     override fun addTags(builder: HTTagBuilder<Fluid>) {
         contents(builder)
         category(builder)
-
-        pneumatic(builder)
     }
 
     private fun contents(builder: HTTagBuilder<Fluid>) {
@@ -39,18 +36,6 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     }
 
     //    Integrations    //
-
-    private fun pneumatic(builder: HTTagBuilder<Fluid>) {
-        fun addTag(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-            builder.addContent(tagKey, content)
-            builder.addTag(content.commonTag, tagKey, HTTagBuilder.DependType.OPTIONAL)
-        }
-
-        addTag(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
-        addTag(PneumaticCraftTags.Fluids.DIESEL, RagiumFluidContents.DIESEL)
-        addTag(PneumaticCraftTags.Fluids.LPG, RagiumFluidContents.LPG)
-        addTag(PneumaticCraftTags.Fluids.LUBRICANT, RagiumFluidContents.LUBRICANT)
-    }
 
     //    Extensions    //
 
