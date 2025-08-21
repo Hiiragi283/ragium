@@ -14,12 +14,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import java.util.*
 
-class HTFluidWithCatalystToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTFluidWithCatalystToObjRecipe<R1>>(
+class HTFluidWithCatalystToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTFluidWithCatalystToObjRecipe<RESULT>>(
     prefix: String,
-    private val factory: Factory<R1, R2>,
+    private val factory: Factory<RESULT, RECIPE>,
     private val ingredient: HTFluidIngredient,
     private val catalyst: Optional<HTItemIngredient>,
-    private val result: R1,
+    private val result: RESULT,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
@@ -53,7 +53,7 @@ class HTFluidWithCatalystToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTFluid
 
     override fun createRecipe(): Recipe<*> = factory.create(ingredient, catalyst, result)
 
-    fun interface Factory<R1 : HTRecipeResult<*>, R2 : HTFluidWithCatalystToObjRecipe<R1>> {
-        fun create(ingredient: HTFluidIngredient, catalyst: Optional<HTItemIngredient>, result: R1): R2
+    fun interface Factory<RESULT : HTRecipeResult<*>, RECIPE : HTFluidWithCatalystToObjRecipe<RESULT>> {
+        fun create(ingredient: HTFluidIngredient, catalyst: Optional<HTItemIngredient>, result: RESULT): RECIPE
     }
 }

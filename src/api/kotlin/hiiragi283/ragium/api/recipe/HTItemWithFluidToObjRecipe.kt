@@ -9,10 +9,10 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
-interface HTItemWithFluidToObjRecipe<R : HTRecipeResult<*>> : HTRecipe<HTItemWithFluidRecipeInput> {
+interface HTItemWithFluidToObjRecipe<RESULT : HTRecipeResult<*>> : HTRecipe<HTItemWithFluidRecipeInput> {
     val itemIngredient: Optional<HTItemIngredient>
     val fluidIngredient: Optional<HTFluidIngredient>
-    val result: R
+    val result: RESULT
 
     override fun test(input: HTItemWithFluidRecipeInput): Boolean {
         val bool1: Boolean = itemIngredient

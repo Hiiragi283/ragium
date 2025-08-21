@@ -48,6 +48,6 @@ object RagiumRecipeTypes {
     val SOLIDIFYING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTFluidWithCatalystToItemRecipe> = create(RagiumConst.SOLIDIFYING)
 
     @JvmStatic
-    private fun <I : RecipeInput, R : Recipe<I>> create(path: String): HTDeferredRecipeType<I, R> =
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =
         HTDeferredRecipeType.createType(RagiumAPI.id(path))
 }

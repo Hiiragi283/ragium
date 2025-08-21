@@ -9,14 +9,14 @@ import net.minecraft.world.level.ItemLike
 
 /**
  * バニラの[Ingredient]を使用するレシピ向けの[HTRecipeBuilder]
- * @param B [HTRecipeBuilder]を継承したクラス
+ * @param BUILDER [HTRecipeBuilder]を継承したクラス
  */
-interface HTIngredientRecipeBuilder<B : HTIngredientRecipeBuilder<B>> : HTRecipeBuilder {
-    fun addIngredient(variant: HTMaterialVariant, material: HTMaterialType): B = addIngredient(variant.itemTagKey(material))
+interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>> : HTRecipeBuilder {
+    fun addIngredient(variant: HTMaterialVariant, material: HTMaterialType): BUILDER = addIngredient(variant.itemTagKey(material))
 
-    fun addIngredient(tagKey: TagKey<Item>): B = addIngredient(Ingredient.of(tagKey))
+    fun addIngredient(tagKey: TagKey<Item>): BUILDER = addIngredient(Ingredient.of(tagKey))
 
-    fun addIngredient(item: ItemLike): B = addIngredient(Ingredient.of(item))
+    fun addIngredient(item: ItemLike): BUILDER = addIngredient(Ingredient.of(item))
 
-    fun addIngredient(ingredient: Ingredient): B
+    fun addIngredient(ingredient: Ingredient): BUILDER
 }

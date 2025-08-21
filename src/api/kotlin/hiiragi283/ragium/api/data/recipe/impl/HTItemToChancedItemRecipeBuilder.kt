@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 
-class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
+class HTItemToChancedItemRecipeBuilder<REICPE : HTItemToChancedItemRecipe>(
     prefix: String,
-    private val factory: Factory<R>,
+    private val factory: Factory<REICPE>,
     val ingredient: HTItemIngredient,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
@@ -22,7 +22,7 @@ class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
 
     private val results: MutableList<HTItemToChancedItemRecipe.ChancedResult> = mutableListOf()
 
-    fun addResult(result: HTItemResult, chance: Float = 1f): HTItemToChancedItemRecipeBuilder<R> = apply {
+    fun addResult(result: HTItemResult, chance: Float = 1f): HTItemToChancedItemRecipeBuilder<REICPE> = apply {
         check(chance in (0f..1f)) { "Chance of result must be within 0f to 1f!" }
         this.results.add(HTItemToChancedItemRecipe.ChancedResult(result, chance))
     }
@@ -31,7 +31,7 @@ class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
 
     override fun createRecipe(): Recipe<*> = factory.create(ingredient, results)
 
-    fun interface Factory<R : HTItemToChancedItemRecipe> {
-        fun create(ingredient: HTItemIngredient, results: List<HTItemToChancedItemRecipe.ChancedResult>): R
+    fun interface Factory<RECIPE : HTItemToChancedItemRecipe> {
+        fun create(ingredient: HTItemIngredient, results: List<HTItemToChancedItemRecipe.ChancedResult>): RECIPE
     }
 }

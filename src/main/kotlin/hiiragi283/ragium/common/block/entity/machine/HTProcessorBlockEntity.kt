@@ -20,15 +20,15 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
-    private val recipeCache: HTRecipeCache<I, R>,
+abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+    private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(variant, pos, state),
     HTPlaySoundBlockEntity {
     constructor(
-        recipeType: RecipeType<R>,
+        recipeType: RecipeType<RECIPE>,
         variant: HTMachineVariant,
         pos: BlockPos,
         state: BlockState,
@@ -43,8 +43,8 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         network: IEnergyStorage,
     ): Boolean {
         // インプットに一致するレシピを探索する
-        val input: I = createRecipeInput(level, pos)
-        val recipe: R = getMatchedRecipe(input, level) ?: return false
+        val input: INPUT = createRecipeInput(level, pos)
+        val recipe: RECIPE = getMatchedRecipe(input, level) ?: return false
         val recipeEnergy: Int = getRequiredEnergy(recipe)
         // レシピの進行度を確認する
         if (this.requiredEnergy != recipeEnergy) {
@@ -59,20 +59,20 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         return true
     }
 
-    protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): I
+    protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): INPUT
 
-    protected open fun getMatchedRecipe(input: I, level: ServerLevel): R? = recipeCache.getFirstRecipe(input, level)
+    protected open fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
 
-    protected open fun getRequiredEnergy(recipe: R): Int = 2000 // TODO
+    protected open fun getRequiredEnergy(recipe: RECIPE): Int = 2000 // TODO
 
-    protected abstract fun canProgressRecipe(level: ServerLevel, input: I, recipe: R): Boolean
+    protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 
     protected abstract fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: I,
-        recipe: R,
+        input: INPUT,
+        recipe: RECIPE,
     )
 
     //    HTPlaySoundBlockEntity    //

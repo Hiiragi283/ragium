@@ -11,8 +11,8 @@ import net.neoforged.neoforge.registries.DeferredBlock
 interface HTVariantKey : StringRepresentable {
     fun translate(type: HTLanguageType, value: String): String
 
-    interface Tagged<T : Any> : HTVariantKey {
-        val tagKey: TagKey<T>
+    interface Tagged<TYPE : Any> : HTVariantKey {
+        val tagKey: TagKey<TYPE>
     }
 
     interface WithBE<BE : BlockEntity> :

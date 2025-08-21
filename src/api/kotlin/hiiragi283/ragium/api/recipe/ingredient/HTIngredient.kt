@@ -5,16 +5,16 @@ import java.util.function.Predicate
 /**
  * @see [mekanism.api.recipes.ingredients.InputIngredient]
  */
-interface HTIngredient<T : Any> : Predicate<T> {
-    abstract override fun test(stack: T): Boolean
+interface HTIngredient<STACK : Any> : Predicate<STACK> {
+    abstract override fun test(stack: STACK): Boolean
 
-    fun testOnlyType(stack: T): Boolean
+    fun testOnlyType(stack: STACK): Boolean
 
-    fun getMatchingStack(stack: T): T
+    fun getMatchingStack(stack: STACK): STACK
 
-    fun getRequiredAmount(stack: T): Int
+    fun getRequiredAmount(stack: STACK): Int
 
     fun hasNoMatchingStacks(): Boolean
 
-    fun getMatchingStacks(): List<T>
+    fun getMatchingStacks(): List<STACK>
 }

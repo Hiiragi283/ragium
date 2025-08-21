@@ -8,12 +8,12 @@ import java.util.function.Predicate
 /**
  * @see [mekanism.api.recipes.MekanismRecipe]
  */
-interface HTRecipe<I : RecipeInput> :
-    Recipe<I>,
-    Predicate<I> {
-    override fun test(input: I): Boolean
+interface HTRecipe<INPUT : RecipeInput> :
+    Recipe<INPUT>,
+    Predicate<INPUT> {
+    override fun test(input: INPUT): Boolean
 
-    override fun matches(input: I, level: Level): Boolean = test(input)
+    override fun matches(input: INPUT, level: Level): Boolean = test(input)
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 

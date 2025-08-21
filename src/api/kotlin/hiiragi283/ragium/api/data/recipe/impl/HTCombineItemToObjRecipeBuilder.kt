@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 
-class HTCombineItemToObjRecipeBuilder<R : HTCombineItemToItemRecipe>(
+class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(
     prefix: String,
-    private val factory: Factory<R>,
+    private val factory: Factory<RECIPE>,
     private val ingredients: List<HTItemIngredient>,
     private val result: HTItemResult,
 ) : HTRecipeBuilder.Prefixed(prefix) {
@@ -30,7 +30,7 @@ class HTCombineItemToObjRecipeBuilder<R : HTCombineItemToItemRecipe>(
 
     override fun createRecipe(): Recipe<*> = factory.create(ingredients, result)
 
-    fun interface Factory<R : HTCombineItemToItemRecipe> {
-        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): R
+    fun interface Factory<RECIPE : HTCombineItemToItemRecipe> {
+        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): RECIPE
     }
 }

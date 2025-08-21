@@ -7,13 +7,12 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.fluids.FluidStack
-import java.util.*
+import java.util.Optional
 
 //    EmiIngredient    //
 
@@ -29,9 +28,9 @@ fun Optional<HTFluidIngredient>.toFluidEmi(): EmiIngredient = map(HTFluidIngredi
 
 fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
-fun HTRecipeResult<ItemStack>.toItemEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStack::of, ::createErrorStack)
+fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStack::of, ::createErrorStack)
 
-fun HTRecipeResult<FluidStack>.toFluidEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
+fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 
 fun createErrorStack(error: DataResult.Error<*>): EmiStack = createItemStack(Items.BARRIER) {
     set(DataComponents.ITEM_NAME, Component.literal(error.message()))

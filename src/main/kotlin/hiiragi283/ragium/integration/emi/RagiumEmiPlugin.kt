@@ -177,7 +177,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTAlloyingEmiRecipe(
                     id,
                     recipe.ingredients.map(HTItemIngredient::toEmi),
-                    recipe.result.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -188,7 +188,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTItemToItemEmiRecipe.compressing(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.result.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -200,11 +200,11 @@ class RagiumEmiPlugin : EmiPlugin {
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.results.map { result: HTItemToChancedItemRecipe.ChancedResult ->
-                        result.toItemEmi().setChance(result.chance)
+                        result.toEmi().setChance(result.chance)
                     },
                 )
 
-                is HTPulverizingRecipe -> HTCrushingEmiRecipe(id, recipe.ingredient.toEmi(), listOf(recipe.result.toItemEmi()))
+                is HTPulverizingRecipe -> HTCrushingEmiRecipe(id, recipe.ingredient.toEmi(), listOf(recipe.result.toEmi()))
 
                 else -> return@forEach
             }
@@ -220,7 +220,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTItemToItemEmiRecipe.extracting(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.result.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -232,7 +232,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     id,
                     recipe.fluidIngredient.toFluidEmi(),
                     recipe.itemIngredient.toItemEmi(),
-                    recipe.result.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -243,7 +243,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTMeltingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.result.toFluidEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -255,7 +255,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     id,
                     recipe.fluidIngredient.toFluidEmi(),
                     recipe.itemIngredient.toItemEmi(),
-                    recipe.result.toFluidEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -267,7 +267,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.catalyst.toItemEmi(),
-                    recipe.result.toFluidEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }
@@ -281,7 +281,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.catalyst.toItemEmi(),
-                    recipe.result.toItemEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }

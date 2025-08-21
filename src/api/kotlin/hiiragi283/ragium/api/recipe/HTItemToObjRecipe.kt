@@ -6,9 +6,9 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-interface HTItemToObjRecipe<R : HTRecipeResult<*>> : HTRecipe<SingleRecipeInput> {
+interface HTItemToObjRecipe<RESULT : HTRecipeResult<*>> : HTRecipe<SingleRecipeInput> {
     val ingredient: HTItemIngredient
-    val result: R
+    val result: RESULT
 
     override fun test(input: SingleRecipeInput): Boolean = !isIncomplete && ingredient.test(input.item())
 

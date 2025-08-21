@@ -14,12 +14,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import java.util.*
 
-class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTItemWithFluidToObjRecipe<R1>>(
+class HTItemWithFluidToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTItemWithFluidToObjRecipe<RESULT>>(
     prefix: String,
-    private val factory: Factory<R1, R2>,
+    private val factory: Factory<RESULT, RECIPE>,
     private val itemIngredient: Optional<HTItemIngredient>,
     private val fluidIngredient: Optional<HTFluidIngredient>,
-    private val result: R1,
+    private val result: RESULT,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
@@ -53,7 +53,7 @@ class HTItemWithFluidToObjRecipeBuilder<R1 : HTRecipeResult<*>, R2 : HTItemWithF
 
     override fun createRecipe(): Recipe<*> = factory.create(itemIngredient, fluidIngredient, result)
 
-    fun interface Factory<R1 : HTRecipeResult<*>, R2 : HTItemWithFluidToObjRecipe<R1>> {
-        fun create(itemIngredient: Optional<HTItemIngredient>, fluidIngredient: Optional<HTFluidIngredient>, result: R1): R2
+    fun interface Factory<RESULT : HTRecipeResult<*>, RECIPE : HTItemWithFluidToObjRecipe<RESULT>> {
+        fun create(itemIngredient: Optional<HTItemIngredient>, fluidIngredient: Optional<HTFluidIngredient>, result: RESULT): RECIPE
     }
 }

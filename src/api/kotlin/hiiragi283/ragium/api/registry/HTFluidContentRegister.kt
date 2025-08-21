@@ -66,12 +66,12 @@ class HTFluidContentRegister(modId: String) {
         properties: FluidType.Properties,
     ): HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(name, properties, ::FluidType)
 
-    fun <T : FluidType> register(
+    fun <TYPE : FluidType> register(
         name: String,
         properties: FluidType.Properties,
-        typeFactory: (FluidType.Properties) -> T,
-    ): HTFluidContent<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> {
-        val typeHolder: DeferredHolder<FluidType, T> =
+        typeFactory: (FluidType.Properties) -> TYPE,
+    ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> {
+        val typeHolder: DeferredHolder<FluidType, TYPE> =
             typeRegister.register(name) { _: ResourceLocation -> typeFactory(properties) }
 
         val stillId: ResourceLocation = ResourceLocation.fromNamespaceAndPath(fluidRegister.namespace, name)
@@ -108,7 +108,7 @@ class HTFluidContentRegister(modId: String) {
             Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET),
         )
 
-        val content: ContentImpl<T, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = ContentImpl(
+        val content: ContentImpl<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = ContentImpl(
             typeHolder,
             stillFluid,
             flowFluid,
