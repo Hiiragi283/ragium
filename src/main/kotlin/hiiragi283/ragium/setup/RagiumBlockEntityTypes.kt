@@ -48,7 +48,7 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    fun <T : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<T>): HTDeferredBlockEntityType<T> =
+    fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> =
         REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
 
     //    Dynamo    //

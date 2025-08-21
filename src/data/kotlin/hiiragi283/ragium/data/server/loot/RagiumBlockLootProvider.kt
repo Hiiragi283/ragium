@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -20,7 +21,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -30,13 +30,13 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
     override fun generate() {
-        RagiumBlocks.REGISTER.entries.forEach(::dropSelf)
+        RagiumBlocks.REGISTER.firstEntries.forEach(::dropSelf)
 
         add(RagiumBlocks.SWEET_BERRIES_CAKE.get()) { block: Block ->
             createSilkTouchDispatchTable(
@@ -51,7 +51,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Decorations
-        for (slab: DeferredBlock<SlabBlock> in RagiumBlocks.SLABS.values) {
+        for (slab: DeferredHolder<Block, *> in RagiumBlocks.SLABS.values) {
             add(slab.get(), ::createSlabItemTable)
         }
 
@@ -72,11 +72,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Crop
-        addCrop(RagiumBlocks.EXP_BERRY_BUSH, RagiumItems.EXP_BERRIES)
-        addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
+        addCrop(RagiumBlocks.EXP_BERRIES, RagiumBlocks.EXP_BERRIES)
+        addCrop(RagiumBlocks.WARPED_WART, RagiumBlocks.WARPED_WART)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: DeferredBlock<*>) ->
+        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->
             val factory: (Block) -> LootTable.Builder = when (material) {
                 RagiumMaterialType.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
@@ -128,7 +128,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }*/
 
         // Storages
-        for (holder: DeferredBlock<*> in RagiumBlocks.DRUMS.values) {
+        for (holder: DeferredHolder<Block, *> in RagiumBlocks.DRUMS.values) {
             add(holder.get()) {
                 copyComponent(
                     it,

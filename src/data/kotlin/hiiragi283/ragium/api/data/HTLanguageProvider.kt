@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -29,7 +30,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import kotlin.enums.enumEntries
@@ -39,11 +39,11 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Extension    //
 
     fun addPatterned() {
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
             addBlock(block, material.translate(type, variant))
         }
 
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: DeferredBlock<*>) ->
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
             addBlock(block, material.translate(type, variant))
         }
 

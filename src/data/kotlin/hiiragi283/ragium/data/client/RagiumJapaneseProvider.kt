@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -19,7 +20,6 @@ import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.registries.DeferredBlock
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
     override fun addTranslations() {
@@ -82,7 +82,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
-        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
+        addBlock(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み")
+        addItem(RagiumBlocks.EXP_BERRIES.itemHolder, "経験値ベリー")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
@@ -102,7 +103,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
             addBlock(variant.wall, variant.translate(type, "壁"))
         }
 
-        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
             addBlock(block, "${color.getTranslatedName(type)}のLEDブロック")
         }
 
@@ -208,8 +209,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
         addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
-        addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
-        addItem(RagiumItems.WARPED_WART, "歪んだウォート")
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
         // Mold
@@ -423,6 +422,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
+        addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
 
         addInfo(HTDeviceVariant.CEU, "無限のパワー")
         addInfo(HTDeviceVariant.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
@@ -462,7 +462,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addInfo(RagiumItems.RAGI_MAGNET, "範囲内のドロップアイテムを回収します。")
         addInfo(RagiumItems.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         addInfo(RagiumItems.TRADER_CATALOG, "行商人からドロップします。")
-        addInfo(RagiumItems.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }
 
     private fun delight() {

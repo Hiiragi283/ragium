@@ -10,7 +10,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "ragium:exp_berry_bush",
+          "block": "ragium:exp_berries",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "3"
@@ -48,7 +48,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "ragium:exp_berry_bush",
+          "block": "ragium:exp_berries",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "2"
@@ -83,5 +83,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/exp_berry_bush"
+  "random_sequence": "ragium:blocks/exp_berries"
 }

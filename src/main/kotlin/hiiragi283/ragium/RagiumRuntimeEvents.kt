@@ -98,7 +98,7 @@ object RagiumRuntimeEvents {
             return
         }
         // 経験値ベリーの場合は経験値を与える
-        if (stack.`is`(RagiumItems.EXP_BERRIES)) {
+        if (RagiumBlocks.EXP_BERRIES.isOf(stack)) {
             player.giveExperiencePoints(8)
             stack.consume(1, player)
             level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS)

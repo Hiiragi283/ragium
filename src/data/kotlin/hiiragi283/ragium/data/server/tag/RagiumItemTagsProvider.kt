@@ -151,7 +151,7 @@ class RagiumItemTagsProvider(
 
     private fun food(builder: HTTagBuilder<Item>) {
         // Crop
-        builder.addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
+        builder.addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_CHOCOLATE)
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_JAMS)
@@ -163,9 +163,9 @@ class RagiumItemTagsProvider(
         builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM_SODA)
         builder.add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
         builder.add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-        builder.add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
+        builder.addItem(Tags.Items.FOODS, RagiumBlocks.WARPED_WART)
 
-        builder.add(Tags.Items.FOODS_BERRY, RagiumItems.EXP_BERRIES)
+        builder.addItem(Tags.Items.FOODS_BERRY, RagiumBlocks.EXP_BERRIES)
         builder.add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
 
         builder.addTag(Tags.Items.FOODS_FRUIT, RagiumCommonTags.Items.FOODS_CHERRY)

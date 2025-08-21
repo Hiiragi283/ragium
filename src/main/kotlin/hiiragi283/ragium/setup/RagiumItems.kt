@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
-import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
@@ -43,7 +42,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tier
@@ -365,19 +363,6 @@ object RagiumItems {
     // Other
     @JvmField
     val BOTTLED_BEE: DeferredItem<Item> = register("bottled_bee")
-
-    @JvmField
-    val EXP_BERRIES: DeferredItem<Item> = register(
-        "exp_berries",
-        { prop: Item.Properties -> ItemNameBlockItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) },
-    )
-
-    @JvmField
-    val WARPED_WART: DeferredItem<Item> = register(
-        "warped_wart",
-        ::HTWarpedWartItem,
-        Item.Properties().food(RagiumFoods.WARPED_WART),
-    )
 
     @JvmField
     val AMBROSIA: DeferredItem<Item> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))

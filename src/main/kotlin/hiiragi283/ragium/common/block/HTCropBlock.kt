@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
@@ -20,9 +19,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import java.util.function.Supplier
 
-open class HTCropBlock(private val seed: Supplier<Item>, properties: Properties) : CropBlock(properties) {
+abstract class HTCropBlock(properties: Properties) : CropBlock(properties) {
     companion object {
         @JvmField
         val AGE: IntegerProperty = BeetrootBlock.AGE
@@ -40,7 +38,7 @@ open class HTCropBlock(private val seed: Supplier<Item>, properties: Properties)
 
     override fun getMaxAge(): Int = 3
 
-    override fun getBaseSeedId(): ItemLike = seed.get()
+    abstract override fun getBaseSeedId(): ItemLike
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
         builder.add(AGE)
@@ -75,7 +73,7 @@ open class HTCropBlock(private val seed: Supplier<Item>, properties: Properties)
             var droppedSeed = false
             for (drop: ItemStack in drops) {
                 if (drop.isEmpty) continue
-                if (drop.item == seed.get() && !droppedSeed) {
+                if (drop.item == baseSeedId && !droppedSeed) {
                     drop.shrink(1)
                     droppedSeed = true
                 }

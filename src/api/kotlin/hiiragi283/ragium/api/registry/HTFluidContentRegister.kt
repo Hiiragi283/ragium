@@ -33,14 +33,14 @@ class HTFluidContentRegister(modId: String) {
     private val fluidRegister: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, modId)
     private val typeRegister: DeferredRegister<FluidType> =
         DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, modId)
-    private val blockRegister = HTBlockRegister(modId)
+    private val blockRegister: DeferredRegister.Blocks = DeferredRegister.createBlocks(modId)
     private val itemRegister = HTItemRegister(modId)
 
     val fluidEntries: Collection<DeferredHolder<Fluid, out Fluid>>
         get() = fluidRegister.entries
     val typeEntries: Collection<DeferredHolder<FluidType, out FluidType>>
         get() = typeRegister.entries
-    val blockEntries: List<DeferredBlock<*>> get() = blockRegister.entries
+    val blockEntries: Collection<DeferredHolder<Block, *>> get() = blockRegister.entries
     val itemEntries: List<DeferredItem<*>> get() = itemRegister.entries
 
     private val contentCache: MutableList<HTFluidContent<*, *, *>> = mutableListOf()

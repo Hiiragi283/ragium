@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
@@ -98,7 +97,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Berries -> Liquid Exp
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(RagiumItems.EXP_BERRIES),
+                HTIngredientHelper.item(RagiumBlocks.EXP_BERRIES),
                 HTResultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),
             ).saveSuffixed(output, "_from_berries")
 
@@ -112,7 +111,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Berries
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.EXP_BERRIES),
+                HTResultHelper.item(RagiumBlocks.EXP_BERRIES),
                 HTIngredientHelper.item(Tags.Items.FOODS_BERRY),
                 HTIngredientHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 4),
             ).save(output)
@@ -191,7 +190,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_BEETROOT),
                 HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 250),
-                HTResultHelper.item(RagiumItems.WARPED_WART),
+                HTResultHelper.item(RagiumBlocks.WARPED_WART),
             ).save(output)
     }
 

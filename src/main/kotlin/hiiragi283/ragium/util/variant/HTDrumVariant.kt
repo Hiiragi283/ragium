@@ -3,13 +3,15 @@ package hiiragi283.ragium.util.variant
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.registries.DeferredBlock
 
 enum class HTDrumVariant(
     factory: (BlockPos, BlockState) -> HTDrumBlockEntity,
@@ -24,7 +26,7 @@ enum class HTDrumVariant(
 
     val capacity: Int get() = RagiumAPI.getConfig().getDrumCapacity(serializedName)
 
-    override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.DRUMS[this]!!
+    override val blockHolder: HTDeferredBlockHolder<HTDrumBlock, BlockItem> get() = RagiumBlocks.DRUMS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> =
         RagiumBlockEntityTypes.REGISTER.registerType("${serializedName}_drum", factory)
 

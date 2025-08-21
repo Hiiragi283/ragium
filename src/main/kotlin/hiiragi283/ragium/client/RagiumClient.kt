@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
@@ -48,7 +49,6 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 import java.awt.Color
@@ -88,7 +88,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     else -> FoliageColor.getDefaultColor()
                 }
             },
-            RagiumBlocks.EXP_BERRY_BUSH.get(),
+            RagiumBlocks.EXP_BERRIES.get(),
         )
         // Water Collector
         event.register(
@@ -102,7 +102,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             HTDeviceVariant.WATER_COLLECTOR.blockHolder.get(),
         )
         // LED Blocks
-        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
             event.register(
                 { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, tint: Int ->
                     if (tint != 0) return@register -1
@@ -143,7 +143,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             HTDeviceVariant.WATER_COLLECTOR,
         )
         // LED Blocks
-        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
             event.register({ _: ItemStack, tint: Int ->
                 if (tint != 0) return@register -1
                 color.color.textColor

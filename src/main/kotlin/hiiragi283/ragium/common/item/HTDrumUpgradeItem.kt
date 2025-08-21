@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getCapability
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -19,14 +20,13 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
 /**
  * @see [me.desht.pneumaticcraft.common.item.AbstractChestUpgradeKitItem]
  */
 abstract class HTDrumUpgradeItem(
-    private val filter: List<DeferredBlock<*>>,
+    private val filter: List<HTDeferredBlockHolder<*, *>>,
     private val newDrum: Supplier<out Block>,
     properties: Properties,
 ) : Item(properties) {

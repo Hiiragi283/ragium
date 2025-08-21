@@ -22,9 +22,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
@@ -78,14 +76,14 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
 fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
 /**
- * `block/`で前置された[DeferredBlock.getId]
+ * `block/`で前置された[DeferredHolder.getId]
  */
-val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
+val DeferredHolder<Block, *>.blockId: ResourceLocation get() = id.withPrefix("block/")
 
 /**
- * `item/`で前置された[DeferredItem.getId]
+ * `item/`で前置された[DeferredHolder.getId]
  */
-val DeferredItem<*>.itemId: ResourceLocation get() = id.withPrefix("item/")
+val DeferredHolder<Item, *>.itemId: ResourceLocation get() = id.withPrefix("item/")
 
 //    HolderSet    //
 

@@ -89,7 +89,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 HTIngredientHelper.item(Items.WARPED_WART_BLOCK),
-                HTResultHelper.item(RagiumItems.WARPED_WART, 3),
+                HTResultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToChancedItemRecipeBuilder

@@ -2,6 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.rowValues
+import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -9,10 +11,6 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTDecorationVariant
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -44,10 +42,9 @@ object RagiumCreativeTabs {
     }
 
     @JvmField
-    val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
-        "blocks",
-        "pulverizer",
-    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+    val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+        register("blocks", { HTMachineVariant.PULVERIZER.asItem() }, RagiumBlocks.REGISTER)
+    /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Natural Resources
         output.accept(RagiumBlocks.ASH_LOG)
         output.accept(RagiumBlocks.SILT)
@@ -82,7 +79,7 @@ object RagiumCreativeTabs {
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
         RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
         output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
-    }
+    }*/
 
     @JvmField
     val INGREDIENTS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
@@ -174,8 +171,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.FEVER_CHERRY)
 
             output.accept(RagiumItems.BOTTLED_BEE)
-            output.accept(RagiumItems.EXP_BERRIES)
-            output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
             output.accept(RagiumItems.TELEPORT_TICKET)
@@ -191,12 +186,26 @@ object RagiumCreativeTabs {
         name: String,
         icon: String,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { _: ResourceLocation ->
+    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
-            .title(Component.translatable("itemGroup.${RagiumAPI.MOD_ID}.$name"))
+            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
             .icon(DeferredItem.createItem<Item>(RagiumAPI.id(icon))::toStack)
             .displayItems(action)
+            .build()
+    }
+
+    @JvmStatic
+    private fun register(
+        name: String,
+        icon: ItemLike,
+        register: HTDoubleDeferredRegister<out ItemLike, *>,
+    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+        CreativeModeTab
+            .builder()
+            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+            .icon { ItemStack(icon) }
+            .displayItems(register.firstEntries)
             .build()
     }
 
@@ -212,11 +221,6 @@ object RagiumCreativeTabs {
     @JvmStatic
     private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
         items.forEach(this::accept)
-    }
-
-    @JvmStatic
-    inline fun <reified I> CreativeModeTab.Output.acceptItems() where I : ItemLike, I : Enum<I> {
-        enumEntries<I>().forEach(this::accept)
     }
 
     //    Events    //

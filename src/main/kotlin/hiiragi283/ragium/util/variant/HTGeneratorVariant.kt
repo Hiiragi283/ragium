@@ -1,8 +1,10 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
@@ -12,8 +14,8 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.registries.DeferredBlock
 
 enum class HTGeneratorVariant(
     factory: (BlockPos, BlockState) -> HTGeneratorBlockEntity,
@@ -32,7 +34,7 @@ enum class HTGeneratorVariant(
     val energyRate: Int get() = RagiumAPI.getConfig().getGeneratorEnergyRate(serializedName)
     val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
-    override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.GENERATORS[this]!!
+    override val blockHolder: HTDeferredBlockHolder<HTEntityBlock, BlockItem> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTGeneratorBlockEntity> =
         RagiumBlockEntityTypes.registerTick("${serializedName}_generator", factory)
 

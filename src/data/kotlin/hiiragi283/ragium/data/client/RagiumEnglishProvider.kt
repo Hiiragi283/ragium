@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -19,7 +20,6 @@ import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.registries.DeferredBlock
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
     override fun addTranslations() {
@@ -90,7 +90,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
-        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
+        addBlock(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
+        addItem(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
@@ -110,7 +111,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
             addBlock(variant.wall, variant.translate(type, "Wall"))
         }
 
-        for ((color: HTColorVariant, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
             addBlock(block, "${color.getTranslatedName(type)} LED Block")
         }
 
@@ -218,8 +219,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
-        addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
-        addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
@@ -423,6 +422,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
+        addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
 
         addInfo(HTDeviceVariant.CEU, "Unlimited Power")
         addInfo(HTDeviceVariant.DIM_ANCHOR, "Always load chunk which placed in.")
@@ -462,7 +462,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addInfo(RagiumItems.RAGI_MAGNET, "Collect dropped items in the effective range")
         addInfo(RagiumItems.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
         addInfo(RagiumItems.TRADER_CATALOG, "Dropped from Wandering Trader.")
-        addInfo(RagiumItems.WARPED_WART, "Clear one bad effect randomly when eaten.")
     }
 
     private fun delight() {

@@ -1,22 +1,43 @@
 package hiiragi283.ragium.api.registry
 
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredRegister
 
 /**
- * Ragiumで使用する[DeferredRegister.Blocks]
+ * @see [mekanism.common.registration.impl.BlockDeferredRegister]
  */
-class HTBlockRegister(namespace: String) : DeferredRegister.Blocks(namespace) {
-    override fun getEntries(): List<DeferredBlock<*>> =
-        super.getEntries().map { holder: DeferredHolder<Block, *> -> DeferredBlock.createBlock<Block>(holder.id) }
-
-    fun <B : Block, T : Any> registerBlockWith(
+class HTBlockRegister(namespace: String) :
+    HTDoubleDeferredRegister<Block, Item>(namespace, Registries.BLOCK, HTItemRegister(namespace)) {
+    fun registerSimple(
         name: String,
-        type: T,
-        properties: BlockBehaviour.Properties,
-        factory: (T, BlockBehaviour.Properties) -> B,
-    ): DeferredBlock<B> = registerBlock(name, { prop: BlockBehaviour.Properties -> factory(type, prop) }, properties)
+        blockProp: BlockBehaviour.Properties,
+        itemProp: Item.Properties = Item.Properties(),
+    ): HTSimpleDeferredBlockHolder = register(name, blockProp, ::Block, ::BlockItem, itemProp)
+
+    fun <BLOCK : Block> registerSimple(
+        name: String,
+        blockProp: BlockBehaviour.Properties,
+        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        itemProp: Item.Properties = Item.Properties(),
+    ): HTDeferredBlockHolder<BLOCK, BlockItem> = register(name, blockProp, blockGetter, ::BlockItem, itemProp)
+
+    fun <BLOCK : Block, ITEM : Item> register(
+        name: String,
+        blockProp: BlockBehaviour.Properties,
+        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        itemGetter: (BLOCK, Item.Properties) -> ITEM,
+        itemProp: Item.Properties = Item.Properties(),
+    ): HTDeferredBlockHolder<BLOCK, ITEM> = registerAdvanced(
+        name,
+        { _: ResourceLocation -> blockGetter(blockProp) },
+        { block: DeferredHolder<Block, BLOCK> ->
+            itemGetter(block.get(), itemProp)
+        },
+        ::HTDeferredBlockHolder,
+    )
 }
