@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
@@ -141,11 +140,6 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [HTMenuDefinition.empty]
-     */
-    fun createEmptyMenuDefinition(size: Int): HTMenuDefinition
 
     /**
      * @see [HTContainerScreen.createFluidTankWidget]

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.dynamo
+package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.registry.HTFluidContent

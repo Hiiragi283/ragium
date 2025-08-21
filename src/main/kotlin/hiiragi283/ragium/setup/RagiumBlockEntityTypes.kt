@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
@@ -48,10 +48,8 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    fun <T : HTTickAwareBlockEntity> registerTick(
-        name: String,
-        factory: BlockEntityType.BlockEntitySupplier<T>,
-    ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntity::serverTick)
+    fun <T : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<T>): HTDeferredBlockEntityType<T> =
+        REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
 
     //    Dynamo    //
 

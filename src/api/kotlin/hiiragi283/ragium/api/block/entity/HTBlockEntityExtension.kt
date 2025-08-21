@@ -1,12 +1,14 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -18,7 +20,26 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 
 interface HTBlockEntityExtension : HTContentListener {
-    val upgrades: HTItemHandler
+    val isRemote: Boolean
+
+    /**
+     * @see [mekanism.common.tile.interfaces.ITileWrapper.getLevel]
+     */
+    fun getLevel(): Level?
+
+    fun getLevelOrThrow(): Level = checkNotNull(getLevel()) { "Level is not initialized!" }
+
+    fun getDimension(): ResourceKey<Level> = getLevelOrThrow().dimension()
+
+    /**
+     * @see [mekanism.common.tile.interfaces.ITileWrapper.getBlockPos]
+     */
+    fun getBlockPos(): BlockPos
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag]
+     */
+    fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag
 
     /**
      * [BlockEntity.setBlockState]の後で呼び出されます。
@@ -74,14 +95,14 @@ interface HTBlockEntityExtension : HTContentListener {
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult {
-        if (this is MenuProvider) {
-            if (!level.isClientSide) {
-                player.openMenu(this, pos)
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide)
-        }
-        return InteractionResult.PASS
+    ): InteractionResult = InteractionResult.PASS
+
+    /**
+     * [onRightClicked]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
+     * @see [mekanism.common.tile.base.TileEntityMekanism.encodeExtraContainerData]
+     */
+    fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
+        buf.writeBlockPos(getBlockPos())
     }
 
     /**
@@ -110,9 +131,7 @@ interface HTBlockEntityExtension : HTContentListener {
     /**
      * ブロックが破壊されたときにインベントリの中身をドロップします。
      */
-    fun dropInventory(consumer: (ItemStack) -> Unit) {
-        upgrades.getStackView().forEach(consumer)
-    }
+    fun dropInventory(consumer: (ItemStack) -> Unit) {}
 
     /**
      * ブロックのコンパレータ出力を返します。

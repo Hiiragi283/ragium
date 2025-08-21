@@ -1,21 +1,26 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.entity.player.Inventory
+import net.minecraft.util.RandomSource
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.items.IItemHandler
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe<*>>(
@@ -30,14 +35,19 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         .addOutput(3)
         .build(this)
 
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.ALLOY_SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
+
+    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance =
+        createSound(SoundEvents.BLASTFURNACE_FIRE_CRACKLE, random, pos)
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
         inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)
 
-    // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe<*>): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
-    override fun serverTickPost(
+    override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -55,10 +65,13 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTAlloySmelterMenu = HTAlloySmelterMenu(
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
+    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 0, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0))
+        consumer(inventory, 1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        consumer(inventory, 2, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0))
+    }
+
+    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 3, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+    }
 }

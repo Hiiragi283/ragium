@@ -2,15 +2,18 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.block.HTBlockStateProperties
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -20,9 +23,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
+import net.neoforged.neoforge.items.IItemHandler
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
@@ -32,15 +35,18 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         requiredEnergy = energyUsage * 20
     }
 
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.SINGLE_ITEM.openMenu(player, title, this, ::writeExtraContainerData)
+
     /**
      * @see [com.hollingsworth.arsnouveau.api.util.BlockUtil.breakExtraBlock]
      */
-    override fun serverTickPre(
+    override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
-    ): TriState {
+    ): Boolean {
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
         val inventory: Inventory = player.inventory
@@ -52,19 +58,19 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         val stateTo: BlockState = level.getBlockState(posTo)
         // 採掘速度が0未満の場合はスキップ
         if (stateTo.getDestroySpeed(level, posTo) < 0) {
-            return TriState.DEFAULT
+            return false
         }
         // 採掘できない場合はスキップ
         if (!stateTo.canHarvestBlock(level, posTo, player)) {
-            return TriState.DEFAULT
+            return false
         }
         // イベントがキャンセルされた場合はスキップ
         if (CommonHooks.fireBlockBreak(level, GameType.SURVIVAL, player, posTo, stateTo).isCanceled) {
-            return TriState.DEFAULT
+            return false
         }
         // エネルギーを消費する
         usedEnergy += network.extractEnergy(energyUsage, false)
-        if (usedEnergy < requiredEnergy) return TriState.DEFAULT
+        if (usedEnergy < requiredEnergy) return false
         usedEnergy = 0
         // ブロックを採掘する
         val blockTo: Block = stateTo.block
@@ -83,15 +89,14 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         if (toolStack.isEmpty && !toolStack1.isEmpty) {
             EventHooks.onPlayerDestroyItem(player, toolStack1, InteractionHand.MAIN_HAND)
         }
-        return TriState.DEFAULT
+        return false
     }
 
-    //    Menu    //
+    //    Slot    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSingleItemMenu = HTSingleItemMenu(
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
+    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+    }
+
+    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {}
 }

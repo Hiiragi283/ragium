@@ -1,12 +1,14 @@
 package hiiragi283.ragium.api.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.inventory.container.HTContainerMenu
+import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -20,8 +22,8 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 @OnlyIn(Dist.CLIENT)
-abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Inventory, title: Component) :
-    AbstractContainerScreen<T>(menu, inventory, title) {
+abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: Inventory, title: Component) :
+    AbstractContainerScreen<MENU>(menu, inventory, title) {
     abstract val texture: ResourceLocation?
 
     override fun render(
@@ -58,7 +60,9 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
     val startY: Int get() = (height - imageHeight) / 2
 
     fun createFluidTankWidget(index: Int, x: Int, y: Int): HTFluidWidget {
-        val handler: IFluidHandler? = (menu.blockEntity as? HTHandlerBlockEntity)?.getFluidHandler(null)
+        val blockEntity: HTBlockEntityExtension? =
+            (menu as? HTContainerWithContextMenu<*>)?.context as? HTBlockEntityExtension
+        val handler: IFluidHandler? = (blockEntity as? HTHandlerBlockEntity)?.getFluidHandler(null)
         return RagiumAPI.getInstance().createFluidTankWidget(
             handler?.getFluidInTank(index),
             handler?.getTankCapacity(index),

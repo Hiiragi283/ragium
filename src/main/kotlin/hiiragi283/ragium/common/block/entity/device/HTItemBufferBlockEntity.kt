@@ -2,23 +2,22 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -38,20 +37,39 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         inventory.getStackView().forEach(consumer)
     }
 
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult {
+        if (isRemote) {
+            RagiumMenuTypes.ITEM_BUFFER.openMenu(
+                player,
+                state.block.name,
+                this,
+                ::writeExtraContainerData,
+            )
+        }
+
+        return InteractionResult.sidedSuccess(isRemote)
+    }
+
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         ItemHandlerHelper.calcRedstoneFromInventory(inventory)
 
     //    Ticking    //
 
-    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // アップグレードにマグネットが入っている場合のみ機能する
-        if (!upgrades.hasStack { stack: ItemStack -> stack.`is`(RagiumItems.RAGI_MAGNET) }) return TriState.FALSE
+        // if (!upgrades.hasStack { stack: ItemStack -> stack.`is`(RagiumItems.RAGI_MAGNET) }) return TriState.FALSE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
             blockPos.getRangedAABB(RagiumAPI.getConfig().getEntityCollectorRange()),
         )
-        if (itemEntities.isEmpty()) return TriState.DEFAULT
+        if (itemEntities.isEmpty()) return false
         // それぞれのItem Entityに対して回収を行う
         for (entity: ItemEntity in itemEntities) {
             // IEのコンベヤ上にいるアイテムは無視する
@@ -67,15 +85,24 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
                 entity.item.count = remainStack.count
             }
         }
-        return TriState.TRUE
+        return true
     }
 
-    override fun getItemHandler(direction: Direction?): IItemHandler? = inventory
+    override fun getItemHandler(direction: Direction?): HTItemStackHandler = inventory
 
-    //    Menu    //
+    //    HTSlotProvider    //
 
-    override val containerData: ContainerData = createData()
+    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        for (index: Int in (0..8)) {
+            consumer(
+                inventory,
+                index,
+                HTSlotHelper.getSlotPosX(3 + index % 3),
+                HTSlotHelper.getSlotPosY(index / 3),
+            )
+        }
+    }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemCollectorMenu =
-        HTItemCollectorMenu(containerId, playerInventory, blockPos, createDefinition(inventory))
+    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+    }
 }

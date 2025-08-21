@@ -3,6 +3,7 @@ package hiiragi283.ragium.util.variant
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -42,7 +43,12 @@ enum class HTDeviceVariant(
 
     override val blockHolder: DeferredBlock<*> get() = RagiumBlocks.DEVICES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDeviceBlockEntity> =
-        RagiumBlockEntityTypes.registerTick(serializedName, factory)
+        RagiumBlockEntityTypes.REGISTER.registerType(
+            serializedName,
+            factory,
+            HTBlockEntity::tickClient,
+            HTBlockEntity::tickServer,
+        )
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

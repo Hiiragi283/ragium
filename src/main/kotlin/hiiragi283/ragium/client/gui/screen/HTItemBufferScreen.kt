@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.gui.screen.HTContainerScreen
-import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
+import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
+import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -10,7 +10,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTItemCollectorScreen(menu: HTItemCollectorMenu, inventory: Inventory, title: Component) :
-    HTContainerScreen<HTItemCollectorMenu>(menu, inventory, title) {
+class HTItemBufferScreen(menu: HTBlockEntityContainerMenu<HTItemBufferBlockEntity>, inventory: Inventory, title: Component) :
+    HTBlockEntityContainerScreen<HTItemBufferBlockEntity>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/item_collector.png")
 }

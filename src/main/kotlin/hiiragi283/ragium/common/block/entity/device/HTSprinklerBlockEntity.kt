@@ -4,15 +4,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
@@ -20,7 +17,9 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO(), pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
+    HTDeviceBlockEntity(TODO(), pos, state),
+    HTSlotProvider.Empty {
     private val tank: HTFluidStackTank =
         object : HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this) {
             override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
@@ -36,15 +35,7 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
 
     //    Ticking    //
 
-    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 高さを0~2の範囲でチェックする
-        for (height: Int in (0..2)) {
-            if (glowCrop(level, pos, height).isTrue) {
-                return TriState.TRUE
-            }
-        }
-        return TriState.DEFAULT
-    }
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     private fun glowCrop(level: ServerLevel, pos: BlockPos, height: Int): TriState {
         // 範囲内のランダムなブロックを対象とする
@@ -66,10 +57,4 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
     }
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.FILL_ONLY)
-
-    //    Menu    //
-
-    override val containerData: ContainerData = createData()
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 }

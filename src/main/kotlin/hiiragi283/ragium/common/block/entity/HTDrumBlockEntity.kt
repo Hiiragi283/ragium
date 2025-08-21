@@ -2,10 +2,9 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -13,15 +12,14 @@ import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.MenuProvider
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -29,8 +27,16 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
     HTBlockEntity(variant.blockEntityHolder, pos, state),
     HTFluidInteractable,
     HTHandlerBlockEntity,
-    MenuProvider {
+    HTSlotProvider.Empty {
     private val tank = HTFluidStackTank(variant.capacity, this)
+
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult = RagiumMenuTypes.DRUM.openMenu(player, name, this, ::writeExtraContainerData)
 
     //    Save & Load    //
 
@@ -57,6 +63,8 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
         tank
     }
 
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+
     //    HTHandlerBlockEntity    //
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler = tank
@@ -64,13 +72,6 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
     //    HTFluidInteractable    //
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
-
-    //    MenuProvider    //
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTFluidOnlyMenu(RagiumMenuTypes.DRUM, containerId, playerInventory, blockPos, HTMenuDefinition.empty(0))
-
-    override fun getDisplayName(): Component = blockState.block.name
 
     //    Impl    //
 

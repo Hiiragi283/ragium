@@ -1,20 +1,23 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.inventory.HTItemToItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
-import net.minecraft.world.entity.player.Inventory
+import net.minecraft.util.RandomSource
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.items.IItemHandler
 
 class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
@@ -29,6 +32,11 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
         .addOutput(1)
         .build(this)
 
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.PULVERIZER.openMenu(player, title, this, ::writeExtraContainerData)
+
+    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance = createSound(SoundEvents.GRINDSTONE_USE, random, pos)
+
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
@@ -36,7 +44,7 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
-    override fun serverTickPost(
+    override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -47,17 +55,15 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
         inventory.extractItem(0, recipe.getIngredientCount(input), false)
-        // サウンドを流す
-        level.playSound(null, pos, SoundEvents.ANVIL_HIT, SoundSource.BLOCKS, 0.5f, 1f)
     }
 
-    //    Menu    //
+    //    Slot    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTItemToItemMenu = HTItemToItemMenu(
-        RagiumMenuTypes.PULVERIZER,
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
+    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+    }
+
+    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+    }
 }

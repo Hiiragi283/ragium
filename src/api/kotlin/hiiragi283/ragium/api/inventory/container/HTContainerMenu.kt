@@ -1,27 +1,33 @@
-package hiiragi283.ragium.api.inventory
+package hiiragi283.ragium.api.inventory.container
 
-import hiiragi283.ragium.api.registry.HTDeferredMenuType
-import net.minecraft.core.BlockPos
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.resources.ResourceKey
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.SlotItemHandler
+import java.util.function.Supplier
 
-abstract class HTContainerMenu(
-    menuType: HTDeferredMenuType<*>,
-    containerId: Int,
-    inventory: Inventory,
-    val pos: BlockPos,
-) : AbstractContainerMenu(menuType.get(), containerId) {
+/**
+ * @see [mekanism.common.inventory.container.MekanismContainer]
+ */
+abstract class HTContainerMenu(menuType: Supplier<out MenuType<*>>, containerId: Int, inventory: Inventory) :
+    AbstractContainerMenu(menuType.get(), containerId) {
     override fun stillValid(player: Player): Boolean = true
 
-    abstract val inputSlots: IntRange
-    abstract val outputSlots: IntRange
+    val inputSlots: IntRange
+        get() = when {
+            inputSlot.isEmpty() -> IntRange.EMPTY
+            else -> inputSlot.min()..inputSlot.max()
+        }
+    val outputSlots: IntRange
+        get() = when {
+            outputSlot.isEmpty() -> IntRange.EMPTY
+            else -> outputSlot.min()..outputSlot.max()
+        }
 
     val playerStartIndex: Int get() = outputSlots.last + 1
 
@@ -72,12 +78,33 @@ abstract class HTContainerMenu(
 
     //    Extensions    //
 
-    @JvmField
-    val player: Player = inventory.player
-    val level: Level get() = player.level()
-    val dimension: ResourceKey<Level> get() = level.dimension()
+    private var slotCount: Int = 0
+    private val inputSlot: MutableList<Int> = mutableListOf()
+    private val outputSlot: MutableList<Int> = mutableListOf()
 
-    val blockEntity: BlockEntity? get() = level.getBlockEntity(pos)
+    fun addInputSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Int,
+        y: Int,
+    ) {
+        addSlot(SlotItemHandler(handler, index, x, y))
+        inputSlot.add(slotCount)
+        slotCount++
+    }
+
+    fun addOutputSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Int,
+        y: Int,
+    ) {
+        addSlot(object : SlotItemHandler(handler, index, x, y) {
+            override fun mayPlace(stack: ItemStack): Boolean = false
+        })
+        outputSlot.add(slotCount)
+        slotCount++
+    }
 
     protected fun addPlayerInv(inventory: Inventory, yOffset: Int = 0) {
         // inventory
@@ -95,11 +122,5 @@ abstract class HTContainerMenu(
         for (index: Int in 0..8) {
             addSlot(Slot(inventory, index, HTSlotHelper.getSlotPosX(index), HTSlotHelper.getSlotPosY(7) - 2 + yOffset))
         }
-    }
-
-    companion object {
-        @JvmStatic
-        protected fun decodePos(registryBuf: RegistryFriendlyByteBuf?): BlockPos =
-            registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO
     }
 }

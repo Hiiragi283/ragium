@@ -5,7 +5,8 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.common.inventory.HTMixerMenu
+import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
+import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
@@ -13,8 +14,8 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-class HTMixerScreen(menu: HTMixerMenu, inventory: Inventory, title: Component) :
-    HTMachineScreen<HTMixerMenu>(RagiumAPI.id("textures/gui/container/mixer.png"), menu, inventory, title),
+class HTMixerScreen(menu: HTBlockEntityContainerMenu<HTMixerBlockEntity>, inventory: Inventory, title: Component) :
+    HTMachineScreen<HTMixerBlockEntity>(RagiumAPI.id("textures/gui/container/mixer.png"), menu, inventory, title),
     HTFluidScreen {
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget
@@ -30,7 +31,7 @@ class HTMixerScreen(menu: HTMixerMenu, inventory: Inventory, title: Component) :
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
         consumer(
             HTProgressWidget.arrow(
-                menu::progress,
+                menu.context::progress,
                 startX + HTSlotHelper.getSlotPosX(4.5),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),

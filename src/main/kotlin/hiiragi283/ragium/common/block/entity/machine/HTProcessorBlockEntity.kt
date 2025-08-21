@@ -1,17 +1,23 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.block.entity.HTPlaySoundBlockEntity
 import hiiragi283.ragium.api.recipe.cache.HTRecipeCache
 import hiiragi283.ragium.api.recipe.cache.HTSimpleRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import net.minecraft.client.Minecraft
+import net.minecraft.client.resources.sounds.SimpleSoundInstance
+import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
@@ -19,7 +25,8 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
-) : HTMachineBlockEntity(variant, pos, state) {
+) : HTMachineBlockEntity(variant, pos, state),
+    HTPlaySoundBlockEntity {
     constructor(
         recipeType: RecipeType<R>,
         variant: HTMachineVariant,
@@ -29,35 +36,27 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
 
     final override val energyUsage: Int get() = variant.energyUsage
 
-    private var lastInput: I? = null
-    private var lastRecipe: R? = null
-
-    final override fun serverTickPre(
+    override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
-    ): TriState {
+    ): Boolean {
         // インプットに一致するレシピを探索する
         val input: I = createRecipeInput(level, pos)
-        val lastRecipe: ResourceLocation? = recipeCache.lastRecipe
-        val recipe: R = getMatchedRecipe(input, level) ?: return resetProgress()
+        val recipe: R = getMatchedRecipe(input, level) ?: return false
         val recipeEnergy: Int = getRequiredEnergy(recipe)
         // レシピの進行度を確認する
         if (this.requiredEnergy != recipeEnergy) {
             this.requiredEnergy = recipeEnergy
-            resetProgress()
         }
-        if (recipeCache.lastRecipe != lastRecipe) {
-            resetProgress()
-        }
-        this.lastInput = input
-        this.lastRecipe = recipe
         // エネルギーを消費する
-        if (!doProgress(network)) return TriState.DEFAULT
+        if (!doProgress(network)) return false
         // レシピを正常に扱えるか判定する
-        if (!canProgressRecipe(level, input, recipe)) return TriState.FALSE
-        return TriState.TRUE
+        if (!canProgressRecipe(level, input, recipe)) return false
+        // レシピを実行する
+        completeRecipe(level, pos, state, input, recipe)
+        return true
     }
 
     protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): I
@@ -68,21 +67,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
 
     protected abstract fun canProgressRecipe(level: ServerLevel, input: I, recipe: R): Boolean
 
-    final override fun serverTickPost(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        result: TriState,
-    ) {
-        if (result.isTrue) {
-            if (lastInput != null && lastRecipe != null) {
-                serverTickPost(level, pos, state, lastInput!!, lastRecipe!!)
-            }
-            resetProgress()
-        }
-    }
-
-    protected abstract fun serverTickPost(
+    protected abstract fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -90,9 +75,21 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         recipe: R,
     )
 
-    protected fun resetProgress(): TriState {
-        this.lastInput = null
-        this.lastRecipe = null
-        return TriState.FALSE
+    //    HTPlaySoundBlockEntity    //
+
+    override fun playSound(level: Level, pos: BlockPos) {
+        if (ticks % 20 == 0) {
+            Minecraft.getInstance().soundManager.play(createSound(level.random, pos))
+        }
     }
+
+    protected abstract fun createSound(random: RandomSource, pos: BlockPos): SoundInstance
+
+    protected fun createSound(
+        sound: SoundEvent,
+        random: RandomSource,
+        pos: BlockPos,
+        volume: Float = 1f,
+        pitch: Float = 1f,
+    ): SoundInstance = SimpleSoundInstance(sound, SoundSource.BLOCKS, volume, pitch, random, pos)
 }

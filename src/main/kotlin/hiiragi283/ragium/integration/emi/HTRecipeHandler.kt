@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.emi
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.handler.StandardRecipeHandler
-import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.api.inventory.container.HTContainerMenu
 import net.minecraft.world.inventory.Slot
 
 open class HTRecipeHandler<T : HTContainerMenu>(private val categories: List<EmiRecipeCategory>) : StandardRecipeHandler<T> {

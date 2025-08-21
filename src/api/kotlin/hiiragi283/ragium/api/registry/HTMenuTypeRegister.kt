@@ -1,11 +1,12 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
+import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
+import hiiragi283.ragium.api.inventory.container.type.HTMenuType
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.flag.FeatureFlags
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuType
-import net.neoforged.neoforge.network.IContainerFactory
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.registries.DeferredRegister
 
 /**
@@ -13,28 +14,19 @@ import net.neoforged.neoforge.registries.DeferredRegister
  */
 class HTMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
     /**
-     * [MenuType.MenuSupplier]から[HTDeferredMenuType]を返します。
-     * @param MENU [AbstractContainerMenu]を継承したクラス
+     * [HTContainerFactory]から[HTDeferredMenuType]を返します。
+     * @param MENU [HTContainerWithContextMenu]を継承したクラス
+     * @param BE [BlockEntity]を継承したクラス
      * @param name [MenuType]のID
-     * @param constructor [MENU]を返すブロック
+     * @param factory [MENU]を返すブロック
      */
-    fun <MENU : AbstractContainerMenu> registerType(name: String, constructor: MenuType.MenuSupplier<MENU>): HTDeferredMenuType<MENU> {
-        val holder: HTDeferredMenuType<MENU> =
+    inline fun <MENU : HTContainerWithContextMenu<BE>, reified BE : BlockEntity> registerType(
+        name: String,
+        factory: HTContainerFactory<MENU, BE>,
+    ): HTDeferredMenuType<MENU, BE> {
+        val holder: HTDeferredMenuType<MENU, BE> =
             HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
-        register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
-        return holder
-    }
-
-    /**
-     * [IContainerFactory]から[HTDeferredMenuType]を返します。
-     * @param MENU [AbstractContainerMenu]を継承したクラス
-     * @param name [MenuType]のID
-     * @param constructor [MENU]を返すブロック
-     */
-    fun <MENU : AbstractContainerMenu> registerType(name: String, constructor: IContainerFactory<MENU>): HTDeferredMenuType<MENU> {
-        val holder: HTDeferredMenuType<MENU> =
-            HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
-        register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
+        register(name) { _: ResourceLocation -> HTMenuType.blockEntity(factory) }
         return holder
     }
 }

@@ -8,22 +8,22 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
-import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -35,7 +35,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ),
-    HTFluidInteractable {
+    HTFluidInteractable,
+    HTSlotProvider.Empty {
     override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).build(this)
     private val tankIn = HTFluidStackTank(variant.tankCapacity, this)
     private val tankOut = HTFluidStackTank(variant.tankCapacity, this)
@@ -50,11 +51,10 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         reader.read(RagiumConst.TANK_OUT, tankOut)
     }
 
-    override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
-        super.sendUpdatePacket(serverLevel, consumer)
-        consumer(HTFluidSlotUpdatePacket(blockPos, 0, tankIn.fluid))
-        consumer(HTFluidSlotUpdatePacket(blockPos, 1, tankOut.fluid))
-    }
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.REFINERY.openMenu(player, title, this, ::writeExtraContainerData)
+
+    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance = createSound(SoundEvents.LAVA_AMBIENT, random, pos)
 
     //    Ticking    //
 
@@ -65,7 +65,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTRefiningRecipe): Boolean =
         tankOut.canFill(recipe.assembleFluid(input, level.registryAccess()), true)
 
-    override fun serverTickPost(
+    override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -76,8 +76,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         tankOut.fill(recipe.assembleFluid(input, level.registryAccess()), false)
         // インプットを減らす
         tankIn.drain(recipe.ingredient, false)
-        // サウンドを流す
-        level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS)
     }
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tankIn, tankOut)
@@ -91,14 +89,4 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // 次にインプットとのやり取りを試みる
         return interactWith(player, hand, tankIn)
     }
-
-    //    Menu    //
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidOnlyMenu = HTFluidOnlyMenu(
-        RagiumMenuTypes.REFINERY,
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(),
-    )
 }

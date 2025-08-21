@@ -6,7 +6,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -20,12 +19,10 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -73,12 +70,6 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
-
-    override fun createEmptyMenuDefinition(size: Int): HTMenuDefinition = HTMenuDefinition(
-        ItemStackHandler(size),
-        ItemStackHandler(4),
-        SimpleContainerData(2),
-    )
 
     override fun createFluidTankWidget(
         stack: FluidStack?,

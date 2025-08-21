@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.dynamo
+package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage

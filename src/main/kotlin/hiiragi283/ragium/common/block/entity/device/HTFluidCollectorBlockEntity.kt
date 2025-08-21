@@ -5,29 +5,27 @@ import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTFluidOnlyMenu
-import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(variant, pos, state),
-    HTFluidInteractable {
+    HTFluidInteractable,
+    HTSlotProvider.Empty {
     protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -38,22 +36,25 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
         reader.read(RagiumConst.TANK, tank)
     }
 
-    override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
-        super.sendUpdatePacket(serverLevel, consumer)
-        consumer(HTFluidSlotUpdatePacket(blockPos, 0, tank.fluid))
-    }
-
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult
+    ): InteractionResult = RagiumMenuTypes.FLUID_COLLECTOR.openMenu(player, name, this, ::writeExtraContainerData)
+    
     //    Ticking    //
 
-    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 液体を生成できるかチェック
         val stack: FluidStack = getGeneratedFluid(level, pos)
-        if (stack.isEmpty) return TriState.DEFAULT
+        if (stack.isEmpty) return false
         // 液体を搬入できるかチェック
-        if (!tank.canFill(stack, false)) return TriState.DEFAULT
+        if (!tank.canFill(stack, false)) return false
         tank.fill(stack, false)
         playSound(level, pos)
-        return TriState.TRUE
+        return true
     }
 
     protected abstract fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack
@@ -66,11 +67,4 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
         interactWith(player, hand, getFluidHandler(null))
-
-    //    Menu    //
-
-    override val containerData: ContainerData = createData()
-
-    final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidOnlyMenu =
-        HTFluidOnlyMenu(RagiumMenuTypes.FLUID_COLLECTOR, containerId, playerInventory, blockPos, createDefinition())
 }

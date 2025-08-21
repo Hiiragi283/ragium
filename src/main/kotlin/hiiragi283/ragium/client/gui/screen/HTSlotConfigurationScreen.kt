@@ -31,7 +31,7 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
     override val texture: ResourceLocation? = null
 
     private fun addButton(direction: Direction, x: Int, y: Int): IOButton = IOButton(
-        menu.pos,
+        menu.context.blockPos,
         direction,
         startX + HTSlotHelper.getSlotPosX(x) - 4,
         startY + HTSlotHelper.getSlotPosY(y) - 4,
@@ -40,7 +40,7 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
         getTransferIO(direction)?.description?.let(Tooltip::create)?.let(this::setTooltip)
     }
 
-    private fun getTransferIO(direction: Direction): HTTransferIO? = (menu.blockEntity as? HTTransferIO.Provider)?.get(direction)
+    private fun getTransferIO(direction: Direction): HTTransferIO? = (menu.context as? HTTransferIO.Provider)?.get(direction)
 
     override fun init() {
         super.init()

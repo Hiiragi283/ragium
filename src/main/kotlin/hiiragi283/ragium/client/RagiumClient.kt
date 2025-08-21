@@ -3,7 +3,6 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -11,7 +10,7 @@ import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
-import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
+import hiiragi283.ragium.client.gui.screen.HTItemBufferScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
@@ -20,6 +19,8 @@ import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTClientPotionTooltip
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -188,33 +189,33 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        fun registerBasic(menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>) {
+        fun <BE : HTMachineBlockEntity> registerMachine(menuType: HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE>) {
             event.register(
                 menuType.get(),
                 HTMachineScreen.create(menuType.id.withPath { "textures/gui/container/$it.png" }),
             )
         }
 
-        registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
-        registerBasic(RagiumMenuTypes.CRUSHER)
-        registerBasic(RagiumMenuTypes.ENGRAVER)
-        registerBasic(RagiumMenuTypes.SINGLE_ITEM)
-        registerBasic(RagiumMenuTypes.SMELTER)
+        registerMachine(RagiumMenuTypes.ALLOY_SMELTER)
+        registerMachine(RagiumMenuTypes.CRUSHER)
+        registerMachine(RagiumMenuTypes.ENGRAVER)
+        registerMachine(RagiumMenuTypes.SINGLE_ITEM)
+        registerMachine(RagiumMenuTypes.SMELTER)
 
-        event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen::compressor)
+        event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen::extractor)
+        event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen.Companion::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
-        event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen::infuser)
-        event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
+        event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen.Companion::infuser)
+        event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerScreen)
-        event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen::pulverizer)
+        event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
-        event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen::solidifier)
+        event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen.Companion::solidifier)
 
         LOGGER.info("Registered Screens!")
     }

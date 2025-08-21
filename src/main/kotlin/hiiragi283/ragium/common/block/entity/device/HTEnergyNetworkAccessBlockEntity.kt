@@ -1,24 +1,25 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.ContainerData
-import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
 import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
@@ -55,6 +56,14 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         inventory.getStackView().forEach(consumer)
     }
 
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult = RagiumMenuTypes.ENERGY_NETWORK_ACCESS.openMenu(player, state.block.name, this, ::writeExtraContainerData)
+
     /*override fun onRightClickedWithItem(
         stack: ItemStack,
         state: BlockState,
@@ -78,16 +87,12 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }*/
 
-    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 左のスロットから電力を吸い取る
-        val extractResult: TriState = extractFromItem()
+        extractFromItem()
         // 右のスロットに電力を渡す
-        val receiveResult: TriState = receiveToItem()
-        // どちらかが行えればtrue
-        return when {
-            !extractResult.isFalse || !receiveResult.isFalse -> TriState.TRUE
-            else -> TriState.FALSE
-        }
+        receiveToItem()
+        return false
     }
 
     private fun extractFromItem(): TriState {
@@ -134,17 +139,13 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
 
-    //    Menu    //
+    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+    }
 
-    override val containerData: ContainerData = SimpleContainerData(2)
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTEnergyNetworkAccessMenu =
-        HTEnergyNetworkAccessMenu(
-            containerId,
-            playerInventory,
-            blockPos,
-            createDefinition(inventory),
-        )
+    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
+        consumer(inventory, 1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
+    }
 
     //    Creative    //
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
@@ -14,11 +14,11 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTChargerRenderer(context: BlockEntityRendererProvider.Context) : BlockEntityRenderer<HTTickAwareBlockEntity> {
+class HTChargerRenderer(context: BlockEntityRendererProvider.Context) : BlockEntityRenderer<HTBlockEntity> {
     private val itemRenderer: ItemRenderer = context.itemRenderer
 
     override fun render(
-        blockEntity: HTTickAwareBlockEntity,
+        blockEntity: HTBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
         bufferSource: MultiBufferSource,
