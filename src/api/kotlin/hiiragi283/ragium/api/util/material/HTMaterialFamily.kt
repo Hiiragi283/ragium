@@ -40,7 +40,7 @@ class HTMaterialFamily(
 
     //    Builder    //
 
-    class Builder private constructor(private val baseVariant: HTMaterialVariant, baseItem: ItemSup?) {
+    class Builder(private val baseVariant: HTMaterialVariant, baseItem: ItemSup?) {
         companion object {
             @JvmStatic
             fun fuel(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.FUEL, baseItem)

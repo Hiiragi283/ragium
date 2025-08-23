@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
@@ -14,6 +15,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
@@ -25,6 +27,8 @@ import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
@@ -94,6 +98,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
         output.accept(recipeId, recipe, null, *conditions)
     }
 
+    // ingredient
     protected fun fuelOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.FUEL)
 
     protected fun gemOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.GEM)
@@ -106,6 +111,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
     protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant): Ingredient =
         CompoundIngredient(variants.map { it.itemTagKey(material) }.map(Ingredient::of)).toVanilla()
 
+    // recipe builders
     protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,
         solid: ItemLike,
@@ -168,6 +174,26 @@ sealed class HTRecipeProvider : IConditionBuilder {
                 .solidifying(null, ingredient, result)
                 .saveSuffixed(output, suffix)
         }
+    }
+
+    protected fun rawToIngot(material: HTMaterialType) {
+        val ingot: TagKey<Item> = HTMaterialVariant.INGOT.itemTagKey(material)
+        // Basic
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                HTResultHelper.item(ingot, 3),
+                HTIngredientHelper.item(HTMaterialVariant.RAW_MATERIAL, material, 2),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+            ).setTagCondition(ingot)
+            .saveSuffixed(output, "_with_basic_flux")
+        // Advanced
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                HTResultHelper.item(ingot, 2),
+                HTIngredientHelper.item(HTMaterialVariant.RAW_MATERIAL, material),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+            ).setTagCondition(ingot)
+            .saveSuffixed(output, "_with_advanced_flux")
     }
 
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)

@@ -29,8 +29,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Plastic Plate
         HTItemToObjRecipeBuilder
             .compressing(
-                HTIngredientHelper.item(RagiumItems.getPlate(RagiumMaterialType.PLASTIC)),
-                HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                HTResultHelper.item(HTMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
             ).save(output)
         // Synthetic Fiber
         HTShapelessRecipeBuilder(RagiumItems.SYNTHETIC_FIBER, 2)

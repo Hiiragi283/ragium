@@ -11,7 +11,6 @@ import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -50,13 +49,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Moss
         HTItemToObjRecipeBuilder
             .compressing(
-                HTIngredientHelper.item(
-                    CompoundIngredient.of(
-                        Ingredient.of(Items.VINE),
-                        Ingredient.of(Items.MOSS_CARPET),
-                    ),
-                    8,
-                ),
+                HTIngredientHelper.item(Ingredient.of(Items.VINE, Items.MOSS_CARPET), 8),
                 HTResultHelper.item(Items.MOSS_BLOCK),
             ).save(output)
         // Sculk

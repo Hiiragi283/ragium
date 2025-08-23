@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
+import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
@@ -37,7 +38,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
     private fun registerBlocks() {
         // Blocks
-        buildList {
+        buildSet {
             addAll(RagiumBlocks.REGISTER.firstEntries)
 
             remove(RagiumBlocks.EXP_BERRIES)
@@ -50,7 +51,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         for ((variant: HTDecorationVariant, wall: DeferredHolder<Block, *>) in RagiumBlocks.WALLS) {
             withExistingParent(wall.id.path, vanillaId("block/wall_inventory"))
-                .texture("wall", variant.textureName)
+                .texture("wall", variant.textureId)
         }
         for (block: HTSimpleDeferredBlockHolder in RagiumBlocks.LED_BLOCKS.values) {
             withExistingParent(block.id.path, RagiumAPI.id("block/led_block"))
@@ -61,10 +62,11 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         val compounds: Map<HTMaterialType, DeferredItem<*>> = RagiumItems.MATERIALS.row(HTMaterialVariant.COMPOUND)
         val tools: Collection<DeferredItem<*>> = RagiumItems.TOOLS.values
 
-        buildList {
+        buildSet {
             addAll(RagiumItems.REGISTER.entries)
 
             add(RagiumBlocks.EXP_BERRIES.itemHolder)
+            add(RagiumBlocks.WARPED_WART.itemHolder)
 
             removeAll(compounds.values)
 

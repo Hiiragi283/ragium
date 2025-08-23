@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "ragium:block/ragi_stone",
-    "side": "ragium:block/ragi_stone",
-    "top": "ragium:block/ragi_stone"
-  }
-}

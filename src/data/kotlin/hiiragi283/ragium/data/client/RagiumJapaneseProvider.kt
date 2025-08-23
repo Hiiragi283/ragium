@@ -88,12 +88,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
-        addBlock(RagiumBlocks.RAGI_STONE, "らぎストーン")
-        addBlock(RagiumBlocks.RAGI_STONE_BRICKS, "らぎストーンレンガ")
-        addBlock(RagiumBlocks.RAGI_STONE_SQUARE, "らぎストーン（正方）")
+        addBlock(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
         addBlock(RagiumBlocks.AZURE_TILES, "紺碧のタイル")
-        addBlock(RagiumBlocks.EMBER_STONE, "熾火石")
-        addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
+        addBlock(RagiumBlocks.ELDRITCH_STONE, "異質石")
+        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE, "磨かれた異質石")
+        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "磨かれた異質石レンガ")
+        addBlock(RagiumBlocks.PLASTIC_BRICKS, "プラスチックレンガ")
+        addBlock(RagiumBlocks.PLASTIC_TILES, "プラスチックタイル")
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
 

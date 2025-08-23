@@ -3,7 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.container.type.HTMenuType
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
-import hiiragi283.ragium.api.registry.HTMenuTypeRegister
+import hiiragi283.ragium.api.registry.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -32,7 +32,7 @@ typealias DeferredBEMenu1 = HTDeferredMenuType<HTBlockEntityContainerMenu<HTMach
 
 object RagiumMenuTypes {
     @JvmField
-    val REGISTER = HTMenuTypeRegister(RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     inline fun <reified BE : HTBlockEntity> register(name: String): HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE> {

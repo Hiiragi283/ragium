@@ -47,6 +47,8 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
         patterns.addAll(pattern)
     }
 
+    fun storage4(): HTShapedRecipeBuilder = pattern("AA", "AA")
+
     fun storage9(): HTShapedRecipeBuilder = pattern("AAA", "AAA", "AAA")
 
     fun hollow(): HTShapedRecipeBuilder = pattern("AAA", "A A", "AAA")

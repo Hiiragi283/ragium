@@ -96,12 +96,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
-        addBlock(RagiumBlocks.RAGI_STONE, "Ragi-Stone")
-        addBlock(RagiumBlocks.RAGI_STONE_BRICKS, "Ragi-Stone Bricks")
-        addBlock(RagiumBlocks.RAGI_STONE_SQUARE, "Ragi-Stone (Square)")
+        addBlock(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
         addBlock(RagiumBlocks.AZURE_TILES, "Azure Tiles")
-        addBlock(RagiumBlocks.EMBER_STONE, "Ember Stone")
-        addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
+        addBlock(RagiumBlocks.ELDRITCH_STONE, "Eldritch Stone")
+        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE, "Polished Eldritch Stone")
+        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "Polished Eldritch Stone Bricks")
+        addBlock(RagiumBlocks.PLASTIC_BRICKS, "Plastic Bricks")
+        addBlock(RagiumBlocks.PLASTIC_TILES, "Plastic Tiles")
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
 

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.advancements.Advancement
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -38,6 +39,8 @@ fun <BUILDER : ModelBuilder<BUILDER>> ModelProvider<BUILDER>.layeredModel(
 ): BUILDER = layeredModel(holder.id.path, layer0, layer1)
 
 //    BlockModelProvider    //
+
+val HTDecorationVariant.textureId: ResourceLocation get() = base.id.withPrefix("block/")
 
 fun BlockStateProvider.simpleBlock(holder: DeferredHolder<Block, *>) {
     simpleBlock(holder.get())

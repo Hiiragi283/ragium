@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:blackstone"
+    },
+    "B": [
+      {
+        "tag": "c:dusts/eldritch_pearl"
+      },
+      {
+        "tag": "c:gems/eldritch_pearl"
+      }
+    ]
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 8,
+    "id": "ragium:eldritch_stone"
+  }
+}

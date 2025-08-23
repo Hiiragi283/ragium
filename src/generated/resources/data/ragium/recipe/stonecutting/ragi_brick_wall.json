@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ragium:ragi_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_brick_wall"
+  }
+}

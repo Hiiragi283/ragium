@@ -34,7 +34,7 @@ class HTFluidContentRegister(modId: String) {
     private val typeRegister: DeferredRegister<FluidType> =
         DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, modId)
     private val blockRegister: DeferredRegister.Blocks = DeferredRegister.createBlocks(modId)
-    private val itemRegister = HTItemRegister(modId)
+    private val itemRegister = HTDeferredItemRegister(modId)
 
     val fluidEntries: Collection<DeferredHolder<Fluid, out Fluid>>
         get() = fluidRegister.entries

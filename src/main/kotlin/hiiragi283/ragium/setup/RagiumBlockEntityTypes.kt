@@ -3,8 +3,8 @@ package hiiragi283.ragium.setup
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
@@ -31,7 +31,7 @@ object RagiumBlockEntityTypes {
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @JvmField
-    val REGISTER = HTBlockEntityTypeRegister(RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun init(eventBus: IEventBus) {

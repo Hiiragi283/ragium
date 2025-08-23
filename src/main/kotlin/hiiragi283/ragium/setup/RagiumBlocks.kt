@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
@@ -48,7 +48,7 @@ import kotlin.enums.enumEntries
 
 object RagiumBlocks {
     @JvmField
-    val REGISTER = HTBlockRegister(RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredBlockRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
@@ -182,6 +182,8 @@ object RagiumBlocks {
             RagiumMaterialType.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
             RagiumMaterialType.MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
             RagiumMaterialType.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
+            // Misc
+            RagiumMaterialType.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (material: RagiumMaterialType, properties: BlockBehaviour.Properties) ->
             put(HTMaterialVariant.STORAGE_BLOCK, material, REGISTER.registerSimple("${material.serializedName}_block", properties))
         }
@@ -247,28 +249,32 @@ object RagiumBlocks {
     //    Buildings    //
 
     @JvmField
-    val RAGI_STONE: HTSimpleDeferredBlockHolder =
-        REGISTER.registerSimple("ragi_stone", copyOf(Blocks.STONE, MapColor.COLOR_RED))
-
-    @JvmField
-    val RAGI_STONE_BRICKS: HTSimpleDeferredBlockHolder =
-        REGISTER.registerSimple("ragi_stone_bricks", copyOf(Blocks.STONE, MapColor.COLOR_RED))
-
-    @JvmField
-    val RAGI_STONE_SQUARE: HTSimpleDeferredBlockHolder =
-        REGISTER.registerSimple("ragi_stone_square", copyOf(Blocks.STONE, MapColor.COLOR_RED))
+    val RAGI_BRICKS: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("ragi_bricks", copyOf(Blocks.BRICKS, MapColor.COLOR_RED))
 
     @JvmField
     val AZURE_TILES: HTSimpleDeferredBlockHolder =
         REGISTER.registerSimple("azure_tiles", copyOf(Blocks.STONE, MapColor.TERRACOTTA_BLUE))
 
     @JvmField
-    val EMBER_STONE: HTSimpleDeferredBlockHolder =
-        REGISTER.registerSimple("ember_stone", copyOf(Blocks.AMETHYST_BLOCK, MapColor.COLOR_ORANGE))
+    val ELDRITCH_STONE: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
 
     @JvmField
-    val PLASTIC_BLOCK: HTSimpleDeferredBlockHolder =
-        REGISTER.registerSimple("plastic_block", copyOf(Blocks.COPPER_BLOCK, MapColor.NONE))
+    val POLISHED_ELDRITCH_STONE: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("polished_eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
+
+    @JvmField
+    val POLISHED_ELDRITCH_STONE_BRICKS: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("polished_eldritch_stone_bricks", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
+
+    @JvmField
+    val PLASTIC_BRICKS: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("plastic_bricks", copyOf(Blocks.BRICKS, MapColor.NONE))
+
+    @JvmField
+    val PLASTIC_TILES: HTSimpleDeferredBlockHolder =
+        REGISTER.registerSimple("plastic_tiles", copyOf(Blocks.BRICKS, MapColor.NONE))
 
     @JvmField
     val BLUE_NETHER_BRICKS: HTSimpleDeferredBlockHolder =
@@ -279,12 +285,13 @@ object RagiumBlocks {
 
     @JvmField
     val DECORATION_MAP: Map<HTDecorationVariant, HTSimpleDeferredBlockHolder> = mapOf(
-        HTDecorationVariant.RAGI_STONE to RAGI_STONE,
-        HTDecorationVariant.RAGI_STONE_BRICK to RAGI_STONE_BRICKS,
-        HTDecorationVariant.RAGI_STONE_SQUARE to RAGI_STONE_SQUARE,
+        HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
         HTDecorationVariant.AZURE_TILE to AZURE_TILES,
-        HTDecorationVariant.EMBER_STONE to EMBER_STONE,
-        HTDecorationVariant.PLASTIC_BLOCK to PLASTIC_BLOCK,
+        HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
+        HTDecorationVariant.POLISHED_ELDRITCH_STONE to POLISHED_ELDRITCH_STONE,
+        HTDecorationVariant.POLISHED_ELDRITCH_STONE_BRICK to POLISHED_ELDRITCH_STONE_BRICKS,
+        HTDecorationVariant.PLASTIC_BRICK to PLASTIC_BRICKS,
+        HTDecorationVariant.PLASTIC_TILE to PLASTIC_TILES,
         HTDecorationVariant.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
         HTDecorationVariant.SPONGE_CAKE to SPONGE_CAKE,
     )
@@ -292,7 +299,10 @@ object RagiumBlocks {
     @JvmField
     val SLABS: Map<HTDecorationVariant, HTDeferredBlockHolder<SlabBlock, BlockItem>> =
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
-            REGISTER.registerSimple("${variant.serializedName}_slab", variant.properties, ::SlabBlock)
+            REGISTER.registerSimple(
+                "${variant.serializedName}_slab",
+                { SlabBlock(copyOf(variant.base.get())) },
+            )
         }
 
     @JvmField
@@ -300,15 +310,17 @@ object RagiumBlocks {
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, base: HTSimpleDeferredBlockHolder) ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
-                variant.properties,
-                { prop: BlockBehaviour.Properties -> StairBlock(base.get().defaultBlockState(), prop) },
+                { StairBlock(base.get().defaultBlockState(), copyOf(variant.base.get())) },
             )
         }
 
     @JvmField
     val WALLS: Map<HTDecorationVariant, HTDeferredBlockHolder<WallBlock, BlockItem>> =
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
-            REGISTER.registerSimple("${variant.serializedName}_wall", variant.properties.forceSolidOn(), ::WallBlock)
+            REGISTER.registerSimple(
+                "${variant.serializedName}_wall",
+                { WallBlock(copyOf(variant.base.get()).forceSolidOn()) },
+            )
         }
 
     @JvmField

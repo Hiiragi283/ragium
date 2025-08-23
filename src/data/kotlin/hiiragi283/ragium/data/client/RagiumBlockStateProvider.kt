@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.simpleBlock
+import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
@@ -38,7 +39,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
     override fun registerStatesAndModels() {
         // Simple Blocks
-        buildList {
+        buildSet {
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
@@ -55,17 +56,15 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         )
 
         // Decoration
-        for ((variant: HTDecorationVariant, slab: Supplier<SlabBlock>) in RagiumBlocks.SLABS) {
-            val textureName: ResourceLocation = variant.textureName
-            slabBlock(slab.get(), textureName, textureName)
-        }
-        for ((variant: HTDecorationVariant, stair: Supplier<StairBlock>) in RagiumBlocks.STAIRS) {
-            val textureName: ResourceLocation = variant.textureName
-            stairsBlock(stair.get(), textureName)
-        }
-        for ((variant: HTDecorationVariant, wall: Supplier<WallBlock>) in RagiumBlocks.WALLS) {
-            val textureName: ResourceLocation = variant.textureName
-            wallBlock(wall.get(), textureName)
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            val textureId: ResourceLocation = variant.textureId
+            val slab: Supplier<SlabBlock> = variant.slab
+            val stair: Supplier<StairBlock> = variant.stairs
+            val wall: Supplier<WallBlock> = variant.wall
+
+            slabBlock(slab.get(), textureId, textureId)
+            stairsBlock(stair.get(), textureId)
+            wallBlock(wall.get(), textureId)
         }
 
         for (block: HTSimpleDeferredBlockHolder in RagiumBlocks.LED_BLOCKS.values) {

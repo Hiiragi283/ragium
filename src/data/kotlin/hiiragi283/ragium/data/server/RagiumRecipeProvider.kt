@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
-import hiiragi283.ragium.data.server.material.RagiumMaterialFamilies
 import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
@@ -31,7 +30,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     @Suppress("UnusedExpression")
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
         VanillaMaterialFamilies
-        RagiumMaterialFamilies
+        // RagiumMaterialFamilies
         ModMaterialFamilies
 
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)

@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
@@ -13,44 +15,70 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.level.ItemLike
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.common.Tags
 
 object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        // Ragi-Stone
-        HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE, 8, CraftingBookCategory.BUILDING)
+        // Ragi-Bricks
+        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 8, CraftingBookCategory.BUILDING)
             .hollow8()
-            .define('A', Tags.Items.STONES)
+            .define('A', ItemTags.STONE_BRICKS)
             .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .save(output)
-        // Ragi-Stone Bricks
-        HTStonecuttingRecipeBuilder(RagiumBlocks.RAGI_STONE_BRICKS)
-            .addIngredient(RagiumBlocks.RAGI_STONE)
-            .save(output)
-        // Ragi-Stone Square
-        HTStonecuttingRecipeBuilder(RagiumBlocks.RAGI_STONE_SQUARE)
-            .addIngredient(RagiumBlocks.RAGI_STONE)
             .save(output)
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILES, 8, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', HTMaterialVariant.GEM, RagiumMaterialType.AZURE)
-            .define('B', Items.DEEPSLATE_TILES)
+            .hollow8()
+            .define('A', Items.DEEPSLATE_TILES)
+            .define('B', gemOrDust(RagiumMaterialType.AZURE))
             .save(output)
-        // Ember Stone
-        HTShapedRecipeBuilder(RagiumBlocks.EMBER_STONE, 8, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', Items.BLAZE_POWDER)
-            .define('B', Items.STONE_BRICKS)
+        // Eldritch Stone
+        HTShapedRecipeBuilder(RagiumBlocks.ELDRITCH_STONE, 8, CraftingBookCategory.BUILDING)
+            .hollow8()
+            .define('A', Items.BLACKSTONE)
+            .define('B', gemOrDust(RagiumMaterialType.ELDRITCH_PEARL))
             .save(output)
-        // Plastic Block
-        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', RagiumModTags.Items.PLASTICS)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+
+        HTShapedRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE, 4, CraftingBookCategory.BUILDING)
+            .storage4()
+            .define('A', RagiumBlocks.ELDRITCH_STONE)
+            .save(output)
+
+        HTStonecuttingRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            .addIngredient(RagiumBlocks.ELDRITCH_STONE)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, 4, CraftingBookCategory.BUILDING)
+            .storage4()
+            .define('A', RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            .save(output)
+
+        HTStonecuttingRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS)
+            .addIngredient(RagiumBlocks.ELDRITCH_STONE, RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            .save(output)
+        // Plastics
+        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS, 4, CraftingBookCategory.BUILDING)
+            .storage4()
+            .define('A', HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .save(output)
+
+        HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS)
+            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_TILES, 4, CraftingBookCategory.BUILDING)
+            .storage4()
+            .define('A', RagiumBlocks.PLASTIC_BRICKS)
+            .save(output)
+
+        HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_TILES)
+            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, 1, CraftingBookCategory.BUILDING)
@@ -110,18 +138,14 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun registerBuildings(variant: HTDecorationVariant) {
-        val base: ItemLike = RagiumBlocks.DECORATION_MAP[variant] ?: return
-        val slab: ItemLike = RagiumBlocks.SLABS[variant] ?: return
-        val stairs: ItemLike = RagiumBlocks.STAIRS[variant] ?: return
-        val wall: ItemLike = RagiumBlocks.WALLS[variant] ?: return
+        val base: HTSimpleDeferredBlockHolder = variant.base
+        val slab: HTDeferredBlockHolder<SlabBlock, *> = variant.slab
+        val stairs: HTDeferredBlockHolder<StairBlock, *> = variant.stairs
+        val wall: HTDeferredBlockHolder<WallBlock, *> = variant.wall
         // Base -> Slab
         HTShapedRecipeBuilder(slab, 6)
             .pattern("AAA")
             .define('A', base)
-            .save(output)
-
-        HTStonecuttingRecipeBuilder(slab, 2)
-            .addIngredient(base)
             .save(output)
         // Base -> Stairs
         HTShapedRecipeBuilder(stairs, 4, CraftingBookCategory.BUILDING)
@@ -131,10 +155,6 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 "AAA",
             ).define('A', base)
             .save(output)
-
-        HTStonecuttingRecipeBuilder(stairs)
-            .addIngredient(base)
-            .save(output)
         // Base -> Wall
         HTShapedRecipeBuilder(wall, 4, CraftingBookCategory.BUILDING)
             .pattern(
@@ -142,9 +162,36 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 "AAA",
             ).define('A', base)
             .save(output)
+        // Stonecutting
+        val cuttingIngredient: Ingredient = getCuttingIngredient(variant)
+
+        HTStonecuttingRecipeBuilder(slab, 2)
+            .addIngredient(cuttingIngredient)
+            .save(output)
+
+        HTStonecuttingRecipeBuilder(stairs)
+            .addIngredient(cuttingIngredient)
+            .save(output)
 
         HTStonecuttingRecipeBuilder(wall)
-            .addIngredient(base)
+            .addIngredient(cuttingIngredient)
             .save(output)
+    }
+
+    private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
+        if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
+            return HTMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)
+        }
+        return buildList {
+            add(variant.base)
+            // Eldritch
+            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE) {
+                add(RagiumBlocks.ELDRITCH_STONE)
+            }
+            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE_BRICK) {
+                add(RagiumBlocks.ELDRITCH_STONE)
+                add(RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            }
+        }.toTypedArray().let { Ingredient.of(*it) }
     }
 }

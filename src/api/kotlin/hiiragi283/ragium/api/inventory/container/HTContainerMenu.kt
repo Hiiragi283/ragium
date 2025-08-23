@@ -29,7 +29,11 @@ abstract class HTContainerMenu(menuType: Supplier<out MenuType<*>>, containerId:
             else -> outputSlot.min()..outputSlot.max()
         }
 
-    val playerStartIndex: Int get() = outputSlots.last + 1
+    val playerStartIndex: Int
+        get() = when {
+            outputSlots.isEmpty() -> 0
+            else -> outputSlots.last + 1
+        }
 
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTPotionBundle
-import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.registry.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -61,7 +61,7 @@ object RagiumItems {
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @JvmField
-    val REGISTER = HTItemRegister(RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun init(eventBus: IEventBus) {

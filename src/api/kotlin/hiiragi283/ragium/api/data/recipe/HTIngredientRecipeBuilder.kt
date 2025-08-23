@@ -16,7 +16,7 @@ interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>
 
     fun addIngredient(tagKey: TagKey<Item>): BUILDER = addIngredient(Ingredient.of(tagKey))
 
-    fun addIngredient(item: ItemLike): BUILDER = addIngredient(Ingredient.of(item))
+    fun addIngredient(vararg items: ItemLike): BUILDER = addIngredient(Ingredient.of(*items))
 
     fun addIngredient(ingredient: Ingredient): BUILDER
 }

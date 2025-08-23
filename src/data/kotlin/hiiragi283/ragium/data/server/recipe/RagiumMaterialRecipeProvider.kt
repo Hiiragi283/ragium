@@ -7,16 +7,15 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.material.HTMaterialFamily
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
@@ -29,8 +28,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        HTMaterialFamily.instances.values.forEach(::registerFamilies)
-
         materials()
 
         oreToRaw()
@@ -231,6 +228,38 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
             .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_hammer")
+
+        // Storage Blocks
+        for (material: RagiumMaterialType in RagiumMaterialType.entries) {
+            val baseVariant: HTMaterialVariant = material.baseVariant ?: continue
+            val base: ItemLike = RagiumItems.MATERIALS.get(baseVariant, material) ?: continue
+
+            RagiumBlocks.MATERIALS.get(HTMaterialVariant.STORAGE_BLOCK, material)?.let { storage: ItemLike ->
+                // Block -> Base
+                HTShapelessRecipeBuilder(base, 9)
+                    .addIngredient(HTMaterialVariant.STORAGE_BLOCK, material)
+                    .saveSuffixed(output, "_from_block")
+                // Base -> Block
+                HTShapedRecipeBuilder(storage)
+                    .hollow8()
+                    .define('A', baseVariant, material)
+                    .define('B', base)
+                    .saveSuffixed(output, "_from_base")
+            }
+
+            RagiumItems.MATERIALS.get(HTMaterialVariant.NUGGET, material)?.let { nugget: ItemLike ->
+                // Base -> Nugget
+                HTShapelessRecipeBuilder(nugget, 9)
+                    .addIngredient(baseVariant, material)
+                    .saveSuffixed(output, "_from_base")
+                // Nugget -> Base
+                HTShapedRecipeBuilder(base)
+                    .hollow8()
+                    .define('A', HTMaterialVariant.NUGGET, material)
+                    .define('B', nugget)
+                    .saveSuffixed(output, "_from_nugget")
+            }
+        }
     }
 
     private fun oreToRaw() {
@@ -398,85 +427,5 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.gemOrDust("fluxite"),
             ).setTagCondition(ModMaterialFamilies.getAlloy("energite").getBaseTagKey())
             .save(output)
-    }
-
-    //    Family    //
-
-    private fun registerFamilies(family: HTMaterialFamily) {
-        val tagKey: TagKey<Item> = family.getBaseTagKey()
-        val item: ItemLike? = family.getBaseItem()
-        if (item != null && family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
-            // Block <-> Base
-            blockToBase(family, tagKey, item)
-            // Base <-> Nugget
-            nuggetToBase(family, tagKey, item)
-        }
-
-        // XXX -> Dust
-        toDust(family, tagKey)
-        // Raw -> Ingot
-        rawToIngot(family)
-    }
-
-    private fun blockToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
-        // Block -> Base
-        val blockTag: TagKey<Item> = family.getTagKey(HTMaterialVariant.STORAGE_BLOCK) ?: return
-        HTShapelessRecipeBuilder(item, 9)
-            .addIngredient(blockTag)
-            .saveSuffixed(output, "_from_block")
-        // Base -> Block
-        val block: ItemLike = family.getItem(HTMaterialVariant.STORAGE_BLOCK) ?: return
-        HTShapedRecipeBuilder(block)
-            .hollow8()
-            .define('A', tagKey)
-            .define('B', item)
-            .saveSuffixed(output, "_from_base")
-    }
-
-    private fun nuggetToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
-        // Base -> Nugget
-        val nugget: ItemLike = family.getItem(HTMaterialVariant.NUGGET) ?: return
-        HTShapelessRecipeBuilder(nugget, 9)
-            .addIngredient(tagKey)
-            .saveSuffixed(output, "_from_base")
-        // Nugget -> Base
-        val nuggetTag: TagKey<Item> = family.getTagKey(HTMaterialVariant.NUGGET) ?: return
-        HTShapedRecipeBuilder(item)
-            .hollow8()
-            .define('A', nuggetTag)
-            .define('B', nugget)
-            .saveSuffixed(output, "_from_nugget")
-    }
-
-    private fun toDust(family: HTMaterialFamily, tagKey: TagKey<Item>) {
-        val dust: TagKey<Item> = family.getTagKey(HTMaterialVariant.DUST) ?: return
-        // Base
-        HTItemToObjRecipeBuilder
-            .pulverizing(HTIngredientHelper.item(tagKey), HTResultHelper.item(dust))
-            .savePrefixed(output.withConditions(not(tagEmpty(dust))), "base/")
-        // Gear
-        // Plate
-        // Rod
-    }
-
-    private fun rawToIngot(family: HTMaterialFamily) {
-        val ingot: TagKey<Item> = family.getTagKey(HTMaterialVariant.INGOT) ?: return
-        val raw: TagKey<Item> = family.getTagKey(HTMaterialVariant.RAW_MATERIAL) ?: return
-        // Basic
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                HTResultHelper.item(ingot, 3),
-                HTIngredientHelper.item(raw, 2),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).setTagCondition(ingot)
-            .saveSuffixed(output, "_with_basic_flux")
-        // Advanced
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                HTResultHelper.item(ingot, 2),
-                HTIngredientHelper.item(raw),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-            ).setTagCondition(ingot)
-            .saveSuffixed(output, "_with_advanced_flux")
     }
 }
