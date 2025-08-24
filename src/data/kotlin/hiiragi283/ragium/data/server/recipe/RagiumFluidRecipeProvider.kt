@@ -17,7 +17,6 @@ import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
@@ -109,7 +108,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             RagiumFluidContents.SAP to 1000,
             null,
             HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750) to HTIngredientHelper.item(Items.SUGAR),
-            HTResultHelper.fluid(Fluids.WATER, 250) to null,
+            HTResultHelper.fluid(HTFluidContent.WATER, 250) to null,
         )
         // Syrup -> Sugar
         HTFluidWithCatalystToObjRecipeBuilder

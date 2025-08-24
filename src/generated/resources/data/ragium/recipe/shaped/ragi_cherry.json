@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:storage_blocks/gold"
+      "tag": "c:foods/apple"
     },
     "B": {
-      "tag": "c:foods/ragi_cherry"
+      "tag": "c:dusts/raginite"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "AAA"
   ],
   "result": {
-    "count": 1,
-    "id": "ragium:fever_cherry"
+    "count": 8,
+    "id": "ragium:ragi_cherry"
   }
 }

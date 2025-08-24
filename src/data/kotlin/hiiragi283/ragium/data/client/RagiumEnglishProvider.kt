@@ -216,7 +216,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        addItem(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         addItem(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
@@ -466,7 +465,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun delight() {
+        addBlock(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+
+        addItem(RagiumDelightAddon.RAGI_ALLOY_KNIFE, "Ragi-Alloy Knife")
+        addItem(RagiumDelightAddon.RAGI_CRYSTAL_KNIFE, "Ragi-Crystal Knife")
+        
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
     }
 
     private fun jade() {

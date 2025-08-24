@@ -8,14 +8,14 @@
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
-      "item": "ragium:ragi_cherry"
+      "item": "ragium:ragi_cherry_pie"
     }
   ],
   "result": [
     {
       "item": {
-        "count": 2,
-        "id": "ragium:ragi_cherry_pulp"
+        "count": 4,
+        "id": "ragium:ragi_cherry_pie_slice"
       }
     }
   ],

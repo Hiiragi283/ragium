@@ -4,7 +4,9 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
+import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -13,8 +15,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
-import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
 
 object BiCodecs {
     @JvmField
@@ -32,13 +32,6 @@ object BiCodecs {
     @JvmField
     val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
         BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
-
-    @JvmField
-    val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> =
-        BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
-
-    @JvmField
-    val ITEM_STACK: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
 
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> either(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
@@ -60,6 +53,14 @@ object BiCodecs {
     )
 
     @JvmStatic
+    fun <T : Any> registryBased(registry: Registry<T>): BiCodec<RegistryFriendlyByteBuf, T> =
+        BiCodec.of(registry.byNameCodec(), ByteBufCodecs.registry(registry.key()))
+
+    @JvmStatic
     fun <T : Any> holder(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, Holder<T>> =
         BiCodec.of(RegistryFixedCodec.create(registryKey), ByteBufCodecs.holderRegistry(registryKey))
+
+    @JvmStatic
+    fun <T : Any> holderSet(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
+        BiCodec.of(RegistryCodecs.homogeneousList(registryKey), ByteBufCodecs.holderSet(registryKey))
 }

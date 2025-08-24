@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
-import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
@@ -324,13 +323,13 @@ object RagiumItems {
         name: String,
         foodProperties: FoodProperties,
         properties: Item.Properties = Item.Properties(),
-    ): DeferredItem<Item> = register(name, HTConsumableItem.create(), properties.food(foodProperties))
+    ): DeferredItem<Item> = register(name, properties.food(foodProperties))
 
     @JvmField
     val ICE_CREAM: DeferredItem<Item> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: DeferredItem<Item> = register("ice_cream_soda", HTConsumableItem.create(sound = SoundEvents.GENERIC_DRINK))
+    val ICE_CREAM_SODA: DeferredItem<Item> = register("ice_cream_soda")
 
     // Meat
     @JvmField
@@ -351,21 +350,16 @@ object RagiumItems {
     val RAGI_CHERRY: DeferredItem<Item> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
-    val RAGI_CHERRY_JAM: DeferredItem<Item> = register(
-        "ragi_cherry_jam",
-        HTConsumableItem.create(sound = SoundEvents.HONEY_DRINK),
-        Item.Properties().food(RagiumFoods.RAGI_CHERRY_JAM),
-    )
-
-    @JvmField
-    val FEVER_CHERRY: DeferredItem<Item> = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, Item.Properties().rarity(Rarity.EPIC))
+    val FEVER_CHERRY: DeferredItem<Item> =
+        registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, properties = Item.Properties().rarity(Rarity.EPIC))
 
     // Other
     @JvmField
     val BOTTLED_BEE: DeferredItem<Item> = register("bottled_bee")
 
     @JvmField
-    val AMBROSIA: DeferredItem<Item> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))
+    val AMBROSIA: DeferredItem<Item> =
+        registerFood("ambrosia", RagiumFoods.AMBROSIA, properties = Item.Properties().rarity(Rarity.EPIC))
 
     //    Machine Parts    //
 
@@ -469,6 +463,11 @@ object RagiumItems {
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
+        }
+
+        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.GENERIC_DRINK)
+            builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.GENERIC_DRINK)
         }
 
         for (block: ItemLike in RagiumBlocks.MATERIALS.columnValues(RagiumMaterialType.IRIDESCENTIUM)) {

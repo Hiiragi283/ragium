@@ -1,8 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.basicItem
+import hiiragi283.ragium.api.extension.handheldItem
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
+import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -34,11 +37,12 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         registerItems()
     }
 
-    private val generated: ModelFile = modelFile(vanillaId("item/generated"))
+    private val generated: ModelFile = modelFile("item/generated")
 
     private fun registerBlocks() {
         // Blocks
         buildSet {
+            // Ragium
             addAll(RagiumBlocks.REGISTER.firstEntries)
 
             remove(RagiumBlocks.EXP_BERRIES)
@@ -47,7 +51,11 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             removeAll(RagiumBlocks.GENERATORS.values)
             removeAll(RagiumBlocks.LED_BLOCKS.values)
             removeAll(RagiumBlocks.WALLS.values)
-        }.map(DeferredHolder<*, *>::getId).forEach(::simpleBlockItem)
+            // Delight
+            addAll(RagiumDelightAddon.BLOCK_REGISTER.firstEntries)
+
+            remove(RagiumDelightAddon.RAGI_CHERRY_PIE)
+        }.forEach(::simpleBlockItem)
 
         for ((variant: HTDecorationVariant, wall: DeferredHolder<Block, *>) in RagiumBlocks.WALLS) {
             withExistingParent(wall.id.path, vanillaId("block/wall_inventory"))
@@ -63,10 +71,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         val tools: Collection<DeferredItem<*>> = RagiumItems.TOOLS.values
 
         buildSet {
+            // Ragium
             addAll(RagiumItems.REGISTER.entries)
-
-            add(RagiumBlocks.EXP_BERRIES.itemHolder)
-            add(RagiumBlocks.WARPED_WART.itemHolder)
 
             removeAll(compounds.values)
 
@@ -75,10 +81,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.LARGE_DRUM_UPGRADE)
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
-
+            // Delight
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
+            // Mekanism
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
-        }.map(DeferredItem<*>::getId).forEach(::basicItem)
+        }.forEach(::basicItem)
+
+        basicItem(RagiumBlocks.EXP_BERRIES)
+        basicItem(RagiumBlocks.WARPED_WART)
+
+        basicItem(RagiumDelightAddon.RAGI_CHERRY_PIE)
 
         for ((material: HTMaterialType, compound: DeferredItem<*>) in compounds) {
             val baseId: String = when (material) {
@@ -99,14 +111,15 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.id.withSuffix("_bucket").path)
-                .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
+                .parent(modelFile("neoforge", "item/bucket"))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }
 
         // Tools
-        handheldItem(RagiumItems.BLAST_CHARGE.asItem())
-
-        tools.map(DeferredItem<*>::getId).forEach(::handheldItem)
+        buildList {
+            add(RagiumItems.BLAST_CHARGE)
+            addAll(tools)
+        }.forEach(::handheldItem)
     }
 }

@@ -51,7 +51,7 @@ object RagiumFoods {
     @JvmStatic
     val RAGI_CHERRY: FoodProperties = HTFoodBuilder.copyOf(Foods.SWEET_BERRIES) {
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0)
+        addEffect(MobEffects.HEALTH_BOOST, 15 * 20, 0)
     }
 
     @JvmField
@@ -71,23 +71,5 @@ object RagiumFoods {
     val YELLOW_CAKE: FoodProperties = HTFoodBuilder.create {
         alwaysEat = true
         addInfinityEffect(MobEffects.WITHER, 1)
-    }
-
-    //    Delight    //
-
-    @JvmStatic
-    val RAGI_CHERRY_JAM: FoodProperties = HTFoodBuilder.create {
-        nutrition = 3
-        saturation = FoodConstants.FOOD_SATURATION_NORMAL
-        alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 1)
-    }
-
-    @JvmStatic
-    val RAGI_CHERRY_PULP: FoodProperties = HTFoodBuilder.create {
-        nutrition = 1
-        saturation = FoodConstants.FOOD_SATURATION_POOR
-        alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0)
     }
 }

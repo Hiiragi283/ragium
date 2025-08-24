@@ -40,6 +40,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
+import vectorwing.farmersdelight.common.tag.CommonTags
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(
@@ -154,7 +155,7 @@ class RagiumItemTagsProvider(
         builder.addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_CHOCOLATE)
-        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_JAMS)
+        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.JAMS)
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.INGOTS_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
@@ -168,19 +169,22 @@ class RagiumItemTagsProvider(
         builder.addItem(Tags.Items.FOODS_BERRY, RagiumBlocks.EXP_BERRIES)
         builder.add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
 
+        builder.addItem(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_APPLE, Items.APPLE)
+
         builder.addTag(Tags.Items.FOODS_FRUIT, RagiumCommonTags.Items.FOODS_CHERRY)
         builder.add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
-        builder.addTag(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-        builder.add(RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
-        builder.add(RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
-
         builder.addItem(
-            RagiumCommonTags.Items.FOODS_JAMS,
-            RagiumCommonTags.Items.JAMS_RAGI_CHERRY,
-            RagiumItems.RAGI_CHERRY_JAM,
+            RagiumCommonTags.Items.FOODS_CHERRY,
+            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
+            RagiumItems.RAGI_CHERRY,
+            RagiumDelightAddon.RAGI_CHERRY_PULP,
         )
 
         builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, RagiumCommonTags.Items.INGOTS_CHOCOLATE)
+        // Delight
+        builder.addItem(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
+
+        builder.addItem(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
     }
 
     //    Categories    //
@@ -220,6 +224,9 @@ class RagiumItemTagsProvider(
 
         setupTool(RagiumModTags.Items.TOOLS_DRILL)
         setupTool(RagiumModTags.Items.TOOLS_HAMMER)
+        
+        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             builder.addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
@@ -278,19 +285,19 @@ class RagiumItemTagsProvider(
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: ItemLike) {
-        add(tagKey, item.asItemHolder())
+    private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, vararg items: ItemLike): HTTagBuilder<Item> = apply {
+        for (item: ItemLike in items) {
+            add(tagKey, item.asItemHolder())
+        }
     }
 
-    private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) {
-        addTag(parent, child)
-        addItem(child, item)
-    }
+    private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, vararg items: ItemLike) =
+        addTag(parent, child).addItem(child, *items)
 
-    private fun HTTagBuilder<Item>.addItem(variant: HTMaterialVariant, material: HTMaterialType, item: ItemLike) {
-        val itemCommonTag: TagKey<Item> = variant.itemCommonTag ?: return
+    private fun HTTagBuilder<Item>.addItem(variant: HTMaterialVariant, material: HTMaterialType, item: ItemLike): HTTagBuilder<Item> {
+        val itemCommonTag: TagKey<Item> = variant.itemCommonTag ?: return this
         val tagKey: TagKey<Item> = variant.itemTagKey(material)
-        addItem(itemCommonTag, tagKey, item)
+        return addItem(itemCommonTag, tagKey, item)
     }
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super

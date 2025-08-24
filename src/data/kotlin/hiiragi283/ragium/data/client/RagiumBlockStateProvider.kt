@@ -3,23 +3,28 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.altModelBlock
 import hiiragi283.ragium.api.extension.altTextureBlock
+import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.cubeColumn
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.layeredBlock
+import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -28,11 +33,13 @@ import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 import net.neoforged.neoforge.registries.DeferredHolder
+import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
@@ -221,13 +228,40 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 ),
             )
         }
+
+        // Delight
+        pieBlock(RagiumDelightAddon.RAGI_CHERRY_PIE)
     }
 
     //    Extensions    //
 
-    /*private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
+    private fun pieBlock(block: DeferredHolder<Block, out PieBlock>) {
+        val delight: String = RagiumConst.FARMERS_DELIGHT
+        val blockId: ResourceLocation = block.blockId
 
-    private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
+        getVariantBuilder(block.get()).forAllStates { state: BlockState ->
+            val bites: Int = state.getValue(PieBlock.BITES)
+            val suffix: String = if (bites > 0) "_slice$bites" else ""
+            val pieModel: BlockModelBuilder = models()
+                .getBuilder(block.id.path + suffix)
+                .parent(modelFile(delight, "block/pie$suffix"))
+                .texture("particle", blockId.withSuffix("_top"))
+                .texture("bottom", "$delight:block/pie_bottom")
+                .texture("side", "$delight:block/pie_side")
+                .texture("top", blockId.withSuffix("_top"))
+                .texture("inner", blockId.withSuffix("_inner"))
+
+            ConfiguredModel
+                .builder()
+                .modelFile(pieModel)
+                .rotationY(state.getValue(PieBlock.FACING).getRotationY())
+                .build()
+        }
+    }
+
+    private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
+
+    /*private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
     private fun cauldronBlock(holder: DeferredBlock<*>) {

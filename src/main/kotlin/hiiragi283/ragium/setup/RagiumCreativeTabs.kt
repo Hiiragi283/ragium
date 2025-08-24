@@ -125,11 +125,11 @@ object RagiumCreativeTabs {
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
-            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_MAGNET)
 
             output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
 
+            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
@@ -167,7 +167,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
             output.accept(RagiumItems.RAGI_CHERRY)
-            output.accept(RagiumItems.RAGI_CHERRY_JAM)
             output.accept(RagiumItems.FEVER_CHERRY)
 
             output.accept(RagiumItems.BOTTLED_BEE)

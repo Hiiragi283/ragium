@@ -95,6 +95,9 @@ object RagiumCommonTags {
 
         // Foods
         @JvmField
+        val FOODS_APPLE: TagKey<Item> = create("foods", "apple")
+
+        @JvmField
         val FOODS_CHOCOLATE: TagKey<Item> = create("foods", RagiumConst.CHOCOLATE)
 
         // Foods - Cherry
@@ -106,7 +109,7 @@ object RagiumCommonTags {
 
         // Foods - Jam
         @JvmField
-        val FOODS_JAMS: TagKey<Item> = create("foods", "jams")
+        val JAMS: TagKey<Item> = create("jams")
 
         @JvmField
         val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", "ragi_cherry")

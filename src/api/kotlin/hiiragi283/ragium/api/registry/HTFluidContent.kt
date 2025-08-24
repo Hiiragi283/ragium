@@ -55,6 +55,24 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
 
                 override fun getBucket(): Item = Items.LAVA_BUCKET
             }
+
+        @JvmField
+        val MILK: HTFluidContent<FluidType, Fluid, Fluid> =
+            object : HTFluidContent<FluidType, Fluid, Fluid> {
+                override val id: ResourceLocation = vanillaId("milk")
+                override val commonTag: TagKey<Fluid> = Tags.Fluids.MILK
+                override val bucketTag: TagKey<Item> = Tags.Items.BUCKETS_MILK
+
+                override fun getType(): FluidType = NeoForgeMod.MILK_TYPE.value()
+
+                override fun getStill(): Fluid = NeoForgeMod.MILK.get()
+
+                override fun getFlow(): Fluid = NeoForgeMod.FLOWING_MILK.get()
+
+                override fun getBlock(): Block = Blocks.AIR
+
+                override fun getBucket(): Item = Items.MILK_BUCKET
+            }
     }
 
     val id: ResourceLocation

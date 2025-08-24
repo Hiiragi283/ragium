@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -114,11 +113,11 @@ object HTIngredientHelper {
     fun fluid(ingredient: SizedFluidIngredient): HTFluidIngredient = HTFluidIngredient.of(ingredient)
 
     @JvmStatic
-    fun water(amount: Int): HTFluidIngredient = fluid(Tags.Fluids.WATER, amount)
+    fun water(amount: Int): HTFluidIngredient = fluid(HTFluidContent.WATER, amount)
 
     @JvmStatic
-    fun lava(amount: Int): HTFluidIngredient = fluid(Tags.Fluids.LAVA, amount)
+    fun lava(amount: Int): HTFluidIngredient = fluid(HTFluidContent.LAVA, amount)
 
     @JvmStatic
-    fun milk(amount: Int): HTFluidIngredient = fluid(Tags.Fluids.MILK, amount)
+    fun milk(amount: Int): HTFluidIngredient = fluid(HTFluidContent.MILK, amount)
 }

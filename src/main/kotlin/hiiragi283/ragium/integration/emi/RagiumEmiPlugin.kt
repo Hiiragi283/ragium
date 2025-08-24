@@ -31,6 +31,7 @@ import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTDynamicRecipes
@@ -66,8 +67,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import org.slf4j.Logger
@@ -364,17 +363,17 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addInteractions() {
         // Water Well
-        addInteraction(EmiStack.of(Fluids.WATER), prefix = "fluid_generator") {
+        addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(EmiStack.of(HTDeviceVariant.WATER_COLLECTOR))
             rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
-        addInteraction(EmiStack.of(Fluids.LAVA), prefix = "fluid_generator") {
+        addInteraction(HTFluidContent.LAVA.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(EmiStack.of(HTDeviceVariant.LAVA_COLLECTOR))
             rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
-        addInteraction(EmiStack.of(NeoForgeMod.MILK.get()), prefix = "fluid_generator") {
+        addInteraction(HTFluidContent.MILK.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(EmiStack.of(HTDeviceVariant.MILK_COLLECTOR))
             rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
         }
@@ -416,7 +415,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // Crude Oil + Lava -> Magma Block / Soul Sand
-        addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL.get(), Fluids.LAVA)
+        addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidContent.LAVA)
     }
 
     private fun addInteraction(
@@ -435,11 +434,11 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    private fun addFluidInteraction(output: ItemLike, source: Fluid, flowing: Fluid) {
+    private fun addFluidInteraction(output: ItemLike, source: HTFluidContent<*, *, *>, flowing: HTFluidContent<*, *, *>) {
         val outputStack: EmiStack = EmiStack.of(output)
 
-        val sourceStack: EmiStack = EmiStack.of(source, 1000)
-        val flowingStack: EmiStack = EmiStack.of(flowing, 1000)
+        val sourceStack: EmiStack = source.toFluidEmi(1000)
+        val flowingStack: EmiStack = flowing.toFluidEmi(1000)
 
         addInteraction(outputStack, prefix = "fluid_interaction") {
             leftInput(sourceStack.copyAsCatalyst())

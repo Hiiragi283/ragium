@@ -12,43 +12,37 @@ import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.extensions.IHolderExtension
 
 /**
- * 登録した[net.minecraft.tags.TagKey]をソートして生成するビルダー
+ * 登録した[TagKey]をソートして生成するビルダー
  */
 @Suppress("UNCHECKED_CAST")
 class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
     private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 
-    fun addOptional(tagKey: TagKey<T>, modId: String, path: String) {
+    fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> =
         add(tagKey, ResourceLocation.fromNamespaceAndPath(modId, path), DependType.OPTIONAL)
-    }
 
     fun add(
         tagKey: TagKey<T>,
         obj: T,
         keyGetter: (T) -> ResourceLocation,
         type: DependType = DependType.REQUIRED,
-    ) {
-        add(tagKey, keyGetter(obj), type)
-    }
+    ): HTTagBuilder<T> = add(tagKey, keyGetter(obj), type)
 
-    fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED) {
+    fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
-    }
 
-    fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED) {
+    fun add(tagKey: TagKey<T>, holder: IHolderExtension<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
+        add(tagKey, holder.delegate.idOrThrow, type)
+
+    fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache.put(tagKey, Entry(id, false, type))
     }
 
-    fun add(tagKey: TagKey<T>, holder: IHolderExtension<T>, type: DependType = DependType.REQUIRED) {
-        add(tagKey, holder.delegate.idOrThrow, type)
-    }
-
-    fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED) {
+    fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         addTag(tagKey, TagKey.create(registryKey, child), type)
-    }
 
-    fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED) {
+    fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache.put(tagKey, Entry(child.location, true, type))
     }
 

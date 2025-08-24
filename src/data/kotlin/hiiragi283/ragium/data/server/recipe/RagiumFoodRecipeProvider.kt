@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,12 +24,9 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
-    val disabledByDelight: ICondition = not(modLoaded(RagiumConst.FARMERS_DELIGHT))
-
     override fun buildRecipeInternal() {
         // Chocolate
         HTItemWithFluidToObjRecipeBuilder
@@ -81,18 +77,17 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     private fun cherry() {
-        // Cherry Jam
-        HTShapelessRecipeBuilder(RagiumItems.RAGI_CHERRY_JAM)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-            .addIngredient(Items.SUGAR)
-            .addIngredient(Items.GLASS_BOTTLE)
-            .save(output.withConditions(disabledByDelight))
+        // Ragi-Cherry
+        HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY, 8)
+            .hollow8()
+            .define('A', RagiumCommonTags.Items.FOODS_APPLE)
+            .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .save(output)
         // Fever Cherry
         HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
             .hollow8()
             .define('A', HTMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GOLD)
-            .define('B', RagiumItems.RAGI_CHERRY)
+            .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .save(output)
     }
 
@@ -178,7 +173,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .save(output.withConditions(disabledByDelight))
+            .save(output)
 
         HTShapelessRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)

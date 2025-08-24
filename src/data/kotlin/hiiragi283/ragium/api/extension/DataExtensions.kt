@@ -1,13 +1,17 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.advancements.Advancement
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
@@ -20,6 +24,10 @@ fun ResourceKey<Advancement>.titleKey(): String = toDescriptionKey("advancements
 fun ResourceKey<Advancement>.descKey(): String = toDescriptionKey("advancements", "desc")
 
 //    ModelFile    //
+
+fun modelFile(path: String): ModelFile = modelFile(vanillaId(path))
+
+fun modelFile(namespace: String, path: String): ModelFile = modelFile(ResourceLocation.fromNamespaceAndPath(namespace, path))
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
@@ -87,3 +95,13 @@ fun BlockStateProvider.translucentSimpleBlock(holder: DeferredHolder<Block, *>, 
         ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("translucent")),
     )
 }
+
+//    ItemModelProvider    //
+
+fun ItemModelProvider.simpleBlockItem(block: DeferredHolder<Block, *>): ItemModelBuilder = simpleBlockItem(block.id)
+
+fun ItemModelProvider.basicItem(item: DeferredHolder<Item, *>): ItemModelBuilder = basicItem(item.id)
+
+fun ItemModelProvider.basicItem(block: HTDeferredBlockHolder<*, *>): ItemModelBuilder = basicItem(block.itemHolder)
+
+fun ItemModelProvider.handheldItem(item: DeferredHolder<Item, *>): ItemModelBuilder = handheldItem(item.id)

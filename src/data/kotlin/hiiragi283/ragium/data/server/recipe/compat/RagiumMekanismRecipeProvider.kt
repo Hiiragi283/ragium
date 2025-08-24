@@ -108,6 +108,15 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/ragi_crystal"))
         // Ore -> Crystal
         oreToGem(RagiumMaterialType.RAGI_CRYSTAL)
+
+        // Raginite + Apple -> Ragi-Cherry
+        ItemStackChemicalToItemStackRecipeBuilder
+            .metallurgicInfusing(
+                itemHelper.from(RagiumCommonTags.Items.FOODS_APPLE),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 40),
+                RagiumItems.RAGI_CHERRY.toStack(),
+                false,
+            ).build(output, id("metallurgic_infusing/ragi_cherry"))
     }
 
     private fun azure() {

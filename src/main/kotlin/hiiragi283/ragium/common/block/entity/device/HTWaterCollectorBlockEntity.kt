@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -11,7 +12,6 @@ import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
@@ -29,7 +29,7 @@ class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         if (waterSources >= 2) {
             amount += 500
         }
-        return FluidStack(Fluids.WATER, amount)
+        return HTFluidContent.WATER.toStack(amount)
     }
 
     override fun playSound(level: ServerLevel, pos: BlockPos) {
