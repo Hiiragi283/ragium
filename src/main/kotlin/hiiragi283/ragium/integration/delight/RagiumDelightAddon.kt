@@ -7,13 +7,14 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.tool.HTToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.BlockItem
@@ -28,8 +29,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 import vectorwing.farmersdelight.common.block.PieBlock
-import vectorwing.farmersdelight.common.item.KnifeItem
-import vectorwing.farmersdelight.common.registry.ModItems
 
 @HTAddon(RagiumConst.FARMERS_DELIGHT)
 object RagiumDelightAddon : RagiumAddon {
@@ -49,17 +48,6 @@ object RagiumDelightAddon : RagiumAddon {
 
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
-
-    // Knives
-    @JvmStatic
-    private fun registerKnife(name: String, tier: Tier): DeferredItem<KnifeItem> =
-        ITEM_REGISTER.register("${name}_knife") { _: ResourceLocation -> KnifeItem(tier, ModItems.knifeItem(tier)) }
-
-    @JvmField
-    val RAGI_ALLOY_KNIFE: DeferredItem<KnifeItem> = registerKnife(RagiumConst.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
-
-    @JvmField
-    val RAGI_CRYSTAL_KNIFE: DeferredItem<KnifeItem> = registerKnife(RagiumConst.RAGI_CRYSTAL, RagiumToolTiers.RAGI_ALLOY)
 
     // Food
     @JvmStatic
@@ -86,6 +74,15 @@ object RagiumDelightAddon : RagiumAddon {
         ITEM_REGISTER.register(eventBus)
     }
 
+    override fun addToolVariant(consumer: (HTToolVariant) -> Unit) {
+        consumer(HTKnifeToolVariant)
+    }
+
+    override fun registerTool(consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit) {
+        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
+        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_ALLOY)
+    }
+
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.HONEY_DRINK)
@@ -94,32 +91,8 @@ object RagiumDelightAddon : RagiumAddon {
     }
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        fun addItems(first: DeferredItem<*>, vararg items: DeferredItem<*>) {
-            for (i: Int in listOf(first, *items).indices) {
-                val item: DeferredItem<*> = items[i]
-                val nextItem: DeferredItem<*> = items.getOrNull(i + 1) ?: continue
-                event.insertAfter(
-                    item.toStack(),
-                    nextItem.toStack(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-                )
-            }
-        }
-        
         if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
-            addItems(
-                // Knife
-                RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY),
-                RAGI_ALLOY_KNIFE,
-            )
-
-            addItems(
-                // Knife
-                RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL),
-                RAGI_CRYSTAL_KNIFE,
-            )
-            
-            addItems(
+            val items: List<DeferredItem<*>> = listOf(
                 // Cherry
                 RagiumItems.RAGI_CHERRY,
                 RAGI_CHERRY_PULP,
@@ -129,6 +102,16 @@ object RagiumDelightAddon : RagiumAddon {
                 RAGI_CHERRY_PIE.itemHolder,
                 RAGI_CHERRY_PIE_SLICE,
             )
+
+            for (i: Int in items.indices) {
+                val item: DeferredItem<*> = items[i]
+                val nextItem: DeferredItem<*> = items.getOrNull(i + 1) ?: continue
+                event.insertAfter(
+                    item.toStack(),
+                    nextItem.toStack(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+                )
+            }
         }
     }
 }
