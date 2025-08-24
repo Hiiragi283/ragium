@@ -467,9 +467,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun delight() {
         addBlock(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
 
-        addItem(RagiumDelightAddon.RAGI_ALLOY_KNIFE, "ラギ合金のナイフ")
-        addItem(RagiumDelightAddon.RAGI_CRYSTAL_KNIFE, "ラギクリスタルのナイフ")
-        
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
         addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
         addItem(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")

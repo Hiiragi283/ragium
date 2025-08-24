@@ -12,7 +12,8 @@ import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -33,14 +34,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
                 HTIngredientHelper.milk(250),
-                HTResultHelper.item(HTMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).saveSuffixed(output, "_from_milk")
 
         HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
-                HTResultHelper.item(HTMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).save(output)
         // Melon Pie
         HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
@@ -66,7 +67,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumItems.AMBROSIA),
-                HTIngredientHelper.item(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
+                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
                 HTIngredientHelper.item(Items.HONEY_BLOCK, 64),
             ).save(output)
 
@@ -81,12 +82,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY, 8)
             .hollow8()
             .define('A', RagiumCommonTags.Items.FOODS_APPLE)
-            .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Fever Cherry
         HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
             .hollow8()
-            .define('A', HTMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GOLD)
+            .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GOLD)
             .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .save(output)
     }
@@ -119,31 +120,31 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                         Ingredient.of(Items.ROTTEN_FLESH),
                     ),
                 ),
-                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.MEAT),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
             ).save(output)
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.MEAT), 3)
             .pattern("AAA")
-            .define('A', HTMaterialVariant.DUST, RagiumMaterialType.MEAT)
+            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT)
             .save(output)
 
         HTFluidWithCatalystToObjRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),
-                HTResultHelper.item(HTMaterialVariant.INGOT, RagiumMaterialType.MEAT),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT),
             ).save(output)
 
         HTCookingRecipeBuilder
             .smoking(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
-            .addIngredient(HTMaterialVariant.INGOT, RagiumMaterialType.MEAT)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT)
             .setExp(0.35f)
             .save(output)
         // Canned Cooked Meat
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
-            .define('A', HTMaterialVariant.INGOT, RagiumMaterialType.COOKED_MEAT)
-            .define('B', HTMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.COOKED_MEAT)
+            .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
             .save(output)
     }
 

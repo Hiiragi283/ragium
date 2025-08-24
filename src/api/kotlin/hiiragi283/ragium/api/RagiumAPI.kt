@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.tool.HTToolVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceKey
@@ -61,6 +62,12 @@ interface RagiumAPI {
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
+
+    fun getToolVariants(): List<HTToolVariant>
+
+    fun getToolVariant(name: String): HTToolVariant = getToolVariants()
+        .firstOrNull { variant: HTToolVariant -> variant.serializedName == name }
+        ?: error("Unknown tool variant: $name")
 
     //    Item    //
 

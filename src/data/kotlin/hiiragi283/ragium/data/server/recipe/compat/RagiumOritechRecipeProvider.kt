@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
@@ -42,14 +42,14 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun foundry() {
         FoundryRecipeBuilder
             .build()
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .input(ingotOrDust(HTVanillaMaterialType.COPPER))
             .result(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY).get())
             .export(output, RagiumConst.RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .input(ingotOrDust(HTVanillaMaterialType.GOLD))
             .result(RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY).get())
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
@@ -80,8 +80,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         AtomicForgeRecipeBuilder
             .build()
             .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .result(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).get())
             .time(20)
             .export(output, RagiumConst.RAGI_CRYSTAL)
@@ -90,7 +90,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun particle() {
         ParticleCollisionRecipeBuilder
             .build()
-            .input(HTMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN)
+            .input(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN)
             .input(Items.DEEPSLATE)
             .result(RagiumItems.DEEP_SCRAP.get())
             .time(2500)
@@ -99,6 +99,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     //    Extension    //
 
-    fun OritechRecipeBuilder.input(variant: HTMaterialVariant, material: HTMaterialType): OritechRecipeBuilder =
+    fun OritechRecipeBuilder.input(variant: HTItemMaterialVariant, material: HTMaterialType): OritechRecipeBuilder =
         input(variant.itemTagKey(material))
 }

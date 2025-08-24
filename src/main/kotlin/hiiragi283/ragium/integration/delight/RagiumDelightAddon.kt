@@ -20,7 +20,6 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Tier
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.api.distmarker.Dist
@@ -29,6 +28,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 import vectorwing.farmersdelight.common.block.PieBlock
+import vectorwing.farmersdelight.common.item.KnifeItem
 
 @HTAddon(RagiumConst.FARMERS_DELIGHT)
 object RagiumDelightAddon : RagiumAddon {
@@ -48,6 +48,15 @@ object RagiumDelightAddon : RagiumAddon {
 
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
+
+    // Knives
+    @JvmField
+    val RAGI_ALLOY_KNIFE: DeferredItem<KnifeItem> =
+        HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
+
+    @JvmField
+    val RAGI_CRYSTAL_KNIFE: DeferredItem<KnifeItem> =
+        HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_ALLOY)
 
     // Food
     @JvmStatic
@@ -78,9 +87,9 @@ object RagiumDelightAddon : RagiumAddon {
         consumer(HTKnifeToolVariant)
     }
 
-    override fun registerTool(consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit) {
-        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
-        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_ALLOY)
+    override fun registerTool(consumer: (HTToolVariant, HTMaterialType, DeferredItem<*>) -> Unit) {
+        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
+        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
     }
 
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {

@@ -10,7 +10,8 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -30,7 +31,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 8, CraftingBookCategory.BUILDING)
             .hollow8()
             .define('A', ItemTags.STONE_BRICKS)
-            .define('B', HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILES, 8, CraftingBookCategory.BUILDING)
@@ -65,11 +66,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Plastics
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS, 4, CraftingBookCategory.BUILDING)
             .storage4()
-            .define('A', HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS)
-            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_TILES, 4, CraftingBookCategory.BUILDING)
@@ -78,7 +79,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_TILES)
-            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, 1, CraftingBookCategory.BUILDING)
@@ -119,7 +120,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
-                HTIngredientHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)
 
@@ -132,7 +133,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             HTShapedRecipeBuilder(RagiumBlocks.getTintedGlass(material))
                 .hollow4()
                 .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
-                .define('B', HTMaterialVariant.GLASS_BLOCK, material)
+                .define('B', HTBlockMaterialVariant.GLASS_BLOCK, material)
                 .save(output)
         }
     }
@@ -180,7 +181,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
-            return HTMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)
+            return HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)
         }
         return buildList {
             add(variant.base)

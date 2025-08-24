@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
@@ -103,13 +103,13 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 HTIngredientHelper.item(Tags.Items.OBSIDIANS_NORMAL),
-                HTResultHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToObjRecipeBuilder
             .pulverizing(
                 HTIngredientHelper.item(RagiumBlocks.ASH_LOG),
-                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.ASH, 3),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.ASH, 3),
             ).saveSuffixed(output, "_from_log")
 
         HTItemToChancedItemRecipeBuilder
@@ -134,7 +134,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             HTItemToObjRecipeBuilder
                 .pulverizing(
                     HTIngredientHelper.item(tagKey, input),
-                    HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.WOOD, output),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.WOOD, output),
                 ).saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
         }
 
@@ -170,7 +170,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
             .addResult(HTResultHelper.item(Items.SAND, 4))
-            .addResult(HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SALTPETER), 1 / 4f)
+            .addResult(HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER), 1 / 4f)
             .saveSuffixed(output, "_from_sandstone")
 
         HTItemToChancedItemRecipeBuilder

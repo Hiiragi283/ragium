@@ -1,10 +1,9 @@
-package hiiragi283.ragium.util.variant
+package hiiragi283.ragium.api.util.tool
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.common.item.HTHammerItem
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
@@ -18,8 +17,8 @@ import net.minecraft.world.item.Tier
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
-enum class HTToolVariant(private val enUsPattern: String, private val jaJpPattern: String, override val tagKey: TagKey<Item>) :
-    HTVariantKey.Tagged<Item> {
+enum class HTVanillaToolVariant(private val enUsPattern: String, private val jaJpPattern: String, override val tagKey: TagKey<Item>) :
+    HTToolVariant {
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
         override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*> =
             register.registerItem(
@@ -59,17 +58,9 @@ enum class HTToolVariant(private val enUsPattern: String, private val jaJpPatter
                 { prop: Item.Properties -> SwordItem(tier, prop) },
                 Item.Properties().attributes(SwordItem.createAttributes(tier, 3f, -2.4f)),
             )
-    },
-    HAMMER("%s Hammer", "%sのハンマー", RagiumModTags.Items.TOOLS_HAMMER) {
-        override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*> =
-            register.registerItem(
-                "${material.serializedName}_hammer",
-                { prop: Item.Properties -> HTHammerItem(tier, prop) },
-                Item.Properties().attributes(DiggerItem.createAttributes(tier, 1f, -2.8f)),
-            )
     }, ;
 
-    abstract fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*>
+    override fun getParentId(path: String): ResourceLocation = vanillaId(path)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

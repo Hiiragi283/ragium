@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
@@ -10,8 +11,11 @@ import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
@@ -33,7 +37,8 @@ import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTToolVariant
+import hiiragi283.ragium.util.variant.HTHammerToolVariant
+import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -97,22 +102,22 @@ object RagiumItems {
             RagiumMaterialType.SALTPETER,
             RagiumMaterialType.SULFUR,
             RagiumMaterialType.ASH,
-        ).forEach { put(HTMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
-        put(HTMaterialVariant.DUST, RagiumMaterialType.WOOD, register("sawdust"))
+        ).forEach { put(HTItemMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
+        put(HTItemMaterialVariant.DUST, RagiumMaterialType.WOOD, register("sawdust"))
         // Gems
-        put(HTMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
+        put(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
         listOf(
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.CRIMSON_CRYSTAL,
             RagiumMaterialType.WARPED_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { put(HTMaterialVariant.GEM, it, register(it.serializedName)) }
+        ).forEach { put(HTItemMaterialVariant.GEM, it, register(it.serializedName)) }
         // Ingots
         listOf(
             RagiumMaterialType.RAGI_ALLOY,
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
-        ).forEach { put(HTMaterialVariant.COMPOUND, it, register("${it.serializedName}_compound")) }
+        ).forEach { put(RagiumMaterialVariants.COMPOUND, it, register("${it.serializedName}_compound")) }
 
         listOf(
             // Metals
@@ -125,7 +130,7 @@ object RagiumItems {
             RagiumMaterialType.CHOCOLATE,
             RagiumMaterialType.MEAT,
             RagiumMaterialType.COOKED_MEAT,
-        ).forEach { put(HTMaterialVariant.INGOT, it, register("${it.serializedName}_ingot")) }
+        ).forEach { put(HTItemMaterialVariant.INGOT, it, register("${it.serializedName}_ingot")) }
         // Nuggets
         listOf(
             RagiumMaterialType.RAGI_ALLOY,
@@ -133,22 +138,26 @@ object RagiumItems {
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
             RagiumMaterialType.IRIDESCENTIUM,
-        ).forEach { put(HTMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
+        ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates
-        put(HTMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
+        put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
 
         // Circuits, Components
         for (tier: RagiumTierType in RagiumTierType.entries) {
-            put(HTMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
-            put(HTMaterialVariant.COMPONENT, tier, register("${tier.serializedName}_component"))
+            put(HTItemMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
+            put(RagiumMaterialVariants.COMPONENT, tier, register("${tier.serializedName}_component"))
         }
 
         // Coils
         fun addCoil(material: RagiumMaterialType) {
-            put(HTMaterialVariant.COIL, material, register("${material.serializedName}_coil"))
+            put(RagiumMaterialVariants.COIL, material, register("${material.serializedName}_coil"))
         }
         addCoil(RagiumMaterialType.RAGI_ALLOY)
         addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+
+        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
+            addon.registerMaterial(::put)
+        }
     }
 
     @JvmStatic
@@ -156,31 +165,19 @@ object RagiumItems {
         ?: error("Unregistered ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
-    fun getCompound(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.COMPOUND, material)
+    fun getDust(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.DUST, material)
 
     @JvmStatic
-    fun getDust(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.DUST, material)
+    fun getGem(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.GEM, material)
 
     @JvmStatic
-    fun getGem(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.GEM, material)
+    fun getIngot(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.INGOT, material)
 
     @JvmStatic
-    fun getIngot(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.INGOT, material)
+    fun getNugget(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.NUGGET, material)
 
     @JvmStatic
-    fun getNugget(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.NUGGET, material)
-
-    @JvmStatic
-    fun getPlate(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.PLATE, material)
-
-    @JvmStatic
-    fun getCircuit(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.CIRCUIT, tier)
-
-    @JvmStatic
-    fun getCoil(material: HTMaterialType): DeferredItem<*> = getMaterial(HTMaterialVariant.COIL, material)
-
-    @JvmStatic
-    fun getComponent(tier: RagiumTierType): DeferredItem<*> = getMaterial(HTMaterialVariant.COMPONENT, tier)
+    fun getPlate(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.PLATE, material)
 
     //    Armors    //
 
@@ -265,48 +262,50 @@ object RagiumItems {
 
     @JvmField
     val TOOLS: HTTable<HTToolVariant, HTMaterialType, DeferredItem<*>> = buildTable {
-        // Hammer
-        mapOf(
-            Tiers.IRON to HTVanillaMaterialType.IRON,
-            Tiers.DIAMOND to HTVanillaMaterialType.DIAMOND,
-            Tiers.NETHERITE to HTVanillaMaterialType.NETHERITE,
-            RagiumToolTiers.RAGI_ALLOY to RagiumMaterialType.RAGI_ALLOY,
-        ).forEach { (tier: Tier, material: HTMaterialType) ->
-            val variant = HTToolVariant.HAMMER
-            put(variant, material, variant.registerItem(REGISTER, material, tier))
+        val consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit = { variant: HTToolVariant, material: HTMaterialType, tier: Tier ->
+            put(
+                variant,
+                material,
+                variant.registerItem(REGISTER, material, tier),
+            )
         }
+
+        // Hammer
+        consumer(HTHammerToolVariant, HTVanillaMaterialType.IRON, Tiers.IRON)
+        consumer(HTHammerToolVariant, HTVanillaMaterialType.DIAMOND, Tiers.DIAMOND)
+        consumer(HTHammerToolVariant, HTVanillaMaterialType.NETHERITE, Tiers.NETHERITE)
+
+        consumer(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
+        consumer(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
+        consumer(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
+
         put(
-            HTToolVariant.HAMMER,
+            HTHammerToolVariant,
             RagiumMaterialType.RAGI_CRYSTAL,
             register("ragi_crystal_hammer", ::HTDestructionHammerItem),
         )
-        for (variant: HTToolVariant in HTToolVariant.entries) {
+        // Tools
+        for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
             // Azure
-            put(
-                variant,
-                RagiumMaterialType.AZURE_STEEL,
-                variant.registerItem(REGISTER, RagiumMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL),
-            )
+            consumer(variant, RagiumMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
             // Deep
-            put(
-                variant,
-                RagiumMaterialType.DEEP_STEEL,
-                variant.registerItem(REGISTER, RagiumMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL),
-            )
+            consumer(variant, RagiumMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
+        }
+
+        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
+            addon.registerTool(::put)
         }
     }
 
     @JvmStatic
-    fun getForgeHammer(material: HTMaterialType): DeferredItem<*> = TOOLS.get(HTToolVariant.HAMMER, material)
-        ?: error("Unregistered ${material.serializedName} forge hammer item")
+    fun getTool(variant: HTToolVariant, material: HTMaterialType): DeferredItem<*> = TOOLS.get(variant, material)
+        ?: error("Unregistered ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
-    fun getAzureTool(variant: HTToolVariant): DeferredItem<*> = TOOLS.get(variant, RagiumMaterialType.AZURE_STEEL)
-        ?: error("Unregistered azure steel ${variant.serializedName} item")
+    fun getAzureTool(variant: HTVanillaToolVariant): DeferredItem<*> = getTool(variant, RagiumMaterialType.AZURE_STEEL)
 
     @JvmStatic
-    fun getDeepTool(variant: HTToolVariant): DeferredItem<*> = TOOLS.get(variant, RagiumMaterialType.DEEP_STEEL)
-        ?: error("Unregistered deep steel ${variant.serializedName} item")
+    fun getDeepTool(variant: HTVanillaToolVariant): DeferredItem<*> = getTool(variant, RagiumMaterialType.DEEP_STEEL)
 
     //    Tickets    //
 
@@ -452,13 +451,13 @@ object RagiumItems {
                 builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(ench, level))
             }
         }
-        setEnch(getAzureTool(HTToolVariant.AXE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTToolVariant.HOE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTToolVariant.PICKAXE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTToolVariant.SHOVEL), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTVanillaToolVariant.AXE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTVanillaToolVariant.HOE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTVanillaToolVariant.PICKAXE), Enchantments.SILK_TOUCH)
+        setEnch(getAzureTool(HTVanillaToolVariant.SHOVEL), Enchantments.SILK_TOUCH)
 
-        setEnch(getDeepTool(HTToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
-        setEnch(getDeepTool(HTToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(getDeepTool(HTVanillaToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
+        setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->

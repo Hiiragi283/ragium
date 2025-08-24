@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
@@ -51,7 +52,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SILT)
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK))
+            addAll(RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.STORAGE_BLOCK))
 
             add(RagiumBlocks.DEVICE_CASING)
         }.forEach(::simpleBlock)
@@ -78,18 +79,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             altModelBlock(block, RagiumAPI.id("block/led_block"))
         }
 
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
         Blocks.TINTED_GLASS
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->
             val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
             val stoneTex: String = when (variant) {
-                HTMaterialVariant.ORE -> "block/stone"
-                HTMaterialVariant.DEEP_ORE -> "block/deepslate"
-                HTMaterialVariant.NETHER_ORE -> "block/netherrack"
-                HTMaterialVariant.END_ORE -> "block/end_stone"
+                HTBlockMaterialVariant.ORE -> "block/stone"
+                HTBlockMaterialVariant.DEEP_ORE -> "block/deepslate"
+                HTBlockMaterialVariant.NETHER_ORE -> "block/netherrack"
+                HTBlockMaterialVariant.END_ORE -> "block/end_stone"
                 else -> null
             } ?: return@forEach
             simpleBlock(

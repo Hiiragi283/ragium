@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.DyeColor
@@ -41,20 +42,20 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Ragium
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(HTMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
-                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
+                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 HTIngredientHelper.item(Tags.Items.GUNPOWDERS),
-                HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
         dyes()
@@ -80,7 +81,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
 
             HTItemToObjRecipeBuilder
                 .extracting(
-                    HTIngredientHelper.item(HTMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
+                    HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
                     HTResultHelper.item(dye, 2),
                 ).saveSuffixed(output, "_from_$name")
         }

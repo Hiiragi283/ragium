@@ -15,7 +15,7 @@ import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.ModTags
 
 object HTKnifeToolVariant : HTToolVariant {
-    override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*> =
+    override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<KnifeItem> =
         register.register("${material.serializedName}_knife") { _: ResourceLocation ->
             KnifeItem(
                 tier,

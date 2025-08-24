@@ -15,8 +15,8 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -40,7 +40,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         // Redstone Acid
         HTItemWithFluidToObjRecipeBuilder
             .mixing(
-                HTIngredientHelper.item(HTMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.water(1000),
                 HTResultHelper.fluid(IETags.fluidRedstoneAcid, 1000),
             ).save(output)
@@ -55,23 +55,23 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         // Copper -> Ragi-Alloy
         HTArcFurnaceRecipeBuilder
             .builder()
-            .output(HTMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .input(ingotOrDust(HTVanillaMaterialType.COPPER))
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 2)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 2)
             .build(output, id("ragi_alloy_ingot"))
         // Gold -> Advanced Ragi-Alloy
         HTArcFurnaceRecipeBuilder
             .builder()
-            .output(HTMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .input(ingotOrDust(HTVanillaMaterialType.GOLD))
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4)
             .build(output, id("advanced_ragi_alloy_ingot"))
         // Diamond -> Ragi-Crystal
         HTArcFurnaceRecipeBuilder
             .builder()
-            .output(HTMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .output(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
-            .input(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 6)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 6)
             .build(output, id("ragi_crystal"))
     }
 
@@ -97,7 +97,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .builder()
             .output(RagiumFluidContents.ELDRITCH_FLUX.get(), 1000)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
-            .input(HTMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .input(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
             .setEnergy(3200)
             .build(output, id("mixer/eldritch_flux"))
 
@@ -105,13 +105,13 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .builder()
             .output(RagiumFluidContents.ELDRITCH_FLUX.get(), 1000)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
-            .input(HTMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .input(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
             .setEnergy(3200)
             .build(output, id("mixer/eldritch_flux_alt"))
         // Flux -> Pearl
         BottlingMachineRecipeBuilder
             .builder()
-            .output(HTMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .output(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .output(Tags.Items.ENDER_PEARLS)
             .fluidInput(RagiumFluidContents.ELDRITCH_FLUX.commonTag, 1000)
             .input(Tags.Items.ENDER_PEARLS)
@@ -128,7 +128,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .setEnergy(6400)
             .build(output, id("squeezer/${fluid.id.path}"))
 
-        val result: TagKey<Item> = HTMaterialVariant.GEM.itemTagKey(material)
+        val result: TagKey<Item> = HTItemMaterialVariant.GEM.itemTagKey(material)
         BottlingMachineRecipeBuilder
             .builder()
             .output(result)
@@ -136,9 +136,9 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .build(output, id("bottling/${result.location.path}"))
     }
 
-    private fun <T, U : BaseHelpers.ItemInput<T>> U.input(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): T =
+    private fun <T, U : BaseHelpers.ItemInput<T>> U.input(variant: HTItemMaterialVariant, material: HTMaterialType, count: Int = 1): T =
         input(variant.itemTagKey(material), count)
 
-    private fun <T, U : BaseHelpers.ItemOutput<T>> U.output(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): T =
+    private fun <T, U : BaseHelpers.ItemOutput<T>> U.output(variant: HTItemMaterialVariant, material: HTMaterialType, count: Int = 1): T =
         output(variant.itemTagKey(material), count)
 }

@@ -12,9 +12,9 @@ private typealias ItemSup = Supplier<out ItemLike>
  */
 class HTMaterialFamily(
     val entryType: EntryType,
-    private val baseVariant: HTMaterialVariant,
-    val variantMap: Map<HTMaterialVariant, Pair<TagKey<Item>, ItemSup?>>,
-) : Iterable<Triple<HTMaterialVariant, TagKey<Item>, ItemLike?>> {
+    private val baseVariant: HTMaterialVariant.ItemTag,
+    val variantMap: Map<HTMaterialVariant.ItemTag, Pair<TagKey<Item>, ItemSup?>>,
+) : Iterable<Triple<HTMaterialVariant.ItemTag, TagKey<Item>, ItemLike?>> {
     companion object {
         @JvmStatic
         val instances: Map<String, HTMaterialFamily> get() = _instances
@@ -23,52 +23,52 @@ class HTMaterialFamily(
         private val _instances: MutableMap<String, HTMaterialFamily> = mutableMapOf()
     }
 
-    private fun getRawEntry(variant: HTMaterialVariant): Pair<TagKey<Item>, ItemSup?>? = variantMap[variant]
+    private fun getRawEntry(variant: HTMaterialVariant.ItemTag): Pair<TagKey<Item>, ItemSup?>? = variantMap[variant]
 
-    fun getTagKey(variant: HTMaterialVariant): TagKey<Item>? = getRawEntry(variant)?.first
+    fun getTagKey(variant: HTMaterialVariant.ItemTag): TagKey<Item>? = getRawEntry(variant)?.first
 
     fun getBaseTagKey(): TagKey<Item> = getTagKey(baseVariant)!!
 
-    fun getItem(variant: HTMaterialVariant): ItemLike? = getRawEntry(variant)?.second?.get()
+    fun getItem(variant: HTMaterialVariant.ItemTag): ItemLike? = getRawEntry(variant)?.second?.get()
 
     fun getBaseItem(): ItemLike? = getItem(baseVariant)
 
-    override fun iterator(): Iterator<Triple<HTMaterialVariant, TagKey<Item>, ItemLike?>> = variantMap
-        .map { (variant: HTMaterialVariant, pair: Pair<TagKey<Item>, ItemSup?>) ->
+    override fun iterator(): Iterator<Triple<HTMaterialVariant.ItemTag, TagKey<Item>, ItemLike?>> = variantMap
+        .map { (variant: HTMaterialVariant.ItemTag, pair: Pair<TagKey<Item>, ItemSup?>) ->
             Triple(variant, pair.first, pair.second?.get())
         }.iterator()
 
     //    Builder    //
 
-    class Builder(private val baseVariant: HTMaterialVariant, baseItem: ItemSup?) {
+    class Builder(private val baseVariant: HTMaterialVariant.ItemTag, baseItem: ItemSup?) {
         companion object {
             @JvmStatic
-            fun fuel(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.FUEL, baseItem)
-                .setEmptyEntry(HTMaterialVariant.DUST)
-                .setEmptyEntry(HTMaterialVariant.ORE)
-                .setEmptyEntry(HTMaterialVariant.STORAGE_BLOCK)
+            fun fuel(baseItem: ItemSup?): Builder = Builder(HTItemMaterialVariant.FUEL, baseItem)
+                .setEmptyEntry(HTItemMaterialVariant.DUST)
+                .setEmptyEntry(HTBlockMaterialVariant.ORE)
+                .setEmptyEntry(HTBlockMaterialVariant.STORAGE_BLOCK)
 
             @JvmStatic
-            fun gem(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.GEM, baseItem)
-                .setEmptyEntry(HTMaterialVariant.DUST)
-                .setEmptyEntry(HTMaterialVariant.ORE)
-                .setEmptyEntry(HTMaterialVariant.STORAGE_BLOCK)
+            fun gem(baseItem: ItemSup?): Builder = Builder(HTItemMaterialVariant.GEM, baseItem)
+                .setEmptyEntry(HTItemMaterialVariant.DUST)
+                .setEmptyEntry(HTBlockMaterialVariant.ORE)
+                .setEmptyEntry(HTBlockMaterialVariant.STORAGE_BLOCK)
 
             @JvmStatic
-            fun ingot(baseItem: ItemSup?): Builder = Builder(HTMaterialVariant.INGOT, baseItem)
-                .setEmptyEntry(HTMaterialVariant.DUST)
-                .setEmptyEntry(HTMaterialVariant.NUGGET)
-                .setEmptyEntry(HTMaterialVariant.ORE)
-                .setEmptyEntry(HTMaterialVariant.RAW_MATERIAL)
-                .setEmptyEntry(HTMaterialVariant.STORAGE_BLOCK)
+            fun ingot(baseItem: ItemSup?): Builder = Builder(HTItemMaterialVariant.INGOT, baseItem)
+                .setEmptyEntry(HTItemMaterialVariant.DUST)
+                .setEmptyEntry(HTItemMaterialVariant.NUGGET)
+                .setEmptyEntry(HTBlockMaterialVariant.ORE)
+                .setEmptyEntry(HTItemMaterialVariant.RAW_MATERIAL)
+                .setEmptyEntry(HTBlockMaterialVariant.STORAGE_BLOCK)
 
             @JvmStatic
             fun ingotAlloy(baseItem: ItemSup?): Builder = ingot(baseItem)
-                .removeEntry(HTMaterialVariant.ORE)
-                .removeEntry(HTMaterialVariant.RAW_MATERIAL)
+                .removeEntry(HTBlockMaterialVariant.ORE)
+                .removeEntry(HTItemMaterialVariant.RAW_MATERIAL)
         }
 
-        private val itemMap: MutableMap<HTMaterialVariant, ItemSup?> = mutableMapOf()
+        private val itemMap: MutableMap<HTMaterialVariant.ItemTag, ItemSup?> = mutableMapOf()
         private var entryType: EntryType = EntryType.RAGIUM
 
         init {
@@ -79,18 +79,15 @@ class HTMaterialFamily(
             }
         }
 
-        fun setEmptyEntry(variant: HTMaterialVariant): Builder = apply {
+        fun setEmptyEntry(variant: HTMaterialVariant.ItemTag): Builder = apply {
             check(itemMap.put(variant, null) == null) { "Duplicated entry found!" }
         }
 
-        fun setDefaultedEntry(variant: HTMaterialVariant, getter: (HTMaterialVariant) -> ItemSup?): Builder =
-            setDefaultedEntry(variant, getter(variant))
-
-        fun setDefaultedEntry(variant: HTMaterialVariant, item: ItemSup?): Builder = apply {
+        fun setDefaultedEntry(variant: HTMaterialVariant.ItemTag, item: ItemSup?): Builder = apply {
             check(itemMap.put(variant, item) == null) { "Duplicated entry found!" }
         }
 
-        fun removeEntry(variant: HTMaterialVariant): Builder = apply {
+        fun removeEntry(variant: HTMaterialVariant.ItemTag): Builder = apply {
             itemMap.remove(variant)
         }
 
@@ -103,8 +100,8 @@ class HTMaterialFamily(
         }
 
         fun build(material: HTMaterialType): HTMaterialFamily {
-            val variantMap: Map<HTMaterialVariant, Pair<TagKey<Item>, ItemSup?>> =
-                itemMap.mapValues { (variant: HTMaterialVariant, item: ItemSup?) ->
+            val variantMap: Map<HTMaterialVariant.ItemTag, Pair<TagKey<Item>, ItemSup?>> =
+                itemMap.mapValues { (variant: HTMaterialVariant.ItemTag, item: ItemSup?) ->
                     variant.itemTagKey(material) to item
                 }
             val family = HTMaterialFamily(entryType, baseVariant, variantMap)

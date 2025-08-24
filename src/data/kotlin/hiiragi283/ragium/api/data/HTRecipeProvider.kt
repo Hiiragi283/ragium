@@ -17,11 +17,13 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
@@ -99,16 +101,19 @@ sealed class HTRecipeProvider : IConditionBuilder {
     }
 
     // ingredient
-    protected fun fuelOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.FUEL)
+    protected fun fuelOrDust(material: HTMaterialType): Ingredient =
+        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.FUEL)
 
-    protected fun gemOrDust(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.GEM)
+    protected fun gemOrDust(material: HTMaterialType): Ingredient =
+        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.GEM)
 
     protected fun ingotOrDust(material: HTMaterialType): Ingredient =
-        multiVariants(material, HTMaterialVariant.DUST, HTMaterialVariant.INGOT)
+        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.INGOT)
 
-    protected fun ingotOrRod(material: HTMaterialType): Ingredient = multiVariants(material, HTMaterialVariant.INGOT, HTMaterialVariant.ROD)
+    protected fun ingotOrRod(material: HTMaterialType): Ingredient =
+        multiVariants(material, HTItemMaterialVariant.INGOT, HTItemMaterialVariant.ROD)
 
-    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant): Ingredient =
+    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant.ItemTag): Ingredient =
         CompoundIngredient(variants.map { it.itemTagKey(material) }.map(Ingredient::of)).toVanilla()
 
     // recipe builders
@@ -177,12 +182,12 @@ sealed class HTRecipeProvider : IConditionBuilder {
     }
 
     protected fun rawToIngot(material: HTMaterialType) {
-        val ingot: TagKey<Item> = HTMaterialVariant.INGOT.itemTagKey(material)
+        val ingot: TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
         // Basic
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(ingot, 3),
-                HTIngredientHelper.item(HTMaterialVariant.RAW_MATERIAL, material, 2),
+                HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).setTagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
@@ -190,7 +195,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.item(ingot, 2),
-                HTIngredientHelper.item(HTMaterialVariant.RAW_MATERIAL, material),
+                HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).setTagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
@@ -199,8 +204,10 @@ sealed class HTRecipeProvider : IConditionBuilder {
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
-        .addIngredient(HTMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
+        .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
     protected fun createComponentUpgrade(tier: RagiumTierType, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
-        HTSmithingRecipeBuilder(output).addIngredient(RagiumItems.getComponent(tier)).addIngredient(ingredient)
+        HTSmithingRecipeBuilder(
+            output,
+        ).addIngredient(RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, tier)).addIngredient(ingredient)
 }

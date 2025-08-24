@@ -7,8 +7,8 @@ import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.resources.ResourceLocation
@@ -25,13 +25,13 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
     private fun matter() {
         // Ragium
         register(
-            HTMaterialVariant.DUST,
+            HTItemMaterialVariant.DUST,
             RagiumMaterialType.RAGINITE,
             RagiumReplicationAddon.MATTER_RAGIUM.toStack(9),
         )
         // Azure
         register(
-            HTMaterialVariant.GEM,
+            HTItemMaterialVariant.GEM,
             RagiumMaterialType.AZURE,
             ReplicationRegistry.Matter.ORGANIC.toStack(2),
             ReplicationRegistry.Matter.PRECIOUS.toStack(5),
@@ -39,21 +39,21 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         )
         // Crimson
         register(
-            HTMaterialVariant.GEM,
+            HTItemMaterialVariant.GEM,
             RagiumMaterialType.CRIMSON_CRYSTAL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.NETHER.toStack(4),
         )
         // Warped
         register(
-            HTMaterialVariant.GEM,
+            HTItemMaterialVariant.GEM,
             RagiumMaterialType.WARPED_CRYSTAL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.ENDER.toStack(4),
         )
         // Eldritch
         register(
-            HTMaterialVariant.GEM,
+            HTItemMaterialVariant.GEM,
             RagiumMaterialType.ELDRITCH_PEARL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.QUANTUM.toStack(9),
@@ -61,7 +61,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
 
         // Foods
         register(
-            HTMaterialVariant.DUST,
+            HTItemMaterialVariant.DUST,
             RagiumMaterialType.MEAT,
             ReplicationRegistry.Matter.LIVING.toStack(4),
             ReplicationRegistry.Matter.ORGANIC.toStack(4),
@@ -87,7 +87,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
     }*/
 
     @JvmStatic
-    private fun register(variant: HTMaterialVariant, material: HTMaterialType, vararg instances: MatterValue) {
+    private fun register(variant: HTItemMaterialVariant, material: HTMaterialType, vararg instances: MatterValue) {
         register(variant.itemTagKey(material), *instances)
     }
 

@@ -11,8 +11,12 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,7 +26,7 @@ import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTColorVariant
-import hiiragi283.ragium.util.variant.HTToolVariant
+import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
@@ -76,10 +80,10 @@ class RagiumItemTagsProvider(
         copy(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, Tags.Items.ORES_IN_GROUND_NETHERRACK)
         copy(RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE, RagiumCommonTags.Items.ORES_IN_GROUND_END_STONE)
 
-        copy(HTMaterialVariant.ORE, RagiumMaterialType.RAGINITE)
-        copy(HTMaterialVariant.ORE, RagiumMaterialType.RAGI_CRYSTAL)
-        copy(HTMaterialVariant.ORE, RagiumMaterialType.CRIMSON_CRYSTAL)
-        copy(HTMaterialVariant.ORE, RagiumMaterialType.WARPED_CRYSTAL)
+        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE)
+        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGI_CRYSTAL)
+        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.CRIMSON_CRYSTAL)
+        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.WARPED_CRYSTAL)
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
@@ -87,7 +91,7 @@ class RagiumItemTagsProvider(
 
         RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
 
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, _) ->
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, _) ->
             copy(variant, material)
         }
 
@@ -102,12 +106,12 @@ class RagiumItemTagsProvider(
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
-    private fun copy(variant: HTMaterialVariant) {
+    private fun copy(variant: HTMaterialVariant.BlockTag) {
         if (!variant.canGenerateTag()) return
         copy(variant.blockCommonTag!!, variant.itemCommonTag!!)
     }
 
-    private fun copy(variant: HTMaterialVariant, material: HTMaterialType) {
+    private fun copy(variant: HTMaterialVariant.BlockTag, material: HTMaterialType) {
         if (!variant.canGenerateTag()) return
         copy(variant.blockTagKey(material), variant.itemTagKey(material))
     }
@@ -120,20 +124,23 @@ class RagiumItemTagsProvider(
 
     private fun material(builder: HTTagBuilder<Item>) {
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            builder.addItem(variant, material, item)
-            if (variant == HTMaterialVariant.GEM || variant == HTMaterialVariant.INGOT) {
-                tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
+            if (variant is HTMaterialVariant.ItemTag) {
+                builder.addItem(variant, material, item)
+
+                if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
+                    tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
+                }
             }
         }
-        builder.addItem(HTMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
+        builder.addItem(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
 
-        builder.addItem(HTMaterialVariant.GEAR, RagiumMaterialType.ELDRITCH_PEARL, RagiumItems.ELDRITCH_GEAR)
+        builder.addItem(HTItemMaterialVariant.GEAR, RagiumMaterialType.ELDRITCH_PEARL, RagiumItems.ELDRITCH_GEAR)
 
-        builder.addItem(HTMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL)
-        builder.addItem(HTMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
+        builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL)
+        builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
 
-        val coalCoke: TagKey<Item> = HTMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
-        builder.addTag(HTMaterialVariant.FUEL.itemCommonTag!!, coalCoke)
+        val coalCoke: TagKey<Item> = HTItemMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
+        builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag!!, coalCoke)
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
         // Mekanism Addon
         builder.addItem(
@@ -196,7 +203,7 @@ class RagiumItemTagsProvider(
 
         builder.addTag(
             RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-            HTMaterialVariant.DUST.itemTagKey(RagiumMaterialType.CINNABAR),
+            HTItemMaterialVariant.DUST.itemTagKey(RagiumMaterialType.CINNABAR),
         )
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
@@ -208,8 +215,11 @@ class RagiumItemTagsProvider(
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
             builder.add(variant.tagKey, item)
         }
-        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTToolVariant.HAMMER)) {
+        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTHammerToolVariant)) {
             builder.add(Tags.Items.TOOLS_WRENCH, hammer)
+        }
+        for (knife: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTKnifeToolVariant)) {
+            builder.add(CommonTags.TOOLS_KNIFE, knife)
         }
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
@@ -224,9 +234,6 @@ class RagiumItemTagsProvider(
 
         setupTool(RagiumModTags.Items.TOOLS_DRILL)
         setupTool(RagiumModTags.Items.TOOLS_HAMMER)
-        
-        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
-        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             builder.addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
@@ -250,7 +257,7 @@ class RagiumItemTagsProvider(
 
         val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
-        builder.addTag(RagiumModTags.Items.PLASTICS, HTMaterialVariant.PLATE.itemTagKey(RagiumMaterialType.PLASTIC))
+        builder.addTag(RagiumModTags.Items.PLASTICS, HTItemMaterialVariant.PLATE.itemTagKey(RagiumMaterialType.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
@@ -263,7 +270,7 @@ class RagiumItemTagsProvider(
 
         builder.addTag(
             ItemTags.PIGLIN_LOVED,
-            HTMaterialVariant.INGOT.itemTagKey(RagiumMaterialType.ADVANCED_RAGI_ALLOY),
+            HTItemMaterialVariant.INGOT.itemTagKey(RagiumMaterialType.ADVANCED_RAGI_ALLOY),
         )
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         // WIP
@@ -294,7 +301,11 @@ class RagiumItemTagsProvider(
     private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, vararg items: ItemLike) =
         addTag(parent, child).addItem(child, *items)
 
-    private fun HTTagBuilder<Item>.addItem(variant: HTMaterialVariant, material: HTMaterialType, item: ItemLike): HTTagBuilder<Item> {
+    private fun HTTagBuilder<Item>.addItem(
+        variant: HTMaterialVariant.ItemTag,
+        material: HTMaterialType,
+        item: ItemLike,
+    ): HTTagBuilder<Item> {
         val itemCommonTag: TagKey<Item> = variant.itemCommonTag ?: return this
         val tagKey: TagKey<Item> = variant.itemTagKey(material)
         return addItem(itemCommonTag, tagKey, item)

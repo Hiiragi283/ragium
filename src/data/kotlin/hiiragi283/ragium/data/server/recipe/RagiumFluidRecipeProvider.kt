@@ -10,7 +10,8 @@ import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
@@ -76,13 +77,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Naphtha -> Diesel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
-            HTResultHelper.item(HTMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+            HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375) to null,
         )
         // Diesel + Crimson Crystal -> Bloo-Diesel
         HTItemWithFluidToObjRecipeBuilder
             .mixing(
-                HTIngredientHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
+                HTIngredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
                 HTIngredientHelper.fluid(RagiumFluidContents.DIESEL, 1000),
                 HTResultHelper.fluid(RagiumFluidContents.BLOOD_DIESEL, 1000),
             ).save(output)
@@ -127,13 +128,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Crimson Sap -> Sap + Crimson Crystal
         distillation(
             RagiumFluidContents.CRIMSON_SAP to 1000,
-            HTResultHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
+            HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
             HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
         )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
-            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Stem -> Warped Sap
@@ -145,13 +146,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Warped Sap -> Sap + Warped Crystal
         distillation(
             RagiumFluidContents.WARPED_SAP to 1000,
-            HTResultHelper.item(HTMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL),
+            HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL),
             HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
         )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
-            .addIngredient(HTMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
     }
 }

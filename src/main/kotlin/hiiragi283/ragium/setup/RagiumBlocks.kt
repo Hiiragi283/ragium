@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
@@ -127,25 +128,25 @@ object RagiumBlocks {
     //    Materials    //
 
     @JvmField
-    val ORES: HTTable<HTMaterialVariant, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
+    val ORES: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
         listOf(
-            HTMaterialVariant.ORE,
-            HTMaterialVariant.DEEP_ORE,
-            HTMaterialVariant.NETHER_ORE,
-            HTMaterialVariant.END_ORE,
-        ).forEach { variant: HTMaterialVariant ->
+            HTBlockMaterialVariant.ORE,
+            HTBlockMaterialVariant.DEEP_ORE,
+            HTBlockMaterialVariant.NETHER_ORE,
+            HTBlockMaterialVariant.END_ORE,
+        ).forEach { variant: HTBlockMaterialVariant ->
             val pattern: String = when (variant) {
-                HTMaterialVariant.ORE -> "%s_ore"
-                HTMaterialVariant.DEEP_ORE -> "deepslate_%s_ore"
-                HTMaterialVariant.NETHER_ORE -> "nether_%s_ore"
-                HTMaterialVariant.END_ORE -> "end_%s_ore"
+                HTBlockMaterialVariant.ORE -> "%s_ore"
+                HTBlockMaterialVariant.DEEP_ORE -> "deepslate_%s_ore"
+                HTBlockMaterialVariant.NETHER_ORE -> "nether_%s_ore"
+                HTBlockMaterialVariant.END_ORE -> "end_%s_ore"
                 else -> return@forEach
             }
             val stone: Block = when (variant) {
-                HTMaterialVariant.ORE -> Blocks.DIAMOND_ORE
-                HTMaterialVariant.DEEP_ORE -> Blocks.DEEPSLATE_DIAMOND_ORE
-                HTMaterialVariant.NETHER_ORE -> Blocks.NETHER_QUARTZ_ORE
-                HTMaterialVariant.END_ORE -> Blocks.END_STONE
+                HTBlockMaterialVariant.ORE -> Blocks.DIAMOND_ORE
+                HTBlockMaterialVariant.DEEP_ORE -> Blocks.DEEPSLATE_DIAMOND_ORE
+                HTBlockMaterialVariant.NETHER_ORE -> Blocks.NETHER_QUARTZ_ORE
+                HTBlockMaterialVariant.END_ORE -> Blocks.END_STONE
                 else -> null
             } ?: return@forEach
 
@@ -164,7 +165,7 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
@@ -185,7 +186,7 @@ object RagiumBlocks {
             // Misc
             RagiumMaterialType.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (material: RagiumMaterialType, properties: BlockBehaviour.Properties) ->
-            put(HTMaterialVariant.STORAGE_BLOCK, material, REGISTER.registerSimple("${material.serializedName}_block", properties))
+            put(HTBlockMaterialVariant.STORAGE_BLOCK, material, REGISTER.registerSimple("${material.serializedName}_block", properties))
         }
 
         // Glasses
@@ -196,7 +197,7 @@ object RagiumBlocks {
             blastProof: Boolean,
         ) {
             put(
-                HTMaterialVariant.GLASS_BLOCK,
+                HTBlockMaterialVariant.GLASS_BLOCK,
                 material,
                 REGISTER.registerSimple(
                     "${material.serializedName}_glass",
@@ -218,7 +219,7 @@ object RagiumBlocks {
             blastProof: Boolean,
         ) {
             put(
-                HTMaterialVariant.TINTED_GLASS_BLOCK,
+                HTBlockMaterialVariant.TINTED_GLASS_BLOCK,
                 material,
                 REGISTER.registerSimple(
                     "tinted_${material.serializedName}_glass",
@@ -234,17 +235,19 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): HTSimpleDeferredBlockHolder = MATERIALS.get(variant, material)
-        ?: error("Unregistered ${variant.serializedName} block for ${material.serializedName}")
+    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlockHolder =
+        MATERIALS.get(variant, material)
+            ?: error("Unregistered ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
-    fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTMaterialVariant.STORAGE_BLOCK, material)
+    fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material)
 
     @JvmStatic
-    fun getGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTMaterialVariant.GLASS_BLOCK, material)
+    fun getGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material)
 
     @JvmStatic
-    fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTMaterialVariant.TINTED_GLASS_BLOCK, material)
+    fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder =
+        getMaterial(HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material)
 
     //    Buildings    //
 

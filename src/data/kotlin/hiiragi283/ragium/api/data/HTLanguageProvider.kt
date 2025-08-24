@@ -7,31 +7,32 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
-import hiiragi283.ragium.util.variant.HTToolVariant
 import mekanism.common.registration.impl.DeferredChemical
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
+import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
@@ -39,30 +40,32 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Extension    //
 
     fun addPatterned() {
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
-            addBlock(block, material.translate(type, variant))
-        }
-
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
-            addBlock(block, material.translate(type, variant))
-        }
+        addBlocks(RagiumBlocks.ORES)
+        addBlocks(RagiumBlocks.MATERIALS)
 
         RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
             addItem(item, material.translate(type, variant))
         }
 
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            addItem(item, variant.translate(type, material.getTranslatedName(type)))
-        }
-
-        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            addItem(item, variant.translate(type, material.getTranslatedName(type)))
-        }
+        addItems(RagiumItems.ARMORS)
+        addItems(RagiumItems.TOOLS)
 
         addVariants<HTGeneratorVariant>()
         addVariants<HTMachineVariant>()
         addVariants<HTDeviceVariant>()
         addVariants<HTDrumVariant>()
+    }
+
+    private fun addBlocks(table: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, out Supplier<out Block>>) {
+        table.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: Supplier<out Block>) ->
+            addBlock(block, material.translate(type, variant))
+        }
+    }
+
+    private fun addItems(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Item>>) {
+        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: Supplier<out Item>) ->
+            addItem(item, variant.translate(type, material.getTranslatedName(type)))
+        }
     }
 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {

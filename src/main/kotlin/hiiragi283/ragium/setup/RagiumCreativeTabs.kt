@@ -6,12 +6,14 @@ import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -89,8 +91,14 @@ object RagiumCreativeTabs {
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Materials
-        HTMaterialVariant.MATERIAL_TAB_ORDER
-            .flatMap(RagiumItems.MATERIALS::rowValues)
+        listOf(
+            HTItemMaterialVariant.RAW_MATERIAL,
+            HTItemMaterialVariant.GEM,
+            RagiumMaterialVariants.COMPOUND,
+            HTItemMaterialVariant.INGOT,
+            HTItemMaterialVariant.NUGGET,
+            HTItemMaterialVariant.DUST,
+        ).flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
         // Ingredients
         output.accept(RagiumItems.TAR)
@@ -111,8 +119,11 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.BASALT_MESH)
         output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
 
-        HTMaterialVariant.CIRCUIT_TAB_ORDER
-            .flatMap(RagiumItems.MATERIALS::rowValues)
+        listOf(
+            RagiumMaterialVariants.COIL,
+            HTItemMaterialVariant.CIRCUIT,
+            RagiumMaterialVariants.COMPONENT,
+        ).flatMap(RagiumItems.MATERIALS::rowValues)
             .forEach(output::accept)
         output.accept(RagiumItems.ETERNAL_COMPONENT)
     }
@@ -124,21 +135,37 @@ object RagiumCreativeTabs {
             "ragi_ticket",
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_ALLOY))
+            output.acceptFromTable(
+                RagiumItems.TOOLS,
+                RagiumAPI.getInstance().getToolVariants(),
+                RagiumMaterialType.RAGI_ALLOY,
+            )
             output.accept(RagiumItems.RAGI_MAGNET)
 
             output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
 
-            output.accept(RagiumItems.getForgeHammer(RagiumMaterialType.RAGI_CRYSTAL))
+            output.acceptFromTable(
+                RagiumItems.TOOLS,
+                RagiumAPI.getInstance().getToolVariants(),
+                RagiumMaterialType.RAGI_CRYSTAL,
+            )
             output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, RagiumMaterialType.AZURE_STEEL)
+            output.acceptFromTable(
+                RagiumItems.TOOLS,
+                RagiumAPI.getInstance().getToolVariants(),
+                RagiumMaterialType.AZURE_STEEL,
+            )
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, RagiumMaterialType.DEEP_STEEL)
+            output.acceptFromTable(
+                RagiumItems.TOOLS,
+                RagiumAPI.getInstance().getToolVariants(),
+                RagiumMaterialType.DEEP_STEEL,
+            )
 
             output.accept(RagiumItems.DRILL)
 
@@ -208,13 +235,21 @@ object RagiumCreativeTabs {
             .build()
     }
 
+    fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
+        table: HTTable<V, HTMaterialType, DeferredItem<*>>,
+        variants: Iterable<V>,
+        material: HTMaterialType,
+    ) {
+        variants
+            .mapNotNull(table.column(material)::get)
+            .forEach(this::accept)
+    }
+
     inline fun <reified V> CreativeModeTab.Output.acceptFromTable(
         table: HTTable<V, HTMaterialType, DeferredItem<*>>,
         material: HTMaterialType,
     ) where V : HTVariantKey, V : Enum<V> {
-        enumEntries<V>()
-            .mapNotNull(table.column(material)::get)
-            .forEach(this::accept)
+        acceptFromTable(table, enumEntries<V>(), material)
     }
 
     @JvmStatic
@@ -247,20 +282,21 @@ object RagiumCreativeTabs {
         if (key == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             insertAfter(
                 Items.IRON_PICKAXE,
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.IRON),
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.IRON),
             )
             insertAfter(
                 Items.DIAMOND_PICKAXE,
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.DIAMOND),
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.DIAMOND),
             )
             insertAfter(
                 Items.NETHERITE_PICKAXE,
-                RagiumItems.getForgeHammer(HTVanillaMaterialType.NETHERITE),
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.NETHERITE),
             )
         }
 
         if (INGREDIENTS.`is`(key)) {
             insertAfter(RagiumItems.getDust(RagiumMaterialType.RAGINITE), RagiumItems.RAGI_COKE)
+            insertAfter(RagiumItems.getDust(RagiumMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.getGem(RagiumMaterialType.AZURE), RagiumItems.SILICON)
             insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), RagiumItems.ELDRITCH_GEAR)
             insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)

@@ -6,9 +6,12 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -32,8 +35,24 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             250,
         )
 
+        knife()
+
         cherry()
         cake()
+    }
+
+    private fun knife() {
+        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+            .pattern("A", "B")
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .save(output)
+
+        createComponentUpgrade(
+            RagiumTierType.ELITE,
+            RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
+            RagiumDelightAddon.RAGI_ALLOY_KNIFE,
+        )
     }
 
     private fun cherry() {
@@ -74,6 +93,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     private fun cake() {
         cutting(RagiumBlocks.SWEET_BERRIES_CAKE, RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
     }
+
+    //    Extension    //
 
     @JvmStatic
     private fun cutting(hole: TagKey<Item>, slice: ItemLike, count: Int) {

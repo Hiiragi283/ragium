@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
@@ -20,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
+import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -55,6 +58,17 @@ class InternalRagiumAPI : RagiumAPI {
         }
         return addonCache
     }
+
+    override fun getToolVariants(): List<HTToolVariant> = buildList {
+        // Vanilla
+        HTVanillaToolVariant.entries.forEach(::add)
+        // Ragium
+        add(HTHammerToolVariant)
+        // Addons
+        for (addon: RagiumAddon in getAddons()) {
+            addon.addToolVariant(::add)
+        }
+    }.sortedBy(HTToolVariant::getSerializedName)
 
     //    Item    //
 

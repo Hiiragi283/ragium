@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -43,7 +45,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             // Dust -> Chemical
             factory(
-                itemHelper.from(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
+                itemHelper.from(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(10),
             ).build(output, id("$prefix/raginite/from_dust"))
             // Enriched -> Chemical
@@ -72,13 +74,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ore -> Dust
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTMaterialVariant.ORE, RagiumMaterialType.RAGINITE),
+                itemHelper.from(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE),
                 RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(12),
             ).build(output, id("processing/raginite/from_ore"))
         // Enrich
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
+                itemHelper.from(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
                 RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
             ).build(output, id("enriching/enrich/raginite"))
         // Raginite + Copper -> Ragi-Alloy
@@ -214,7 +216,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
     private fun IItemStackIngredientCreator.from(
-        variant: HTMaterialVariant,
+        variant: HTMaterialVariant.ItemTag,
         material: HTMaterialType,
         count: Int = 1,
     ): ItemStackIngredient = from(variant.itemTagKey(material), count)
@@ -228,7 +230,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private fun oreToGem(material: HTMaterialType) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTMaterialVariant.ORE, material),
+                itemHelper.from(HTBlockMaterialVariant.ORE, material),
                 RagiumItems.getGem(material).toStack(2),
             ).build(output, id("processing/${material.serializedName}/from_ore"))
     }

@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.common.fluid.HTNetherVaporizableFluidType
 import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
@@ -125,7 +125,7 @@ object RagiumFluidContents {
             defaultProperties(),
             HTNetherVaporizableFluidType.create(
                 HTResultHelper.item(
-                    HTMaterialVariant.GEM,
+                    HTItemMaterialVariant.GEM,
                     RagiumMaterialType.CRIMSON_CRYSTAL,
                 ),
             ),
@@ -138,7 +138,7 @@ object RagiumFluidContents {
             defaultProperties(),
             HTNetherVaporizableFluidType.create(
                 HTResultHelper.item(
-                    HTMaterialVariant.GEM,
+                    HTItemMaterialVariant.GEM,
                     RagiumMaterialType.WARPED_CRYSTAL,
                 ),
             ),

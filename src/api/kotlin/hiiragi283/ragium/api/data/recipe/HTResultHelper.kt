@@ -32,7 +32,8 @@ object HTResultHelper {
     fun item(key: ResourceKey<Item>, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
         RagiumAPI.getInstance().createItemResult(HTKeyOrTagEntry(key), count, component)
 
-    fun item(variant: HTMaterialVariant, material: HTMaterialType, count: Int = 1): HTItemResult = item(variant.itemTagKey(material), count)
+    fun item(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, count: Int = 1): HTItemResult =
+        item(variant.itemTagKey(material), count)
 
     fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult =
         RagiumAPI.getInstance().createItemResult(HTKeyOrTagEntry(tagKey), count, DataComponentPatch.EMPTY)
