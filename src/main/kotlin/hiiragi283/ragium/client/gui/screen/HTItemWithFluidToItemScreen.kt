@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -15,21 +17,21 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-class HTItemWithFluidToItemScreen(
+class HTItemWithFluidToItemScreen<BE : HTMachineBlockEntity>(
     texture: ResourceLocation,
     private val factory: (() -> Float, Int, Int) -> HTProgressWidget,
-    menu: HTBlockEntityContainerMenu<HTMachineBlockEntity>,
+    menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTMachineScreen<HTMachineBlockEntity>(texture, menu, inventory, title),
+) : HTMachineScreen<BE>(texture, menu, inventory, title),
     HTFluidScreen {
     companion object {
         @JvmStatic
         fun infuser(
-            menu: HTBlockEntityContainerMenu<HTMachineBlockEntity>,
+            menu: HTBlockEntityContainerMenu<HTInfuserBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTItemWithFluidToItemScreen = HTItemWithFluidToItemScreen(
+        ): HTItemWithFluidToItemScreen<HTInfuserBlockEntity> = HTItemWithFluidToItemScreen(
             RagiumAPI.id("textures/gui/container/infuser.png"),
             HTProgressWidget::infuse,
             menu,
@@ -39,10 +41,10 @@ class HTItemWithFluidToItemScreen(
 
         @JvmStatic
         fun solidifier(
-            menu: HTBlockEntityContainerMenu<HTMachineBlockEntity>,
+            menu: HTBlockEntityContainerMenu<HTSolidifierBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTItemWithFluidToItemScreen = HTItemWithFluidToItemScreen(
+        ): HTItemWithFluidToItemScreen<HTSolidifierBlockEntity> = HTItemWithFluidToItemScreen(
             RagiumAPI.id("textures/gui/container/solidifier.png"),
             HTProgressWidget::arrow,
             menu,
@@ -56,7 +58,7 @@ class HTItemWithFluidToItemScreen(
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
     }
 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

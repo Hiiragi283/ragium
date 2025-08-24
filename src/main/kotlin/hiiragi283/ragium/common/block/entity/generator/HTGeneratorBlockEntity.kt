@@ -12,8 +12,6 @@ abstract class HTGeneratorBlockEntity(protected val variant: HTGeneratorVariant,
     HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
     final override val energyUsage: Int = variant.energyRate
 
-    final override fun handleEnergy(network: IEnergyStorage): Int = network.receiveEnergy(energyUsage, false)
-
     final override fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
         HTFilteredEnergyStorage(network, HTEnergyFilter.EXTRACT_ONLY)
 }

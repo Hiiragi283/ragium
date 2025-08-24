@@ -40,11 +40,11 @@ class HTDeferredBlockRegister(namespace: String) :
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlockHolder<BLOCK, ITEM> = register(
         name,
-        { blockGetter(blockProp) }, 
+        { blockGetter(blockProp) },
         itemGetter,
-        itemProp
+        itemProp,
     )
-    
+
     fun <BLOCK : Block, ITEM : Item> register(
         name: String,
         blockGetter: () -> BLOCK,

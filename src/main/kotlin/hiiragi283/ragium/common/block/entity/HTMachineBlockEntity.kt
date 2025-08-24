@@ -115,14 +115,12 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     protected fun doProgress(network: IEnergyStorage): Boolean {
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += handleEnergy(network)
+            usedEnergy += network.extractEnergy(energyUsage, false)
         }
         if (usedEnergy < requiredEnergy) return false
         usedEnergy -= requiredEnergy
         return true
     }
-
-    protected open fun handleEnergy(network: IEnergyStorage): Int = network.extractEnergy(energyUsage, false)
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val network: IEnergyStorage = this.network ?: return false

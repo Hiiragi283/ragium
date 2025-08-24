@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.api.gui.component.HTProgressWidget
-import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -19,7 +18,7 @@ open class HTMachineScreen<BE : HTMachineBlockEntity>(
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTContainerScreen<HTBlockEntityContainerMenu<BE>>(menu, inventory, title) {
+) : HTBlockEntityContainerScreen<BE>(menu, inventory, title) {
     companion object {
         @JvmStatic
         fun <BE : HTMachineBlockEntity> create(

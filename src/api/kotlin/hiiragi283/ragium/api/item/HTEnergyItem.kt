@@ -1,17 +1,17 @@
 package hiiragi283.ragium.api.item
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addEnergyTooltip
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.roundToInt
 
@@ -39,10 +39,8 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         @JvmStatic
         fun getEnergyUsage(stack: ItemStack, amount: Int): Int {
             var result: Int = amount
-            val server: MinecraftServer = RagiumAPI.getInstance().getCurrentServer() ?: return amount
-            server
-                .registryAccess()
-                .lookupOrThrow(Registries.ENCHANTMENT)
+            val enchGetter: HolderGetter<Enchantment> = CommonHooks.resolveLookup(Registries.ENCHANTMENT) ?: return amount
+            enchGetter
                 .get(Enchantments.UNBREAKING)
                 .ifPresent { holder: Holder.Reference<Enchantment> ->
                     val level: Int = stack.getEnchantmentLevel(holder)

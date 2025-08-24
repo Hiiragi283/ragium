@@ -33,6 +33,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
@@ -236,6 +237,17 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        HTDynamicRecipes.bucketFilling().forEach { (id: ResourceLocation, recipe: HTItemWithFluidToItemRecipe) ->
+            registry.addRecipe(
+                HTItemWithFluidToItemEmiRecipe.infusing(
+                    id,
+                    recipe.fluidIngredient.toFluidEmi(),
+                    recipe.itemIngredient.toItemEmi(),
+                    recipe.result.toEmi(),
+                ),
+            )
+        }
+
         registry.addRecipeHandler(RagiumMenuTypes.INFUSER.get(), HTRecipeHandler(RagiumEmiCategories.INFUSING))
         // Melting
         RagiumRecipeTypes.MELTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToFluidRecipe ->
@@ -247,6 +259,16 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        HTDynamicRecipes.bucketEmptying().forEach { (id: ResourceLocation, recipe: HTItemToFluidRecipe) ->
+            registry.addRecipe(
+                HTMeltingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    recipe.result.toEmi(),
+                ),
+            )
+        }
+
         registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
         // Mixing
         RagiumRecipeTypes.MIXING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToFluidRecipe ->

@@ -54,7 +54,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = getReducedUpdateTag(registries)
 
-    override fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = super.getUpdateTag(registries)
+    override fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
 
     final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
         loadAdditional(tag, lookupProvider)

@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
 class HTSimpleRecipeCache<I : RecipeInput, R : Recipe<I>>(val recipeType: RecipeType<R>) : HTRecipeCache<I, R> {
-    override var lastRecipe: ResourceLocation? = null
-        private set
+    private var lastRecipe: ResourceLocation? = null
 
     override fun getFirstHolder(input: I, level: Level): RecipeHolder<R>? = level.recipeManager
         .getRecipeFor(recipeType, input, level, lastRecipe)

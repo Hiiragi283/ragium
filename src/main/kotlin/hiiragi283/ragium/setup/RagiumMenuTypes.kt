@@ -17,18 +17,18 @@ import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.resources.ResourceLocation
 
 typealias DeferredBEMenu<BE> = HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE>
-
-typealias DeferredBEMenu1 = HTDeferredMenuType<HTBlockEntityContainerMenu<HTMachineBlockEntity>, HTMachineBlockEntity>
 
 object RagiumMenuTypes {
     @JvmField
@@ -80,7 +80,7 @@ object RagiumMenuTypes {
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = register("fluid_collector")
 
     @JvmField
-    val INFUSER: DeferredBEMenu1 = register("infuser")
+    val INFUSER: DeferredBEMenu<HTInfuserBlockEntity> = register("infuser")
 
     @JvmField
     val ITEM_BUFFER: DeferredBEMenu<HTItemBufferBlockEntity> = register("item_buffer")
@@ -104,5 +104,5 @@ object RagiumMenuTypes {
     val SINGLE_ITEM: DeferredBEMenu<HTBlockBreakerBlockEntity> = register("single_item")
 
     @JvmField
-    val SOLIDIFIER: DeferredBEMenu1 = register("solidifier")
+    val SOLIDIFIER: DeferredBEMenu<HTSolidifierBlockEntity> = register("solidifier")
 }

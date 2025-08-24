@@ -11,8 +11,7 @@ import net.minecraft.world.level.Level
 class HTMultiRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeTypes: List<RecipeType<out R>>) : HTRecipeCache<I, R> {
     constructor(vararg recipeTypes: RecipeType<out R>) : this(recipeTypes.toList())
 
-    override var lastRecipe: ResourceLocation? = null
-        private set
+    private var lastRecipe: ResourceLocation? = null
 
     override fun getFirstHolder(input: I, level: Level): RecipeHolder<R>? {
         for (type: RecipeType<out R> in recipeTypes) {

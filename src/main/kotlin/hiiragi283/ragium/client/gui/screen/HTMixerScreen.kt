@@ -23,9 +23,9 @@ class HTMixerScreen(menu: HTBlockEntityContainerMenu<HTMixerBlockEntity>, invent
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0)))
         fluidWidget1 =
-            addRenderableWidget(createFluidTankWidget(1, HTSlotHelper.getSlotPosX(6.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidWidget(1, HTSlotHelper.getSlotPosX(6.5), HTSlotHelper.getSlotPosY(0)))
     }
 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

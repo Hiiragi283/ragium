@@ -73,9 +73,10 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(tank.fluid)
         if (required <= 0) return false
-        return if (tank.canDrain(required, true)) {
+        return if (tank.canDrain(required, true) && network.receiveEnergy(energyUsage, true) == energyUsage) {
             tank.drain(required, false)
-            handleEnergy(network) > 0
+            network.receiveEnergy(energyUsage, false)
+            true
         } else {
             false
         }

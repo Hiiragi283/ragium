@@ -11,8 +11,15 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 import java.util.Optional
+
+operator fun <RECIPE : Recipe<*>> RecipeHolder<RECIPE>.component1(): ResourceLocation = id
+
+operator fun <RECIPE : Recipe<*>> RecipeHolder<RECIPE>.component2(): RECIPE = value
 
 //    EmiIngredient    //
 

@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Recipe
 import java.util.*
 
 class HTItemWithFluidToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTItemWithFluidToObjRecipe<RESULT>>(
@@ -51,7 +50,7 @@ class HTItemWithFluidToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTI
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): Recipe<*> = factory.create(itemIngredient, fluidIngredient, result)
+    override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result)
 
     fun interface Factory<RESULT : HTRecipeResult<*>, RECIPE : HTItemWithFluidToObjRecipe<RESULT>> {
         fun create(itemIngredient: Optional<HTItemIngredient>, fluidIngredient: Optional<HTFluidIngredient>, result: RESULT): RECIPE

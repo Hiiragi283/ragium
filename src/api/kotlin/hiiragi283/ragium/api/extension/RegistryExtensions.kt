@@ -4,6 +4,7 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.Util
+import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -25,6 +26,9 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
+import java.util.stream.Stream
+
+//    ResourceLocation    //
 
 /**
  * 名前空間が`minecraft`となる[ResourceLocation]を返します。
@@ -52,6 +56,12 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
         append(suffix)
     }
 }
+
+//    Registry    //
+
+fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Stream<Holder.Reference<T>> = holders()
+    .filter(Holder.Reference<T>::isBound)
+    .filter { holder: Holder.Reference<T> -> !holder.`is`(defaultKey) }
 
 //    Holder    //
 

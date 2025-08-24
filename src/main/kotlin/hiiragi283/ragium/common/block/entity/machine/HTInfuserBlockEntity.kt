@@ -10,6 +10,8 @@ import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.common.recipe.HTDynamicRecipeCache
+import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -31,7 +33,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToItemRecipe>(
-        RagiumRecipeTypes.INFUSING.get(),
+        HTDynamicRecipeCache(RagiumRecipeTypes.INFUSING.get(), HTDynamicRecipes::bucketFilling),
         HTMachineVariant.INFUSER,
         pos,
         state,

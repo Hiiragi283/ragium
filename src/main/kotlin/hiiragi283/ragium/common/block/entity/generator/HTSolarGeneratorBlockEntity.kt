@@ -32,7 +32,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         // 現在地から空が見えない場合はスキップ
         if (level.canSeeSky(pos)) return false
         // 発電を行う
-        val generated: Int = handleEnergy(network)
+        val generated: Int = network.receiveEnergy(energyUsage, false)
         return false
     }
 }

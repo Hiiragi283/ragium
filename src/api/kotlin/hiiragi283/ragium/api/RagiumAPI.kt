@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
-import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -28,7 +27,7 @@ import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
 
 interface RagiumAPI {
@@ -84,12 +83,6 @@ interface RagiumAPI {
      * @return プレイヤーが存在しない場合は`null`
      */
     fun getPlayer(uuid: UUID, server: MinecraftServer?): ServerPlayer? = server?.playerList?.getPlayer(uuid)
-
-    /**
-     * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。
-     * @return 存在しない場合は`null`
-     */
-    fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess()
 
     /**
      * 現在のサーバーのインスタンスを返します。
@@ -149,11 +142,11 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTContainerScreen.createFluidTankWidget]
+     * @see [HTContainerScreen.createFluidWidget]
      */
-    fun createFluidTankWidget(
-        stack: FluidStack?,
-        capacity: Int?,
+    fun createFluidWidget(
+        handler: IFluidHandler?,
+        index: Int,
         x: Int,
         y: Int,
     ): HTFluidWidget

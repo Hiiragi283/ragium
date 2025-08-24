@@ -13,5 +13,5 @@ abstract class HTCombineItemToItemRecipe(val ingredients: List<HTItemIngredient>
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
 
     final override fun isIncomplete(): Boolean =
-        ingredients.isEmpty() || ingredients.all(HTItemIngredient::hasNoMatchingStacks) || result.hasNoMatchingStack()
+        ingredients.isEmpty() || ingredients.any(HTItemIngredient::hasNoMatchingStacks) || result.hasNoMatchingStack()
 }

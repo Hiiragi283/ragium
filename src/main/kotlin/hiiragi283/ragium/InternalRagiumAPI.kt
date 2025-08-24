@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -30,7 +30,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -79,14 +79,14 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
-    override fun createFluidTankWidget(
-        stack: FluidStack?,
-        capacity: Int?,
+    override fun createFluidWidget(
+        handler: IFluidHandler?,
+        index: Int,
         x: Int,
         y: Int,
-    ): HTFluidWidget = HTFluidTankWidget(
-        stack ?: FluidStack.EMPTY,
-        capacity ?: 0,
+    ): HTFluidWidget = HTFluidHandlerWidget(
+        handler,
+        index,
         x,
         y,
     )

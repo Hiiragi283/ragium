@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Recipe
 
 class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(
     prefix: String,
@@ -28,7 +27,7 @@ class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): Recipe<*> = factory.create(ingredients, result)
+    override fun createRecipe(): RECIPE = factory.create(ingredients, result)
 
     fun interface Factory<RECIPE : HTCombineItemToItemRecipe> {
         fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): RECIPE

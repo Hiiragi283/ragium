@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.inventory.container.type
 import net.minecraft.client.Minecraft
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamDecoder
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -22,9 +21,9 @@ class HTMenuType<MENU : AbstractContainerMenu, C>(val factory: HTContainerFactor
         @JvmStatic
         fun <MENU : AbstractContainerMenu, C> create(
             factory: HTContainerFactory<MENU, C>,
-            decoder: StreamDecoder<in RegistryFriendlyByteBuf, C>,
-        ): HTMenuType<MENU, C> = HTMenuType(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf ->
-            factory.create(containerId, inventory, decoder.decode(buf))
+            decoder: (RegistryFriendlyByteBuf?) -> C,
+        ): HTMenuType<MENU, C> = HTMenuType(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
+            factory.create(containerId, inventory, decoder(buf))
         }
 
         @JvmStatic
@@ -38,7 +37,7 @@ class HTMenuType<MENU : AbstractContainerMenu, C>(val factory: HTContainerFactor
         @JvmStatic
         inline fun <reified BE : BlockEntity> getBlockEntityFromBuf(buf: FriendlyByteBuf?): BE {
             checkNotNull(buf)
-            if (!FMLEnvironment.dist.isClient) error("Only supported on client side")
+            check(FMLEnvironment.dist.isClient) { "Only supported on client side" }
             return Minecraft.getInstance().level?.getBlockEntity(buf.readBlockPos()) as? BE
                 ?: error("Failed to find block entity on client side")
         }

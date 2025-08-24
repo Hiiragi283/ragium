@@ -26,7 +26,7 @@ class HTFuelGeneratorScreen(menu: HTBlockEntityContainerMenu<HTFuelGeneratorBloc
         addRenderableWidget(createEnergyWidget(menu.context.getDimension(), HTSlotHelper.getSlotPosX(4)))
         // Fluid Widget
         fluidWidget =
-            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0)))
     }
 
     //    HTFluidScreen    //

@@ -36,7 +36,7 @@ enum class HTDecorationVariant(private val enUsPattern: String, private val jaJp
     val slab: HTDeferredBlockHolder<SlabBlock, BlockItem> get() = RagiumBlocks.SLABS[this]!!
     val stairs: HTDeferredBlockHolder<StairBlock, BlockItem> get() = RagiumBlocks.STAIRS[this]!!
     val wall: HTDeferredBlockHolder<WallBlock, BlockItem> get() = RagiumBlocks.WALLS[this]!!
-    
+
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern
         HTLanguageType.JA_JP -> jaJpPattern

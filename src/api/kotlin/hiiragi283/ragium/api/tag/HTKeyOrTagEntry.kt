@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.tag
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import io.netty.buffer.ByteBuf
@@ -13,6 +12,7 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import net.neoforged.neoforge.common.CommonHooks
 
 class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     companion object {
@@ -31,8 +31,10 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
         val error: DataResult<Holder<T>> = DataResult.error { "Failed to find lookup for $registryKey" }
-        val provider1: HolderLookup.Provider = provider ?: RagiumAPI.getInstance().getRegistryAccess() ?: return error
-        return provider1.lookup(registryKey).map(::getFirstHolder).orElseGet { error }
+        val getter: HolderGetter<T> = provider?.lookupOrThrow(registryKey)
+            ?: CommonHooks.resolveLookup(registryKey)
+            ?: return error
+        return getFirstHolder(getter)
     }
 
     fun getFirstHolder(lookup: HolderGetter<T>): DataResult<out Holder<T>> = entry.map(

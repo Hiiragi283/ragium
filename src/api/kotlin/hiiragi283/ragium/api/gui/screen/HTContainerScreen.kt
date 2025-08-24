@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
@@ -59,16 +58,10 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: 
 
     val startY: Int get() = (height - imageHeight) / 2
 
-    fun createFluidTankWidget(index: Int, x: Int, y: Int): HTFluidWidget {
-        val blockEntity: HTBlockEntityExtension? =
-            (menu as? HTContainerWithContextMenu<*>)?.context as? HTBlockEntityExtension
-        val handler: IFluidHandler? = (blockEntity as? HTHandlerBlockEntity)?.getFluidHandler(null)
-        return RagiumAPI.getInstance().createFluidTankWidget(
-            handler?.getFluidInTank(index),
-            handler?.getTankCapacity(index),
-            startX + x,
-            startY + y,
-        )
+    fun createFluidWidget(index: Int, x: Int, y: Int): HTFluidWidget {
+        val handler: IFluidHandler? =
+            ((menu as? HTContainerWithContextMenu<*>)?.context as? HTHandlerBlockEntity)?.getFluidHandler(null)
+        return RagiumAPI.getInstance().createFluidWidget(handler, index, startX + x, startY + y)
     }
 
     fun createEnergyWidget(

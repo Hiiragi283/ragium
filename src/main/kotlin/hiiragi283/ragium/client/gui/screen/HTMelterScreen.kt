@@ -21,7 +21,7 @@ class HTMelterScreen(menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>, inve
     override fun init() {
         super.init()
         fluidWidget =
-            addRenderableWidget(createFluidTankWidget(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
+            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
     }
 
     //    HTFluidScreen    //

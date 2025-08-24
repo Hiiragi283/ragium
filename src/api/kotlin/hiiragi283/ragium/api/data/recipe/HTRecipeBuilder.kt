@@ -59,7 +59,7 @@ interface HTRecipeBuilder : RecipeBuilder {
     //    Prefixed    //
 
     abstract class Prefixed(val prefix: String) : HTRecipeBuilder {
-        protected abstract fun createRecipe(): Recipe<*>
+        abstract fun createRecipe(): Recipe<*>
 
         private val conditions: MutableList<ICondition> = mutableListOf()
 
