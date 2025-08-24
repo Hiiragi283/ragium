@@ -13,8 +13,11 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
@@ -54,6 +57,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addVariants<HTMachineVariant>()
         addVariants<HTDeviceVariant>()
         addVariants<HTDrumVariant>()
+
+        for ((material: RagiumMaterialType, knife) in RagiumDelightAddon.KNIFE_MAP) {
+            addItem(knife, HTKnifeToolVariant.translate(type, material.getTranslatedName(type)))
+        }
     }
 
     private fun addBlocks(table: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, out Supplier<out Block>>) {

@@ -13,13 +13,10 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.tool.HTToolVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -63,12 +60,6 @@ interface RagiumAPI {
 
     fun getAddons(): List<RagiumAddon>
 
-    fun getToolVariants(): List<HTToolVariant>
-
-    fun getToolVariant(name: String): HTToolVariant = getToolVariants()
-        .firstOrNull { variant: HTToolVariant -> variant.serializedName == name }
-        ?: error("Unknown tool variant: $name")
-
     //    Item    //
 
     fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(potion.value().effects, count)
@@ -78,24 +69,6 @@ interface RagiumAPI {
     fun createSoda(instances: List<MobEffectInstance>, count: Int = 1): ItemStack
 
     //    Server    //
-
-    /**
-     * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
-     * @return サーバーまたはプレイヤーが存在しない場合は`null`
-     */
-    fun getPlayer(uuid: UUID): ServerPlayer? = getPlayer(uuid, getCurrentServer())
-
-    /**
-     * [uuid]と[server]から[ServerPlayer]を返します。
-     * @return プレイヤーが存在しない場合は`null`
-     */
-    fun getPlayer(uuid: UUID, server: MinecraftServer?): ServerPlayer? = server?.playerList?.getPlayer(uuid)
-
-    /**
-     * 現在のサーバーのインスタンスを返します。
-     * @return 存在しない場合は`null`
-     */
-    fun getCurrentServer(): MinecraftServer?
 
     /**
      * エネルギーネットワークのマネージャを返します。

@@ -7,25 +7,23 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTVariantKey
-import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
+import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
-import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
@@ -34,6 +32,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -131,8 +130,38 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
-        addUpgrades(RagiumItems.ARMORS)
-        addUpgrades(RagiumItems.TOOLS)
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, armor: DeferredItem<*>) ->
+            val before: HTVanillaMaterialType = when (material) {
+                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
+                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
+                else -> return@forEach
+            }
+            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, before) ?: return@forEach
+            when (material) {
+                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
+                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
+                else -> return@forEach
+            }(armor, beforeArmor)
+        }
+
+        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, material: HTMaterialType, tool: ItemLike) ->
+            val before: HTVanillaMaterialType = when (material) {
+                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
+                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
+                else -> return@forEach
+            }
+            val beforeTool: ItemLike = when (variant) {
+                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, before)
+                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, before)
+                is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[before]?.get()
+                else -> null
+            } ?: return@forEach
+            when (material) {
+                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
+                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
+                else -> return@forEach
+            }(tool, beforeTool)
+        }
 
         addTemplate(
             RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
@@ -142,31 +171,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
             RagiumMaterialType.DEEP_STEEL,
         )
-    }
-
-    @JvmStatic
-    private fun <V : HTVariantKey> addUpgrades(table: HTTable<V, HTMaterialType, out ItemLike>) {
-        table.forEach { (variant: V, material: HTMaterialType, item: ItemLike) ->
-            val base: HTVanillaMaterialType = when (material) {
-                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
-                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
-                else -> return@forEach
-            }
-            val path = "${base.serializedName}_${variant.serializedName}"
-            val id: ResourceLocation = when (variant) {
-                is HTToolVariant -> variant.getParentId(path)
-                is HTArmorVariant -> vanillaId(path)
-                else -> return@forEach
-            }
-            when (material) {
-                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
-                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
-                else -> return@forEach
-            }(
-                item,
-                BuiltInRegistries.ITEM.get(id),
-            )
-        }
     }
 
     @JvmStatic

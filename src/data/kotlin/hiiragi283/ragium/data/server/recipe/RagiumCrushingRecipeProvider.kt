@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -134,7 +134,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             HTItemToObjRecipeBuilder
                 .pulverizing(
                     HTIngredientHelper.item(tagKey, input),
-                    HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.WOOD, output),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, output),
                 ).saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
         }
 

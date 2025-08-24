@@ -1,7 +1,6 @@
-package hiiragi283.ragium.util.material
+package hiiragi283.ragium.api.util.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.util.material.HTMaterialType
 
 enum class HTVanillaMaterialType(private val enName: String, private val jpName: String) : HTMaterialType {
     // Metal
@@ -23,6 +22,16 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
     REDSTONE("Redstone", "レッドストーン"),
     SOUL("Soul", "ソウル"),
     OBSIDIAN("Obsidian", "黒曜石"),
+    WOOD("Wood", "木") {
+        override fun translate(type: HTLanguageType, variant: HTMaterialVariant): String = if (variant == HTItemMaterialVariant.DUST) {
+            when (type) {
+                HTLanguageType.EN_US -> "Sawdust"
+                HTLanguageType.JA_JP -> "おがくず"
+            }
+        } else {
+            super.translate(type, variant)
+        }
+    },
     ;
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

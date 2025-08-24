@@ -9,10 +9,10 @@ import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack

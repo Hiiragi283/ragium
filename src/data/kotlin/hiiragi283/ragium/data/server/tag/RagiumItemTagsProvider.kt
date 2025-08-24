@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -15,16 +14,15 @@ import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
-import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTArmorVariant
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
@@ -45,6 +43,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
 import vectorwing.farmersdelight.common.tag.CommonTags
+import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(
@@ -59,7 +58,7 @@ class RagiumItemTagsProvider(
         helper,
     ) {
     override fun addTags(builder: HTTagBuilder<Item>) {
-        copy(builder)
+        copy()
 
         material(builder)
         food(builder)
@@ -73,7 +72,7 @@ class RagiumItemTagsProvider(
 
     private val tagsToCopy: MutableMap<TagKey<Block>, TagKey<Item>> = mutableMapOf()
 
-    private fun copy(builder: HTTagBuilder<Item>) {
+    private fun copy() {
         copy(Tags.Blocks.ORES, Tags.Items.ORES)
         copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
         copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE)
@@ -214,15 +213,17 @@ class RagiumItemTagsProvider(
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
             builder.add(variant.tagKey, item)
-        }
-        for (hammer: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTHammerToolVariant)) {
-            builder.add(Tags.Items.TOOLS_WRENCH, hammer)
-        }
-        for (knife: DeferredItem<*> in RagiumItems.TOOLS.rowValues(HTKnifeToolVariant)) {
-            builder.add(CommonTags.TOOLS_KNIFE, knife)
+            if (variant == HTHammerToolVariant) {
+                builder.add(Tags.Items.TOOLS_WRENCH, item)
+            }
         }
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
+
+        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
+        builder.add(ModTags.KNIVES, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+        builder.add(ModTags.KNIVES, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
 
         fun setupTool(tagKey: TagKey<Item>) {
             builder.addTag(ItemTags.BREAKS_DECORATED_POTS, tagKey)

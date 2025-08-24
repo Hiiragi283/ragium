@@ -8,12 +8,13 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
@@ -29,6 +30,8 @@ import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 import vectorwing.farmersdelight.common.block.PieBlock
 import vectorwing.farmersdelight.common.item.KnifeItem
+import vectorwing.farmersdelight.common.registry.ModItems
+import java.util.function.Supplier
 
 @HTAddon(RagiumConst.FARMERS_DELIGHT)
 object RagiumDelightAddon : RagiumAddon {
@@ -58,6 +61,24 @@ object RagiumDelightAddon : RagiumAddon {
     val RAGI_CRYSTAL_KNIFE: DeferredItem<KnifeItem> =
         HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_ALLOY)
 
+    @JvmField
+    val KNIFE_MAP: Map<RagiumMaterialType, DeferredItem<KnifeItem>> = buildMap {
+        put(RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
+        put(RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
+    }
+
+    @JvmField
+    val ALL_KNIFE_MAP: Map<HTMaterialType, Supplier<out Item>> = buildMap {
+        // Delight
+        put(HTVanillaMaterialType.IRON, ModItems.IRON_KNIFE)
+        put(HTVanillaMaterialType.GOLD, ModItems.GOLDEN_KNIFE)
+        put(HTVanillaMaterialType.DIAMOND, ModItems.DIAMOND_KNIFE)
+        put(HTVanillaMaterialType.NETHERITE, ModItems.NETHERITE_KNIFE)
+        // Ragium
+        put(RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
+        put(RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
+    }
+
     // Food
     @JvmStatic
     private fun registerFood(name: String, food: FoodProperties): DeferredItem<Item> =
@@ -83,15 +104,6 @@ object RagiumDelightAddon : RagiumAddon {
         ITEM_REGISTER.register(eventBus)
     }
 
-    override fun addToolVariant(consumer: (HTToolVariant) -> Unit) {
-        consumer(HTKnifeToolVariant)
-    }
-
-    override fun registerTool(consumer: (HTToolVariant, HTMaterialType, DeferredItem<*>) -> Unit) {
-        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
-        consumer(HTKnifeToolVariant, RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
-    }
-
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.HONEY_DRINK)
@@ -101,6 +113,14 @@ object RagiumDelightAddon : RagiumAddon {
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
+            for ((material: RagiumMaterialType, knife: DeferredItem<KnifeItem>) in KNIFE_MAP) {
+                event.insertAfter(
+                    RagiumItems.getTool(HTHammerToolVariant, material).toStack(),
+                    knife.toStack(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+                )
+            }
+
             val items: List<DeferredItem<*>> = listOf(
                 // Cherry
                 RagiumItems.RAGI_CHERRY,

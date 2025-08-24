@@ -12,8 +12,6 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.tool.HTToolVariant
-import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
@@ -22,11 +20,9 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
-import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
-import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -59,17 +55,6 @@ class InternalRagiumAPI : RagiumAPI {
         return addonCache
     }
 
-    override fun getToolVariants(): List<HTToolVariant> = buildList {
-        // Vanilla
-        HTVanillaToolVariant.entries.forEach(::add)
-        // Ragium
-        add(HTHammerToolVariant)
-        // Addons
-        for (addon: RagiumAddon in getAddons()) {
-            addon.addToolVariant(::add)
-        }
-    }.sortedBy(HTToolVariant::getSerializedName)
-
     //    Item    //
 
     override fun createSoda(instances: List<MobEffectInstance>, count: Int): ItemStack {
@@ -80,10 +65,8 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Server    //
 
-    override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
-
     override fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage? =
-        getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+        ServerLifecycleHooks.getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Platform    //
 

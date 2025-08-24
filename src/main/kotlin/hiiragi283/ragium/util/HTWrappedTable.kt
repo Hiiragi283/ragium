@@ -1,6 +1,7 @@
 package hiiragi283.ragium.util
 
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.util.HTTable
 
 internal open class HTWrappedTable<R : Any, C : Any, V : Any>(protected val delegated: Table<R, C, V>) : HTTable<R, C, V> {
@@ -37,8 +38,10 @@ internal open class HTWrappedTable<R : Any, C : Any, V : Any>(protected val dele
 
         override fun remove(row: R, column: C): V? = delegated.remove(row, column)
 
-        override fun putAll(other: Table<R, C, V>) {
-            delegated.putAll(other)
+        override fun putAll(other: HTTable<out R, out C, out V>) {
+            other.forEach { (row: R, column: C, value: V) ->
+                delegated.put(row, column, value)
+            }
         }
 
         override fun put(row: R, column: C, value: V): V? = delegated.put(row, column, value)

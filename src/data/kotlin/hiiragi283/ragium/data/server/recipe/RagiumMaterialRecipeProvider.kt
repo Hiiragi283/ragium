@@ -16,11 +16,11 @@ import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.tags.TagKey
@@ -153,8 +153,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
-            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.WOOD)
-            .define('B', RagiumItems.getDust(RagiumMaterialType.WOOD))
+            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD)
+            .define('B', RagiumItems.getDust(HTVanillaMaterialType.WOOD))
             .save(output)
 
         HTCookingRecipeBuilder

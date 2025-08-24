@@ -118,7 +118,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             )
         val azureGears: AdvancementHolder = child(RagiumAdvancements.AZURE_GEARS, azureSteel) {
             display {
-                setIcon(RagiumItems.getAzureTool(HTVanillaToolVariant.PICKAXE))
+                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialType.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()

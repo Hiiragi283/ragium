@@ -36,16 +36,6 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     ASH("Ash", "灰"),
     COAL_COKE("Coal Coke", "石炭コークス", HTItemMaterialVariant.FUEL),
     PLASTIC("Plastic", "プラスチック", HTItemMaterialVariant.PLATE),
-    WOOD("Wood", "木") {
-        override fun translate(type: HTLanguageType, variant: HTMaterialVariant): String = if (variant == HTItemMaterialVariant.DUST) {
-            when (type) {
-                HTLanguageType.EN_US -> "Sawdust"
-                HTLanguageType.JA_JP -> "おがくず"
-            }
-        } else {
-            super.translate(type, variant)
-        }
-    },
     ;
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

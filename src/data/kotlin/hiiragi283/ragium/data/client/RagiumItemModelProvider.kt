@@ -83,6 +83,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             removeAll(tools)
             // Delight
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
+
+            removeAll(RagiumDelightAddon.KNIFE_MAP.values)
             // Mekanism
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
@@ -118,8 +120,10 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         // Tools
         buildList {
-            add(RagiumItems.BLAST_CHARGE)
             addAll(tools)
+            add(RagiumItems.BLAST_CHARGE)
+
+            addAll(RagiumDelightAddon.KNIFE_MAP.values)
         }.forEach(::handheldItem)
     }
 }

@@ -8,8 +8,9 @@ import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.util.HTLootTicketHelper
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -135,37 +136,23 @@ object RagiumCreativeTabs {
             "ragi_ticket",
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.acceptFromTable(
-                RagiumItems.TOOLS,
-                RagiumAPI.getInstance().getToolVariants(),
-                RagiumMaterialType.RAGI_ALLOY,
-            )
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
             output.accept(RagiumItems.RAGI_MAGNET)
 
             output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
 
-            output.acceptFromTable(
-                RagiumItems.TOOLS,
-                RagiumAPI.getInstance().getToolVariants(),
-                RagiumMaterialType.RAGI_CRYSTAL,
-            )
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
-            output.acceptFromTable(
-                RagiumItems.TOOLS,
-                RagiumAPI.getInstance().getToolVariants(),
-                RagiumMaterialType.AZURE_STEEL,
-            )
+            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.AZURE_STEEL)
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL))
 
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)
-            output.acceptFromTable(
-                RagiumItems.TOOLS,
-                RagiumAPI.getInstance().getToolVariants(),
-                RagiumMaterialType.DEEP_STEEL,
-            )
+            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.DEEP_STEEL)
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL))
 
             output.accept(RagiumItems.DRILL)
 
@@ -296,7 +283,7 @@ object RagiumCreativeTabs {
 
         if (INGREDIENTS.`is`(key)) {
             insertAfter(RagiumItems.getDust(RagiumMaterialType.RAGINITE), RagiumItems.RAGI_COKE)
-            insertAfter(RagiumItems.getDust(RagiumMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
+            insertAfter(RagiumItems.getDust(HTVanillaMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.getGem(RagiumMaterialType.AZURE), RagiumItems.SILICON)
             insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), RagiumItems.ELDRITCH_GEAR)
             insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)

@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.material
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialFamily
-import hiiragi283.ragium.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import net.minecraft.world.item.Items
 
 object VanillaMaterialFamilies {

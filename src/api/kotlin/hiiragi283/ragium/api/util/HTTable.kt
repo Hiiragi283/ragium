@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.util
 
-import com.google.common.collect.Table
-
 interface HTTable<R : Any, C : Any, V : Any> {
     fun contains(row: R, column: C): Boolean
 
@@ -38,7 +36,7 @@ interface HTTable<R : Any, C : Any, V : Any> {
 
         fun put(row: R, column: C, value: V): V?
 
-        fun putAll(other: Table<R, C, V>)
+        fun putAll(other: HTTable<out R, out C, out V>)
 
         fun remove(row: R, column: C): V?
     }
