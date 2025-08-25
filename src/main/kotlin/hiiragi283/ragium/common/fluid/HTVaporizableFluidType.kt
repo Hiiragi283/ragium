@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-open class HTVaporizableFluidType(protected val drop: HTItemResult, properties: Properties) : FluidType(properties) {
+open class HTVaporizableFluidType(val drop: HTItemResult, properties: Properties) : FluidType(properties) {
     companion object {
         @JvmStatic
         fun create(drop: HTItemResult): (Properties) -> HTVaporizableFluidType = { prop: Properties ->

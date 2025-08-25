@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:mushroom_stew"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mushroom_stew"
+  }
+}

@@ -92,11 +92,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
     //    Extensions    //
 
-    private fun <T : Any> Builder<T, Item>.add(
-        variant: HTMaterialVariant.ItemTag,
-        material: HTMaterialType,
-        value: T,
-    ): Builder<T, Item> =
+    private fun <T : Any> Builder<T, Item>.add(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, value: T): Builder<T, Item> =
         add(variant.itemTagKey(material), value, false)
 
     private fun Builder<HTFluidFuelData, Fluid>.add(content: HTFluidContent<*, *, *>, amount: Int): Builder<HTFluidFuelData, Fluid> =

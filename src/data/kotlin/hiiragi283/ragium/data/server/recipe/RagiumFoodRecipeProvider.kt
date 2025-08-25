@@ -29,6 +29,21 @@ import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
+        // Mushroom Stew
+        HTItemWithFluidToObjRecipeBuilder
+            .mixing(
+                HTIngredientHelper.item(Tags.Items.MUSHROOMS, 2),
+                HTIngredientHelper.milk(250),
+                HTResultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250),
+            ).save(output)
+
+        extractAndInfuse(
+            HTIngredientHelper.item(Items.BOWL),
+            Items.MUSHROOM_STEW,
+            RagiumFluidContents.MUSHROOM_STEW,
+            250,
+        )
+
         // Chocolate
         HTItemWithFluidToObjRecipeBuilder
             .infusing(

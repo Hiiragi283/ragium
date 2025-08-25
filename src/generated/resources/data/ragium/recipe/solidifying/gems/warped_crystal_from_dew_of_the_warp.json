@@ -1,7 +1,7 @@
 {
   "type": "ragium:solidifying",
   "ingredient": {
-    "amount": 90,
+    "amount": 1000,
     "tag": "c:dew_of_the_warp"
   },
   "result": {

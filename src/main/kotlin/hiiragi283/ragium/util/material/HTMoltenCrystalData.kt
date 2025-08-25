@@ -19,6 +19,11 @@ enum class HTMoltenCrystalData(
     WARPED(RagiumMaterialType.WARPED_CRYSTAL, 0x006666, "Dew of the Warp", "歪みの雫"),
     ELDRITCH(RagiumMaterialType.ELDRITCH_PEARL, 0x660066, "Eldritch Flux", "異質な流動体"),
     ;
+    companion object {
+        const val LOG_TO_SAP = 500
+        const val SAP_TO_MOLTEN = 250
+        const val MOLTEN_TO_GEM = 1000
+    }
 
     val log: TagKey<Item>?
         get() = when (this) {

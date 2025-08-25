@@ -171,7 +171,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             // Chemical -> Item
             ChemicalCrystallizerRecipeBuilder
                 .crystallizing(
-                    chemicalHelper.fromHolder(chemical, 1000),
+                    chemicalHelper.fromHolder(chemical, HTMoltenCrystalData.MOLTEN_TO_GEM),
                     RagiumItems.getGem(material).toStack(),
                 ).build(output, id("crystallizing/${material.serializedName}"))
         }

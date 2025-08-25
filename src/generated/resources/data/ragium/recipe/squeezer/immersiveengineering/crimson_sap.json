@@ -8,7 +8,7 @@
   "type": "immersiveengineering:squeezer",
   "energy": 6400,
   "fluid": {
-    "amount": 125,
+    "amount": 500,
     "id": "ragium:crimson_sap"
   },
   "input": {

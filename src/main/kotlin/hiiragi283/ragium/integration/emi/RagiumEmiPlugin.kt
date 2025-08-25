@@ -33,6 +33,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
 import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
@@ -52,7 +53,6 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.Holder
@@ -68,6 +68,7 @@ import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import org.slf4j.Logger
 import kotlin.collections.component1
@@ -389,27 +390,16 @@ class RagiumEmiPlugin : EmiPlugin {
             rightInput(EmiStack.of(Items.BEE_SPAWN_EGG), false)
         }
 
-        // Cauldron Interaction
-        addInteraction(EmiStack.of(Items.MUSHROOM_STEW), prefix = "cauldron") {
-            leftInput(EmiStack.of(Items.BOWL))
-            rightInput(EmiStack.of(Items.CAULDRON), true)
-            rightInput(EmiStack.of(RagiumFluidContents.MUSHROOM_STEW.get()), false)
-        }
-
         // World Vaporization
-        addInteraction(EmiStack.of(Items.SLIME_BALL)) {
-            leftInput(EmiStack.of(RagiumFluidContents.SAP.getBucket()))
-            rightInput(EmiStack.EMPTY, false)
+        for (fluid: Fluid in HTDynamicRecipes.fluidStream()) {
+            val type: FluidType = fluid.fluidType
+            if (type is HTVaporizableFluidType) {
+                addInteraction(type.drop.toEmi()) {
+                    leftInput(EmiStack.of(fluid.bucket))
+                    rightInput(EmiStack.EMPTY, false)
+                }
+            }
         }
-        addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL))) {
-            leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_BLOOD.getBucket()))
-            rightInput(EmiStack.EMPTY, false)
-        }
-        addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.WARPED_CRYSTAL))) {
-            leftInput(EmiStack.of(RagiumFluidContents.DEW_OF_THE_WARP.getBucket()))
-            rightInput(EmiStack.EMPTY, false)
-        }
-
         // Crude Oil + Lava -> Magma Block / Soul Sand
         addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidContent.LAVA)
     }

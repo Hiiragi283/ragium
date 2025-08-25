@@ -20,15 +20,18 @@ import java.util.stream.Stream
 
 object HTDynamicRecipes {
     @JvmStatic
-    fun fluidStream(): Stream<Holder.Reference<Fluid>> = BuiltInRegistries.FLUID
+    fun fluidHolderStream(): Stream<Holder.Reference<Fluid>> = BuiltInRegistries.FLUID
         .holdersNotEmpty()
         .filter { holder: Holder.Reference<Fluid> ->
             val fluid: Fluid = holder.value()
             (fluid as? FlowingFluid)?.isSource(fluid.defaultFluidState()) ?: false
         }
+    
+    @JvmStatic
+    fun fluidStream(): Stream<Fluid> = fluidHolderStream().map(Holder.Reference<Fluid>::value)
 
     @JvmStatic
-    fun bucketFilling(): Iterator<RecipeHolder<HTItemWithFluidToItemRecipe>> = fluidStream()
+    fun bucketFilling(): Iterator<RecipeHolder<HTItemWithFluidToItemRecipe>> = fluidHolderStream()
         .map { holder: Holder.Reference<Fluid> ->
             val fluid: Fluid = holder.value()
             val id: ResourceLocation = holder.key().location().withPrefix("/infusing/bucket/")
@@ -43,7 +46,7 @@ object HTDynamicRecipes {
         }.iterator()
 
     @JvmStatic
-    fun bucketEmptying(): Iterator<RecipeHolder<HTItemToFluidRecipe>> = fluidStream()
+    fun bucketEmptying(): Iterator<RecipeHolder<HTItemToFluidRecipe>> = fluidHolderStream()
         .map { holder: Holder.Reference<Fluid> ->
             val fluid: Fluid = holder.value()
             val id: ResourceLocation = holder.key().location().withPrefix("/melting/bucket/")

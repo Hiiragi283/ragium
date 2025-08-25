@@ -130,17 +130,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 HTItemMaterialVariant.GEM.itemTagKey(material),
                 molten,
-                90,
+                HTMoltenCrystalData.MOLTEN_TO_GEM,
             )
 
             val log: TagKey<Item> = data.log ?: continue
             val sap: HTFluidContent<*, *, *> = data.sap ?: continue
             // log -> sap
             HTItemToObjRecipeBuilder
-                .melting(HTIngredientHelper.item(log), HTResultHelper.fluid(sap, 125))
+                .melting(HTIngredientHelper.item(log), HTResultHelper.fluid(sap, HTMoltenCrystalData.LOG_TO_SAP))
                 .saveSuffixed(output, "_from_stems")
             // sap -> molten
-            distillation(sap to 1000, null, HTResultHelper.fluid(molten, 125) to null)
+            distillation(sap to 1000, null, HTResultHelper.fluid(molten, HTMoltenCrystalData.SAP_TO_MOLTEN) to null)
         }
     }
 }
