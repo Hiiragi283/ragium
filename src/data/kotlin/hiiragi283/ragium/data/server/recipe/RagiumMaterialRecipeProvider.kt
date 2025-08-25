@@ -5,9 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -19,7 +17,6 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
@@ -31,15 +28,22 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        materials()
+        raginite()
+        azure()
+        eldritch()
+        deepSteel()
+        miscMaterials()
 
+        material()
         oreToRaw()
         alloying()
     }
 
-    private fun materials() {
-        fun compound(material: HTMaterialType): ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPOUND, material)
+    @JvmStatic
+    private fun compound(material: HTMaterialType): ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPOUND, material)
 
+    @JvmStatic
+    private fun raginite() {
         // Ragi-Alloy
         HTShapedRecipeBuilder(compound(RagiumMaterialType.RAGI_ALLOY))
             .hollow4()
@@ -98,13 +102,23 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.DIAMOND),
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 6),
             ).save(output)
-        // Azure Steel
+    }
+
+    private fun azure() {
+        // Azure Shard
         HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
             .mosaic4()
             .define('A', Tags.Items.GEMS_AMETHYST)
             .define('B', Tags.Items.GEMS_LAPIS)
             .save(output)
 
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, 2),
+                HTIngredientHelper.gemOrDust(HTVanillaMaterialType.AMETHYST),
+                HTIngredientHelper.gemOrDust(HTVanillaMaterialType.LAPIS),
+            ).save(output)
+        // Azure Steel
         HTShapedRecipeBuilder(compound(RagiumMaterialType.AZURE_STEEL))
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE)
@@ -119,18 +133,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, 2),
-                HTIngredientHelper.gemOrDust(HTVanillaMaterialType.AMETHYST),
-                HTIngredientHelper.gemOrDust(HTVanillaMaterialType.LAPIS),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
                 HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE, 2),
             ).save(output)
-
+        // Azure Silicon
         HTCookingRecipeBuilder
             .blasting(RagiumItems.SILICON)
             .addIngredient(gemOrDust(RagiumMaterialType.AZURE))
@@ -150,18 +157,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).saveSuffixed(output, "_alt")
-        // Sawdust
-        HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
-            .hollow8()
-            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD)
-            .define('B', RagiumItems.getDust(HTVanillaMaterialType.WOOD))
-            .save(output)
+    }
 
-        HTCookingRecipeBuilder
-            .blasting(Items.CHARCOAL, onlyBlasting = true)
-            .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
-            .setExp(0.15f)
-            .saveSuffixed(output, "_from_pellet")
+    private fun eldritch() {
         // Eldritch Pearl
         HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
             .cross4()
@@ -177,27 +175,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL),
                 HTIngredientHelper.item(RagiumModTags.Items.ELDRITCH_PEARL_BINDER),
             ).save(output)
+    }
 
-        HTItemWithFluidToObjRecipeBuilder
-            .mixing(
-                HTIngredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
-                HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 1000),
-                HTResultHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
-            ).save(output)
-
-        HTItemWithFluidToObjRecipeBuilder
-            .mixing(
-                HTIngredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 1000),
-                HTResultHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
-            ).saveSuffixed(output, "_alt")
-
-        HTFluidWithCatalystToObjRecipeBuilder
-            .solidifying(
-                HTIngredientHelper.item(Tags.Items.ENDER_PEARLS),
-                HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
-                HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL),
-            ).save(output)
+    private fun deepSteel() {
         // Deep Steel
         HTCookingRecipeBuilder
             .blasting(RagiumItems.DEEP_SCRAP)
@@ -219,6 +199,21 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_DEEP_SCRAP))
             .addResult(HTResultHelper.item(RagiumItems.DEEP_SCRAP, 2))
             .saveSuffixed(output, "_from_ore")
+    }
+
+    private fun miscMaterials() {
+        // Sawdust
+        HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
+            .hollow8()
+            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD)
+            .define('B', RagiumItems.getDust(HTVanillaMaterialType.WOOD))
+            .save(output)
+
+        HTCookingRecipeBuilder
+            .blasting(Items.CHARCOAL, onlyBlasting = true)
+            .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
+            .setExp(0.15f)
+            .saveSuffixed(output, "_from_pellet")
         // Iridescentium
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -233,7 +228,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
             .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_hammer")
+    }
 
+    private fun material() {
         // Storage Blocks
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
             val baseVariant: HTMaterialVariant.ItemTag = material.baseVariant ?: continue

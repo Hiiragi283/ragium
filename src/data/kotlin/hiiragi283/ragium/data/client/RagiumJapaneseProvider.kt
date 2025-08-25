@@ -155,8 +155,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.SYRUP, "シロップ")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumFluidContents.ELDRITCH_FLUX, "異質なフラックス")
     }
 
     private fun item() {
@@ -481,9 +479,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun mekanism() {
         addChemical(RagiumMekanismAddon.CHEMICAL_RAGINITE, "ラギナイト")
         addChemical(RagiumMekanismAddon.CHEMICAL_AZURE, "紺碧エッセンス")
-        addChemical(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, "深紅の樹液")
-        addChemical(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, "歪んだ樹液")
-        addChemical(RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX, "異質なフラックス")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")

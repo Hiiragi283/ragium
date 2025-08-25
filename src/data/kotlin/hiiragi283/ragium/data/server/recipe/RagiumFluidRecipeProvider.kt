@@ -12,11 +12,15 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -119,40 +123,37 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(Items.SUGAR),
             ).saveSuffixed(output, "_from_syrup")
 
-        // Crimson Stem -> Crimson Sap
-        HTItemToObjRecipeBuilder
-            .melting(
-                HTIngredientHelper.item(ItemTags.CRIMSON_STEMS),
-                HTResultHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 125),
-            ).saveSuffixed(output, "_from_stems")
-        // Crimson Sap -> Sap + Crimson Crystal
-        distillation(
-            RagiumFluidContents.CRIMSON_SAP to 1000,
-            HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
-            HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
-        )
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
-        // Warped Stem -> Warped Sap
-        HTItemToObjRecipeBuilder
-            .melting(
-                HTIngredientHelper.item(ItemTags.WARPED_STEMS),
-                HTResultHelper.fluid(RagiumFluidContents.WARPED_SAP, 125),
-            ).saveSuffixed(output, "_from_stems")
-        // Warped Sap -> Sap + Warped Crystal
-        distillation(
-            RagiumFluidContents.WARPED_SAP to 1000,
-            HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL),
-            HTResultHelper.fluid(RagiumFluidContents.SAP, 125) to null,
-        )
-        // Crimson Crystal -> Blaze Powder
+        // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
+
+        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+            val molten: HTFluidContent<*, *, *> = data.molten
+            val material: HTMaterialType = data.material
+            // molten <-> gem
+            meltAndFreeze(
+                null,
+                HTItemMaterialVariant.GEM.itemTagKey(material),
+                molten,
+                90,
+            )
+
+            val log: TagKey<Item> = data.log ?: continue
+            val sap: HTFluidContent<*, *, *> = data.sap ?: continue
+            // log -> sap
+            HTItemToObjRecipeBuilder
+                .melting(HTIngredientHelper.item(log), HTResultHelper.fluid(sap, 125))
+                .saveSuffixed(output, "_from_stems")
+            // sap -> molten
+            distillation(sap to 1000, null, HTResultHelper.fluid(molten, 125) to null)
+        }
     }
 }

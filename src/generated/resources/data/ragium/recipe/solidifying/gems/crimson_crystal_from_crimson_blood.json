@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "ingredient": {
+    "amount": 90,
+    "tag": "c:crimson_blood"
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:gems/crimson_crystal"
+  }
+}

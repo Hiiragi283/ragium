@@ -8,7 +8,7 @@
   "type": "mekanism:crystallizing",
   "input": {
     "amount": 1000,
-    "chemical": "ragium:crimson_sap"
+    "chemical": "ragium:crimson_blood"
   },
   "output": {
     "count": 1,

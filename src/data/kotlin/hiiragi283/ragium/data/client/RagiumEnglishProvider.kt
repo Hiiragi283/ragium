@@ -164,8 +164,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SYRUP, "Syrup")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumFluidContents.ELDRITCH_FLUX, "Eldritch Flux")
     }
 
     private fun item() {
@@ -481,9 +479,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun mekanism() {
         addChemical(RagiumMekanismAddon.CHEMICAL_RAGINITE, "Raginite")
         addChemical(RagiumMekanismAddon.CHEMICAL_AZURE, "Azure Essence")
-        addChemical(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, "Crimson Sap")
-        addChemical(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, "Warped Sap")
-        addChemical(RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX, "Eldritch Flux")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")

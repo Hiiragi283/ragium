@@ -11,8 +11,8 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
@@ -35,9 +35,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
         raginite()
         azure()
-        crimson()
-        warped()
-        eldritch()
+        molten()
         deep()
     }
 
@@ -146,40 +144,37 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
     }
 
-    private fun crimson() {
+    private fun molten() {
         oreToGem(RagiumMaterialType.CRIMSON_CRYSTAL)
-
-        fluidCrystallizing(
-            RagiumFluidContents.CRIMSON_SAP,
-            RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP,
-            RagiumMaterialType.CRIMSON_CRYSTAL,
-        )
-    }
-
-    private fun warped() {
         oreToGem(RagiumMaterialType.WARPED_CRYSTAL)
 
-        fluidCrystallizing(
-            RagiumFluidContents.WARPED_SAP,
-            RagiumMekanismAddon.CHEMICAL_WARPED_SAP,
-            RagiumMaterialType.WARPED_CRYSTAL,
-        )
-    }
-
-    private fun eldritch() {
         // Crimson + Warped -> Eldritch
         ChemicalChemicalToChemicalRecipeBuilder
             .chemicalInfusing(
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 1),
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_BLOOD, 1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_DEW_OF_THE_WARP, 1),
                 RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX.asStack(1),
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
-        fluidCrystallizing(
-            RagiumFluidContents.ELDRITCH_FLUX,
-            RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX,
-            RagiumMaterialType.ELDRITCH_PEARL,
-        )
+        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+            val molten: HTFluidContent<*, *, *> = data.molten
+            val material: HTMaterialType = data.material
+            val chemical: DeferredChemical<*> = RagiumMekanismAddon.getChemical(data)
+            // Fluid <-> Chemical
+            RotaryRecipeBuilder
+                .rotary(
+                    fluidHelper.from(molten.commonTag, 1),
+                    chemicalHelper.fromHolder(chemical, 1),
+                    chemical.asStack(1),
+                    molten.toStack(1),
+                ).build(output, id("rotary/${molten.id.path}"))
+            // Chemical -> Item
+            ChemicalCrystallizerRecipeBuilder
+                .crystallizing(
+                    chemicalHelper.fromHolder(chemical, 1000),
+                    RagiumItems.getGem(material).toStack(),
+                ).build(output, id("crystallizing/${material.serializedName}"))
+        }
     }
 
     private fun deep() {
@@ -233,27 +228,5 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                 itemHelper.from(HTBlockMaterialVariant.ORE, material),
                 RagiumItems.getGem(material).toStack(2),
             ).build(output, id("processing/${material.serializedName}/from_ore"))
-    }
-
-    private fun fluidCrystallizing(
-        fluid: HTFluidContent<*, *, *>,
-        chemical: DeferredChemical<*>,
-        material: HTMaterialType,
-        toItemAmount: Int = 1000,
-    ) {
-        // Fluid <-> Chemical
-        RotaryRecipeBuilder
-            .rotary(
-                fluidHelper.from(fluid.commonTag, 1),
-                chemicalHelper.fromHolder(chemical, 1),
-                chemical.asStack(1),
-                fluid.toStack(1),
-            ).build(output, id("rotary/${fluid.id.path}"))
-        // Chemical -> Item
-        ChemicalCrystallizerRecipeBuilder
-            .crystallizing(
-                chemicalHelper.fromHolder(chemical, toItemAmount),
-                RagiumItems.getGem(material).toStack(),
-            ).build(output, id("crystallizing/${material.serializedName}"))
     }
 }

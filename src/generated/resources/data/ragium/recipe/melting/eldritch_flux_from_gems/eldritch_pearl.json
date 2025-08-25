@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "tag": "c:gems/eldritch_pearl"
+  },
+  "result": {
+    "amount": 90,
+    "id": "ragium:eldritch_flux"
+  }
+}

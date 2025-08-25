@@ -11,8 +11,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 object RagiumPneumaticRecipeProvider : HTRecipeProvider.Integration(RagiumConst.PNEUMATIC) {
     override fun buildRecipeInternal() {
         FluidMixerRecipeBuilder(
-            RagiumFluidContents.CRIMSON_SAP.toIngredient(1000),
-            RagiumFluidContents.WARPED_SAP.toIngredient(1000),
+            RagiumFluidContents.CRIMSON_BLOOD.toIngredient(1000),
+            RagiumFluidContents.DEW_OF_THE_WARP.toIngredient(1000),
             FluidStack.EMPTY,
             RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL).toStack(),
             2f,

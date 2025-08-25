@@ -26,6 +26,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.client.renderer.BiomeColors
@@ -165,25 +166,35 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumFluidContents.HONEY.getType(),
         )
 
-        fun register(content: HTFluidContent<*, *, *>, color: Color) {
-            event.registerFluidType(HTSimpleFluidExtensions(color), content.getType())
+        fun liquid(content: HTFluidContent<*, *, *>, color: Color) {
+            event.registerFluidType(HTSimpleFluidExtensions.liquid(color), content.getType())
         }
-        register(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
-        register(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
-        register(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        register(RagiumFluidContents.LPG, Color(0xffcc99))
-        register(RagiumFluidContents.NAPHTHA, Color(0xff9966))
-        register(RagiumFluidContents.DIESEL, Color(0xff3300))
-        register(RagiumFluidContents.BLOOD_DIESEL, Color(0x663333))
-        register(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+        fun molten(content: HTFluidContent<*, *, *>, color: Color) {
+            event.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getType())
+        }
 
-        register(RagiumFluidContents.SAP, Color(0x996633))
-        register(RagiumFluidContents.SYRUP, Color(0xcc9966))
-        register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))
-        register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
+        liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
+        liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
-        register(RagiumFluidContents.ELDRITCH_FLUX, Color(0x660066))
+        molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
+        liquid(RagiumFluidContents.LPG, Color(0xffcc99))
+        liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))
+        liquid(RagiumFluidContents.DIESEL, Color(0xff3300))
+        liquid(RagiumFluidContents.BLOOD_DIESEL, Color(0x663333))
+        liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+
+        liquid(RagiumFluidContents.SAP, Color(0x996633))
+        liquid(RagiumFluidContents.SYRUP, Color(0xcc9966))
+
+        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+            val color = Color(data.color)
+            // molten
+            molten(data.molten, color)
+            // sap
+            val sap: HTFluidContent<*, *, *> = data.sap ?: continue
+            liquid(sap, color)
+        }
 
         LOGGER.info("Registered client extensions!")
     }

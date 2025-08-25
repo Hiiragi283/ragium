@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "ragium:ragi_alloy_knife"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_crystal_knife"
+  },
+  "template": {
+    "item": "ragium:elite_component"
+  }
+}

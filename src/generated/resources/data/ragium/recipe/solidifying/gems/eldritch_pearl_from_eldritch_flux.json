@@ -1,11 +1,11 @@
 {
   "type": "ragium:solidifying",
   "ingredient": {
-    "amount": 1000,
-    "tag": "c:warped_sap"
+    "amount": 90,
+    "tag": "c:eldritch_flux"
   },
   "result": {
     "count": 1,
-    "id": "#c:gems/warped_crystal"
+    "id": "#c:gems/eldritch_pearl"
   }
 }

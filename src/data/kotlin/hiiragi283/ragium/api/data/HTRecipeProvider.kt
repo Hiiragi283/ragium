@@ -138,6 +138,27 @@ sealed class HTRecipeProvider : IConditionBuilder {
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
+    protected fun meltAndFreeze(
+        catalyst: HTItemIngredient?,
+        solid: TagKey<Item>,
+        fluid: HTFluidContent<*, *, *>,
+        amount: Int,
+    ) {
+        // Melting
+        HTItemToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(solid),
+                HTResultHelper.fluid(fluid, amount),
+            ).saveSuffixed(output, "_from_${solid.location.path}")
+        // Solidifying
+        HTFluidWithCatalystToObjRecipeBuilder
+            .solidifying(
+                catalyst,
+                HTIngredientHelper.fluid(fluid, amount),
+                HTResultHelper.item(solid),
+            ).saveSuffixed(output, "_from_${fluid.id.path}")
+    }
+
     protected fun extractAndInfuse(
         empty: HTItemIngredient,
         filled: ItemLike,

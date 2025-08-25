@@ -8,12 +8,12 @@
   "type": "immersiveengineering:bottling_machine",
   "fluid": {
     "amount": 1000,
-    "tag": "c:crimson_sap"
+    "tag": "c:dew_of_the_warp"
   },
   "inputs": [],
   "results": [
     {
-      "tag": "c:gems/crimson_crystal"
+      "tag": "c:gems/warped_crystal"
     }
   ]
 }

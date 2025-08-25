@@ -40,34 +40,40 @@ object RagiumFluidContents {
         REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory)
 
     @JvmStatic
-    private fun defaultProperties(): FluidType.Properties = FluidType.Properties
+    private fun properties(): FluidType.Properties = FluidType.Properties
         .create()
         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun gaseous(): FluidType.Properties = defaultProperties().density(-1000)
+    private fun molten(): FluidType.Properties = FluidType.Properties
+        .create()
+        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+
+    @JvmStatic
+    private fun gaseous(): FluidType.Properties = properties().density(-1000)
 
     //    Vanilla    //
 
     @JvmField
     val HONEY: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("honey", defaultProperties())
+        register("honey", properties())
 
     @JvmField
     val EXPERIENCE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("experience", defaultProperties())
+        register("experience", properties())
 
     @JvmField
     val MUSHROOM_STEW: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("mushroom_stew", defaultProperties())
+        register("mushroom_stew", properties())
 
     //    Oil    //
 
     @JvmField
     val CRUDE_OIL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "crude_oil",
-        defaultProperties()
+        molten()
             .canSwim(false)
             .pathType(PathType.LAVA)
             .density(3000)
@@ -86,14 +92,14 @@ object RagiumFluidContents {
     @JvmField
     val NAPHTHA: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "naphtha",
-        defaultProperties(),
+        properties(),
         HTExplosiveFluidType.create(3f),
     )
 
     @JvmField
     val DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "fuel",
-        defaultProperties(),
+        properties(),
         HTExplosiveFluidType.create(4f),
     )
 
@@ -101,28 +107,39 @@ object RagiumFluidContents {
     val BLOOD_DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
             "blood_diesel",
-            defaultProperties(),
+            properties(),
             HTExplosiveFluidType.create(6f),
         )
 
     @JvmField
-    val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("lubricant", defaultProperties())
+    val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("lubricant", properties())
 
     //    Sap    //
 
     @JvmField
     val SAP: HTFluidContent<HTVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", defaultProperties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SLIME_BALL)))
+        register("sap", properties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SLIME_BALL)))
 
     @JvmField
     val SYRUP: HTFluidContent<HTVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("syrup", defaultProperties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SUGAR)))
+        register("syrup", properties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SUGAR)))
 
     @JvmField
-    val CRIMSON_SAP: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("crimson_sap", properties())
+
+    @JvmField
+    val WARPED_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("warped_sap", properties())
+
+    //    Molten    //
+
+    @JvmField
+    val CRIMSON_BLOOD: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
-            "crimson_sap",
-            defaultProperties(),
+            "crimson_blood",
+            molten(),
             HTNetherVaporizableFluidType.create(
                 HTResultHelper.item(
                     HTItemMaterialVariant.GEM,
@@ -132,10 +149,10 @@ object RagiumFluidContents {
         )
 
     @JvmField
-    val WARPED_SAP: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val DEW_OF_THE_WARP: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
-            "warped_sap",
-            defaultProperties(),
+            "dew_of_the_warp",
+            molten(),
             HTNetherVaporizableFluidType.create(
                 HTResultHelper.item(
                     HTItemMaterialVariant.GEM,
@@ -144,11 +161,9 @@ object RagiumFluidContents {
             ),
         )
 
-    //    Other    //
-
     @JvmField
     val ELDRITCH_FLUX: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("eldritch_flux", defaultProperties())
+        register("eldritch_flux", molten())
 
     //    Interaction    //
 

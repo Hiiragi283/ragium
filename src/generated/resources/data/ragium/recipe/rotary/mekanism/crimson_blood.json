@@ -8,18 +8,18 @@
   "type": "mekanism:rotary",
   "chemical_input": {
     "amount": 1,
-    "chemical": "ragium:warped_sap"
+    "chemical": "ragium:crimson_blood"
   },
   "chemical_output": {
     "amount": 1,
-    "id": "ragium:warped_sap"
+    "id": "ragium:crimson_blood"
   },
   "fluid_input": {
     "amount": 1,
-    "tag": "c:warped_sap"
+    "tag": "c:crimson_blood"
   },
   "fluid_output": {
     "amount": 1,
-    "id": "ragium:warped_sap"
+    "id": "ragium:crimson_blood"
   }
 }

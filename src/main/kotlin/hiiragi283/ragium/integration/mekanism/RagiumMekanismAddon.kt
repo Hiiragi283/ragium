@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import mekanism.api.chemical.Chemical
 import mekanism.common.registration.impl.ChemicalDeferredRegister
@@ -36,14 +37,24 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val CHEMICAL_AZURE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc)
 
-    @JvmField
-    val CHEMICAL_CRIMSON_SAP: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("crimson_sap", 0x660000)
+    @JvmStatic
+    fun registerCrystal(data: HTMoltenCrystalData): DeferredChemical<Chemical> = CHEMICAL_REGISTER.register(data.molten.id.path, data.color)
 
     @JvmField
-    val CHEMICAL_WARPED_SAP: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("warped_sap", 0x006666)
+    val CHEMICAL_CRIMSON_BLOOD: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.CRIMSON)
 
     @JvmField
-    val CHEMICAL_ELDRITCH_FLUX: DeferredChemical<Chemical> = CHEMICAL_REGISTER.register("eldritch_flux", 0x660066)
+    val CHEMICAL_DEW_OF_THE_WARP: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.WARPED)
+
+    @JvmField
+    val CHEMICAL_ELDRITCH_FLUX: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.ELDRITCH)
+
+    @JvmStatic
+    fun getChemical(data: HTMoltenCrystalData): DeferredChemical<Chemical> = when (data) {
+        HTMoltenCrystalData.CRIMSON -> CHEMICAL_CRIMSON_BLOOD
+        HTMoltenCrystalData.WARPED -> CHEMICAL_DEW_OF_THE_WARP
+        HTMoltenCrystalData.ELDRITCH -> CHEMICAL_ELDRITCH_FLUX
+    }
 
     //    Item    //
 

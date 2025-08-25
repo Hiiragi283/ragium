@@ -406,11 +406,11 @@ class RagiumEmiPlugin : EmiPlugin {
             rightInput(EmiStack.EMPTY, false)
         }
         addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL))) {
-            leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_SAP.getBucket()))
+            leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_BLOOD.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }
         addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.WARPED_CRYSTAL))) {
-            leftInput(EmiStack.of(RagiumFluidContents.WARPED_SAP.getBucket()))
+            leftInput(EmiStack.of(RagiumFluidContents.DEW_OF_THE_WARP.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }
 

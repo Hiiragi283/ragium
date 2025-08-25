@@ -5,19 +5,15 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "immersiveengineering:mixer",
-  "energy": 3200,
+  "type": "immersiveengineering:bottling_machine",
   "fluid": {
     "amount": 1000,
-    "tag": "c:warped_sap"
+    "tag": "c:crimson_blood"
   },
-  "inputs": [
+  "inputs": [],
+  "results": [
     {
       "tag": "c:gems/crimson_crystal"
     }
-  ],
-  "result": {
-    "amount": 1000,
-    "id": "ragium:eldritch_flux"
-  }
+  ]
 }

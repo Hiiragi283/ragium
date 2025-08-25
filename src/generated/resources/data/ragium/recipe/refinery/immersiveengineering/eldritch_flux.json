@@ -6,14 +6,17 @@
     }
   ],
   "type": "immersiveengineering:refinery",
+  "catalyst": {
+    "tag": "ragium:eldritch_pearl_binder"
+  },
   "energy": 240,
   "input0": {
     "amount": 100,
-    "tag": "c:crimson_sap"
+    "tag": "c:crimson_blood"
   },
   "input1": {
     "amount": 100,
-    "tag": "c:warped_sap"
+    "tag": "c:dew_of_the_warp"
   },
   "result": {
     "amount": 100,

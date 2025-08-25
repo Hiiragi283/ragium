@@ -8,18 +8,18 @@
   "type": "mekanism:rotary",
   "chemical_input": {
     "amount": 1,
-    "chemical": "ragium:crimson_sap"
+    "chemical": "ragium:dew_of_the_warp"
   },
   "chemical_output": {
     "amount": 1,
-    "id": "ragium:crimson_sap"
+    "id": "ragium:dew_of_the_warp"
   },
   "fluid_input": {
     "amount": 1,
-    "tag": "c:crimson_sap"
+    "tag": "c:dew_of_the_warp"
   },
   "fluid_output": {
     "amount": 1,
-    "id": "ragium:crimson_sap"
+    "id": "ragium:dew_of_the_warp"
   }
 }

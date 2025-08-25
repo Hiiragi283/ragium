@@ -10,15 +10,10 @@
     "amount": 1000,
     "tag": "c:eldritch_flux"
   },
-  "input": {
-    "tag": "c:ender_pearls"
-  },
+  "inputs": [],
   "results": [
     {
       "tag": "c:gems/eldritch_pearl"
-    },
-    {
-      "tag": "c:ender_pearls"
     }
   ]
 }

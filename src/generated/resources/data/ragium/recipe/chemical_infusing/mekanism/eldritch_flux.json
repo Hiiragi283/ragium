@@ -8,7 +8,7 @@
   "type": "mekanism:chemical_infusing",
   "left_input": {
     "amount": 1,
-    "chemical": "ragium:crimson_sap"
+    "chemical": "ragium:crimson_blood"
   },
   "output": {
     "amount": 1,
@@ -16,6 +16,6 @@
   },
   "right_input": {
     "amount": 1,
-    "chemical": "ragium:warped_sap"
+    "chemical": "ragium:dew_of_the_warp"
   }
 }

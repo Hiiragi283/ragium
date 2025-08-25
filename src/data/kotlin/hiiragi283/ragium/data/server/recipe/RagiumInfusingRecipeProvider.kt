@@ -143,21 +143,21 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.NETHERRACKS),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
                 HTResultHelper.item(Items.CRIMSON_NYLIUM),
             ).save(output)
         // Crimson Fungus
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.RED_MUSHROOM),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
                 HTResultHelper.item(Items.CRIMSON_FUNGUS),
             ).save(output)
         // Nether Wart
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_BEETROOT),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
                 HTResultHelper.item(Items.NETHER_WART),
             ).save(output)
 
@@ -165,7 +165,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.SOUL_SOIL),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
                 HTResultHelper.item(RagiumBlocks.CRIMSON_SOIL),
             ).save(output)
     }
@@ -175,21 +175,21 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.NETHERRACKS),
-                HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
                 HTResultHelper.item(Items.WARPED_NYLIUM),
             ).save(output)
         // Warped Fungus
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.RED_MUSHROOM),
-                HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
                 HTResultHelper.item(Items.WARPED_FUNGUS),
             ).save(output)
         // Warped Wart
         HTItemWithFluidToObjRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_BEETROOT),
-                HTIngredientHelper.fluid(RagiumFluidContents.WARPED_SAP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
                 HTResultHelper.item(RagiumBlocks.WARPED_WART),
             ).save(output)
     }

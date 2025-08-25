@@ -1,11 +1,11 @@
 {
-  "type": "ragium:solidifying",
+  "type": "ragium:refining",
   "ingredient": {
     "amount": 1000,
     "tag": "c:crimson_sap"
   },
   "result": {
-    "count": 1,
-    "id": "#c:gems/crimson_crystal"
+    "amount": 125,
+    "id": "ragium:crimson_blood"
   }
 }

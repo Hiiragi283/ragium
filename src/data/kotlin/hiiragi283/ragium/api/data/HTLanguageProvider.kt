@@ -15,8 +15,10 @@ import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
@@ -58,8 +60,15 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addVariants<HTDeviceVariant>()
         addVariants<HTDrumVariant>()
 
+        // Delight
         for ((material: RagiumMaterialType, knife) in RagiumDelightAddon.KNIFE_MAP) {
             addItem(knife, HTKnifeToolVariant.translate(type, material.getTranslatedName(type)))
+        }
+        // Mekanism
+        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+            val value: String = data.getTranslatedName(type)
+            addFluid(data.molten, value)
+            addChemical(RagiumMekanismAddon.getChemical(data), value)
         }
     }
 

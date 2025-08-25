@@ -5,15 +5,14 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "immersiveengineering:bottling_machine",
-  "fluid": {
+  "type": "immersiveengineering:refinery",
+  "energy": 0,
+  "input0": {
     "amount": 1000,
     "tag": "c:warped_sap"
   },
-  "inputs": [],
-  "results": [
-    {
-      "tag": "c:gems/warped_crystal"
-    }
-  ]
+  "result": {
+    "amount": 125,
+    "id": "ragium:dew_of_the_warp"
+  }
 }
