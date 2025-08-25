@@ -59,6 +59,6 @@ abstract class HTFluidWidget(x: Int, y: Int, message: Component) :
     }
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addFluidTooltip(stack, consumer, flag)
+        addFluidTooltip(stack, consumer, flag, true)
     }
 }

@@ -26,7 +26,7 @@ object HTDynamicRecipes {
             val fluid: Fluid = holder.value()
             (fluid as? FlowingFluid)?.isSource(fluid.defaultFluidState()) ?: false
         }
-    
+
     @JvmStatic
     fun fluidStream(): Stream<Fluid> = fluidHolderStream().map(Holder.Reference<Fluid>::value)
 

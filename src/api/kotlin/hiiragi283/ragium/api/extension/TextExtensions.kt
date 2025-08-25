@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.item.HTEnergyItem
+import hiiragi283.ragium.api.item.HTFluidItem
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -16,6 +17,7 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
 import java.text.NumberFormat
 import java.util.function.Consumer
@@ -76,7 +78,12 @@ fun energyText(storage: IEnergyStorage): MutableComponent = Component.translatab
  * 指定した[stack]からツールチップを生成します
  * @param consumer 生成したツールチップを受けとるブロック
  */
-fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: TooltipFlag) {
+fun addFluidTooltip(
+    stack: FluidStack,
+    consumer: Consumer<Component>,
+    flag: TooltipFlag,
+    inGui: Boolean,
+) {
     // Empty name if stack is empty
     if (stack.isEmpty) {
         consumer.accept(Component.translatable(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY))
@@ -90,6 +97,7 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: Tool
             intText(stack.amount),
         ),
     )
+    if (!inGui) return
     // Fluid id if advanced
     if (flag.isAdvanced) {
         consumer.accept(Component.literal(stack.fluidHolder.registeredName).withStyle(ChatFormatting.DARK_GRAY))
@@ -105,4 +113,11 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: Tool
 
 fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
     HTEnergyItem.getStorage(stack)?.let(::energyText)?.let(consumer::accept)
+}
+
+fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
+    val handler: IFluidHandlerItem = HTFluidItem.getHandler(stack) ?: return
+    for (i: Int in (0 until handler.tanks)) {
+        addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
+    }
 }

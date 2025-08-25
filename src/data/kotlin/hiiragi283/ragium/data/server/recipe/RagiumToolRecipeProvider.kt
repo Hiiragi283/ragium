@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
 import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
-import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -25,7 +24,6 @@ import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
@@ -63,45 +61,28 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
-            .hollow8()
-            .define('A', Tags.Items.GUNPOWDERS)
-            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
-            .pattern(
-                " A ",
-                "ABA",
-                "AAA",
-            ).define('A', Tags.Items.LEATHERS)
-            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
-            .hollow4()
-            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
-            .define('B', Tags.Items.EGGS)
-            .save(output)
-
         HTShapedRecipeBuilder(RagiumItems.ETERNAL_COMPONENT)
             .cross8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
             .define('B', Items.CLOCK)
             .define('C', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, RagiumTierType.ULTIMATE))
             .save(output)
+        save(
+            RagiumAPI.id("shapeless/eternal_ticket"),
+            HTEternalTicketRecipe(CraftingBookCategory.MISC),
+        )
 
-        ragiAlloy()
+        raginite()
         azureAndDeepSteel()
+        molten()
 
         forgeHammers()
 
-        tickets()
         lootTickets()
     }
 
     @JvmStatic
-    private fun ragiAlloy() {
+    private fun raginite() {
         // Basic
         HTShapedRecipeBuilder(RagiumItems.RAGI_MAGNET)
             .pattern(
@@ -125,6 +106,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET)
+            .cross8()
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .define('B', Tags.Items.DYES_RED)
+            .define('C', Items.PAPER)
             .save(output)
     }
 
@@ -174,6 +162,40 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
+    private fun molten() {
+        // Crimson
+        HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
+            .hollow8()
+            .define('A', Tags.Items.GUNPOWDERS)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .save(output)
+        // Warped
+        HTShapedRecipeBuilder(RagiumItems.TELEPORT_KEY)
+            .cross8()
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .define('C', Items.TRIAL_KEY)
+            .save(output)
+
+        resetComponent(RagiumItems.TELEPORT_KEY)
+        // Eldritch
+        HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
+            .pattern(
+                " A ",
+                "ABA",
+                "AAA",
+            ).define('A', Tags.Items.LEATHERS)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
+            .hollow4()
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .define('B', Tags.Items.EGGS)
+            .save(output)
+    }
+
+    @JvmStatic
     private fun forgeHammers() {
         fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getTool(HTHammerToolVariant, material)
 
@@ -198,21 +220,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
             hammer(RagiumMaterialType.RAGI_ALLOY),
         ).save(output)
-    }
-
-    @JvmStatic
-    private fun tickets() {
-        addTicket(RagiumItems.RAGI_TICKET, RagiumMaterialType.RAGI_CRYSTAL, DyeColor.RED)
-        addTicket(RagiumItems.TELEPORT_TICKET, RagiumMaterialType.WARPED_CRYSTAL, DyeColor.CYAN)
-
-        save(
-            RagiumAPI.id("shapeless/blast_charge"),
-            HTBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
-        )
-        save(
-            RagiumAPI.id("shapeless/eternal_ticket"),
-            HTEternalTicketRecipe(CraftingBookCategory.MISC),
-        )
     }
 
     @JvmStatic
@@ -274,16 +281,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(ingredient)
             .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .save(this.output)
-    }
-
-    @JvmStatic
-    private fun addTicket(ticket: ItemLike, material: HTMaterialType, dye: DyeColor) {
-        HTShapedRecipeBuilder(ticket)
-            .cross8()
-            .define('A', HTItemMaterialVariant.GEM, material)
-            .define('B', dye.tag)
-            .define('C', Items.PAPER)
-            .save(output)
     }
 
     @JvmStatic

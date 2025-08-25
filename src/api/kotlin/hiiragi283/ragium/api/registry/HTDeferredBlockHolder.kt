@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.registry
 
-import net.minecraft.world.item.BlockItem
+import hiiragi283.ragium.api.item.HTBlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -9,7 +9,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 
-typealias HTSimpleDeferredBlockHolder = HTDeferredBlockHolder<Block, BlockItem>
+typealias HTSimpleDeferredBlockHolder = HTDeferredBlockHolder<Block, HTBlockItem<Block>>
+
+typealias HTBasicDeferredBlockHolder<BLOCK> = HTDeferredBlockHolder<BLOCK, HTBlockItem<BLOCK>>
 
 /**
  * @see [mekanism.common.registration.impl.BlockRegistryObject]

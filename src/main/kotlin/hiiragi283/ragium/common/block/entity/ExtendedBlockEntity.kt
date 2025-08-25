@@ -130,8 +130,29 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     //    HTContentListener    //
 
     override fun onContentsChanged() {
-        setChanged()
+        markOnlySave()
         reloadUpgrades()
+    }
+
+    protected fun markOnlySave() {
+        setChanged(false)
+    }
+
+    override fun setChanged() {
+        setChanged(true)
+    }
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityUpdateable.setChanged]
+     */
+    protected fun setChanged(updateComparator: Boolean) {
+        val level: Level = this.level ?: return
+        if (level.isLoaded(blockPos)) {
+            level.getChunkAt(blockPos).isUnsaved = true
+        }
+        if (updateComparator && !blockState.isAir) {
+            level.updateNeighbourForOutputSignal(blockPos, blockState.block)
+        }
     }
 
     //    Nameable    //

@@ -164,14 +164,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.blockHolder.get()),
             )
         }
-        val teleportTicket: AdvancementHolder = child(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
+        val teleportKey: AdvancementHolder = child(RagiumAdvancements.TELEPORT_KEY, warpedCrystal) {
             display {
-                setIcon(RagiumItems.TELEPORT_TICKET)
-                setTitleFromKey(RagiumAdvancements.TELEPORT_TICKET)
-                setDescFromKey(RagiumAdvancements.TELEPORT_TICKET)
+                setIcon(RagiumItems.TELEPORT_KEY)
+                setTitleFromKey(RagiumAdvancements.TELEPORT_KEY)
+                setDescFromKey(RagiumAdvancements.TELEPORT_KEY)
                 setGoal()
             }
-            addCriterion("use_teleport_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.TELEPORT_TICKET))
+            addCriterion("use_teleport_key", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.TELEPORT_KEY))
         }
     }
 

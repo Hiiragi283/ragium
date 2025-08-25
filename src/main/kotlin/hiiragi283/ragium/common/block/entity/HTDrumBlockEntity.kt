@@ -63,7 +63,7 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
         tank
     }
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = true
 
     //    HTHandlerBlockEntity    //
 

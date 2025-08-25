@@ -34,12 +34,10 @@ import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
-import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
@@ -133,9 +131,6 @@ class RagiumEmiPlugin : EmiPlugin {
                         )
                     }
                 }
-            }
-            if (recipe is HTBlastChargeRecipe) {
-                addRecipeSafe(id, ::HTBlastChargeEmiRecipe)
             }
             if (recipe is HTEternalTicketRecipe) {
                 EmiPort

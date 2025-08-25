@@ -8,7 +8,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 /**
  * [FluidHandlerItemStack.getFluid]が[FluidStack.EMPTY]の時にコンポーネントを消す[FluidHandlerItemStack]
  */
-class HTComponentFluidHandler(container: ItemStack, capacity: Int) :
+open class HTComponentFluidHandler(container: ItemStack, capacity: Int) :
     FluidHandlerItemStack(
         RagiumDataComponents.FLUID_CONTENT,
         container,

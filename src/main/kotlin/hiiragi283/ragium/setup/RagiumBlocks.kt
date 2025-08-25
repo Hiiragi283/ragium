@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
@@ -23,6 +24,7 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.item.HTDrumItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
@@ -31,7 +33,6 @@ import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.level.block.Block
@@ -61,7 +62,7 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> B,
-    ): HTDeferredBlockHolder<B, BlockItem> =
+    ): HTBasicDeferredBlockHolder<B> =
         REGISTER.registerSimple(type.id.path, properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
 
     @JvmStatic
@@ -84,15 +85,17 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val SILT: HTDeferredBlockHolder<HTSiltBlock, BlockItem> =
-        REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
+    val SILT: HTBasicDeferredBlockHolder<HTSiltBlock> = REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
 
     @JvmField
-    val CRIMSON_SOIL: HTDeferredBlockHolder<HTCrimsonSoilBlock, BlockItem> =
-        REGISTER.registerSimple("crimson_soil", copyOf(Blocks.SOUL_SOIL), ::HTCrimsonSoilBlock)
+    val CRIMSON_SOIL: HTBasicDeferredBlockHolder<HTCrimsonSoilBlock> = REGISTER.registerSimple(
+        "crimson_soil",
+        copyOf(Blocks.SOUL_SOIL),
+        ::HTCrimsonSoilBlock,
+    )
 
     @JvmField
-    val ASH_LOG: HTDeferredBlockHolder<RotatedPillarBlock, BlockItem> = REGISTER.registerSimple(
+    val ASH_LOG: HTBasicDeferredBlockHolder<RotatedPillarBlock> = REGISTER.registerSimple(
         "ash_log",
         BlockBehaviour.Properties
             .of()
@@ -300,7 +303,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val SLABS: Map<HTDecorationVariant, HTDeferredBlockHolder<SlabBlock, BlockItem>> =
+    val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<SlabBlock>> =
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_slab",
@@ -309,7 +312,7 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val STAIRS: Map<HTDecorationVariant, HTDeferredBlockHolder<StairBlock, BlockItem>> =
+    val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<StairBlock>> =
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, base: HTSimpleDeferredBlockHolder) ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
@@ -318,7 +321,7 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val WALLS: Map<HTDecorationVariant, HTDeferredBlockHolder<WallBlock, BlockItem>> =
+    val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<WallBlock>> =
         DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_wall",
@@ -338,41 +341,38 @@ object RagiumBlocks {
     //    Foods    //
 
     @JvmField
-    val SWEET_BERRIES_CAKE: HTDeferredBlockHolder<HTSweetBerriesCakeBlock, BlockItem> = REGISTER.registerSimple(
-        "sweet_berries_cake",
-        copyOf(Blocks.YELLOW_WOOL).forceSolidOn(),
-        ::HTSweetBerriesCakeBlock,
-    )
+    val SWEET_BERRIES_CAKE: HTBasicDeferredBlockHolder<HTSweetBerriesCakeBlock> =
+        REGISTER.registerSimple("sweet_berries_cake", copyOf(Blocks.YELLOW_WOOL).forceSolidOn(), ::HTSweetBerriesCakeBlock)
 
     //    Generators    //
 
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTDeferredBlockHolder<HTEntityBlock, BlockItem>> =
+    val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
         createMap<HTGeneratorVariant>(machineProperty(), ::HTHorizontalEntityBlock)
 
     //    Machines    //
 
     @JvmField
-    val BASIC_MACHINE_FRAME: HTDeferredBlockHolder<TransparentBlock, BlockItem> =
+    val BASIC_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
         REGISTER.registerSimple("basic_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
 
     @JvmField
-    val ADVANCED_MACHINE_FRAME: HTDeferredBlockHolder<TransparentBlock, BlockItem> =
+    val ADVANCED_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
         REGISTER.registerSimple("advanced_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
 
     @JvmField
-    val ELITE_MACHINE_FRAME: HTDeferredBlockHolder<TransparentBlock, BlockItem> =
+    val ELITE_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
         REGISTER.registerSimple("elite_machine_frame", machineProperty(), ::TransparentBlock)
 
     @JvmField
-    val FRAMES: List<HTDeferredBlockHolder<TransparentBlock, BlockItem>> = listOf(
+    val FRAMES: List<HTBasicDeferredBlockHolder<TransparentBlock>> = listOf(
         BASIC_MACHINE_FRAME,
         ADVANCED_MACHINE_FRAME,
         ELITE_MACHINE_FRAME,
     )
 
     @JvmField
-    val MACHINES: Map<HTMachineVariant, HTDeferredBlockHolder<HTEntityBlock, BlockItem>> =
+    val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
         createMap<HTMachineVariant>(machineProperty(), ::HTHorizontalEntityBlock)
 
     //    Devices    //
@@ -402,14 +402,14 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val DEVICES: Map<HTDeviceVariant, HTDeferredBlockHolder<HTEntityBlock, BlockItem>> =
+    val DEVICES: Map<HTDeviceVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
         createMap<HTDeviceVariant>(machineProperty(), HTEntityBlock::Simple)
 
     @JvmStatic
     private inline fun <reified V> createMap(
         properties: BlockBehaviour.Properties,
         noinline factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> HTEntityBlock,
-    ): Map<V, HTDeferredBlockHolder<HTEntityBlock, BlockItem>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
+    ): Map<V, HTBasicDeferredBlockHolder<HTEntityBlock>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
         enumEntries<V>().associateWith { variant: V ->
             val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
             registerEntity(type, properties, factory)
@@ -418,7 +418,7 @@ object RagiumBlocks {
     //    Storages    //
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, HTDeferredBlockHolder<HTDrumBlock, BlockItem>> = HTDrumVariant.entries
+    val DRUMS: Map<HTDrumVariant, HTDeferredBlockHolder<HTDrumBlock, HTDrumItem>> = HTDrumVariant.entries
         .associateWith { variant: HTDrumVariant ->
             val base: Block = when (variant) {
                 HTDrumVariant.SMALL -> Blocks.IRON_BLOCK
@@ -427,6 +427,10 @@ object RagiumBlocks {
                 HTDrumVariant.HUGE -> Blocks.NETHERITE_BLOCK
             }
             val type: HTDeferredBlockEntityType<HTDrumBlockEntity> = variant.blockEntityHolder
-            registerEntity(type, copyOf(base), ::HTDrumBlock)
+            REGISTER.register(
+                type.id.path,
+                { HTDrumBlock(type, copyOf(base)) },
+                ::HTDrumItem,
+            )
         }
 }

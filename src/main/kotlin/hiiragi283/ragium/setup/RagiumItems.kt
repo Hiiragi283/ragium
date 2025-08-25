@@ -29,7 +29,7 @@ import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
-import hiiragi283.ragium.common.item.HTTeleportTicketItem
+import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -56,6 +56,8 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
@@ -243,6 +245,12 @@ object RagiumItems {
         REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
 
     @JvmField
+    val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
+
+    @JvmField
+    val TELEPORT_KEY: DeferredItem<HTTeleportKeyItem> = register("teleport_key", ::HTTeleportKeyItem)
+
+    @JvmField
     val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
 
     @JvmField
@@ -300,14 +308,6 @@ object RagiumItems {
 
     @JvmStatic
     private fun getDeepTool(variant: HTVanillaToolVariant): DeferredItem<*> = getTool(variant, RagiumMaterialType.DEEP_STEEL)
-
-    //    Tickets    //
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register("teleport_ticket", ::HTTeleportTicketItem)
 
     //    Foods    //
 
@@ -412,27 +412,48 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        registerEnergy(event, DRILL, 160000)
-
+        // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            event.registerItem(
-                Capabilities.FluidHandler.ITEM,
-                { stack: ItemStack, _: Void? ->
-                    val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                    HTComponentFluidHandler(stack, variant.capacity * modifier)
-                },
-                variant,
-            )
+            registerFluid(event, variant, variant.capacity)
+        }
+        registerFluid(event, TELEPORT_KEY, 8000) { stack: ItemStack, capacity: Int ->
+            object : HTComponentFluidHandler(stack, capacity) {
+                override fun isFluidValid(tank: Int, stack: FluidStack): Boolean =
+                    super.isFluidValid(tank, stack) && RagiumFluidContents.DEW_OF_THE_WARP.isOf(stack)
+            }
         }
 
+        // Energy
+        registerEnergy(event, DRILL, 160000)
+
         LOGGER.info("Registered item capabilities!")
+    }
+
+    @JvmStatic
+    fun registerFluid(
+        event: RegisterCapabilitiesEvent,
+        item: ItemLike,
+        capacity: Int,
+        factory: (ItemStack, Int) -> IFluidHandlerItem = ::HTComponentFluidHandler,
+    ) {
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            { stack: ItemStack, _: Void? ->
+                val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+                factory(stack, capacity * modifier)
+            },
+            item,
+        )
     }
 
     @JvmStatic
     fun registerEnergy(event: RegisterCapabilitiesEvent, item: ItemLike, capacity: Int) {
         event.registerItem(
             Capabilities.EnergyStorage.ITEM,
-            { stack: ItemStack, _: Void? -> HTComponentEnergyStorage(stack, capacity) },
+            { stack: ItemStack, _: Void? ->
+                val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+                HTComponentEnergyStorage(stack, capacity * modifier)
+            },
             item,
         )
     }

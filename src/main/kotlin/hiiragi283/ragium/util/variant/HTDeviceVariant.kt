@@ -2,8 +2,8 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
@@ -12,13 +12,12 @@ import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEn
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.core.BlockPos
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTDeviceVariant(
@@ -30,7 +29,7 @@ enum class HTDeviceVariant(
 ) : HTVariantKey.WithBE<HTDeviceBlockEntity> {
     // Basic
     ITEM_BUFFER(::HTItemBufferBlockEntity, RagiumTierType.BASIC, "Item Buffer", "アイテムバッファ"),
-    MILK_COLLECTOR(::HTMilkDrainBlockEntity, RagiumTierType.BASIC, "Milk Collector", "搾乳機"),
+    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, RagiumTierType.BASIC, "Milk Collector", "搾乳機"),
     WATER_COLLECTOR(::HTWaterCollectorBlockEntity, RagiumTierType.BASIC, "Water Collector", "水収集機"),
 
     // Advanced
@@ -43,7 +42,7 @@ enum class HTDeviceVariant(
     CEU(HTEnergyNetworkAccessBlockEntity::Creative, RagiumTierType.ULTIMATE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
 
-    override val blockHolder: HTDeferredBlockHolder<HTEntityBlock, BlockItem> get() = RagiumBlocks.DEVICES[this]!!
+    override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDeviceBlockEntity> =
         RagiumBlockEntityTypes.REGISTER.registerType(
             serializedName,

@@ -186,7 +186,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.BOTTLED_BEE)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.accept(RagiumItems.TELEPORT_TICKET)
+            output.accept(RagiumItems.TELEPORT_KEY)
 
             output.accept(RagiumItems.RAGI_TICKET)
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)

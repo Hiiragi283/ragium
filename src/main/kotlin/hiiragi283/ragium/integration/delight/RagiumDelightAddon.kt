@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.delight
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.RagiumConst
@@ -18,7 +18,6 @@ import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Blocks
@@ -41,7 +40,7 @@ object RagiumDelightAddon : RagiumAddon {
     val BLOCK_REGISTER = HTDeferredBlockRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val RAGI_CHERRY_PIE: HTDeferredBlockHolder<PieBlock, BlockItem> = BLOCK_REGISTER.registerSimple(
+    val RAGI_CHERRY_PIE: HTBasicDeferredBlockHolder<PieBlock> = BLOCK_REGISTER.registerSimple(
         "ragi_cherry_pie",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> PieBlock(prop, RAGI_CHERRY_PIE_SLICE) },

@@ -1,11 +1,10 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -33,9 +32,9 @@ enum class HTDecorationVariant(private val enUsPattern: String, private val jaJp
         BLUE_NETHER_BRICK -> RagiumBlocks.BLUE_NETHER_BRICKS
         SPONGE_CAKE -> RagiumBlocks.SPONGE_CAKE
     }
-    val slab: HTDeferredBlockHolder<SlabBlock, BlockItem> get() = RagiumBlocks.SLABS[this]!!
-    val stairs: HTDeferredBlockHolder<StairBlock, BlockItem> get() = RagiumBlocks.STAIRS[this]!!
-    val wall: HTDeferredBlockHolder<WallBlock, BlockItem> get() = RagiumBlocks.WALLS[this]!!
+    val slab: HTBasicDeferredBlockHolder<SlabBlock> get() = RagiumBlocks.SLABS[this]!!
+    val stairs: HTBasicDeferredBlockHolder<StairBlock> get() = RagiumBlocks.STAIRS[this]!!
+    val wall: HTBasicDeferredBlockHolder<WallBlock> get() = RagiumBlocks.WALLS[this]!!
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.recipe.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import net.minecraft.core.registries.Registries
@@ -22,10 +21,6 @@ object RagiumCustomRecipeSerializers {
         REGISTER.register(name) { _: ResourceLocation -> serializer }
 
     //    Custom    //
-
-    @JvmField
-    val BLAST_CHARGE: Supplier<RecipeSerializer<HTBlastChargeRecipe>> =
-        register("blast_charge", SimpleCraftingRecipeSerializer(::HTBlastChargeRecipe))
 
     @JvmField
     val ETERNAL_TICKET: Supplier<SimpleCraftingRecipeSerializer<HTEternalTicketRecipe>> =

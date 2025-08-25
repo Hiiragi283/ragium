@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/warped_crystal"
+      "tag": "c:ingots/azure_steel"
     },
     "B": {
-      "tag": "c:dyes/cyan"
+      "tag": "c:gems/warped_crystal"
     },
     "C": {
-      "item": "minecraft:paper"
+      "item": "minecraft:trial_key"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_ticket"
+    "id": "ragium:teleport_key"
   }
 }

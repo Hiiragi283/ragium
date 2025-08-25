@@ -61,7 +61,7 @@ object RagiumAdvancements {
     val DIM_ANCHOR: ResourceKey<Advancement> = create("dimensional_anchor")
 
     @JvmField
-    val TELEPORT_TICKET: ResourceKey<Advancement> = create("teleport_ticket")
+    val TELEPORT_KEY: ResourceKey<Advancement> = create("teleport_key")
 
     //    Eldritch    //
 

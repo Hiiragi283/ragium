@@ -39,7 +39,7 @@ class HTDrumBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag)
         val handler: IFluidHandlerItem = stack.getCapability(Capabilities.FluidHandler.ITEM) ?: return
         for (i: Int in (0 until handler.tanks)) {
-            addFluidTooltip(handler.getFluidInTank(i), tooltipComponents::add, tooltipFlag)
+            addFluidTooltip(handler.getFluidInTank(i), tooltipComponents::add, tooltipFlag, false)
         }
     }
 }

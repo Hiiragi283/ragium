@@ -66,7 +66,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Warped
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだ結晶を手に入れる")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "リモートワーク", "次元アンカーを置いて，そのチャンクを常に読み込ませる")
-        addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "片道切符", "テレポートアンカーに紐づいたテレポートチケットを使う")
+        addAdvancement(RagiumAdvancements.TELEPORT_KEY, "ロックオープン！", "転位の鍵を使い，紐づけた座標に飛ぶ")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")
@@ -157,9 +157,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun item() {
-        // Tickets
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
-        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         // Material
         addItem(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
@@ -191,7 +188,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_MAGNET, "らぎマグネット")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SLOT_COVER, "スロットカバー")
+        addItem(RagiumItems.TELEPORT_KEY, "転位の鍵")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")

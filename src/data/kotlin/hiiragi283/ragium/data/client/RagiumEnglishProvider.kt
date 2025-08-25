@@ -70,7 +70,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Warped
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "Remote Work", "Place Dimensional Anchor to force loading the chunk")
-        addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "One-way Ticket", "Use teleport ticket bound with Teleport Anchor")
+        addAdvancement(RagiumAdvancements.TELEPORT_KEY, "Lock Open!", "Use teleport key to teleport linked position")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Gotcha!", "Throw Eldritch Egg to capture mobs")
@@ -166,9 +166,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun item() {
-        // Tickets
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
-        addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         // Material
         addItem(RagiumItems.BASALT_MESH, "Basalt Mesh")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
@@ -201,7 +198,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SLOT_COVER, "Slot Cover")
+        addItem(RagiumItems.TELEPORT_KEY, "Teleport Key")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")

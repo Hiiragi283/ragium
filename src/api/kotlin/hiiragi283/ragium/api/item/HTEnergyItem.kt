@@ -57,7 +57,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
 
     //    Item    //
 
-    override fun isBarVisible(stack: ItemStack): Boolean = true
+    override fun isBarVisible(stack: ItemStack): Boolean = hasStorage(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
         val storage: IEnergyStorage = getStorage(stack) ?: return 0

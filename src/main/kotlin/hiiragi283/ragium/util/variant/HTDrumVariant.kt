@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.item.HTDrumItem
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTDrumVariant(
@@ -26,9 +26,9 @@ enum class HTDrumVariant(
 
     val capacity: Int get() = RagiumAPI.getConfig().getDrumCapacity(serializedName)
 
-    override val blockHolder: HTDeferredBlockHolder<HTDrumBlock, BlockItem> get() = RagiumBlocks.DRUMS[this]!!
+    override val blockHolder: HTDeferredBlockHolder<HTDrumBlock, HTDrumItem> get() = RagiumBlocks.DRUMS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> =
-        RagiumBlockEntityTypes.REGISTER.registerType("${serializedName}_drum", factory)
+        RagiumBlockEntityTypes.registerTick("${serializedName}_drum", factory)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

@@ -91,6 +91,8 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
 
     override fun get(): STILL = getStill()
 
+    fun isOf(stack: FluidStack): Boolean = stack.`is`(commonTag)
+
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 
     fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)

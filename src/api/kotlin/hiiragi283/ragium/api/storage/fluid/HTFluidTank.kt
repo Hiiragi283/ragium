@@ -9,10 +9,20 @@ import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.Optional
 
+/**
+ * @see [mekanism.api.fluid.IExtendedFluidTank]
+ */
 interface HTFluidTank :
     IFluidTank,
     INBTSerializable<CompoundTag>,
     HTContentListener {
+    companion object {
+        fun toAction(simulate: Boolean): IFluidHandler.FluidAction = when (simulate) {
+            true -> IFluidHandler.FluidAction.SIMULATE
+            false -> IFluidHandler.FluidAction.EXECUTE
+        }
+    }
+
     fun isEmpty(): Boolean
 
     fun getSpace(): Int
@@ -24,11 +34,6 @@ interface HTFluidTank :
     fun drain(stack: FluidStack, simulate: Boolean): FluidStack = drain(stack, toAction(simulate))
 
     fun drain(max: Int, simulate: Boolean): FluidStack = drain(max, toAction(simulate))
-
-    private fun toAction(simulate: Boolean): IFluidHandler.FluidAction = when (simulate) {
-        true -> IFluidHandler.FluidAction.SIMULATE
-        false -> IFluidHandler.FluidAction.EXECUTE
-    }
 
     fun canFill(resource: FluidStack, forceFull: Boolean): Boolean {
         val filled: Int = fill(resource, IFluidHandler.FluidAction.SIMULATE)
