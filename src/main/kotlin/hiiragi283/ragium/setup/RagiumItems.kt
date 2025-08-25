@@ -80,10 +80,13 @@ object RagiumItems {
     val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
 
     @JvmField
-    val SILICON: DeferredItem<Item> = register("silicon")
+    val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
-    val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
+    val RESIN: DeferredItem<Item> = register("resin")
+
+    @JvmField
+    val SILICON: DeferredItem<Item> = register("silicon")
 
     @JvmField
     val TAR: DeferredItem<Item> = register("tar")

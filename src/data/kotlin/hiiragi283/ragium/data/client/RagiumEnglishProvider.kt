@@ -161,7 +161,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
-        addFluid(RagiumFluidContents.SYRUP, "Syrup")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
     }
@@ -176,8 +175,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
         addItem(RagiumItems.ELDRITCH_GEAR, "Eldritch Gear")
-        addItem(RagiumItems.SILICON, "Indigo Silicon")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
+        addItem(RagiumItems.RESIN, "Resin")
+        addItem(RagiumItems.SILICON, "Indigo Silicon")
         addItem(RagiumItems.TAR, "Tar")
 
         addPatterned()

@@ -152,7 +152,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
-        addFluid(RagiumFluidContents.SYRUP, "シロップ")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
     }
@@ -167,8 +166,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.DEEP_SCRAP, "深層の欠片")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ELDRITCH_GEAR, "異質な歯車")
-        addItem(RagiumItems.SILICON, "紺碧のシリコン")
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
+        addItem(RagiumItems.RESIN, "樹脂")
+        addItem(RagiumItems.SILICON, "紺碧のシリコン")
         addItem(RagiumItems.TAR, "タール")
 
         addPatterned()

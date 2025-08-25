@@ -1,7 +1,22 @@
 {
   "values": {
+    "#c:gems/crimson_crystal": {
+      "burn_time": 4800
+    },
+    "#c:storage_blocks/crimson_crystal": {
+      "burn_time": 43200
+    },
+    "ragium:compressed_sawdust": {
+      "burn_time": 1200
+    },
     "ragium:ragi_coke": {
-      "burn_time": 6400
+      "burn_time": 3200
+    },
+    "ragium:resin": {
+      "burn_time": 800
+    },
+    "ragium:tar": {
+      "burn_time": 800
     }
   }
 }

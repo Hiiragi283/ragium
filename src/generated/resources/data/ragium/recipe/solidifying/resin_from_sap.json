@@ -1,11 +1,11 @@
 {
   "type": "ragium:solidifying",
   "ingredient": {
-    "amount": 250,
-    "tag": "c:syrup"
+    "amount": 1000,
+    "tag": "c:sap"
   },
   "result": {
     "count": 1,
-    "id": "minecraft:sugar"
+    "id": "ragium:resin"
   }
 }

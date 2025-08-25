@@ -122,10 +122,6 @@ object RagiumFluidContents {
         register("sap", properties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SLIME_BALL)))
 
     @JvmField
-    val SYRUP: HTFluidContent<HTVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("syrup", properties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SUGAR)))
-
-    @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("crimson_sap", properties())
 

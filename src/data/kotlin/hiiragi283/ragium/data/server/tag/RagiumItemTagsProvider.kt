@@ -246,6 +246,7 @@ class RagiumItemTagsProvider(
         // Parts
         builder.add(RagiumCommonTags.Items.SILICON, RagiumItems.SILICON)
         builder.add(Tags.Items.LEATHERS, RagiumItems.SYNTHETIC_LEATHER)
+        builder.add(Tags.Items.SLIME_BALLS, RagiumItems.RESIN)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
         builder.add(Tags.Items.STRINGS, RagiumItems.SYNTHETIC_FIBER)
 

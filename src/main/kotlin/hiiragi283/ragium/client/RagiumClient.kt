@@ -185,7 +185,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
         liquid(RagiumFluidContents.SAP, Color(0x996633))
-        liquid(RagiumFluidContents.SYRUP, Color(0xcc9966))
 
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val color = Color(data.color)

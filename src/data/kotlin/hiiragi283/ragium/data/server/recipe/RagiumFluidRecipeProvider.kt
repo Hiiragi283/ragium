@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -109,19 +108,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
             ).saveSuffixed(output, "_from_log")
         // Sap -> Syrup
-        distillation(
-            RagiumFluidContents.SAP to 1000,
-            null,
-            HTResultHelper.fluid(RagiumFluidContents.SYRUP, 750) to HTIngredientHelper.item(Items.SUGAR),
-            HTResultHelper.fluid(HTFluidContent.WATER, 250) to null,
-        )
-        // Syrup -> Sugar
-        HTFluidWithCatalystToObjRecipeBuilder
-            .solidifying(
-                null,
-                HTIngredientHelper.fluid(RagiumFluidContents.SYRUP, 250),
-                HTResultHelper.item(Items.SUGAR),
-            ).saveSuffixed(output, "_from_syrup")
+        distillation(RagiumFluidContents.SAP to 1000, HTResultHelper.item(RagiumItems.RESIN))
 
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder

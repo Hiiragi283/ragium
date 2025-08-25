@@ -401,10 +401,6 @@ class RagiumEmiPlugin : EmiPlugin {
             leftInput(EmiStack.of(RagiumFluidContents.SAP.getBucket()))
             rightInput(EmiStack.EMPTY, false)
         }
-        addInteraction(EmiStack.of(Items.SUGAR)) {
-            leftInput(EmiStack.of(RagiumFluidContents.SYRUP.getBucket()))
-            rightInput(EmiStack.EMPTY, false)
-        }
         addInteraction(EmiStack.of(RagiumItems.getGem(RagiumMaterialType.CRIMSON_CRYSTAL))) {
             leftInput(EmiStack.of(RagiumFluidContents.CRIMSON_BLOOD.getBucket()))
             rightInput(EmiStack.EMPTY, false)
