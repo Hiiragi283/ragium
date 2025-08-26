@@ -77,6 +77,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         diode()
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun circuits() {
         fun circuit(tier: RagiumTierType): DeferredItem<*> = RagiumItems.getMaterial(HTItemMaterialVariant.CIRCUIT, tier)
         // Circuit Boards
@@ -166,6 +167,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun components() {
         fun register(material: HTMaterialType, core: HTMaterialType) {
             // Shaped
@@ -217,6 +219,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun redStones() {
         // Redstone Board
         HTShapedRecipeBuilder(RagiumItems.REDSTONE_BOARD, 4)
@@ -249,6 +252,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @JvmStatic
     private fun diode() {
         // LED
         HTCombineItemToObjRecipeBuilder

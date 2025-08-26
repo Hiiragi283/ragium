@@ -31,10 +31,10 @@ object HTLootTicketHelper {
     )
 
     @JvmStatic
-    val DEFAULT_LOOT_TICKETS: Map<ResourceKey<LootTable>, ItemStack> by lazy { DEFAULT_LOOT_IDS.associateWith(::createTicket) }
+    fun getDefaultLootTickets(): Map<ResourceKey<LootTable>, ItemStack> = DEFAULT_LOOT_IDS.associateWith(::createTicket)
 
     @JvmStatic
-    fun getLootTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = DEFAULT_LOOT_TICKETS[lootTableKey]?.copy() ?: ItemStack.EMPTY
+    fun getLootTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = createTicket(lootTableKey)
 
     @JvmStatic
     private fun createTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = createItemStack(RagiumItems.RAGI_TICKET, 1) {

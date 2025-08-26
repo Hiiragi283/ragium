@@ -125,7 +125,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    English    //
 
     abstract class English(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.EN_US) {
-        override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
             add(content.getBucket(), "$value Bucket")
         }
     }
@@ -133,7 +133,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Japanese    //
 
     abstract class Japanese(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.JA_JP) {
-        override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
             add(content.getBucket(), "${value}入りバケツ")
         }
     }

@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 
 object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
+    @JvmStatic
     private lateinit var enchLookup: HolderGetter<Enchantment>
 
     override fun buildRecipeInternal() {

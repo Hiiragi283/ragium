@@ -30,6 +30,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         drums()
     }
 
+    @JvmStatic
     private fun casings() {
         // Wooden
         HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
@@ -88,9 +89,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     //    Machines    //
 
+    @JvmStatic
     private fun generators() {
     }
 
+    @JvmStatic
     private fun machines() {
         // Basic
         basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
@@ -166,6 +169,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         ).save(output)
     }
 
+    @JvmStatic
     private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
@@ -176,6 +180,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
+    @JvmStatic
     private fun advMachine(variant: HTMachineVariant, side: Ingredient) {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
@@ -188,6 +193,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     //    Devices    //
 
+    @JvmStatic
     private fun devices() {
         // Basic
         basicDevice(HTDeviceVariant.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
@@ -200,18 +206,21 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advancedDevice(HTDeviceVariant.DIM_ANCHOR, HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.WARPED_CRYSTAL))
     }
 
+    @JvmStatic
     private fun basicDevice(device: ItemLike, input: Ingredient) {
         createComponentUpgrade(RagiumTierType.BASIC, device, RagiumBlocks.DEVICE_CASING)
             .addIngredient(input)
             .save(output)
     }
 
+    @JvmStatic
     private fun advancedDevice(device: ItemLike, input: Ingredient) {
         createComponentUpgrade(RagiumTierType.ADVANCED, device, RagiumBlocks.DEVICE_CASING)
             .addIngredient(input)
             .save(output)
     }
 
+    @JvmStatic
     private fun drums() {
         for ((variant: HTDrumVariant, drum: ItemLike) in RagiumBlocks.DRUMS) {
             val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {

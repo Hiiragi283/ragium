@@ -5,6 +5,7 @@ import com.google.common.collect.Table
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -57,11 +58,10 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Item    //
 
-    override fun createSoda(instances: List<MobEffectInstance>, count: Int): ItemStack {
-        val stack: ItemStack = RagiumItems.ICE_CREAM_SODA.toStack(count)
-        stack.set(DataComponents.FOOD, HTFoodBuilder.create { instances.forEach(this::addEffect) })
-        return stack
-    }
+    override fun createSoda(instances: List<MobEffectInstance>, count: Int): ItemStack =
+        createItemStack(RagiumItems.ICE_CREAM_SODA, count) {
+            set(DataComponents.FOOD, HTFoodBuilder.create { instances.forEach(this::addEffect) })
+        }
 
     //    Server    //
 

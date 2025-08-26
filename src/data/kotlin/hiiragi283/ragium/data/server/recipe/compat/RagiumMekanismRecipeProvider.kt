@@ -39,6 +39,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         deep()
     }
 
+    @JvmStatic
     private fun chemicalConversion() {
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             // Dust -> Chemical
@@ -68,6 +69,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         toChemical(ItemStackToChemicalRecipeBuilder::oxidizing, "oxidizing")
     }
 
+    @JvmStatic
     private fun raginite() {
         // Ore -> Dust
         ItemStackToItemStackRecipeBuilder
@@ -119,6 +121,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/${RagiumConst.RAGI_CHERRY}"))
     }
 
+    @JvmStatic
     private fun azure() {
         // Enrich
         ItemStackToItemStackRecipeBuilder
@@ -144,6 +147,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
     }
 
+    @JvmStatic
     private fun molten() {
         oreToGem(RagiumMaterialType.CRIMSON_CRYSTAL)
         oreToGem(RagiumMaterialType.WARPED_CRYSTAL)
@@ -177,6 +181,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         }
     }
 
+    @JvmStatic
     private fun deep() {
         // Ore -> Scrap
         ItemStackToItemStackRecipeBuilder
@@ -205,23 +210,32 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
     //    Extensions    //
 
+    @JvmStatic
     private val itemHelper: IItemStackIngredientCreator = IMekanismAccess.INSTANCE.itemStackIngredientCreator()
+
+    @JvmStatic
     private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
+
+    @JvmStatic
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
+    @JvmStatic
     private fun IItemStackIngredientCreator.from(
         variant: HTMaterialVariant.ItemTag,
         material: HTMaterialType,
         count: Int = 1,
     ): ItemStackIngredient = from(variant.itemTagKey(material), count)
 
+    @JvmStatic
     private fun IItemStackIngredientCreator.gemOrDust(material: HTMaterialType, count: Int = 1): ItemStackIngredient =
         from(this@RagiumMekanismRecipeProvider.gemOrDust(material), count)
 
+    @JvmStatic
     private fun IItemStackIngredientCreator.ingotOrDust(material: HTMaterialType, count: Int = 1): ItemStackIngredient =
         from(this@RagiumMekanismRecipeProvider.ingotOrDust(material), count)
 
+    @JvmStatic
     private fun oreToGem(material: HTMaterialType) {
         ItemStackToItemStackRecipeBuilder
             .enriching(

@@ -79,7 +79,7 @@ object RagiumTooltipHandler {
     }
 
     @JvmStatic
-    fun food(stack: ItemStack, consumer: (Component) -> Unit, tickRate: Float) {
+    private fun food(stack: ItemStack, consumer: (Component) -> Unit, tickRate: Float) {
         val food: FoodProperties = stack.getFoodProperties(null) ?: return
         val effects: List<FoodProperties.PossibleEffect> = food.effects
         if (effects.isNotEmpty()) {

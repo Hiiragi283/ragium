@@ -49,6 +49,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         molten()
     }
 
+    @JvmStatic
     private fun raginite() {
         // Copper -> Ragi-Alloy
         HTArcFurnaceRecipeBuilder
@@ -73,6 +74,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .build(output, id("ragi_crystal"))
     }
 
+    @JvmStatic
     private fun molten() {
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val molten: HTFluidContent<*, *, *> = data.molten
@@ -114,9 +116,11 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     //    Extension    //
 
+    @JvmStatic
     private fun <T, U : BaseHelpers.ItemInput<T>> U.input(variant: HTItemMaterialVariant, material: HTMaterialType, count: Int = 1): T =
         input(variant.itemTagKey(material), count)
 
+    @JvmStatic
     private fun <T, U : BaseHelpers.ItemOutput<T>> U.output(variant: HTItemMaterialVariant, material: HTMaterialType, count: Int = 1): T =
         output(variant.itemTagKey(material), count)
 }

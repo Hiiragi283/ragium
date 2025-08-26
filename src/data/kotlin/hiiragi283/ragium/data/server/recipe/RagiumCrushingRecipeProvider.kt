@@ -124,6 +124,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         snow()
     }
 
+    @JvmStatic
     private fun woodDust() {
         fun wood(
             tagKey: TagKey<Item>,
@@ -154,6 +155,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         wood(Tags.Items.RODS_WOODEN, 2, 1, "_from_stick")
     }
 
+    @JvmStatic
     private fun sand() {
         // Colorless
         HTItemToChancedItemRecipeBuilder
@@ -185,6 +187,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_sandstone")
     }
 
+    @JvmStatic
     private fun prismarine() {
         HTItemToObjRecipeBuilder
             .pulverizing(
@@ -214,6 +217,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_dark")
     }
 
+    @JvmStatic
     private fun snow() {
         // Snow
         HTItemToObjRecipeBuilder

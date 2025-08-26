@@ -189,7 +189,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.TELEPORT_KEY)
 
             output.accept(RagiumItems.RAGI_TICKET)
-            output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
+            output.acceptAll(HTLootTicketHelper.getDefaultLootTickets().values)
         }
 
     //    Extensions    //

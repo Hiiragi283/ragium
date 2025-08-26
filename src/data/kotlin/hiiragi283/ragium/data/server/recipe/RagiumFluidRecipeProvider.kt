@@ -31,6 +31,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         sap()
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun melting() {
         // Magma Block <-> Lava
         meltAndFreeze(
@@ -41,6 +42,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         )
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun crudeOil() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
@@ -92,6 +94,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @JvmStatic
     private fun sap() {
         // Bio Fuel + Water -> polymer Resin
         HTItemWithFluidToObjRecipeBuilder

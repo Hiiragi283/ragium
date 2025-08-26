@@ -10,7 +10,6 @@ import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 
 @EventBusSubscriber
@@ -55,8 +54,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val network: IEnergyStorage = getEnergyNetwork(source)
-        val amount: Int = network.energyStored
+        val amount: Int = getEnergyNetwork(source).energyStored
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
     }

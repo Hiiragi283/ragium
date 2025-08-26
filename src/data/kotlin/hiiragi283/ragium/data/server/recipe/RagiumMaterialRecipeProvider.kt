@@ -104,6 +104,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @JvmStatic
     private fun azure() {
         // Azure Shard
         HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
@@ -159,6 +160,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_alt")
     }
 
+    @JvmStatic
     private fun eldritch() {
         // Eldritch Pearl
         HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
@@ -177,6 +179,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @JvmStatic
     private fun deepSteel() {
         // Deep Steel
         HTCookingRecipeBuilder
@@ -201,6 +204,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_ore")
     }
 
+    @JvmStatic
     private fun miscMaterials() {
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
@@ -230,6 +234,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_with_hammer")
     }
 
+    @JvmStatic
     private fun material() {
         // Storage Blocks
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
@@ -264,6 +269,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
+    @JvmStatic
     private fun oreToRaw() {
         // Coal
         HTItemToChancedItemRecipeBuilder
@@ -330,6 +336,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_ore")
     }
 
+    @JvmStatic
     @Suppress("DEPRECATION")
     private fun alloying() {
         // Netherite

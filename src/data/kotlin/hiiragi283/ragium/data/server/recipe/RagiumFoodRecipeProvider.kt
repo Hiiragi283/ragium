@@ -92,6 +92,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         sponge()
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun cherry() {
         // Ragi-Cherry
         HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY, 8)
@@ -107,6 +108,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
@@ -124,6 +126,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun meat() {
         // Minced Meat
         HTItemToObjRecipeBuilder
@@ -163,6 +166,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
+    @JvmStatic
     private fun sponge() {
         // Cakes
         HTShapedRecipeBuilder(Items.CAKE)

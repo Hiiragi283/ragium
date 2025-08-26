@@ -13,7 +13,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -45,16 +44,17 @@ object HTIngredientHelper {
     fun item(ingredient: SizedIngredient): HTItemIngredient = HTItemIngredient.of(ingredient)
 
     @JvmStatic
-    fun itemTags(vararg tagKeys: TagKey<Item>, count: Int = 1): HTItemIngredient = item(
-        CompoundIngredient(tagKeys.map(Ingredient::of)),
+    fun itemTags(vararg tagKeys: TagKey<Item>, count: Int = 1): HTItemIngredient = itemTags(tagKeys.toList(), count)
+
+    @JvmStatic
+    fun itemTags(tagKeys: Iterable<TagKey<Item>>, count: Int = 1): HTItemIngredient = item(
+        tagKeys.map(Ingredient::TagValue).stream().let(Ingredient::fromValues),
         count,
     )
 
     @JvmStatic
-    fun multiVariants(material: HTMaterialType, vararg variant: HTMaterialVariant.ItemTag, count: Int = 1): HTItemIngredient = item(
-        CompoundIngredient(variant.map { it.itemTagKey(material) }.map(Ingredient::of)),
-        count,
-    )
+    fun multiVariants(material: HTMaterialType, vararg variant: HTMaterialVariant.ItemTag, count: Int = 1): HTItemIngredient =
+        itemTags(variant.map { it.itemTagKey(material) }, count)
 
     @JvmStatic
     fun fuelOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient = multiVariants(

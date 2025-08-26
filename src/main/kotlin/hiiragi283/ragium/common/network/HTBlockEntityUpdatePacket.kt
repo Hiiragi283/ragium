@@ -11,7 +11,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
-import net.minecraft.world.level.Level
 
 data class HTBlockEntityUpdatePacket(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
@@ -36,7 +35,8 @@ data class HTBlockEntityUpdatePacket(val pos: BlockPos, val updateTag: CompoundT
     override fun type(): CustomPacketPayload.Type<HTBlockEntityUpdatePacket> = TYPE
 
     override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
-        val level: Level = player.level()
-        level.getBlockEntity(pos)?.handleUpdateTag(updateTag, level.registryAccess())
+        with(player.level()) {
+            getBlockEntity(pos)?.handleUpdateTag(updateTag, registryAccess())
+        }
     }
 }

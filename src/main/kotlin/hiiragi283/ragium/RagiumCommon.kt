@@ -106,11 +106,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
-        val registrar = RagiumPayloadRegister(event.registrar(RagiumAPI.MOD_ID))
-
-        registrar.registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
-
-        registrar.registerC2S(HTTransferIOUpdatePayload.TYPE, HTTransferIOUpdatePayload.STREAM_CODEC)
+        with(RagiumPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
+            // Server -> Client
+            registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
+            // Client -> Server
+            registerC2S(HTTransferIOUpdatePayload.TYPE, HTTransferIOUpdatePayload.STREAM_CODEC)
+        }
 
         LOGGER.info("Registered packets!")
     }

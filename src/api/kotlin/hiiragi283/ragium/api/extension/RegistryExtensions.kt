@@ -9,7 +9,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -135,5 +134,3 @@ fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.IT
  * [TagKey]の名前を返します。
  */
 fun TagKey<*>.getName(): MutableComponent = Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")
-
-fun <T : Any> TagKey<*>.copyTo(registry: ResourceKey<out Registry<T>>): TagKey<T> = TagKey.create(registry, location)

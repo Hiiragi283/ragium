@@ -37,10 +37,9 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
-import net.neoforged.neoforge.common.conditions.IConditionBuilder
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
-sealed class HTRecipeProvider : IConditionBuilder {
+sealed class HTRecipeProvider {
     protected lateinit var provider: HolderLookup.Provider
         private set
     protected lateinit var output: RecipeOutput
@@ -92,7 +91,7 @@ sealed class HTRecipeProvider : IConditionBuilder {
             }
         }
 
-        override fun modifyOutput(output: RecipeOutput): RecipeOutput = output.withConditions(modLoaded(modid))
+        override fun modifyOutput(output: RecipeOutput): RecipeOutput = output.withConditions(ModLoadedCondition(modid))
     }
 
     //    Extensions    //
@@ -114,8 +113,11 @@ sealed class HTRecipeProvider : IConditionBuilder {
     protected fun ingotOrRod(material: HTMaterialType): Ingredient =
         multiVariants(material, HTItemMaterialVariant.INGOT, HTItemMaterialVariant.ROD)
 
-    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant.ItemTag): Ingredient =
-        CompoundIngredient(variants.map { it.itemTagKey(material) }.map(Ingredient::of)).toVanilla()
+    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant.ItemTag): Ingredient = variants
+        .map { it.itemTagKey(material) }
+        .map(Ingredient::TagValue)
+        .stream()
+        .let(Ingredient::fromValues)
 
     // recipe builders
     protected fun meltAndFreeze(

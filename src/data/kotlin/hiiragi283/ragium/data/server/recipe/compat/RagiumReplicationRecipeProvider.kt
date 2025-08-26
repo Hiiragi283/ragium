@@ -22,6 +22,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         matter()
     }
 
+    @JvmStatic
     private fun matter() {
         // Ragium
         register(
@@ -110,7 +111,9 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         save(id, recipe)
     }
 
+    @JvmStatic
     private fun DeferredHolder<IMatterType, IMatterType>.toStack(amount: Int): MatterValue = toStack(amount.toDouble())
 
+    @JvmStatic
     private fun DeferredHolder<IMatterType, IMatterType>.toStack(amount: Double): MatterValue = MatterValue(this.get(), amount)
 }

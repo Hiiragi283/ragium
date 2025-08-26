@@ -81,7 +81,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
-        Blocks.TINTED_GLASS
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->

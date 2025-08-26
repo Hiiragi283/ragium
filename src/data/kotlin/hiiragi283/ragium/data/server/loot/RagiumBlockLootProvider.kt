@@ -16,7 +16,6 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -34,7 +33,7 @@ import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
-    BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
+    BlockLootSubProvider(setOf(), FeatureFlags.REGISTRY.allFlags(), provider) {
     override fun generate() {
         RagiumBlocks.REGISTER.firstEntries.forEach(::dropSelf)
 

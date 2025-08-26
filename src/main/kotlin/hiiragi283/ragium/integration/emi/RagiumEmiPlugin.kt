@@ -112,7 +112,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Crafting
         val crafting: HTDeferredRecipeType<CraftingInput, CraftingRecipe> =
             HTDeferredRecipeType.createType(vanillaId("crafting"))
-        crafting.forEach(recipeManager) { id: ResourceLocation, recipe: CraftingRecipe ->
+        crafting.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
                     addRecipeSafe(

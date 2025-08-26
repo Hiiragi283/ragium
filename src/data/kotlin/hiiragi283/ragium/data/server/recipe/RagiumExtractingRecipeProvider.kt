@@ -61,6 +61,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         dyes()
     }
 
+    @JvmStatic
     private fun dyes() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder

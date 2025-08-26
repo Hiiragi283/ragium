@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
-import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -20,6 +19,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
@@ -53,7 +53,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         val toolStack: ItemStack = this.inventory.getStackInSlot(0)
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
-        val front: Direction = state.getValue(HTBlockStateProperties.HORIZONTAL)
+        val front: Direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
         val posTo: BlockPos = pos.relative(front)
         val stateTo: BlockState = level.getBlockState(posTo)
         // 採掘速度が0未満の場合はスキップ

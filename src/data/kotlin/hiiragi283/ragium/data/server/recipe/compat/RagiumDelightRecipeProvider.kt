@@ -53,6 +53,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         cake()
     }
 
+    @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
             .pattern("A", "B")
@@ -67,6 +68,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         ).save(output)
     }
 
+    @JvmStatic
     private fun cherry() {
         HTCuttingBoardRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PULP, 2)
             .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
@@ -119,6 +121,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
     }
 
+    @JvmStatic
     private fun cake() {
         HTCuttingBoardRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)

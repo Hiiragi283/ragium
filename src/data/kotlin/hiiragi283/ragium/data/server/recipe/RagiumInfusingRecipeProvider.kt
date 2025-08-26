@@ -33,6 +33,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         eldritch()
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun bottle() {
         // Ominous Bottle
         HTItemWithFluidToObjRecipeBuilder
@@ -43,6 +44,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun water() {
         // Dirt -> Mud
         HTItemWithFluidToObjRecipeBuilder
@@ -86,6 +88,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun exp() {
         // Exp Bottle
         extractAndInfuse(
@@ -138,6 +141,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun crimson() {
         // Crimson Nylium
         HTItemWithFluidToObjRecipeBuilder
@@ -170,6 +174,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @_root_ide_package_.kotlin.jvm.JvmStatic
     private fun warped() {
         // Warped Nylium
         HTItemWithFluidToObjRecipeBuilder
@@ -194,6 +199,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
     }
 
+    @JvmStatic
     private fun eldritch() {
         // Ominous Trial Key
         HTItemWithFluidToObjRecipeBuilder

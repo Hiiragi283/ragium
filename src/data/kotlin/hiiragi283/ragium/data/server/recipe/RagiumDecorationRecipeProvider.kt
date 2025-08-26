@@ -101,6 +101,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         glass()
     }
 
+    @JvmStatic
     private fun glass() {
         // Quartz Glass
         HTCombineItemToObjRecipeBuilder
@@ -138,6 +139,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
+    @JvmStatic
     private fun registerBuildings(variant: HTDecorationVariant) {
         val base: HTSimpleDeferredBlockHolder = variant.base
         val slab: HTDeferredBlockHolder<SlabBlock, *> = variant.slab
@@ -179,6 +181,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
+    @JvmStatic
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
             return HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)

@@ -26,6 +26,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         particle()
     }
 
+    @JvmStatic
     private fun centrifuge() {
         CentrifugeRecipeBuilder
             .build()
@@ -34,6 +35,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         // .export(output, "eldritch_flux")
     }
 
+    @JvmStatic
     private fun foundry() {
         FoundryRecipeBuilder
             .build()
@@ -71,6 +73,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, RagiumConst.DEEP_STEEL)
     }
 
+    @JvmStatic
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
@@ -82,6 +85,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, RagiumConst.RAGI_CRYSTAL)
     }
 
+    @JvmStatic
     private fun particle() {
         ParticleCollisionRecipeBuilder
             .build()
