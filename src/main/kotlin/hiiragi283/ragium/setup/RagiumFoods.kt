@@ -51,7 +51,7 @@ object RagiumFoods {
     @JvmStatic
     val RAGI_CHERRY: FoodProperties = HTFoodBuilder.copyOf(Foods.SWEET_BERRIES) {
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 15 * 20, 0)
+        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0)
     }
 
     @JvmField

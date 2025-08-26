@@ -47,6 +47,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
 
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Get Ragi-Cherry")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "The Last Breakfast", "Get Ragi-Cherry Toast Tower")
+
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "This is red, not orange!", "Get Advanced Ragi-Alloy Ingot")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
@@ -463,10 +466,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun delight() {
         addBlock(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+        addBlock(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "Ragi-Cherry Toast Tower")
 
-        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
         addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         addItem(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
     }
 
     private fun jade() {

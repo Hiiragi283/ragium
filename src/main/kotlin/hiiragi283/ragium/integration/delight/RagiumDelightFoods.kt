@@ -18,15 +18,13 @@ object RagiumDelightFoods {
         nutrition = 3
         saturation = FoodConstants.FOOD_SATURATION_NORMAL
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 1)
+        addEffect(MobEffects.HEALTH_BOOST, 15 * 20, 1)
     }
 
     @JvmStatic
-    val RAGI_CHERRY_PIE_SLICE: FoodProperties = HTFoodBuilder.create {
+    val RAGI_CHERRY_PIE_SLICE: FoodProperties = HTFoodBuilder.copyOf(RagiumFoods.RAGI_CHERRY) {
         nutrition = 3
         saturation = FoodConstants.FOOD_SATURATION_LOW
-        alwaysEat = true
         fastFood()
-        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0)
     }
 }

@@ -1,39 +1,29 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
-import hiiragi283.ragium.api.data.advancement.HTDisplayInfoBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.function.Consumer
 
-abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
+abstract class HTAdvancementGenerator {
     protected lateinit var root: AdvancementHolder
 
-    protected lateinit var output: Consumer<AdvancementHolder>
+    protected lateinit var output: HTAdvancementOutput
 
-    final override fun generate(
-        registries: HolderLookup.Provider,
-        saver: Consumer<AdvancementHolder>,
-        existingFileHelper: ExistingFileHelper,
-    ) {
-        output = saver
+    fun generate(provider: HolderLookup.Provider, output: HTAdvancementOutput, helper: ExistingFileHelper) {
+        this.output = output
         root = createRoot()
-        generate(registries)
+        generate(provider)
     }
 
     protected abstract fun createRoot(): AdvancementHolder
@@ -42,17 +32,17 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
 
     //    Extension    //
 
-    protected fun root(key: ResourceKey<Advancement>, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
+    protected fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
         HTAdvancementBuilder.root().apply(builderAction).save(output, key)
 
     protected fun child(
-        key: ResourceKey<Advancement>,
+        key: HTAdvancementKey,
         parent: AdvancementHolder,
         builderAction: HTAdvancementBuilder.() -> Unit,
     ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
 
     protected fun createSimple(
-        key: ResourceKey<Advancement>,
+        key: HTAdvancementKey,
         parent: AdvancementHolder,
         variant: HTItemMaterialVariant,
         material: HTMaterialType,
@@ -66,7 +56,7 @@ abstract class HTAdvancementGenerator : AdvancementProvider.AdvancementGenerator
     )
 
     protected fun createSimple(
-        key: ResourceKey<Advancement>,
+        key: HTAdvancementKey,
         parent: AdvancementHolder,
         item: ItemLike,
         tagKey: TagKey<Item>? = null,

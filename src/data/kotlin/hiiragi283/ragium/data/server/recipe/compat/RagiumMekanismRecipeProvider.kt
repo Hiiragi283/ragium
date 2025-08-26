@@ -116,7 +116,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 40),
                 RagiumItems.RAGI_CHERRY.toStack(),
                 false,
-            ).build(output, id("metallurgic_infusing/ragi_cherry"))
+            ).build(output, id("metallurgic_infusing/${RagiumConst.RAGI_CHERRY}"))
     }
 
     private fun azure() {

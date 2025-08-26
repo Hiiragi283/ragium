@@ -16,6 +16,7 @@ object RagiumConst {
     const val OBSIDIAN = "obsidian"
     const val QUARTZ = "quartz"
     const val RAGI_ALLOY = "ragi_alloy"
+    const val RAGI_CHERRY = "ragi_cherry"
     const val RAGI_CRYSTAL = "ragi_crystal"
     const val RAGINITE = "raginite"
     const val SOUL = "soul"

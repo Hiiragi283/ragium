@@ -183,14 +183,22 @@ class RagiumItemTagsProvider(
             RagiumCommonTags.Items.FOODS_CHERRY,
             RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
             RagiumItems.RAGI_CHERRY,
-            RagiumDelightAddon.RAGI_CHERRY_PULP,
         )
 
         builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, RagiumCommonTags.Items.INGOTS_CHOCOLATE)
         // Delight
+        builder.addItem(
+            RagiumCommonTags.Items.FOODS_CHERRY,
+            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
+            RagiumDelightAddon.RAGI_CHERRY_PULP,
+        )
+
         builder.addItem(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
+        builder.addItem(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
 
         builder.addItem(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
+        builder.addItem(ModTags.MEALS, RagiumDelightAddon.RAGI_CHERRY_TOAST)
+        builder.addItem(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
     }
 
     //    Categories    //
@@ -294,14 +302,12 @@ class RagiumItemTagsProvider(
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, vararg items: ItemLike): HTTagBuilder<Item> = apply {
-        for (item: ItemLike in items) {
-            add(tagKey, item.asItemHolder())
-        }
+    private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: ItemLike): HTTagBuilder<Item> = apply {
+        add(tagKey, item.asItemHolder())
     }
 
-    private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, vararg items: ItemLike) =
-        addTag(parent, child).addItem(child, *items)
+    private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) =
+        addTag(parent, child).addItem(child, item)
 
     private fun HTTagBuilder<Item>.addItem(
         variant: HTMaterialVariant.ItemTag,

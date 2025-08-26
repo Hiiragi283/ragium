@@ -1,87 +1,93 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.util.RagiumConst
-import net.minecraft.advancements.Advancement
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 
 object RagiumAdvancements {
     @JvmField
-    val ROOT: ResourceKey<Advancement> = create("root")
+    val ROOT: HTAdvancementKey = create("root")
 
     @JvmField
-    val CRAFTABLE_TEMPLATES: ResourceKey<Advancement> = create("craftable_templates")
+    val CRAFTABLE_TEMPLATES: HTAdvancementKey = create("craftable_templates")
 
     //    Raginite    //
 
     @JvmField
-    val RAGINITE: ResourceKey<Advancement> = create(RagiumConst.RAGINITE)
+    val RAGINITE: HTAdvancementKey = create(RagiumConst.RAGINITE)
 
     @JvmField
-    val RAGI_ALLOY: ResourceKey<Advancement> = create(RagiumConst.RAGI_ALLOY)
+    val RAGI_CHERRY: HTAdvancementKey = create(RagiumConst.RAGI_CHERRY)
 
     @JvmField
-    val ADV_RAGI_ALLOY: ResourceKey<Advancement> = create(RagiumConst.ADVANCED_RAGI_ALLOY)
+    val RAGI_CHERRY_TOAST: HTAdvancementKey = create(RagiumConst.RAGI_CHERRY + "_toast")
 
     @JvmField
-    val RAGI_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.RAGI_CRYSTAL)
+    val RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.RAGI_ALLOY)
+
+    // Advanced
+    @JvmField
+    val ADV_RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.ADVANCED_RAGI_ALLOY)
+
+    // Elite
+    @JvmField
+    val RAGI_CRYSTAL: HTAdvancementKey = create(RagiumConst.RAGI_CRYSTAL)
 
     @JvmField
-    val RAGI_CRYSTAL_HAMMER: ResourceKey<Advancement> = create(RagiumConst.RAGI_CRYSTAL + "_hammer")
+    val RAGI_CRYSTAL_HAMMER: HTAdvancementKey = create(RagiumConst.RAGI_CRYSTAL + "_hammer")
 
     @JvmField
-    val RAGI_TICKET: ResourceKey<Advancement> = create("ragi_ticket")
+    val RAGI_TICKET: HTAdvancementKey = create("ragi_ticket")
 
     //    Azure    //
 
     @JvmField
-    val AZURE_SHARD: ResourceKey<Advancement> = create("azure_shard")
+    val AZURE_SHARD: HTAdvancementKey = create("azure_shard")
 
     @JvmField
-    val AZURE_STEEL: ResourceKey<Advancement> = create("azure_steel")
+    val AZURE_STEEL: HTAdvancementKey = create("azure_steel")
 
     @JvmField
-    val AZURE_GEARS: ResourceKey<Advancement> = create("azure_gears")
+    val AZURE_GEARS: HTAdvancementKey = create("azure_gears")
 
     //    Crimson    //
 
     @JvmField
-    val CRIMSON_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.CRIMSON_CRYSTAL)
+    val CRIMSON_CRYSTAL: HTAdvancementKey = create(RagiumConst.CRIMSON_CRYSTAL)
 
     @JvmField
-    val CRIMSON_SOIL: ResourceKey<Advancement> = create("crimson_soil")
+    val CRIMSON_SOIL: HTAdvancementKey = create("crimson_soil")
 
     //    Warped    //
 
     @JvmField
-    val WARPED_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.WARPED_CRYSTAL)
+    val WARPED_CRYSTAL: HTAdvancementKey = create(RagiumConst.WARPED_CRYSTAL)
 
     @JvmField
-    val DIM_ANCHOR: ResourceKey<Advancement> = create("dimensional_anchor")
+    val DIM_ANCHOR: HTAdvancementKey = create("dimensional_anchor")
 
     @JvmField
-    val TELEPORT_KEY: ResourceKey<Advancement> = create("teleport_key")
+    val TELEPORT_KEY: HTAdvancementKey = create("teleport_key")
 
     //    Eldritch    //
 
     @JvmField
-    val ELDRITCH_PEARL: ResourceKey<Advancement> = create(RagiumConst.ELDRITCH_PEARL)
+    val ELDRITCH_PEARL: HTAdvancementKey = create(RagiumConst.ELDRITCH_PEARL)
 
     @JvmField
-    val ELDRITCH_EGG: ResourceKey<Advancement> = create("eldritch_egg")
+    val ELDRITCH_EGG: HTAdvancementKey = create("eldritch_egg")
 
     @JvmField
-    val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")
+    val MYSTERIOUS_OBSIDIAN: HTAdvancementKey = create("mysterious_obsidian")
 
     //    Iridescentium    //
 
     @JvmField
-    val IRIDESCENTIUM: ResourceKey<Advancement> = create("iridescentium")
+    val IRIDESCENTIUM: HTAdvancementKey = create("iridescentium")
 
     @JvmField
-    val ETERNAL_COMPONENT: ResourceKey<Advancement> = create("eternal_component")
+    val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")
 
     @JvmStatic
-    private fun create(path: String): ResourceKey<Advancement> = ResourceKey.create(Registries.ADVANCEMENT, RagiumAPI.id(path))
+    private fun create(path: String): HTAdvancementKey = HTAdvancementKey(RagiumAPI.id(path))
 }

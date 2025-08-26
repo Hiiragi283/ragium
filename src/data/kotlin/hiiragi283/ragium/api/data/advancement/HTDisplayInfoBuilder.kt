@@ -1,17 +1,13 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.extension.descKey
-import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.util.HTDslMarker
-import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import java.util.Optional
+import java.util.*
 
 @HTDslMarker
 class HTDisplayInfoBuilder {
@@ -33,12 +29,12 @@ class HTDisplayInfoBuilder {
         icon = ItemStack(item)
     }
 
-    fun setTitleFromKey(key: ResourceKey<Advancement>): HTDisplayInfoBuilder = apply {
-        title = Component.translatable(key.titleKey())
+    fun setTitleFromKey(key: HTAdvancementKey): HTDisplayInfoBuilder = apply {
+        title = Component.translatable(key.titleKey)
     }
 
-    fun setDescFromKey(key: ResourceKey<Advancement>): HTDisplayInfoBuilder = apply {
-        description = Component.translatable(key.descKey())
+    fun setDescFromKey(key: HTAdvancementKey): HTDisplayInfoBuilder = apply {
+        description = Component.translatable(key.descKey)
     }
 
     fun setGoal(): HTDisplayInfoBuilder = apply {

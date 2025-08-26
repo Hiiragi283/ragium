@@ -3,25 +3,17 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.util.variant.HTDecorationVariant
-import net.minecraft.advancements.Advancement
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
+import net.neoforged.neoforge.client.model.generators.BlockModelProvider
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.registries.DeferredHolder
-
-//    Advancement    //
-
-fun ResourceKey<Advancement>.titleKey(): String = toDescriptionKey("advancements", "title")
-
-fun ResourceKey<Advancement>.descKey(): String = toDescriptionKey("advancements", "desc")
 
 //    ModelFile    //
 
@@ -31,20 +23,14 @@ fun modelFile(namespace: String, path: String): ModelFile = modelFile(ResourceLo
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
-fun <BUILDER : ModelBuilder<BUILDER>> ModelProvider<BUILDER>.layeredModel(
-    path: String,
-    layer0: ResourceLocation,
-    layer1: ResourceLocation,
-): BUILDER = withExistingParent(path, RagiumAPI.id("block/layered"))
-    .texture("layer0", layer0)
-    .texture("layer1", layer1)
-    .renderType("cutout")
-
-fun <BUILDER : ModelBuilder<BUILDER>> ModelProvider<BUILDER>.layeredModel(
+fun BlockModelProvider.layeredModel(
     holder: DeferredHolder<Block, *>,
     layer0: ResourceLocation,
     layer1: ResourceLocation,
-): BUILDER = layeredModel(holder.id.path, layer0, layer1)
+): BlockModelBuilder = withExistingParent(holder.id.path, RagiumAPI.id("block/layered"))
+    .texture("layer0", layer0)
+    .texture("layer1", layer1)
+    .renderType("cutout")
 
 //    BlockModelProvider    //
 

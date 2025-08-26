@@ -1,12 +1,15 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTAdvancementGenerator
+import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
+import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -18,6 +21,7 @@ import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = root(RagiumAdvancements.ROOT) {
@@ -68,6 +72,23 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             HTItemMaterialVariant.INGOT,
             RagiumMaterialType.RAGI_ALLOY,
         )
+
+        val ragiCherry: AdvancementHolder = createSimple(
+            RagiumAdvancements.RAGI_CHERRY,
+            raginite,
+            RagiumItems.RAGI_CHERRY,
+            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
+        )
+        val ragiCherryToast: AdvancementHolder = HTAdvancementBuilder
+            .child(ragiCherry)
+            .display {
+                setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+                setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
+                setDescFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
+                setGoal()
+            }.hasAllItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+            .addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
+            .save(output, RagiumAdvancements.RAGI_CHERRY_TOAST)
         // Advanced
         val advRagiAlloy: AdvancementHolder = createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,

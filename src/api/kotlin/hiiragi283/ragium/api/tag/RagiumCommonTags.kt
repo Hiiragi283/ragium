@@ -105,14 +105,14 @@ object RagiumCommonTags {
         val FOODS_CHERRY: TagKey<Item> = create("foods", "cherry")
 
         @JvmField
-        val FOODS_RAGI_CHERRY: TagKey<Item> = create("foods", "ragi_cherry")
+        val FOODS_RAGI_CHERRY: TagKey<Item> = create("foods", RagiumConst.RAGI_CHERRY)
 
         // Foods - Jam
         @JvmField
         val JAMS: TagKey<Item> = create("jams")
 
         @JvmField
-        val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", "ragi_cherry")
+        val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", RagiumConst.RAGI_CHERRY)
 
         // Ingots
         private const val INGOTS: String = RagiumConst.INGOTS

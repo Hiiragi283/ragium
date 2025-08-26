@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.data.advancement.HTDisplayInfoBuilder
 import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -8,22 +7,21 @@ import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.DisplayInfo
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
-import java.util.*
-import java.util.function.Consumer
+import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.common.conditions.ICondition
+import java.util.Optional
 
 @HTDslMarker
-class HTAdvancementBuilder private constructor(private val parent: ResourceKey<Advancement>?) {
+class HTAdvancementBuilder private constructor(private val parent: HTAdvancementKey?) {
     companion object {
         @JvmStatic
         fun root(): HTAdvancementBuilder = HTAdvancementBuilder(null)
 
         @JvmStatic
-        fun child(parent: ResourceKey<Advancement>): HTAdvancementBuilder = HTAdvancementBuilder(parent)
+        fun child(parent: HTAdvancementKey): HTAdvancementBuilder = HTAdvancementBuilder(parent)
 
         @JvmStatic
-        fun child(parent: AdvancementHolder): HTAdvancementBuilder = child(ResourceKey.create(Registries.ADVANCEMENT, parent.id))
+        fun child(parent: AdvancementHolder): HTAdvancementBuilder = child(HTAdvancementKey(parent.id))
     }
 
     var display: DisplayInfo? = null
@@ -40,20 +38,23 @@ class HTAdvancementBuilder private constructor(private val parent: ResourceKey<A
         criteria[key] = criterion
     }
 
-    fun build(key: ResourceKey<Advancement>): AdvancementHolder {
-        val requirements: AdvancementRequirements = this.requirements ?: strategy.create(criteria.keys)
-        return AdvancementHolder(
-            key.location(),
-            Advancement(
-                Optional.ofNullable(parent?.location()),
-                Optional.ofNullable(display),
-                rewards,
-                criteria,
-                requirements,
-                true,
-            ),
-        )
+    private val conditions: MutableList<ICondition> = mutableListOf()
+
+    fun addConditions(vararg conditions: ICondition): HTAdvancementBuilder = apply {
+        this.conditions.addAll(conditions)
     }
 
-    fun save(consumer: Consumer<AdvancementHolder>, key: ResourceKey<Advancement>): AdvancementHolder = build(key).apply(consumer::accept)
+    fun save(output: HTAdvancementOutput, key: HTAdvancementKey): AdvancementHolder {
+        val id: ResourceLocation = key.id
+        val adv = Advancement(
+            Optional.ofNullable(parent?.id),
+            Optional.ofNullable(display),
+            rewards,
+            criteria,
+            this.requirements ?: strategy.create(criteria.keys),
+            true,
+        )
+        output.accept(id, adv, conditions)
+        return AdvancementHolder(id, adv)
+    }
 }

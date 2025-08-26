@@ -55,6 +55,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumDelightAddon.BLOCK_REGISTER.firstEntries)
 
             remove(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            remove(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
         }.forEach(::simpleBlockItem)
 
         for ((variant: HTDecorationVariant, wall: DeferredHolder<Block, *>) in RagiumBlocks.WALLS) {
@@ -85,6 +86,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
 
             removeAll(RagiumDelightAddon.KNIFE_MAP.values)
+            remove(RagiumDelightAddon.RAGI_CHERRY_TOAST) // TODO
             // Mekanism
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
@@ -93,6 +95,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         basicItem(RagiumBlocks.WARPED_WART)
 
         basicItem(RagiumDelightAddon.RAGI_CHERRY_PIE)
+        // basicItem(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
 
         for ((material: HTMaterialType, compound: DeferredItem<*>) in compounds) {
             val baseId: String = when (material) {

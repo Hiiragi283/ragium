@@ -2,9 +2,8 @@ package hiiragi283.ragium.api.data
 
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.descKey
+import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTVariantKey
@@ -25,7 +24,6 @@ import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import mekanism.common.registration.impl.DeferredChemical
-import net.minecraft.advancements.Advancement
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
@@ -90,9 +88,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    fun addAdvancement(key: ResourceKey<Advancement>, title: String, desc: String) {
-        add(key.titleKey(), title)
-        add(key.descKey(), desc)
+    fun addAdvancement(key: HTAdvancementKey, title: String, desc: String) {
+        add(key.titleKey, title)
+        add(key.descKey, desc)
     }
 
     fun addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {

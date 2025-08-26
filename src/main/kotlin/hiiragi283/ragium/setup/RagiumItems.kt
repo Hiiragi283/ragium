@@ -340,7 +340,7 @@ object RagiumItems {
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: DeferredItem<Item> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: DeferredItem<Item> = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
 
     @JvmField
     val FEVER_CHERRY: DeferredItem<Item> =

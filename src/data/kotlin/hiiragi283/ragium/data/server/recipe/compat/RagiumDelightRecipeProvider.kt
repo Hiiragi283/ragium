@@ -72,19 +72,6 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
-        // Jam
-        CookingPotRecipeBuilder
-            .cookingPotRecipe(
-                RagiumDelightAddon.RAGI_CHERRY_JAM,
-                1,
-                200,
-                0.35f,
-                Items.GLASS_BOTTLE,
-            ).addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-            .addIngredient(Items.SUGAR)
-            .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
-            .save(output)
         // Pie
         HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .pattern(
@@ -106,6 +93,30 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .storage4()
             .define('A', RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE)
             .saveSuffixed(output, "_from_slice")
+        // Jam
+        CookingPotRecipeBuilder
+            .cookingPotRecipe(
+                RagiumDelightAddon.RAGI_CHERRY_JAM,
+                1,
+                200,
+                0.35f,
+                Items.GLASS_BOTTLE,
+            ).addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(Items.SUGAR)
+            .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+            .pattern(
+                "ABA",
+                "ACA",
+                "CDC",
+            ).define('A', RagiumCommonTags.Items.JAMS_RAGI_CHERRY)
+            .define('B', Tags.Items.DRINKS_HONEY)
+            .define('C', Tags.Items.FOODS_BREAD)
+            .define('D', Items.BOWL)
+            .save(output)
     }
 
     private fun cake() {

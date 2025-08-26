@@ -47,6 +47,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.RAGINITE, "レッドストーンではない", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
 
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "最後の朝食", "らぎチェリーのトーストタワーを手に入れる")
+
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "赤色です。", "発展ラギ合金インゴットを手に入れる")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
@@ -463,10 +466,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun delight() {
         addBlock(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
+        addBlock(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "らぎチェリーのトーストタワー")
 
-        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
         addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
         addItem(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
     }
 
     private fun jade() {

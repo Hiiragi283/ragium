@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
@@ -34,7 +35,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
@@ -85,7 +85,7 @@ object RagiumDatagen {
 
         generator.addProvider(
             event.includeServer(),
-            AdvancementProvider(
+            HTAdvancementProvider(
                 output,
                 provider,
                 helper,
