@@ -6,8 +6,9 @@ import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
+import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
+import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
@@ -30,8 +31,8 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
-import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
-import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
+import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
+import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -54,10 +55,9 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.capabilities.ICapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
@@ -245,23 +245,22 @@ object RagiumItems {
         REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
 
     @JvmField
-    val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
+    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
-    val TELEPORT_KEY: DeferredItem<HTTeleportKeyItem> = register("teleport_key", ::HTTeleportKeyItem)
+    val TELEPORT_KEY: DeferredItem<Item> = register("teleport_key", ::HTTeleportKeyItem)
 
     @JvmField
     val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
 
     @JvmField
-    val MEDIUM_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> =
-        register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
+    val MEDIUM_DRUM_UPGRADE: DeferredItem<Item> = register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
 
     @JvmField
-    val LARGE_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> = register("large_drum_upgrade", HTDrumUpgradeItem::Large)
+    val LARGE_DRUM_UPGRADE: DeferredItem<Item> = register("large_drum_upgrade", HTDrumUpgradeItem::Large)
 
     @JvmField
-    val HUGE_DRUM_UPGRADE: DeferredItem<HTDrumUpgradeItem> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
+    val HUGE_DRUM_UPGRADE: DeferredItem<Item> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
     @JvmField
     val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
@@ -412,51 +411,49 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        // Item
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            provider(9, ::HTPotionBundleItemHandler),
+            POTION_BUNDLE,
+        )
+
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            registerFluid(event, variant, variant.capacity)
+            event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                providerEnch(variant.capacity, ::HTComponentFluidHandler),
+                variant,
+            )
         }
-        registerFluid(event, TELEPORT_KEY, 8000) { stack: ItemStack, capacity: Int ->
-            object : HTComponentFluidHandler(stack, capacity) {
-                override fun isFluidValid(tank: Int, stack: FluidStack): Boolean =
-                    super.isFluidValid(tank, stack) && RagiumFluidContents.DEW_OF_THE_WARP.isOf(stack)
-            }
-        }
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            providerEnch(8000, ::HTTeleportKeyFluidHandler),
+            TELEPORT_KEY,
+        )
 
         // Energy
-        registerEnergy(event, DRILL, 160000)
+        event.registerItem(
+            Capabilities.EnergyStorage.ITEM,
+            providerEnch(160000, ::HTComponentEnergyStorage),
+            DRILL,
+        )
 
         LOGGER.info("Registered item capabilities!")
     }
 
     @JvmStatic
-    fun registerFluid(
-        event: RegisterCapabilitiesEvent,
-        item: ItemLike,
-        capacity: Int,
-        factory: (ItemStack, Int) -> IFluidHandlerItem = ::HTComponentFluidHandler,
-    ) {
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            { stack: ItemStack, _: Void? ->
-                val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                factory(stack, capacity * modifier)
-            },
-            item,
-        )
-    }
+    private fun <T : Any> provider(capacity: Int, factory: (ItemStack, Int) -> T): ICapabilityProvider<ItemStack, Void?, T> =
+        ICapabilityProvider { stack: ItemStack, _: Void? ->
+            factory(stack, capacity)
+        }
 
     @JvmStatic
-    fun registerEnergy(event: RegisterCapabilitiesEvent, item: ItemLike, capacity: Int) {
-        event.registerItem(
-            Capabilities.EnergyStorage.ITEM,
-            { stack: ItemStack, _: Void? ->
-                val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-                HTComponentEnergyStorage(stack, capacity * modifier)
-            },
-            item,
-        )
-    }
+    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): ICapabilityProvider<ItemStack, Void?, T> =
+        ICapabilityProvider { stack: ItemStack, _: Void? ->
+            val modifier: Int = stack.getEnchantmentLevel(RagiumAPI.getInstance().getCapabilityEnch()) + 1
+            factory(stack, capacity * modifier)
+        }
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
@@ -475,10 +472,6 @@ object RagiumItems {
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
-        event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
-        }
-
         event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.GENERIC_DRINK)
             builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.GENERIC_DRINK)

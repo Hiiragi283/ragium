@@ -1,6 +1,6 @@
-package hiiragi283.ragium.common.storage.fluid
+package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
  */
 open class HTComponentFluidHandler(container: ItemStack, capacity: Int) :
     FluidHandlerItemStack(
-        RagiumDataComponents.FLUID_CONTENT,
+        RagiumAPI.getInstance()::getFluidComponent,
         container,
         capacity,
     ) {

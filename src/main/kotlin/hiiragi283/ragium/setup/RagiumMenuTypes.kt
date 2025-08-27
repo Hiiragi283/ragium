@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.container.type.HTMenuType
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -26,7 +25,15 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.common.inventory.container.HTPotionBundleMenu
+import net.minecraft.client.Minecraft
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.fml.loading.FMLEnvironment
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.items.IItemHandler
 
 typealias DeferredBEMenu<BE> = HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE>
 
@@ -34,22 +41,38 @@ object RagiumMenuTypes {
     @JvmField
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
 
+    /**
+     * @see [mekanism.common.inventory.container.type.MekanismContainerType.getTileFromBuf]
+     */
+    @JvmStatic
+    inline fun <reified BE : BlockEntity> getBlockEntityFromBuf(buf: FriendlyByteBuf?): BE {
+        checkNotNull(buf)
+        check(FMLEnvironment.dist.isClient) { "Only supported on client side" }
+        return Minecraft.getInstance().level?.getBlockEntity(buf.readBlockPos()) as? BE
+            ?: error("Failed to find block entity on client side")
+    }
+
     @JvmStatic
     inline fun <reified BE : HTBlockEntity> register(name: String): HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE> {
         val holder: HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE> =
             HTDeferredMenuType.createType(RagiumAPI.id(name))
-        REGISTER.register(name) { _: ResourceLocation ->
-            HTMenuType.blockEntity(HTBlockEntityContainerMenu.create(holder))
-        }
-        return holder
+        return REGISTER.registerType(name, HTBlockEntityContainerMenu.create(holder), ::getBlockEntityFromBuf)
     }
 
     @JvmField
     val DRUM: DeferredBEMenu<HTDrumBlockEntity> = register("drum")
 
     @JvmField
+    val POTION_BUNDLE: HTDeferredMenuType<HTPotionBundleMenu, IItemHandler> =
+        REGISTER.registerType("potion_bundle", ::HTPotionBundleMenu) { buf: RegistryFriendlyByteBuf? ->
+            checkNotNull(buf)
+            val stack: ItemStack = ItemStack.STREAM_CODEC.decode(buf)
+            checkNotNull(stack.getCapability(Capabilities.ItemHandler.ITEM)) { "Failed to get Item Handler from context" }
+        }
+
+    @JvmField
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu, HTMachineBlockEntity> =
-        REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu)
+        REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu, ::getBlockEntityFromBuf)
 
     //    Generator    //
 

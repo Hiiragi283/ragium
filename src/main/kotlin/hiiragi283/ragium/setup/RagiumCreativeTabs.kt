@@ -136,6 +136,7 @@ object RagiumCreativeTabs {
             "ragi_ticket",
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
+            // Raginite
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
             output.accept(RagiumItems.RAGI_MAGNET)
 
@@ -143,27 +144,29 @@ object RagiumCreativeTabs {
 
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.RAGI_LANTERN)
-
+            // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.AZURE_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL))
+            // Molten
+            output.accept(RagiumItems.BLAST_CHARGE)
 
+            output.accept(RagiumItems.TELEPORT_KEY)
+
+            output.accept(RagiumItems.ENDER_BUNDLE)
+            output.accept(RagiumItems.ELDRITCH_EGG)
+            // Deep
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.DEEP_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL))
-
+            // Other
             output.accept(RagiumItems.DRILL)
 
             output.accept(RagiumItems.POTION_BUNDLE)
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
-
-            output.accept(RagiumItems.BLAST_CHARGE)
-
-            output.accept(RagiumItems.ENDER_BUNDLE)
-            output.accept(RagiumItems.ELDRITCH_EGG)
             // Foods
             output.accept(RagiumItems.getIngot(RagiumMaterialType.CHOCOLATE))
 
@@ -186,8 +189,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.BOTTLED_BEE)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.accept(RagiumItems.TELEPORT_KEY)
-
             output.accept(RagiumItems.RAGI_TICKET)
             output.acceptAll(HTLootTicketHelper.getDefaultLootTickets().values)
         }

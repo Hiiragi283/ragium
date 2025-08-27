@@ -3,7 +3,6 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
@@ -17,9 +16,9 @@ import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTMixerScreen
+import hiiragi283.ragium.client.gui.screen.HTPotionBundleScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
-import hiiragi283.ragium.client.gui.screen.tooltip.HTClientPotionTooltip
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -222,6 +221,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerScreen)
+        event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleScreen)
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
@@ -238,8 +238,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
-        event.register(HTPotionBundle::class.java, ::HTClientPotionTooltip)
-
         LOGGER.info("Registered ClientTooltipComponents!")
     }
 }

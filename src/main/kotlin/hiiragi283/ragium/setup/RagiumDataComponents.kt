@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.item.component.HTPotionBundle
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -69,9 +68,6 @@ object RagiumDataComponents {
     @JvmField
     val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceKey<LootTable>>> =
         register("loot_table_id", BiCodecs.resourceKey(Registries.LOOT_TABLE).cast())
-
-    @JvmField
-    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> = register("potion_bundle", HTPotionBundle.CODEC)
 
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<HTTeleportPos>> = register("teleport_pos", HTTeleportPos.CODEC.cast())

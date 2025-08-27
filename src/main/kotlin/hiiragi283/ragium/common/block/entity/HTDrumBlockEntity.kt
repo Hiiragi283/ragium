@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
@@ -50,12 +50,13 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
-        tank.fluid = componentInput.getOrDefault(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy()
+        tank.fluid =
+            componentInput.getOrDefault(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.EMPTY).copy()
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.fluid))
+        components.set(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.copyOf(tank.fluid))
     }
 
     override fun reloadUpgrades() {

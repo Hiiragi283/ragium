@@ -1,18 +1,18 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.api.storage.energy
 
-import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.api.RagiumAPI
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 import net.neoforged.neoforge.energy.ComponentEnergyStorage
 
 /**
  * [ComponentEnergyStorage.getEnergyStored]が`0`の時にコンポーネントを消す[ComponentEnergyStorage]
  */
-class HTComponentEnergyStorage(
+open class HTComponentEnergyStorage(
     parent: MutableDataComponentHolder,
     capacity: Int,
     maxReceive: Int = capacity,
     maxExtract: Int = maxReceive,
-) : ComponentEnergyStorage(parent, RagiumDataComponents.ENERGY.get(), capacity, maxReceive, maxExtract) {
+) : ComponentEnergyStorage(parent, RagiumAPI.getInstance().getEnergyComponent(), capacity, maxReceive, maxExtract) {
     override fun setEnergy(energy: Int) {
         super.setEnergy(energy)
         if (parent.getOrDefault(energyComponent, 0) <= 0) {

@@ -29,7 +29,6 @@ import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -125,7 +124,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         getVariantBuilder(RagiumBlocks.WARPED_WART.get())
             .forAllStates { state: BlockState ->
-                Blocks.NETHER_WART
                 val age: Int = when (state.getValue(HTCropBlock.AGE)) {
                     0 -> 0
                     1 -> 1

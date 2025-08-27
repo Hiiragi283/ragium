@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.server.loot
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
@@ -132,7 +132,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 copyComponent(
                     it,
                     DataComponents.ENCHANTMENTS,
-                    RagiumDataComponents.FLUID_CONTENT.get(),
+                    RagiumAPI.getInstance().getFluidComponent(),
                 )
             }
         }
