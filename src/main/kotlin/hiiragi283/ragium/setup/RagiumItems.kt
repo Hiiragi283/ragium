@@ -31,6 +31,7 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
+import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -45,6 +46,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -231,10 +233,10 @@ object RagiumItems {
     val BLAST_CHARGE: DeferredItem<Item> = register("blast_charge", ::HTBlastChargeItem)
 
     @JvmField
-    val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
+    val ELDRITCH_EGG: DeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
 
     @JvmField
-    val ELDRITCH_EGG: DeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
+    val UNIVERSAL_BUNDLE: DeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem, Item.Properties().stacksTo(1))
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
@@ -472,6 +474,10 @@ object RagiumItems {
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
+        event.modify(UNIVERSAL_BUNDLE) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.COLOR.get(), DyeColor.WHITE)
+        }
+
         event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.GENERIC_DRINK)
             builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.GENERIC_DRINK)

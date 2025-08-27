@@ -23,10 +23,12 @@ class HTPotionBundleItem(properties: Properties) : Item(properties) {
             val stackIn: ItemStack = handler.getStackInSlot(i)
             if (stackIn.isEmpty) continue
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
-            if (!livingEntity.hasInfiniteMaterials()){
+            if (!livingEntity.hasInfiniteMaterials()) {
                 handler.extractItem(i, 1, false)
             }
-            dropStackAt(livingEntity, result)
+            if (result != stackIn) {
+                dropStackAt(livingEntity, result)
+            }
             return stack
         }
         return stack
@@ -41,7 +43,7 @@ class HTPotionBundleItem(properties: Properties) : Item(properties) {
         if (stack.isEmpty) return InteractionResultHolder.fail(stack)
         val handler: IItemHandler =
             stack.getCapability(Capabilities.ItemHandler.ITEM) ?: return InteractionResultHolder.fail(stack)
-        // 　シフト注はGUIを開く
+        // 　シフト中はGUIを開く
         if (player.isShiftKeyDown) {
             RagiumMenuTypes.POTION_BUNDLE.openMenu(player, stack.hoverName, handler) { buf: RegistryFriendlyByteBuf ->
                 ItemStack.STREAM_CODEC.encode(buf, stack)

@@ -15,6 +15,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.ItemStack
 
 object BiCodecs {
     @JvmField
@@ -30,8 +32,17 @@ object BiCodecs {
     val RL: BiCodec<ByteBuf, ResourceLocation> = BiCodec.of(ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
 
     @JvmField
+    val COLOR: BiCodec<ByteBuf, DyeColor> = BiCodec.of(DyeColor.CODEC, DyeColor.STREAM_CODEC)
+
+    @JvmField
     val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
         BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
+
+    @JvmStatic
+    fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: BiCodec<in B, K>, valueCodec: BiCodec<in B, V>): BiCodec<B, Map<K, V>> = BiCodec.of(
+        Codec.unboundedMap(keyCodec.codec, valueCodec.codec),
+        ByteBufCodecs.map(::HashMap, keyCodec.streamCodec, valueCodec.streamCodec),
+    )
 
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> either(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
@@ -39,6 +50,22 @@ object BiCodecs {
         ByteBufCodecs.either(first.streamCodec, second.streamCodec),
     )
 
+    @JvmStatic
+    private val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
+
+    @JvmStatic
+    private val ITEM_STACK: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(
+        ItemStack.OPTIONAL_CODEC,
+        ItemStack.OPTIONAL_STREAM_CODEC,
+    )
+
+    @JvmStatic
+    fun itemStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, ItemStack> = when (allowEmpty) {
+        true -> ITEM_STACK
+        false -> ITEM_STACK_NON_EMPTY
+    }
+
+    // Registry
     @JvmStatic
     fun <T : Any> resourceKey(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, ResourceKey<T>> =
         BiCodec.of(ResourceKey.codec(registryKey), ResourceKey.streamCodec(registryKey))

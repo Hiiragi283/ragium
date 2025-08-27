@@ -197,7 +197,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
         addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
-        addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
@@ -205,6 +204,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.SLOT_COVER, "Slot Cover")
         addItem(RagiumItems.TELEPORT_KEY, "Teleport Key")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
+        addItem(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")

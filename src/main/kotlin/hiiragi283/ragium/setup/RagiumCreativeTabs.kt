@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
+import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
@@ -21,6 +22,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -154,8 +156,9 @@ object RagiumCreativeTabs {
 
             output.accept(RagiumItems.TELEPORT_KEY)
 
-            output.accept(RagiumItems.ENDER_BUNDLE)
             output.accept(RagiumItems.ELDRITCH_EGG)
+
+            DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
             // Deep
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)

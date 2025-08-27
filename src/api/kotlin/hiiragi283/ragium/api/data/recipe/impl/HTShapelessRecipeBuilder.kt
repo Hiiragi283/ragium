@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 
-class HTShapelessRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
+class HTShapelessRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory = CraftingBookCategory.MISC) :
     HTIngredientRecipeBuilder<HTShapelessRecipeBuilder> {
     constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
         ItemStack(item, count),

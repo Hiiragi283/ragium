@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
  * Ragiumで使用する[MenuType]向けの[DeferredRegister]
  */
 class HTDeferredMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
-    fun <MENU : HTContainerMenu, C> registerType(
+    fun <MENU : HTContainerMenu, C : Any> registerType(
         name: String,
         factory: HTContainerFactory<MENU, C>,
         decoder: (RegistryFriendlyByteBuf?) -> C,

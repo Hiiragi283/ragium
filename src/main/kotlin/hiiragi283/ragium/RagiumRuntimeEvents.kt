@@ -9,21 +9,16 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.stats.Stats
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
 import net.minecraft.world.entity.npc.WanderingTrader
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
@@ -75,7 +70,7 @@ object RagiumRuntimeEvents {
         val player: Player = event.entity
         val level: Level = player.level()
         // エンダーバンドルの場合はGUIを開く
-        if (stack.`is`(RagiumItems.ENDER_BUNDLE)) {
+        /*if (stack.`is`(RagiumItems.ENDER_BUNDLE)) {
             // SEを再生する
             level.playSound(null, player.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS)
             // GUiを開く
@@ -90,7 +85,7 @@ object RagiumRuntimeEvents {
             player.awardStat(Stats.OPEN_ENDERCHEST)
             event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             return
-        }
+        }*/
         // 行商人のカタログの場合もGUIを開く
         if (stack.`is`(RagiumItems.TRADER_CATALOG)) {
             event.cancellationResult =

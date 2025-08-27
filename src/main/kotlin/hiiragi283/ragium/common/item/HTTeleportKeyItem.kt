@@ -34,7 +34,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(Rarity.RARE)) {
     private val fuelStack: FluidStack
-        get() = RagiumFluidContents.DEW_OF_THE_WARP.toStack(1000)
+        get() = RagiumFluidContents.DEW_OF_THE_WARP.toStack(125)
 
     override fun onItemUseFirst(stack: ItemStack, context: UseOnContext): InteractionResult {
         val level: Level = context.level

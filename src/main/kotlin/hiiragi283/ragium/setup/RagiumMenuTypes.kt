@@ -26,6 +26,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleMenu
+import hiiragi283.ragium.common.inventory.container.HTUniversalBundleMenu
+import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
 import net.minecraft.client.Minecraft
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -67,12 +69,18 @@ object RagiumMenuTypes {
         REGISTER.registerType("potion_bundle", ::HTPotionBundleMenu) { buf: RegistryFriendlyByteBuf? ->
             checkNotNull(buf)
             val stack: ItemStack = ItemStack.STREAM_CODEC.decode(buf)
-            checkNotNull(stack.getCapability(Capabilities.ItemHandler.ITEM)) { "Failed to get Item Handler from context" }
+            checkNotNull(stack.getCapability(Capabilities.ItemHandler.ITEM)) { "Failed to get potion bundle container" }
         }
 
     @JvmField
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu, HTMachineBlockEntity> =
         REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu, ::getBlockEntityFromBuf)
+
+    @JvmField
+    val UNIVERSAL_BUNDLE: HTDeferredMenuType<HTUniversalBundleMenu, IItemHandler> =
+        REGISTER.registerType("universal_backpack", ::HTUniversalBundleMenu) {
+            HTUniversalBundleManager.emptyHandler()
+        }
 
     //    Generator    //
 

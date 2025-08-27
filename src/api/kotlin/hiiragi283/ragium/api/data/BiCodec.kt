@@ -7,12 +7,12 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.NonNullList
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.ExtraCodecs
 import java.util.*
 import java.util.function.Function
-import kotlin.collections.List
 
 @ConsistentCopyVisibility
 data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>, val streamCodec: StreamCodec<B, V>) {
@@ -198,6 +198,11 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     fun listOrElement(): BiCodec<B, List<V>> = of(codec.listOrElement(), streamCodec.listOf())
 
     fun listOrElement(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOrElement(min, max), streamCodec.listOf())
+
+    fun nonNullList(): BiCodec<B, NonNullList<V>> = of(
+        NonNullList.codecOf(codec),
+        ByteBufCodecs.collection(NonNullList<V>::createWithCapacity, streamCodec),
+    )
 
     // Optional
     fun toOptional(): BiCodec<B, Optional<V>> = of(ExtraCodecs.optionalEmptyMap(codec), streamCodec.toOptional())

@@ -3,19 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:leathers"
+      "item": "ragium:synthetic_fiber"
     },
     "B": {
+      "item": "ragium:synthetic_leather"
+    },
+    "C": {
       "tag": "c:gems/eldritch_pearl"
     }
   },
   "pattern": [
-    " A ",
     "ABA",
-    "AAA"
+    "BCB",
+    "BBB"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ender_bundle"
+    "id": "ragium:universal_bundle"
   }
 }

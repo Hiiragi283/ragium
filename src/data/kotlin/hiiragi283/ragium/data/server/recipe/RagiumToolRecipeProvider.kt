@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
 import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
+import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -20,6 +21,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.resources.ResourceKey
@@ -179,20 +181,30 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         resetComponent(RagiumItems.TELEPORT_KEY)
         // Eldritch
-        HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
-            .pattern(
-                " A ",
-                "ABA",
-                "AAA",
-            ).define('A', Tags.Items.LEATHERS)
-            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
-            .save(output)
-
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .define('B', Tags.Items.EGGS)
             .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.UNIVERSAL_BUNDLE)
+            .pattern(
+                "ABA",
+                "BCB",
+                "BBB",
+            ).define('A', RagiumItems.SYNTHETIC_FIBER)
+            .define('B', RagiumItems.SYNTHETIC_LEATHER)
+            .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .save(output)
+
+        for (variant: HTColorVariant in HTColorVariant.entries) {
+            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color))
+                .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
+                .addIngredient(variant.dyeTag)
+                .savePrefixed(output, "${variant.serializedName}_")
+        }
+
+        resetComponent(RagiumItems.UNIVERSAL_BUNDLE)
     }
 
     @JvmStatic

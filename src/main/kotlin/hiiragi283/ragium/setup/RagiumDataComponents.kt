@@ -13,6 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -38,6 +39,9 @@ object RagiumDataComponents {
 
     @JvmField
     val BLAST_POWER: Supplier<DataComponentType<Float>> = register("blast_power", BiCodecs.POSITIVE_FLOAT.cast())
+
+    @JvmField
+    val COLOR: Supplier<DataComponentType<DyeColor>> = register("color", BiCodecs.COLOR.cast())
 
     @JvmField
     val DRINK_SOUND: Supplier<DataComponentType<SoundEvent>> = register(

@@ -19,11 +19,14 @@ import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTPotionBundleScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTUniversalBundleScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.material.HTMoltenCrystalData
 import hiiragi283.ragium.util.variant.HTColorVariant
@@ -82,10 +85,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // Exp Berry Bush
         event.register(
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                if (tint != 0) return@register -1
                 when {
-                    getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
-                    else -> FoliageColor.getDefaultColor()
+                    tint != 0 -> return@register -1
+                    else -> when {
+                        getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
+                        else -> FoliageColor.getDefaultColor()
+                    }
                 }
             },
             RagiumBlocks.EXP_BERRIES.get(),
@@ -93,11 +98,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // Water Collector
         event.register(
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                if (tint != 0) return@register -1
-                if (getter != null && pos != null) {
-                    return@register BiomeColors.getAverageWaterColor(getter, pos)
+                when {
+                    tint != 0 -> -1
+                    getter != null && pos != null -> BiomeColors.getAverageWaterColor(getter, pos)
+                    else -> -1
                 }
-                -1
             },
             HTDeviceVariant.WATER_COLLECTOR.blockHolder.get(),
         )
@@ -105,8 +110,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
             event.register(
                 { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, tint: Int ->
-                    if (tint != 0) return@register -1
-                    color.color.textColor
+                    when {
+                        tint != 0 -> return@register -1
+                        else -> color.color.textureDiffuseColor
+                    }
                 },
                 block.get(),
             )
@@ -136,24 +143,29 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
         // Water Collector
-        event.register(
-            { _: ItemStack, tint: Int ->
-                if (tint == 0) 0x3f76e4 else -1
-            },
-            HTDeviceVariant.WATER_COLLECTOR,
-        )
+        event.register({ _: ItemStack, tint: Int -> if (tint == 0) 0x3f76e4 else -1 }, HTDeviceVariant.WATER_COLLECTOR)
         // LED Blocks
-        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
-            event.register({ _: ItemStack, tint: Int ->
-                if (tint != 0) return@register -1
-                color.color.textColor
-            }, block.get())
+        for ((variant: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
+            event.register(
+                { _: ItemStack, tint: Int -> if (tint != 0) -1 else variant.color.textureDiffuseColor },
+                block.get(),
+            )
         }
 
         // Buckets
         for (bucket: DeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
             event.register(DynamicFluidContainerModel.Colors(), bucket)
         }
+        // Backpack
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                when {
+                    tint != 0 -> -1
+                    else -> stack.get(RagiumDataComponents.COLOR)?.textureDiffuseColor ?: -1
+                }
+            },
+            RagiumItems.UNIVERSAL_BUNDLE,
+        )
 
         LOGGER.info("Registered ItemColor!")
     }
@@ -211,6 +223,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerMachine(RagiumMenuTypes.SINGLE_ITEM)
         registerMachine(RagiumMenuTypes.SMELTER)
 
+        event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTUniversalBundleScreen)
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)

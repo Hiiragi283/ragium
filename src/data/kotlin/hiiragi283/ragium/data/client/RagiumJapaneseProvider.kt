@@ -187,7 +187,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
         addItem(RagiumItems.ELDRITCH_EGG, "異質な卵")
-        addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_MAGNET, "らぎマグネット")
@@ -195,6 +194,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.SLOT_COVER, "スロットカバー")
         addItem(RagiumItems.TELEPORT_KEY, "転位の鍵")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
+        addItem(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")

@@ -16,6 +16,10 @@ import java.util.function.Supplier
  */
 abstract class HTContainerMenu(menuType: Supplier<out MenuType<*>>, containerId: Int, inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId) {
+    init {
+        onOpen(inventory.player)
+    }
+
     override fun stillValid(player: Player): Boolean = true
 
     val inputSlots: IntRange
@@ -80,6 +84,11 @@ abstract class HTContainerMenu(menuType: Supplier<out MenuType<*>>, containerId:
         return result
     }
 
+    final override fun removed(player: Player) {
+        super.removed(player)
+        onClose(player)
+    }
+
     //    Extensions    //
 
     private var slotCount: Int = 0
@@ -127,4 +136,8 @@ abstract class HTContainerMenu(menuType: Supplier<out MenuType<*>>, containerId:
             addSlot(Slot(inventory, index, HTSlotHelper.getSlotPosX(index), HTSlotHelper.getSlotPosY(7) - 2 + yOffset))
         }
     }
+
+    protected open fun onOpen(player: Player) {}
+
+    protected open fun onClose(player: Player) {}
 }

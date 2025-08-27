@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Inventory
 /**
  * @see [mekanism.common.inventory.container.tile.MekanismTileContainer]
  */
-abstract class HTContainerWithContextMenu<C>(
+abstract class HTContainerWithContextMenu<C : Any>(
     menuType: HTDeferredMenuType<*, C>,
     containerId: Int,
     inventory: Inventory,

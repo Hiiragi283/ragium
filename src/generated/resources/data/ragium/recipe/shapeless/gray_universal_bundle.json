@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:universal_bundle"
+    },
+    {
+      "tag": "c:dyes/gray"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "gray"
+    },
+    "count": 1,
+    "id": "ragium:universal_bundle"
+  }
+}

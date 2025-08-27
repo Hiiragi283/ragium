@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:universal_bundle"
+    },
+    {
+      "tag": "c:dyes/orange"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "orange"
+    },
+    "count": 1,
+    "id": "ragium:universal_bundle"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:universal_bundle"
+    },
+    {
+      "tag": "c:dyes/purple"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "purple"
+    },
+    "count": 1,
+    "id": "ragium:universal_bundle"
+  }
+}

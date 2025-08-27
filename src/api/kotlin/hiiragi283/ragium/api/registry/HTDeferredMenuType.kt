@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTMenuType
 import net.minecraft.core.registries.Registries
@@ -18,15 +19,15 @@ import net.neoforged.neoforge.registries.DeferredHolder
 /**
  * Ragiumで使用する[MenuType]向けの[DeferredHolder]
  */
-class HTDeferredMenuType<MENU : AbstractContainerMenu, C> private constructor(key: ResourceKey<MenuType<*>>) :
+class HTDeferredMenuType<MENU : AbstractContainerMenu, C : Any> private constructor(key: ResourceKey<MenuType<*>>) :
     DeferredHolder<MenuType<*>, HTMenuType<MENU, C>>(key) {
         companion object {
             @JvmStatic
-            fun <MENU : AbstractContainerMenu, C> createType(key: ResourceLocation): HTDeferredMenuType<MENU, C> =
+            fun <MENU : AbstractContainerMenu, C : Any> createType(key: ResourceLocation): HTDeferredMenuType<MENU, C> =
                 createType(ResourceKey.create(Registries.MENU, key))
 
             @JvmStatic
-            fun <MENU : AbstractContainerMenu, C> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<MENU, C> =
+            fun <MENU : AbstractContainerMenu, C : Any> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<MENU, C> =
                 HTDeferredMenuType(key)
         }
 
@@ -37,6 +38,17 @@ class HTDeferredMenuType<MENU : AbstractContainerMenu, C> private constructor(ke
             { id: Int, inv: Inventory, _: Player -> get().create(id, inv, context) },
             title,
         )
+
+        fun openMenu(
+            player: Player,
+            title: Component,
+            context: C,
+            streamCodec: BiCodec<RegistryFriendlyByteBuf, C>,
+        ): InteractionResult = openMenu(
+            player,
+            title,
+            context,
+        ) { buf: RegistryFriendlyByteBuf -> streamCodec.encode(buf, context) }
 
         /**
          * 指定された[player], [title], [writer]からGUIを開きます。
