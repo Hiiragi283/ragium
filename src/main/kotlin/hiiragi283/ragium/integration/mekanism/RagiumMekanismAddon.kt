@@ -50,7 +50,7 @@ object RagiumMekanismAddon : RagiumAddon {
 
     @JvmStatic
     fun getChemical(material: HTMaterialType): DeferredChemical<Chemical> =
-        CHEMICAL_MAP[material] ?: error("Unregistered chemical for ${material.serializedName}")
+        CHEMICAL_MAP[material] ?: error("Unknown chemical for ${material.serializedName}")
 
     //    Item    //
 
@@ -76,7 +76,7 @@ object RagiumMekanismAddon : RagiumAddon {
         HTVanillaMaterialType.OBSIDIAN -> MekanismItems.ENRICHED_OBSIDIAN
         HTVanillaMaterialType.GOLD -> MekanismItems.ENRICHED_GOLD
         else -> MATERIAL_ITEMS.get(HTMekMaterialVariant.ENRICHED, material)
-            ?: error("Unregistered enriched item for ${material.serializedName}")
+            ?: error("Unknown enriched item for ${material.serializedName}")
     }
 
     @JvmStatic
@@ -110,7 +110,7 @@ object RagiumMekanismAddon : RagiumAddon {
             // Azure
             event.insertAfter(
                 RagiumItems.getGem(RagiumMaterialType.AZURE).toStack(),
-                getEnrichedStack(RagiumMaterialType.RAGINITE),
+                getEnrichedStack(RagiumMaterialType.AZURE),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
         }

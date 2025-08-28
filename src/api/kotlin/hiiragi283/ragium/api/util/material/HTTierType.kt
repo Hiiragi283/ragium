@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.util.material
 import hiiragi283.ragium.api.data.HTLanguageType
 import net.minecraft.world.item.Rarity
 
-enum class HTTierType(val rarity: Rarity) : HTMaterialType {
+enum class HTTierType(val rarity: Rarity) : HTMaterialType.Translatable {
     BASIC(Rarity.COMMON) {
         override fun getTranslatedName(type: HTLanguageType): String = when (type) {
             HTLanguageType.EN_US -> "Basic"

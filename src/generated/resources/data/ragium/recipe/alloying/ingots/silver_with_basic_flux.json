@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/silver"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "tag": "c:raw_materials/silver"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/basic"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "#c:ingots/silver"
+  }
+}

@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -34,7 +33,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
@@ -46,7 +44,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addBlocks(RagiumBlocks.ORES)
         addBlocks(RagiumBlocks.MATERIALS)
 
-        materialItems(RagiumItems.MATERIALS)
+        addItems(RagiumItems.MATERIALS)
 
         addItems(RagiumItems.ARMORS)
         addItems(RagiumItems.TOOLS)
@@ -67,19 +65,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             addChemical(RagiumMekanismAddon.getChemical(data.material), value)
         }
 
-        materialItems(RagiumMekanismAddon.MATERIAL_ITEMS)
-    }
-
-    private fun addBlocks(table: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, out Supplier<out Block>>) {
-        table.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: Supplier<out Block>) ->
-            addBlock(block, material.translate(type, variant))
-        }
-    }
-
-    private fun addItems(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Item>>) {
-        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: Supplier<out Item>) ->
-            addItem(item, variant.translate(type, material.getTranslatedName(type)))
-        }
+        addItems(RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {
@@ -88,9 +74,19 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun materialItems(table: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>>) {
-        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            addItem(item, material.translate(type, variant))
+    private fun addBlocks(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Block>>) {
+        table.forEach { (variant: HTVariantKey, material: HTMaterialType, block: Supplier<out Block>) ->
+            if (material is HTMaterialType.Translatable) {
+                addBlock(block, material.translate(type, variant))
+            }
+        }
+    }
+    
+    private fun addItems(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Item>>) {
+        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: Supplier<out Item>) ->
+            if (material is HTMaterialType.Translatable) {
+                addItem(item, material.translate(type, variant))
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.util.material.HTCommonMaterialTypes
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
@@ -115,20 +116,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(HTResultHelper.item(Items.INK_SAC))
             .save(output)
 
-        for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
-            if (baseVariant == HTItemMaterialVariant.DUST) continue
-            HTItemToObjRecipeBuilder
-                .pulverizing(
-                    HTIngredientHelper.item(baseVariant, material),
-                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).saveSuffixed(output, "_from_${baseVariant.serializedName}")
-        }
-
         woodDust()
         sand()
         prismarine()
         snow()
+
+        material()
     }
 
     @JvmStatic
@@ -248,5 +241,47 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(Items.BLUE_ICE),
                 HTResultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
+    }
+
+    @JvmStatic
+    private fun material() {
+        // Builtin
+        for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
+            if (baseVariant == HTItemMaterialVariant.DUST) continue
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(baseVariant, material),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
+                ).saveSuffixed(output, "_from_${baseVariant.serializedName}")
+        }
+
+        // Common
+        for (material: HTMaterialType in HTCommonMaterialTypes.METALS.values) {
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(HTItemMaterialVariant.INGOT, material),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
+                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                .saveSuffixed(output, "_from_ingot")
+        }
+
+        for (material: HTMaterialType in HTCommonMaterialTypes.ALLOYS.values) {
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(HTItemMaterialVariant.INGOT, material),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
+                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                .saveSuffixed(output, "_from_ingot")
+        }
+
+        for (material: HTMaterialType in HTCommonMaterialTypes.GEMS.values) {
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(HTItemMaterialVariant.GEM, material),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
+                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                .saveSuffixed(output, "_from_gem")
+        }
     }
 }

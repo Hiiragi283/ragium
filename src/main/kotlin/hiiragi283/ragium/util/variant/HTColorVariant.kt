@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 
-enum class HTColorVariant(val color: DyeColor, private val enName: String, private val jpName: String) : HTMaterialType {
+enum class HTColorVariant(val color: DyeColor, private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     WHITE(DyeColor.WHITE, "White", "白色"),
     ORANGE(DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(DyeColor.MAGENTA, "Magenta", "赤紫色"),

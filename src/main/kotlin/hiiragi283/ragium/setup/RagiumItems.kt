@@ -179,7 +179,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): DeferredItem<*> = MATERIALS.get(variant, material)
-        ?: error("Unregistered ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
     fun getDust(material: HTMaterialType): DeferredItem<*> = getMaterial(HTItemMaterialVariant.DUST, material)
@@ -218,11 +218,11 @@ object RagiumItems {
 
     @JvmStatic
     fun getAzureArmor(variant: HTArmorVariant): DeferredItem<*> = ARMORS.get(variant, RagiumMaterialType.AZURE_STEEL)
-        ?: error("Unregistered azure steel ${variant.serializedName} item")
+        ?: error("Unknown azure steel ${variant.serializedName} item")
 
     @JvmStatic
     fun getDeepArmor(variant: HTArmorVariant): DeferredItem<*> = ARMORS.get(variant, RagiumMaterialType.DEEP_STEEL)
-        ?: error("Unregistered deep steel ${variant.serializedName} item")
+        ?: error("Unknown deep steel ${variant.serializedName} item")
 
     //    Tools    //
 
@@ -317,7 +317,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getTool(variant: HTToolVariant, material: HTMaterialType): DeferredItem<*> = TOOLS.get(variant, material)
-        ?: error("Unregistered ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
     private fun getAzureTool(variant: HTVanillaToolVariant): DeferredItem<*> = getTool(variant, RagiumMaterialType.AZURE_STEEL)

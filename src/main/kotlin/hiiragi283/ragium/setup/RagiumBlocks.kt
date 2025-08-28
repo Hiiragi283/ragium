@@ -229,7 +229,7 @@ object RagiumBlocks {
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlockHolder =
         MATERIALS.get(variant, material)
-            ?: error("Unregistered ${variant.serializedName} block for ${material.serializedName}")
+            ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
     fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material)

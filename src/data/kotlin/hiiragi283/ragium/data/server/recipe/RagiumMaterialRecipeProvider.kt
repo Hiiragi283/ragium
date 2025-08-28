@@ -12,17 +12,15 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.util.material.HTCommonMaterialTypes
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -237,7 +235,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun material() {
-        // Storage Blocks
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
             val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
             val base: ItemLike = RagiumItems.MATERIALS.get(baseVariant, material) ?: continue
@@ -268,6 +265,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_nugget")
             }
         }
+
+        rawToIngot(HTVanillaMaterialType.COPPER)
+        rawToIngot(HTVanillaMaterialType.IRON)
+        rawToIngot(HTVanillaMaterialType.GOLD)
+
+        HTCommonMaterialTypes.METALS.values.forEach(::rawToIngot)
     }
 
     @JvmStatic
@@ -356,86 +359,85 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Steel
-        val steelTag: TagKey<Item> = ModMaterialFamilies.getAlloy("steel").getBaseTagKey()
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(steelTag),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel")),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL, 2),
-            ).tagCondition(steelTag)
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel"))
             .saveSuffixed(output, "_from_coal")
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(steelTag),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel")),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.fuelOrDust(RagiumMaterialType.COAL_COKE),
-            ).tagCondition(steelTag)
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel"))
             .saveSuffixed(output, "_from_coke")
         // Invar
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("invar"), 3),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON, 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("invar").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("invar"))
             .save(output)
         // Electrum
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("electrum"), 2),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD),
                 HTIngredientHelper.ingotOrDust("silver"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("electrum"))
             .save(output)
         // Bronze
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("bronze"), 4),
                 HTIngredientHelper.item(Tags.Items.INGOTS_COPPER, 3),
                 HTIngredientHelper.ingotOrDust("tin"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("bronze"))
             .save(output)
         // Brass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("brass"), 4),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER, 3),
                 HTIngredientHelper.ingotOrDust("zinc"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("brass").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("brass"))
             .save(output)
         // Constantan
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("constantan"), 2),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER),
                 HTIngredientHelper.ingotOrDust("nickel"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("constantan"))
             .save(output)
 
         // Adamant
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), 2),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("adamant"), 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.DIAMOND),
-            ).tagCondition(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("adamant"))
             .save(output)
         // Duratium
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), 2),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("duratium"), 2),
                 HTIngredientHelper.ingotOrDust("platinum"),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.NETHERITE),
-            ).tagCondition(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("duratium"))
             .save(output)
         // Energite
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), 2),
+                HTResultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("energite"), 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
                 HTIngredientHelper.gemOrDust("fluxite"),
-            ).tagCondition(ModMaterialFamilies.getAlloy("energite").getBaseTagKey())
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("energite"))
             .save(output)
     }
 }

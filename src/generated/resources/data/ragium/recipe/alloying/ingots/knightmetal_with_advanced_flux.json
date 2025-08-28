@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/knightmetal"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:raw_materials/knightmetal"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/advanced"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "#c:ingots/knightmetal"
+  }
+}

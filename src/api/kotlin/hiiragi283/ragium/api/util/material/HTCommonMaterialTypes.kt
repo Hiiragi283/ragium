@@ -1,15 +1,10 @@
-package hiiragi283.ragium.data.server.material
+package hiiragi283.ragium.api.util.material
 
-import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.util.material.HTMaterialFamily
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.util.material.RagiumMaterialType
-
-object ModMaterialFamilies {
+object HTCommonMaterialTypes {
     //    Common Metal    //
 
     @JvmField
-    val METALS: Map<String, HTMaterialFamily> = listOf(
+    val METALS: Map<String, HTMaterialType> = listOf(
         // 3rd
         "aluminum",
         // 4th
@@ -48,19 +43,13 @@ object ModMaterialFamilies {
         "ironwood",
         "wrought_iron",
         "knightmetal",
-    ).associateWith(::commonMetal)
+    ).associateWith(::MaterialImpl)
 
     @JvmStatic
-    private fun commonMetal(key: String): HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(null)
-        .setMod()
-        .build(MaterialImpl(key))
-
-    @JvmStatic
-    fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
+    fun getMetal(key: String): HTMaterialType = METALS[key] ?: error("Unknown material: $key")
 
     @JvmField
-    val ALLOYS: Map<String, HTMaterialFamily> = listOf(
+    val ALLOYS: Map<String, HTMaterialType> = listOf(
         // Alloys
         "steel",
         "invar",
@@ -84,22 +73,15 @@ object ModMaterialFamilies {
         // Twilight Forest
         "steeleaf",
         "fiery",
-    ).associateWith(::commonAlloy)
+    ).associateWith(::MaterialImpl)
 
     @JvmStatic
-    private fun commonAlloy(key: String): HTMaterialFamily = HTMaterialFamily.Builder
-        .ingotAlloy(null)
-        .setMod()
-        .build(MaterialImpl(key))
-
-    @JvmStatic
-    fun getAlloy(key: String): HTMaterialFamily = ALLOYS[key] ?: error("Unregistered material: $key")
+    fun getAlloy(key: String): HTMaterialType = ALLOYS[key] ?: error("Unknown material: $key")
 
     //    Common Gem    //
 
     @JvmField
-    val GEMS: Map<String, HTMaterialFamily> = listOf(
-        "cinnabar",
+    val GEMS: Map<String, HTMaterialType> = listOf(
         "fluorite",
         "peridot",
         "ruby",
@@ -121,30 +103,14 @@ object ModMaterialFamilies {
         "fluxite",
         // Twilight Forest
         "carminite",
-    ).associateWith(::commonGem)
+    ).associateWith(::MaterialImpl)
 
     @JvmStatic
-    private fun commonGem(key: String): HTMaterialFamily = HTMaterialFamily.Builder
-        .gem(null)
-        .setMod()
-        .build(MaterialImpl(key))
-
-    @JvmStatic
-    fun getGem(key: String): HTMaterialFamily = GEMS[key] ?: error("Unregistered material: $key")
-
-    //    Other    //
-
-    @JvmField
-    val COAL_COKE: HTMaterialFamily = HTMaterialFamily.Builder
-        .fuel(null)
-        .setMod()
-        .build(RagiumMaterialType.COAL_COKE)
+    fun getGem(key: String): HTMaterialType = GEMS[key] ?: error("Unknown material: $key")
 
     //    MaterialImpl    //
 
     private data class MaterialImpl(private val name: String) : HTMaterialType {
-        override fun getTranslatedName(type: HTLanguageType): String = throw UnsupportedOperationException()
-
         override fun getSerializedName(): String = name
     }
 }

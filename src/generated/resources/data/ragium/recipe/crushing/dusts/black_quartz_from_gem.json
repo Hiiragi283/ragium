@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/black_quartz"
+      }
+    }
+  ],
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "tag": "c:gems/black_quartz"
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:dusts/black_quartz"
+  }
+}

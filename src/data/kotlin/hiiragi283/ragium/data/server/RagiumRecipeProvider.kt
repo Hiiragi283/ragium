@@ -1,7 +1,5 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.data.server.material.ModMaterialFamilies
-import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
@@ -29,12 +27,7 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
-    @Suppress("UnusedExpression")
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        VanillaMaterialFamilies
-        // RagiumMaterialFamilies
-        ModMaterialFamilies
-
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
