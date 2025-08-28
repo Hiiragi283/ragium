@@ -4,19 +4,22 @@
       "amount": 10
     },
     "#c:bioethanol": {
-      "amount": 10
-    },
-    "#c:blood_diesel": {
-      "amount": 5
+      "amount": 20
     },
     "#c:creosote": {
       "amount": 100
     },
+    "#c:crimson_fuel": {
+      "amount": 5
+    },
     "#c:crude_oil": {
       "amount": 100
     },
-    "#c:ethanol": {
+    "#c:diesel": {
       "amount": 10
+    },
+    "#c:ethanol": {
+      "amount": 20
     },
     "#c:fuel": {
       "amount": 10
@@ -25,6 +28,9 @@
       "amount": 5
     },
     "#c:lpg": {
+      "amount": 20
+    },
+    "#c:natural_gas": {
       "amount": 20
     },
     "#c:oil": {
@@ -55,7 +61,7 @@
           "modid": "actuallyadditions"
         }
       ],
-      "amount": 10
+      "amount": 5
     },
     "actuallyadditions:refined_canola_oil": {
       "neoforge:conditions": [
@@ -64,7 +70,7 @@
           "modid": "actuallyadditions"
         }
       ],
-      "amount": 10
+      "amount": 20
     }
   }
 }

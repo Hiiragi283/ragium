@@ -31,7 +31,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         sap()
     }
 
-    @_root_ide_package_.kotlin.jvm.JvmStatic
+    @JvmStatic
     private fun melting() {
         // Magma Block <-> Lava
         meltAndFreeze(
@@ -42,7 +42,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         )
     }
 
-    @_root_ide_package_.kotlin.jvm.JvmStatic
+    @JvmStatic
     private fun crudeOil() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
@@ -57,7 +57,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 500),
             ).saveSuffixed(output, "_from_soul")
 
-        // Crude Oil + clay -> Polymer Resin
+        // Crude Oil + Clay -> Polymer Resin
         HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.CLAY_BALL),
@@ -65,32 +65,32 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
             ).saveSuffixed(output, "_from_crude_oil")
 
-        // Crude Oil -> LPG + Naphtha + Tar
+        // Crude Oil -> Natural Gas + Naphtha + Tar
         distillation(
             RagiumFluidContents.CRUDE_OIL to 1000,
             HTResultHelper.item(RagiumItems.TAR),
             HTResultHelper.fluid(RagiumFluidContents.NAPHTHA, 375) to null,
-            HTResultHelper.fluid(RagiumFluidContents.LPG, 375) to HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
+            HTResultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 375) to HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
         )
-        // LPG + Coal -> 4x Polymer Resin
+        // Natural Gas + Catalyst -> 4x Polymer Resin
         HTFluidTransformRecipeBuilder
             .infusing(
-                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
-                HTIngredientHelper.fluid(RagiumFluidContents.LPG, 125),
+                HTIngredientHelper.item(RagiumItems.POLYMER_CATALYST),
+                HTIngredientHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125),
                 HTResultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
             ).saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
             HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
-            HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375) to null,
+            HTResultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
         // Diesel + Crimson Crystal -> Bloo-Diesel
         HTFluidTransformRecipeBuilder
             .mixing(
                 HTIngredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
-                HTIngredientHelper.fluid(RagiumFluidContents.DIESEL, 1000),
-                HTResultHelper.fluid(RagiumFluidContents.BLOOD_DIESEL, 1000),
+                HTIngredientHelper.fluid(RagiumFluidContents.FUEL, 1000),
+                HTResultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000),
             ).save(output)
     }
 
@@ -110,8 +110,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(ItemTags.LOGS_THAT_BURN),
                 HTResultHelper.fluid(RagiumFluidContents.SAP, 125),
             ).saveSuffixed(output, "_from_log")
-        // Sap -> Syrup
-        distillation(RagiumFluidContents.SAP to 1000, HTResultHelper.item(RagiumItems.RESIN))
+        // Sap -> Resin
+        distillation(
+            RagiumFluidContents.SAP to 1000,
+            HTResultHelper.item(RagiumItems.RESIN),
+            HTResultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125) to null,
+        )
 
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder

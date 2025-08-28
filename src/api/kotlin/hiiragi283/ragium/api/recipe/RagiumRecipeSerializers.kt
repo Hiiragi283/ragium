@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
-import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
@@ -48,10 +47,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val PULVERIZING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTPulverizingRecipe>> =
         create("pulverizing")
-
-    @JvmField
-    val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSolidifyingRecipe>> =
-        create(RagiumConst.SOLIDIFYING)
 
     @JvmStatic
     fun <RECIPE : Recipe<*>> create(path: String): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<RECIPE>> =

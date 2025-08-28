@@ -1,7 +1,7 @@
 {
   "values": [
-    "#c:buckets/blood_diesel",
     "#c:buckets/crimson_blood",
+    "#c:buckets/crimson_fuel",
     "#c:buckets/crimson_sap",
     "#c:buckets/crude_oil",
     "#c:buckets/dew_of_the_warp",
@@ -9,10 +9,10 @@
     "#c:buckets/experience",
     "#c:buckets/fuel",
     "#c:buckets/honey",
-    "#c:buckets/lpg",
     "#c:buckets/lubricant",
     "#c:buckets/mushroom_stew",
     "#c:buckets/naphtha",
+    "#c:buckets/natural_gas",
     "#c:buckets/sap",
     "#c:buckets/warped_sap"
   ]

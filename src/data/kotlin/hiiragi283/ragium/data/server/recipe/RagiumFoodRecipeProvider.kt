@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
@@ -52,7 +51,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).saveSuffixed(output, "_from_milk")
 
-        HTFluidWithCatalystToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
@@ -92,7 +91,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         sponge()
     }
 
-    @_root_ide_package_.kotlin.jvm.JvmStatic
+    @JvmStatic
     private fun cherry() {
         // Ragi-Cherry
         HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY, 8)
@@ -108,7 +107,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
-    @_root_ide_package_.kotlin.jvm.JvmStatic
+    @JvmStatic
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
@@ -126,7 +125,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
     }
 
-    @_root_ide_package_.kotlin.jvm.JvmStatic
+    @JvmStatic
     private fun meat() {
         // Minced Meat
         HTItemToObjRecipeBuilder
@@ -146,7 +145,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT)
             .save(output)
 
-        HTFluidWithCatalystToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),

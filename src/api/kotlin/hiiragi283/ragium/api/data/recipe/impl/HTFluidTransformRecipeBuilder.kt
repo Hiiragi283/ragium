@@ -62,11 +62,25 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
             Optional.ofNullable(itemResult),
             Optional.of(fluidResult),
         )
+
+        @JvmStatic
+        fun solidifying(
+            itemIngredient: HTItemIngredient?,
+            fluidIngredient: HTFluidIngredient,
+            itemResult: HTItemResult,
+        ): HTFluidTransformRecipeBuilder<HTRefiningRecipe> = HTFluidTransformRecipeBuilder(
+            RagiumConst.SOLIDIFYING,
+            ::HTRefiningRecipe,
+            fluidIngredient,
+            Optional.ofNullable(itemIngredient),
+            Optional.of(itemResult),
+            Optional.empty(),
+        )
     }
 
     override fun getPrimalId(): ResourceLocation = when {
-        itemResult.isPresent -> itemResult.get().id
         fluidResult.isPresent -> fluidResult.get().id
+        itemResult.isPresent -> itemResult.get().id
         else -> error("Either item or fluid result required!")
     }
 

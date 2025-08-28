@@ -27,6 +27,13 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
+        // Polymer Catalyst
+        HTShapedRecipeBuilder(RagiumItems.POLYMER_CATALYST)
+            .cross8()
+            .define('A', Tags.Items.RODS_BREEZE)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('C', Items.IRON_BARS)
+            .save(output)
         // Plastic Plate
         HTItemToObjRecipeBuilder
             .compressing(

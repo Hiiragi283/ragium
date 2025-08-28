@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
@@ -133,7 +132,7 @@ sealed class HTRecipeProvider {
                 HTResultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.asItemHolder().idOrThrow.path}")
         // Solidifying
-        HTFluidWithCatalystToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -154,7 +153,7 @@ sealed class HTRecipeProvider {
                 HTResultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.location.path}")
         // Solidifying
-        HTFluidWithCatalystToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -194,13 +193,7 @@ sealed class HTRecipeProvider {
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
             HTFluidTransformRecipeBuilder
-                .refining(ingredient, result, catalyst, null)
-                .saveSuffixed(output, suffix)
-        }
-        // Solidifying
-        itemResult?.let { result: HTItemResult ->
-            HTFluidWithCatalystToObjRecipeBuilder
-                .solidifying(null, ingredient, result)
+                .refining(ingredient, result, catalyst, itemResult)
                 .saveSuffixed(output, suffix)
         }
     }

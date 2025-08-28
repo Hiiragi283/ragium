@@ -69,18 +69,20 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             // low
             .add(RagiumConst.ACTUALLY, "canola_oil", 50)
             // medium
-            .add(RagiumFluidContents.LPG, 20)
-            .add("ethanol", 10)
-            .add("bioethanol", 10)
-            .add(RagiumConst.ACTUALLY, "refined_canola_oil", 10)
+            .add(RagiumFluidContents.NATURAL_GAS, 20)
+            .add("ethanol", 20)
+            .add("bioethanol", 20)
+            .add("lpg", 20)
+            .add(RagiumConst.ACTUALLY, "refined_canola_oil", 20)
             // high
-            .add(RagiumFluidContents.DIESEL, 10)
+            .add(RagiumFluidContents.FUEL, 10)
+            .add("diesel", 10)
             .add("biodiesel", 10)
             .add(RagiumConst.ACTUALLY, "crystallized_oil", 10)
             // highest
-            .add(RagiumFluidContents.BLOOD_DIESEL, 5)
+            .add(RagiumFluidContents.CRIMSON_FUEL, 5)
             .add("high_power_biodiesel", 5)
-            .add(RagiumConst.ACTUALLY, "empowered_oil", 10)
+            .add(RagiumConst.ACTUALLY, "empowered_oil", 5)
     }
 
     private fun thermalFuels() {

@@ -7,6 +7,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 
 class HTFluidTransformingEmiRecipe(
     id: ResourceLocation,
@@ -15,6 +16,16 @@ class HTFluidTransformingEmiRecipe(
     val itemResult: EmiStack,
     val fluidResult: EmiStack,
 ) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
+    init {
+        for (stack: EmiStack in itemIngredient.emiStacks) {
+            val stackIn: ItemStack = stack.itemStack
+            if (stackIn.hasCraftingRemainingItem()) {
+                stack.remainder = EmiStack.of(stackIn.craftingRemainingItem)
+                break
+            }
+        }
+    }
+
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.FLUID_TRANSFORM
 
     override fun getInputs(): List<EmiIngredient> = listOf(fluidIngredient)

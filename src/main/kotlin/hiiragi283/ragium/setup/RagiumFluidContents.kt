@@ -83,8 +83,8 @@ object RagiumFluidContents {
     )
 
     @JvmField
-    val LPG: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
-        "lpg",
+    val NATURAL_GAS: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+        "natural_gas",
         gaseous(),
         HTExplosiveFluidType.create(4f),
     )
@@ -97,16 +97,16 @@ object RagiumFluidContents {
     )
 
     @JvmField
-    val DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val FUEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "fuel",
         properties(),
         HTExplosiveFluidType.create(4f),
     )
 
     @JvmField
-    val BLOOD_DIESEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val CRIMSON_FUEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
-            "blood_diesel",
+            "crimson_fuel",
             properties(),
             HTExplosiveFluidType.create(6f),
         )

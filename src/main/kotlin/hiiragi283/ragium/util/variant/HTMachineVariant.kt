@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -43,7 +42,6 @@ enum class HTMachineVariant(
     CRUSHER(::HTCrusherBlockEntity, HTTierType.ADVANCED, "Crusher", "破砕機"),
     MELTER(::HTMelterBlockEntity, HTTierType.ADVANCED, "Melter", "溶融炉"),
     REFINERY(::HTRefineryBlockEntity, HTTierType.ADVANCED, "Refinery", "精製機"),
-    SOLIDIFIER(::HTSolidifierBlockEntity, HTTierType.ADVANCED, "Solidifier", "成型機"),
     ;
 
     val energyUsage: Int get() = RagiumAPI.getConfig().getProcessorEnergyUsage(serializedName)

@@ -1,10 +1,10 @@
 {
-  "type": "ragium:solidifying",
-  "ingredient": {
+  "type": "ragium:fluid_transform",
+  "fluid_ingredient": {
     "amount": 1000,
     "tag": "c:crimson_blood"
   },
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "#c:gems/crimson_crystal"
   }

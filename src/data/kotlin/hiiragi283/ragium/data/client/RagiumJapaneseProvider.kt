@@ -148,10 +148,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
-        addFluid(RagiumFluidContents.LPG, "LPG")
+        addFluid(RagiumFluidContents.NATURAL_GAS, "天然ガス")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
-        addFluid(RagiumFluidContents.BLOOD_DIESEL, "ブラッディーゼル")
+        addFluid(RagiumFluidContents.FUEL, "燃料")
+        addFluid(RagiumFluidContents.CRIMSON_FUEL, "深紅の燃料")
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
@@ -225,6 +225,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
+        addItem(RagiumItems.POLYMER_CATALYST, "重合触媒")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")

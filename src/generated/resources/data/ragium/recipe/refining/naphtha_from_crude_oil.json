@@ -7,5 +7,9 @@
   "fluid_result": {
     "amount": 375,
     "id": "ragium:naphtha"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:tar"
   }
 }

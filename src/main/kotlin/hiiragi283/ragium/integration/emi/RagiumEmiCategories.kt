@@ -2,6 +2,7 @@ package hiiragi283.ragium.integration.emi
 
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipeCategory
+import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.util.RagiumConst
@@ -14,7 +15,7 @@ object RagiumEmiCategories {
     @JvmField
     val GENERATORS: Map<HTGeneratorVariant, HTEmiRecipeCategory> =
         HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant))
+            HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant), EmiRecipeSorting.identifier())
         }
 
     @JvmStatic
@@ -22,41 +23,40 @@ object RagiumEmiCategories {
 
     //    Machines    //
 
+    @JvmStatic
+    private fun machine(path: String, variant: HTMachineVariant): HTEmiRecipeCategory =
+        HTEmiRecipeCategory(path, EmiStack.of(variant), EmiRecipeSorting.compareOutputThenInput())
+
+    // Basic
     @JvmField
-    val ALLOYING = HTEmiRecipeCategory(RagiumConst.ALLOYING, EmiStack.of(HTMachineVariant.ALLOY_SMELTER))
+    val COMPRESSING: HTEmiRecipeCategory = machine(RagiumConst.COMPRESSING, HTMachineVariant.COMPRESSOR)
 
     @JvmField
-    val COMPRESSING = HTEmiRecipeCategory(RagiumConst.COMPRESSING, EmiStack.of(HTMachineVariant.COMPRESSOR))
+    val CRUSHING: HTEmiRecipeCategory = machine(RagiumConst.CRUSHING, HTMachineVariant.PULVERIZER)
 
     @JvmField
-    val CRUSHING = HTEmiRecipeCategory(RagiumConst.CRUSHING, EmiStack.of(HTMachineVariant.PULVERIZER))
+    val EXTRACTING: HTEmiRecipeCategory = machine(RagiumConst.EXTRACTING, HTMachineVariant.EXTRACTOR)
+
+    // Advanced
+    @JvmField
+    val ALLOYING: HTEmiRecipeCategory = machine(RagiumConst.ALLOYING, HTMachineVariant.ALLOY_SMELTER)
 
     @JvmField
-    val DISTILLATION = HTEmiRecipeCategory("distillation", EmiStack.of(HTMachineVariant.REFINERY))
+    val FLUID_TRANSFORM: HTEmiRecipeCategory = machine(RagiumConst.FLUID_TRANSFORM, HTMachineVariant.REFINERY)
 
     @JvmField
-    val EXTRACTING = HTEmiRecipeCategory(RagiumConst.EXTRACTING, EmiStack.of(HTMachineVariant.EXTRACTOR))
-
-    @JvmField
-    val FLUID_TRANSFORM = HTEmiRecipeCategory(RagiumConst.FLUID_TRANSFORM, EmiStack.of(HTMachineVariant.REFINERY))
-
-    @JvmField
-    val MELTING = HTEmiRecipeCategory(RagiumConst.MELTING, EmiStack.of(HTMachineVariant.MELTER))
-
-    @JvmField
-    val SOLIDIFYING = HTEmiRecipeCategory(RagiumConst.SOLIDIFYING, EmiStack.of(HTMachineVariant.SOLIDIFIER))
+    val MELTING: HTEmiRecipeCategory = machine(RagiumConst.MELTING, HTMachineVariant.MELTER)
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
-        // Machines
-        ALLOYING,
+        // Basic
         COMPRESSING,
         CRUSHING,
-        DISTILLATION,
         EXTRACTING,
+        // Advanced
+        ALLOYING,
         FLUID_TRANSFORM,
         MELTING,
-        SOLIDIFYING,
     )
 
     @JvmField

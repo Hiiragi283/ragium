@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
+import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.HTDrillItem
@@ -384,6 +385,9 @@ object RagiumItems {
     // Plastics
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
+
+    @JvmField
+    val POLYMER_CATALYST: DeferredItem<Item> = register("polymer_catalyst", ::HTCatalystItem)
 
     @JvmField
     val SYNTHETIC_FIBER: DeferredItem<Item> = register("synthetic_fiber")

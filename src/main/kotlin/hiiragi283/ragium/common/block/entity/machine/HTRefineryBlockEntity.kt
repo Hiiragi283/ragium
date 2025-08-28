@@ -105,10 +105,10 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Slot    //
 
     override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(0))
+        consumer(inventory, 0, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0))
     }
 
     override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(2))
+        consumer(inventory, 1, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
     }
 }

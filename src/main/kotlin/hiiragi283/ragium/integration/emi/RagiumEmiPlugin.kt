@@ -22,7 +22,6 @@ import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
@@ -40,7 +39,6 @@ import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTFluidWithCatalystToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -289,7 +287,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Smelting
         registry.addRecipeHandler(RagiumMenuTypes.SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.SMELTING))
         // Solidifying
-        RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
+        /*RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
             registry.addRecipe(
                 HTFluidWithCatalystToItemEmiRecipe.solidifying(
                     id,
@@ -299,7 +297,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.SOLIDIFIER.get(), HTRecipeHandler(RagiumEmiCategories.SOLIDIFYING))
+        registry.addRecipeHandler(RagiumMenuTypes.SOLIDIFIER.get(), HTRecipeHandler(RagiumEmiCategories.SOLIDIFYING))*/
     }
 
     /*private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {

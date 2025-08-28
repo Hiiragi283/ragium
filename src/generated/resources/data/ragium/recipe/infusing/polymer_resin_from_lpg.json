@@ -2,19 +2,11 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 125,
-    "tag": "c:lpg"
+    "tag": "c:natural_gas"
   },
   "item_ingredient": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/coal"
-      },
-      {
-        "tag": "c:fuels/coal"
-      }
-    ],
-    "count": 1
+    "count": 1,
+    "item": "ragium:polymer_catalyst"
   },
   "item_result": {
     "count": 4,

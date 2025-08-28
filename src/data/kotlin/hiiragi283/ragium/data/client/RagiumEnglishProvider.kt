@@ -157,10 +157,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
-        addFluid(RagiumFluidContents.LPG, "LPG")
+        addFluid(RagiumFluidContents.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluidContents.DIESEL, "Diesel")
-        addFluid(RagiumFluidContents.BLOOD_DIESEL, "Bloo-Diesel")
+        addFluid(RagiumFluidContents.FUEL, "Fuel")
+        addFluid(RagiumFluidContents.CRIMSON_FUEL, "Crimson Fuel")
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
@@ -225,6 +225,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
+        addItem(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")

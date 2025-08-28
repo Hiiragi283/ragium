@@ -12,7 +12,6 @@ import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTItemBufferScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
-import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTPotionBundleScreen
@@ -189,10 +188,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
         molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        liquid(RagiumFluidContents.LPG, Color(0xffcc99))
+        liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))
-        liquid(RagiumFluidContents.DIESEL, Color(0xff3300))
-        liquid(RagiumFluidContents.BLOOD_DIESEL, Color(0x663333))
+        liquid(RagiumFluidContents.FUEL, Color(0xcc3300))
+        liquid(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
         liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
         liquid(RagiumFluidContents.SAP, Color(0x996633))
@@ -236,7 +235,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
-        event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen.Companion::solidifier)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
 
         LOGGER.info("Registered Screens!")

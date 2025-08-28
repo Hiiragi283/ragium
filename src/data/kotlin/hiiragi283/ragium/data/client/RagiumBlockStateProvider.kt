@@ -182,7 +182,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.CRUSHER, advancedMachine, vanillaId("block/nether_bricks"))
         machine(HTMachineVariant.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(HTMachineVariant.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(HTMachineVariant.SOLIDIFIER, advancedMachine, advancedMachine)
 
         // Device
         for ((variant: HTDeviceVariant, block: DeferredHolder<Block, *>) in RagiumBlocks.DEVICES) {
