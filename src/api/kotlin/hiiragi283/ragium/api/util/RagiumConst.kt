@@ -73,6 +73,7 @@ object RagiumConst {
     const val MELTING = "melting"
     const val MIXING = "mixing"
     const val REFINING = "refining"
+    const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
 
     const val CATALYST = "catalyst"

@@ -106,6 +106,7 @@ object RagiumCreativeTabs {
         // Ingredients
         output.accept(RagiumItems.TAR)
         output.accept(RagiumItems.ELDER_HEART)
+        output.accept(RagiumItems.WITHER_DOLl)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)
         output.accept(RagiumItems.LED)

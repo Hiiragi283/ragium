@@ -170,6 +170,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.RESIN, "樹脂")
         addItem(RagiumItems.SILICON, "紺碧のシリコン")
         addItem(RagiumItems.TAR, "タール")
+        addItem(RagiumItems.WITHER_DOLl, "ウィザー人形")
 
         addPatterned()
         // Armor

@@ -25,6 +25,7 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
@@ -41,6 +42,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -284,6 +286,18 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.MIXER.get(), HTRecipeHandler(RagiumEmiCategories.MIXING))*/
+        // Simulating
+        RagiumRecipeTypes.SIMULATING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
+            registry.addRecipe(
+                HTSimulatingEmiRecipe(
+                    id,
+                    recipe.ingredient.toItemEmi(),
+                    recipe.catalyst.toEmi(),
+                    recipe.result.toEmi(),
+                ),
+            )
+        }
+        registry.addRecipeHandler(RagiumMenuTypes.SIMULATOR.get(), HTRecipeHandler(RagiumEmiCategories.SIMULATING))
         // Smelting
         registry.addRecipeHandler(RagiumMenuTypes.SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.SMELTING))
         // Solidifying

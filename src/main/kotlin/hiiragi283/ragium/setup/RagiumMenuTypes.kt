@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -122,6 +123,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val SMELTER: DeferredBEMenu<HTSmelterBlockEntity> = register("smelter")
+
+    @JvmField
+    val SIMULATOR: DeferredBEMenu<HTSimulatorBlockEntity> = register("simulator")
 
     @JvmField
     val SINGLE_ITEM: DeferredBEMenu<HTBlockBreakerBlockEntity> = register("single_item")

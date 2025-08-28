@@ -148,22 +148,24 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advMachine(HTMachineVariant.MELTER, Ingredient.of(Items.BLAST_FURNACE))
         advMachine(HTMachineVariant.REFINERY, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
 
-        createComponentUpgrade(
-            HTTierType.ADVANCED,
-            HTMachineVariant.ALLOY_SMELTER,
-            HTMachineVariant.SMELTER,
-        ).save(output)
-        createComponentUpgrade(
-            HTTierType.ADVANCED,
-            HTMachineVariant.CRUSHER,
-            HTMachineVariant.PULVERIZER,
-        ).save(output)
-
-        createComponentUpgrade(
-            HTTierType.ADVANCED,
-            HTMachineVariant.MELTER,
-            HTMachineVariant.EXTRACTOR,
-        ).save(output)
+        mapOf(
+            HTMachineVariant.ALLOY_SMELTER to HTMachineVariant.SMELTER,
+            HTMachineVariant.CRUSHER to HTMachineVariant.PULVERIZER,
+            HTMachineVariant.MELTER to HTMachineVariant.EXTRACTOR,
+        ).forEach { (adv: HTMachineVariant, basic: HTMachineVariant) ->
+            createComponentUpgrade(HTTierType.ADVANCED, adv, basic).save(output)
+        }
+        // Elite
+        HTShapedRecipeBuilder(HTMachineVariant.SIMULATOR)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ELITE)
+            .define('D', Items.DEEPSLATE_TILES)
+            .save(output)
     }
 
     @JvmStatic

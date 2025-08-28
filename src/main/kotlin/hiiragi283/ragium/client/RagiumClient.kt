@@ -219,6 +219,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerMachine(RagiumMenuTypes.ALLOY_SMELTER)
         registerMachine(RagiumMenuTypes.CRUSHER)
         registerMachine(RagiumMenuTypes.ENGRAVER)
+        registerMachine(RagiumMenuTypes.SIMULATOR)
         registerMachine(RagiumMenuTypes.SINGLE_ITEM)
         registerMachine(RagiumMenuTypes.SMELTER)
 

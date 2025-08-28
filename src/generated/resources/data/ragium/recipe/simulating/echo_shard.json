@@ -1,0 +1,11 @@
+{
+  "type": "ragium:simulating",
+  "catalyst": {
+    "count": 1,
+    "item": "minecraft:sculk_catalyst"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:echo_shard"
+  }
+}

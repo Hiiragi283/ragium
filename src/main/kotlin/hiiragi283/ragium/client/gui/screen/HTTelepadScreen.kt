@@ -54,7 +54,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         // z
         editBoxZ = setupNumberBox(2)
         // dimension
-        editBoxDim = setupEditBox(HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosX(3))
+        editBoxDim = setupEditBox()
 
         val teleportPos: HTTeleportPos = menu.context.teleportPos ?: return
         editBoxX.number = teleportPos.x
@@ -83,12 +83,12 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         return editBox
     }
 
-    private fun setupEditBox(x: Int, y: Int): EditBox {
+    private fun setupEditBox(): EditBox {
         val editBox: EditBox = addRenderableWidget(
             EditBox(
                 font,
-                startX + x,
-                startY + y - 4 * 4,
+                startX + HTSlotHelper.getSlotPosX(3),
+                startY + HTSlotHelper.getSlotPosY(3) - (4 * 3),
                 18 * 3,
                 12,
                 Component.empty(),

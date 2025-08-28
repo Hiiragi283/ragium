@@ -1,0 +1,8 @@
+{
+  "parent": "ragium:block/machine_base",
+  "textures": {
+    "bottom": "minecraft:block/deepslate_tiles",
+    "front": "ragium:block/simulator_front",
+    "top": "ragium:block/elite_machine_casing"
+  }
+}

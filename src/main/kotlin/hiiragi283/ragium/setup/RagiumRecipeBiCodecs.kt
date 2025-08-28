@@ -6,11 +6,13 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
@@ -63,6 +65,19 @@ object RagiumRecipeBiCodecs {
         HTCombineItemToItemRecipe::ingredients,
         HTItemResultImpl.CODEC.fieldOf("result"),
         HTCombineItemToItemRecipe::result,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R : HTItemWithCatalystToItemRecipe> itemWithCatalystToItem(
+        factory: HTItemWithCatalystToItemRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.optionalFieldOf("ingredient"),
+        HTItemWithCatalystToItemRecipe::ingredient,
+        HTItemIngredient.CODEC.fieldOf("catalyst"),
+        HTItemWithCatalystToItemRecipe::catalyst,
+        HTItemResultImpl.CODEC.fieldOf("result"),
+        HTItemWithCatalystToItemRecipe::result,
         factory::create,
     )
 

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:simulating",
+  "catalyst": {
+    "count": 1,
+    "item": "minecraft:dragon_egg"
+  },
+  "ingredient": {
+    "count": 1,
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:dragon_breath"
+  }
+}

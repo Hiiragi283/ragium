@@ -47,6 +47,10 @@ object RagiumEmiCategories {
     @JvmField
     val MELTING: HTEmiRecipeCategory = machine(RagiumConst.MELTING, HTMachineVariant.MELTER)
 
+    // Elite
+    @JvmField
+    val SIMULATING: HTEmiRecipeCategory = machine(RagiumConst.SIMULATING, HTMachineVariant.SIMULATOR)
+
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
         // Basic
@@ -57,6 +61,8 @@ object RagiumEmiCategories {
         ALLOYING,
         FLUID_TRANSFORM,
         MELTING,
+        // Elite
+        SIMULATING,
     )
 
     @JvmField

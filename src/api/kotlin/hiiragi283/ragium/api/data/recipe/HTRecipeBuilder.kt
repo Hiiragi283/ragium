@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition
 
@@ -63,7 +64,9 @@ interface HTRecipeBuilder : RecipeBuilder {
 
         private val conditions: MutableList<ICondition> = mutableListOf()
 
-        fun setTagCondition(tagKey: TagKey<Item>): Prefixed = addCondition(NotCondition(TagEmptyCondition(tagKey)))
+        fun modCondition(modId: String): Prefixed = addCondition(ModLoadedCondition(modId))
+
+        fun tagCondition(tagKey: TagKey<Item>): Prefixed = addCondition(NotCondition(TagEmptyCondition(tagKey)))
 
         fun addCondition(condition: ICondition): Prefixed = apply {
             this.conditions.add(condition)

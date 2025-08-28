@@ -361,7 +361,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(steelTag),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL, 2),
-            ).setTagCondition(steelTag)
+            ).tagCondition(steelTag)
             .saveSuffixed(output, "_from_coal")
 
         HTCombineItemToObjRecipeBuilder
@@ -369,7 +369,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(steelTag),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.fuelOrDust(RagiumMaterialType.COAL_COKE),
-            ).setTagCondition(steelTag)
+            ).tagCondition(steelTag)
             .saveSuffixed(output, "_from_coke")
         // Invar
         HTCombineItemToObjRecipeBuilder
@@ -377,7 +377,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON, 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("invar").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("invar").getBaseTagKey())
             .save(output)
         // Electrum
         HTCombineItemToObjRecipeBuilder
@@ -385,7 +385,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD),
                 HTIngredientHelper.ingotOrDust("silver"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey())
             .save(output)
         // Bronze
         HTCombineItemToObjRecipeBuilder
@@ -393,7 +393,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4),
                 HTIngredientHelper.item(Tags.Items.INGOTS_COPPER, 3),
                 HTIngredientHelper.ingotOrDust("tin"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey())
             .save(output)
         // Brass
         HTCombineItemToObjRecipeBuilder
@@ -401,7 +401,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER, 3),
                 HTIngredientHelper.ingotOrDust("zinc"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("brass").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("brass").getBaseTagKey())
             .save(output)
         // Constantan
         HTCombineItemToObjRecipeBuilder
@@ -409,7 +409,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER),
                 HTIngredientHelper.ingotOrDust("nickel"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey())
             .save(output)
 
         // Adamant
@@ -418,7 +418,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.DIAMOND),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey())
             .save(output)
         // Duratium
         HTCombineItemToObjRecipeBuilder
@@ -426,7 +426,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), 2),
                 HTIngredientHelper.ingotOrDust("platinum"),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.NETHERITE),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey())
             .save(output)
         // Energite
         HTCombineItemToObjRecipeBuilder
@@ -434,7 +434,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), 2),
                 HTIngredientHelper.ingotOrDust("nickel"),
                 HTIngredientHelper.gemOrDust("fluxite"),
-            ).setTagCondition(ModMaterialFamilies.getAlloy("energite").getBaseTagKey())
+            ).tagCondition(ModMaterialFamilies.getAlloy("energite").getBaseTagKey())
             .save(output)
     }
 }

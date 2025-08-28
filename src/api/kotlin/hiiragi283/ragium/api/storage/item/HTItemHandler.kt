@@ -71,19 +71,16 @@ interface HTItemHandler :
 
     fun shrinkStack(slot: Int, ingredient: HTItemIngredient, simulate: Boolean): Int {
         val stackIn: ItemStack = getStackInSlot(slot)
-        return shrinkStack(slot, ingredient.getRequiredAmount(stackIn), simulate)
-    }
-
-    fun shrinkStack(slot: Int, catalyst: Optional<HTItemIngredient>, simulate: Boolean): Int {
-        val stackIn: ItemStack = getStackInSlot(slot)
         if (stackIn.hasCraftingRemainingItem() && stackIn.count == 1) {
             setStackInSlot(slot, stackIn.craftingRemainingItem)
             return 0
         }
-        return catalyst
-            .map { ingredient: HTItemIngredient -> shrinkStack(slot, ingredient.getRequiredAmount(stackIn), simulate) }
-            .orElse(0)
+        return shrinkStack(slot, ingredient.getRequiredAmount(stackIn), simulate)
     }
+
+    fun shrinkStack(slot: Int, catalyst: Optional<HTItemIngredient>, simulate: Boolean): Int = catalyst
+        .map { ingredient: HTItemIngredient -> shrinkStack(slot, ingredient.getRequiredAmount(getStackInSlot(slot)), simulate) }
+        .orElse(0)
 
     fun getStackView(): Iterable<ItemStack>
 

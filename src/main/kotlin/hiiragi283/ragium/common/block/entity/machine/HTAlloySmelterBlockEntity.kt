@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -61,8 +60,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTMultiItemToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
             inventory.shrinkStack(slot, ingredients[index], false)
         }
-        // サウンドを流す
-        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }
 
     override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {

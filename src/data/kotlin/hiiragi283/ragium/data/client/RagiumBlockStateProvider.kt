@@ -183,6 +183,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(HTMachineVariant.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
+        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
+        machine(HTMachineVariant.SIMULATOR, eliteMachine, vanillaId("block/deepslate_tiles"))
+
         // Device
         for ((variant: HTDeviceVariant, block: DeferredHolder<Block, *>) in RagiumBlocks.DEVICES) {
             when (variant) {

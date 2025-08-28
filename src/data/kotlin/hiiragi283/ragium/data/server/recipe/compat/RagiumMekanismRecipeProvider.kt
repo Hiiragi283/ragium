@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -27,6 +30,8 @@ import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.common.registration.impl.DeferredChemical
+import mekanism.common.registries.MekanismItems
+import mekanism.common.tags.MekanismTags
 import net.minecraft.world.item.Items
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MEKANISM) {
@@ -145,6 +150,14 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                 RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/azure_steel"))
+
+        // Ethene + Catalyst -> HDPE
+        HTFluidTransformRecipeBuilder
+            .solidifying(
+                HTIngredientHelper.item(RagiumItems.POLYMER_CATALYST),
+                HTIngredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
+                HTResultHelper.item(MekanismItems.HDPE_PELLET),
+            ).save(output)
     }
 
     @JvmStatic

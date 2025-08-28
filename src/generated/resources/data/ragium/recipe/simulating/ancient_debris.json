@@ -1,0 +1,15 @@
+{
+  "type": "ragium:simulating",
+  "catalyst": {
+    "count": 1,
+    "item": "minecraft:piglin_brute_spawn_egg"
+  },
+  "ingredient": {
+    "count": 16,
+    "tag": "c:netherracks"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ancient_debris"
+  }
+}

@@ -206,7 +206,7 @@ sealed class HTRecipeProvider {
                 HTResultHelper.item(ingot, 3),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).setTagCondition(ingot)
+            ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
         // Advanced
         HTCombineItemToObjRecipeBuilder
@@ -214,7 +214,7 @@ sealed class HTRecipeProvider {
                 HTResultHelper.item(ingot, 2),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-            ).setTagCondition(ingot)
+            ).tagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
     }
 

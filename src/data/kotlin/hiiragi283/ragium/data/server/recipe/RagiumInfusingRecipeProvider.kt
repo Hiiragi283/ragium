@@ -201,6 +201,13 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun eldritch() {
+        // Budding Amethyst
+        HTFluidTransformRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(Items.AMETHYST_BLOCK),
+                HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+                HTResultHelper.item(Items.BUDDING_AMETHYST),
+            ).save(output)
         // Ominous Trial Key
         HTFluidTransformRecipeBuilder
             .infusing(

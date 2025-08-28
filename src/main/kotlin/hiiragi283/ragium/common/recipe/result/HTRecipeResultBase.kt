@@ -43,6 +43,6 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
 
     final override val id: ResourceLocation = entry.id
 
-    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
+    final override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
         entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }
 }

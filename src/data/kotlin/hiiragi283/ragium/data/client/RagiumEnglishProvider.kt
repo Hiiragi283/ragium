@@ -179,6 +179,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.RESIN, "Resin")
         addItem(RagiumItems.SILICON, "Indigo Silicon")
         addItem(RagiumItems.TAR, "Tar")
+        addItem(RagiumItems.WITHER_DOLl, "Wither Doll")
 
         addPatterned()
         // Armor
