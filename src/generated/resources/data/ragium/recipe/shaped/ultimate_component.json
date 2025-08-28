@@ -3,18 +3,21 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/eldritch_pearl"
+      "tag": "c:ingots/deep_steel"
     },
     "B": {
-      "item": "ragium:eldritch_gear"
+      "tag": "c:glass_blocks/obsidian"
     },
     "C": {
       "tag": "c:circuits/ultimate"
+    },
+    "D": {
+      "item": "ragium:elite_component"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "CDC",
     "ABA"
   ],
   "result": {

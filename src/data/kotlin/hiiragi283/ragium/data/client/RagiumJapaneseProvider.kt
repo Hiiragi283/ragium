@@ -165,7 +165,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.DEEP_SCRAP, "深層の欠片")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
-        addItem(RagiumItems.ELDRITCH_GEAR, "異質な歯車")
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.RESIN, "樹脂")
         addItem(RagiumItems.SILICON, "紺碧のシリコン")

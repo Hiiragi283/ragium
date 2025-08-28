@@ -366,10 +366,7 @@ object RagiumItems {
     val ELDER_HEART: DeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
-    val ELDRITCH_GEAR: DeferredItem<Item> = register("eldritch_gear", Item.Properties().rarity(Rarity.RARE))
-
-    @JvmField
-    val WITHER_DOLl: DeferredItem<Item> = register("wither_doll", Item.Properties().rarity(Rarity.RARE))
+    val WITHER_DOLl: DeferredItem<Item> = register("wither_doll", Item.Properties())
 
     // LED
     @JvmField

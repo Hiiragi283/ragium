@@ -6,15 +6,18 @@
       "tag": "c:gems/ragi_crystal"
     },
     "B": {
-      "item": "ragium:silicon"
+      "tag": "c:glass_blocks/quartz"
     },
     "C": {
       "tag": "c:circuits/elite"
+    },
+    "D": {
+      "item": "ragium:advanced_component"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "CDC",
     "ABA"
   ],
   "result": {

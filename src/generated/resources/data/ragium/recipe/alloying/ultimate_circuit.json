@@ -3,11 +3,19 @@
   "ingredients": [
     {
       "count": 1,
-      "tag": "c:gems/eldritch_pearl"
+      "tag": "c:nuggets/iridescentium"
     },
     {
-      "count": 1,
-      "tag": "c:nuggets/iridescentium"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/eldritch_pearl"
+        },
+        {
+          "tag": "c:gems/eldritch_pearl"
+        }
+      ],
+      "count": 1
     },
     {
       "count": 1,

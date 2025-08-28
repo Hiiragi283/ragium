@@ -2,12 +2,20 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 1,
-      "tag": "c:dusts/redstone"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/copper"
+        },
+        {
+          "tag": "c:ingots/copper"
+        }
+      ],
+      "count": 2
     },
     {
       "count": 1,
-      "tag": "c:ingots/copper"
+      "tag": "c:dusts/raginite"
     },
     {
       "count": 1,
@@ -15,7 +23,7 @@
     }
   ],
   "result": {
-    "count": 1,
+    "count": 4,
     "id": "ragium:basic_circuit"
   }
 }

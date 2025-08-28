@@ -174,7 +174,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
-        addItem(RagiumItems.ELDRITCH_GEAR, "Eldritch Gear")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.RESIN, "Resin")
         addItem(RagiumItems.SILICON, "Indigo Silicon")

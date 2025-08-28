@@ -2,12 +2,28 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 1,
-      "tag": "c:gems/ragi_crystal"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/advanced_ragi_alloy"
+        },
+        {
+          "tag": "c:ingots/advanced_ragi_alloy"
+        }
+      ],
+      "count": 2
     },
     {
-      "count": 1,
-      "tag": "c:ingots/advanced_ragi_alloy"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/ragi_crystal"
+        },
+        {
+          "tag": "c:gems/ragi_crystal"
+        }
+      ],
+      "count": 1
     },
     {
       "count": 1,

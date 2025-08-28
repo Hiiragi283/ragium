@@ -133,8 +133,6 @@ class RagiumItemTagsProvider(
         }
         builder.addItem(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
 
-        builder.addItem(HTItemMaterialVariant.GEAR, RagiumMaterialType.ELDRITCH_PEARL, RagiumItems.ELDRITCH_GEAR)
-
         builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL)
         builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
 

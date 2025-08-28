@@ -6,15 +6,18 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "ragium:ragi_alloy_coil"
+      "tag": "c:glass_blocks/colorless"
     },
     "C": {
       "tag": "c:circuits/basic"
+    },
+    "D": {
+      "tag": "c:dusts/redstone"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "CDC",
     "ABA"
   ],
   "result": {

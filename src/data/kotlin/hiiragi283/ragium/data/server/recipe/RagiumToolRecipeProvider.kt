@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
@@ -15,7 +14,6 @@ import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
 import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
-import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
@@ -23,7 +21,6 @@ import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -62,17 +59,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Items.BOOK)
             .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.ETERNAL_COMPONENT)
-            .cross8()
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
-            .define('B', Items.CLOCK)
-            .define('C', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ULTIMATE))
-            .save(output)
-        save(
-            RagiumAPI.id("shapeless/eternal_ticket"),
-            HTEternalTicketRecipe(CraftingBookCategory.MISC),
-        )
 
         raginite()
         azureAndDeepSteel()

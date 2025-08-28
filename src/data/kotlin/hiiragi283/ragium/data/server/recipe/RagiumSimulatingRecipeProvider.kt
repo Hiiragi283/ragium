@@ -119,7 +119,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 "AAA",
                 "BBB",
-                " B "
+                " B ",
             ).define('A', Items.WITHER_SKELETON_SKULL)
             .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .save(output)
@@ -128,7 +128,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(RagiumItems.WITHER_DOLl),
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.IRIDESCENTIUM),
-                HTResultHelper.item(Items.NETHER_STAR),
+                HTResultHelper.item(Tags.Items.NETHER_STARS),
             ).save(output)
     }
 }
