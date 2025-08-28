@@ -24,7 +24,7 @@ enum class HTItemMaterialVariant(private val enUsPattern: String, private val ja
     FUEL("%s", "%s", RagiumConst.FUELS),
     ;
 
-    override val itemCommonTag: TagKey<Item>? = itemTagKey(commonId(tagPrefix))
+    override val itemCommonTag: TagKey<Item> = itemTagKey(commonId(tagPrefix))
 
     override fun canGenerateTag(): Boolean = true
 

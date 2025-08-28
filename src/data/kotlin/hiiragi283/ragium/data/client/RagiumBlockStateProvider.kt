@@ -104,8 +104,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
-        // Log
-        logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
         // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRIES.get())

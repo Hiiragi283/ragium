@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.addon
 
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
@@ -34,4 +36,8 @@ interface RagiumAddon {
      */
 
     fun onClientSetup(event: FMLClientSetupEvent) {}
+
+    //    Extension    //
+
+    fun registerMaterial(consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit) {}
 }

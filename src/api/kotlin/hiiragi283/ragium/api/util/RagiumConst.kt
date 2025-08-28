@@ -86,7 +86,6 @@ object RagiumConst {
 
     const val CIRCUITS = "circuits"
     const val DUSTS = "dusts"
-    const val ENRICHED = "enriched"
     const val FUELS = "fuels"
     const val GEMS = "gems"
     const val GLASS_BLOCKS = "glass_blocks"

@@ -178,7 +178,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
-            output.accept(RagiumItems.MINCED_MEAT)
+            output.accept(RagiumItems.getDust(RagiumMaterialType.MEAT))
             output.accept(RagiumItems.getIngot(RagiumMaterialType.MEAT))
             output.accept(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
             output.accept(RagiumItems.CANNED_COOKED_MEAT)

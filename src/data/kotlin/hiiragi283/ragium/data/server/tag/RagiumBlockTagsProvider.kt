@@ -67,7 +67,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
         // Shovel
-        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         // Other
@@ -130,7 +129,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
         // WIP
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.ASH_LOG)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.WOODEN_CASING)
     }
 

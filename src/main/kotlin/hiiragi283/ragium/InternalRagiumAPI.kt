@@ -13,6 +13,10 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
@@ -23,6 +27,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -63,6 +68,70 @@ class InternalRagiumAPI : RagiumAPI {
                 }
         }
         return addonCache
+    }
+
+    private lateinit var mapCache: Map<HTMaterialType, HTMaterialVariant.ItemTag>
+
+    override fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag> {
+        if (!::mapCache.isInitialized) {
+            mapCache = buildMap {
+                val consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit =
+                    { type: HTMaterialType, variant: HTMaterialVariant.ItemTag ->
+                        check(put(type, variant) == null) { "Duplicate base variant for ${type.serializedName}" }
+                    }
+
+                setupMaterials(consumer)
+
+                for (addon: RagiumAddon in getAddons()) {
+                    addon.registerMaterial(consumer)
+                }
+            }
+        }
+        return mapCache
+    }
+
+    private fun setupMaterials(consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit) {
+        // Vanilla
+        consumer(HTVanillaMaterialType.COPPER, HTItemMaterialVariant.INGOT)
+        consumer(HTVanillaMaterialType.IRON, HTItemMaterialVariant.INGOT)
+        consumer(HTVanillaMaterialType.GOLD, HTItemMaterialVariant.INGOT)
+        consumer(HTVanillaMaterialType.NETHERITE, HTItemMaterialVariant.INGOT)
+
+        consumer(HTVanillaMaterialType.LAPIS, HTItemMaterialVariant.GEM)
+        consumer(HTVanillaMaterialType.QUARTZ, HTItemMaterialVariant.GEM)
+        consumer(HTVanillaMaterialType.AMETHYST, HTItemMaterialVariant.GEM)
+        consumer(HTVanillaMaterialType.DIAMOND, HTItemMaterialVariant.GEM)
+        consumer(HTVanillaMaterialType.EMERALD, HTItemMaterialVariant.GEM)
+
+        consumer(HTVanillaMaterialType.COAL, HTItemMaterialVariant.FUEL)
+        consumer(HTVanillaMaterialType.CHARCOAL, HTItemMaterialVariant.FUEL)
+        consumer(HTVanillaMaterialType.REDSTONE, HTItemMaterialVariant.DUST)
+        consumer(HTVanillaMaterialType.OBSIDIAN, HTItemMaterialVariant.DUST)
+        consumer(HTVanillaMaterialType.WOOD, HTItemMaterialVariant.DUST)
+        // Ragium
+        consumer(RagiumMaterialType.RAGINITE, HTItemMaterialVariant.DUST)
+        consumer(RagiumMaterialType.CINNABAR, HTItemMaterialVariant.GEM)
+        consumer(RagiumMaterialType.SALTPETER, HTItemMaterialVariant.DUST)
+        consumer(RagiumMaterialType.SULFUR, HTItemMaterialVariant.DUST)
+
+        consumer(RagiumMaterialType.RAGI_CRYSTAL, HTItemMaterialVariant.GEM)
+        consumer(RagiumMaterialType.AZURE, HTItemMaterialVariant.GEM)
+        consumer(RagiumMaterialType.CRIMSON_CRYSTAL, HTItemMaterialVariant.GEM)
+        consumer(RagiumMaterialType.WARPED_CRYSTAL, HTItemMaterialVariant.GEM)
+        consumer(RagiumMaterialType.ELDRITCH_PEARL, HTItemMaterialVariant.GEM)
+
+        consumer(RagiumMaterialType.RAGI_ALLOY, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.ADVANCED_RAGI_ALLOY, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.AZURE_STEEL, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.DEEP_STEEL, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.IRIDESCENTIUM, HTItemMaterialVariant.INGOT)
+
+        consumer(RagiumMaterialType.CHOCOLATE, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.MEAT, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.COOKED_MEAT, HTItemMaterialVariant.INGOT)
+
+        consumer(RagiumMaterialType.COAL_COKE, HTItemMaterialVariant.FUEL)
+        consumer(RagiumMaterialType.PLASTIC, HTItemMaterialVariant.PLATE)
     }
 
     //    Item    //

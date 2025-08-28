@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
@@ -26,7 +27,6 @@ import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
-import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -122,16 +122,7 @@ class RagiumItemTagsProvider(
     //    Material    //
 
     private fun material(builder: HTTagBuilder<Item>) {
-        RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            if (variant is HTMaterialVariant.ItemTag) {
-                builder.addItem(variant, material, item)
-
-                if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
-                    tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
-                }
-            }
-        }
-        builder.addItem(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT, RagiumItems.MINCED_MEAT)
+        materialTable(builder, RagiumItems.MATERIALS)
 
         builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL)
         builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
@@ -140,16 +131,19 @@ class RagiumItemTagsProvider(
         builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag!!, coalCoke)
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
         // Mekanism Addon
-        builder.addItem(
-            MekanismTags.Items.ENRICHED,
-            RagiumModTags.Items.ENRICHED_AZURE,
-            RagiumMekanismAddon.ITEM_ENRICHED_AZURE,
-        )
-        builder.addItem(
-            MekanismTags.Items.ENRICHED,
-            RagiumModTags.Items.ENRICHED_RAGINITE,
-            RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE,
-        )
+        materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
+    }
+
+    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>>) {
+        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
+            if (variant is HTMaterialVariant.ItemTag) {
+                builder.addItem(variant, material, item)
+
+                if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
+                    tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
+                }
+            }
+        }
     }
 
     //    Foods    //

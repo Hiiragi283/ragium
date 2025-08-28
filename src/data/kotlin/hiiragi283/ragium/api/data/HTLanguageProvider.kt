@@ -46,9 +46,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addBlocks(RagiumBlocks.ORES)
         addBlocks(RagiumBlocks.MATERIALS)
 
-        RagiumItems.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
-            addItem(item, material.translate(type, variant))
-        }
+        materialItems(RagiumItems.MATERIALS)
 
         addItems(RagiumItems.ARMORS)
         addItems(RagiumItems.TOOLS)
@@ -66,8 +64,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val value: String = data.getTranslatedName(type)
             addFluid(data.molten, value)
-            addChemical(RagiumMekanismAddon.getChemical(data), value)
+            addChemical(RagiumMekanismAddon.getChemical(data.material), value)
         }
+
+        materialItems(RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
     private fun addBlocks(table: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, out Supplier<out Block>>) {
@@ -85,6 +85,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
             addBlock(variant.blockHolder, variant.translate(type, ""))
+        }
+    }
+
+    private fun materialItems(table: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>>) {
+        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
+            addItem(item, material.translate(type, variant))
         }
     }
 

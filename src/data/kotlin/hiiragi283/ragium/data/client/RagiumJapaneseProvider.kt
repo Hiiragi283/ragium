@@ -16,6 +16,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -84,7 +85,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
         addBlock(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
-        addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み")
         addItem(RagiumBlocks.EXP_BERRIES.itemHolder, "経験値ベリー")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
@@ -199,7 +199,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
 
-        addItem(RagiumItems.MINCED_MEAT, "ひき肉")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
         addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "カットスイートベリーケーキ")
@@ -387,9 +386,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumModTags.Items.TOOLS_DRILL, "ドリル")
         add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
-
-        add(RagiumModTags.Items.ENRICHED_RAGINITE, "濃縮ラギナイト")
-        add(RagiumModTags.Items.ENRICHED_AZURE, "濃縮紺碧エッセンス")
     }
 
     private fun text() {
@@ -421,7 +417,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun information() {
-        addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
         addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
 
@@ -482,11 +477,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun mekanism() {
-        addChemical(RagiumMekanismAddon.CHEMICAL_RAGINITE, "ラギナイト")
-        addChemical(RagiumMekanismAddon.CHEMICAL_AZURE, "紺碧エッセンス")
-
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
+        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "ラギナイト")
+        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "紺碧エッセンス")
     }
 
     private fun replication() {

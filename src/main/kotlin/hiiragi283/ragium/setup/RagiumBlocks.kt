@@ -38,7 +38,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.StairBlock
@@ -93,17 +92,6 @@ object RagiumBlocks {
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
-    )
-
-    @JvmField
-    val ASH_LOG: HTBasicDeferredBlockHolder<RotatedPillarBlock> = REGISTER.registerSimple(
-        "ash_log",
-        BlockBehaviour.Properties
-            .of()
-            .mapColor(MapColor.COLOR_GRAY)
-            .strength(1f)
-            .sound(SoundType.SAND),
-        ::RotatedPillarBlock,
     )
 
     @JvmField

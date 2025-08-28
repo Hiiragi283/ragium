@@ -54,22 +54,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(slab.get(), ::createSlabItemTable)
         }
 
-        // Log
-        add(RagiumBlocks.ASH_LOG.get()) { block: Block ->
-            applyExplosionDecay(
-                block,
-                LootTable
-                    .lootTable()
-                    .withPool(
-                        LootPool
-                            .lootPool()
-                            .add(LootItem.lootTableItem(RagiumItems.getDust(RagiumMaterialType.ASH)))
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
-                    ),
-            )
-        }
-
         // Crop
         addCrop(RagiumBlocks.EXP_BERRIES, RagiumBlocks.EXP_BERRIES)
         addCrop(RagiumBlocks.WARPED_WART, RagiumBlocks.WARPED_WART)

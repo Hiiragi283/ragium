@@ -16,6 +16,7 @@ import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -92,7 +93,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
         addBlock(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
         addBlock(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
         addItem(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
@@ -209,7 +209,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 
-        addItem(RagiumItems.MINCED_MEAT, "Minced Meat")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
         addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "Slice of Sweet Berries Cake")
@@ -387,9 +386,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumModTags.Items.TOOLS_DRILL, "Drills")
         add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
-
-        add(RagiumModTags.Items.ENRICHED_RAGINITE, "Enriched Raginite")
-        add(RagiumModTags.Items.ENRICHED_AZURE, "Enriched Azure Essence")
     }
 
     private fun text() {
@@ -421,7 +417,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun information() {
-        addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
         addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
 
@@ -482,11 +477,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun mekanism() {
-        addChemical(RagiumMekanismAddon.CHEMICAL_RAGINITE, "Raginite")
-        addChemical(RagiumMekanismAddon.CHEMICAL_AZURE, "Azure Essence")
-
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
+        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "Raginite")
+        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "Azure Essence")
     }
 
     private fun replication() {

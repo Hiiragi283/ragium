@@ -3,8 +3,13 @@ package hiiragi283.ragium.integration.mekanism
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
@@ -18,10 +23,12 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 
 @HTAddon(RagiumConst.MEKANISM)
@@ -32,20 +39,18 @@ object RagiumMekanismAddon : RagiumAddon {
     val CHEMICAL_REGISTER = ChemicalDeferredRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val CHEMICAL_RAGINITE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse(RagiumConst.RAGINITE, 0xFF0033)
+    val CHEMICAL_MAP: Map<HTMaterialType, DeferredChemical<Chemical>> = buildMap {
+        put(RagiumMaterialType.RAGINITE, CHEMICAL_REGISTER.registerInfuse(RagiumConst.RAGINITE, 0xFF0033))
+        put(RagiumMaterialType.AZURE, CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc))
 
-    @JvmField
-    val CHEMICAL_AZURE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc)
-
-    @JvmStatic
-    fun registerCrystal(data: HTMoltenCrystalData): DeferredChemical<Chemical> = CHEMICAL_REGISTER.register(data.molten.id.path, data.color)
-
-    @JvmField
-    val CHEMICAL_CRYSTALS: Map<HTMoltenCrystalData, DeferredChemical<Chemical>> =
-        HTMoltenCrystalData.entries.associateWith(::registerCrystal)
+        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+            put(data.material, CHEMICAL_REGISTER.register(data.molten.id.path, data.color))
+        }
+    }
 
     @JvmStatic
-    fun getChemical(data: HTMoltenCrystalData): DeferredChemical<Chemical> = CHEMICAL_CRYSTALS[data]!!
+    fun getChemical(material: HTMaterialType): DeferredChemical<Chemical> =
+        CHEMICAL_MAP[material] ?: error("Unregistered chemical for ${material.serializedName}")
 
     //    Item    //
 
@@ -53,10 +58,29 @@ object RagiumMekanismAddon : RagiumAddon {
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val ITEM_ENRICHED_RAGINITE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
+    val MATERIAL_ITEMS: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>> = buildTable {
+        // Enriched
+        put(
+            HTMekMaterialVariant.ENRICHED,
+            RagiumMaterialType.RAGINITE,
+            ITEM_REGISTER.registerSimpleItem("enriched_raginite"),
+        )
+        put(HTMekMaterialVariant.ENRICHED, RagiumMaterialType.AZURE, ITEM_REGISTER.registerSimpleItem("enriched_azure"))
+    }
 
-    @JvmField
-    val ITEM_ENRICHED_AZURE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_azure")
+    @JvmStatic
+    fun getEnriched(material: HTMaterialType): DeferredHolder<Item, *> = when (material) {
+        HTVanillaMaterialType.COAL -> MekanismItems.ENRICHED_CARBON
+        HTVanillaMaterialType.REDSTONE -> MekanismItems.ENRICHED_REDSTONE
+        HTVanillaMaterialType.DIAMOND -> MekanismItems.ENRICHED_DIAMOND
+        HTVanillaMaterialType.OBSIDIAN -> MekanismItems.ENRICHED_OBSIDIAN
+        HTVanillaMaterialType.GOLD -> MekanismItems.ENRICHED_GOLD
+        else -> MATERIAL_ITEMS.get(HTMekMaterialVariant.ENRICHED, material)
+            ?: error("Unregistered enriched item for ${material.serializedName}")
+    }
+
+    @JvmStatic
+    fun getEnrichedStack(material: HTMaterialType): ItemStack = getEnriched(material).let(::ItemStack)
 
     //    RagiumAddon    //
 
@@ -79,14 +103,14 @@ object RagiumMekanismAddon : RagiumAddon {
             // Raginite
             event.insertAfter(
                 RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(),
-                ITEM_ENRICHED_RAGINITE.toStack(),
+                getEnrichedStack(RagiumMaterialType.RAGINITE),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
 
             // Azure
             event.insertAfter(
                 RagiumItems.getGem(RagiumMaterialType.AZURE).toStack(),
-                ITEM_ENRICHED_AZURE.toStack(),
+                getEnrichedStack(RagiumMaterialType.RAGINITE),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
         }

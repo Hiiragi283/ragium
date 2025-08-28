@@ -15,6 +15,8 @@ import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -67,6 +69,10 @@ interface RagiumAPI {
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
+
+    fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag>
+
+    fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
 
     //    Item    //
 

@@ -1,11 +1,14 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -106,17 +109,21 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_block")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                HTIngredientHelper.item(RagiumBlocks.ASH_LOG),
-                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.ASH, 3),
-            ).saveSuffixed(output, "_from_log")
-
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(Items.GLOW_INK_SAC))
             .addResult(HTResultHelper.item(RagiumItems.LUMINOUS_PASTE))
             .addResult(HTResultHelper.item(Items.INK_SAC))
             .save(output)
+
+        for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
+            if (baseVariant == HTItemMaterialVariant.DUST) continue
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(baseVariant, material),
+                    HTResultHelper.item(HTItemMaterialVariant.DUST, material),
+                ).saveSuffixed(output, "_from_${baseVariant.serializedName}")
+        }
 
         woodDust()
         sand()

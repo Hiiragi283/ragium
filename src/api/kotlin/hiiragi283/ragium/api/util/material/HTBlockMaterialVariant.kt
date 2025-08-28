@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api.util.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -19,27 +21,16 @@ enum class HTBlockMaterialVariant(private val enUsPattern: String, private val j
     TINTED_GLASS_BLOCK("Tinted %s Glass", "遮光%sガラス", null),
     ;
 
-    override val blockCommonTag: TagKey<Block>? = tagPrefix?.let {
-        hiiragi283.ragium.api.extension.blockTagKey(
-            commonId(
-                it,
-            ),
-        )
-    }
-    override val itemCommonTag: TagKey<Item>? = tagPrefix?.let {
-        hiiragi283.ragium.api.extension
-            .itemTagKey(commonId(it))
-    }
+    override val blockCommonTag: TagKey<Block>? = tagPrefix?.let { blockTagKey(commonId(it)) }
+    override val itemCommonTag: TagKey<Item>? = tagPrefix?.let { itemTagKey(commonId(it)) }
 
     override fun canGenerateTag(): Boolean = tagPrefix != null
 
     private fun checkTagPrefix(): String = checkNotNull(tagPrefix) { "Tag creation is not allowed for $serializedName!" }
 
-    override fun blockTagKey(path: String): TagKey<Block> = hiiragi283.ragium.api.extension
-        .blockTagKey(commonId("${checkTagPrefix()}/$path"))
+    override fun blockTagKey(path: String): TagKey<Block> = blockTagKey(commonId("${checkTagPrefix()}/$path"))
 
-    override fun itemTagKey(path: String): TagKey<Item> = hiiragi283.ragium.api.extension
-        .itemTagKey(commonId("${checkTagPrefix()}/$path"))
+    override fun itemTagKey(path: String): TagKey<Item> = itemTagKey(commonId("${checkTagPrefix()}/$path"))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

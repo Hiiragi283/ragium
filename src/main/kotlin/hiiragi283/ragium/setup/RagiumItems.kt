@@ -103,14 +103,27 @@ object RagiumItems {
     val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>> = buildTable {
         // Dusts
         listOf(
-            RagiumMaterialType.RAGINITE,
+            // Vanilla - Metal
+            HTVanillaMaterialType.COPPER,
+            HTVanillaMaterialType.IRON,
+            HTVanillaMaterialType.GOLD,
+            // Vanilla - Gem
+            HTVanillaMaterialType.LAPIS,
+            HTVanillaMaterialType.AMETHYST,
+            // Vanilla - Other
             HTVanillaMaterialType.OBSIDIAN,
+            // Common
             RagiumMaterialType.CINNABAR,
             RagiumMaterialType.SALTPETER,
             RagiumMaterialType.SULFUR,
-            RagiumMaterialType.ASH,
+            // Ragium
+            RagiumMaterialType.RAGINITE,
+            RagiumMaterialType.AZURE,
+            RagiumMaterialType.RAGI_CRYSTAL,
+            RagiumMaterialType.ELDRITCH_PEARL,
         ).forEach { put(HTItemMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
         put(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, register("sawdust"))
+        put(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT, register("minced_meat"))
         // Gems
         put(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
         listOf(
@@ -328,9 +341,6 @@ object RagiumItems {
     val ICE_CREAM_SODA: DeferredItem<Item> = register("ice_cream_soda")
 
     // Meat
-    @JvmField
-    val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
-
     @JvmField
     val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_${RagiumConst.COOKED_MEAT}", RagiumFoods.CANNED_COOKED_MEAT)
 
