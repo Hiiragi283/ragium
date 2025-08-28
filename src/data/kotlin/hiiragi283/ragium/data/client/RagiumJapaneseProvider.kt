@@ -184,17 +184,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addItem(RagiumItems.DRILL, "電動ドリル")
 
-        addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
+        addItem(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
+        addItem(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         addItem(RagiumItems.ELDRITCH_EGG, "異質な卵")
+        addItem(RagiumItems.LOOT_TICKET, "らぎチケット")
+        addItem(RagiumItems.MAGNET, "らぎマグネット")
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
-        addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-        addItem(RagiumItems.RAGI_MAGNET, "らぎマグネット")
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SLOT_COVER, "スロットカバー")
         addItem(RagiumItems.TELEPORT_KEY, "転位の鍵")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
+        addItem(RagiumItems.WRENCH, "らぎレンチ")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
@@ -454,8 +455,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         )
         addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
         addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
-        addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
-        addInfo(RagiumItems.RAGI_MAGNET, "範囲内のドロップアイテムを回収します。")
+        addInfo(RagiumItems.DYNAMIC_LANTERN, "範囲内の暗所に光源を設置します。")
+        addInfo(RagiumItems.MAGNET, "範囲内のドロップアイテムを回収します。")
         addInfo(RagiumItems.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         addInfo(RagiumItems.TRADER_CATALOG, "行商人からドロップします。")
     }

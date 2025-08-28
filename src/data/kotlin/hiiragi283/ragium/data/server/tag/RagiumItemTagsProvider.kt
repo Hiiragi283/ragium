@@ -25,7 +25,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTColorVariant
-import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -128,7 +127,7 @@ class RagiumItemTagsProvider(
         builder.addItem(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL)
 
         val coalCoke: TagKey<Item> = HTItemMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
-        builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag!!, coalCoke)
+        builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag, coalCoke)
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
         // Mekanism Addon
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
@@ -213,10 +212,9 @@ class RagiumItemTagsProvider(
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
             builder.add(variant.tagKey, item)
-            if (variant == HTHammerToolVariant) {
-                builder.add(Tags.Items.TOOLS_WRENCH, item)
-            }
         }
+
+        builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.WRENCH)
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 
@@ -283,9 +281,9 @@ class RagiumItemTagsProvider(
     //    Integration    //
 
     private fun curios(builder: HTTagBuilder<Item>) {
-        builder.add(CuriosTags.CHARM, RagiumItems.ADVANCED_RAGI_MAGNET)
-        builder.add(CuriosTags.CHARM, RagiumItems.RAGI_LANTERN)
-        builder.add(CuriosTags.CHARM, RagiumItems.RAGI_MAGNET)
+        builder.add(CuriosTags.CHARM, RagiumItems.ADVANCED_MAGNET)
+        builder.add(CuriosTags.CHARM, RagiumItems.DYNAMIC_LANTERN)
+        builder.add(CuriosTags.CHARM, RagiumItems.MAGNET)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {

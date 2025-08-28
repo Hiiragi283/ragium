@@ -72,7 +72,16 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun raginite() {
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.RAGI_MAGNET)
+        HTShapedRecipeBuilder(RagiumItems.WRENCH)
+            .pattern(
+                " A ",
+                " BA",
+                "B  ",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.MAGNET)
             .pattern(
                 "A A",
                 "B B",
@@ -85,18 +94,18 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         // Advanced
         createComponentUpgrade(
             HTTierType.ADVANCED,
-            RagiumItems.ADVANCED_RAGI_MAGNET,
-            RagiumItems.RAGI_MAGNET,
+            RagiumItems.ADVANCED_MAGNET,
+            RagiumItems.MAGNET,
         ).save(output)
 
         // Elite
-        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
+        HTShapedRecipeBuilder(RagiumItems.DYNAMIC_LANTERN)
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET)
+        HTShapedRecipeBuilder(RagiumItems.LOOT_TICKET)
             .cross8()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Tags.Items.DYES_RED)
@@ -286,7 +295,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
             .cross8()
             .apply(builderAction)
-            .define('C', RagiumItems.RAGI_TICKET)
+            .define('C', RagiumItems.LOOT_TICKET)
             .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
     }
 }

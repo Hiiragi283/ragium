@@ -194,17 +194,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addItem(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
-        addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
+        addItem(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
+        addItem(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
+        addItem(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
+        addItem(RagiumItems.MAGNET, "Ragi-Magnet")
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
-        addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
-        addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SLOT_COVER, "Slot Cover")
         addItem(RagiumItems.TELEPORT_KEY, "Teleport Key")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         addItem(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
+        addItem(RagiumItems.WRENCH, "Ragi-Wrench")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
@@ -454,8 +455,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         )
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
-        addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")
-        addInfo(RagiumItems.RAGI_MAGNET, "Collect dropped items in the effective range")
+        addInfo(RagiumItems.DYNAMIC_LANTERN, "Light up darkness in range.")
+        addInfo(RagiumItems.MAGNET, "Collect dropped items in the effective range")
         addInfo(RagiumItems.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
         addInfo(RagiumItems.TRADER_CATALOG, "Dropped from Wandering Trader.")
     }

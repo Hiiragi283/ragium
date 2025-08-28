@@ -81,7 +81,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             }
         }
     }
-    
+
     private fun addItems(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Item>>) {
         table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: Supplier<out Item>) ->
             if (material is HTMaterialType.Translatable) {

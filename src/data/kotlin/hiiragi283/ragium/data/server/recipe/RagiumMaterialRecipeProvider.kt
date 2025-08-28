@@ -174,7 +174,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 9),
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL),
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL),
-                HTIngredientHelper.item(RagiumModTags.Items.ELDRITCH_PEARL_BINDER),
+                HTIngredientHelper.item(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, 3),
             ).save(output)
     }
 
@@ -229,7 +229,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR)
             .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER)
             .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
-            .addIngredient(RagiumModTags.Items.TOOLS_HAMMER)
             .saveSuffixed(output, "_with_hammer")
     }
 

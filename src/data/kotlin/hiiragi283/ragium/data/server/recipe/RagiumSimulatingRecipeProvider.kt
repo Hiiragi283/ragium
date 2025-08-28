@@ -109,7 +109,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         // Resonant Debris
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Items.DEEPSLATE, 4),
+                HTIngredientHelper.item(Items.DEEPSLATE, 8),
                 HTIngredientHelper.item(Items.WARDEN_SPAWN_EGG),
                 HTResultHelper.item(RagiumBlocks.RESONANT_DEBRIS),
             ).save(output)

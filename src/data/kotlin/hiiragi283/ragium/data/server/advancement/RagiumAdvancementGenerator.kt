@@ -113,12 +113,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         }
         val ragiTicket: AdvancementHolder = child(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
             display {
-                setIcon(RagiumItems.RAGI_TICKET)
+                setIcon(RagiumItems.LOOT_TICKET)
                 setTitleFromKey(RagiumAdvancements.RAGI_TICKET)
                 setDescFromKey(RagiumAdvancements.RAGI_TICKET)
                 setGoal()
             }
-            addCriterion("use_ragi_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.RAGI_TICKET))
+            addCriterion("use_ragi_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.LOOT_TICKET))
         }
     }
 

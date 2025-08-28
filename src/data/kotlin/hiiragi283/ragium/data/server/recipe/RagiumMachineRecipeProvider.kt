@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTTierType
@@ -37,61 +36,57 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
-            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Stone
         HTShapedRecipeBuilder(RagiumBlocks.STONE_CASING)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.REINFORCED_STONE_CASING)
             .casing()
             .define('A', Items.BASALT)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
         // Machine
         HTShapedRecipeBuilder(RagiumBlocks.BASIC_MACHINE_FRAME, 2)
             .hollow8()
             .define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Advanced Machine
         HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_FRAME, 2)
             .hollow8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.AZURE)
             .save(output)
         // Elite Machine
         HTShapedRecipeBuilder(RagiumBlocks.ELITE_MACHINE_FRAME, 4)
             .hollow8()
             .define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
-            .define('B', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.ELDRITCH_PEARL)
             .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('C', RagiumModTags.Items.TOOLS_HAMMER)
+            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .saveSuffixed(output, "_with_obsidian")
     }
 
     //    Machines    //
-
-    @JvmStatic
-    private fun generators() {
-    }
 
     @JvmStatic
     private fun machines() {
@@ -228,6 +223,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun drums() {
         for ((variant: HTDrumVariant, drum: ItemLike) in RagiumBlocks.DRUMS) {
+            resetComponent(drum)
+
             val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
                 HTDrumVariant.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
                 HTDrumVariant.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
@@ -246,8 +243,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
         // Huge
-        createNetheriteUpgrade(HTDrumVariant.HUGE, HTDrumVariant.LARGE)
-            .save(output)
+        createNetheriteUpgrade(HTDrumVariant.HUGE, HTDrumVariant.LARGE).save(output)
         // Upgrades
         for (variant: HTDrumVariant in RagiumBlocks.DRUMS.keys) {
             val upgrade: ItemLike = when (variant) {

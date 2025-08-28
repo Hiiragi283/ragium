@@ -37,7 +37,7 @@ object HTLootTicketHelper {
     fun getLootTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = createTicket(lootTableKey)
 
     @JvmStatic
-    private fun createTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = createItemStack(RagiumItems.RAGI_TICKET, 1) {
+    private fun createTicket(lootTableKey: ResourceKey<LootTable>): ItemStack = createItemStack(RagiumItems.LOOT_TICKET, 1) {
         set(RagiumDataComponents.LOOT_TABLE_ID, lootTableKey)
     }
 }

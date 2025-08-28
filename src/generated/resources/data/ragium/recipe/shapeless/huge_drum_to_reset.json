@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:huge_drum"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:huge_drum"
+  }
+}

@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:obsidians/normal"
-    },
-    "B": {
       "tag": "c:ingots/azure_steel"
     },
-    "C": {
-      "tag": "c:dusts/raginite"
+    "B": {
+      "tag": "c:ingots/ragi_alloy"
     }
   },
   "pattern": [
-    "ABA",
-    "BCB",
-    "ABA"
+    " A ",
+    " BA",
+    "B  "
   ],
   "result": {
-    "count": 4,
-    "id": "ragium:device_casing"
+    "count": 1,
+    "id": "ragium:wrench"
   }
 }

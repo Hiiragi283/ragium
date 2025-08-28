@@ -141,13 +141,14 @@ object RagiumCreativeTabs {
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             // Raginite
+            output.accept(RagiumItems.WRENCH)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
-            output.accept(RagiumItems.RAGI_MAGNET)
+            output.accept(RagiumItems.MAGNET)
 
-            output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
+            output.accept(RagiumItems.ADVANCED_MAGNET)
 
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL))
-            output.accept(RagiumItems.RAGI_LANTERN)
+            output.accept(RagiumItems.DYNAMIC_LANTERN)
             // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
@@ -194,7 +195,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.BOTTLED_BEE)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.accept(RagiumItems.RAGI_TICKET)
+            output.accept(RagiumItems.LOOT_TICKET)
             output.acceptAll(HTLootTicketHelper.getDefaultLootTickets().values)
         }
 

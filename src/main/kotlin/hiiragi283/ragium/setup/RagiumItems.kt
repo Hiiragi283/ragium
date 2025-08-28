@@ -226,6 +226,55 @@ object RagiumItems {
 
     //    Tools    //
 
+    // Raginite
+    @JvmField
+    val WRENCH: DeferredItem<Item> = register("wrench", Item.Properties().stacksTo(1))
+
+    @JvmField
+    val MAGNET: DeferredItem<Item> = register("ragi_magnet", ::HTSimpleMagnetItem)
+
+    @JvmField
+    val ADVANCED_MAGNET: DeferredItem<Item> = register("advanced_ragi_magnet", ::HTExpMagnetItem)
+
+    @JvmField
+    val DYNAMIC_LANTERN: DeferredItem<Item> = register("ragi_lantern", ::HTDynamicLanternItem)
+
+    @JvmField
+    val LOOT_TICKET: DeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
+
+    // Azure
+    @JvmField
+    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
+        REGISTER.register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", ::HTAzureSteelTemplateItem)
+
+    @JvmField
+    val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
+
+    // Crimson
+    @JvmField
+    val BLAST_CHARGE: DeferredItem<Item> = register("blast_charge", ::HTBlastChargeItem)
+
+    // Warped
+    @JvmField
+    val TELEPORT_KEY: DeferredItem<Item> = register("teleport_key", ::HTTeleportKeyItem)
+
+    // Eldritch
+    @JvmField
+    val ELDRITCH_EGG: DeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
+
+    @JvmField
+    val UNIVERSAL_BUNDLE: DeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem, Item.Properties().stacksTo(1))
+
+    @JvmField
+    val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
+
+    // Deep
+    @JvmField
+    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
+        REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
+
+    // Other
+
     @JvmField
     val POTION_BUNDLE: DeferredItem<Item> = register("potion_bundle", ::HTPotionBundleItem, Item.Properties().stacksTo(1))
 
@@ -236,41 +285,6 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
-    val RAGI_MAGNET: DeferredItem<Item> = register("ragi_magnet", ::HTSimpleMagnetItem)
-
-    @JvmField
-    val RAGI_LANTERN: DeferredItem<Item> = register("ragi_lantern", ::HTDynamicLanternItem)
-
-    @JvmField
-    val ADVANCED_RAGI_MAGNET: DeferredItem<Item> = register("advanced_ragi_magnet", ::HTExpMagnetItem)
-
-    @JvmField
-    val BLAST_CHARGE: DeferredItem<Item> = register("blast_charge", ::HTBlastChargeItem)
-
-    @JvmField
-    val ELDRITCH_EGG: DeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
-
-    @JvmField
-    val UNIVERSAL_BUNDLE: DeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem, Item.Properties().stacksTo(1))
-
-    @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
-        REGISTER.register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", ::HTAzureSteelTemplateItem)
-
-    @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
-        REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val TELEPORT_KEY: DeferredItem<Item> = register("teleport_key", ::HTTeleportKeyItem)
-
-    @JvmField
-    val ETERNAL_COMPONENT: DeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
-
-    @JvmField
     val MEDIUM_DRUM_UPGRADE: DeferredItem<Item> = register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
 
     @JvmField
@@ -278,9 +292,6 @@ object RagiumItems {
 
     @JvmField
     val HUGE_DRUM_UPGRADE: DeferredItem<Item> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
-
-    @JvmField
-    val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
 
     @JvmField
     val TOOLS: HTTable<HTToolVariant, HTMaterialType, DeferredItem<*>> = buildTable {

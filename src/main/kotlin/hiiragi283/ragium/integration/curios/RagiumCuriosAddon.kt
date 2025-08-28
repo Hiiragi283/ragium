@@ -26,8 +26,8 @@ object RagiumCuriosAddon : RagiumAddon {
             )
         }
 
-        register(RagiumItems.ADVANCED_RAGI_MAGNET, ::HTTickingCurio)
-        register(RagiumItems.RAGI_LANTERN, ::HTTickingCurio)
-        register(RagiumItems.RAGI_MAGNET, ::HTTickingCurio)
+        register(RagiumItems.ADVANCED_MAGNET, ::HTTickingCurio)
+        register(RagiumItems.DYNAMIC_LANTERN, ::HTTickingCurio)
+        register(RagiumItems.MAGNET, ::HTTickingCurio)
     }
 }

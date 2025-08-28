@@ -27,12 +27,11 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler =
-        HTItemStackHandler
-            .Builder(2)
-            .addInput(0)
-            .addOutput(1)
-            .build(this)
+    override val inventory: HTItemHandler = HTItemStackHandler
+        .Builder(2)
+        .addInput(0)
+        .addOutput(1)
+        .build(this)
 
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SMELTER.openMenu(player, title, this, ::writeExtraContainerData)

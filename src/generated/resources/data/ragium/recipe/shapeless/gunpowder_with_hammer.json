@@ -15,10 +15,7 @@
       {
         "tag": "c:fuels/charcoal"
       }
-    ],
-    {
-      "tag": "ragium:tools/hammer"
-    }
+    ]
   ],
   "result": {
     "count": 3,
