@@ -1,5 +1,5 @@
 {
-  "type": "ragium:infusing",
+  "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 1000,
     "tag": "c:experience"
@@ -8,7 +8,7 @@
     "count": 1,
     "item": "minecraft:chiseled_quartz_block"
   },
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "minecraft:ghast_tear"
   }

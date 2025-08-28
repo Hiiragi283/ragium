@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -58,7 +58,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_soul")
 
         // Crude Oil + clay -> Polymer Resin
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.CLAY_BALL),
                 HTIngredientHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
@@ -73,7 +73,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             HTResultHelper.fluid(RagiumFluidContents.LPG, 375) to HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
         )
         // LPG + Coal -> 4x Polymer Resin
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
                 HTIngredientHelper.fluid(RagiumFluidContents.LPG, 125),
@@ -86,7 +86,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             HTResultHelper.fluid(RagiumFluidContents.DIESEL, 375) to null,
         )
         // Diesel + Crimson Crystal -> Bloo-Diesel
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .mixing(
                 HTIngredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
                 HTIngredientHelper.fluid(RagiumFluidContents.DIESEL, 1000),
@@ -97,7 +97,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun sap() {
         // Bio Fuel + Water -> polymer Resin
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(RagiumCommonTags.Items.FUELS_BIO_BLOCK),
                 HTIngredientHelper.water(250),

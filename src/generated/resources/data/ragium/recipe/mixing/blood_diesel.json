@@ -1,15 +1,15 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 1000,
     "tag": "c:fuel"
   },
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:blood_diesel"
+  },
   "item_ingredient": {
     "count": 1,
     "tag": "c:gems/crimson_crystal"
-  },
-  "result": {
-    "amount": 1000,
-    "id": "ragium:blood_diesel"
   }
 }

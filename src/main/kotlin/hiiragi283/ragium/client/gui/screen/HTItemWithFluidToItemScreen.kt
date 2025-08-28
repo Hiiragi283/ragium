@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
@@ -26,19 +25,6 @@ class HTItemWithFluidToItemScreen<BE : HTMachineBlockEntity>(
 ) : HTMachineScreen<BE>(texture, menu, inventory, title),
     HTFluidScreen {
     companion object {
-        @JvmStatic
-        fun infuser(
-            menu: HTBlockEntityContainerMenu<HTInfuserBlockEntity>,
-            inventory: Inventory,
-            title: Component,
-        ): HTItemWithFluidToItemScreen<HTInfuserBlockEntity> = HTItemWithFluidToItemScreen(
-            RagiumAPI.id("textures/gui/container/infuser.png"),
-            HTProgressWidget::infuse,
-            menu,
-            inventory,
-            title,
-        )
-
         @JvmStatic
         fun solidifier(
             menu: HTBlockEntityContainerMenu<HTSolidifierBlockEntity>,

@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -30,7 +30,7 @@ import net.neoforged.neoforge.common.crafting.CompoundIngredient
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Mushroom Stew
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .mixing(
                 HTIngredientHelper.item(Tags.Items.MUSHROOMS, 2),
                 HTIngredientHelper.milk(250),
@@ -45,7 +45,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Chocolate
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
                 HTIngredientHelper.milk(250),
@@ -66,7 +66,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         // Ice Cream
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.SNOWBALL),
                 HTIngredientHelper.milk(250),

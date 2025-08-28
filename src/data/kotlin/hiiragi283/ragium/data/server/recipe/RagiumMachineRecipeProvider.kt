@@ -145,9 +145,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
-        advMachine(HTMachineVariant.INFUSER, Ingredient.of(Items.HOPPER))
         advMachine(HTMachineVariant.MELTER, Ingredient.of(Items.BLAST_FURNACE))
-        advMachine(HTMachineVariant.MIXER, Ingredient.of(Items.CAULDRON))
         advMachine(HTMachineVariant.REFINERY, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
         advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
 

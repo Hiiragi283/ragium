@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.holdersNotEmpty
+import hiiragi283.ragium.api.recipe.base.HTFluidTransformingRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -31,12 +31,12 @@ object HTDynamicRecipes {
     fun fluidStream(): Stream<Fluid> = fluidHolderStream().map(Holder.Reference<Fluid>::value)
 
     @JvmStatic
-    fun bucketFilling(): Iterator<RecipeHolder<HTItemWithFluidToItemRecipe>> = fluidHolderStream()
+    fun bucketFilling(): Iterator<RecipeHolder<HTFluidTransformingRecipe>> = fluidHolderStream()
         .map { holder: Holder.Reference<Fluid> ->
             val fluid: Fluid = holder.value()
             val id: ResourceLocation = holder.key().location().withPrefix("/infusing/bucket/")
 
-            val recipe: HTItemWithFluidToItemRecipe = HTItemWithFluidToObjRecipeBuilder
+            val recipe: HTFluidTransformingRecipe = HTFluidTransformRecipeBuilder
                 .infusing(
                     HTIngredientHelper.item(Tags.Items.BUCKETS_EMPTY),
                     HTIngredientHelper.fluid(fluid, 1000),

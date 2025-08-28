@@ -38,16 +38,10 @@ object RagiumEmiCategories {
     val EXTRACTING = HTEmiRecipeCategory(RagiumConst.EXTRACTING, EmiStack.of(HTMachineVariant.EXTRACTOR))
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumConst.INFUSING, EmiStack.of(HTMachineVariant.INFUSER))
+    val FLUID_TRANSFORM = HTEmiRecipeCategory(RagiumConst.FLUID_TRANSFORM, EmiStack.of(HTMachineVariant.REFINERY))
 
     @JvmField
     val MELTING = HTEmiRecipeCategory(RagiumConst.MELTING, EmiStack.of(HTMachineVariant.MELTER))
-
-    @JvmField
-    val MIXING = HTEmiRecipeCategory(RagiumConst.MIXING, EmiStack.of(HTMachineVariant.MIXER))
-
-    @JvmField
-    val REFINING = HTEmiRecipeCategory(RagiumConst.REFINING, EmiStack.of(HTMachineVariant.REFINERY))
 
     @JvmField
     val SOLIDIFYING = HTEmiRecipeCategory(RagiumConst.SOLIDIFYING, EmiStack.of(HTMachineVariant.SOLIDIFIER))
@@ -60,10 +54,8 @@ object RagiumEmiCategories {
         CRUSHING,
         DISTILLATION,
         EXTRACTING,
-        INFUSING,
+        FLUID_TRANSFORM,
         MELTING,
-        MIXING,
-        REFINING,
         SOLIDIFYING,
     )
 

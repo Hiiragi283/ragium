@@ -5,9 +5,6 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTFluidWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToFluidRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToItemRecipe
-import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
@@ -33,16 +30,10 @@ object RagiumRecipeTypes {
     val EXTRACTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = create(RagiumConst.EXTRACTING)
 
     @JvmField
-    val INFUSING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToItemRecipe> = create(RagiumConst.INFUSING)
+    val FLUID_TRANSFORM: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTFluidTransformRecipe> = create(RagiumConst.FLUID_TRANSFORM)
 
     @JvmField
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToFluidRecipe> = create(RagiumConst.MELTING)
-
-    @JvmField
-    val MIXING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToFluidRecipe> = create(RagiumConst.MIXING)
-
-    @JvmField
-    val REFINING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTRefiningRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
     val SOLIDIFYING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTFluidWithCatalystToItemRecipe> = create(RagiumConst.SOLIDIFYING)

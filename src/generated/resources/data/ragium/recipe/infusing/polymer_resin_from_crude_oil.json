@@ -1,5 +1,5 @@
 {
-  "type": "ragium:infusing",
+  "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 125,
     "tag": "c:crude_oil"
@@ -8,7 +8,7 @@
     "count": 1,
     "item": "minecraft:clay_ball"
   },
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "#ragium:polymer_resin"
   }

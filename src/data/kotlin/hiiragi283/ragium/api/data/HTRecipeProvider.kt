@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidWithCatalystToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
@@ -175,7 +175,7 @@ sealed class HTRecipeProvider {
                 HTResultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${filled.asItemHolder().idOrThrow.path}")
         // Infusing
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 empty,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -193,8 +193,8 @@ sealed class HTRecipeProvider {
         val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(content, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTFluidWithCatalystToObjRecipeBuilder
-                .refining(catalyst, ingredient, result)
+            HTFluidTransformRecipeBuilder
+                .refining(ingredient, result, catalyst, null)
                 .saveSuffixed(output, suffix)
         }
         // Solidifying

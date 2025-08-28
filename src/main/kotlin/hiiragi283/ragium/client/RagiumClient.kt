@@ -15,7 +15,6 @@ import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTItemWithFluidToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
-import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTPotionBundleScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
@@ -231,10 +230,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen.Companion::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
-        event.register(RagiumMenuTypes.INFUSER.get(), HTItemWithFluidToItemScreen.Companion::infuser)
         event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
-        event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerScreen)
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleScreen)
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)

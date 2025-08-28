@@ -1,10 +1,10 @@
 {
-  "type": "ragium:refining",
-  "ingredient": {
+  "type": "ragium:fluid_transform",
+  "fluid_ingredient": {
     "amount": 1000,
     "tag": "c:crimson_sap"
   },
-  "result": {
+  "fluid_result": {
     "amount": 250,
     "id": "ragium:crimson_blood"
   }

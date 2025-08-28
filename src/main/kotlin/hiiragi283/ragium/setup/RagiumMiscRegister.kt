@@ -9,9 +9,7 @@ import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSolidifyingRecipe
@@ -72,24 +70,16 @@ object RagiumMiscRegister {
             RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTExtractingRecipe),
         )
         register(
-            RagiumRecipeSerializers.INFUSING,
-            RagiumRecipeBiCodecs.itemWithFluidToObj(HTItemResultImpl.CODEC, ::HTInfusingRecipe),
+            RagiumRecipeSerializers.FLUID_TRANSFORM,
+            RagiumRecipeBiCodecs.fluidTransform(::HTRefiningRecipe),
         )
         register(
             RagiumRecipeSerializers.MELTING,
             RagiumRecipeBiCodecs.itemToObj(HTFluidResultImpl.CODEC, ::HTMeltingRecipe),
         )
         register(
-            RagiumRecipeSerializers.MIXING,
-            RagiumRecipeBiCodecs.itemWithFluidToObj(HTFluidResultImpl.CODEC, ::HTMixingRecipe),
-        )
-        register(
             RagiumRecipeSerializers.PULVERIZING,
             RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTPulverizingRecipe),
-        )
-        register(
-            RagiumRecipeSerializers.REFINING,
-            RagiumRecipeBiCodecs.fluidWithCatalystToObj(HTFluidResultImpl.CODEC, ::HTRefiningRecipe),
         )
         register(
             RagiumRecipeSerializers.SOLIDIFYING,
@@ -104,14 +94,12 @@ object RagiumMiscRegister {
         }
 
         register(RagiumRecipeTypes.ALLOYING)
-        register(RagiumRecipeTypes.CRUSHING)
         register(RagiumRecipeTypes.COMPRESSING)
+        register(RagiumRecipeTypes.CRUSHING)
         register(RagiumRecipeTypes.ENCHANTING)
         register(RagiumRecipeTypes.EXTRACTING)
-        register(RagiumRecipeTypes.INFUSING)
+        register(RagiumRecipeTypes.FLUID_TRANSFORM)
         register(RagiumRecipeTypes.MELTING)
-        register(RagiumRecipeTypes.MIXING)
-        register(RagiumRecipeTypes.REFINING)
         register(RagiumRecipeTypes.SOLIDIFYING)
     }
 }

@@ -8,27 +8,29 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
-class HTRefiningEmiRecipe(
+class HTFluidTransformingEmiRecipe(
     id: ResourceLocation,
     val fluidIngredient: EmiIngredient,
     val itemIngredient: EmiIngredient,
-    val result: EmiStack,
+    val itemResult: EmiStack,
+    val fluidResult: EmiStack,
 ) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.REFINING
+    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.FLUID_TRANSFORM
 
     override fun getInputs(): List<EmiIngredient> = listOf(fluidIngredient)
 
     override fun getCatalysts(): List<EmiIngredient> = listOf(itemIngredient)
 
-    override fun getOutputs(): List<EmiStack> = listOf(result)
+    override fun getOutputs(): List<EmiStack> = listOf(itemResult, fluidResult)
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
         widgets.addTank(fluidIngredient, getPosition(1), getPosition(0)).drawBack(false)
-        widgets.addSlot(itemIngredient, getPosition(3), getPosition(2)).drawBack(false).catalyst(true)
+        widgets.addSlot(itemIngredient, getPosition(2.5), getPosition(0)).drawBack(false)
         // Output
-        widgets.addTank(result, getPosition(5), getPosition(0)).drawBack(false).recipeContext(this)
+        widgets.addSlot(itemResult, getPosition(3.5), getPosition(2)).drawBack(false)
+        widgets.addTank(fluidResult, getPosition(5), getPosition(0)).drawBack(false).recipeContext(this)
     }
 
     override val arrowPosX: Int = getPosition(3)

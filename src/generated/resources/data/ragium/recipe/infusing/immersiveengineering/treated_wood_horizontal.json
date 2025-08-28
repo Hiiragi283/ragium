@@ -5,7 +5,7 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "ragium:infusing",
+  "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 125,
     "tag": "c:creosote"
@@ -14,7 +14,7 @@
     "count": 1,
     "tag": "minecraft:planks"
   },
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "immersiveengineering:treated_wood_horizontal"
   }

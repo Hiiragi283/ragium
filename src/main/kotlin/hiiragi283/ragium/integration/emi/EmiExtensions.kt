@@ -40,6 +40,10 @@ fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStac
 
 fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 
+fun Optional<HTItemResult>.toItemEmi(): EmiStack = map(HTItemResult::toEmi).orElse(EmiStack.EMPTY)
+
+fun Optional<HTFluidResult>.toFluidEmi(): EmiStack = map(HTFluidResult::toEmi).orElse(EmiStack.EMPTY)
+
 fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(get())
 
 fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get(), amount)

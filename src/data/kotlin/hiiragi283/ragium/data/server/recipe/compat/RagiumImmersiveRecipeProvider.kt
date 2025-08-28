@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConst
@@ -31,14 +31,14 @@ import net.minecraft.world.item.Item
 object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.IMMERSIVE) {
     override fun buildRecipeInternal() {
         // Treated Planks
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(ItemTags.PLANKS),
                 HTIngredientHelper.fluid(IETags.fluidCreosote, 125),
                 HTResultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!),
             ).save(output)
         // Redstone Acid
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .mixing(
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.water(1000),

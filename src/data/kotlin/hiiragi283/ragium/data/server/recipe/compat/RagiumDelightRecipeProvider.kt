@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTItemWithFluidToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -34,7 +34,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             250,
         )
         // Rich soil
-        HTItemWithFluidToObjRecipeBuilder
+        HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
                 HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 250),

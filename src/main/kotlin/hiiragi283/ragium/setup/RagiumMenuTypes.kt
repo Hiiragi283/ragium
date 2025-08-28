@@ -17,9 +17,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
@@ -112,16 +110,10 @@ object RagiumMenuTypes {
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = register("fluid_collector")
 
     @JvmField
-    val INFUSER: DeferredBEMenu<HTInfuserBlockEntity> = register("infuser")
-
-    @JvmField
     val ITEM_BUFFER: DeferredBEMenu<HTItemBufferBlockEntity> = register("item_buffer")
 
     @JvmField
     val MELTER: DeferredBEMenu<HTMelterBlockEntity> = register("melter")
-
-    @JvmField
-    val MIXER: DeferredBEMenu<HTMixerBlockEntity> = register("mixer")
 
     @JvmField
     val PULVERIZER: DeferredBEMenu<HTPulverizerBlockEntity> = register("pulverizer")

@@ -72,6 +72,40 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
         )
 
         @JvmStatic
+        fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any, T4 : Any> composite(
+            codec1: MapBiCodec<in B, T1>,
+            getter1: (C) -> T1,
+            codec2: MapBiCodec<in B, T2>,
+            getter2: (C) -> T2,
+            codec3: MapBiCodec<in B, T3>,
+            getter3: (C) -> T3,
+            codec4: MapBiCodec<in B, T4>,
+            getter4: (C) -> T4,
+            factory: (T1, T2, T3, T4) -> C,
+        ): MapBiCodec<B, C> = of(
+            RecordCodecBuilder.mapCodec { instance ->
+                instance
+                    .group(
+                        codec1.codec.forGetter(getter1),
+                        codec2.codec.forGetter(getter2),
+                        codec3.codec.forGetter(getter3),
+                        codec4.codec.forGetter(getter4),
+                    ).apply(instance, factory)
+            },
+            StreamCodec.composite(
+                codec1.streamCodec,
+                getter1,
+                codec2.streamCodec,
+                getter2,
+                codec3.streamCodec,
+                getter3,
+                codec4.streamCodec,
+                getter4,
+                factory,
+            ),
+        )
+
+        @JvmStatic
         fun <B : ByteBuf, V : Any> unit(instance: V): MapBiCodec<B, V> = of(MapCodec.unit(instance), StreamCodec.unit(instance))
     }
 

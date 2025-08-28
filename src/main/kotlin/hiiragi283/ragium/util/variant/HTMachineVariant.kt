@@ -14,9 +14,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
@@ -43,9 +41,7 @@ enum class HTMachineVariant(
     // Advanced
     ALLOY_SMELTER(::HTAlloySmelterBlockEntity, HTTierType.ADVANCED, "Alloy Smelter", "合金炉"),
     CRUSHER(::HTCrusherBlockEntity, HTTierType.ADVANCED, "Crusher", "破砕機"),
-    INFUSER(::HTInfuserBlockEntity, HTTierType.ADVANCED, "Infuser", "注入機"),
     MELTER(::HTMelterBlockEntity, HTTierType.ADVANCED, "Melter", "溶融炉"),
-    MIXER(::HTMixerBlockEntity, HTTierType.ADVANCED, "Mixer", "混合機"),
     REFINERY(::HTRefineryBlockEntity, HTTierType.ADVANCED, "Refinery", "精製機"),
     SOLIDIFIER(::HTSolidifierBlockEntity, HTTierType.ADVANCED, "Solidifier", "成型機"),
     ;
