@@ -23,16 +23,20 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
+import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -70,8 +74,13 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Server    //
 
+    override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
+
+    override fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
+        CommonHooks.resolveLookup(registryKey)
+
     override fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage? =
-        ServerLifecycleHooks.getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+        getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Platform    //
 

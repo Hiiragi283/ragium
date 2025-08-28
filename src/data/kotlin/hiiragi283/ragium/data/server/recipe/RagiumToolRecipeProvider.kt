@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
@@ -20,7 +21,6 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTColorVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
@@ -43,7 +43,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .define('C', HTItemMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE)
@@ -67,7 +67,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
             .define('B', Items.CLOCK)
-            .define('C', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, RagiumTierType.ULTIMATE))
+            .define('C', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ULTIMATE))
             .save(output)
         save(
             RagiumAPI.id("shapeless/eternal_ticket"),
@@ -98,7 +98,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         // Advanced
         createComponentUpgrade(
-            RagiumTierType.ADVANCED,
+            HTTierType.ADVANCED,
             RagiumItems.ADVANCED_RAGI_MAGNET,
             RagiumItems.RAGI_MAGNET,
         ).save(output)
@@ -228,7 +228,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
         createComponentUpgrade(
-            RagiumTierType.ELITE,
+            HTTierType.ELITE,
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
             hammer(RagiumMaterialType.RAGI_ALLOY),
         ).save(output)

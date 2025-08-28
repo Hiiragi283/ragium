@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
+import hiiragi283.ragium.client.network.HTTelepadUpdatePacket
 import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.setup.RagiumArmorMaterials
@@ -110,6 +111,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             // Server -> Client
             registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
             // Client -> Server
+            registerC2S(HTTelepadUpdatePacket.TYPE, HTTelepadUpdatePacket.STREAM_CODEC)
             registerC2S(HTTransferIOUpdatePayload.TYPE, HTTransferIOUpdatePayload.STREAM_CODEC)
         }
 

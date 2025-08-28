@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -108,7 +108,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "DDD",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Items.FLINT)
-            .define('C', HTItemMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .define('D', Items.BRICKS)
             .save(output)
 
@@ -141,7 +141,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "DDD",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .define('B', Tags.Items.GEMS_DIAMOND)
-            .define('C', HTItemMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
@@ -152,18 +152,18 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         advMachine(HTMachineVariant.SOLIDIFIER, Ingredient.of(Items.IRON_BARS))
 
         createComponentUpgrade(
-            RagiumTierType.ADVANCED,
+            HTTierType.ADVANCED,
             HTMachineVariant.ALLOY_SMELTER,
             HTMachineVariant.SMELTER,
         ).save(output)
         createComponentUpgrade(
-            RagiumTierType.ADVANCED,
+            HTTierType.ADVANCED,
             HTMachineVariant.CRUSHER,
             HTMachineVariant.PULVERIZER,
         ).save(output)
 
         createComponentUpgrade(
-            RagiumTierType.ADVANCED,
+            HTTierType.ADVANCED,
             HTMachineVariant.MELTER,
             HTMachineVariant.EXTRACTOR,
         ).save(output)
@@ -174,7 +174,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.CIRCUIT, RagiumTierType.BASIC)
+            .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .define('C', side)
             .define('D', RagiumBlocks.STONE_CASING)
             .save(output)
@@ -185,7 +185,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(variant)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.CIRCUIT, RagiumTierType.ADVANCED)
+            .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
             .define('C', side)
             .define('D', RagiumBlocks.REINFORCED_STONE_CASING)
             .save(output)
@@ -196,27 +196,33 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun devices() {
         // Basic
-        basicDevice(HTDeviceVariant.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
-        basicDevice(HTDeviceVariant.MILK_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_MILK))
-        basicDevice(HTDeviceVariant.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
-        // Advanced
-        advancedDevice(HTDeviceVariant.ENI, HTItemMaterialVariant.GEM.toIngredient(HTVanillaMaterialType.DIAMOND))
-        advancedDevice(HTDeviceVariant.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
-        advancedDevice(HTDeviceVariant.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advancedDevice(HTDeviceVariant.DIM_ANCHOR, HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.WARPED_CRYSTAL))
-    }
-
-    @JvmStatic
-    private fun basicDevice(device: ItemLike, input: Ingredient) {
-        createComponentUpgrade(RagiumTierType.BASIC, device, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(input)
+        createComponentUpgrade(HTTierType.BASIC, HTDeviceVariant.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.CHESTS)
             .save(output)
-    }
+        createComponentUpgrade(HTTierType.BASIC, HTDeviceVariant.MILK_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_MILK)
+            .save(output)
+        createComponentUpgrade(HTTierType.BASIC, HTDeviceVariant.WATER_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_WATER)
+            .save(output)
 
-    @JvmStatic
-    private fun advancedDevice(device: ItemLike, input: Ingredient) {
-        createComponentUpgrade(RagiumTierType.ADVANCED, device, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(input)
+        // Advanced
+        createComponentUpgrade(HTTierType.ADVANCED, HTDeviceVariant.ENI, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND)
+            .save(output)
+        createComponentUpgrade(HTTierType.ADVANCED, HTDeviceVariant.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Items.HOPPER)
+            .save(output)
+        createComponentUpgrade(HTTierType.ADVANCED, HTDeviceVariant.LAVA_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_LAVA)
+            .save(output)
+        // Elite
+        createComponentUpgrade(HTTierType.ELITE, HTDeviceVariant.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .save(output)
+
+        createComponentUpgrade(HTTierType.ELITE, HTDeviceVariant.TELEPAD, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
     }
 

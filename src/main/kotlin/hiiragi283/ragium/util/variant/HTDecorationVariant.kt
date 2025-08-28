@@ -2,7 +2,7 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.world.level.block.SlabBlock
@@ -21,7 +21,7 @@ enum class HTDecorationVariant(private val enUsPattern: String, private val jaJp
     SPONGE_CAKE("Sponge Cake %s", "スポンジケーキの%s"),
     ;
 
-    val base: HTSimpleDeferredBlockHolder get() = when (this) {
+    val base: HTDeferredBlockHolder<*, *> get() = when (this) {
         RAGI_BRICK -> RagiumBlocks.RAGI_BRICKS
         AZURE_TILE -> RagiumBlocks.AZURE_TILES
         ELDRITCH_STONE -> RagiumBlocks.ELDRITCH_STONE

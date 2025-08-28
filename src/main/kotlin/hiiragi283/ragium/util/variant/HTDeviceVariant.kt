@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
@@ -13,33 +14,36 @@ import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTDeviceVariant(
     factory: (BlockPos, BlockState) -> HTDeviceBlockEntity,
-    val tier: RagiumTierType,
+    val tier: HTTierType,
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
 ) : HTVariantKey.WithBE<HTDeviceBlockEntity> {
     // Basic
-    ITEM_BUFFER(::HTItemBufferBlockEntity, RagiumTierType.BASIC, "Item Buffer", "アイテムバッファ"),
-    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, RagiumTierType.BASIC, "Milk Collector", "搾乳機"),
-    WATER_COLLECTOR(::HTWaterCollectorBlockEntity, RagiumTierType.BASIC, "Water Collector", "水収集機"),
+    ITEM_BUFFER(::HTItemBufferBlockEntity, HTTierType.BASIC, "Item Buffer", "アイテムバッファ"),
+    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, HTTierType.BASIC, "Milk Collector", "搾乳機"),
+    WATER_COLLECTOR(::HTWaterCollectorBlockEntity, HTTierType.BASIC, "Water Collector", "水収集機"),
 
     // Advanced
-    ENI(HTEnergyNetworkAccessBlockEntity::Simple, RagiumTierType.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
-    EXP_COLLECTOR(::HTExpCollectorBlockEntity, RagiumTierType.ADVANCED, "Exp Collector", "経験値収集機"),
-    LAVA_COLLECTOR(::HTLavaCollectorBlockEntity, RagiumTierType.ADVANCED, "Lava Collector", "溶岩収集機"),
-    DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, RagiumTierType.ADVANCED, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
+    ENI(HTEnergyNetworkAccessBlockEntity::Simple, HTTierType.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
+    EXP_COLLECTOR(::HTExpCollectorBlockEntity, HTTierType.ADVANCED, "Exp Collector", "経験値収集機"),
+    LAVA_COLLECTOR(::HTLavaCollectorBlockEntity, HTTierType.ADVANCED, "Lava Collector", "溶岩収集機"),
+
+    // Elite
+    DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, HTTierType.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
+    TELEPAD(::HTTelepadBlockentity, HTTierType.ELITE, "Telepad", "テレパッド"),
 
     // Creative
-    CEU(HTEnergyNetworkAccessBlockEntity::Creative, RagiumTierType.ULTIMATE, "C.E.U", "C.E.U", "creative_energy_unit"),
+    CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTTierType.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!

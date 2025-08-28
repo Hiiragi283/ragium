@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
@@ -16,7 +17,6 @@ import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.UUIDUtil
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
@@ -30,6 +30,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.UUID
@@ -48,18 +49,18 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected abstract val inventory: HTItemHandler
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.writeNullable(UUIDUtil.CODEC, RagiumConst.OWNER, ownerId)
+        writer.writeNullable(BiCodecs.UUID, RagiumConst.OWNER, ownerId)
         writer.write(RagiumConst.INVENTORY, inventory)
         writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(UUIDUtil.CODEC, RagiumConst.OWNER).ifSuccess { ownerId = it }
+        reader.read(BiCodecs.UUID, RagiumConst.OWNER).ifSuccess { ownerId = it }
         reader.read(RagiumConst.INVENTORY, inventory)
         reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
-    override fun onRightClickedWithWrench(
+    override fun onRightClickedWithItem(
         stack: ItemStack,
         state: BlockState,
         level: Level,
@@ -68,10 +69,11 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
-        if (isRemote) {
+        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
             RagiumMenuTypes.SLOT_CONFIG.openMenu(player, name, this, ::writeExtraContainerData)
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        return super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
     }
 
     override fun onRightClicked(

@@ -21,8 +21,13 @@ data class HTTeleportPos(val globalPos: GlobalPos) {
     }
     constructor(dimension: ResourceKey<Level>, pos: BlockPos) : this(GlobalPos(dimension, pos))
 
+    constructor(dimension: ResourceKey<Level>, x: Int, y: Int, z: Int) : this(dimension, BlockPos(x, y, z))
+
     val dimension: ResourceKey<Level> = globalPos.dimension
     val pos: BlockPos = globalPos.pos
+    val x: Int = pos.x
+    val y: Int = pos.y
+    val z: Int = pos.z
 
     fun getDescription(): MutableComponent = bracketText(joinedText(levelText(dimension), blockPosText(pos)))
 }

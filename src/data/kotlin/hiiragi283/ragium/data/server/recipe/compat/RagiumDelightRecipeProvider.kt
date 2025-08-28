@@ -11,12 +11,12 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.material.RagiumTierType
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
@@ -62,7 +62,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         createComponentUpgrade(
-            RagiumTierType.ELITE,
+            HTTierType.ELITE,
             RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
             RagiumDelightAddon.RAGI_ALLOY_KNIFE,
         ).save(output)

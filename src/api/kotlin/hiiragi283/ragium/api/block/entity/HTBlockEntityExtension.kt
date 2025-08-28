@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.common.Tags
 
 interface HTBlockEntityExtension : HTContentListener {
     val isRemote: Boolean
@@ -27,9 +26,7 @@ interface HTBlockEntityExtension : HTContentListener {
      */
     fun getLevel(): Level?
 
-    fun getLevelOrThrow(): Level = checkNotNull(getLevel()) { "Level is not initialized!" }
-
-    fun getDimension(): ResourceKey<Level> = getLevelOrThrow().dimension()
+    fun getDimension(): ResourceKey<Level> = checkNotNull(getLevel()) { "Level is not initialized!" }.dimension()
 
     /**
      * @see [mekanism.common.tile.interfaces.ITileWrapper.getBlockPos]
@@ -64,27 +61,11 @@ interface HTBlockEntityExtension : HTContentListener {
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-    ): ItemInteractionResult = when {
-        // レンチでクリックすると搬入出を設定
-        stack.`is`(Tags.Items.TOOLS_WRENCH) -> {
-            onRightClickedWithWrench(stack, state, level, pos, player, hand, hitResult)
-        }
+    ): ItemInteractionResult = when (this) {
         // 液体コンテナで触ると搬出入を行う
-        else -> when (this) {
-            is HTFluidInteractable -> interactWith(level, player, hand)
-            else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-        }
+        is HTFluidInteractable -> interactWith(level, player, hand)
+        else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
     }
-
-    fun onRightClickedWithWrench(
-        stack: ItemStack,
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
-    ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
     /**
      * ブロックが右クリックされたときに呼ばれます。

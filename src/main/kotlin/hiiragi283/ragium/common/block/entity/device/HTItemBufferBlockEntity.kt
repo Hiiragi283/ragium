@@ -44,15 +44,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        if (isRemote) {
-            RagiumMenuTypes.ITEM_BUFFER.openMenu(
-                player,
-                state.block.name,
-                this,
-                ::writeExtraContainerData,
-            )
-        }
-
+        if (isRemote) RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
         return InteractionResult.sidedSuccess(isRemote)
     }
 

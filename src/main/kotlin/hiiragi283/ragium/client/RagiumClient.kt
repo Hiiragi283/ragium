@@ -19,6 +19,7 @@ import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTPotionBundleScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.gui.screen.HTUniversalBundleScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -239,6 +240,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
         event.register(RagiumMenuTypes.SOLIDIFIER.get(), HTItemWithFluidToItemScreen.Companion::solidifier)
+        event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
 
         LOGGER.info("Registered Screens!")
     }

@@ -2,7 +2,7 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.util.material.RagiumTierType
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
@@ -122,10 +122,10 @@ object RagiumConfig : RagiumAPI.Config {
                     .definePositiveInt("tankCapacity", 8000)
                 // Energy Rate
                 val defaultValue: Int = when (variant.tier) {
-                    RagiumTierType.BASIC -> 32
-                    RagiumTierType.ADVANCED -> 128
-                    RagiumTierType.ELITE -> 512
-                    RagiumTierType.ULTIMATE -> 2048
+                    HTTierType.BASIC -> 32
+                    HTTierType.ADVANCED -> 128
+                    HTTierType.ELITE -> 512
+                    else -> 2048
                 }
                 val value: ModConfigSpec.IntValue = builder.definePositiveInt("energyRate", defaultValue)
                 builder.pop()
@@ -144,10 +144,10 @@ object RagiumConfig : RagiumAPI.Config {
                     .definePositiveInt("tankCapacity", 8000)
                 // Energy Usage
                 val defaultValue: Int = when (variant.tier) {
-                    RagiumTierType.BASIC -> 16
-                    RagiumTierType.ADVANCED -> 64
-                    RagiumTierType.ELITE -> 256
-                    RagiumTierType.ULTIMATE -> 1024
+                    HTTierType.BASIC -> 16
+                    HTTierType.ADVANCED -> 64
+                    HTTierType.ELITE -> 256
+                    else -> 1024
                 }
                 val value: ModConfigSpec.IntValue = builder.definePositiveInt("energyUsage", defaultValue)
                 builder.pop()

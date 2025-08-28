@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.core.Holder
@@ -13,7 +14,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
-import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import kotlin.math.roundToInt
@@ -43,7 +43,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
         @JvmStatic
         fun getFluidUsage(stack: ItemStack, fluid: FluidStack): Int {
             val enchGetter: HolderGetter<Enchantment> =
-                CommonHooks.resolveLookup(Registries.ENCHANTMENT) ?: return fluid.amount
+                RagiumAPI.getInstance().resolveLookup(Registries.ENCHANTMENT) ?: return fluid.amount
             enchGetter
                 .get(Enchantments.UNBREAKING)
                 .ifPresent { holder: Holder.Reference<Enchantment> ->

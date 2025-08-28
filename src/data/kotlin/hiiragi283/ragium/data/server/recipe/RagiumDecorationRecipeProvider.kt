@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
@@ -141,7 +140,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun registerBuildings(variant: HTDecorationVariant) {
-        val base: HTSimpleDeferredBlockHolder = variant.base
+        val base: HTDeferredBlockHolder<*, *> = variant.base
         val slab: HTDeferredBlockHolder<SlabBlock, *> = variant.slab
         val stairs: HTDeferredBlockHolder<StairBlock, *> = variant.stairs
         val wall: HTDeferredBlockHolder<WallBlock, *> = variant.wall

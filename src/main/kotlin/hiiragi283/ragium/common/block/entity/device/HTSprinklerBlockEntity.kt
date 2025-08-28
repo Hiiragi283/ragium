@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTSlotProvider
@@ -14,17 +15,14 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state),
     HTSlotProvider.Empty {
-    private val tank: HTFluidStackTank =
-        object : HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this) {
-            override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
-        }
+    private val tank: HTFluidStackTank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
+        .setValidator(HTFluidContent.WATER)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)

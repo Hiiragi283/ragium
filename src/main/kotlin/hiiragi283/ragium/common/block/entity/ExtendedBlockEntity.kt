@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.item.HTSlotProvider
@@ -15,12 +16,10 @@ import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.network.Connection
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.Nameable
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
@@ -29,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.network.PacketDistributor
 import org.slf4j.Logger
-import java.util.*
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -85,16 +83,12 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
                     .ifError { error: DataResult.Error<Tag> -> LOGGER.error(error.message()) }
             }
 
-            override fun <T : Any> writeNullable(codec: Codec<T>, key: String, value: T?) {
-                write(ExtraCodecs.optionalEmptyMap(codec), key, Optional.ofNullable(value))
-            }
-
             override fun write(key: String, serializable: INBTSerializable<CompoundTag>) {
                 tag.put(key, serializable.serializeNBT(registries))
             }
         }
         // Custom Name
-        writer.writeNullable(ComponentSerialization.CODEC, "custom_name", customName)
+        writer.writeNullable(BiCodecs.TEXT, "custom_name", customName)
         // Custom
         writeNbt(writer)
     }
@@ -110,7 +104,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
             }
         }
         // Custom Name
-        reader.read(ComponentSerialization.CODEC, "custom_name").ifSuccess { customName = it }
+        reader.read(BiCodecs.TEXT, "custom_name").ifSuccess { customName = it }
         // Custom
         readNbt(reader)
     }

@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.api.util.tool.HTArmorVariant
 import hiiragi283.ragium.api.util.tool.HTToolVariant
@@ -35,7 +36,6 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.material.RagiumTierType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
@@ -149,9 +149,10 @@ object RagiumItems {
         put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
 
         // Circuits, Components
-        for (tier: RagiumTierType in RagiumTierType.entries) {
-            put(HTItemMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit"))
-            put(RagiumMaterialVariants.COMPONENT, tier, register("${tier.serializedName}_component"))
+        for (tier: HTTierType in HTTierType.COMMON) {
+            val properties: Item.Properties = Item.Properties().rarity(tier.rarity)
+            put(HTItemMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit", properties))
+            put(RagiumMaterialVariants.COMPONENT, tier, register("${tier.serializedName}_component", properties))
         }
 
         // Coils

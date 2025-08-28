@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
@@ -136,4 +137,7 @@ object RagiumMenuTypes {
 
     @JvmField
     val SOLIDIFIER: DeferredBEMenu<HTSolidifierBlockEntity> = register("solidifier")
+
+    @JvmField
+    val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = register("telepad")
 }

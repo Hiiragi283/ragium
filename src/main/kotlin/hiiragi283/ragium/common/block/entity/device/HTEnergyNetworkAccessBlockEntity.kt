@@ -62,7 +62,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult = RagiumMenuTypes.ENERGY_NETWORK_ACCESS.openMenu(player, state.block.name, this, ::writeExtraContainerData)
+    ): InteractionResult = RagiumMenuTypes.ENERGY_NETWORK_ACCESS.openMenu(player, name, this, ::writeExtraContainerData)
 
     /*override fun onRightClickedWithItem(
         stack: ItemStack,

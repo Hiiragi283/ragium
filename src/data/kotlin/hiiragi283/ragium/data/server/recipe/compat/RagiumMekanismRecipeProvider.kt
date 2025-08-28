@@ -155,9 +155,9 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Crimson + Warped -> Eldritch
         ChemicalChemicalToChemicalRecipeBuilder
             .chemicalInfusing(
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_BLOOD, 1),
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_DEW_OF_THE_WARP, 1),
-                RagiumMekanismAddon.CHEMICAL_ELDRITCH_FLUX.asStack(1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.getChemical(HTMoltenCrystalData.CRIMSON), 1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.getChemical(HTMoltenCrystalData.WARPED), 1),
+                RagiumMekanismAddon.getChemical(HTMoltenCrystalData.ELDRITCH).asStack(1),
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {

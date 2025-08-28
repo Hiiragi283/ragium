@@ -44,10 +44,8 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         override val inputSlots: IntArray = intArrayOf(0)
         override val outputSlots: IntArray = intArrayOf()
     }
-    protected val tank: HTFluidStackTank =
-        object : HTFluidStackTank(variant.tankCapacity, this) {
-            override fun isFluidValid(stack: FluidStack): Boolean = getRequiredAmount(stack) > 0
-        }
+    protected val tank: HTFluidStackTank = HTFluidStackTank(variant.tankCapacity, this)
+        .setValidator { stack: FluidStack -> getRequiredAmount(stack) > 0 }
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.TANK, tank)

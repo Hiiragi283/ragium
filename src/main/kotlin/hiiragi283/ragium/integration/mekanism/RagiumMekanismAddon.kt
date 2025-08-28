@@ -41,20 +41,11 @@ object RagiumMekanismAddon : RagiumAddon {
     fun registerCrystal(data: HTMoltenCrystalData): DeferredChemical<Chemical> = CHEMICAL_REGISTER.register(data.molten.id.path, data.color)
 
     @JvmField
-    val CHEMICAL_CRIMSON_BLOOD: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.CRIMSON)
-
-    @JvmField
-    val CHEMICAL_DEW_OF_THE_WARP: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.WARPED)
-
-    @JvmField
-    val CHEMICAL_ELDRITCH_FLUX: DeferredChemical<Chemical> = registerCrystal(HTMoltenCrystalData.ELDRITCH)
+    val CHEMICAL_CRYSTALS: Map<HTMoltenCrystalData, DeferredChemical<Chemical>> =
+        HTMoltenCrystalData.entries.associateWith(::registerCrystal)
 
     @JvmStatic
-    fun getChemical(data: HTMoltenCrystalData): DeferredChemical<Chemical> = when (data) {
-        HTMoltenCrystalData.CRIMSON -> CHEMICAL_CRIMSON_BLOOD
-        HTMoltenCrystalData.WARPED -> CHEMICAL_DEW_OF_THE_WARP
-        HTMoltenCrystalData.ELDRITCH -> CHEMICAL_ELDRITCH_FLUX
-    }
+    fun getChemical(data: HTMoltenCrystalData): DeferredChemical<Chemical> = CHEMICAL_CRYSTALS[data]!!
 
     //    Item    //
 

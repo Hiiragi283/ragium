@@ -7,8 +7,11 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryCodecs
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
@@ -17,6 +20,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import java.util.UUID
 
 object BiCodecs {
     @JvmField
@@ -37,6 +41,13 @@ object BiCodecs {
     @JvmField
     val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
         BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
+
+    @JvmField
+    val TEXT: BiCodec<RegistryFriendlyByteBuf, Component> =
+        BiCodec.of(ComponentSerialization.CODEC, ComponentSerialization.STREAM_CODEC)
+
+    @JvmField
+    val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
 
     @JvmStatic
     fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: BiCodec<in B, K>, valueCodec: BiCodec<in B, V>): BiCodec<B, Map<K, V>> = BiCodec.of(

@@ -16,10 +16,13 @@ import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -74,6 +77,10 @@ interface RagiumAPI {
     fun createSoda(instances: List<MobEffectInstance>, count: Int = 1): ItemStack
 
     //    Server    //
+
+    fun getCurrentServer(): MinecraftServer?
+
+    fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>?
 
     /**
      * エネルギーネットワークのマネージャを返します。

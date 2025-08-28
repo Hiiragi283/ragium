@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
+import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
@@ -287,10 +288,14 @@ object RagiumBlocks {
         REGISTER.registerSimple("blue_nether_bricks", copyOf(Blocks.NETHER_BRICKS, MapColor.COLOR_BLUE))
 
     @JvmField
-    val SPONGE_CAKE: HTSimpleDeferredBlockHolder = REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL))
+    val SPONGE_CAKE: HTBasicDeferredBlockHolder<HTSpongeCakeBlock> = REGISTER.registerSimple(
+        "sponge_cake",
+        copyOf(Blocks.YELLOW_WOOL),
+        ::HTSpongeCakeBlock,
+    )
 
     @JvmField
-    val DECORATION_MAP: Map<HTDecorationVariant, HTSimpleDeferredBlockHolder> = mapOf(
+    val DECORATION_MAP: Map<HTDecorationVariant, HTDeferredBlockHolder<*, *>> = mapOf(
         HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
         HTDecorationVariant.AZURE_TILE to AZURE_TILES,
         HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
@@ -304,7 +309,7 @@ object RagiumBlocks {
 
     @JvmField
     val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<SlabBlock>> =
-        DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
+        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_slab",
                 { SlabBlock(copyOf(variant.base.get())) },
@@ -313,16 +318,17 @@ object RagiumBlocks {
 
     @JvmField
     val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<StairBlock>> =
-        DECORATION_MAP.mapValues { (variant: HTDecorationVariant, base: HTSimpleDeferredBlockHolder) ->
+        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
+            val base: HTDeferredBlockHolder<*, *> = variant.base
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
-                { StairBlock(base.get().defaultBlockState(), copyOf(variant.base.get())) },
+                { StairBlock(base.get().defaultBlockState(), copyOf(base.get())) },
             )
         }
 
     @JvmField
     val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<WallBlock>> =
-        DECORATION_MAP.mapValues { (variant: HTDecorationVariant, _) ->
+        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_wall",
                 { WallBlock(copyOf(variant.base.get()).forceSolidOn()) },
