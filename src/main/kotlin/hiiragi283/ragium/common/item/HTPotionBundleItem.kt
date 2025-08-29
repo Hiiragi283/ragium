@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
@@ -45,9 +44,7 @@ class HTPotionBundleItem(properties: Properties) : Item(properties) {
             stack.getCapability(Capabilities.ItemHandler.ITEM) ?: return InteractionResultHolder.fail(stack)
         // 　シフト中はGUIを開く
         if (player.isShiftKeyDown) {
-            RagiumMenuTypes.POTION_BUNDLE.openMenu(player, stack.hoverName, handler) { buf: RegistryFriendlyByteBuf ->
-                ItemStack.STREAM_CODEC.encode(buf, stack)
-            }
+            RagiumMenuTypes.GENERIC_9x1.openMenu(player, stack.hoverName, handler) {}
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
         } else {
             return ItemUtils.startUsingInstantly(level, player, usedHand)

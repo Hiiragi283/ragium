@@ -17,25 +17,13 @@ import kotlin.math.min
 abstract class HTItemStackHandler : HTItemHandler {
     companion object {
         @JvmField
-        val EMPTY: HTItemStackHandler = object : HTItemStackHandler(0) {
-            override fun onContentsChanged() {}
+        val EMPTY: HTItemStackHandler = Builder(0).build()
 
-            override val inputSlots: IntArray = intArrayOf()
-            override val outputSlots: IntArray = intArrayOf()
-        }
-
-        @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemStackHandler> = BiCodecs
+        @JvmStatic
+        fun codec(factory: (List<ItemStack>) -> HTItemStackHandler): BiCodec<RegistryFriendlyByteBuf, HTItemStackHandler> = BiCodecs
             .itemStack(true)
             .listOf()
-            .xmap({ stacks: List<ItemStack> ->
-                Simple(
-                    stacks.toMutableList(),
-                    intArrayOf(),
-                    intArrayOf(),
-                    HTContentListener.NONE,
-                )
-            }, HTItemStackHandler::stacks)
+            .xmap(factory, HTItemStackHandler::stacks)
     }
 
     protected var stacks: MutableList<ItemStack>
@@ -193,36 +181,22 @@ abstract class HTItemStackHandler : HTItemHandler {
             outputSlots.addAll(slots)
         }
 
-        fun build(callback: HTContentListener): HTItemStackHandler =
+        fun build(): HTItemStackHandler = build(null)
+
+        fun build(callback: HTContentListener?): HTItemStackHandler =
             Simple(size, inputSlots.toIntArray(), outputSlots.toIntArray(), callback)
     }
 
     //    Simple    //
 
-    private class Simple : HTItemStackHandler {
-        constructor(size: Int, inputSlots: IntArray, outputSlots: IntArray, callback: HTContentListener) : super(size) {
-            this.inputSlots = inputSlots
-            this.outputSlots = outputSlots
-            this.callback = callback
-        }
-
-        constructor(
-            stacks: MutableList<ItemStack>,
-            inputSlots: IntArray,
-            outputSlots: IntArray,
-            callback: HTContentListener,
-        ) : super(stacks) {
-            this.inputSlots = inputSlots
-            this.outputSlots = outputSlots
-            this.callback = callback
-        }
-
-        override val inputSlots: IntArray
-        override val outputSlots: IntArray
-        private val callback: HTContentListener
-
+    private class Simple(
+        size: Int,
+        override val inputSlots: IntArray,
+        override val outputSlots: IntArray,
+        private val callback: HTContentListener?
+    ) : HTItemStackHandler(size) {
         override fun onContentsChanged() {
-            callback.onContentsChanged()
+            callback?.onContentsChanged()
         }
     }
 }

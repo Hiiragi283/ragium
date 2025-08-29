@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -24,16 +25,12 @@ import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTPotionBundleMenu
-import hiiragi283.ragium.common.inventory.container.HTUniversalBundleMenu
-import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
+import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.loading.FMLEnvironment
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 
 typealias DeferredBEMenu<BE> = HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE>
@@ -64,22 +61,27 @@ object RagiumMenuTypes {
     val DRUM: DeferredBEMenu<HTDrumBlockEntity> = register("drum")
 
     @JvmField
-    val POTION_BUNDLE: HTDeferredMenuType<HTPotionBundleMenu, IItemHandler> =
-        REGISTER.registerType("potion_bundle", ::HTPotionBundleMenu) { buf: RegistryFriendlyByteBuf? ->
-            checkNotNull(buf)
-            val stack: ItemStack = ItemStack.STREAM_CODEC.decode(buf)
-            checkNotNull(stack.getCapability(Capabilities.ItemHandler.ITEM)) { "Failed to get potion bundle container" }
-        }
-
-    @JvmField
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu, HTMachineBlockEntity> =
         REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu, ::getBlockEntityFromBuf)
 
+    //    Generic    //
+
+    @JvmStatic
+    private fun registerGeneric(
+        factory: HTContainerFactory<HTGenericContainerMenu, IItemHandler>,
+        rows: Int,
+    ): HTDeferredMenuType<HTGenericContainerMenu, IItemHandler> = REGISTER.registerType(
+        "generic_9x$rows",
+        factory,
+    ) { HTItemStackHandler.Builder(rows * 9).build() }
+
     @JvmField
-    val UNIVERSAL_BUNDLE: HTDeferredMenuType<HTUniversalBundleMenu, IItemHandler> =
-        REGISTER.registerType("universal_backpack", ::HTUniversalBundleMenu) {
-            HTUniversalBundleManager.emptyHandler()
-        }
+    val GENERIC_9x1: HTDeferredMenuType<HTGenericContainerMenu, IItemHandler> =
+        registerGeneric(HTGenericContainerMenu::oneRow, 1)
+
+    @JvmField
+    val GENERIC_9x3: HTDeferredMenuType<HTGenericContainerMenu, IItemHandler> =
+        registerGeneric(HTGenericContainerMenu::threeRow, 3)
 
     //    Generator    //
 
