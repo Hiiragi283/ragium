@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTTransferIO
@@ -15,6 +16,11 @@ interface HTItemHandler :
     IItemHandlerModifiable,
     INBTSerializable<CompoundTag>,
     HTContentListener {
+    companion object {
+        @JvmField
+        val EMPTY: HTItemHandler = Builder(0).build()
+    }
+
     val isEmpty: Boolean
     val inputSlots: IntArray
     val outputSlots: IntArray
@@ -93,5 +99,31 @@ interface HTItemHandler :
         return false
     }
 
-    operator fun get(slot: Int): ItemStack = getStackInSlot(slot)
+    //    Builder    //
+
+    class Builder(private val size: Int) {
+        private val inputSlots: MutableList<Int> = mutableListOf()
+        private val outputSlots: MutableList<Int> = mutableListOf()
+
+        fun addInput(vararg slots: Int): Builder = apply {
+            inputSlots.addAll(slots.toTypedArray())
+        }
+
+        fun addInput(slots: IntRange): Builder = apply {
+            inputSlots.addAll(slots)
+        }
+
+        fun addOutput(vararg slots: Int): Builder = apply {
+            outputSlots.addAll(slots.toTypedArray())
+        }
+
+        fun addOutput(slots: IntRange): Builder = apply {
+            outputSlots.addAll(slots)
+        }
+
+        fun build(): HTItemHandler = build(null)
+
+        fun build(callback: HTContentListener?): HTItemHandler =
+            RagiumAPI.getInstance().createItemHandler(size, inputSlots.toIntArray(), outputSlots.toIntArray(), callback)
+    }
 }

@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
@@ -28,7 +27,7 @@ import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler.Builder(1).addInput(0).build(this)
+    override val inventory: HTItemHandler = HTItemHandler.Builder(1).addInput(0).build(this)
     override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
 
     init {

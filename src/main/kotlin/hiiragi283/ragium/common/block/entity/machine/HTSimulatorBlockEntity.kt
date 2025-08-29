@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -26,7 +25,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler
+    override val inventory: HTItemHandler = HTItemHandler
         .Builder(3)
         .addInput(0)
         .addOutput(2)

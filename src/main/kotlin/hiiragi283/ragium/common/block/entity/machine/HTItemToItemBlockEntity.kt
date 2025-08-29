@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -18,7 +17,7 @@ abstract class HTItemToItemBlockEntity(
     pos: BlockPos,
     state: BlockState,
 ) : HTProcessorBlockEntity<SingleRecipeInput, HTItemToItemRecipe>(recipeType, variant, pos, state) {
-    final override val inventory: HTItemHandler = HTItemStackHandler
+    final override val inventory: HTItemHandler = HTItemHandler
         .Builder(2)
         .addInput(0)
         .addOutput(1)

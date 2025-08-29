@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -28,7 +27,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler
+    override val inventory: HTItemHandler = HTItemHandler
         .Builder(4)
         .addInput(0..2)
         .addOutput(3)

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -26,7 +25,7 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler
+    override val inventory: HTItemHandler = HTItemHandler
         .Builder(2)
         .addInput(0)
         .addOutput(1)

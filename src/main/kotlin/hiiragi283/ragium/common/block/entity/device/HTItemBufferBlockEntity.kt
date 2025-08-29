@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.ITEM_BUFFER, pos, state) {
-    private val inventory: HTItemStackHandler = HTItemStackHandler.Builder(9).addInput(0..8).build(this)
+    private val inventory: HTItemHandler = HTItemHandler.Builder(9).addInput(0..8).build(this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.write(RagiumConst.INVENTORY, inventory)
@@ -80,7 +80,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         return true
     }
 
-    override fun getItemHandler(direction: Direction?): HTItemStackHandler = inventory
+    override fun getItemHandler(direction: Direction?): HTItemHandler = inventory
 
     //    HTSlotProvider    //
 

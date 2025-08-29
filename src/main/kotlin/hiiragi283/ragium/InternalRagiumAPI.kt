@@ -10,6 +10,8 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -20,6 +22,7 @@ import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -158,6 +161,20 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
+
+    override fun createItemHandler(
+        size: Int,
+        inputSlots: IntArray,
+        outputSlots: IntArray,
+        callback: HTContentListener?,
+    ): HTItemHandler = object : HTItemStackHandler(size) {
+        override val inputSlots: IntArray = inputSlots
+        override val outputSlots: IntArray = outputSlots
+
+        override fun onContentsChanged() {
+            callback?.onContentsChanged()
+        }
+    }
 
     override fun createFluidWidget(
         handler: IFluidHandler?,

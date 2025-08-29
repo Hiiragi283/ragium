@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.storage.item
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -16,9 +15,6 @@ import kotlin.math.min
 
 abstract class HTItemStackHandler : HTItemHandler {
     companion object {
-        @JvmField
-        val EMPTY: HTItemStackHandler = Builder(0).build()
-
         @JvmStatic
         fun codec(factory: (List<ItemStack>) -> HTItemStackHandler): BiCodec<RegistryFriendlyByteBuf, HTItemStackHandler> = BiCodecs
             .itemStack(true)
@@ -157,46 +153,5 @@ abstract class HTItemStackHandler : HTItemHandler {
 
     protected open fun onContentsChanced(slot: Int) {
         onContentsChanged()
-    }
-
-    //    Builder    //
-
-    class Builder(private val size: Int) {
-        private val inputSlots: MutableList<Int> = mutableListOf()
-        private val outputSlots: MutableList<Int> = mutableListOf()
-
-        fun addInput(vararg slots: Int): Builder = apply {
-            inputSlots.addAll(slots.toTypedArray())
-        }
-
-        fun addInput(slots: IntRange): Builder = apply {
-            inputSlots.addAll(slots)
-        }
-
-        fun addOutput(vararg slots: Int): Builder = apply {
-            outputSlots.addAll(slots.toTypedArray())
-        }
-
-        fun addOutput(slots: IntRange): Builder = apply {
-            outputSlots.addAll(slots)
-        }
-
-        fun build(): HTItemStackHandler = build(null)
-
-        fun build(callback: HTContentListener?): HTItemStackHandler =
-            Simple(size, inputSlots.toIntArray(), outputSlots.toIntArray(), callback)
-    }
-
-    //    Simple    //
-
-    private class Simple(
-        size: Int,
-        override val inputSlots: IntArray,
-        override val outputSlots: IntArray,
-        private val callback: HTContentListener?
-    ) : HTItemStackHandler(size) {
-        override fun onContentsChanged() {
-            callback?.onContentsChanged()
-        }
     }
 }

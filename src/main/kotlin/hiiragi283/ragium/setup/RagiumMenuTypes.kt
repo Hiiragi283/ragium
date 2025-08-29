@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTDeferredMenuTypeRegister
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -26,7 +27,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -73,7 +73,7 @@ object RagiumMenuTypes {
     ): HTDeferredMenuType<HTGenericContainerMenu, IItemHandler> = REGISTER.registerType(
         "generic_9x$rows",
         factory,
-    ) { HTItemStackHandler.Builder(rows * 9).build() }
+    ) { HTItemHandler.Builder(rows * 9).build() }
 
     @JvmField
     val GENERIC_9x1: HTDeferredMenuType<HTGenericContainerMenu, IItemHandler> =
