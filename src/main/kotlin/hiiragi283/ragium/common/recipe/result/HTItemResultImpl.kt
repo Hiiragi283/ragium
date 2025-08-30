@@ -20,13 +20,7 @@ class HTItemResultImpl(entry: HTKeyOrTagEntry<Item>, amount: Int, components: Da
             Registries.ITEM,
             BiCodec.intRange(1, 99).optionalOrElseField("count", 1),
             ::HTItemResultImpl,
-        ).flatXmap(DataResult<HTItemResult>::success) { result: HTItemResult ->
-            if (result is HTItemResultImpl) {
-                DataResult.success(result)
-            } else {
-                DataResult.error { "Item Result $result is not HTItemResultImpl" }
-            }
-        }
+        ).let(BiCodec.Companion::downCast)
     }
 
     override fun createStack(holder: Holder<Item>, amount: Int, components: DataComponentPatch): DataResult<ItemStack> {

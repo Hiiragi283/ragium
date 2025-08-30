@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -28,8 +27,7 @@ import net.minecraft.world.phys.BlockHitResult
 
 class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.TELEPAD, pos, state),
-    HTFluidInteractable,
-    HTSlotProvider.Empty {
+    HTFluidInteractable {
     companion object {
         @JvmStatic
         fun validateStructure(level: Level, pos: BlockPos): Boolean = BlockPos

@@ -4,12 +4,17 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.network.HTNbtCodecHelper
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.item.ItemEntity
@@ -18,23 +23,24 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.ITEM_BUFFER, pos, state) {
-    private val inventory: HTItemHandler = HTItemHandler.Builder(9).addInput(0..8).build(this)
+    private lateinit var slots: List<HTItemSlot>
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        slots = (0..8).map { index: Int ->
+            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
+        }
+        return HTSimpleItemSlotHolder(null, slots, listOf())
+    }
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(slots))
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.INVENTORY, inventory)
-    }
-
-    override fun dropInventory(consumer: (ItemStack) -> Unit) {
-        super.dropInventory(consumer)
-        inventory.getStackView().forEach(consumer)
+        reader.read(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(slots))
     }
 
     override fun onRightClicked(
@@ -49,7 +55,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        ItemHandlerHelper.calcRedstoneFromInventory(inventory)
+        ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
 
     //    Ticking    //
 
@@ -69,32 +75,19 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
             // 回収までのディレイが残っている場合はスキップ
             if (entity.hasPickUpDelay()) continue
             // 各スロットに対して搬入操作を行う
-            val stackIn: ItemStack = entity.item.copy()
-            val remainStack: ItemStack = ItemHandlerHelper.insertItem(inventory, stackIn, false)
-            if (remainStack.isEmpty) {
-                entity.discard()
-            } else {
-                entity.item.count = remainStack.count
+            val previous: ItemStack = entity.item.copy()
+            var remainder: ItemStack = previous
+            for (slot: HTItemSlot in slots) {
+                remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+                if (remainder.isEmpty) {
+                    entity.discard()
+                    break
+                }
+            }
+            if (remainder != previous) {
+                entity.item = remainder
             }
         }
         return true
-    }
-
-    override fun getItemHandler(direction: Direction?): HTItemHandler = inventory
-
-    //    HTSlotProvider    //
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        for (index: Int in (0..8)) {
-            consumer(
-                inventory,
-                index,
-                HTSlotHelper.getSlotPosX(3 + index % 3),
-                HTSlotHelper.getSlotPosY(index / 3),
-            )
-        }
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
     }
 }

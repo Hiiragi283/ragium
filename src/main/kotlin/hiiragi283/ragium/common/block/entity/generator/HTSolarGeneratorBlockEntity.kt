@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -11,11 +9,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTGeneratorBlockEntity(HTGeneratorVariant.SOLAR, pos, state),
-    HTSlotProvider.Empty {
-    override val inventory: HTItemHandler = HTItemHandler.EMPTY
-
+class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGeneratorBlockEntity(HTGeneratorVariant.SOLAR, pos, state) {
     override fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
 
     override fun onUpdateServer(

@@ -6,7 +6,10 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -18,7 +21,6 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
@@ -27,11 +29,20 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemHandler
-        .Builder(4)
-        .addInput(0..2)
-        .addOutput(3)
-        .build(this)
+    private lateinit var inputSlots: List<HTItemStackSlot>
+    private lateinit var outputSlot: HTItemStackSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlots = listOf(
+            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
+        )
+        // output
+        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        return HTSimpleItemSlotHolder(this, inputSlots, listOf(outputSlot))
+    }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.ALLOY_SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
@@ -39,8 +50,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance =
         createSound(SoundEvents.BLASTFURNACE_FIRE_CRACKLE, random, pos)
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
-        inventory.inputSlots.map(inventory::getStackInSlot).let(::HTMultiItemRecipeInput)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput = HTMultiItemRecipeInput.fromSlots(inputSlots)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
@@ -57,17 +67,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTMultiItemToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
-            inventory.shrinkStack(slot, ingredients[index], false)
+            inputSlots[slot].shrinkStack(ingredients[index], false)
         }
-    }
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0))
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        consumer(inventory, 2, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 3, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
     }
 }

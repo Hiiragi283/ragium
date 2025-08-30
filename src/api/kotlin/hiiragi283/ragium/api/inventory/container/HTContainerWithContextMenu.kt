@@ -6,10 +6,11 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
 /**
+ * [C]を受け取る[HTContainerMenu]の拡張クラス
  * @see [mekanism.common.inventory.container.tile.MekanismTileContainer]
  */
 abstract class HTContainerWithContextMenu<C : Any>(
-    menuType: HTDeferredMenuType<*, C>,
+    menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
     val context: C,
@@ -18,8 +19,9 @@ abstract class HTContainerWithContextMenu<C : Any>(
         containerId,
         inventory,
     ) {
-    init {
-        (context as? HTMenuCallback)?.openMenu(inventory.player)
+    override fun onOpen(player: Player) {
+        super.onOpen(player)
+        (context as? HTMenuCallback)?.openMenu(player)
     }
 
     override fun onClose(player: Player) {

@@ -2,8 +2,12 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
@@ -24,22 +28,24 @@ import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
-    override val inventory: HTItemHandler = HTItemHandler.Builder(1).addInput(0).build(this)
     override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
 
     init {
         requiredEnergy = energyUsage * 20
     }
 
+    lateinit var toolSlot: HTItemSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        toolSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        return HTSimpleItemSlotHolder(this, listOf(toolSlot), listOf())
+    }
+
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SINGLE_ITEM.openMenu(player, title, this, ::writeExtraContainerData)
 
-    /**
-     * @see [com.hollingsworth.arsnouveau.api.util.BlockUtil.breakExtraBlock]
-     */
     override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
@@ -49,7 +55,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
         val inventory: Inventory = player.inventory
-        val toolStack: ItemStack = this.inventory.getStackInSlot(0)
+        val toolStack: ItemStack = toolSlot.getStack()
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
         val front: Direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
@@ -90,12 +96,4 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         }
         return false
     }
-
-    //    Slot    //
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {}
 }

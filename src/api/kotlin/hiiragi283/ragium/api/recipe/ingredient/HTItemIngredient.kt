@@ -5,6 +5,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
+/**
+ * [ItemStack]向けの[HTIngredient]の実装
+ * @see [mekanism.api.recipes.ingredients.ItemStackIngredient]
+ */
 @ConsistentCopyVisibility
 data class HTItemIngredient private constructor(private val delegate: SizedIngredient) : HTIngredient<ItemStack> {
     companion object {

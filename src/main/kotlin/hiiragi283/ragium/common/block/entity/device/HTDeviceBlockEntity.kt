@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -10,8 +9,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(type, pos, state),
-    HTHandlerBlockEntity {
+    HTBlockEntity(type, pos, state) {
     constructor(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) : this(
         variant.blockEntityHolder,
         pos,

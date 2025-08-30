@@ -6,11 +6,15 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -27,7 +31,6 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
@@ -37,11 +40,17 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ),
     HTFluidInteractable {
-    override val inventory: HTItemHandler = HTItemHandler
-        .Builder(2)
-        .addInput(0)
-        .addOutput(1)
-        .build(this)
+    private lateinit var inputSlot: HTItemSlot
+    private lateinit var outputSlot: HTItemSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0))
+        // output
+        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+    }
+
     private val tankIn = HTFluidStackTank(variant.tankCapacity, this)
     private val tankOut = HTFluidStackTank(variant.tankCapacity, this)
 
@@ -63,7 +72,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), tankIn.fluid)
+        HTItemWithFluidRecipeInput(inputSlot, tankIn)
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
@@ -85,7 +94,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         insertToOutput(recipe.assemble(input, registries), false)
         tankOut.fill(recipe.assembleFluid(input, registries), false)
         // インプットを減らす
-        inventory.shrinkStack(0, recipe.itemIngredient, false)
+        inputSlot.shrinkStack(recipe.itemIngredient, false)
         tankIn.drain(recipe.fluidIngredient, false)
     }
 
@@ -99,15 +108,5 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         if (result.consumesAction()) return result
         // 次にインプットとのやり取りを試みる
         return interactWith(player, hand, tankIn)
-    }
-
-    //    Slot    //
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
     }
 }

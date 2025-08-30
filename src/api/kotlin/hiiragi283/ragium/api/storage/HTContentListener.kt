@@ -1,8 +1,13 @@
 package hiiragi283.ragium.api.storage
 
 /**
+ * 変化が起きた時に呼び出されるインターフェース
  * @see [mekanism.api.IContentsListener]
  */
-fun interface HTContentListener {
+fun interface HTContentListener : Runnable {
     fun onContentsChanged()
+
+    override fun run() {
+        onContentsChanged()
+    }
 }

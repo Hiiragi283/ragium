@@ -2,8 +2,13 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.network.HTNbtCodecHelper
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -19,41 +24,47 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
 import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(variant, pos, state) {
-    private val inventory: HTItemStackHandler = object : HTItemStackHandler(2) {
-        override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
-            val energyStorage: IEnergyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return false
-            return when (slot) {
-                0 -> energyStorage.energyStored > 0 && energyStorage.canExtract()
-                1 -> energyStorage.energyStored < energyStorage.maxEnergyStored && energyStorage.canReceive()
-                else -> false
-            }
-        }
+    private lateinit var extractSlot: HTItemSlot
+    private lateinit var insertSlot: HTItemSlot
 
-        override fun onContentsChanged() {
-            this@HTEnergyNetworkAccessBlockEntity.onContentsChanged()
-        }
-
-        override val inputSlots: IntArray = intArrayOf(0)
-        override val outputSlots: IntArray = intArrayOf(1)
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        // extract
+        extractSlot = HTItemStackSlot.atManualOut(
+            this,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(1),
+            filter = { stack: ItemStack ->
+                val energyStorage: IEnergyStorage =
+                    stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return@atManualOut false
+                energyStorage.energyStored > 0 && energyStorage.canExtract()
+            },
+        )
+        // insert
+        insertSlot = HTItemStackSlot.atManualOut(
+            this,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(1),
+            filter = { stack: ItemStack ->
+                val energyStorage: IEnergyStorage =
+                    stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return@atManualOut false
+                energyStorage.energyStored < energyStorage.maxEnergyStored && energyStorage.canReceive()
+            },
+        )
+        return HTSimpleItemSlotHolder(null, listOf(extractSlot), listOf(extractSlot))
     }
+
     protected abstract val network: IEnergyStorage?
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.INVENTORY, inventory)
-    }
-
-    override fun dropInventory(consumer: (ItemStack) -> Unit) {
-        super.dropInventory(consumer)
-        inventory.getStackView().forEach(consumer)
+        reader.read(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
     }
 
     override fun onRightClicked(
@@ -96,7 +107,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun extractFromItem(): TriState {
-        val stackIn: ItemStack = inventory.getStackInSlot(0)
+        val stackIn: ItemStack = extractSlot.getStack()
         val energyIn: IEnergyStorage = stackIn.getCapability(Capabilities.EnergyStorage.ITEM) ?: return TriState.FALSE
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, true)
@@ -116,7 +127,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun receiveToItem(): TriState {
-        val stackIn: ItemStack = inventory.getStackInSlot(1)
+        val stackIn: ItemStack = insertSlot.getStack()
         val energyIn: IEnergyStorage = stackIn.getCapability(Capabilities.EnergyStorage.ITEM) ?: return TriState.FALSE
         var toReceive: Int = transferRate
         toReceive = energyIn.receiveEnergy(toReceive, true)
@@ -138,14 +149,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     protected abstract val transferRate: Int
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
-    }
 
     //    Creative    //
 

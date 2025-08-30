@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -12,18 +15,17 @@ import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTPotionBundleItem(properties: Properties) : Item(properties) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
-        val handler: IItemHandler =
-            stack.getCapability(Capabilities.ItemHandler.ITEM) ?: return stack
-        for (i: Int in (0 until handler.slots)) {
-            val stackIn: ItemStack = handler.getStackInSlot(i)
-            if (stackIn.isEmpty) continue
+        val handler: HTItemHandler = stack.getCapability(Capabilities.ItemHandler.ITEM) as? HTItemHandler
+            ?: return stack
+        for (slot: HTItemSlot in handler.getItemSlots(handler.getInventorySideFor())) {
+            if (slot.isEmpty) continue
+            val stackIn: ItemStack = slot.getStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
-                handler.extractItem(i, 1, false)
+                slot.extractItem(1, false, HTStorageAccess.INTERNAl)
             }
             if (result != stackIn) {
                 dropStackAt(livingEntity, result)
@@ -40,14 +42,18 @@ class HTPotionBundleItem(properties: Properties) : Item(properties) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
         if (stack.isEmpty) return InteractionResultHolder.fail(stack)
-        val handler: IItemHandler =
-            stack.getCapability(Capabilities.ItemHandler.ITEM) ?: return InteractionResultHolder.fail(stack)
         // 　シフト中はGUIを開く
-        if (player.isShiftKeyDown) {
-            RagiumMenuTypes.GENERIC_9x1.openMenu(player, stack.hoverName, handler) {}
-            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
-        } else {
-            return ItemUtils.startUsingInstantly(level, player, usedHand)
+        return when {
+            player.isShiftKeyDown -> InteractionResultHolder(
+                RagiumMenuTypes.GENERIC_9x1.openMenu(
+                    player,
+                    usedHand,
+                    stack,
+                ),
+                stack,
+            )
+
+            else -> ItemUtils.startUsingInstantly(level, player, usedHand)
         }
     }
 }

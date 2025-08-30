@@ -7,8 +7,8 @@ import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.material.HTTierType
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -17,11 +17,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTGeneratorVariant(
-    factory: (BlockPos, BlockState) -> HTGeneratorBlockEntity,
+    factory: (BlockPos, BlockState) -> HTBlockEntity,
     val tier: HTTierType,
     private val enUsPattern: String,
     private val jaJpPattern: String,
-) : HTVariantKey.WithBE<HTGeneratorBlockEntity> {
+) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     THERMAL(::HTThermalGeneratorBlockEntity, HTTierType.BASIC, "Thermal", "火力"),
 
@@ -34,7 +34,7 @@ enum class HTGeneratorVariant(
     val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTGeneratorBlockEntity> =
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
         RagiumBlockEntityTypes.registerTick("${serializedName}_generator", factory)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

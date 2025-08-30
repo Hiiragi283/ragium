@@ -4,7 +4,11 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -16,7 +20,6 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
@@ -25,11 +28,19 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemHandler
-        .Builder(3)
-        .addInput(0)
-        .addOutput(2)
-        .build(this)
+    private lateinit var inputSlot: HTItemSlot
+    private lateinit var catalystSlot: HTItemSlot
+    private lateinit var outputSlot: HTItemSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        // catalyst
+        catalystSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        // output
+        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+    }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SIMULATOR.openMenu(player, name, this, ::writeExtraContainerData)
@@ -37,7 +48,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance = createSound(SoundEvents.LAVA_AMBIENT, random, pos)
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
-        HTMultiItemRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
+        HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
         insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
@@ -52,15 +63,6 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // 実際にインプットを減らす
-        inventory.shrinkStack(0, recipe.ingredient, false)
-    }
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 2, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        inputSlot.shrinkStack(recipe.ingredient, false)
     }
 }

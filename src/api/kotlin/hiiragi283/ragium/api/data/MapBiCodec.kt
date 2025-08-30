@@ -6,6 +6,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.StreamCodec
 
+/**
+ * [MapCodec]と[StreamCodec]を束ねたデータクラス
+ * @see [BiCodec]
+ * @see [BiCodecs]
+ */
 @ConsistentCopyVisibility
 data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCodec<V>, val streamCodec: StreamCodec<B, V>) {
     companion object {
@@ -109,8 +114,22 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
         fun <B : ByteBuf, V : Any> unit(instance: V): MapBiCodec<B, V> = of(MapCodec.unit(instance), StreamCodec.unit(instance))
     }
 
+    /**
+     * 指定された[to]と[from]に基づいて，別の[MapBiCodec]に変換します。
+     * @param S 変換後のコーデックの対象となるクラス
+     * @param to [V]から[S]に変換するブロック
+     * @param from [S]から[V]に変換するブロック
+     * @return [S]を対象とする[MapBiCodec]
+     */
     fun <S : Any> xmap(to: (V) -> S, from: (S) -> V): MapBiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
+    /**
+     * 指定された[to]と[from]に基づいて，別の[MapBiCodec]に変換します。
+     * @param S 変換後のコーデックの対象となるクラス
+     * @param to [V]から[S]の[DataResult]に変換するブロック
+     * @param from [S]から[V]の[DataResult]にに変換するブロック
+     * @return [S]を対象とする[MapBiCodec]
+     */
     fun <S : Any> flatXmap(to: (V) -> DataResult<S>, from: (S) -> DataResult<V>): MapBiCodec<B, S> = of(
         codec.flatXmap(to, from),
         streamCodec.map(

@@ -2,7 +2,8 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
-import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
+import hiiragi283.ragium.api.inventory.container.HTBaseGenericContainerMenu
+import hiiragi283.ragium.api.inventory.container.HTContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -11,8 +12,8 @@ import net.minecraft.world.entity.player.Inventory
 /**
  * @see [net.minecraft.client.gui.screens.inventory.ContainerScreen]
  */
-class HTGenericScreen(menu: HTGenericContainerMenu, inventory: Inventory, title: Component) :
-    HTContainerScreen<HTGenericContainerMenu>(menu, inventory, title) {
+class HTGenericScreen<MENU>(menu: MENU, inventory: Inventory, title: Component) :
+    HTContainerScreen<MENU>(menu, inventory, title) where MENU : HTContainerMenu, MENU : HTBaseGenericContainerMenu {
     companion object {
         @JvmStatic
         private val TEXTURE_ID: ResourceLocation = vanillaId("textures/gui/container/generic_54.png")

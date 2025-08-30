@@ -7,16 +7,11 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -87,20 +82,17 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        registerHandlers<HTGeneratorBlockEntity, HTGeneratorVariant>(event)
-        registerHandlers<HTMachineBlockEntity, HTMachineVariant>(event)
-        registerHandlers<HTDeviceBlockEntity, HTDeviceVariant>(event)
-        registerHandlers<HTDrumBlockEntity, HTDrumVariant>(event)
+        registerHandlers<HTGeneratorVariant>(event)
+        registerHandlers<HTMachineVariant>(event)
+        registerHandlers<HTDeviceVariant>(event)
+        registerHandlers<HTDrumVariant>(event)
 
         LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic
-    private fun <BE> registerHandlers(
-        event: RegisterCapabilitiesEvent,
-        holder: HTDeferredBlockEntityType<BE>,
-    ) where BE : BlockEntity, BE : HTHandlerBlockEntity {
-        val type: BlockEntityType<BE> = holder.get()
+    private fun registerHandlers(event: RegisterCapabilitiesEvent, holder: HTDeferredBlockEntityType<out HTBlockEntity>) {
+        val type: BlockEntityType<out HTBlockEntity>? = holder.get()
         event.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
             type,
@@ -119,9 +111,9 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private inline fun <BE, reified V> registerHandlers(
+    private inline fun <reified V> registerHandlers(
         event: RegisterCapabilitiesEvent,
-    ) where BE : BlockEntity, BE : HTHandlerBlockEntity, V : HTVariantKey.WithBE<BE>, V : Enum<V> {
+    ) where V : HTVariantKey.WithBE<HTBlockEntity>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
             registerHandlers(event, variant.blockEntityHolder)
         }

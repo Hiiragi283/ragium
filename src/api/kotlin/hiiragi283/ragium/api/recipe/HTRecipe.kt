@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level
 import java.util.function.Predicate
 
 /**
+ * Ragiumで使用する[Recipe]の拡張インターフェース
  * @see [mekanism.api.recipes.MekanismRecipe]
  */
 interface HTRecipe<INPUT : RecipeInput> :

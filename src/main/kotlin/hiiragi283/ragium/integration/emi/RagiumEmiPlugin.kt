@@ -8,7 +8,6 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
-import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -46,7 +45,6 @@ import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.Holder
@@ -173,7 +171,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.ALLOY_SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.ALLOYING))
         // Compressing
         RagiumRecipeTypes.COMPRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToItemRecipe ->
             registry.addRecipe(
@@ -184,7 +181,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.COMPRESSOR.get(), HTRecipeHandler(RagiumEmiCategories.COMPRESSING))
         // Crushing
         RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToChancedItemRecipe ->
             val recipe: HTCrushingEmiRecipe = when (recipe) {
@@ -202,10 +198,6 @@ class RagiumEmiPlugin : EmiPlugin {
             }
             registry.addRecipe(recipe)
         }
-        registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
-        registry.addRecipeHandler(RagiumMenuTypes.PULVERIZER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
-        // Engraving
-        registry.addRecipeHandler(RagiumMenuTypes.ENGRAVER.get(), HTRecipeHandler(VanillaEmiRecipeCategories.STONECUTTING))
         // Extracting
         RagiumRecipeTypes.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToItemRecipe ->
             registry.addRecipe(
@@ -216,7 +208,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.EXTRACTOR.get(), HTRecipeHandler(RagiumEmiCategories.EXTRACTING))
         // Fluid Transforming
         RagiumRecipeTypes.FLUID_TRANSFORM.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidTransformRecipe ->
             registry.addRecipe(
@@ -229,7 +220,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.REFINERY.get(), HTRecipeHandler(RagiumEmiCategories.FLUID_TRANSFORM))
         // Infusing
         /*RagiumRecipeTypes.INFUSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToItemRecipe ->
             registry.addRecipe(
@@ -250,9 +240,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     recipe.result.toEmi(),
                 ),
             )
-        }
-
-        registry.addRecipeHandler(RagiumMenuTypes.INFUSER.get(), HTRecipeHandler(RagiumEmiCategories.INFUSING))*/
+        }*/
         // Melting
         RagiumRecipeTypes.MELTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToFluidRecipe ->
             registry.addRecipe(
@@ -272,8 +260,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-
-        registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
         // Mixing
         /*RagiumRecipeTypes.MIXING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToFluidRecipe ->
             registry.addRecipe(
@@ -284,8 +270,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     recipe.result.toEmi(),
                 ),
             )
-        }
-        registry.addRecipeHandler(RagiumMenuTypes.MIXER.get(), HTRecipeHandler(RagiumEmiCategories.MIXING))*/
+        }*/
         // Simulating
         RagiumRecipeTypes.SIMULATING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
             registry.addRecipe(
@@ -297,9 +282,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.SIMULATOR.get(), HTRecipeHandler(RagiumEmiCategories.SIMULATING))
-        // Smelting
-        registry.addRecipeHandler(RagiumMenuTypes.SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.SMELTING))
         // Solidifying
         /*RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
             registry.addRecipe(
@@ -310,8 +292,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     recipe.result.toEmi(),
                 ),
             )
-        }
-        registry.addRecipeHandler(RagiumMenuTypes.SOLIDIFIER.get(), HTRecipeHandler(RagiumEmiCategories.SOLIDIFYING))*/
+        }*/
     }
 
     /*private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {

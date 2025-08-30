@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -24,8 +23,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(variant, pos, state),
-    HTFluidInteractable,
-    HTSlotProvider.Empty {
+    HTFluidInteractable {
     protected val tank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {

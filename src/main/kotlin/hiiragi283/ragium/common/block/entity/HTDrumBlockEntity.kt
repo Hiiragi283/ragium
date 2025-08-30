@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -25,9 +23,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: BlockState) :
     HTBlockEntity(variant.blockEntityHolder, pos, state),
-    HTFluidInteractable,
-    HTHandlerBlockEntity,
-    HTSlotProvider.Empty {
+    HTFluidInteractable {
     private val tank = HTFluidStackTank(variant.capacity, this)
 
     override fun onRightClicked(

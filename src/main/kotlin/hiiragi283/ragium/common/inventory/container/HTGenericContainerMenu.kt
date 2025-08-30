@@ -1,47 +1,48 @@
 package hiiragi283.ragium.common.inventory.container
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.inventory.container.HTBaseGenericContainerMenu
 import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * @see [net.minecraft.world.inventory.ChestMenu]
  */
 class HTGenericContainerMenu(
-    menuType: HTDeferredMenuType<*, IItemHandler>,
+    menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
-    context: IItemHandler,
-    val rows: Int,
+    context: HTItemHandler,
+    override val rows: Int,
 ) : HTContainerWithContextMenu<IItemHandler>(
         menuType,
         containerId,
         inventory,
         context,
-    ) {
+    ),
+    HTBaseGenericContainerMenu {
     companion object {
         @JvmStatic
-        fun oneRow(containerId: Int, inventory: Inventory, handler: IItemHandler): HTGenericContainerMenu =
-            HTGenericContainerMenu(RagiumMenuTypes.GENERIC_9x1, containerId, inventory, handler, 1)
-
-        @JvmStatic
-        fun threeRow(containerId: Int, inventory: Inventory, handler: IItemHandler): HTGenericContainerMenu =
+        fun threeRow(containerId: Int, inventory: Inventory, handler: HTItemHandler): HTGenericContainerMenu =
             HTGenericContainerMenu(RagiumMenuTypes.GENERIC_9x3, containerId, inventory, handler, 3)
     }
 
     init {
-        check(context.slots >= rows) { "Item handler size ${context.slots} is smaller than expected $rows" }
+        check(context.slots >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
         for (y: Int in (0 until rows)) {
             for (x: Int in (0 until 9)) {
-                addInputSlot(context, x + y * 9, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y))
+                context.getItemSlot(x + y * 9, context.getInventorySideFor())?.createContainerSlot()?.let(::addSlot)
             }
         }
 
         addPlayerInv(inventory, i)
     }
+
+    override fun stillValid(player: Player): Boolean = true
 }

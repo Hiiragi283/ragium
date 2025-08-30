@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.material.HTTierType
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
@@ -25,11 +25,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTMachineVariant(
-    factory: (BlockPos, BlockState) -> HTMachineBlockEntity,
+    factory: (BlockPos, BlockState) -> HTBlockEntity,
     val tier: HTTierType,
     private val enUsPattern: String,
     private val jaJpPattern: String,
-) : HTVariantKey.WithBE<HTMachineBlockEntity> {
+) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     BLOCK_BREAKER(::HTBlockBreakerBlockEntity, HTTierType.BASIC, "Block Breaker", "採掘機"),
     COMPRESSOR(::HTCompressorBlockEntity, HTTierType.BASIC, "Compressor", "圧縮機"),
@@ -52,7 +52,7 @@ enum class HTMachineVariant(
     val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.MACHINES[this]!!
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTMachineBlockEntity> =
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
         RagiumBlockEntityTypes.registerTick(serializedName, factory)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

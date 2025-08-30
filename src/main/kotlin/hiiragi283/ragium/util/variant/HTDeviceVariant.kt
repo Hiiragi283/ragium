@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -22,12 +21,12 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 enum class HTDeviceVariant(
-    factory: (BlockPos, BlockState) -> HTDeviceBlockEntity,
+    factory: (BlockPos, BlockState) -> HTBlockEntity,
     val tier: HTTierType,
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
-) : HTVariantKey.WithBE<HTDeviceBlockEntity> {
+) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     ITEM_BUFFER(::HTItemBufferBlockEntity, HTTierType.BASIC, "Item Buffer", "アイテムバッファ"),
     MILK_COLLECTOR(::HTMilkCollectorBlockEntity, HTTierType.BASIC, "Milk Collector", "搾乳機"),
@@ -47,7 +46,7 @@ enum class HTDeviceVariant(
     ;
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTDeviceBlockEntity> =
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
         RagiumBlockEntityTypes.REGISTER.registerType(
             serializedName,
             factory,

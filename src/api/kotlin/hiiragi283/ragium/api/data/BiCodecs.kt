@@ -23,38 +23,76 @@ import net.minecraft.world.item.ItemStack
 import java.util.UUID
 
 object BiCodecs {
+    /**
+     * `0`以上の値を対象とする[Int]の[BiCodec]
+     */
     @JvmField
     val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.NON_NEGATIVE_INT, ByteBufCodecs.INT)
 
+    /**
+     * `1`以上の値を対象とする[Int]の[BiCodec]
+     */
     @JvmField
     val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.POSITIVE_INT, ByteBufCodecs.INT)
 
+    /**
+     * `0f`以上の値を対象とする[Float]の[BiCodec]
+     */
     @JvmField
     val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.of(ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT)
 
+    /**
+     * [ResourceLocation]の[BiCodec]
+     */
     @JvmField
     val RL: BiCodec<ByteBuf, ResourceLocation> = BiCodec.of(ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
 
+    /**
+     * [DyeColor]の[BiCodec]
+     */
     @JvmField
     val COLOR: BiCodec<ByteBuf, DyeColor> = BiCodec.of(DyeColor.CODEC, DyeColor.STREAM_CODEC)
 
+    /**
+     * [DataComponentPatch]の[BiCodec]
+     */
     @JvmField
     val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
         BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
 
+    /**
+     * [Component]の[BiCodec]
+     */
     @JvmField
     val TEXT: BiCodec<RegistryFriendlyByteBuf, Component> =
         BiCodec.of(ComponentSerialization.CODEC, ComponentSerialization.STREAM_CODEC)
 
+    /**
+     * [UUID]の[BiCodec]
+     */
     @JvmField
     val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
 
+    /**
+     * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。
+     * @param K [Map]のキーとなるクラス
+     * @param V [Map]の値となるクラス
+     * @param keyCodec [K]を対象とする[BiCodec]
+     * @param valueCodec [V]を対象とする[BiCodec]
+     * @return [Map]の[BiCodec]
+     */
     @JvmStatic
     fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: BiCodec<in B, K>, valueCodec: BiCodec<in B, V>): BiCodec<B, Map<K, V>> = BiCodec.of(
         Codec.unboundedMap(keyCodec.codec, valueCodec.codec),
         ByteBufCodecs.map(::HashMap, keyCodec.streamCodec, valueCodec.streamCodec),
     )
 
+    /**
+     * 指定された[first], [second]に基づいて，[Either]の[BiCodec]を返します。
+     * @param first [F]を対象とする[BiCodec]
+     * @param second [S]を対象とする[BiCodec]
+     * @return [Either]の[BiCodec]
+     */
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> either(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
         Codec.either(first.codec, second.codec),
@@ -70,6 +108,10 @@ object BiCodecs {
         ItemStack.OPTIONAL_STREAM_CODEC,
     )
 
+    /**
+     * [ItemStack]の[BiCodec]を返します。
+     * @param allowEmpty [ItemStack.EMPTY]を許容するかどうか
+     */
     @JvmStatic
     fun itemStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, ItemStack> = when (allowEmpty) {
         true -> ITEM_STACK
@@ -77,10 +119,19 @@ object BiCodecs {
     }
 
     // Registry
+
+    /**
+     * 指定された[registryKey]から[ResourceKey]の[BiCodec]を返します。
+     * @param T レジストリの要素のクラス
+     */
     @JvmStatic
     fun <T : Any> resourceKey(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, ResourceKey<T>> =
         BiCodec.of(ResourceKey.codec(registryKey), ResourceKey.streamCodec(registryKey))
 
+    /**
+     * 指定された[registryKey]から[TagKey]の[BiCodec]を返します。
+     * @param T レジストリの要素のクラス
+     */
     @JvmStatic
     fun <T : Any> tagKey(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, TagKey<T>> = BiCodec.of(
         TagKey.hashedCodec(registryKey),
@@ -90,14 +141,26 @@ object BiCodecs {
         ),
     )
 
+    /**
+     * 指定された[registry]から[T]の[BiCodec]を返します。
+     * @param T レジストリの要素のクラス
+     */
     @JvmStatic
     fun <T : Any> registryBased(registry: Registry<T>): BiCodec<RegistryFriendlyByteBuf, T> =
         BiCodec.of(registry.byNameCodec(), ByteBufCodecs.registry(registry.key()))
 
+    /**
+     * 指定された[registryKey]から[Holder]の[BiCodec]を返します。
+     * @param T レジストリの要素のクラス
+     */
     @JvmStatic
     fun <T : Any> holder(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, Holder<T>> =
         BiCodec.of(RegistryFixedCodec.create(registryKey), ByteBufCodecs.holderRegistry(registryKey))
 
+    /**
+     * 指定された[registryKey]から[HolderSet]の[BiCodec]を返します。
+     * @param T レジストリの要素のクラス
+     */
     @JvmStatic
     fun <T : Any> holderSet(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
         BiCodec.of(RegistryCodecs.homogeneousList(registryKey), ByteBufCodecs.holderSet(registryKey))

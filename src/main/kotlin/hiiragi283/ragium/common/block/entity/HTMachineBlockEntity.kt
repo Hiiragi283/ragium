@@ -1,16 +1,14 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.network.HTNbtCodecHelper
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.HTTransferIOCache
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -34,29 +32,23 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.UUID
-import kotlin.collections.forEach
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
-    HTHandlerBlockEntity,
     HTOwnedBlockEntity,
     HTTransferIO.Provider,
     HTTransferIO.Receiver {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    //    Storage    //
-
-    protected abstract val inventory: HTItemHandler
-
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         writer.writeNullable(BiCodecs.UUID, RagiumConst.OWNER, ownerId)
-        writer.write(RagiumConst.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
         writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
         reader.read(BiCodecs.UUID, RagiumConst.OWNER).ifSuccess { ownerId = it }
-        reader.read(RagiumConst.INVENTORY, inventory)
+        reader.read(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
         reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
@@ -86,11 +78,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     protected abstract fun openGui(player: Player, title: Component): InteractionResult
 
-    final override fun dropInventory(consumer: (ItemStack) -> Unit) {
-        super.dropInventory(consumer)
-        inventory.getStackView().forEach(consumer)
-    }
-
     override fun setPlacedBy(
         level: Level,
         pos: BlockPos,
@@ -103,7 +90,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        ItemHandlerHelper.calcRedstoneFromInventory(inventory)
+        ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
 
     //    Ticking    //
 
@@ -157,8 +144,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         this.externalNetwork = wrapNetworkToExternal(network)
     }
 
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, direction, transferIOCache)
-
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 
     protected open fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
@@ -208,12 +193,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         override fun getCount(): Int = 2
     }
 
-    final override fun addContainerData(consumer: (ContainerData) -> Unit) {
-        consumer(containerData)
-    }
-
     //    Extension    //
 
-    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack =
-        ItemHandlerHelper.insertItem(inventory.toFilteredReverse(), output, simulate)
+    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack = TODO()
 }

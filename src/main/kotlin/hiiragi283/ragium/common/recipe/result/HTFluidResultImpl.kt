@@ -20,13 +20,7 @@ class HTFluidResultImpl(entry: HTKeyOrTagEntry<Fluid>, amount: Int, components: 
             Registries.FLUID,
             BiCodec.INT.fieldOf("amount"),
             ::HTFluidResultImpl,
-        ).flatXmap(DataResult<HTFluidResult>::success) { result: HTFluidResult ->
-            if (result is HTFluidResultImpl) {
-                DataResult.success(result)
-            } else {
-                DataResult.error { "Fluid Result $result is not HTFluidResultImpl" }
-            }
-        }
+        ).let(BiCodec.Companion::downCast)
     }
 
     override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): DataResult<FluidStack> {

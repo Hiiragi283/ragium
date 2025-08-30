@@ -1,7 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -18,20 +23,37 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
+    HTSingleItemInputBlockEntity<StonecutterRecipe>(
         RecipeType.STONECUTTING,
         HTMachineVariant.ENGRAVER,
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemHandler
-        .Builder(6)
-        .addInput(0)
-        .addOutput(2..5)
-        .build(this)
+    private lateinit var catalystSlot: HTItemSlot
+    private lateinit var outputSlots: List<HTItemSlot>
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        // catalyst
+        catalystSlot = HTItemStackSlot.at(
+            listener,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(2),
+            canExtract = { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL },
+            canInsert = { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL },
+        )
+        // outputs
+        outputSlots = listOf(
+            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5)),
+            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5)),
+            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5)),
+            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
+        )
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), outputSlots, catalystSlot)
+    }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.ENGRAVER.openMenu(player, title, this, ::writeExtraContainerData)
@@ -40,8 +62,6 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         createSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT, random, pos)
 
     //    Ticking    //
-
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
         val allRecipes: List<RecipeHolder<StonecutterRecipe>> = level.recipeManager.getAllRecipesFor(RecipeType.STONECUTTING)
@@ -52,17 +72,13 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
             val recipe: StonecutterRecipe = holder.value
             if (!recipe.matches(input, level)) continue
             val result: ItemStack = recipe.assemble(input, level.registryAccess())
-            if (ItemStack.isSameItemSameComponents(inventory.getStackInSlot(1), result)) {
+            if (ItemStack.isSameItemSameComponents(catalystSlot.getStack(), result)) {
                 matchedRecipe = recipe
                 break
             }
         }
         return matchedRecipe
     }
-
-    // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean =
-        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -74,20 +90,6 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        inventory.extractItem(0, 1, false)
-    }
-
-    //    Slot    //
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 2, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5))
-        consumer(inventory, 3, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5))
-        consumer(inventory, 4, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
-        consumer(inventory, 5, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
+        inputSlot.shrinkStack(1, false)
     }
 }

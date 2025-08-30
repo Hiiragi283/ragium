@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.block.entity.HTPlaySoundBlockEntity
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
@@ -25,8 +24,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
-) : HTMachineBlockEntity(variant, pos, state),
-    HTPlaySoundBlockEntity {
+) : HTMachineBlockEntity(variant, pos, state) {
     constructor(
         recipeType: RecipeType<RECIPE>,
         variant: HTMachineVariant,
@@ -75,9 +73,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
         recipe: RECIPE,
     )
 
-    //    HTPlaySoundBlockEntity    //
-
-    override fun playSound(level: Level, pos: BlockPos) {
+    override fun onUpdateClient(level: Level, pos: BlockPos, state: BlockState) {
         if (ticks % 20 == 0) {
             Minecraft.getInstance().soundManager.play(createSound(level.random, pos))
         }

@@ -4,12 +4,15 @@ import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
@@ -26,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
@@ -36,14 +38,20 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         state,
     ),
     HTFluidInteractable {
-    final override val inventory: HTItemHandler = object : HTItemStackHandler(1) {
-        override fun onContentsChanged() {
-            this@HTFuelGeneratorBlockEntity.onContentsChanged()
-        }
+    protected lateinit var fuelSlot: HTItemSlot
+        private set
 
-        override val inputSlots: IntArray = intArrayOf(0)
-        override val outputSlots: IntArray = intArrayOf()
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // fuel
+        fuelSlot = HTItemStackSlot.atManualOut(
+            this,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(1),
+            filter = { stack: ItemStack -> getFuelValue(stack) > 0 },
+        )
+        return HTSimpleItemSlotHolder(this, listOf(fuelSlot), listOf())
     }
+
     protected val tank: HTFluidStackTank = HTFluidStackTank(variant.tankCapacity, this)
         .setValidator { stack: FluidStack -> getRequiredAmount(stack) > 0 }
 
@@ -84,8 +92,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
      * @see [mekanism.generators.common.slot.FluidFuelInventorySlot.fillOrBurn]
      */
     protected fun convertToFuel() {
-        val stack: ItemStack = inventory.getStackInSlot(0)
-        if (!stack.isEmpty) {
+        val slot: HTItemSlot = fuelSlot
+        if (!slot.isEmpty) {
+            val stack: ItemStack = slot.getStack()
             val remainAmount: Int = tank.space
             if (remainAmount > 0) {
                 val fuelValue: Int = getFuelValue(stack)
@@ -94,9 +103,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
                     if (hasContainer && stack.count > 1) return
                     tank.fill(getFuelStack(fuelValue), false)
                     if (hasContainer) {
-                        inventory.setStackInSlot(0, stack.craftingRemainingItem)
+                        slot.setStack(stack.craftingRemainingItem)
                     } else {
-                        stack.shrink(1)
+                        slot.shrinkStack(1, false)
                     }
                 }
             }
@@ -119,12 +128,4 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
 
     final override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
         interactWith(player, hand, tank)
-
-    //    Slot    //
-
-    final override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
-    }
-
-    final override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {}
 }

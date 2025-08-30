@@ -12,11 +12,11 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import java.util.function.Predicate
 
-open class HTFluidStackTank(capacity: Int, private val callback: HTContentListener) :
+open class HTFluidStackTank(capacity: Int, private val listener: HTContentListener) :
     FluidTank(capacity),
     HTFluidTank {
     override fun onContentsChanged() {
-        callback.onContentsChanged()
+        listener.onContentsChanged()
     }
 
     fun setValidator(content: HTFluidContent<*, *, *>): HTFluidStackTank = setValidator(content.commonTag)

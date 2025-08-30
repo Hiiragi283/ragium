@@ -54,6 +54,6 @@ object RagiumRecipeSerializers {
         create(RagiumConst.SIMULATING)
 
     @JvmStatic
-    fun <RECIPE : Recipe<*>> create(path: String): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<RECIPE>> =
+    private fun <RECIPE : Recipe<*>> create(path: String): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<RECIPE>> =
         DeferredHolder.create(Registries.RECIPE_SERIALIZER, RagiumAPI.id(path))
 }

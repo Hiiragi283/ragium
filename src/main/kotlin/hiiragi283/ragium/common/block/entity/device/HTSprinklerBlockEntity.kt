@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTSlotProvider
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.util.variant.HTDeviceVariant
@@ -18,9 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state),
-    HTSlotProvider.Empty {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state) {
     private val tank: HTFluidStackTank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
         .setValidator(HTFluidContent.WATER)
 

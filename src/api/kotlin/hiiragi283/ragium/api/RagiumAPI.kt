@@ -10,10 +10,8 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
-import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -140,16 +138,6 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [HTItemHandler.Builder.build]
-     */
-    fun createItemHandler(
-        size: Int,
-        inputSlots: IntArray,
-        outputSlots: IntArray,
-        callback: HTContentListener?,
-    ): HTItemHandler
 
     /**
      * @see [HTContainerScreen.createFluidWidget]

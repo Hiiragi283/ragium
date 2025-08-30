@@ -5,6 +5,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
+/**
+ * [FluidStack]向けの[HTIngredient]の実装
+ * @see [mekanism.api.recipes.ingredients.FluidStackIngredient]
+ */
 @ConsistentCopyVisibility
 data class HTFluidIngredient private constructor(private val delegate: SizedFluidIngredient) : HTIngredient<FluidStack> {
     companion object {

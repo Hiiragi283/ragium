@@ -1,11 +1,31 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.block.entity.HTPlaySoundBlockEntity
+import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
+import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Nameable
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.common.util.INBTSerializable
+import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * @see [mekanism.common.tile.base.TileEntityMekanism]
@@ -15,7 +35,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         type,
         pos,
         state,
-    ) {
+    ),
+    Nameable,
+    HTNbtCodec,
+    HTItemHandler,
+    HTHandlerBlockEntity {
+    //    Ticking    //
+
     companion object {
         /**
          * @see [mekanism.common.tile.base.TileEntityMekanism.tickClient]
@@ -27,9 +53,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             state: BlockState,
             blockEntity: HTBlockEntity,
         ) {
-            if (blockEntity is HTPlaySoundBlockEntity) {
-                blockEntity.playSound(level, pos)
-            }
             blockEntity.onUpdateClient(level, pos, state)
             blockEntity.ticks++
         }
@@ -56,7 +79,76 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     var ticks: Int = 0
         protected set
 
-    protected fun onUpdateClient(level: Level, pos: BlockPos, state: BlockState) {}
+    protected open fun onUpdateClient(level: Level, pos: BlockPos, state: BlockState) {}
 
     protected abstract fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
+
+    //    Save & Load    //
+
+    final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        val writer: HTNbtCodec.Writer = object : HTNbtCodec.Writer {
+            override fun <T : Any> write(codec: Codec<T>, key: String, value: T) {
+                codec
+                    .encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), value)
+                    .ifSuccess { tag.put(key, it) }
+                    .ifError { error: DataResult.Error<Tag> -> LOGGER.error(error.message()) }
+            }
+
+            override fun write(key: String, serializable: INBTSerializable<CompoundTag>) {
+                tag.put(key, serializable.serializeNBT(registries))
+            }
+        }
+        // Custom Name
+        writer.writeNullable(BiCodecs.TEXT, "custom_name", customName)
+        // Custom
+        writeNbt(writer)
+    }
+
+    final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        val reader: HTNbtCodec.Reader = object : HTNbtCodec.Reader {
+            override fun <T : Any> read(codec: Codec<T>, key: String): DataResult<T> = codec
+                .parse(registries.createSerializationContext(NbtOps.INSTANCE), tag.get(key))
+
+            override fun read(key: String, serializable: INBTSerializable<CompoundTag>) {
+                serializable.deserializeNBT(registries, tag.getCompound(key))
+            }
+        }
+        // Custom Name
+        reader.read(BiCodecs.TEXT, "custom_name").ifSuccess { customName = it }
+        // Custom
+        readNbt(reader)
+    }
+
+    //    Nameable    //
+
+    private var customName: Component? = null
+
+    final override fun getName(): Component = customName ?: blockState.block.name
+
+    final override fun getCustomName(): Component? = customName
+
+    //    Capability    //
+
+    protected val itemHandlerManager: HTItemHandlerManager?
+
+    init {
+        itemHandlerManager = initializeItemHandler(this)?.let { holder: HTItemSlotHolder ->
+            HTItemHandlerManager(holder, this)
+        }
+    }
+
+    // Item
+    protected open fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? = null
+
+    final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
+
+    override fun dropInventory(consumer: (ItemStack) -> Unit) {
+        super.dropInventory(consumer)
+        getItemSlots(getInventorySideFor()).map(HTItemSlot::getStack).forEach(consumer)
+    }
+
+    override fun getItemHandler(direction: Direction?): IItemHandler? =
+        itemHandlerManager?.resolve(Capabilities.ItemHandler.BLOCK, direction)
 }

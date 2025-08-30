@@ -1,10 +1,17 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
+/**
+ * 複数の[ItemStack]から[ItemStack]を生成するレシピのインターフェース
+ * @see [HTCombineItemToItemRecipe]
+ * @see [HTItemWithCatalystToItemRecipe]
+ */
 interface HTMultiItemToObjRecipe : HTRecipe<HTMultiItemRecipeInput> {
     companion object {
         @JvmStatic

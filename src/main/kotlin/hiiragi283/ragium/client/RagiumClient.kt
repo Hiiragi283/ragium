@@ -208,7 +208,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        fun <BE : HTMachineBlockEntity> registerMachine(menuType: HTDeferredMenuType<HTBlockEntityContainerMenu<BE>, BE>) {
+        fun <BE : HTMachineBlockEntity> registerMachine(menuType: HTDeferredMenuType<HTBlockEntityContainerMenu<BE>>) {
             event.register(
                 menuType.get(),
                 HTMachineScreen.create(menuType.id.withPath { "textures/gui/container/$it.png" }),

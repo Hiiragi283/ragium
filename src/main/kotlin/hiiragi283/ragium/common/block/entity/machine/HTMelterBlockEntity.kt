@@ -5,13 +5,17 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTDynamicRecipeCache
 import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -29,21 +33,25 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, HTItemToFluidRecipe>(
+    HTSingleItemInputBlockEntity<HTItemToFluidRecipe>(
         HTDynamicRecipeCache(RagiumRecipeTypes.MELTING.get(), HTDynamicRecipes::bucketEmptying),
         HTMachineVariant.MELTER,
         pos,
         state,
     ),
     HTFluidInteractable {
-    override val inventory: HTItemHandler = HTItemHandler
-        .Builder(2)
-        .addInput(0)
-        .addOutput(1)
-        .build(this)
+    private lateinit var outputSlot: HTItemSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        // output
+        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+    }
+
     private val tank = HTFluidStackTank(variant.tankCapacity, this)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -63,8 +71,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
-
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToFluidRecipe): Boolean =
         tank.canFill(recipe.assembleFluid(input, level.registryAccess()), true)
@@ -80,10 +86,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         tank.fill(recipe.assembleFluid(input, level.registryAccess()), false)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
-            inventory.insertItem(1, stack.craftingRemainingItem, false)
+            outputSlot.setStack(stack.craftingRemainingItem)
         }
         // インプットを減らす
-        inventory.shrinkStack(0, recipe.ingredient, false)
+        inputSlot.shrinkStack(recipe.ingredient, false)
     }
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.DRAIN_ONLY)
@@ -92,14 +98,4 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
         interactWith(player, hand, getFluidHandler(null))
-
-    //    Slot    //
-
-    override fun addInputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-    }
-
-    override fun addOutputSlot(consumer: (handler: IItemHandler, index: Int, x: Int, y: Int) -> Unit) {
-        consumer(inventory, 1, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
-    }
 }
