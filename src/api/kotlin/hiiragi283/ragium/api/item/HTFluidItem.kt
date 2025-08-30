@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addFluidTooltip
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
@@ -34,11 +34,11 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
 
         @JvmStatic
         fun drainFluid(stack: ItemStack, resource: FluidStack, simulate: Boolean): FluidStack =
-            getHandler(stack)?.drain(resource, HTFluidTank.toAction(simulate)) ?: FluidStack.EMPTY
+            getHandler(stack)?.drain(resource, HTFluidHandler.toAction(simulate)) ?: FluidStack.EMPTY
 
         @JvmStatic
         fun drainFluid(stack: ItemStack, maxDrain: Int, simulate: Boolean): FluidStack =
-            getHandler(stack)?.drain(maxDrain, HTFluidTank.toAction(simulate)) ?: FluidStack.EMPTY
+            getHandler(stack)?.drain(maxDrain, HTFluidHandler.toAction(simulate)) ?: FluidStack.EMPTY
 
         @JvmStatic
         fun getFluidUsage(stack: ItemStack, fluid: FluidStack): Int {

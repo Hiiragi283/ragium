@@ -3,19 +3,12 @@ package hiiragi283.ragium.common.storage.energy
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
-import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
-import hiiragi283.ragium.api.util.RagiumConst
 import io.netty.buffer.ByteBuf
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.Mth
-import net.neoforged.neoforge.common.util.INBTSerializable
 import kotlin.math.min
 
-class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
-    IEnergyStorageModifiable,
-    INBTSerializable<CompoundTag> {
+class HTEnergyNetwork(private var amount: Int, private var capacity: Int) : IEnergyStorageModifiable {
     companion object {
         @JvmStatic
         private fun getInitialCapacity(): Int = RagiumAPI.getConfig().getDefaultNetworkCapacity()
@@ -65,15 +58,4 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     override fun canExtract(): Boolean = true
 
     override fun canReceive(): Boolean = true
-
-    override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        putInt(RagiumConst.ENERGY_STORED, amount)
-        putInt(RagiumConst.ENERGY_CAPACITY, capacity)
-    }
-
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        val capacity: Int = nbt.getInt(RagiumConst.ENERGY_CAPACITY)
-        this.capacity = if (capacity <= 0) getInitialCapacity() else capacity
-        this.amount = nbt.getInt(RagiumConst.ENERGY_STORED)
-    }
 }

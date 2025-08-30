@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.inventory.Slot
@@ -143,7 +144,7 @@ interface HTItemSlot :
     fun growStack(amount: Int, simulate: Boolean): Int {
         val current: Int = this.count
         if (current == 0) return 0
-        val fixedAmount: Int = if (current > 0) {
+        val fixedAmount: Int = if (amount > 0) {
             min(amount, getLimit(getStack()))
         } else {
             amount
@@ -196,6 +197,8 @@ interface HTItemSlot :
     val count: Int get() = getStack().count
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        put("item", getStack().save(provider))
+        if (!isEmpty) {
+            put(RagiumConst.ITEM, getStack().save(provider))
+        }
     }
 }

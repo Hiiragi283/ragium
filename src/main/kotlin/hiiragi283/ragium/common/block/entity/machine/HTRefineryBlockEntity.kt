@@ -2,24 +2,22 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -51,17 +49,13 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 
-    private val tankIn = HTFluidStackTank(variant.tankCapacity, this)
-    private val tankOut = HTFluidStackTank(variant.tankCapacity, this)
+    private lateinit var inputTank: HTFluidStackTank
+    private lateinit var outputTank: HTFluidStackTank
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.TANK_IN, tankIn)
-        writer.write(RagiumConst.TANK_OUT, tankOut)
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.TANK_IN, tankIn)
-        reader.read(RagiumConst.TANK_OUT, tankOut)
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        inputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
+        outputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
+        return HTSimpleFluidTankHolder(this, listOf(inputTank), listOf(outputTank))
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
@@ -72,13 +66,13 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(inputSlot, tankIn)
+        HTItemWithFluidRecipeInput(inputSlot, inputTank)
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
         val registries: HolderLookup.Provider = level.registryAccess()
         val bool1: Boolean = insertToOutput(recipe.assemble(input, registries), true).isEmpty
-        val bool2: Boolean = tankOut.canFill(recipe.assembleFluid(input, registries), true)
+        val bool2: Boolean = outputTank.insert(recipe.assembleFluid(input, registries), true, HTStorageAccess.INTERNAl).isEmpty
         return bool1 && bool2
     }
 
@@ -92,21 +86,19 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         val registries: HolderLookup.Provider = level.registryAccess()
         insertToOutput(recipe.assemble(input, registries), false)
-        tankOut.fill(recipe.assembleFluid(input, registries), false)
+        outputTank.insert(recipe.assembleFluid(input, registries), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         inputSlot.shrinkStack(recipe.itemIngredient, false)
-        tankIn.drain(recipe.fluidIngredient, false)
+        inputTank.shrinkStack(recipe.fluidIngredient, false)
     }
-
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tankIn, tankOut)
 
     //    HTFluidInteractable    //
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult {
         // 初めにアウトプットからの取り出しを試みる
-        val result: ItemInteractionResult = interactWith(player, hand, HTFilteredFluidHandler(tankOut, HTFluidFilter.DRAIN_ONLY))
+        val result: ItemInteractionResult = interactWith(player, hand, outputTank)
         if (result.consumesAction()) return result
         // 次にインプットとのやり取りを試みる
-        return interactWith(player, hand, tankIn)
+        return interactWith(player, hand, inputTank)
     }
 }

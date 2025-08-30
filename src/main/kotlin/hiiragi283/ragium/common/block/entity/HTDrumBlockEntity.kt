@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -19,12 +19,17 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: BlockState) :
     HTBlockEntity(variant.blockEntityHolder, pos, state),
     HTFluidInteractable {
-    private val tank = HTFluidStackTank(variant.capacity, this)
+    private val capacity: Int = variant.capacity
+    private lateinit var tank: HTFluidStackTank
+
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        tank = HTFluidStackTank.of(listener, capacity)
+        return HTSimpleFluidTankHolder(null, listOf(), listOf(), tank)
+    }
 
     override fun onRightClicked(
         state: BlockState,
@@ -34,25 +39,19 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
         hitResult: BlockHitResult,
     ): InteractionResult = RagiumMenuTypes.DRUM.openMenu(player, name, this, ::writeExtraContainerData)
 
-    //    Save & Load    //
-
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.TANK, tank)
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.TANK, tank)
-    }
+    //    Save & Read    //
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
-        tank.fluid =
-            componentInput.getOrDefault(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.EMPTY).copy()
+        componentInput
+            .getOrDefault(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.EMPTY)
+            .copy()
+            .let(tank::setStack)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.copyOf(tank.fluid))
+        components.set(RagiumAPI.getInstance().getFluidComponent(), SimpleFluidContent.copyOf(tank.getStack()))
     }
 
     override fun reloadUpgrades() {
@@ -61,10 +60,6 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = true
-
-    //    HTHandlerBlockEntity    //
-
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = tank
 
     //    HTFluidInteractable    //
 

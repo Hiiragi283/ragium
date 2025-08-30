@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.storage.resolver
 
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import hiiragi283.ragium.api.storage.resolver.HTCapabilityResolver
+import hiiragi283.ragium.common.storage.HTCapabilityType
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability
 
@@ -14,6 +15,8 @@ open class HTCapabilityResolverImpl<HANDLER : Any, SIDED_HANDLER : HANDLER>(
 ) : HTCapabilityResolver<Direction> {
     private val handlers: MutableMap<Direction, HANDLER> = mutableMapOf()
     private var readOnlyHandler: HANDLER? = null
+
+    fun <T : Any> resolve(type: HTCapabilityType<*, T>, context: Direction?): T? = resolve(type.blockCapability, context)
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, context: Direction?): T? {

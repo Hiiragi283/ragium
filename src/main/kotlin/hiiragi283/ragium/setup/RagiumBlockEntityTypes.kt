@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
@@ -92,20 +93,10 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerHandlers(event: RegisterCapabilitiesEvent, holder: HTDeferredBlockEntityType<out HTBlockEntity>) {
-        val type: BlockEntityType<out HTBlockEntity>? = holder.get()
-        event.registerBlockEntity(
-            Capabilities.ItemHandler.BLOCK,
-            type,
-            HTHandlerBlockEntity::getItemHandler,
-        )
-        event.registerBlockEntity(
-            Capabilities.FluidHandler.BLOCK,
-            type,
-            HTHandlerBlockEntity::getFluidHandler,
-        )
+        HTCapabilityType.register(event, holder)
         event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK,
-            type,
+            holder.get(),
             HTHandlerBlockEntity::getEnergyStorage,
         )
     }

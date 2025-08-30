@@ -3,15 +3,14 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.extension.getRangedAABB
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -24,14 +23,11 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
     HTFluidInteractable {
-    private val tank = HTFluidStackTank(Int.MAX_VALUE, this)
+    private lateinit var tank: HTFluidStackTank
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.TANK, tank)
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.TANK, tank)
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        tank = HTFluidStackTank.of(listener, Int.MAX_VALUE)
+        return HTSimpleFluidTankHolder(null, listOf(), listOf(tank))
     }
 
     //    Ticking    //
@@ -47,18 +43,15 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * RagiumAPI.getConfig().getExpCollectorMultiplier()
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            if (tank.canFill(stack, true)) {
-                tank.fill(stack, false)
+            if (tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) {
+                tank.insert(stack, false, HTStorageAccess.INTERNAl)
                 entity.discard()
             }
         }
         return true
     }
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.DRAIN_ONLY)
-
     //    HTFluidInteractable    //
 
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
-        interactWith(player, hand, getFluidHandler(null))
+    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
 }

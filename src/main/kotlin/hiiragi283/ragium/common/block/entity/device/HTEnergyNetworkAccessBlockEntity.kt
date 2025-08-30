@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.network.HTNbtCodecHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -58,14 +55,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     protected abstract val network: IEnergyStorage?
-
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
-    }
 
     override fun onRightClicked(
         state: BlockState,

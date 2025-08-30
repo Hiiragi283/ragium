@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
@@ -16,4 +17,7 @@ fun interface HTFluidInteractable {
 
         else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
     }
+
+    fun interactWith(player: Player, hand: InteractionHand, tank: HTFluidTank): ItemInteractionResult =
+        interactWith(player, hand, tank.toSingleHandler())
 }

@@ -33,7 +33,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     override val isRemote: Boolean get() = !(level?.isClientSide ?: true)
 
-    //    Save & Load    //
+    //    Save & Read    //
 
     final override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 

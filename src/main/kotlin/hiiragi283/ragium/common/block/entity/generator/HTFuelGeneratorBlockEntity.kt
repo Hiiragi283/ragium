@@ -3,20 +3,18 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -52,15 +50,12 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         return HTSimpleItemSlotHolder(this, listOf(fuelSlot), listOf())
     }
 
-    protected val tank: HTFluidStackTank = HTFluidStackTank(variant.tankCapacity, this)
-        .setValidator { stack: FluidStack -> getRequiredAmount(stack) > 0 }
+    protected lateinit var tank: HTFluidStackTank
+        private set
 
-    final override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.TANK, tank)
-    }
-
-    final override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.TANK, tank)
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+        tank = HTFluidStackTank.of(listener, 8000, filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 })
+        return HTSimpleFluidTankHolder(this, listOf(tank), listOf())
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
@@ -77,10 +72,11 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         // スロット内のアイテムを液体に変換する
         convertToFuel()
         // 燃料を消費して発電する
-        val required: Int = getRequiredAmount(tank.fluid)
+        val required: Int = getRequiredAmount(tank.getStack())
         if (required <= 0) return false
-        return if (tank.canDrain(required, true) && network.receiveEnergy(energyUsage, true) == energyUsage) {
-            tank.drain(required, false)
+        if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
+        return if (network.receiveEnergy(energyUsage, true) == energyUsage) {
+            tank.extract(required, false, HTStorageAccess.INTERNAl)
             network.receiveEnergy(energyUsage, false)
             true
         } else {
@@ -95,13 +91,13 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         val slot: HTItemSlot = fuelSlot
         if (!slot.isEmpty) {
             val stack: ItemStack = slot.getStack()
-            val remainAmount: Int = tank.space
+            val remainAmount: Int = tank.getNeeded()
             if (remainAmount > 0) {
                 val fuelValue: Int = getFuelValue(stack)
                 if (fuelValue in 1..remainAmount) {
                     val hasContainer: Boolean = stack.hasCraftingRemainingItem()
                     if (hasContainer && stack.count > 1) return
-                    tank.fill(getFuelStack(fuelValue), false)
+                    tank.insert(getFuelStack(fuelValue), false, HTStorageAccess.INTERNAl)
                     if (hasContainer) {
                         slot.setStack(stack.craftingRemainingItem)
                     } else {
@@ -120,9 +116,6 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
 
     protected fun getRequiredAmount(stack: FluidStack, dataMap: DataMapType<Fluid, HTFluidFuelData>): Int =
         stack.fluidHolder.getData(dataMap)?.amount ?: 0
-
-    final override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
-        HTFilteredFluidHandler(tank, HTFluidFilter.FILL_ONLY)
 
     //    HTFluidInteractable    //
 

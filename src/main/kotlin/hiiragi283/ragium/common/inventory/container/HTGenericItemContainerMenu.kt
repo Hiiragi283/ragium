@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.inventory.container.HTBaseGenericContainerMenu
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -13,7 +14,6 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.capabilities.Capabilities
 
 class HTGenericItemContainerMenu(
     menuType: HTDeferredMenuType<*>,
@@ -57,7 +57,7 @@ class HTGenericItemContainerMenu(
 
     val handler: HTItemHandler = when (isClientSide) {
         true -> null
-        false -> stack.getCapability(Capabilities.ItemHandler.ITEM) as? HTItemHandler
+        false -> HTCapabilityType.ITEM.getCapability(stack) as? HTItemHandler
     } ?: createSlots(rows)
 
     init {

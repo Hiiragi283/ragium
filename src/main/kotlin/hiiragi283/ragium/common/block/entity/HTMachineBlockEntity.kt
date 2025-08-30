@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.network.HTNbtCodecHelper
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.storage.HTTransferIO
@@ -41,14 +40,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
+        super.writeNbt(writer)
         writer.writeNullable(BiCodecs.UUID, RagiumConst.OWNER, ownerId)
-        writer.write(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
         writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
+        super.readNbt(reader)
         reader.read(BiCodecs.UUID, RagiumConst.OWNER).ifSuccess { ownerId = it }
-        reader.read(RagiumConst.INVENTORY, HTNbtCodecHelper.slotSerializer(getItemSlots(getInventorySideFor())))
         reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
     }
 

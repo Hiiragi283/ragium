@@ -7,9 +7,14 @@ import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.HTCapabilityType
+import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -23,8 +28,8 @@ import net.minecraft.world.Nameable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.INBTSerializable
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
 /**
@@ -39,6 +44,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     Nameable,
     HTNbtCodec,
     HTItemHandler,
+    HTFluidHandler,
     HTHandlerBlockEntity {
     //    Ticking    //
 
@@ -83,7 +89,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     protected abstract fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
 
-    //    Save & Load    //
+    //    Save & Read    //
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -101,6 +107,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         writer.writeNullable(BiCodecs.TEXT, "custom_name", customName)
+        // Capability
+        HTCapabilityType.ITEM.saveTo(tag, registries, this)
+        HTCapabilityType.FLUID.saveTo(tag, registries, this)
         // Custom
         writeNbt(writer)
     }
@@ -117,6 +126,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         reader.read(BiCodecs.TEXT, "custom_name").ifSuccess { customName = it }
+        // Capability
+        HTCapabilityType.ITEM.readFrom(tag, registries, this)
+        HTCapabilityType.FLUID.readFrom(tag, registries, this)
         // Custom
         readNbt(reader)
     }
@@ -132,11 +144,11 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     //    Capability    //
 
     protected val itemHandlerManager: HTItemHandlerManager?
+    protected val fluidHandlerManager: HTFluidHandlerManager?
 
     init {
-        itemHandlerManager = initializeItemHandler(this)?.let { holder: HTItemSlotHolder ->
-            HTItemHandlerManager(holder, this)
-        }
+        itemHandlerManager = HTItemHandlerManager(initializeItemHandler(this), this)
+        fluidHandlerManager = HTFluidHandlerManager(initializeFluidHandler(this), this)
     }
 
     // Item
@@ -149,6 +161,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         getItemSlots(getInventorySideFor()).map(HTItemSlot::getStack).forEach(consumer)
     }
 
-    override fun getItemHandler(direction: Direction?): IItemHandler? =
-        itemHandlerManager?.resolve(Capabilities.ItemHandler.BLOCK, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTCapabilityType.ITEM, direction)
+
+    // Fluid
+    protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
+
+    final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
+
+    final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
+        fluidHandlerManager?.resolve(HTCapabilityType.FLUID, direction)
 }

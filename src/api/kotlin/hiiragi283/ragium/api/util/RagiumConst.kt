@@ -46,18 +46,17 @@ object RagiumConst {
 
     //    Nbt    //
 
-    const val NETWORK = "network"
     const val TRANSFER_IO = "transfer_io"
     const val UPGRADES = "upgrades"
     const val OWNER = "owner"
 
-    const val INVENTORY = "inventory"
-    const val TANK = "tank"
-    const val TANK_IN = "tank_in"
-    const val TANK_OUT = "tank_out"
+    const val ITEM = "item"
+    const val SLOT = "slot"
+    const val ITEMS = "items"
 
-    const val ENERGY_CAPACITY = "energy_capacity"
-    const val ENERGY_STORED = "energy_stored"
+    const val FLUID = "fluid"
+    const val TANK = "tank"
+    const val FLUIDS = "fluids"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 

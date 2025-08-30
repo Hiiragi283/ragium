@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.util.RagiumChunkLoader
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -22,10 +21,6 @@ class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTDevic
         super.setRemoved()
         releaseChunk()
     }
-
-    override fun writeNbt(writer: HTNbtCodec.Writer) {}
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {}
 
     private fun forceChunk(): Boolean {
         if (this.isRemote) return false

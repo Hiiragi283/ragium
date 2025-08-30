@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -14,11 +15,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.capabilities.Capabilities
 
 class HTPotionBundleItem(properties: Properties) : Item(properties) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
-        val handler: HTItemHandler = stack.getCapability(Capabilities.ItemHandler.ITEM) as? HTItemHandler
+        val handler: HTItemHandler = HTCapabilityType.ITEM.getCapability(stack) as? HTItemHandler
             ?: return stack
         for (slot: HTItemSlot in handler.getItemSlots(handler.getInventorySideFor())) {
             if (slot.isEmpty) continue

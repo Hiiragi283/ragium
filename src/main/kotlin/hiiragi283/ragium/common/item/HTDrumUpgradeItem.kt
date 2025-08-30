@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.getCapability
 import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.Supplier
@@ -43,7 +42,7 @@ abstract class HTDrumUpgradeItem(
         if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
                 var fluid: FluidStack = FluidStack.EMPTY
-                level.getCapability(Capabilities.FluidHandler.BLOCK, pos)?.let { handler: IFluidHandler ->
+                HTCapabilityType.FLUID.getCapability(level, pos, null)?.let { handler: IFluidHandler ->
                     fluid = handler.getFluidInTank(0).copy()
                 }
                 val newState: BlockState = newDrum.get().defaultBlockState()
@@ -54,8 +53,8 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                level
-                    .getCapability(Capabilities.FluidHandler.BLOCK, pos)
+                HTCapabilityType.FLUID
+                    .getCapability(level, pos, null)
                     ?.fill(fluid, IFluidHandler.FluidAction.EXECUTE)
                 val drop = ItemStack(state.block)
                 player?.let { dropStackAt(it, drop) } ?: dropStackAt(level, pos, drop)

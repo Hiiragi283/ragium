@@ -10,9 +10,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -68,9 +66,3 @@ fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
 fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
     Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
-
-//    Capability    //
-
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-fun <T : Any, C : Any> ILevelExtension.getCapability(capability: BlockCapability<T, C?>, pos: BlockPos): T? =
-    getCapability(capability, pos, null)

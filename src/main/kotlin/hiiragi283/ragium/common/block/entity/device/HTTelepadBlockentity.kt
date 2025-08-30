@@ -4,16 +4,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -38,8 +37,14 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
             .allMatch(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
-    private val tank: HTFluidStackTank = HTFluidStackTank(RagiumAPI.getConfig().getDeviceTankCapacity(), this)
-        .setValidator(RagiumFluidContents.DEW_OF_THE_WARP)
+    private lateinit var tank: HTFluidStackTank
+
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        tank =
+            HTFluidStackTank.of(listener, RagiumAPI.getConfig().getDeviceTankCapacity(), filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+        return HTSimpleFluidTankHolder(null, listOf(tank), listOf())
+    }
+
     var teleportPos: HTTeleportPos? = null
         private set
 
@@ -52,12 +57,12 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     }
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConst.TANK, tank)
+        super.writeNbt(writer)
         writer.writeNullable(HTTeleportPos.CODEC, "teleport_pos", teleportPos)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConst.TANK, tank)
+        super.readNbt(reader)
         reader.read(HTTeleportPos.CODEC, "teleport_pos").ifSuccess { teleportPos = it }
     }
 
@@ -77,10 +82,6 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     }
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
-
-    //    HTHandlerBlockEntity    //
-
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(tank, HTFluidFilter.FILL_ONLY)
 
     //    HTFluidInteractable    //
 

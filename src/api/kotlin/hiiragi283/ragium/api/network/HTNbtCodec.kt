@@ -12,12 +12,12 @@ interface HTNbtCodec {
     /**
      * 指定した[writer]に値を書き込みます。
      */
-    fun writeNbt(writer: Writer)
+    fun writeNbt(writer: Writer) {}
 
     /**
      * 指定した[reader]から値を読み取ります。
      */
-    fun readNbt(reader: Reader)
+    fun readNbt(reader: Reader) {}
 
     //    Writer    //
 

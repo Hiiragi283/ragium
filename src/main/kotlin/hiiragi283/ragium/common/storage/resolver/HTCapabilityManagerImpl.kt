@@ -9,7 +9,7 @@ import net.neoforged.neoforge.capabilities.BlockCapability
  * @see [mekanism.common.capabilities.resolver.manager.CapabilityHandlerManager]
  */
 open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any, HANDLER : Any, SIDED_HANDLER : HANDLER>(
-    protected val holder: HOLDER?,
+    @JvmField protected val holder: HOLDER?,
     baseHandler: SIDED_HANDLER,
     proxyCreator: ProxyCreator<HANDLER, SIDED_HANDLER>,
     private val containerGetter: (HOLDER, Direction?) -> List<CONTAINER>,
