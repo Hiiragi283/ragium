@@ -12,6 +12,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -40,10 +41,10 @@ interface HTFluidTank :
      * @return 搬入されなかった[FluidStack]
      */
     fun insert(stack: FluidStack, simulate: Boolean, access: HTStorageAccess): FluidStack {
-        if (stack.isEmpty) return FluidStack.EMPTY
+        if (stack.isEmpty || !isFluidValidForInsert(stack, access)) return stack
 
         val needed: Int = getNeeded()
-        if (needed <= 0 || !isFluidValidForInsert(stack, access)) return stack
+        if (needed <= 0) return stack
 
         val sameType: Boolean = FluidStack.isSameFluidSameComponents(getStack(), stack)
         if (isEmpty || sameType) {
@@ -73,11 +74,9 @@ interface HTFluidTank :
         if (isEmpty || amount < 1 || !canFluidExtract(getStack(), access)) {
             return FluidStack.EMPTY
         }
-        val current: Int = min(stack.amount, capacity)
-        val fixedAmount: Int = min(amount, current)
-        val result: FluidStack = stack.copyWithAmount(fixedAmount)
+        val result: FluidStack = stack.copyWithAmount(min(fluidAmount, amount))
         if (!simulate) {
-            shrinkStack(fixedAmount, false)
+            shrinkStack(result.amount, false)
             onContentsChanged()
         }
         return result
@@ -113,13 +112,13 @@ interface HTFluidTank :
             if (!simulate) setEmpty()
             return 0
         }
-        val stack = getStack()
-        val maxStackSize: Int = capacity
-        val fixedAmount: Int = min(amount, maxStackSize)
+        val stack: FluidStack = getStack()
+        val fixedAmount: Int = min(amount, capacity)
         if (stack.amount == fixedAmount || simulate) {
             return fixedAmount
         }
         setStack(stack.copyWithAmount(fixedAmount))
+        onContentsChanged()
         return fixedAmount
     }
 
@@ -179,7 +178,7 @@ interface HTFluidTank :
         setStack(FluidStack.EMPTY)
     }
 
-    fun getNeeded(): Int = min(0, capacity - fluidAmount)
+    fun getNeeded(): Int = max(0, capacity - fluidAmount)
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
         put(RagiumConst.FLUID, getStack().saveOptional(provider))

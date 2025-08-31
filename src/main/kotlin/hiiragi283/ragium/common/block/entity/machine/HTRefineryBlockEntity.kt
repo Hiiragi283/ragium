@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -55,7 +55,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         inputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
         outputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
-        return HTSimpleFluidTankHolder(this, listOf(inputTank), listOf(outputTank))
+        return HTSimpleFluidTankHolder(this, inputTank, outputTank, null)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

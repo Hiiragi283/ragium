@@ -27,6 +27,7 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
+    private val canHandle: (HTBlockEntity) -> Boolean,
 ) {
     companion object {
         @JvmField
@@ -35,6 +36,7 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
             RagiumConst.ITEMS,
             RagiumConst.SLOT,
             HTBlockEntity::getItemSlots,
+            HTBlockEntity::hasItemHandler,
         )
 
         @JvmField
@@ -43,6 +45,7 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
             RagiumConst.FLUIDS,
             RagiumConst.TANK,
             HTBlockEntity::getFluidTanks,
+            HTBlockEntity::hasFluidHandler,
         )
 
         @JvmStatic
@@ -115,4 +118,6 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
     }
 
     fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)
+
+    fun canHandle(blockEntity: HTBlockEntity): Boolean = canHandle.invoke(blockEntity)
 }

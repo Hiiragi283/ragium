@@ -23,7 +23,7 @@ data class HTTransferIOUpdatePayload(val pos: BlockPos, val direction: Direction
             HTTransferIOUpdatePayload::pos,
             Direction.STREAM_CODEC,
             HTTransferIOUpdatePayload::direction,
-            HTTransferIO.STREAM_CODEC,
+            HTTransferIO.CODEC.streamCodec,
             HTTransferIOUpdatePayload::transferIO,
             ::HTTransferIOUpdatePayload,
         )

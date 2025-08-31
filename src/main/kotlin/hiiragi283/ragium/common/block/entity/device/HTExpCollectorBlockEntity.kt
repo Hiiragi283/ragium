@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -27,7 +27,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTFluidStackTank.of(listener, Int.MAX_VALUE)
-        return HTSimpleFluidTankHolder(null, listOf(), listOf(tank))
+        return HTSimpleFluidTankHolder.output(null, tank)
     }
 
     //    Ticking    //

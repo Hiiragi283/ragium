@@ -6,32 +6,30 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import net.minecraft.core.Direction
 
 class HTSimpleFluidTankHolder(
-    private val transferProvider: HTTransferIO.Provider?,
-    private val inputTanks: List<HTFluidTank>,
-    private val outputTanks: List<HTFluidTank>,
-    private val catalyst: HTFluidTank? = null,
-) : HTFluidTankHolder {
-    override fun getFluidTank(side: Direction?): List<HTFluidTank> {
-        if (side == null) {
-            return buildList {
-                addAll(inputTanks)
-                addAll(outputTanks)
-                catalyst?.let(::add)
-            }
-        } else {
-            if (canInsert(side)) {
-            }
-        }
-        return listOf()
+    transferProvider: HTTransferIO.Provider?,
+    private val inputTank: HTFluidTank?,
+    private val outputTank: HTFluidTank?,
+    private val generic: HTFluidTank?,
+) : HTSimpleCapabilityHolder(transferProvider),
+    HTFluidTankHolder {
+    companion object {
+        @JvmStatic
+        fun input(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+            HTSimpleFluidTankHolder(transferProvider, tank, null, null)
+
+        @JvmStatic
+        fun output(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+            HTSimpleFluidTankHolder(transferProvider, null, tank, null)
+
+        @JvmStatic
+        fun generic(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+            HTSimpleFluidTankHolder(transferProvider, null, null, tank)
     }
 
-    override fun canInsert(side: Direction?): Boolean = when (side) {
-        null -> false
-        else -> transferProvider?.apply(side)?.canInsert ?: true
-    }
-
-    override fun canExtract(side: Direction?): Boolean = when (side) {
-        null -> false
-        else -> transferProvider?.apply(side)?.canExtract ?: true
+    override fun getFluidTank(side: Direction?): List<HTFluidTank> = when {
+        side == null -> listOfNotNull(inputTank, outputTank, generic)
+        canInsert(side) -> listOfNotNull(inputTank, generic)
+        canExtract(side) -> listOfNotNull(outputTank, generic)
+        else -> listOf()
     }
 }

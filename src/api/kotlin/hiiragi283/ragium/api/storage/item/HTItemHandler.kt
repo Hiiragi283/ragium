@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack
 interface HTItemHandler :
     HTSidedItemHandler,
     HTContentListener {
+    fun hasItemHandler(): Boolean = true
+
     fun getItemSlots(side: Direction?): List<HTItemSlot>
 
     fun getItemSlot(slot: Int, side: Direction?): HTItemSlot? = getItemSlots(side).getOrNull(slot)

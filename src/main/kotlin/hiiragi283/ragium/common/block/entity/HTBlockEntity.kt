@@ -158,6 +158,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     // Item
     protected open fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? = null
 
+    final override fun hasItemHandler(): Boolean = itemHandlerManager?.canHandle() ?: false
+
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
     override fun dropInventory(consumer: (ItemStack) -> Unit) {
@@ -169,6 +171,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     // Fluid
     protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
+
+    override fun hasFluidHandler(): Boolean = fluidHandlerManager?.canHandle() ?: false
 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 

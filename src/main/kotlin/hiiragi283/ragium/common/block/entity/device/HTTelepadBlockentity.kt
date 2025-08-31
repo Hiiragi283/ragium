@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -42,7 +42,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank =
             HTFluidStackTank.of(listener, RagiumAPI.getConfig().getDeviceTankCapacity(), filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
-        return HTSimpleFluidTankHolder(null, listOf(tank), listOf())
+        return HTSimpleFluidTankHolder.input(null, tank)
     }
 
     var teleportPos: HTTeleportPos? = null

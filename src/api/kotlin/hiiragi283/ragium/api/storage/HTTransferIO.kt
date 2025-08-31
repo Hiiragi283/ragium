@@ -1,15 +1,14 @@
 package hiiragi283.ragium.api.storage
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.function.BiConsumer
 import java.util.function.Function
 
@@ -22,11 +21,7 @@ enum class HTTransferIO(val canInsert: Boolean, val canExtract: Boolean, val col
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTTransferIO> = StringRepresentable.fromEnum(HTTransferIO::values)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<FriendlyByteBuf, HTTransferIO> =
-            NeoForgeStreamCodecs.enumCodec(HTTransferIO::class.java)
+        val CODEC: BiCodec<FriendlyByteBuf, HTTransferIO> = BiCodecs.enum(HTTransferIO::values)
 
         @JvmStatic
         fun fromOrdinal(ordinal: Int): HTTransferIO = entries.getOrNull(ordinal) ?: BOTH

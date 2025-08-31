@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.data.BiCodecs.UUID
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -9,6 +10,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
@@ -18,8 +20,10 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
 
 object BiCodecs {
@@ -98,6 +102,13 @@ object BiCodecs {
         Codec.either(first.codec, second.codec),
         ByteBufCodecs.either(first.streamCodec, second.streamCodec),
     )
+
+    @JvmStatic
+    inline fun <reified V> enum(noinline values: () -> Array<V>): BiCodec<FriendlyByteBuf, V> where V : StringRepresentable, V : Enum<V> =
+        BiCodec.of(
+            StringRepresentable.fromEnum(values),
+            NeoForgeStreamCodecs.enumCodec(V::class.java),
+        )
 
     @JvmStatic
     private val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)

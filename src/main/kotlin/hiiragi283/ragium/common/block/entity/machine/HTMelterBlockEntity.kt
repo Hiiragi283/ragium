@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -54,7 +54,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTFluidStackTank.of(listener, variant.tankCapacity)
-        return HTSimpleFluidTankHolder(null, listOf(), listOf(tank))
+        return HTSimpleFluidTankHolder.output(null, tank)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
@@ -79,7 +79,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         tank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
-            outputSlot.setStack(stack.craftingRemainingItem)
+            outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
         }
         // インプットを減らす
         inputSlot.shrinkStack(recipe.ingredient, false)

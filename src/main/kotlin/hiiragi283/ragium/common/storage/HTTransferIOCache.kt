@@ -6,6 +6,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
 import net.neoforged.neoforge.common.util.INBTSerializable
 
 class HTTransferIOCache :
@@ -26,15 +27,16 @@ class HTTransferIOCache :
         for (direction: Direction in Direction.entries) {
             val transferIO: HTTransferIO = cache[direction] ?: continue
             HTTransferIO.CODEC
-                .encodeStart(NbtOps.INSTANCE, transferIO)
+                .encode(NbtOps.INSTANCE, transferIO)
                 .ifSuccess { this.put(direction.serializedName, it) }
         }
     }
 
     override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
         for (direction: Direction in Direction.entries) {
+            val tag: Tag = nbt.get(direction.serializedName) ?: continue
             HTTransferIO.CODEC
-                .parse(NbtOps.INSTANCE, nbt.get(direction.serializedName))
+                .decode(NbtOps.INSTANCE, tag)
                 .ifSuccess { set(direction, it) }
         }
     }

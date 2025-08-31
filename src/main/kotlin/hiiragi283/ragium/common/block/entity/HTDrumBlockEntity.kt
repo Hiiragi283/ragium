@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTFluidInteractable
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -28,7 +28,7 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTFluidStackTank.of(listener, capacity)
-        return HTSimpleFluidTankHolder(null, listOf(tank), listOf(tank))
+        return HTSimpleFluidTankHolder.generic(null, tank)
     }
 
     override fun onRightClicked(

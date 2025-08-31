@@ -17,6 +17,8 @@ interface HTFluidHandler : HTSidedFluidHandler {
         }
     }
 
+    fun hasFluidHandler(): Boolean = true
+
     fun getFluidTanks(side: Direction?): List<HTFluidTank>
 
     fun getFluidTank(tank: Int, side: Direction?): HTFluidTank? = getFluidTanks(side).getOrNull(tank)

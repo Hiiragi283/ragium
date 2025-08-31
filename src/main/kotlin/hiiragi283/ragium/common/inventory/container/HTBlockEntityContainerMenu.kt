@@ -33,13 +33,13 @@ open class HTBlockEntityContainerMenu<BE : HTBlockEntity>(
     }
 
     init {
-        (context as? HTMachineBlockEntity)?.let { blockEntity: HTMachineBlockEntity ->
+        (context as? HTBlockEntity)?.let { blockEntity: HTBlockEntity ->
             blockEntity
                 .getItemSlots(blockEntity.getItemSideFor())
                 .mapNotNull(HTItemSlot::createContainerSlot)
                 .forEach(::addSlot)
-            addDataSlots(blockEntity.containerData)
         }
+        (context as? HTMachineBlockEntity)?.containerData?.let(::addDataSlots)
         // player inventory
         addPlayerInv(inventory)
     }

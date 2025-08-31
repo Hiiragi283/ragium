@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

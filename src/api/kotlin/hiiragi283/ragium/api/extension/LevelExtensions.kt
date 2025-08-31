@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Position
 import net.minecraft.world.Containers
@@ -10,7 +11,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -44,11 +44,9 @@ fun dropStackAt(entity: Entity, stack: ItemStack) {
             ItemHandlerHelper.giveItemToPlayer(entity, stack)
         }
     } else {
-        val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
-        val remainStack: ItemStack = when {
-            handler != null -> ItemHandlerHelper.insertItem(handler, stack, false)
-            else -> stack
-        }
+        val remainStack: ItemStack = HTMultiCapability.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
+            ItemHandlerHelper.insertItem(handler, stack, false)
+        } ?: stack
         dropStackAt(entity.level(), entity.position(), remainStack)
     }
 }

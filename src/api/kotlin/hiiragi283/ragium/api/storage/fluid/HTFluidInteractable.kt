@@ -1,6 +1,5 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
