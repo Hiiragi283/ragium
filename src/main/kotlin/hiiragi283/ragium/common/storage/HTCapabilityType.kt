@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.storage
 
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -14,12 +12,9 @@ import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.capabilities.BlockCapability
-import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.common.util.INBTSerializable
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
@@ -28,8 +23,7 @@ import net.neoforged.neoforge.items.IItemHandler
  * @see [mekanism.common.attachments.containers.ContainerType]
  */
 class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any, ITEM_HANDLER : HANDLER>(
-    val blockCapability: BlockCapability<HANDLER, Direction?>,
-    val itemCapability: ItemCapability<ITEM_HANDLER, Void?>,
+    val multiCapability: HTMultiCapability<HANDLER, ITEM_HANDLER>,
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
@@ -37,8 +31,7 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
     companion object {
         @JvmField
         val ITEM: HTCapabilityType<HTItemSlot, IItemHandler, IItemHandler> = HTCapabilityType(
-            Capabilities.ItemHandler.BLOCK,
-            Capabilities.ItemHandler.ITEM,
+            HTMultiCapability.ITEM,
             RagiumConst.ITEMS,
             RagiumConst.SLOT,
             HTBlockEntity::getItemSlots,
@@ -46,35 +39,39 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
 
         @JvmField
         val FLUID: HTCapabilityType<HTFluidTank, IFluidHandler, IFluidHandlerItem> = HTCapabilityType(
-            Capabilities.FluidHandler.BLOCK,
-            Capabilities.FluidHandler.ITEM,
+            HTMultiCapability.FLUID,
             RagiumConst.FLUIDS,
             RagiumConst.TANK,
             HTBlockEntity::getFluidTanks,
         )
 
         @JvmStatic
-        fun <BE : HTBlockEntity> register(event: RegisterCapabilitiesEvent, type: HTDeferredBlockEntityType<BE>) {
-            event.registerBlockEntity(ITEM.blockCapability, type.get(), HTHandlerBlockEntity::getItemHandler)
-            event.registerBlockEntity(FLUID.blockCapability, type.get(), HTHandlerBlockEntity::getFluidHandler)
-        }
-
-        @JvmStatic
         fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
-            event.registerItem(ITEM.itemCapability, { stack: ItemStack, _: Void? -> getter(stack) }, *items)
+            event.registerItem(
+                HTMultiCapability.ITEM.itemCapability,
+                { stack: ItemStack, _: Void? -> getter(stack) },
+                *items,
+            )
         }
 
         @JvmStatic
         fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
-            event.registerItem(FLUID.itemCapability, { stack: ItemStack, _: Void? -> getter(stack) }, *items)
+            event.registerItem(
+                HTMultiCapability.FLUID.itemCapability,
+                { stack: ItemStack, _: Void? -> getter(stack) },
+                *items,
+            )
+        }
+
+        @JvmStatic
+        fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
+            event.registerItem(
+                HTMultiCapability.ENERGY.itemCapability,
+                { stack: ItemStack, _: Void? -> getter(stack) },
+                *items,
+            )
         }
     }
-
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    fun getCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): HANDLER? =
-        level.getCapability(blockCapability, pos, side)
-
-    fun getCapability(stack: ItemStack): ITEM_HANDLER? = stack.getCapability(itemCapability)
 
     //    Save & Read    //
 

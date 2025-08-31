@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
@@ -15,7 +15,6 @@ import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import org.slf4j.Logger
@@ -92,21 +91,26 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun registerHandlers(event: RegisterCapabilitiesEvent, holder: HTDeferredBlockEntityType<out HTBlockEntity>) {
-        HTCapabilityType.register(event, holder)
-        event.registerBlockEntity(
-            Capabilities.EnergyStorage.BLOCK,
-            holder.get(),
-            HTHandlerBlockEntity::getEnergyStorage,
-        )
-    }
-
-    @JvmStatic
     private inline fun <reified V> registerHandlers(
         event: RegisterCapabilitiesEvent,
     ) where V : HTVariantKey.WithBE<HTBlockEntity>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
-            registerHandlers(event, variant.blockEntityHolder)
+            val type: BlockEntityType<out HTBlockEntity> = variant.blockEntityHolder.get()
+            event.registerBlockEntity(
+                HTMultiCapability.ITEM.blockCapability,
+                type,
+                HTHandlerBlockEntity::getItemHandler,
+            )
+            event.registerBlockEntity(
+                HTMultiCapability.FLUID.blockCapability,
+                type,
+                HTHandlerBlockEntity::getFluidHandler,
+            )
+            event.registerBlockEntity(
+                HTMultiCapability.ENERGY.blockCapability,
+                type,
+                HTHandlerBlockEntity::getEnergyStorage,
+            )
         }
     }
 }

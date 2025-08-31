@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addFluidTooltip
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -12,7 +13,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 abstract class HTFluidItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getHandler(stack: ItemStack): IFluidHandlerItem? = stack.getCapability(Capabilities.FluidHandler.ITEM)
+        fun getHandler(stack: ItemStack): IFluidHandlerItem? = HTMultiCapability.FLUID.getCapability(stack)
 
         @JvmStatic
         fun hasHandler(stack: ItemStack): Boolean = getHandler(stack) != null

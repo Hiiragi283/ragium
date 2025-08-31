@@ -30,7 +30,4 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
     //    Ticking    //
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
-
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
-        insertToOutput(recipe.assemble(input, level.registryAccess()), true).isEmpty
 }

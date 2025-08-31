@@ -2,10 +2,9 @@ package hiiragi283.ragium.api.storage.fluid
 
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
- * 向きに応じて制御された[IFluidHandler]の拡張インターフェース
+ * 向きに応じて制御された[IFluidHandlerModifiable]の拡張インターフェース
  * @see [mekanism.api.fluid.ISidedFluidHandler]
  */
 interface HTSidedFluidHandler : IFluidHandlerModifiable {

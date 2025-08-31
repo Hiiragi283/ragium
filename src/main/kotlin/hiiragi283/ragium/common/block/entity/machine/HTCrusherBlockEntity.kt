@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -55,9 +56,12 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
-            if (!insertToOutput(stackIn, true).isEmpty) {
-                return false
+            var remainder: ItemStack = stackIn
+            for (slot: HTItemSlot in outputSlots) {
+                remainder = slot.insertItem(stackIn, true, HTStorageAccess.INTERNAl)
+                if (remainder.isEmpty) break
             }
+            if (!remainder.isEmpty) return false
         }
         return true
     }
@@ -72,7 +76,11 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                insertToOutput(result.getOrEmpty(level.registryAccess()), false)
+                var remainder: ItemStack = result.getOrEmpty(level.registryAccess())
+                for (slot: HTItemSlot in outputSlots) {
+                    remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+                    if (remainder.isEmpty) break
+                }
             }
         }
         // インプットを減らす

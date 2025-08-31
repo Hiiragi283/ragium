@@ -10,21 +10,21 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
  * @see [mekanism.api.inventory.ISidedItemHandler]
  */
 interface HTSidedItemHandler : IItemHandlerModifiable {
-    fun getInventorySideFor(): Direction? = null
+    fun getItemSideFor(): Direction? = null
 
     fun setStackInSlot(slot: Int, stack: ItemStack, side: Direction?)
 
     override fun setStackInSlot(slot: Int, stack: ItemStack) {
-        setStackInSlot(slot, stack, getInventorySideFor())
+        setStackInSlot(slot, stack, getItemSideFor())
     }
 
     fun getSlots(side: Direction?): Int
 
-    override fun getSlots(): Int = getSlots(getInventorySideFor())
+    override fun getSlots(): Int = getSlots(getItemSideFor())
 
     fun getStackInSlot(slot: Int, side: Direction?): ItemStack
 
-    override fun getStackInSlot(slot: Int): ItemStack = getStackInSlot(slot, getInventorySideFor())
+    override fun getStackInSlot(slot: Int): ItemStack = getStackInSlot(slot, getItemSideFor())
 
     fun insertItem(
         slot: Int,
@@ -33,8 +33,7 @@ interface HTSidedItemHandler : IItemHandlerModifiable {
         simulate: Boolean,
     ): ItemStack
 
-    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
-        insertItem(slot, stack, getInventorySideFor(), simulate)
+    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = insertItem(slot, stack, getItemSideFor(), simulate)
 
     fun extractItem(
         slot: Int,
@@ -43,14 +42,13 @@ interface HTSidedItemHandler : IItemHandlerModifiable {
         simulate: Boolean,
     ): ItemStack
 
-    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack =
-        extractItem(slot, amount, getInventorySideFor(), simulate)
+    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = extractItem(slot, amount, getItemSideFor(), simulate)
 
     fun getSlotLimit(slot: Int, side: Direction?): Int
 
-    override fun getSlotLimit(slot: Int): Int = getSlotLimit(slot, getInventorySideFor())
+    override fun getSlotLimit(slot: Int): Int = getSlotLimit(slot, getItemSideFor())
 
     fun isItemValid(slot: Int, stack: ItemStack, side: Direction?): Boolean
 
-    override fun isItemValid(slot: Int, stack: ItemStack): Boolean = isItemValid(slot, stack, getInventorySideFor())
+    override fun isItemValid(slot: Int, stack: ItemStack): Boolean = isItemValid(slot, stack, getItemSideFor())
 }

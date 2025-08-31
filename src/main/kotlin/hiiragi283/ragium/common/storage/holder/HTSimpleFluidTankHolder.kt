@@ -11,16 +11,18 @@ class HTSimpleFluidTankHolder(
     private val outputTanks: List<HTFluidTank>,
     private val catalyst: HTFluidTank? = null,
 ) : HTFluidTankHolder {
-    override fun getFluidTank(side: Direction?): List<HTFluidTank> = when {
-        side == null -> buildList {
-            addAll(inputTanks)
-            addAll(outputTanks)
-            catalyst?.let(::add)
+    override fun getFluidTank(side: Direction?): List<HTFluidTank> {
+        if (side == null) {
+            return buildList {
+                addAll(inputTanks)
+                addAll(outputTanks)
+                catalyst?.let(::add)
+            }
+        } else {
+            if (canInsert(side)) {
+            }
         }
-
-        canInsert(side) -> inputTanks
-        canExtract(side) -> outputTanks
-        else -> listOf()
+        return listOf()
     }
 
     override fun canInsert(side: Direction?): Boolean = when (side) {

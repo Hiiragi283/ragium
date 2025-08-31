@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.container.HTBaseGenericContainerMenu
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.storage.HTCapabilityType
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -57,7 +57,7 @@ class HTGenericItemContainerMenu(
 
     val handler: HTItemHandler = when (isClientSide) {
         true -> null
-        false -> HTCapabilityType.ITEM.getCapability(stack) as? HTItemHandler
+        false -> HTMultiCapability.ITEM.getCapability(stack) as? HTItemHandler
     } ?: createSlots(rows)
 
     init {
@@ -66,7 +66,7 @@ class HTGenericItemContainerMenu(
 
         for (y: Int in (0 until rows)) {
             for (x: Int in (0 until 9)) {
-                handler.getItemSlot(x + y * 9, handler.getInventorySideFor())?.createContainerSlot()?.let(::addSlot)
+                handler.getItemSlot(x + y * 9, handler.getItemSideFor())?.createContainerSlot()?.let(::addSlot)
             }
         }
 

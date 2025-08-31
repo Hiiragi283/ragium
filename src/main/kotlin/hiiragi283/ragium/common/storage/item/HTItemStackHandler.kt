@@ -12,7 +12,7 @@ open class HTItemStackHandler(protected var slots: List<HTItemSlot>, private val
         @JvmStatic
         fun <HANDLER : HTItemHandler> codec(handlerFactory: (List<HTItemSlot>) -> HANDLER): BiCodec<RegistryFriendlyByteBuf, HANDLER> =
             HTItemStackSlot.SIMPLE_CODEC.listOf().xmap(handlerFactory) { handler: HANDLER ->
-                handler.getItemSlots(handler.getInventorySideFor())
+                handler.getItemSlots(handler.getItemSideFor())
             }
     }
 

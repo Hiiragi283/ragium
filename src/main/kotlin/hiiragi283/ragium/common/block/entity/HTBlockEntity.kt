@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -143,10 +144,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     //    Capability    //
 
-    protected val itemHandlerManager: HTItemHandlerManager?
-    protected val fluidHandlerManager: HTFluidHandlerManager?
+    protected var itemHandlerManager: HTItemHandlerManager? = null
+        private set
+    protected var fluidHandlerManager: HTFluidHandlerManager? = null
+        private set
 
-    init {
+    override fun afterLevelInit(level: Level) {
+        super.afterLevelInit(level)
         itemHandlerManager = HTItemHandlerManager(initializeItemHandler(this), this)
         fluidHandlerManager = HTFluidHandlerManager(initializeFluidHandler(this), this)
     }
@@ -158,10 +162,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     override fun dropInventory(consumer: (ItemStack) -> Unit) {
         super.dropInventory(consumer)
-        getItemSlots(getInventorySideFor()).map(HTItemSlot::getStack).forEach(consumer)
+        getItemSlots(getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTCapabilityType.ITEM, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)
 
     // Fluid
     protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
@@ -169,5 +173,5 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
-        fluidHandlerManager?.resolve(HTCapabilityType.FLUID, direction)
+        fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
 }

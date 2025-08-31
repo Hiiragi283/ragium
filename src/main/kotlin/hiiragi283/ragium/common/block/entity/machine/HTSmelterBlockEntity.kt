@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
@@ -47,6 +48,9 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: AbstractCookingRecipe): Boolean =
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
@@ -55,7 +59,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: AbstractCookingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         inputSlot.shrinkStack(1, false)
     }

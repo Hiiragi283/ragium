@@ -28,7 +28,7 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTFluidStackTank.of(listener, capacity)
-        return HTSimpleFluidTankHolder(null, listOf(), listOf(), tank)
+        return HTSimpleFluidTankHolder(null, listOf(tank), listOf(tank))
     }
 
     override fun onRightClicked(

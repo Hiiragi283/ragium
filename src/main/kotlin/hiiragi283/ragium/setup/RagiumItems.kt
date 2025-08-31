@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.registry.HTDeferredItemRegister
+import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
@@ -447,23 +448,21 @@ object RagiumItems {
         HTCapabilityType.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
         // Energy
-        // event.registerItem(Capabilities.EnergyStorage.ITEM, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
+        HTCapabilityType.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
         LOGGER.info("Registered item capabilities!")
     }
 
     @JvmStatic
-    private fun <T : Any> provider(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? =
-        { stack: ItemStack ->
-            factory(stack, capacity)
-        }
+    private fun <T : Any> provider(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+        factory(stack, capacity)
+    }
 
     @JvmStatic
-    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? =
-        { stack: ItemStack ->
-            val modifier: Int = stack.getEnchantmentLevel(RagiumAPI.getInstance().getCapabilityEnch()) + 1
-            factory(stack, capacity * modifier)
-        }
+    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+        val modifier: Int = stack.getEnchantmentLevel(RagiumAPI.getInstance().getCapabilityEnch()) + 1
+        factory(stack, capacity * modifier)
+    }
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {

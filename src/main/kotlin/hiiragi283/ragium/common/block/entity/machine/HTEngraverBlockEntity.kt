@@ -63,6 +63,15 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean {
+        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
+        for (slot: HTItemSlot in outputSlots) {
+            remainder = slot.insertItem(remainder, true, HTStorageAccess.INTERNAl)
+            if (remainder.isEmpty) break
+        }
+        return remainder.isEmpty
+    }
+
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
         val allRecipes: List<RecipeHolder<StonecutterRecipe>> = level.recipeManager.getAllRecipesFor(RecipeType.STONECUTTING)
         if (allRecipes.isEmpty()) return null
@@ -88,7 +97,11 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: StonecutterRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(recipe.assemble(input, level.registryAccess()), false)
+        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
+        for (slot: HTItemSlot in outputSlots) {
+            remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+            if (remainder.isEmpty) break
+        }
         // インプットを減らす
         inputSlot.shrinkStack(1, false)
     }

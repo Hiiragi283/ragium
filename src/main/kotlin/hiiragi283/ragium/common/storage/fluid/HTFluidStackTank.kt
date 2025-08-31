@@ -89,7 +89,7 @@ open class HTFluidStackTank protected constructor(
     override fun isFluidValid(stack: FluidStack): Boolean = filter.test(stack)
 
     override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        setStackUnchecked(FluidStack.parse(provider, nbt.getCompound(RagiumConst.FLUID)).orElse(FluidStack.EMPTY), false)
+        setStackUnchecked(FluidStack.parseOptional(provider, nbt.getCompound(RagiumConst.FLUID)), false)
     }
 
     override fun onContentsChanged() {

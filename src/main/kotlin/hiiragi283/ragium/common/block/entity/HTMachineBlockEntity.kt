@@ -138,6 +138,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     private var externalNetwork: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
+        super.afterLevelInit(level)
         val network: IEnergyStorage = level.getData(RagiumAttachmentTypes.ENERGY_NETWORK) ?: return
         this.network = network
         this.externalNetwork = wrapNetworkToExternal(network)
@@ -191,8 +192,4 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
         override fun getCount(): Int = 2
     }
-
-    //    Extension    //
-
-    protected fun insertToOutput(output: ItemStack, simulate: Boolean): ItemStack = TODO()
 }

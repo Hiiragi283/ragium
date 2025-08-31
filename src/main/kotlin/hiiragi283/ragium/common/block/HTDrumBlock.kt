@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.storage.HTCapabilityType
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
@@ -37,7 +37,7 @@ class HTDrumBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : 
         tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag)
-        val handler: IFluidHandler = HTCapabilityType.FLUID.getCapability(stack) ?: return
+        val handler: IFluidHandler = HTMultiCapability.FLUID.getCapability(stack) ?: return
         for (i: Int in (0 until handler.tanks)) {
             addFluidTooltip(handler.getFluidInTank(i), tooltipComponents::add, tooltipFlag, false)
         }

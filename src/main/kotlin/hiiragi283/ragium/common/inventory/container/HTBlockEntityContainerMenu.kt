@@ -35,7 +35,7 @@ open class HTBlockEntityContainerMenu<BE : HTBlockEntity>(
     init {
         (context as? HTMachineBlockEntity)?.let { blockEntity: HTMachineBlockEntity ->
             blockEntity
-                .getItemSlots(blockEntity.getInventorySideFor())
+                .getItemSlots(blockEntity.getItemSideFor())
                 .mapNotNull(HTItemSlot::createContainerSlot)
                 .forEach(::addSlot)
             addDataSlots(blockEntity.containerData)

@@ -71,7 +71,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
         val registries: HolderLookup.Provider = level.registryAccess()
-        val bool1: Boolean = insertToOutput(recipe.assemble(input, registries), true).isEmpty
+        val bool1: Boolean = outputSlot.insertItem(recipe.assemble(input, registries), true, HTStorageAccess.INTERNAl).isEmpty
         val bool2: Boolean = outputTank.insert(recipe.assembleFluid(input, registries), true, HTStorageAccess.INTERNAl).isEmpty
         return bool1 && bool2
     }
@@ -85,7 +85,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         // 実際にアウトプットに搬出する
         val registries: HolderLookup.Provider = level.registryAccess()
-        insertToOutput(recipe.assemble(input, registries), false)
+        outputSlot.insertItem(recipe.assemble(input, registries), false, HTStorageAccess.INTERNAl)
         outputTank.insert(recipe.assembleFluid(input, registries), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         inputSlot.shrinkStack(recipe.itemIngredient, false)

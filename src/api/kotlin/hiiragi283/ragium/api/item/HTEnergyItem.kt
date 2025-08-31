@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addEnergyTooltip
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
@@ -11,7 +12,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.roundToInt
 
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getStorage(stack: ItemStack): IEnergyStorage? = stack.getCapability(Capabilities.EnergyStorage.ITEM)
+        fun getStorage(stack: ItemStack): IEnergyStorage? = HTMultiCapability.ENERGY.getCapability(stack)
 
         @JvmStatic
         fun hasStorage(stack: ItemStack): Boolean = getStorage(stack) != null

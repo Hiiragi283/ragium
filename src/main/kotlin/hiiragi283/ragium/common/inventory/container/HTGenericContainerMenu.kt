@@ -37,7 +37,7 @@ class HTGenericContainerMenu(
 
         for (y: Int in (0 until rows)) {
             for (x: Int in (0 until 9)) {
-                context.getItemSlot(x + y * 9, context.getInventorySideFor())?.createContainerSlot()?.let(::addSlot)
+                context.getItemSlot(x + y * 9, context.getItemSideFor())?.createContainerSlot()?.let(::addSlot)
             }
         }
 

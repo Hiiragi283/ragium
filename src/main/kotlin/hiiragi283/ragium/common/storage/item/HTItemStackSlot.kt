@@ -123,7 +123,7 @@ open class HTItemStackSlot protected constructor(
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked)
 
     override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        setStackUnchecked(ItemStack.parse(provider, nbt.getCompound(RagiumConst.ITEM)).orElse(ItemStack.EMPTY), false)
+        setStackUnchecked(ItemStack.parseOptional(provider, nbt.getCompound(RagiumConst.ITEM)), false)
     }
 
     final override fun onContentsChanged() {

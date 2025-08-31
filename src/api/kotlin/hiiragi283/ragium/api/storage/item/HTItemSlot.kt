@@ -197,8 +197,6 @@ interface HTItemSlot :
     val count: Int get() = getStack().count
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        if (!isEmpty) {
-            put(RagiumConst.ITEM, getStack().save(provider))
-        }
+        put(RagiumConst.ITEM, getStack().saveOptional(provider))
     }
 }
