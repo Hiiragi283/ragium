@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.item
+package hiiragi283.ragium.common.storage.item.slot
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.extension.tankRange
@@ -39,7 +39,7 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                HTMultiCapability.FLUID.getCapability(stack)?.let { handler: IFluidHandlerItem ->
+                HTMultiCapability.Companion.FLUID.getCapability(stack)?.let { handler: IFluidHandlerItem ->
                     for (i: Int in handler.tankRange) {
                         if (tank.isFluidValid(handler.getFluidInTank(i))) return@HTFluidFuelItemStackSlot false
                     }

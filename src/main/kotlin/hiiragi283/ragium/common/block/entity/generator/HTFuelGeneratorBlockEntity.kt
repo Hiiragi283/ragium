@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
-import hiiragi283.ragium.common.storage.item.HTFluidFuelItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos

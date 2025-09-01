@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import net.minecraft.client.gui.GuiGraphics

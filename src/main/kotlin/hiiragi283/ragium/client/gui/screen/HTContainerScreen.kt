@@ -1,14 +1,13 @@
-package hiiragi283.ragium.api.gui.screen
+package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.container.HTContainerMenu
 import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
+import hiiragi283.ragium.client.gui.component.HTEnergyNetworkWidget
+import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.Component
@@ -58,23 +57,19 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: 
 
     val startY: Int get() = (height - imageHeight) / 2
 
-    fun createFluidWidget(index: Int, x: Int, y: Int): HTFluidWidget {
+    fun createFluidWidget(index: Int, x: Int, y: Int): HTFluidHandlerWidget {
         val handler: IFluidHandler? =
             ((menu as? HTContainerWithContextMenu<*>)?.context as? HTHandlerBlockEntity)?.getFluidHandler(null)
-        val widget: HTFluidWidget = RagiumAPI.getInstance().createFluidWidget(handler, index, startX + x, startY + y)
-        addRenderableWidget(widget.getWidget())
-        return widget
+        return HTFluidHandlerWidget(handler, index, startX + x, startY + y).apply(::addRenderableWidget)
     }
 
     fun createEnergyWidget(
         key: ResourceKey<Level>,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
-    ): AbstractWidget = RagiumAPI
-        .getInstance()
-        .createEnergyWidget(
-            key,
-            startX + x,
-            startY + y,
-        ).apply(::addRenderableWidget)
+    ): HTEnergyNetworkWidget = HTEnergyNetworkWidget(
+        key,
+        startX + x,
+        startY + y,
+    ).apply(::addRenderableWidget)
 }

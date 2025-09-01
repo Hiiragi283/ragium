@@ -460,7 +460,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        val modifier: Int = stack.getEnchantmentLevel(RagiumAPI.getInstance().getCapabilityEnch()) + 1
+        val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
         factory(stack, capacity * modifier)
     }
 

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.item
+package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.extension.tankRange
 import hiiragi283.ragium.api.storage.HTContentListener

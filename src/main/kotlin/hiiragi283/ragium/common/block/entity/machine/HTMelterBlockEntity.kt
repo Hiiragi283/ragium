@@ -14,7 +14,7 @@ import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
-import hiiragi283.ragium.common.storage.item.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance

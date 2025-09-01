@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.common.storage.item.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.util.function.Predicate

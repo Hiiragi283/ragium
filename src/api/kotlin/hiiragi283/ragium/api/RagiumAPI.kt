@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
@@ -17,7 +15,6 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
-import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -31,12 +28,10 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
 
 interface RagiumAPI {
@@ -141,21 +136,6 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTContainerScreen.createFluidWidget]
-     */
-    fun createFluidWidget(
-        handler: IFluidHandler?,
-        index: Int,
-        x: Int,
-        y: Int,
-    ): HTFluidWidget
-
-    /**
-     * @see [HTContainerScreen.createEnergyWidget]
-     */
-    fun createEnergyWidget(key: ResourceKey<Level>, x: Int, y: Int): AbstractWidget
-
-    /**
      * @see [HTResultHelper.item]
      */
     fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult
@@ -164,8 +144,6 @@ interface RagiumAPI {
      * @see [HTResultHelper.fluid]
      */
     fun createFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, component: DataComponentPatch): HTFluidResult
-
-    fun getCapabilityEnch(): ResourceKey<Enchantment>
 
     /**
      * @see [HTComponentEnergyStorage]

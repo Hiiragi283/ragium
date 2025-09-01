@@ -6,7 +6,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.createItemStack
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -17,19 +16,15 @@ import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.client.gui.component.HTEnergyNetworkWidget
-import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -40,13 +35,11 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -161,27 +154,11 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
-    override fun createFluidWidget(
-        handler: IFluidHandler?,
-        index: Int,
-        x: Int,
-        y: Int,
-    ): HTFluidWidget = HTFluidHandlerWidget(
-        handler,
-        index,
-        x,
-        y,
-    )
-
-    override fun createEnergyWidget(key: ResourceKey<Level>, x: Int, y: Int): AbstractWidget = HTEnergyNetworkWidget(key, x, y)
-
     override fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult =
         HTItemResultImpl(entry, amount, component)
 
     override fun createFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, component: DataComponentPatch): HTFluidResult =
         HTFluidResultImpl(entry, amount, component)
-
-    override fun getCapabilityEnch(): ResourceKey<Enchantment> = RagiumEnchantments.CAPACITY
 
     override fun getEnergyComponent(): DataComponentType<Int> = RagiumDataComponents.ENERGY.get()
 

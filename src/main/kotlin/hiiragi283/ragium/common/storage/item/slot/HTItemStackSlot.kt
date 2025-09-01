@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.item
+package hiiragi283.ragium.common.storage.item.slot
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.data.BiCodec

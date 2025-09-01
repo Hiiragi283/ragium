@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
-import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
