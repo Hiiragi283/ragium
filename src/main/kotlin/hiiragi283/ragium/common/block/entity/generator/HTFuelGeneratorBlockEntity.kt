@@ -7,10 +7,11 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
@@ -51,11 +52,15 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         return HTSimpleItemSlotHolder(this, listOf(slot), listOf())
     }
 
-    protected lateinit var tank: HTFluidStackTank
+    protected lateinit var tank: HTVariableFluidStackTank
         private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
-        tank = HTFluidStackTank.input(listener, 8000, filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 })
+        tank = HTVariableFluidStackTank.input(
+            listener,
+            RagiumConfig.CONFIG.generatorInputTankCapacity,
+            filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 },
+        )
         return HTSimpleFluidTankHolder.input(this, tank)
     }
 

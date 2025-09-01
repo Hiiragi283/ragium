@@ -1,6 +1,5 @@
 package hiiragi283.ragium.util.variant
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
@@ -19,6 +18,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -48,7 +48,7 @@ enum class HTMachineVariant(
     SIMULATOR(::HTSimulatorBlockEntity, HTTierType.ELITE, "Simulation Chamber", "シミュレーション室"),
     ;
 
-    val energyUsage: Int get() = RagiumAPI.getConfig().getProcessorEnergyUsage(serializedName)
+    val energyUsage: Int get() = RagiumConfig.CONFIG.machineEnergyUsage[this]!!.asInt
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.MACHINES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

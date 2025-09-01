@@ -15,10 +15,12 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.IntSupplier
 
 enum class HTDeviceVariant(
     factory: (BlockPos, BlockState) -> HTBlockEntity,
@@ -44,6 +46,8 @@ enum class HTDeviceVariant(
     // Creative
     CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTTierType.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
+
+    val tickRate: IntSupplier get() = RagiumConfig.CONFIG.deviceTickRate[this]!!
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

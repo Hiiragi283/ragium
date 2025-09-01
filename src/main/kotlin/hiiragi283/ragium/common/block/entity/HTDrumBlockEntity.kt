@@ -5,8 +5,9 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
@@ -26,12 +27,14 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     HTFluidInteractable {
     constructor(variant: HTDrumVariant, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    private lateinit var tank: HTFluidStackTank
+    private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.create(listener, 8000)
+        tank = createTank(listener)
         return HTSimpleFluidTankHolder.generic(null, tank)
     }
+
+    protected abstract fun createTank(listener: HTContentListener): HTVariableFluidStackTank
 
     override fun onRightClicked(
         state: BlockState,
@@ -69,11 +72,23 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     //    Impl    //
 
-    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state)
+    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
+        override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
+            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.smallDrumCapacity)
+    }
 
-    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state)
+    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
+        override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
+            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.mediumDrumCapacity)
+    }
 
-    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state)
+    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
+        override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
+            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.largeDrumCapacity)
+    }
 
-    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state)
+    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
+        override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
+            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.hugeDrumCapacity)
+    }
 }

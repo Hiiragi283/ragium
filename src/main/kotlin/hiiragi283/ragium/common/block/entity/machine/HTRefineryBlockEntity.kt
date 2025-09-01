@@ -10,10 +10,11 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
@@ -49,13 +50,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 
-    private lateinit var inputTank: HTFluidStackTank
-    private lateinit var outputTank: HTFluidStackTank
+    private lateinit var inputTank: HTVariableFluidStackTank
+    private lateinit var outputTank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val capacity = 8000
-        inputTank = HTFluidStackTank.input(listener, capacity)
-        outputTank = HTFluidStackTank.output(listener, capacity)
+        inputTank = HTVariableFluidStackTank.input(listener, RagiumConfig.CONFIG.refineryInputTankCapacity)
+        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.refineryOutputTankCapacity)
         return HTSimpleFluidTankHolder(this, inputTank, outputTank, null)
     }
 

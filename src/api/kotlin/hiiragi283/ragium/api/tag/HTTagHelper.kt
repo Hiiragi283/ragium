@@ -20,7 +20,7 @@ object HTTagHelper {
 
     @JvmStatic
     fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
-        for (modId: String in RagiumAPI.getConfig().getTagOutputPriority()) {
+        for (modId: String in RagiumAPI.getInstance().getTagOutputPriority()) {
             val foundHolder: Holder<T>? = getFirstHolder(holderSet, modId)
             if (foundHolder != null) return Optional.of(foundHolder)
         }

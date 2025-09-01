@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -18,7 +18,7 @@ class HTMilkCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidCollectorBlockEntity(HTDeviceVariant.MILK_COLLECTOR, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         val area = AABB(pos.above())
-        val multiplier: Int = RagiumAPI.getConfig().getMilkDrainMultiplier()
+        val multiplier: Int = RagiumConfig.CONFIG.milkCollectorMultiplier.asInt
         // Milk from Cow
         val cows: List<Cow> = level.getEntitiesOfClass(Cow::class.java, area)
         if (cows.isNotEmpty()) {

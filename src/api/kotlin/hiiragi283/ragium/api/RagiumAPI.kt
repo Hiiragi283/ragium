@@ -57,9 +57,6 @@ interface RagiumAPI {
             }
             return instance
         }
-
-        @JvmStatic
-        fun getConfig(): Config = getInstance().getConfigImpl()
     }
 
     //    Addon    //
@@ -91,35 +88,7 @@ interface RagiumAPI {
 
     //    Config    //
 
-    fun getConfigImpl(): Config
-
-    interface Config {
-        // Generator
-        fun getGeneratorEnergyRate(key: String): Int
-
-        // Machine
-        fun getProcessorEnergyUsage(key: String): Int
-
-        fun getDefaultNetworkCapacity(): Int
-
-        // Device
-        fun getDeviceTankCapacity(): Int
-
-        fun getEntityCollectorRange(): Int
-
-        fun getExpCollectorMultiplier(): Int
-
-        fun getMilkDrainMultiplier(): Int
-
-        // Drum
-        fun getDrumCapacity(key: String): Int
-
-        // Recipe
-        fun getTagOutputPriority(): List<String>
-
-        // World
-        fun disableMilkCure(): Boolean
-    }
+    fun getTagOutputPriority(): List<String>
 
     //    Platform    //
 

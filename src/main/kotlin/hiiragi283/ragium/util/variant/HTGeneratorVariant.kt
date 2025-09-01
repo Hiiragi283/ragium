@@ -1,6 +1,5 @@
 package hiiragi283.ragium.util.variant
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
@@ -11,6 +10,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -30,7 +30,7 @@ enum class HTGeneratorVariant(
     SOLAR(::HTSolarGeneratorBlockEntity, HTTierType.ADVANCED, "Solar", "太陽光"),
     ;
 
-    val energyRate: Int get() = RagiumAPI.getConfig().getGeneratorEnergyRate(serializedName)
+    val energyRate: Int get() = RagiumConfig.CONFIG.generatorEnergyRate[this]!!.asInt
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -23,10 +23,10 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
     HTFluidInteractable {
-    private lateinit var tank: HTFluidStackTank
+    private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.output(listener, RagiumAPI.getConfig().getDeviceTankCapacity())
+        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.deviceCollectorTankCapacity)
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
@@ -36,12 +36,12 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 範囲内のExp Orbを取得する
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
-            blockPos.getRangedAABB(RagiumAPI.getConfig().getEntityCollectorRange()),
+            blockPos.getRangedAABB(RagiumConfig.CONFIG.deviceCollectorEntityRange.asDouble),
         )
         if (expOrbs.isEmpty()) return false
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * RagiumAPI.getConfig().getExpCollectorMultiplier()
+            val fluidAmount: Int = entity.value * RagiumConfig.CONFIG.expCollectorMultiplier.asInt
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
             if (tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) {
                 tank.insert(stack, false, HTStorageAccess.INTERNAl)

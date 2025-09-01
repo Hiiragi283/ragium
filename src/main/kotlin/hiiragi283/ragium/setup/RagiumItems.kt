@@ -37,6 +37,7 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
@@ -443,7 +444,13 @@ object RagiumItems {
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            HTCapabilityCodec.registerFluid(event, providerEnch(variant.capacity, ::HTComponentFluidHandler), variant)
+            val capacity: Int = when (variant) {
+                HTDrumVariant.SMALL -> RagiumConfig::smallDrumCapacity
+                HTDrumVariant.MEDIUM -> RagiumConfig::mediumDrumCapacity
+                HTDrumVariant.LARGE -> RagiumConfig::largeDrumCapacity
+                HTDrumVariant.HUGE -> RagiumConfig::hugeDrumCapacity
+            }(RagiumConfig.CONFIG).asInt
+            HTCapabilityCodec.registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
         }
         HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 

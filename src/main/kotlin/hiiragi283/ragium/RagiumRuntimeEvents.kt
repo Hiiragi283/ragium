@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -220,7 +221,7 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun onEffectRemove(event: MobEffectEvent.Remove) {
         val cure: EffectCure = event.cure ?: return
-        if (cure == EffectCures.MILK && RagiumAPI.getConfig().disableMilkCure()) {
+        if (cure == EffectCures.MILK && RagiumConfig.CONFIG.disableMilkCure.asBoolean) {
             event.isCanceled = true
         }
     }

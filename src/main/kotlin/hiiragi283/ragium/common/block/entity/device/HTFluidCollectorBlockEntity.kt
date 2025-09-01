@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -23,10 +23,10 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(variant, pos, state),
     HTFluidInteractable {
-    private lateinit var tank: HTFluidStackTank
+    private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.output(listener, RagiumAPI.getConfig().getDeviceTankCapacity())
+        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.deviceCollectorTankCapacity)
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 

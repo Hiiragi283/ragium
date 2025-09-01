@@ -9,6 +9,7 @@ import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -31,6 +32,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
@@ -74,7 +76,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onModConstruct(eventBus, dist)
         }
 
-        RagiumConfig.register(container)
+        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.CONFIG_SPEC)
 
         LOGGER.info("Ragium loaded!")
     }

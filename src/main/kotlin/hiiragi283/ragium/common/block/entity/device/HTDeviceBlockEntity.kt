@@ -7,16 +7,22 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.IntSupplier
 
-abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(type, pos, state) {
+abstract class HTDeviceBlockEntity(
+    private val tickRate: IntSupplier,
+    type: HTDeferredBlockEntityType<*>,
+    pos: BlockPos,
+    state: BlockState,
+) : HTBlockEntity(type, pos, state) {
     constructor(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) : this(
+        variant.tickRate,
         variant.blockEntityHolder,
         pos,
         state,
     )
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= 20) {
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= tickRate.asInt) {
         ticks = 0
         actionServer(level, pos, state)
     } else {

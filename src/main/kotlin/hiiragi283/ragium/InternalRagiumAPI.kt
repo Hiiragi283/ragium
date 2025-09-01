@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -146,9 +147,11 @@ class InternalRagiumAPI : RagiumAPI {
     override fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage? =
         getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
-    //    Platform    //
+    //    Config    //
 
-    override fun getConfigImpl(): RagiumAPI.Config = RagiumConfig
+    override fun getTagOutputPriority(): List<String> = RagiumConfig.CONFIG.tagOutputPriority.get()
+
+    //    Platform    //
 
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 

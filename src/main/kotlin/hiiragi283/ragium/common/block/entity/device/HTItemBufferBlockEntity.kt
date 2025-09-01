@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
@@ -9,6 +8,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -54,7 +54,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
-            blockPos.getRangedAABB(RagiumAPI.getConfig().getEntityCollectorRange()),
+            blockPos.getRangedAABB(RagiumConfig.CONFIG.deviceCollectorEntityRange.asDouble),
         )
         if (itemEntities.isEmpty()) return false
         // それぞれのItem Entityに対して回収を行う

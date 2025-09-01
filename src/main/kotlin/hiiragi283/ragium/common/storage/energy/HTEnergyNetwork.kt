@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storage.energy
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
@@ -11,7 +10,7 @@ import kotlin.math.min
 class HTEnergyNetwork(private var amount: Int, private var capacity: Int) : IEnergyStorageModifiable {
     companion object {
         @JvmStatic
-        private fun getInitialCapacity(): Int = RagiumAPI.getConfig().getDefaultNetworkCapacity()
+        private fun getInitialCapacity(): Int = 1_000_000
 
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTEnergyNetwork> = BiCodec.composite(

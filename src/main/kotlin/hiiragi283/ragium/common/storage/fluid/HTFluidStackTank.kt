@@ -60,7 +60,8 @@ open class HTFluidStackTank protected constructor(
         )
     }
 
-    private var stack: FluidStack = FluidStack.EMPTY
+    @JvmField
+    protected var stack: FluidStack = FluidStack.EMPTY
 
     override fun getStack(): FluidStack = stack
 

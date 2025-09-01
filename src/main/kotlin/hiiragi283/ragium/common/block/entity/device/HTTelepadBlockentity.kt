@@ -6,8 +6,9 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -37,12 +38,12 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
             .allMatch(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
-    private lateinit var tank: HTFluidStackTank
+    private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.input(
+        tank = HTVariableFluidStackTank.input(
             listener,
-            RagiumAPI.getConfig().getDeviceTankCapacity(),
+            RagiumConfig.CONFIG.deviceCollectorTankCapacity,
             filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf,
         )
         return HTSimpleFluidTankHolder.input(null, tank)
