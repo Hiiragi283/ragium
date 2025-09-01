@@ -35,11 +35,11 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input
-        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // catalyst
-        catalystSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        catalystSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // output
-        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 

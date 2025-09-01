@@ -35,7 +35,7 @@ class HTGenericItemContainerMenu(
         @JvmStatic
         fun createSlots(rows: Int): HTItemHandler = HTItemStackHandler(
             (0 until rows * 9).map { index: Int ->
-                HTItemStackSlot.at(
+                HTItemStackSlot.create(
                     null,
                     HTSlotHelper.getSlotPosX(index % 9),
                     HTSlotHelper.getSlotPosY(index / 9),

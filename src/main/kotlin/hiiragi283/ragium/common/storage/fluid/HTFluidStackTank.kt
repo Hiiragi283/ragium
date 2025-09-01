@@ -44,7 +44,7 @@ open class HTFluidStackTank protected constructor(
             filter: Predicate<FluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
-            ALWAYS_TRUE,
+            { _: FluidStack, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
             { stack: FluidStack, _: HTStorageAccess -> canInsert.test(stack) },
             filter,
             listener,

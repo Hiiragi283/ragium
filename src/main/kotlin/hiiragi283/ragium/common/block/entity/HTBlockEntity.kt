@@ -157,13 +157,30 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         setChanged()
     }
 
-    protected val itemHandlerManager: HTItemHandlerManager?
     protected val fluidHandlerManager: HTFluidHandlerManager?
+    protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
-        itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
+        itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
+
+    // Fluid
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialFluidTanks]
+     */
+    protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleFluid]
+     */
+    override fun hasFluidHandler(): Boolean = fluidHandlerManager?.canHandle() ?: false
+
+    final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
+
+    final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
+        fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
 
     // Item
 
@@ -185,21 +202,4 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)
-
-    // Fluid
-
-    /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialFluidTanks]
-     */
-    protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
-
-    /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleFluid]
-     */
-    override fun hasFluidHandler(): Boolean = fluidHandlerManager?.canHandle() ?: false
-
-    final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
-
-    final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
-        fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
 }

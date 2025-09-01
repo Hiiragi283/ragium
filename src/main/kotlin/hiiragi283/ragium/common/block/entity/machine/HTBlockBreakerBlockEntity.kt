@@ -39,7 +39,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        toolSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        toolSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         return HTSimpleItemSlotHolder(this, listOf(toolSlot), listOf())
     }
 

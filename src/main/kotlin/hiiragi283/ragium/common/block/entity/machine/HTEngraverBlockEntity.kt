@@ -36,21 +36,15 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input
-        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // catalyst
-        catalystSlot = HTItemStackSlot.at(
-            listener,
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(2),
-            canExtract = { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL },
-            canInsert = { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL },
-        )
+        catalystSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // outputs
         outputSlots = listOf(
-            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5)),
-            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5)),
-            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5)),
-            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
+            HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5)),
+            HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5)),
+            HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5)),
+            HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
         )
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), outputSlots, catalystSlot)
     }

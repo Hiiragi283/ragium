@@ -44,9 +44,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input
-        inputSlot = HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // output
-        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 

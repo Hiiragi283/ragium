@@ -36,12 +36,12 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input
         inputSlots = listOf(
-            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.atManualOut(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
         )
         // output
-        outputSlot = HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         return HTSimpleItemSlotHolder(this, inputSlots, listOf(outputSlot))
     }
 

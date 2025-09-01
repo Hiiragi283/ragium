@@ -30,24 +30,24 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         // extract
-        extractSlot = HTItemStackSlot.atManualOut(
+        extractSlot = HTItemStackSlot.create(
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ItemStack ->
                 val energyStorage: IEnergyStorage =
-                    HTMultiCapability.ENERGY.getCapability(stack) ?: return@atManualOut false
+                    HTMultiCapability.ENERGY.getCapability(stack) ?: return@create false
                 energyStorage.energyStored > 0 && energyStorage.canExtract()
             },
         )
         // insert
-        insertSlot = HTItemStackSlot.atManualOut(
+        insertSlot = HTItemStackSlot.create(
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ItemStack ->
                 val energyStorage: IEnergyStorage =
-                    HTMultiCapability.ENERGY.getCapability(stack) ?: return@atManualOut false
+                    HTMultiCapability.ENERGY.getCapability(stack) ?: return@create false
                 energyStorage.energyStored < energyStorage.maxEnergyStored && energyStorage.canReceive()
             },
         )

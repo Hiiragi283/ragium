@@ -7,11 +7,10 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
-import hiiragi283.ragium.common.storage.item.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.HTFluidFuelItemStackSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
@@ -36,18 +35,20 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         state,
     ),
     HTFluidInteractable {
-    protected lateinit var fuelSlot: HTItemSlot
+    protected lateinit var slot: HTFluidFuelItemStackSlot
         private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // fuel
-        fuelSlot = HTItemStackSlot.atManualOut(
-            this,
+        slot = HTFluidFuelItemStackSlot.create(
+            tank,
+            ::getFuelValue,
+            ::getFuelStack,
+            listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = { stack: ItemStack -> getFuelValue(stack) > 0 },
         )
-        return HTSimpleItemSlotHolder(this, listOf(fuelSlot), listOf())
+        return HTSimpleItemSlotHolder(this, listOf(slot), listOf())
     }
 
     protected lateinit var tank: HTFluidStackTank
@@ -70,7 +71,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         network: IEnergyStorage,
     ): Boolean {
         // スロット内のアイテムを液体に変換する
-        convertToFuel()
+        slot.fillOrBurn()
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(tank.getStack())
         if (required <= 0) return false
@@ -81,30 +82,6 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
             true
         } else {
             false
-        }
-    }
-
-    /**
-     * @see [mekanism.generators.common.slot.FluidFuelInventorySlot.fillOrBurn]
-     */
-    protected fun convertToFuel() {
-        val slot: HTItemSlot = fuelSlot
-        if (!slot.isEmpty) {
-            val stack: ItemStack = slot.getStack()
-            val remainAmount: Int = tank.getNeeded()
-            if (remainAmount > 0) {
-                val fuelValue: Int = getFuelValue(stack)
-                if (fuelValue in 1..remainAmount) {
-                    val hasContainer: Boolean = stack.hasCraftingRemainingItem()
-                    if (hasContainer && stack.count > 1) return
-                    tank.insert(getFuelStack(fuelValue), false, HTStorageAccess.INTERNAl)
-                    if (hasContainer) {
-                        slot.setStack(stack.craftingRemainingItem)
-                    } else {
-                        slot.shrinkStack(1, false)
-                    }
-                }
-            }
         }
     }
 

@@ -45,24 +45,13 @@ open class HTItemStackSlot protected constructor(
                 BiCodec.INT.fieldOf("y"),
                 HTItemStackSlot::y,
             ) { stack: ItemStack, x: Int, y: Int ->
-                val slot: HTItemStackSlot = at(null, x, y)
+                val slot: HTItemStackSlot = create(null, x, y)
                 slot.setStack(stack)
                 slot
             }.let(BiCodec.Companion::downCast)
 
         @JvmStatic
-        fun atManualOut(
-            listener: HTContentListener?,
-            x: Int,
-            y: Int,
-            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: Predicate<ItemStack> = Predicates.alwaysTrue(),
-            canInsert: Predicate<ItemStack> = Predicates.alwaysTrue(),
-            filter: Predicate<ItemStack> = Predicates.alwaysTrue(),
-        ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y)
-
-        @JvmStatic
-        fun at(
+        fun create(
             listener: HTContentListener?,
             x: Int,
             y: Int,
@@ -71,6 +60,39 @@ open class HTItemStackSlot protected constructor(
             canInsert: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             filter: Predicate<ItemStack> = Predicates.alwaysTrue(),
         ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y)
+
+        @JvmStatic
+        fun input(
+            listener: HTContentListener?,
+            x: Int,
+            y: Int,
+            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+            canInsert: Predicate<ItemStack> = Predicates.alwaysTrue(),
+            filter: Predicate<ItemStack> = canInsert,
+        ): HTItemStackSlot = create(
+            listener,
+            x,
+            y,
+            limit,
+            { _: ItemStack, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
+            { stack: ItemStack, _: HTStorageAccess -> canInsert.test(stack) },
+            filter,
+        )
+
+        @JvmStatic
+        fun output(
+            listener: HTContentListener?,
+            x: Int,
+            y: Int,
+            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+        ): HTItemStackSlot = create(
+            listener,
+            x,
+            y,
+            limit,
+            ALWAYS_TRUE,
+            { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+        )
     }
 
     protected constructor(
@@ -83,7 +105,7 @@ open class HTItemStackSlot protected constructor(
         y: Int,
     ) : this(
         limit,
-        { stack: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL && canExtract.test(stack) },
+        { stack: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL || canExtract.test(stack) },
         { stack: ItemStack, _: HTStorageAccess -> canInsert.test(stack) },
         filter,
         listener,

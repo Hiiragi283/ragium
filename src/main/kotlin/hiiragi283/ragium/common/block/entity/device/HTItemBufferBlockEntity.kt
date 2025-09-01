@@ -27,7 +27,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         slots = (0..8).map { index: Int ->
-            HTItemStackSlot.at(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
+            HTItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
         }
         return HTSimpleItemSlotHolder(null, slots, listOf())
     }

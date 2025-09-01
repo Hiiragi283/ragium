@@ -117,7 +117,7 @@ fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
 
 fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
     val handler: IFluidHandlerItem = HTFluidItem.getHandler(stack) ?: return
-    for (i: Int in (0 until handler.tanks)) {
+    for (i: Int in handler.tankRange) {
         addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
     }
 }
