@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -148,6 +149,11 @@ interface RagiumAPI {
         x: Int,
         y: Int,
     ): HTFluidWidget
+
+    /**
+     * @see [HTContainerScreen.createEnergyWidget]
+     */
+    fun createEnergyWidget(key: ResourceKey<Level>, x: Int, y: Int): AbstractWidget
 
     /**
      * @see [HTResultHelper.item]

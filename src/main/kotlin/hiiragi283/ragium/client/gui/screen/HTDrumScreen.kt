@@ -23,8 +23,7 @@ class HTDrumScreen(menu: HTBlockEntityContainerMenu<HTDrumBlockEntity>, inventor
 
     override fun init() {
         super.init()
-        fluidWidget =
-            addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0)))
+        fluidWidget = createFluidWidget(0, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
     }
 
     //    HTFluidScreen    //

@@ -45,7 +45,7 @@ class HTPotionBundleItem(properties: Properties) : Item(properties) {
         // 　シフト中はGUIを開く
         return when {
             player.isShiftKeyDown -> InteractionResultHolder(
-                RagiumMenuTypes.GENERIC_9x1.openMenu(
+                RagiumMenuTypes.POTION_BUNDLE.openMenu(
                     player,
                     usedHand,
                     stack,

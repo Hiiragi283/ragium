@@ -12,7 +12,4 @@ object HTSlotHelper {
 
     @JvmStatic
     fun getSlotPosY(index: Double): Int = 18 + (index * 18).toInt()
-
-    @JvmStatic
-    fun isIn(value: Int, start: Int, range: Int): Boolean = value in (start..start + range)
 }

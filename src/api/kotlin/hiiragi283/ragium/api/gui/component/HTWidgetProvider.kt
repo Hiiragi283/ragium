@@ -3,12 +3,8 @@ package hiiragi283.ragium.api.gui.component
 import net.minecraft.client.gui.components.AbstractWidget
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-interface HTFluidWidget :
-    HTWidgetExtension,
-    HTWidgetProvider<AbstractWidget> {
-    var stack: FluidStack
-    val capacity: Int
+fun interface HTWidgetProvider<T : AbstractWidget> {
+    fun getWidget(): T
 }

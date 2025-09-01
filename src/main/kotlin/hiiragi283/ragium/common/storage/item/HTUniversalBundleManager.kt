@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.inventory.container.HTGenericItemContainerMenu
+import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -34,7 +34,7 @@ class HTUniversalBundleManager private constructor(map: Map<DyeColor, HTItemHand
     private class BundleHandler(private val delegate: HTItemHandler) :
         HTItemHandler by delegate,
         HTMenuCallback {
-        constructor() : this(HTGenericItemContainerMenu.createSlots(3))
+        constructor() : this(HTGenericContainerRows.createHandler(3))
 
         constructor(slots: List<HTItemSlot>) : this(HTItemStackHandler(slots, null))
 

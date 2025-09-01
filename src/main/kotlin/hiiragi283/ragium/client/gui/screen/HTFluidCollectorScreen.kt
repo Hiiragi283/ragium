@@ -2,9 +2,9 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
@@ -32,7 +32,7 @@ class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBl
             ),
         )
 
-        fluidWidget = addRenderableWidget(createFluidWidget(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)))
+        fluidWidget = createFluidWidget(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
 
     //    HTFluidScreen    //

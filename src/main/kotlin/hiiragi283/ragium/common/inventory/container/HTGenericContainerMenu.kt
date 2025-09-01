@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.inventory.container
 
-import hiiragi283.ragium.api.inventory.container.HTBaseGenericContainerMenu
 import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -24,11 +23,11 @@ class HTGenericContainerMenu(
         inventory,
         context,
     ),
-    HTBaseGenericContainerMenu {
+    HTGenericContainerRows {
     companion object {
         @JvmStatic
         fun threeRow(containerId: Int, inventory: Inventory, handler: HTItemHandler): HTGenericContainerMenu =
-            HTGenericContainerMenu(RagiumMenuTypes.GENERIC_9x3, containerId, inventory, handler, 3)
+            HTGenericContainerMenu(RagiumMenuTypes.UNIVERSAL_BUNDLE, containerId, inventory, handler, 3)
     }
 
     init {

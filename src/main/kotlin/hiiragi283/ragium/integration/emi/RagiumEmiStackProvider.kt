@@ -7,7 +7,7 @@ import dev.emi.emi.api.stack.EmiStackInteraction
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTContainerScreen
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
-import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.util.HTBounds
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.inventory.Slot
 
@@ -16,19 +16,15 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
         if (screen is HTContainerScreen<*>) {
             // Get stack from slots
             for (slot: Slot in screen.menu.slots) {
-                if (HTSlotHelper.isIn(x, screen.startX + slot.x, 18)) {
-                    if (HTSlotHelper.isIn(y, screen.startY + slot.y, 18)) {
-                        return EmiStackInteraction(EmiStack.of(slot.item), null, false)
-                    }
+                if (HTBounds.createSlot(screen.startX + slot.x, screen.startY + slot.y).contains(x, y)) {
+                    return EmiStackInteraction(EmiStack.of(slot.item), null, false)
                 }
             }
             // Get stack from tanks
             if (screen is HTFluidScreen) {
                 for (widget: HTFluidWidget in screen.iterator()) {
-                    if (HTSlotHelper.isIn(x, widget.x, widget.width)) {
-                        if (HTSlotHelper.isIn(y, widget.y, widget.height)) {
-                            return EmiStackInteraction(NeoForgeEmiStack.of(widget.stack), null, false)
-                        }
+                    if (widget.getBounds().contains(x, y)) {
+                        return EmiStackInteraction(NeoForgeEmiStack.of(widget.stack), null, false)
                     }
                 }
             }

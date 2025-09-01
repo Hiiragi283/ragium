@@ -18,6 +18,11 @@ import net.neoforged.neoforge.common.MutableDataComponentHolder
 class HTPotionBundleItemHandler(parent: MutableDataComponentHolder, size: Int) :
     HTComponentItemHandler(parent, size),
     HTMenuCallback {
+    companion object {
+        @JvmStatic
+        fun filterPotion(stack: ItemStack): Boolean = stack.isEmpty || stack.`is`(Items.POTION)
+    }
+
     override fun createSlot(slot: Int): HTItemSlot = PotionSlot(slot)
 
     override fun openMenu(player: Player) {
@@ -37,10 +42,10 @@ class HTPotionBundleItemHandler(parent: MutableDataComponentHolder, size: Int) :
 
         override fun getLimit(stack: ItemStack): Int = 1
 
-        override fun isItemValid(stack: ItemStack): Boolean = stack.isEmpty || stack.`is`(Items.POTION)
+        override fun isItemValid(stack: ItemStack): Boolean = filterPotion(stack)
 
         override fun createContainerSlot(): Slot =
-            HTContainerItemSlot(this, HTSlotHelper.getSlotPosX(slot % 9), HTSlotHelper.getSlotPosY(slot / 9), null)
+            HTContainerItemSlot(this, HTSlotHelper.getSlotPosX(slot % 9), HTSlotHelper.getSlotPosY(slot / 9), ::setStack)
 
         override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
         }

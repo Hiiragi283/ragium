@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity

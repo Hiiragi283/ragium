@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.gui.component
+package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.energyText

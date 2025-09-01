@@ -1,12 +1,17 @@
-package hiiragi283.ragium.api.gui.component
+package hiiragi283.ragium.client.gui.component
 
+import hiiragi283.ragium.api.gui.component.HTWidgetExtension
+import hiiragi283.ragium.api.util.HTBounds
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.network.chat.Component
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 
 /**
  * @see [me.desht.pneumaticcraft.client.gui.widget.WidgetTextFieldNumber]
  */
+@OnlyIn(Dist.CLIENT)
 class HTNumberEditBox<N>(
     private val getter: (String) -> N,
     font: Font,
@@ -21,7 +26,8 @@ class HTNumberEditBox<N>(
         width,
         height,
         Component.empty(),
-    ) where N : Number, N : Comparable<N> {
+    ),
+    HTWidgetExtension where N : Number, N : Comparable<N> {
     var number: N
         get() = value.let(getter)
         set(value) {
@@ -29,4 +35,6 @@ class HTNumberEditBox<N>(
         }
 
     var range: ClosedRange<N>? = null
+
+    override fun getBounds(): HTBounds = HTBounds(x, y, width, height)
 }

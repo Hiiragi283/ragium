@@ -1,9 +1,12 @@
 package hiiragi283.ragium.common.inventory
 
+import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
 
 class HTSlotConfigurationMenu(containerId: Int, inventory: Inventory, blockEntity: HTMachineBlockEntity) :
-    HTBlockEntityContainerMenu<HTMachineBlockEntity>(RagiumMenuTypes.SLOT_CONFIG, containerId, inventory, blockEntity)
+    HTContainerWithContextMenu<HTMachineBlockEntity>(RagiumMenuTypes.SLOT_CONFIG, containerId, inventory, blockEntity) {
+    override fun stillValid(player: Player): Boolean = !context.isRemoved && context.level?.isInWorldBounds(context.blockPos) == true
+}

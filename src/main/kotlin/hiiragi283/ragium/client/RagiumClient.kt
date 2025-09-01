@@ -222,8 +222,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerMachine(RagiumMenuTypes.SINGLE_ITEM)
         registerMachine(RagiumMenuTypes.SMELTER)
 
-        event.register(RagiumMenuTypes.GENERIC_9x1.get(), ::HTGenericScreen)
-        event.register(RagiumMenuTypes.GENERIC_9x3.get(), ::HTGenericScreen)
+        event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTGenericScreen)
+        event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)

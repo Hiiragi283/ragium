@@ -24,7 +24,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTGenericItemContainerMenu
+import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
+import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -43,16 +44,16 @@ object RagiumMenuTypes {
     val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu> =
         REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu, ::getBlockEntityFromBuf)
 
-    //    Generic    //
+    //    Item    //
 
     @JvmField
-    val GENERIC_9x1: HTDeferredMenuType<HTGenericItemContainerMenu> =
-        REGISTER.registerItemType("generic_9x1", HTGenericItemContainerMenu::oneRow)
+    val POTION_BUNDLE: HTDeferredMenuType<HTPotionBundleContainerMenu> =
+        REGISTER.registerItemType("potion_bundle", ::HTPotionBundleContainerMenu)
 
     @JvmField
-    val GENERIC_9x3: HTDeferredMenuType<HTGenericContainerMenu> =
-        REGISTER.registerType("generic_9x3", HTGenericContainerMenu::threeRow) {
-            HTGenericItemContainerMenu.createSlots(3)
+    val UNIVERSAL_BUNDLE: HTDeferredMenuType<HTGenericContainerMenu> =
+        REGISTER.registerType("universal_bundle", HTGenericContainerMenu::threeRow) {
+            HTGenericContainerRows.createHandler(3)
         }
 
     //    Generator    //

@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.gui.component.HTEnergyNetworkWidget
-import hiiragi283.ragium.api.gui.component.HTProgressWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
+import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -29,7 +29,7 @@ open class HTMachineScreen<BE : HTMachineBlockEntity>(
             }
     }
 
-    protected lateinit var energyWidget: HTEnergyNetworkWidget
+    protected lateinit var energyWidget: AbstractWidget
         private set
 
     override fun init() {
@@ -37,7 +37,7 @@ open class HTMachineScreen<BE : HTMachineBlockEntity>(
         // Progress Widget
         addProgressBar(::addRenderableOnly)
         // Energy Widget
-        energyWidget = addRenderableWidget(createEnergyWidget(menu.context.getDimension()))
+        energyWidget = createEnergyWidget(menu.context.getDimension())
     }
 
     protected open fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

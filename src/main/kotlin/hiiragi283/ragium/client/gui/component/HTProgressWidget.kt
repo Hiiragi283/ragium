@@ -1,14 +1,15 @@
-package hiiragi283.ragium.api.gui.component
+package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 
+@OnlyIn(Dist.CLIENT)
 class HTProgressWidget(
     private val texture: ResourceLocation,
     private val levelGetter: () -> Float,
@@ -16,7 +17,7 @@ class HTProgressWidget(
     y: Int,
     width: Int,
     height: Int,
-) : AbstractWidget(x, y, width, height, Component.empty()) {
+) : HTAbstractWidget(x, y, width, height, Component.empty()) {
     companion object {
         @JvmStatic
         fun arrow(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
@@ -49,6 +50,4 @@ class HTProgressWidget(
             height,
         )
     }
-
-    override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {}
 }

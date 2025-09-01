@@ -1,8 +1,9 @@
-package hiiragi283.ragium.api.gui.component
+package hiiragi283.ragium.client.gui.component
 
 import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.extension.drawQuad
 import hiiragi283.ragium.api.extension.setShaderColor
+import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite

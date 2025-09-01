@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.client.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.client.gui.component.HTFluidHandlerWidget
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
@@ -28,6 +29,7 @@ import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
 import hiiragi283.ragium.util.HTWrappedTable
 import hiiragi283.ragium.util.material.RagiumMaterialType
+import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -170,6 +172,8 @@ class InternalRagiumAPI : RagiumAPI {
         x,
         y,
     )
+
+    override fun createEnergyWidget(key: ResourceKey<Level>, x: Int, y: Int): AbstractWidget = HTEnergyNetworkWidget(key, x, y)
 
     override fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult =
         HTItemResultImpl(entry, amount, component)
