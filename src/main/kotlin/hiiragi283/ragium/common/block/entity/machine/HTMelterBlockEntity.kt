@@ -53,8 +53,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.output(listener, variant.tankCapacity)
-        return HTSimpleFluidTankHolder.output(null, tank)
+        tank = HTFluidStackTank.output(listener, 8000)
+        return HTSimpleFluidTankHolder.output(this, tank)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

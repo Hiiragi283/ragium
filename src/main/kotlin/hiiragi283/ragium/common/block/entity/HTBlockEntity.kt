@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
+import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
@@ -15,6 +17,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
@@ -33,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
+import org.slf4j.Logger
 
 /**
  * @see [mekanism.common.tile.base.TileEntityMekanism]
@@ -51,6 +55,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     //    Ticking    //
 
     companion object {
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
+
         /**
          * @see [mekanism.common.tile.base.TileEntityMekanism.tickClient]
          */
@@ -141,6 +148,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         reader.read(BiCodecs.TEXT, "custom_name").ifSuccess { customName = it }
         // Custom
         readNbt(reader)
+    }
+
+    override fun sendPassivePacket(level: ServerLevel) {
+        super.sendPassivePacket(level)
+        if (hasFluidHandler()) {
+            val tanks: List<HTFluidTank> = getFluidTanks(getFluidSideFor())
+            for (i: Int in tanks.indices) {
+                HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this, i))
+            }
+        }
     }
 
     //    Nameable    //

@@ -5,9 +5,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
-import hiiragi283.ragium.client.network.HTTelepadUpdatePacket
-import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
-import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
+import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
+import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
+import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -109,10 +110,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
         with(RagiumPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
             // Server -> Client
-            registerS2C(HTBlockEntityUpdatePacket.TYPE, HTBlockEntityUpdatePacket.STREAM_CODEC)
+            registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
+            registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
             // Client -> Server
-            registerC2S(HTTelepadUpdatePacket.TYPE, HTTelepadUpdatePacket.STREAM_CODEC)
-            registerC2S(HTTransferIOUpdatePayload.TYPE, HTTransferIOUpdatePayload.STREAM_CODEC)
+            registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
+            registerC2S(HTUpdateTransferIOPayload.TYPE, HTUpdateTransferIOPayload.STREAM_CODEC)
         }
 
         LOGGER.info("Registered packets!")

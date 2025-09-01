@@ -11,22 +11,22 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
-class HTTelepadUpdatePacket(val pos: BlockPos, val teleportPos: HTTeleportPos) : HTCustomPayload.C2S {
+class HTUpdateTelepadPacket(val pos: BlockPos, val teleportPos: HTTeleportPos) : HTCustomPayload.C2S {
     companion object {
         @JvmField
-        val TYPE = CustomPacketPayload.Type<HTTelepadUpdatePacket>(RagiumAPI.id("telepad_update"))
+        val TYPE = CustomPacketPayload.Type<HTUpdateTelepadPacket>(RagiumAPI.id("update_telepad"))
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTTelepadUpdatePacket> = StreamCodec.composite(
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTUpdateTelepadPacket> = StreamCodec.composite(
             BlockPos.STREAM_CODEC,
-            HTTelepadUpdatePacket::pos,
+            HTUpdateTelepadPacket::pos,
             HTTeleportPos.CODEC.streamCodec,
-            HTTelepadUpdatePacket::teleportPos,
-            ::HTTelepadUpdatePacket,
+            HTUpdateTelepadPacket::teleportPos,
+            ::HTUpdateTelepadPacket,
         )
     }
 
-    override fun type(): CustomPacketPayload.Type<HTTelepadUpdatePacket> = TYPE
+    override fun type(): CustomPacketPayload.Type<HTUpdateTelepadPacket> = TYPE
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
         val telepad: HTTelepadBlockentity = player.level().getBlockEntity(pos) as? HTTelepadBlockentity ?: return

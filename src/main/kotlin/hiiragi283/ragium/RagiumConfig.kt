@@ -35,8 +35,6 @@ object RagiumConfig : RagiumAPI.Config {
     override fun getGeneratorEnergyRate(key: String): Int = COMMON.generatorEnergyRate[key]?.get() ?: 0
 
     // Machine
-    override fun getMachineTankCapacity(key: String): Int = COMMON.machineTankCapacity[key]?.get() ?: 8000
-
     override fun getProcessorEnergyUsage(key: String): Int = COMMON.machineEnergyUsage[key]?.get() ?: 0
 
     override fun getDefaultNetworkCapacity(): Int = COMMON.defaultNetworkCapacity.get()
@@ -68,9 +66,6 @@ object RagiumConfig : RagiumAPI.Config {
         val generatorEnergyRate: Map<String, ModConfigSpec.IntValue>
 
         //    Machine    //
-
-        @JvmField
-        val machineTankCapacity: MutableMap<String, ModConfigSpec.IntValue> = mutableMapOf()
 
         @JvmField
         val machineEnergyUsage: Map<String, ModConfigSpec.IntValue>
@@ -115,11 +110,6 @@ object RagiumConfig : RagiumAPI.Config {
             generatorEnergyRate = HTGeneratorVariant.entries.associate { variant: HTGeneratorVariant ->
                 val name: String = variant.serializedName
                 builder.push(name)
-                // Tank Capacity
-                machineTankCapacity[name] = builder
-                    .comment("Capacity for tanks in this machine")
-                    .worldRestart()
-                    .definePositiveInt("tankCapacity", 8000)
                 // Energy Rate
                 val defaultValue: Int = when (variant.tier) {
                     HTTierType.BASIC -> 32
@@ -137,11 +127,6 @@ object RagiumConfig : RagiumAPI.Config {
             machineEnergyUsage = HTMachineVariant.entries.associate { variant: HTMachineVariant ->
                 val name: String = variant.serializedName
                 builder.push(name)
-                // Tank Capacity
-                machineTankCapacity[name] = builder
-                    .comment("Capacity for tanks in this machine")
-                    .worldRestart()
-                    .definePositiveInt("tankCapacity", 8000)
                 // Energy Usage
                 val defaultValue: Int = when (variant.tier) {
                     HTTierType.BASIC -> 16

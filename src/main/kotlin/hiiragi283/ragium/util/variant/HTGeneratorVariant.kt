@@ -31,7 +31,6 @@ enum class HTGeneratorVariant(
     ;
 
     val energyRate: Int get() = RagiumAPI.getConfig().getGeneratorEnergyRate(serializedName)
-    val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

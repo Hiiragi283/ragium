@@ -6,8 +6,9 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
+import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
-import hiiragi283.ragium.client.network.HTTelepadUpdatePacket
+import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.components.EditBox
@@ -18,7 +19,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.network.PacketDistributor
 import org.lwjgl.glfw.GLFW
 
 class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
@@ -129,7 +129,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         val teleportPos = HTTeleportPos(dim, x, y, z)
         val blockEntity: HTTelepadBlockentity = menu.context
         blockEntity.updateDestination(teleportPos)
-        PacketDistributor.sendToServer(HTTelepadUpdatePacket(blockEntity.blockPos, teleportPos))
+        HTPacketHelper.sendToServer(HTUpdateTelepadPacket(blockEntity.blockPos, teleportPos))
     }
 
     //    HTFluidScreen    //

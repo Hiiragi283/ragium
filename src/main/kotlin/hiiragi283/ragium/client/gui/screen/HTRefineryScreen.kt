@@ -36,7 +36,7 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
             HTProgressWidget.burn(
                 menu.context::progress,
                 startX + HTSlotHelper.getSlotPosX(4),
-                startY + HTSlotHelper.getSlotPosX(2),
+                startY + HTSlotHelper.getSlotPosX(1),
             ),
         )
     }

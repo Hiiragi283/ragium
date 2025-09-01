@@ -98,8 +98,6 @@ interface RagiumAPI {
         fun getGeneratorEnergyRate(key: String): Int
 
         // Machine
-        fun getMachineTankCapacity(key: String): Int
-
         fun getProcessorEnergyUsage(key: String): Int
 
         fun getDefaultNetworkCapacity(): Int

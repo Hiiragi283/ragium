@@ -2,8 +2,9 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.api.storage.HTTransferIO
-import hiiragi283.ragium.client.network.HTTransferIOUpdatePayload
+import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton
-import net.neoforged.neoforge.network.PacketDistributor
 
 @OnlyIn(Dist.CLIENT)
 class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Inventory, title: Component) :
@@ -69,7 +69,7 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
             super.onPress()
             val transferIO1: HTTransferIO = getTransferIO(direction)?.nextEntry ?: return
             tooltip = Tooltip.create(transferIO1.description)
-            PacketDistributor.sendToServer(HTTransferIOUpdatePayload(pos, direction, transferIO1))
+            HTPacketHelper.sendToServer(HTUpdateTransferIOPayload(pos, direction, transferIO1))
         }
 
         override fun renderWidget(

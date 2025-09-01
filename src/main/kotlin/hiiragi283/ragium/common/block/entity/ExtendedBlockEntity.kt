@@ -2,8 +2,9 @@ package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
+import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
+import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -12,11 +13,9 @@ import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.network.PacketDistributor
 import org.slf4j.Logger
 
 /**
@@ -27,8 +26,8 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     BlockEntity(type.get(), pos, state),
     HTBlockEntityExtension {
     companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
     }
 
     override val isClientSide: Boolean get() = !(level?.isClientSide ?: true)
@@ -52,8 +51,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     fun sendUpdatePacket(level: ServerLevel) {
         if (isRemoved) return
-        val packet: HTBlockEntityUpdatePacket = HTBlockEntityUpdatePacket.create(this) ?: return
-        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos(blockPos), packet)
+        HTPacketHelper.sendToClient(level, blockPos, HTUpdateBlockEntityPacket.create(this))
     }
 
     @Deprecated("Deprecated in Java")
@@ -83,19 +81,20 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * @see [mekanism.common.tile.base.TileEntityUpdateable.setChanged]
      */
-    protected fun setChanged(updateComparator: Boolean) {
-        val level: Level = this.level ?: return
-        if (level.isClientSide) return
+    protected open fun setChanged(updateComparator: Boolean) {
+        val level: ServerLevel = this.level as? ServerLevel ?: return
         val time: Long = level.gameTime
         if (lastSaveTime != time) {
             level.blockEntityChanged(blockPos)
             lastSaveTime = time
         }
-        LOGGER.debug("Block Entity at {} will be saved", blockPos)
         if (updateComparator && !isClientSide) {
             markDirtyComparator()
         }
+        sendPassivePacket(level)
     }
 
     protected open fun markDirtyComparator() {}
+
+    protected open fun sendPassivePacket(level: ServerLevel) {}
 }

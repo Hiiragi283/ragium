@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -20,14 +21,15 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
-abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(variant.blockEntityHolder, pos, state),
+abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    HTBlockEntity(type, pos, state),
     HTFluidInteractable {
-    private val capacity: Int = variant.capacity
+    constructor(variant: HTDrumVariant, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
+
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.create(listener, capacity)
+        tank = HTFluidStackTank.create(listener, 8000)
         return HTSimpleFluidTankHolder.generic(null, tank)
     }
 

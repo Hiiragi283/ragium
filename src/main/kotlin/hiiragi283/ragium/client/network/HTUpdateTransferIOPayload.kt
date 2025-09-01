@@ -12,20 +12,20 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
-data class HTTransferIOUpdatePayload(val pos: BlockPos, val direction: Direction, val transferIO: HTTransferIO) : HTCustomPayload.C2S {
+data class HTUpdateTransferIOPayload(val pos: BlockPos, val direction: Direction, val transferIO: HTTransferIO) : HTCustomPayload.C2S {
     companion object {
         @JvmField
-        val TYPE = CustomPacketPayload.Type<HTTransferIOUpdatePayload>(RagiumAPI.id("transfer_io_update"))
+        val TYPE = CustomPacketPayload.Type<HTUpdateTransferIOPayload>(RagiumAPI.id("update_transfer_io"))
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTTransferIOUpdatePayload> = StreamCodec.composite(
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTUpdateTransferIOPayload> = StreamCodec.composite(
             BlockPos.STREAM_CODEC,
-            HTTransferIOUpdatePayload::pos,
+            HTUpdateTransferIOPayload::pos,
             Direction.STREAM_CODEC,
-            HTTransferIOUpdatePayload::direction,
+            HTUpdateTransferIOPayload::direction,
             HTTransferIO.CODEC.streamCodec,
-            HTTransferIOUpdatePayload::transferIO,
-            ::HTTransferIOUpdatePayload,
+            HTUpdateTransferIOPayload::transferIO,
+            ::HTUpdateTransferIOPayload,
         )
     }
 
@@ -37,5 +37,5 @@ data class HTTransferIOUpdatePayload(val pos: BlockPos, val direction: Direction
         }
     }
 
-    override fun type(): CustomPacketPayload.Type<HTTransferIOUpdatePayload> = TYPE
+    override fun type(): CustomPacketPayload.Type<HTUpdateTransferIOPayload> = TYPE
 }

@@ -49,7 +49,6 @@ enum class HTMachineVariant(
     ;
 
     val energyUsage: Int get() = RagiumAPI.getConfig().getProcessorEnergyUsage(serializedName)
-    val tankCapacity: Int get() = RagiumAPI.getConfig().getMachineTankCapacity(serializedName)
 
     override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.MACHINES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

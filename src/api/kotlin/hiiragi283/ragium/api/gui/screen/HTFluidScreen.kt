@@ -6,6 +6,8 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
-interface HTFluidScreen : Iterable<HTFluidWidget> {
+interface HTFluidScreen :
+    HTPositionScreen,
+    Iterable<HTFluidWidget> {
     fun setFluidStack(index: Int, stack: FluidStack)
 }

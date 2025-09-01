@@ -17,31 +17,31 @@ import net.minecraft.world.level.Level
  * @see [mekanism.common.network.to_client.PacketUpdateTile]
  */
 @ConsistentCopyVisibility
-data class HTBlockEntityUpdatePacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
+data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
         @JvmField
-        val TYPE = CustomPacketPayload.Type<HTBlockEntityUpdatePacket>(RagiumAPI.id("block_entity_update"))
+        val TYPE = CustomPacketPayload.Type<HTUpdateBlockEntityPacket>(RagiumAPI.id("update_block_entity"))
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTBlockEntityUpdatePacket> = StreamCodec.composite(
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTUpdateBlockEntityPacket> = StreamCodec.composite(
             BlockPos.STREAM_CODEC,
-            HTBlockEntityUpdatePacket::pos,
+            HTUpdateBlockEntityPacket::pos,
             ByteBufCodecs.TRUSTED_COMPOUND_TAG,
-            HTBlockEntityUpdatePacket::updateTag,
-            ::HTBlockEntityUpdatePacket,
+            HTUpdateBlockEntityPacket::updateTag,
+            ::HTUpdateBlockEntityPacket,
         )
 
         @JvmStatic
-        fun create(blockEntity: HTBlockEntityExtension): HTBlockEntityUpdatePacket? {
+        fun create(blockEntity: HTBlockEntityExtension): HTUpdateBlockEntityPacket? {
             val level: Level = blockEntity.getLevel() ?: return null
-            return HTBlockEntityUpdatePacket(
+            return HTUpdateBlockEntityPacket(
                 blockEntity.getBlockPos(),
                 blockEntity.getReducedUpdateTag(level.registryAccess()),
             )
         }
     }
 
-    override fun type(): CustomPacketPayload.Type<HTBlockEntityUpdatePacket> = TYPE
+    override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
 
     override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
         with(player.level()) {
