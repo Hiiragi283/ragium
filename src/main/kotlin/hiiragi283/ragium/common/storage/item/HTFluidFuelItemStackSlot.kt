@@ -57,9 +57,9 @@ class HTFluidFuelItemStackSlot private constructor(
     fun fillOrBurn() {
         if (isEmpty) return
         val needed: Int = tank.getNeeded()
-        if (needed > 0) {
+        if (needed > 0 && !fillTank()) {
             val amount: Int = stackToAmount(getStack())
-            if (amount in (0..needed)) {
+            if (amount in 1..needed) {
                 val hasContainer: Boolean = getStack().hasCraftingRemainingItem()
                 if (hasContainer && getStack().count > 1) return
                 tank.insert(amountToFuel(amount), false, HTStorageAccess.INTERNAl)

@@ -255,6 +255,19 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun validate(validator: (V) -> DataResult<V>): BiCodec<B, V> = flatXmap(validator, validator)
 
+    fun <E : Any> dispatch(
+        typeKey: String,
+        type: (E) -> V,
+        codec: (V) -> MapCodec<out E>,
+        streamCodec: (V) -> StreamCodec<in B, out E>,
+    ): BiCodec<B, E> = of(
+        this.codec.dispatch(typeKey, type, codec),
+        this.streamCodec.dispatch(type, streamCodec),
+    )
+
+    fun <E : Any> dispatch(type: (E) -> V, codec: (V) -> MapCodec<out E>, streamCodec: (V) -> StreamCodec<in B, out E>): BiCodec<B, E> =
+        dispatch("type", type, codec, streamCodec)
+
     /**
      * 現在の[BiCodec]を[MapBiCodec]に変換します。
      */

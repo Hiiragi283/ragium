@@ -1,15 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtOps
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
@@ -32,13 +29,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     companion object {
         @JvmField
         val LOGGER: Logger = LogUtils.getLogger()
-
-        /**
-         * @see [BlockEntity.ComponentHelper.COMPONENTS_CODEC]
-         */
-        @JvmField
-        val COMPONENT_CODEC: Codec<DataComponentMap> =
-            DataComponentMap.CODEC.optionalFieldOf("components", DataComponentMap.EMPTY).codec()
     }
 
     override val isClientSide: Boolean get() = !(level?.isClientSide ?: true)
@@ -52,12 +42,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     override fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = super.getUpdateTag(registries)
 
     final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
-        super.loadAdditional(tag, lookupProvider)
-
-        COMPONENT_CODEC
-            .parse(lookupProvider.createSerializationContext(NbtOps.INSTANCE), tag)
-            .resultOrPartial { error: String -> LOGGER.warn("Failed to load components: {}", error) }
-            .ifPresent(::setComponents)
+        loadAdditional(tag, lookupProvider)
     }
 
     final override fun onDataPacket(net: Connection, pkt: ClientboundBlockEntityDataPacket, lookupProvider: HolderLookup.Provider) {

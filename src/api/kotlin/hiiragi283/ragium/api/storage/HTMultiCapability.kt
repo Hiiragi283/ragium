@@ -64,4 +64,6 @@ open class HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER>(
     open fun getCapability(entity: Entity, side: Direction?): HANDLER? = entity.getCapability(entityCapability, side)
 
     open fun getCapability(stack: ItemStack): ITEM_HANDLER? = stack.getCapability(itemCapability)
+
+    fun hasCapability(stack: ItemStack): Boolean = getCapability(stack) != null
 }
