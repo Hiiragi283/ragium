@@ -53,8 +53,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputTank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        inputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
-        outputTank = HTFluidStackTank.of(listener, variant.tankCapacity)
+        inputTank = HTFluidStackTank.input(listener, variant.tankCapacity)
+        outputTank = HTFluidStackTank.output(listener, variant.tankCapacity)
         return HTSimpleFluidTankHolder(this, inputTank, outputTank, null)
     }
 

@@ -31,7 +31,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         // extract
         extractSlot = HTItemStackSlot.atManualOut(
-            this,
+            listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ItemStack ->
@@ -42,7 +42,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         )
         // insert
         insertSlot = HTItemStackSlot.atManualOut(
-            this,
+            listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ItemStack ->

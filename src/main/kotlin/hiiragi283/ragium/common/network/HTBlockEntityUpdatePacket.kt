@@ -11,8 +11,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.world.level.Level
 
-data class HTBlockEntityUpdatePacket(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
+/**
+ * @see [mekanism.common.network.to_client.PacketUpdateTile]
+ */
+@ConsistentCopyVisibility
+data class HTBlockEntityUpdatePacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
         @JvmField
         val TYPE = CustomPacketPayload.Type<HTBlockEntityUpdatePacket>(RagiumAPI.id("block_entity_update"))
@@ -21,16 +26,20 @@ data class HTBlockEntityUpdatePacket(val pos: BlockPos, val updateTag: CompoundT
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTBlockEntityUpdatePacket> = StreamCodec.composite(
             BlockPos.STREAM_CODEC,
             HTBlockEntityUpdatePacket::pos,
-            ByteBufCodecs.COMPOUND_TAG,
+            ByteBufCodecs.TRUSTED_COMPOUND_TAG,
             HTBlockEntityUpdatePacket::updateTag,
             ::HTBlockEntityUpdatePacket,
         )
-    }
 
-    constructor(blockEntity: HTBlockEntityExtension) : this(
-        blockEntity.getBlockPos(),
-        blockEntity.getLevel()?.registryAccess()?.let(blockEntity::getReducedUpdateTag) ?: CompoundTag(),
-    )
+        @JvmStatic
+        fun create(blockEntity: HTBlockEntityExtension): HTBlockEntityUpdatePacket? {
+            val level: Level = blockEntity.getLevel() ?: return null
+            return HTBlockEntityUpdatePacket(
+                blockEntity.getBlockPos(),
+                blockEntity.getReducedUpdateTag(level.registryAccess()),
+            )
+        }
+    }
 
     override fun type(): CustomPacketPayload.Type<HTBlockEntityUpdatePacket> = TYPE
 

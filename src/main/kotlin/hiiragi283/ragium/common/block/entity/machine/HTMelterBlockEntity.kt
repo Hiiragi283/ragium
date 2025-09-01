@@ -53,7 +53,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.of(listener, variant.tankCapacity)
+        tank = HTFluidStackTank.output(listener, variant.tankCapacity)
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 

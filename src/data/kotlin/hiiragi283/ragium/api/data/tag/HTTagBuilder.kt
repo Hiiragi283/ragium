@@ -3,13 +3,13 @@ package hiiragi283.ragium.api.data.tag
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.util.HTMultiMap
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
-import net.neoforged.neoforge.common.extensions.IHolderExtension
 
 /**
  * 登録した[TagKey]をソートして生成するビルダー
@@ -32,8 +32,8 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
 
-    fun add(tagKey: TagKey<T>, holder: IHolderExtension<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
-        add(tagKey, holder.delegate.idOrThrow, type)
+    fun add(tagKey: TagKey<T>, holder: Holder<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
+        add(tagKey, holder.idOrThrow, type)
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache.put(tagKey, Entry(id, false, type))

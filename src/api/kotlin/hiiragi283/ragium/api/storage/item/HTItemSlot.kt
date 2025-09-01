@@ -132,6 +132,7 @@ interface HTItemSlot :
             return fixedAmount
         }
         setStack(stack.copyWithCount(fixedAmount))
+        onContentsChanged()
         return fixedAmount
     }
 
@@ -197,6 +198,8 @@ interface HTItemSlot :
     val count: Int get() = getStack().count
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        put(RagiumConst.ITEM, getStack().saveOptional(provider))
+        if (!this@HTItemSlot.isEmpty) {
+            put(RagiumConst.ITEM, getStack().saveOptional(provider))
+        }
     }
 }

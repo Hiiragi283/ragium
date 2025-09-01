@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
+import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
@@ -14,7 +15,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.storage.HTCapabilityType
+import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
@@ -94,10 +95,17 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
+        // Capability
+        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.saveTo(tag, registries, this)
+            }
+        }
+
         val writer: HTNbtCodec.Writer = object : HTNbtCodec.Writer {
-            override fun <T : Any> write(codec: Codec<T>, key: String, value: T) {
+            override fun <T : Any> write(codec: BiCodec<*, T>, key: String, value: T) {
                 codec
-                    .encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), value)
+                    .encode(registries.createSerializationContext(NbtOps.INSTANCE), value)
                     .ifSuccess { tag.put(key, it) }
                     .ifError { error: DataResult.Error<Tag> -> LOGGER.error(error.message()) }
             }
@@ -108,15 +116,19 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         writer.writeNullable(BiCodecs.TEXT, "custom_name", customName)
-        // Capability
-        HTCapabilityType.ITEM.saveTo(tag, registries, this)
-        HTCapabilityType.FLUID.saveTo(tag, registries, this)
         // Custom
         writeNbt(writer)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
+        // Capability
+        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.readFrom(tag, registries, this)
+            }
+        }
+
         val reader: HTNbtCodec.Reader = object : HTNbtCodec.Reader {
             override fun <T : Any> read(codec: Codec<T>, key: String): DataResult<T> = codec
                 .parse(registries.createSerializationContext(NbtOps.INSTANCE), tag.get(key))
@@ -127,9 +139,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         reader.read(BiCodecs.TEXT, "custom_name").ifSuccess { customName = it }
-        // Capability
-        HTCapabilityType.ITEM.readFrom(tag, registries, this)
-        HTCapabilityType.FLUID.readFrom(tag, registries, this)
         // Custom
         readNbt(reader)
     }
@@ -144,20 +153,28 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     //    Capability    //
 
-    protected var itemHandlerManager: HTItemHandlerManager? = null
-        private set
-    protected var fluidHandlerManager: HTFluidHandlerManager? = null
-        private set
+    override fun onContentsChanged() {
+        setChanged()
+    }
 
-    override fun afterLevelInit(level: Level) {
-        super.afterLevelInit(level)
-        itemHandlerManager = HTItemHandlerManager(initializeItemHandler(this), this)
-        fluidHandlerManager = HTFluidHandlerManager(initializeFluidHandler(this), this)
+    protected val itemHandlerManager: HTItemHandlerManager?
+    protected val fluidHandlerManager: HTFluidHandlerManager?
+
+    init {
+        itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
+        fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
     }
 
     // Item
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialInventory]
+     */
     protected open fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? = null
 
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.hasInventory]
+     */
     final override fun hasItemHandler(): Boolean = itemHandlerManager?.canHandle() ?: false
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
@@ -170,8 +187,15 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)
 
     // Fluid
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialFluidTanks]
+     */
     protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
 
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleFluid]
+     */
     override fun hasFluidHandler(): Boolean = fluidHandlerManager?.canHandle() ?: false
 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()

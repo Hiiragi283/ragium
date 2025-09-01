@@ -27,37 +27,38 @@ open class HTFluidStackTank protected constructor(
             BiPredicate { _: FluidStack, _: HTStorageAccess -> true }
 
         @JvmStatic
-        fun atManualOut(
-            listener: HTContentListener?,
-            capacity: Int,
-            canExtract: Predicate<FluidStack> = Predicates.alwaysTrue(),
-            canInsert: Predicate<FluidStack> = Predicates.alwaysTrue(),
-            filter: Predicate<FluidStack> = Predicates.alwaysTrue(),
-        ): HTFluidStackTank = HTFluidStackTank(capacity, canExtract, canInsert, filter, listener)
+        private fun validateCapacity(capacity: Int): Int {
+            check(capacity >= 0) { "Capacity must be non negative" }
+            return capacity
+        }
 
         @JvmStatic
-        fun of(
+        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank =
+            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, Predicates.alwaysTrue(), listener)
+
+        @JvmStatic
+        fun input(
             listener: HTContentListener?,
             capacity: Int,
-            canExtract: BiPredicate<FluidStack, HTStorageAccess> = ALWAYS_TRUE,
-            canInsert: BiPredicate<FluidStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<FluidStack> = Predicates.alwaysTrue(),
-        ): HTFluidStackTank = HTFluidStackTank(capacity, canExtract, canInsert, filter, listener)
-    }
+            canInsert: Predicate<FluidStack> = Predicates.alwaysTrue(),
+            filter: Predicate<FluidStack> = canInsert,
+        ): HTFluidStackTank = HTFluidStackTank(
+            validateCapacity(capacity),
+            ALWAYS_TRUE,
+            { stack: FluidStack, _: HTStorageAccess -> canInsert.test(stack) },
+            filter,
+            listener,
+        )
 
-    protected constructor(
-        capacity: Int,
-        canExtract: Predicate<FluidStack>,
-        canInsert: Predicate<FluidStack>,
-        filter: Predicate<FluidStack>,
-        listener: HTContentListener?,
-    ) : this(
-        capacity,
-        { stack: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL && canExtract.test(stack) },
-        { stack: FluidStack, _: HTStorageAccess -> canInsert.test(stack) },
-        filter,
-        listener,
-    )
+        @JvmStatic
+        fun output(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
+            validateCapacity(capacity),
+            ALWAYS_TRUE,
+            { _: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            Predicates.alwaysTrue(),
+            listener,
+        )
+    }
 
     private var stack: FluidStack = FluidStack.EMPTY
 
@@ -92,7 +93,7 @@ open class HTFluidStackTank protected constructor(
         setStackUnchecked(FluidStack.parseOptional(provider, nbt.getCompound(RagiumConst.FLUID)), false)
     }
 
-    override fun onContentsChanged() {
+    final override fun onContentsChanged() {
         listener?.onContentsChanged()
     }
 }

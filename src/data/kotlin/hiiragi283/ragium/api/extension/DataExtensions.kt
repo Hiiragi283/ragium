@@ -34,7 +34,7 @@ fun BlockModelProvider.layeredModel(
 
 //    BlockModelProvider    //
 
-val HTDecorationVariant.textureId: ResourceLocation get() = base.id.withPrefix("block/")
+val HTDecorationVariant.textureId: ResourceLocation get() = base.blockId
 
 fun BlockStateProvider.simpleBlock(holder: DeferredHolder<Block, *>) {
     simpleBlock(holder.get())

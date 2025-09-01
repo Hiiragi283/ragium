@@ -181,7 +181,9 @@ interface HTFluidTank :
     fun getNeeded(): Int = max(0, capacity - fluidAmount)
 
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        put(RagiumConst.FLUID, getStack().saveOptional(provider))
+        if (!this@HTFluidTank.isEmpty) {
+            put(RagiumConst.FLUID, getStack().saveOptional(provider))
+        }
     }
 
     //    IFluidTank    //

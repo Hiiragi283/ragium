@@ -114,6 +114,8 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
         fun <B : ByteBuf, V : Any> unit(instance: V): MapBiCodec<B, V> = of(MapCodec.unit(instance), StreamCodec.unit(instance))
     }
 
+    fun toCodec(): BiCodec<B, V> = BiCodec.of(codec.codec(), streamCodec)
+
     /**
      * 指定された[to]と[from]に基づいて，別の[MapBiCodec]に変換します。
      * @param S 変換後のコーデックの対象となるクラス

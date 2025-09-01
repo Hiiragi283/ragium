@@ -214,7 +214,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Storages
         for (drum: DeferredHolder<Block, *> in RagiumBlocks.DRUMS.values) {
-            val id: ResourceLocation = drum.id.withPrefix("block/")
+            val id: ResourceLocation = drum.blockId
             simpleBlock(
                 drum.get(),
                 models().cubeColumn(

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.block.entity
 
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -19,8 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
-interface HTBlockEntityExtension : HTContentListener {
-    val isRemote: Boolean
+interface HTBlockEntityExtension {
+    val isClientSide: Boolean
 
     /**
      * @see [mekanism.common.tile.interfaces.ITileWrapper.getLevel]

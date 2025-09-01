@@ -27,7 +27,7 @@ abstract class HTDrumBlockEntity(variant: HTDrumVariant, pos: BlockPos, state: B
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.of(listener, capacity)
+        tank = HTFluidStackTank.create(listener, capacity)
         return HTSimpleFluidTankHolder.generic(null, tank)
     }
 

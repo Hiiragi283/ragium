@@ -1,12 +1,15 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
@@ -29,9 +32,16 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     companion object {
         @JvmField
         val LOGGER: Logger = LogUtils.getLogger()
+
+        /**
+         * @see [BlockEntity.ComponentHelper.COMPONENTS_CODEC]
+         */
+        @JvmField
+        val COMPONENT_CODEC: Codec<DataComponentMap> =
+            DataComponentMap.CODEC.optionalFieldOf("components", DataComponentMap.EMPTY).codec()
     }
 
-    override val isRemote: Boolean get() = !(level?.isClientSide ?: true)
+    override val isClientSide: Boolean get() = !(level?.isClientSide ?: true)
 
     //    Save & Read    //
 
@@ -39,10 +49,15 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = getReducedUpdateTag(registries)
 
-    override fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
+    override fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = super.getUpdateTag(registries)
 
     final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
-        loadAdditional(tag, lookupProvider)
+        super.loadAdditional(tag, lookupProvider)
+
+        COMPONENT_CODEC
+            .parse(lookupProvider.createSerializationContext(NbtOps.INSTANCE), tag)
+            .resultOrPartial { error: String -> LOGGER.warn("Failed to load components: {}", error) }
+            .ifPresent(::setComponents)
     }
 
     final override fun onDataPacket(net: Connection, pkt: ClientboundBlockEntityDataPacket, lookupProvider: HolderLookup.Provider) {
@@ -50,14 +65,10 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         if (!tag.isEmpty) handleUpdateTag(tag, lookupProvider)
     }
 
-    fun sendUpdatePacket() {
-        if (isRemote) return
-        sendUpdatePacket(level as ServerLevel)
-    }
-
     fun sendUpdatePacket(level: ServerLevel) {
         if (isRemoved) return
-        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos(blockPos), HTBlockEntityUpdatePacket(this))
+        val packet: HTBlockEntityUpdatePacket = HTBlockEntityUpdatePacket.create(this) ?: return
+        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos(blockPos), packet)
     }
 
     @Deprecated("Deprecated in Java")
@@ -74,12 +85,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     //    HTContentListener    //
 
-    override fun onContentsChanged() {
-        markOnlySave()
-        reloadUpgrades()
-    }
-
-    protected fun markOnlySave() {
+    protected fun setOnlySave() {
         setChanged(false)
     }
 
@@ -87,16 +93,24 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         setChanged(true)
     }
 
+    private var lastSaveTime: Long = 0
+
     /**
      * @see [mekanism.common.tile.base.TileEntityUpdateable.setChanged]
      */
     protected fun setChanged(updateComparator: Boolean) {
         val level: Level = this.level ?: return
-        if (level.isLoaded(blockPos)) {
-            level.getChunkAt(blockPos).isUnsaved = true
+        if (level.isClientSide) return
+        val time: Long = level.gameTime
+        if (lastSaveTime != time) {
+            level.blockEntityChanged(blockPos)
+            lastSaveTime = time
         }
-        if (updateComparator && !blockState.isAir) {
-            level.updateNeighbourForOutputSignal(blockPos, blockState.block)
+        LOGGER.debug("Block Entity at {} will be saved", blockPos)
+        if (updateComparator && !isClientSide) {
+            markDirtyComparator()
         }
     }
+
+    protected open fun markDirtyComparator() {}
 }

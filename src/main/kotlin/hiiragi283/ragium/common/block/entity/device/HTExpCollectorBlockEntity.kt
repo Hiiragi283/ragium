@@ -26,7 +26,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTFluidStackTank.of(listener, Int.MAX_VALUE)
+        tank = HTFluidStackTank.output(listener, RagiumAPI.getConfig().getDeviceTankCapacity())
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 

@@ -54,7 +54,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
-        tank = HTFluidStackTank.of(listener, 8000, filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 })
+        tank = HTFluidStackTank.input(listener, 8000, filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 })
         return HTSimpleFluidTankHolder.input(this, tank)
     }
 

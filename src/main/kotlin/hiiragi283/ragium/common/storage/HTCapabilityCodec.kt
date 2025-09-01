@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -15,15 +16,14 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
+import org.slf4j.Logger
 
 /**
  * @see [mekanism.common.attachments.containers.ContainerType]
  */
-class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any, ITEM_HANDLER : HANDLER>(
-    val multiCapability: HTMultiCapability<HANDLER, ITEM_HANDLER>,
+class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
@@ -31,8 +31,10 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
 ) {
     companion object {
         @JvmField
-        val ITEM: HTCapabilityType<HTItemSlot, IItemHandler, IItemHandler> = HTCapabilityType(
-            HTMultiCapability.ITEM,
+        val LOGGER: Logger = LogUtils.getLogger()
+
+        @JvmField
+        val ITEM: HTCapabilityCodec<HTItemSlot> = HTCapabilityCodec(
             RagiumConst.ITEMS,
             RagiumConst.SLOT,
             HTBlockEntity::getItemSlots,
@@ -40,13 +42,15 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
         )
 
         @JvmField
-        val FLUID: HTCapabilityType<HTFluidTank, IFluidHandler, IFluidHandlerItem> = HTCapabilityType(
-            HTMultiCapability.FLUID,
+        val FLUID: HTCapabilityCodec<HTFluidTank> = HTCapabilityCodec(
             RagiumConst.FLUIDS,
             RagiumConst.TANK,
             HTBlockEntity::getFluidTanks,
             HTBlockEntity::hasFluidHandler,
         )
+
+        @JvmField
+        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)
 
         @JvmStatic
         fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
@@ -86,16 +90,19 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
         val list: ListTag = save(provider, containers)
         if (!list.isEmpty()) {
             nbt.put(containerTag, list)
+            LOGGER.debug("Saved containers!")
         }
     }
 
     private fun save(provider: HolderLookup.Provider, containers: List<CONTAINER>): ListTag {
         val list = ListTag()
-        containers.forEachIndexed { index: Int, container: CONTAINER ->
-            val nbt: CompoundTag = container.serializeNBT(provider)
-            nbt.putInt(containerKey, index)
+        for (slot: Int in containers.indices) {
+            val nbt: CompoundTag = containers[slot].serializeNBT(provider)
+            if (nbt.isEmpty) continue
+            nbt.putInt(containerKey, slot)
             list.add(nbt)
         }
+        LOGGER.debug("Saved containers: {}", list)
         return list
     }
 
@@ -108,13 +115,17 @@ class HTCapabilityType<CONTAINER : INBTSerializable<CompoundTag>, HANDLER : Any,
     }
 
     private fun read(provider: HolderLookup.Provider, containers: List<CONTAINER>, list: ListTag) {
+        LOGGER.debug("Read containers: {}", list)
+        if (list.isEmpty()) return
         for (i: Int in list.indices) {
             val nbt: CompoundTag = list.getCompound(i)
+            if (nbt.isEmpty) continue
             val slot: Int = nbt.getInt(containerKey)
-            if (slot in containers.indices) {
+            if (slot in (0 until containers.size)) {
                 containers[slot].deserializeNBT(provider, nbt)
             }
         }
+        LOGGER.debug("Read containers!")
     }
 
     fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)

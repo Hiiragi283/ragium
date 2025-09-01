@@ -13,6 +13,7 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDecorationVariant
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -21,7 +22,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.common.extensions.IHolderExtension
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
@@ -99,15 +99,16 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
-            if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
-                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+        RagiumBlocks.MATERIALS
+            .forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTSimpleDeferredBlockHolder) ->
+                if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
+                    builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+                }
+                builder.addBlock(variant, material, block)
+                if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
+                    builder.addBlock(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
+                }
             }
-            builder.addBlock(variant, material, block)
-            if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
-                builder.addBlock(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
-            }
-        }
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
@@ -134,27 +135,23 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Block>.addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: IHolderExtension<Block>) {
+    private fun HTTagBuilder<Block>.addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: Holder<Block>) {
         addTag(parent, child)
         add(child, block)
     }
 
-    private fun HTTagBuilder<Block>.addBlock(
-        variant: HTMaterialVariant.BlockTag,
-        material: HTMaterialType,
-        block: IHolderExtension<Block>,
-    ) {
+    private fun HTTagBuilder<Block>.addBlock(variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: Holder<Block>) {
         val blockCommonTag: TagKey<Block> = variant.blockCommonTag ?: return
         val tagKey: TagKey<Block> = variant.blockTagKey(material)
         addBlock(blockCommonTag, tagKey, block)
     }
 
-    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, IHolderExtension<Block>>) {
+    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, Holder<Block>>) {
         addBlocks(tagKey, blocks.values)
     }
 
-    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Iterable<IHolderExtension<Block>>) {
-        for (holder: IHolderExtension<Block> in blocks) {
+    private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Iterable<Holder<Block>>) {
+        for (holder: Holder<Block> in blocks) {
             add(tagKey, holder)
         }
     }

@@ -34,7 +34,7 @@ import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
-import hiiragi283.ragium.common.storage.HTCapabilityType
+import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.util.material.RagiumMaterialType
@@ -439,16 +439,16 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        HTCapabilityType.registerItem(event, provider(9, ::HTPotionBundleItemHandler), POTION_BUNDLE)
+        HTCapabilityCodec.registerItem(event, provider(9, ::HTPotionBundleItemHandler), POTION_BUNDLE)
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            HTCapabilityType.registerFluid(event, providerEnch(variant.capacity, ::HTComponentFluidHandler), variant)
+            HTCapabilityCodec.registerFluid(event, providerEnch(variant.capacity, ::HTComponentFluidHandler), variant)
         }
-        HTCapabilityType.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
+        HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
         // Energy
-        HTCapabilityType.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
+        HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
         LOGGER.info("Registered item capabilities!")
     }

@@ -40,8 +40,11 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank =
-            HTFluidStackTank.of(listener, RagiumAPI.getConfig().getDeviceTankCapacity(), filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+        tank = HTFluidStackTank.input(
+            listener,
+            RagiumAPI.getConfig().getDeviceTankCapacity(),
+            filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf,
+        )
         return HTSimpleFluidTankHolder.input(null, tank)
     }
 
@@ -52,7 +55,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         val server: MinecraftServer = RagiumAPI.getInstance().getCurrentServer() ?: return
         if (server.getLevel(teleportPos.dimension) != null) {
             this.teleportPos = teleportPos
-            setChanged()
+            setOnlySave()
         }
     }
 

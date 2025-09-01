@@ -39,8 +39,8 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        if (isRemote) RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
-        return InteractionResult.sidedSuccess(isRemote)
+        if (isClientSide) RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
+        return InteractionResult.sidedSuccess(isClientSide)
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
