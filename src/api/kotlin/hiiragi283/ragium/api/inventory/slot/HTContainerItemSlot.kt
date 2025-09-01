@@ -18,7 +18,7 @@ open class HTContainerItemSlot(
     val slot: HTItemSlot,
     x: Int,
     y: Int,
-    private val uncheckedSetter: Consumer<ItemStack>?,
+    private val uncheckedSetter: Consumer<ItemStack>,
 ) : Slot(emptyContainer, 0, x, y),
     HTSlot {
     companion object {
@@ -36,7 +36,7 @@ open class HTContainerItemSlot(
 
     override fun mayPlace(stack: ItemStack): Boolean {
         if (stack.isEmpty) return false
-        if (slot.isEmpty) return insertItem(stack, true).count <= stack.count
+        if (slot.isEmpty) return insertItem(stack, true).count < stack.count
         if (slot.extractItem(1, true, HTStorageAccess.MANUAL).isEmpty) return false
         return slot.isItemValidForInsert(stack, HTStorageAccess.MANUAL)
     }
@@ -46,7 +46,7 @@ open class HTContainerItemSlot(
     override fun hasItem(): Boolean = !slot.isEmpty
 
     override fun set(stack: ItemStack) {
-        uncheckedSetter?.accept(stack)
+        uncheckedSetter.accept(stack)
         setChanged()
     }
 
