@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType

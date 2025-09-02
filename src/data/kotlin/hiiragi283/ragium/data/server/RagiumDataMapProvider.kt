@@ -1,19 +1,19 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation

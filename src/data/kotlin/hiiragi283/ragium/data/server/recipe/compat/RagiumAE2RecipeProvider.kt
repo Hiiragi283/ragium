@@ -3,12 +3,12 @@ package hiiragi283.ragium.data.server.recipe.compat
 import appeng.core.definitions.AEBlocks
 import appeng.core.definitions.AEItems
 import appeng.core.definitions.BlockDefinition
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithCatalystToItemRecipeBuilder
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.gui.component
 
-import hiiragi283.ragium.api.util.HTBounds
-import hiiragi283.ragium.api.util.HTBoundsProvider
+import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.math.HTBoundsProvider
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.neoforged.api.distmarker.Dist

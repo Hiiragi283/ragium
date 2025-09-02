@@ -1,13 +1,13 @@
-package hiiragi283.ragium.api.util.tool
+package hiiragi283.ragium.common.variant
 
+import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey

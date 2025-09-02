@@ -1,14 +1,14 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike

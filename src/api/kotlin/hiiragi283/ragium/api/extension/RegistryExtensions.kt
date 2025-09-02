@@ -2,8 +2,8 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder

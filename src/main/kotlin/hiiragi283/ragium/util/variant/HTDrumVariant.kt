@@ -1,9 +1,9 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity

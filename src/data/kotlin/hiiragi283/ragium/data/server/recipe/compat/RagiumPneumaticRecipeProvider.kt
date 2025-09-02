@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import me.desht.pneumaticcraft.datagen.recipe.FluidMixerRecipeBuilder
 import net.neoforged.neoforge.fluids.FluidStack
 

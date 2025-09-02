@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 

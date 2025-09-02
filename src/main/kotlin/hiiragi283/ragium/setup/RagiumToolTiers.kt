@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey

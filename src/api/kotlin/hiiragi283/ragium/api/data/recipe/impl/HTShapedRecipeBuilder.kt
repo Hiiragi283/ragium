@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.data.recipe.impl
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

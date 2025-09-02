@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

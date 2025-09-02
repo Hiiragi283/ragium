@@ -3,12 +3,12 @@ package hiiragi283.ragium.data.server.loot
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup

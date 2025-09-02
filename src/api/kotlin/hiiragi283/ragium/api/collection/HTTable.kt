@@ -1,5 +1,8 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.collection
 
+/**
+ * @see [com.google.common.collect.Table]
+ */
 interface HTTable<R : Any, C : Any, V : Any> {
     fun contains(row: R, column: C): Boolean
 

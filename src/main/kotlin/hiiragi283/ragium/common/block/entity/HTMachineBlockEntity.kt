@@ -1,14 +1,14 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
-import hiiragi283.ragium.api.util.RagiumConst
+import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTTransferIOCache
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes

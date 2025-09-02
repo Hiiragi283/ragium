@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import mekanism.common.tags.MekanismTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item

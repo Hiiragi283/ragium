@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
@@ -10,18 +11,17 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
-import hiiragi283.ragium.api.util.material.HTTierType
-import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.advancements.Advancement

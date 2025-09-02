@@ -1,4 +1,6 @@
-package hiiragi283.ragium.api.util.material
+package hiiragi283.ragium.common.material
+
+import hiiragi283.ragium.api.material.HTMaterialType
 
 object HTCommonMaterialTypes {
     //    Common Metal    //

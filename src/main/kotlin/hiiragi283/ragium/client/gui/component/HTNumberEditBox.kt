@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.gui.component.HTWidgetExtension
-import hiiragi283.ragium.api.util.HTBounds
+import hiiragi283.ragium.api.math.HTBounds
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.network.chat.Component

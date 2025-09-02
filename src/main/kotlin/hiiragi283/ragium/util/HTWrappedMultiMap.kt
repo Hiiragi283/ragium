@@ -1,7 +1,8 @@
 package hiiragi283.ragium.util
 
 import com.google.common.collect.Multimap
-import hiiragi283.ragium.api.util.HTMultiMap
+import hiiragi283.ragium.api.collection.HTMultiMap
+import hiiragi283.ragium.api.extension.forEach
 
 internal open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated: Multimap<K, V>) : HTMultiMap<K, V> {
     override val size: Int get() = delegated.size()
@@ -27,7 +28,13 @@ internal open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated:
 
         override fun putAll(key: K, values: Iterable<V>): Boolean = delegated.putAll(key, values)
 
-        override fun putAll(other: Multimap<K, V>): Boolean = delegated.putAll(other)
+        override fun putAll(other: HTMultiMap<K, V>): Boolean {
+            var changed = false
+            other.forEach { key: K, value: V ->
+                changed = delegated.put(key, value)
+            }
+            return changed
+        }
 
         override fun replaceValues(key: K, values: Iterable<V>): Collection<V> = delegated.replaceValues(key, values)
 

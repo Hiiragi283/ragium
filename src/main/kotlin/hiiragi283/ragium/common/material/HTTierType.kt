@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.util.material
+package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.material.HTMaterialType
 import net.minecraft.world.item.Rarity
 
 enum class HTTierType(val rarity: Rarity) : HTMaterialType.Translatable {

@@ -1,7 +1,8 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.collection
 
-import com.google.common.collect.Multimap
-
+/**
+ * @see [com.google.common.collect.Multimap]
+ */
 interface HTMultiMap<K : Any, V : Any> {
     val size: Int
 
@@ -26,7 +27,7 @@ interface HTMultiMap<K : Any, V : Any> {
 
         fun putAll(key: K, values: Iterable<V>): Boolean
 
-        fun putAll(other: Multimap<K, V>): Boolean
+        fun putAll(other: HTMultiMap<K, V>): Boolean
 
         fun replaceValues(key: K, values: Iterable<V>): Collection<V>
 

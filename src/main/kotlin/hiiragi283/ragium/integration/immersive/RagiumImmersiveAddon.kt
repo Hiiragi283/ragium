@@ -1,9 +1,9 @@
 package hiiragi283.ragium.integration.immersive
 
 import blusunrize.immersiveengineering.api.tool.RailgunHandler
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.entity.Entity

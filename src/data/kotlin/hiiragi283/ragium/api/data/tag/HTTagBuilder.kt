@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.tag
 
+import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.util.HTMultiMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey

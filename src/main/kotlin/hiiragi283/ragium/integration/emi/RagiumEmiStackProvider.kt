@@ -6,7 +6,7 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.stack.EmiStackInteraction
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
-import hiiragi283.ragium.api.util.HTBounds
+import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.client.gui.screen.HTContainerScreen
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.inventory.Slot

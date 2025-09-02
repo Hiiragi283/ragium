@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCrushingRecipe
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredHolder
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer

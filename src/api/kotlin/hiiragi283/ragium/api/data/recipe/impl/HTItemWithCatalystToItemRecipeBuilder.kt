@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.data.recipe.impl
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
 import java.util.*
 

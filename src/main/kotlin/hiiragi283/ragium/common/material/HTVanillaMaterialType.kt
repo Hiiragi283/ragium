@@ -1,7 +1,9 @@
-package hiiragi283.ragium.api.util.material
+package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.variant.HTVariantKey
 
 enum class HTVanillaMaterialType(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     // Metal

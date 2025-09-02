@@ -2,11 +2,11 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.tool.HTToolVariant
+import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTHammerItem
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

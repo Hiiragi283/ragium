@@ -2,13 +2,13 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.common.fluid.HTNetherVaporizableFluidType
 import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
-import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks

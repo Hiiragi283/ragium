@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.altModelBlock
 import hiiragi283.ragium.api.extension.altTextureBlock
 import hiiragi283.ragium.api.extension.blockId
@@ -14,12 +15,11 @@ import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks

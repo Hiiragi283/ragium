@@ -2,10 +2,9 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.util.material.HTTierType
+import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -15,6 +14,7 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks

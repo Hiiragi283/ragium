@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
-import hiiragi283.ragium.api.util.RagiumConst
 
 object RagiumAdvancements {
     @JvmField

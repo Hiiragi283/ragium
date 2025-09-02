@@ -1,18 +1,18 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.tool.HTVanillaToolVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.advancements.AdvancementHolder

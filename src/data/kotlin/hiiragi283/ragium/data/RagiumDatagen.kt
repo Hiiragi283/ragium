@@ -2,8 +2,8 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider

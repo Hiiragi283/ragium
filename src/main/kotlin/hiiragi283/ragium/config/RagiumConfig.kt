@@ -1,8 +1,8 @@
 package hiiragi283.ragium.config
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTTierType
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant

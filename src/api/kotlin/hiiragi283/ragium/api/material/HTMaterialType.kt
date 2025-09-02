@@ -1,8 +1,8 @@
-package hiiragi283.ragium.api.util.material
+package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.data.HTTranslatedNameProvider
-import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.variant.HTVariantKey
 import net.minecraft.util.StringRepresentable
 
 interface HTMaterialType : StringRepresentable {

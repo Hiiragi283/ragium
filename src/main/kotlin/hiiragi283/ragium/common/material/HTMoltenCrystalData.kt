@@ -1,9 +1,9 @@
-package hiiragi283.ragium.util.material
+package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.data.HTTranslatedNameProvider
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey

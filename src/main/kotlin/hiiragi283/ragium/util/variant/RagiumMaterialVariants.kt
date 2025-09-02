@@ -1,7 +1,7 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.util.material.HTMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialVariant
 
 object RagiumMaterialVariants {
     @JvmStatic

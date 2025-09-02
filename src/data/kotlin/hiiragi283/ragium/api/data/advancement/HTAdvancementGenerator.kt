@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger

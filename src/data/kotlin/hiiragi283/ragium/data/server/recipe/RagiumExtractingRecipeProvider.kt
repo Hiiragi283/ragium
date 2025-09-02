@@ -4,10 +4,10 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.util.material.RagiumMaterialType
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Items

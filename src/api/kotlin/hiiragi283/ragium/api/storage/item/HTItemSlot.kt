@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.inventory.Slot

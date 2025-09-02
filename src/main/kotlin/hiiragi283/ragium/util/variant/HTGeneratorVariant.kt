@@ -2,14 +2,14 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.util.material.HTTierType
+import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks

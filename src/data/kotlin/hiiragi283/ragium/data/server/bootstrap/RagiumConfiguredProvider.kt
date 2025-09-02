@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.data.HTWorldGenData
-import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BlockTags

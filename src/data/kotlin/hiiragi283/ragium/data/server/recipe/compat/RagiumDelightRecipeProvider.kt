@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
@@ -7,16 +8,15 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
-import hiiragi283.ragium.api.util.material.HTTierType
+import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.material.RagiumMaterialType
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab

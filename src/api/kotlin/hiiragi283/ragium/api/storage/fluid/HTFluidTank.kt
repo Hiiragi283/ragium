@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.storage.fluid
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.common.util.INBTSerializable

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.data.recipe.impl
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.resources.ResourceLocation
 
 class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(

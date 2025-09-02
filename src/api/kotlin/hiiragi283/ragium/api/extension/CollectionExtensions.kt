@@ -3,8 +3,8 @@ package hiiragi283.ragium.api.extension
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.HashMultimap
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.HTMultiMap
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.collection.HTMultiMap
+import hiiragi283.ragium.api.collection.HTTable
 
 //    MultiMap    //
 
