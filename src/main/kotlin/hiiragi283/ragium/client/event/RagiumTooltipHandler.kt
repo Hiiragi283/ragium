@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.event
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.client.resources.language.I18n
@@ -42,14 +42,12 @@ object RagiumTooltipHandler {
     @JvmStatic
     private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
         if (stack.itemHolder.idOrThrow.namespace == RagiumAPI.MOD_ID) {
-            val descKey: String = RagiumTranslationKeys.getTooltipKey(stack)
+            val descKey: String = RagiumTranslation.getTooltipKey(stack)
             if (!I18n.exists(descKey)) return
             if (flag.hasShiftDown()) {
                 consumer(Component.translatable(descKey).withStyle(ChatFormatting.GREEN))
             } else {
-                consumer(
-                    Component.translatable(RagiumTranslationKeys.TOOLTIP_SHOW_INFO).withStyle(ChatFormatting.YELLOW),
-                )
+                consumer(RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW))
             }
         }
     }
@@ -65,14 +63,13 @@ object RagiumTooltipHandler {
         stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getInstance(enchLookup)?.ifPresent { instance: EnchantmentInstance ->
             if (flag.hasShiftDown()) {
                 consumer(
-                    Component.translatable(
-                        RagiumTranslationKeys.TOOLTIP_INTRINSIC_ENCHANTMENT,
+                    RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(
                         Enchantment.getFullname(instance.enchantment, instance.level),
                     ),
                 )
             } else {
                 consumer(
-                    Component.translatable(RagiumTranslationKeys.TOOLTIP_SHOW_INFO).withStyle(ChatFormatting.YELLOW),
+                    RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW),
                 )
             }
         }
@@ -95,7 +92,7 @@ object RagiumTooltipHandler {
     @JvmStatic
     private fun workInProgress(stack: ItemStack, consumer: (Component) -> Unit) {
         if (stack.`is`(RagiumModTags.Items.WIP)) {
-            consumer(Component.translatable(RagiumTranslationKeys.TOOLTIP_WIP).withStyle(ChatFormatting.DARK_RED))
+            consumer(RagiumTranslation.TOOLTIP_WIP.getColoredComponent(ChatFormatting.DARK_RED))
         }
     }
 }

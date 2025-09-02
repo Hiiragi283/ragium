@@ -1,9 +1,9 @@
 package hiiragi283.ragium.util.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.data.HTTranslatedNameProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.translate.HTTranslatable
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -14,7 +14,7 @@ enum class HTMoltenCrystalData(
     val color: Int,
     private val enName: String,
     private val jaName: String,
-) : HTTranslatable {
+) : HTTranslatedNameProvider {
     CRIMSON(RagiumMaterialType.CRIMSON_CRYSTAL, 0x660000, "Crimson Blood", "深紅の血液"),
     WARPED(RagiumMaterialType.WARPED_CRYSTAL, 0x006666, "Dew of the Warp", "歪みの雫"),
     ELDRITCH(RagiumMaterialType.ELDRITCH_PEARL, 0x660066, "Eldritch Flux", "異質な流動体"),

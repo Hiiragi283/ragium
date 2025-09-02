@@ -26,7 +26,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -239,7 +239,7 @@ class RagiumItemTagsProvider(
             builder.addItem(Tags.Items.BUCKETS, content.bucketTag, content.getBucket())
         }
         // LED
-        for ((color: HTColorVariant, block: ItemLike) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorMaterial, block: ItemLike) in RagiumBlocks.LED_BLOCKS) {
             builder.addItem(color.dyedTag, block)
         }
         // Parts

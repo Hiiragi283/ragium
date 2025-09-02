@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util.translate
+package hiiragi283.ragium.api.text
 
 import net.minecraft.network.chat.Component
 

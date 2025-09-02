@@ -20,7 +20,7 @@ import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -278,13 +278,13 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
         // LED Block
-        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(HTColorVariant.WHITE), 8)
+        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(HTColorMaterial.WHITE), 8)
             .hollow8()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
-        for ((color: HTColorVariant, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             HTShapedRecipeBuilder(block, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)

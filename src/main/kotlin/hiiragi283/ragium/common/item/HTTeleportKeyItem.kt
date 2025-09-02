@@ -4,7 +4,6 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.HTFluidItem
 import hiiragi283.ragium.api.item.component.HTTeleportPos
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.ChatFormatting
@@ -102,7 +101,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
 
     private fun canTeleportTo(serverLevel: ServerLevel, teleportPos: HTTeleportPos, stack: ItemStack): DataResult<Unit> = when {
         // 指定した座標が読み込まれていなければエラー
-        !serverLevel.isLoaded(teleportPos.pos) -> DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
+        !serverLevel.isLoaded(teleportPos.pos) -> DataResult.error { "" }
         // 燃料タンクが見つからなければエラー
         !hasHandler(stack) -> DataResult.error { "Failed to get fluid handler" }
         // 燃料を消費できなければエラー

@@ -3,9 +3,9 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.HTHasTranslationKey
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -17,7 +17,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
@@ -107,7 +107,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
             add(variant.wall, variant.translate(type, "壁"))
         }
 
-        for ((color: HTColorVariant, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
             add(block, "${color.getTranslatedName(type)}のLEDブロック")
         }
 
@@ -390,26 +390,26 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun text() {
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "紺鉄強化")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS, "紺鉄インゴット")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "鉄製の防具，武器，道具を置いてください")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE, "紺鉄強化")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS, "紺鉄インゴット")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "鉄製の防具，武器，道具を置いてください")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
 
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE, "深層鋼強化")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_APPLIES_TO, "深層鋼の装備品")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE, "深層鋼強化")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO, "深層鋼の装備品")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
 
-        add(RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
-        add(RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY, "空")
-        add(RagiumTranslationKeys.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")
-        add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
-        add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
-        add(RagiumTranslationKeys.TOOLTIP_WIP, "この要素は開発中です！！")
+        add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
+        add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "空")
+        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")
+        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
+        add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
+        add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
 
         add(HTTransferIO.INPUT_ONLY.translationKey, "モード：搬入")
         add(HTTransferIO.OUTPUT_ONLY.translationKey, "モード：搬出")
@@ -474,7 +474,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun jade() {
         add("config.jade.plugin_ragium.output_side", "搬出面")
 
-        add(RagiumTranslationKeys.JADE_OUTPUT_SIDE, "搬出面: %s")
+        add(RagiumTranslation.JADE_OUTPUT_SIDE, "搬出面: %s")
     }
 
     private fun mekanism() {

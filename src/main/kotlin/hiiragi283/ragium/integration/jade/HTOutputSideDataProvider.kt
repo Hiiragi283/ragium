@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jade
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.integration.jade.base.HTBlockDataProvider
 import net.minecraft.core.Direction
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -19,12 +19,7 @@ object HTOutputSideDataProvider : HTBlockDataProvider<Direction>() {
         config: IPluginConfig,
         data: Direction,
     ) {
-        tooltip.add(
-            Component.translatable(
-                RagiumTranslationKeys.JADE_OUTPUT_SIDE,
-                Component.translatable("jade.${data.serializedName}"),
-            ),
-        )
+        tooltip.add(RagiumTranslation.JADE_OUTPUT_SIDE.getComponent(Component.translatable("jade.${data.serializedName}")))
     }
 
     override fun streamData(accessor: BlockAccessor): Direction? = null

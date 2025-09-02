@@ -28,7 +28,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.item.HTDrumItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
@@ -242,7 +242,7 @@ object RagiumBlocks {
     //    Buildings    //
 
     @JvmField
-    val RAGI_BRICKS: HTSimpleDeferredBlock = 
+    val RAGI_BRICKS: HTSimpleDeferredBlock =
         REGISTER.registerSimple("ragi_bricks", copyOf(Blocks.BRICKS, MapColor.COLOR_RED))
 
     @JvmField
@@ -274,7 +274,7 @@ object RagiumBlocks {
         REGISTER.registerSimple("blue_nether_bricks", copyOf(Blocks.NETHER_BRICKS, MapColor.COLOR_BLUE))
 
     @JvmField
-    val SPONGE_CAKE: HTBasicDeferredBlock<HTSpongeCakeBlock> = 
+    val SPONGE_CAKE: HTBasicDeferredBlock<HTSpongeCakeBlock> =
         REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL), ::HTSpongeCakeBlock)
 
     @JvmField
@@ -319,13 +319,13 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val LED_BLOCKS: Map<HTColorVariant, HTSimpleDeferredBlock> =
-        HTColorVariant.entries.associateWith { color: HTColorVariant ->
+    val LED_BLOCKS: Map<HTColorMaterial, HTSimpleDeferredBlock> =
+        HTColorMaterial.entries.associateWith { color: HTColorMaterial ->
             REGISTER.registerSimple("${color.serializedName}_led_block", glass().mapColor(color.color).lightLevel { 15 })
         }
 
     @JvmStatic
-    fun getLedBlock(color: HTColorVariant): HTSimpleDeferredBlock = LED_BLOCKS[color]!!
+    fun getLedBlock(color: HTColorMaterial): HTSimpleDeferredBlock = LED_BLOCKS[color]!!
 
     //    Foods    //
 

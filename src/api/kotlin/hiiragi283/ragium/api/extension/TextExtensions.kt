@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.item.HTEnergyItem
 import hiiragi283.ragium.api.item.HTFluidItem
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -68,8 +68,7 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     )
 }
 
-fun energyText(storage: IEnergyStorage): MutableComponent = Component.translatable(
-    RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE,
+fun energyText(storage: IEnergyStorage): MutableComponent = RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(
     intText(storage.energyStored),
     intText(storage.maxEnergyStored),
 )
@@ -86,13 +85,12 @@ fun addFluidTooltip(
 ) {
     // Empty name if stack is empty
     if (stack.isEmpty) {
-        consumer.accept(Component.translatable(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY))
+        consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY.getComponent())
         return
     }
     // Fluid Name and Amount
     consumer.accept(
-        Component.translatable(
-            RagiumTranslationKeys.TOOLTIP_FLUID_NAME,
+        RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(
             stack.hoverName,
             intText(stack.amount),
         ),

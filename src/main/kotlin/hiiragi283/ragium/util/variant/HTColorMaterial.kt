@@ -1,13 +1,12 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 
-enum class HTColorVariant(val color: DyeColor, private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
+enum class HTColorMaterial(val color: DyeColor, private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     WHITE(DyeColor.WHITE, "White", "白色"),
     ORANGE(DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(DyeColor.MAGENTA, "Magenta", "赤紫色"),
@@ -25,8 +24,6 @@ enum class HTColorVariant(val color: DyeColor, private val enName: String, priva
     RED(DyeColor.RED, "Red", "赤色"),
     BLACK(DyeColor.BLACK, "Black", "黒色"),
     ;
-
-    override val translationKey: String = "variant.color.${RagiumConst.MINECRAFT}.$serializedName"
 
     val dyeTag: TagKey<Item> = color.tag
     val dyedTag: TagKey<Item> = color.dyedTag

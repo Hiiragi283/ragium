@@ -20,7 +20,7 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTLootTicketHelper
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
@@ -192,7 +192,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .save(output)
 
-        for (variant: HTColorVariant in HTColorVariant.entries) {
+        for (variant: HTColorMaterial in HTColorMaterial.entries) {
             HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color))
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)

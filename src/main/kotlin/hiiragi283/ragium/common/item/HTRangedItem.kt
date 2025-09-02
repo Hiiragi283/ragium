@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.intText
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
@@ -44,11 +44,11 @@ abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1
         flag: TooltipFlag,
     ) {
         tooltips.add(
-            Component
-                .translatable(
-                    RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE,
+            RagiumTranslation.TOOLTIP_EFFECT_RANGE
+                .getColoredComponent(
+                    ChatFormatting.GRAY,
                     intText(getRange(stack, context.level())).withStyle(ChatFormatting.WHITE),
-                ).withStyle(ChatFormatting.GRAY),
+                ),
         )
     }
 

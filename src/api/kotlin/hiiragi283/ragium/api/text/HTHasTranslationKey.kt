@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util.translate
+package hiiragi283.ragium.api.text
 
 /**
  * @see [mekanism.api.text.IHasTranslationKey]

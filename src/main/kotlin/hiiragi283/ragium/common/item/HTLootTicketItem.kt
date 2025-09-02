@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
@@ -65,11 +65,7 @@ class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.R
     ) {
         val lootTableKey: ResourceKey<LootTable> = stack.get(RagiumDataComponents.LOOT_TABLE_ID) ?: return
         tooltipComponents.add(
-            Component
-                .translatable(
-                    RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID,
-                    lootTableKey.location().toString(),
-                ).withStyle(ChatFormatting.YELLOW),
+            RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.getColoredComponent(ChatFormatting.YELLOW, lootTableKey.location().toString()),
         )
     }
 }

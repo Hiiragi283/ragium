@@ -3,9 +3,9 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.HTHasTranslationKey
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
-import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -17,7 +17,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.material.RagiumMaterialType
-import hiiragi283.ragium.util.variant.HTColorVariant
+import hiiragi283.ragium.util.variant.HTColorMaterial
 import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.data.PackOutput
@@ -115,7 +115,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
             add(variant.wall, variant.translate(type, "Wall"))
         }
 
-        for ((color: HTColorVariant, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
             add(block, "${color.getTranslatedName(type)} LED Block")
         }
 
@@ -390,26 +390,26 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun text() {
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO, "Azure Steel Equipment")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS, "Azure Steel Ingot")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add iron armor, weapon, ot tool")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Azure Steel Ingot")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "Azure Steel Equipment")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS, "Azure Steel Ingot")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add iron armor, weapon, ot tool")
+        add(RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Azure Steel Ingot")
 
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE, "Deep Steel Upgrade")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_APPLIES_TO, "Deep Steel Equipment")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
-        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE, "Deep Steel Upgrade")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO, "Deep Steel Equipment")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
+        add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
 
-        add(RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
-        add(RagiumTranslationKeys.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")
-        add(RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE, "Effect Radius: %s blocks")
-        add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
-        add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "Press Shift to show info")
-        add(RagiumTranslationKeys.TOOLTIP_WIP, "This content is work in progress!!")
+        add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
+        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")
+        add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "Effect Radius: %s blocks")
+        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
+        add(RagiumTranslation.TOOLTIP_SHOW_INFO, "Press Shift to show info")
+        add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
 
         add(HTTransferIO.INPUT_ONLY.translationKey, "Mode: Input")
         add(HTTransferIO.OUTPUT_ONLY.translationKey, "Mode: Output")
@@ -474,7 +474,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun jade() {
         add("config.jade.plugin_ragium.output_side", "Output Side")
 
-        add(RagiumTranslationKeys.JADE_OUTPUT_SIDE, "Output Side: %s")
+        add(RagiumTranslation.JADE_OUTPUT_SIDE, "Output Side: %s")
     }
 
     private fun mekanism() {

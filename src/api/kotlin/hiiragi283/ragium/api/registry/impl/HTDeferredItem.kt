@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.registry.HTDeferredHolder
-import hiiragi283.ragium.api.util.translate.HTHasComponent
-import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
+import hiiragi283.ragium.api.text.HTHasComponent
+import hiiragi283.ragium.api.text.HTHasTranslationKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey

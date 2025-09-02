@@ -1,6 +1,5 @@
 package hiiragi283.ragium.util.material
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
@@ -45,8 +44,6 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     COAL_COKE("Coal Coke", "石炭コークス"),
     PLASTIC("Plastic", "プラスチック"),
     ;
-
-    override val translationKey: String = "material.${RagiumAPI.MOD_ID}.$serializedName"
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName

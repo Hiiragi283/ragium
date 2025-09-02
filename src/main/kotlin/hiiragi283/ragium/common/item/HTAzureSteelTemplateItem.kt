@@ -1,18 +1,17 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.SmithingTemplateItem
 
 class HTAzureSteelTemplateItem :
     SmithingTemplateItem(
-        Component.translatable(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO).withStyle(ChatFormatting.BLUE),
-        Component.translatable(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS).withStyle(ChatFormatting.BLUE),
-        Component.translatable(RagiumTranslationKeys.AZURE_STEEL_UPGRADE).withStyle(ChatFormatting.GRAY),
-        Component.translatable(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION),
-        Component.translatable(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION),
+        RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO.getColoredComponent(ChatFormatting.BLUE),
+        RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS.getColoredComponent(ChatFormatting.BLUE),
+        RagiumTranslation.AZURE_STEEL_UPGRADE.getColoredComponent(ChatFormatting.GRAY),
+        RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION.getComponent(),
+        RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION.getComponent(),
         listOf(
             "item/empty_armor_slot_helmet",
             "item/empty_armor_slot_chestplate",

@@ -10,11 +10,11 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTVariantKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.text.HTHasTranslationKey
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
-import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -112,7 +112,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)
 
     fun addInfo(item: ItemLike, vararg values: String) {
-        add(RagiumTranslationKeys.getTooltipKey(ItemStack(item)), values.joinToString(separator = "\n"))
+        add(RagiumTranslation.getTooltipKey(ItemStack(item)), values.joinToString(separator = "\n"))
     }
 
     fun addItemGroup(group: HTHolderLike, value: String) {
