@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
-import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus

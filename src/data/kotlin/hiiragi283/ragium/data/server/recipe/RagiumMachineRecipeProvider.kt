@@ -7,12 +7,12 @@ import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTMachineVariant
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient

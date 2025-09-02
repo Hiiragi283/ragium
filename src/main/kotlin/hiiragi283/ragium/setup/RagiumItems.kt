@@ -38,12 +38,12 @@ import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTDrumVariant
-import hiiragi283.ragium.util.variant.HTHammerToolVariant
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey

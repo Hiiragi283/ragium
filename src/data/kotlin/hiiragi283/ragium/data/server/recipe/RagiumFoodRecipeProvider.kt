@@ -16,10 +16,10 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient

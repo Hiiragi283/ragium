@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
-import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.resources.sounds.SoundInstance

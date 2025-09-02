@@ -1,4 +1,4 @@
-package hiiragi283.ragium.util.variant
+package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType

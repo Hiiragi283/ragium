@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe

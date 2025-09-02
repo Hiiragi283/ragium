@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
-import hiiragi283.ragium.util.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BoneMealItem

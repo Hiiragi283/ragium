@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.util.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTDecorationVariant
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockModelProvider

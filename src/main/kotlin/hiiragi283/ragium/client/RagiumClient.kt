@@ -22,14 +22,14 @@ import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
+import hiiragi283.ragium.common.variant.HTColorMaterial
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTColorMaterial
-import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos

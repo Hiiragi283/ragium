@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory

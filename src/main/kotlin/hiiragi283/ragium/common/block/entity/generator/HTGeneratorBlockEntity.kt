@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
 import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage

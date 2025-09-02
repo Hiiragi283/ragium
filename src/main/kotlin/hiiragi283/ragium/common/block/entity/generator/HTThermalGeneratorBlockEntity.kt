@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState

@@ -6,8 +6,8 @@ import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
-import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 
 object RagiumEmiCategories {
     //    Generators    //

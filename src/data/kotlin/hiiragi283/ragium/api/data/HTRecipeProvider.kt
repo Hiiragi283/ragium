@@ -22,8 +22,8 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup

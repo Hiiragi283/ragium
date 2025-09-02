@@ -3,9 +3,9 @@ package hiiragi283.ragium.config
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.material.HTTierType
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
-import hiiragi283.ragium.util.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
 import org.apache.commons.lang3.tuple.Pair
 

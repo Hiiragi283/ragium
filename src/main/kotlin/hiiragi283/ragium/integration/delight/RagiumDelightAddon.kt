@@ -12,11 +12,11 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
-import hiiragi283.ragium.util.variant.HTHammerToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties

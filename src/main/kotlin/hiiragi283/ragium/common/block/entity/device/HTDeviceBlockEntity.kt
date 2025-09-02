@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.util.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth

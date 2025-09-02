@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component

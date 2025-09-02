@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.variant.HTDecorationVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput

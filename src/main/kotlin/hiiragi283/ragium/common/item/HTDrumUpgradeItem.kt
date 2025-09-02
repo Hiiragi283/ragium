@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.storage.HTMultiCapability
-import hiiragi283.ragium.util.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents

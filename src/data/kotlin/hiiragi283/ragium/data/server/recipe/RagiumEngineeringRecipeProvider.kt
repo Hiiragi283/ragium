@@ -18,10 +18,10 @@ import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
+import hiiragi283.ragium.common.variant.HTColorMaterial
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.HTColorMaterial
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike

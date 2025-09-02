@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel

@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel

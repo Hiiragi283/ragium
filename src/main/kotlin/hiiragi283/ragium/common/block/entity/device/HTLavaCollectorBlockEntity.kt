@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.util.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel

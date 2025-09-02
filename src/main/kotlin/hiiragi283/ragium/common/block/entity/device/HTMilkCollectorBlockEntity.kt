@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents

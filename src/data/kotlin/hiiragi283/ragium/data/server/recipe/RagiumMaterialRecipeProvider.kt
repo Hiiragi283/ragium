@@ -18,9 +18,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTCommonMaterialTypes
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags

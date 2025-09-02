@@ -34,6 +34,8 @@ import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
 import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
@@ -45,8 +47,6 @@ import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.variant.HTDeviceVariant
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey

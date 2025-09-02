@@ -8,11 +8,11 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer

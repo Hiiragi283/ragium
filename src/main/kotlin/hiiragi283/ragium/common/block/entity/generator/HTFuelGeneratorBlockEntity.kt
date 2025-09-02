@@ -11,9 +11,9 @@ import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
