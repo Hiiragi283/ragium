@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.data.MapBiCodec
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
-import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup

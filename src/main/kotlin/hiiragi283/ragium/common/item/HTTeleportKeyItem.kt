@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.item
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.toCenterVec3
-import hiiragi283.ragium.api.item.HTFluidItem
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents

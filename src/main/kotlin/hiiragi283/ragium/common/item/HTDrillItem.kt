@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.item.HTEnergyItem
 import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents

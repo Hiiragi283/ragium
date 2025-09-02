@@ -129,14 +129,14 @@ sealed class HTRecipeProvider {
         HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(solid),
-                HTResultHelper.fluid(fluid, amount),
+                HTResultHelper.INSTANCE.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.asItemHolder().idOrThrow.path}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.item(solid),
+                HTResultHelper.INSTANCE.item(solid),
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
@@ -150,14 +150,14 @@ sealed class HTRecipeProvider {
         HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(solid),
-                HTResultHelper.fluid(fluid, amount),
+                HTResultHelper.INSTANCE.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.location.path}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.item(solid),
+                HTResultHelper.INSTANCE.item(solid),
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
@@ -171,14 +171,14 @@ sealed class HTRecipeProvider {
         HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(filled),
-                HTResultHelper.fluid(fluid, amount),
+                HTResultHelper.INSTANCE.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${filled.asItemHolder().idOrThrow.path}")
         // Infusing
         HTFluidTransformRecipeBuilder
             .infusing(
                 empty,
                 HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.item(filled),
+                HTResultHelper.INSTANCE.item(filled),
             ).saveSuffixed(output, "_from_${fluid.id.path}")
     }
 
@@ -203,7 +203,7 @@ sealed class HTRecipeProvider {
         // Basic
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ingot, 3),
+                HTResultHelper.INSTANCE.item(ingot, 3),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).tagCondition(ingot)
@@ -211,7 +211,7 @@ sealed class HTRecipeProvider {
         // Advanced
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(ingot, 2),
+                HTResultHelper.INSTANCE.item(ingot, 2),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).tagCondition(ingot)

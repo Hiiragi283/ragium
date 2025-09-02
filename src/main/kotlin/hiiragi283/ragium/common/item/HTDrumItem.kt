@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.item.HTBlockItem
-import hiiragi283.ragium.api.item.HTFluidItem
 import hiiragi283.ragium.common.block.HTDrumBlock
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack

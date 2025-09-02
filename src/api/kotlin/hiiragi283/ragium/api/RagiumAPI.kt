@@ -10,26 +10,20 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
-import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import java.util.*
@@ -86,9 +80,9 @@ interface RagiumAPI {
      */
     fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage?
 
-    //    Config    //
+    //    Recipe    //
 
-    fun getTagOutputPriority(): List<String>
+    fun getResultHelper(): HTResultHelper
 
     //    Platform    //
 
@@ -101,16 +95,6 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [HTResultHelper.item]
-     */
-    fun createItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, component: DataComponentPatch): HTItemResult
-
-    /**
-     * @see [HTResultHelper.fluid]
-     */
-    fun createFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, component: DataComponentPatch): HTFluidResult
 
     /**
      * @see [HTComponentEnergyStorage]

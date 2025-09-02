@@ -17,79 +17,79 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Tags.Items.SANDS_COLORLESS, 4),
-                HTResultHelper.item(Items.SANDSTONE),
+                HTResultHelper.INSTANCE.item(Items.SANDSTONE),
             ).save(output)
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Tags.Items.SANDS_RED, 4),
-                HTResultHelper.item(Items.RED_SANDSTONE),
+                HTResultHelper.INSTANCE.item(Items.RED_SANDSTONE),
             ).save(output)
 
         // Clay -> Mud
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.CLAY),
-                HTResultHelper.item(Items.MUD),
+                HTResultHelper.INSTANCE.item(Items.MUD),
             ).save(output)
         // Mud -> Packed Mud
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.MUD),
-                HTResultHelper.item(Items.PACKED_MUD),
+                HTResultHelper.INSTANCE.item(Items.PACKED_MUD),
             ).save(output)
 
         // Snow -> Ice
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.SNOW_BLOCK, 4),
-                HTResultHelper.item(Items.ICE),
+                HTResultHelper.INSTANCE.item(Items.ICE),
             ).save(output)
 
         // Moss
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Ingredient.of(Items.VINE, Items.MOSS_CARPET), 8),
-                HTResultHelper.item(Items.MOSS_BLOCK),
+                HTResultHelper.INSTANCE.item(Items.MOSS_BLOCK),
             ).save(output)
         // Sculk
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.SCULK_VEIN, 8),
-                HTResultHelper.item(Items.SCULK),
+                HTResultHelper.INSTANCE.item(Items.SCULK),
             ).save(output)
 
         // TNT
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.GUNPOWDER, 4),
-                HTResultHelper.item(Items.TNT),
+                HTResultHelper.INSTANCE.item(Items.TNT),
             ).save(output)
 
         // Paper
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Tags.Items.CROPS_SUGAR_CANE),
-                HTResultHelper.item(Items.PAPER, 2),
+                HTResultHelper.INSTANCE.item(Items.PAPER, 2),
             ).save(output)
 
         // Sawdust -> Compressed
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, 8),
-                HTResultHelper.item(RagiumItems.COMPRESSED_SAWDUST),
+                HTResultHelper.INSTANCE.item(RagiumItems.COMPRESSED_SAWDUST),
             ).save(output)
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL, 64),
-                HTResultHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND),
             ).saveSuffixed(output, "_from_coal")
 
         // Basalt Mesh
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(Items.BASALT, 8),
-                HTResultHelper.item(RagiumItems.BASALT_MESH),
+                HTResultHelper.INSTANCE.item(RagiumItems.BASALT_MESH),
             ).save(output)
     }
 }

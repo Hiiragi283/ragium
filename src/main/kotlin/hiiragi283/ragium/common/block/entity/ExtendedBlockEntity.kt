@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
-import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

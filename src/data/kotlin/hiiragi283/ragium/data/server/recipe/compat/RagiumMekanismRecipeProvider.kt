@@ -148,7 +148,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             .solidifying(
                 HTIngredientHelper.item(RagiumItems.POLYMER_CATALYST),
                 HTIngredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
-                HTResultHelper.item(MekanismItems.HDPE_PELLET),
+                HTResultHelper.INSTANCE.item(MekanismItems.HDPE_PELLET),
             ).save(output)
     }
 

@@ -20,14 +20,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 null,
                 HTIngredientHelper.item(Items.BUDDING_AMETHYST),
-                HTResultHelper.item(Items.AMETHYST_SHARD, 4),
+                HTResultHelper.INSTANCE.item(Items.AMETHYST_SHARD, 4),
             ).save(output)
         // Echo Shard
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
                 HTIngredientHelper.item(Items.SCULK_CATALYST),
-                HTResultHelper.item(Items.ECHO_SHARD),
+                HTResultHelper.INSTANCE.item(Items.ECHO_SHARD),
             ).save(output)
 
         mobExtracting()
@@ -40,7 +40,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 null,
                 HTIngredientHelper.item(Items.ARMADILLO_SPAWN_EGG),
-                HTResultHelper.item(Items.ARMADILLO_SCUTE),
+                HTResultHelper.INSTANCE.item(Items.ARMADILLO_SCUTE),
             ).save(output)
 
         // Honeycomb
@@ -48,14 +48,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 null,
                 HTIngredientHelper.item(Items.BEE_NEST),
-                HTResultHelper.item(Items.HONEYCOMB),
+                HTResultHelper.INSTANCE.item(Items.HONEYCOMB),
             ).save(output)
         // Honey Bottle
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 HTIngredientHelper.item(Items.GLASS_BOTTLE),
                 HTIngredientHelper.item(Items.BEE_NEST),
-                HTResultHelper.item(Items.HONEY_BOTTLE),
+                HTResultHelper.INSTANCE.item(Items.HONEY_BOTTLE),
             ).save(output)
 
         // Egg
@@ -63,7 +63,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Tags.Items.SEEDS),
                 HTIngredientHelper.item(Items.CHICKEN_SPAWN_EGG),
-                HTResultHelper.item(Items.EGG),
+                HTResultHelper.INSTANCE.item(Items.EGG),
             ).save(output)
 
         // Dragon Breath
@@ -71,7 +71,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Items.GLASS_BOTTLE),
                 HTIngredientHelper.item(Items.DRAGON_EGG),
-                HTResultHelper.item(Items.DRAGON_BREATH),
+                HTResultHelper.INSTANCE.item(Items.DRAGON_BREATH),
             ).save(output)
 
         // Poppy
@@ -79,7 +79,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Tags.Items.FERTILIZERS),
                 HTIngredientHelper.item(Items.IRON_GOLEM_SPAWN_EGG),
-                HTResultHelper.item(Items.POPPY),
+                HTResultHelper.INSTANCE.item(Items.POPPY),
             ).save(output)
 
         // Ancient Debris
@@ -87,7 +87,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Tags.Items.NETHERRACKS, 16),
                 HTIngredientHelper.item(Items.PIGLIN_BRUTE_SPAWN_EGG),
-                HTResultHelper.item(Items.ANCIENT_DEBRIS),
+                HTResultHelper.INSTANCE.item(Items.ANCIENT_DEBRIS),
             ).save(output)
 
         // Wool
@@ -95,7 +95,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 null,
                 HTIngredientHelper.item(Items.SHEEP_SPAWN_EGG),
-                HTResultHelper.item(Items.WHITE_WOOL),
+                HTResultHelper.INSTANCE.item(Items.WHITE_WOOL),
             ).save(output)
 
         // Turtle Scute
@@ -103,7 +103,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Items.SEAGRASS, 8),
                 HTIngredientHelper.item(Items.TURTLE_SPAWN_EGG),
-                HTResultHelper.item(Items.TURTLE_SCUTE),
+                HTResultHelper.INSTANCE.item(Items.TURTLE_SCUTE),
             ).save(output)
 
         // Resonant Debris
@@ -111,7 +111,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(Items.DEEPSLATE, 8),
                 HTIngredientHelper.item(Items.WARDEN_SPAWN_EGG),
-                HTResultHelper.item(RagiumBlocks.RESONANT_DEBRIS),
+                HTResultHelper.INSTANCE.item(RagiumBlocks.RESONANT_DEBRIS),
             ).save(output)
 
         // Nether Star
@@ -128,7 +128,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 HTIngredientHelper.item(RagiumItems.WITHER_DOLl),
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.IRIDESCENTIUM),
-                HTResultHelper.item(Tags.Items.NETHER_STARS),
+                HTResultHelper.INSTANCE.item(Tags.Items.NETHER_STARS),
             ).save(output)
     }
 }

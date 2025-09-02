@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
-import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
+import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component

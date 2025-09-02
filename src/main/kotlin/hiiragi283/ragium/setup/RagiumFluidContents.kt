@@ -119,7 +119,7 @@ object RagiumFluidContents {
 
     @JvmField
     val SAP: HTFluidContent<HTVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", properties(), HTVaporizableFluidType.create(HTResultHelper.item(Items.SLIME_BALL)))
+        register("sap", properties(), HTVaporizableFluidType.create(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -137,7 +137,7 @@ object RagiumFluidContents {
             "crimson_blood",
             molten(),
             HTNetherVaporizableFluidType.create(
-                HTResultHelper.item(
+                HTResultHelper.INSTANCE.item(
                     HTItemMaterialVariant.GEM,
                     RagiumMaterialType.CRIMSON_CRYSTAL,
                 ),
@@ -150,7 +150,7 @@ object RagiumFluidContents {
             "dew_of_the_warp",
             molten(),
             HTNetherVaporizableFluidType.create(
-                HTResultHelper.item(
+                HTResultHelper.INSTANCE.item(
                     HTItemMaterialVariant.GEM,
                     RagiumMaterialType.WARPED_CRYSTAL,
                 ),

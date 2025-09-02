@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe.result
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.data.BiCodec
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries

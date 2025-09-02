@@ -40,7 +40,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .compressing(
                 HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
-                HTResultHelper.item(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
             ).save(output)
         // Synthetic Fiber
         HTShapelessRecipeBuilder(RagiumItems.SYNTHETIC_FIBER, 2)
@@ -67,14 +67,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Blaze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(Items.BLAZE_ROD),
+                HTResultHelper.INSTANCE.item(Items.BLAZE_ROD),
                 HTIngredientHelper.item(Items.BLAZE_POWDER, 4),
                 HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
             ).save(output)
         // Breeze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(Items.BREEZE_ROD),
+                HTResultHelper.INSTANCE.item(Items.BREEZE_ROD),
                 HTIngredientHelper.item(Items.WIND_CHARGE, 6),
                 HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
             ).save(output)
@@ -92,14 +92,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Circuit Boards
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
+                HTResultHelper.INSTANCE.item(RagiumItems.CIRCUIT_BOARD, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.QUARTZ),
             ).save(output)
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                HTResultHelper.INSTANCE.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS, 2),
                 HTIngredientHelper.item(RagiumItems.BASALT_MESH),
             ).save(output)
@@ -126,7 +126,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(circuit(HTTierType.BASIC), 4),
+                HTResultHelper.INSTANCE.item(circuit(HTTierType.BASIC), 4),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER, 2),
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
                 HTIngredientHelper.item(RagiumItems.CIRCUIT_BOARD),
@@ -149,7 +149,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(circuit(HTTierType.ADVANCED), 2),
+                HTResultHelper.INSTANCE.item(circuit(HTTierType.ADVANCED), 2),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD, 2),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
                 HTIngredientHelper.item(RagiumItems.CIRCUIT_BOARD),
@@ -157,7 +157,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Elite
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(circuit(HTTierType.ELITE)),
+                HTResultHelper.INSTANCE.item(circuit(HTTierType.ELITE)),
                 HTIngredientHelper.ingotOrDust(RagiumMaterialType.ADVANCED_RAGI_ALLOY, 2),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.RAGI_CRYSTAL),
                 HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
@@ -165,7 +165,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Ultimate
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(circuit(HTTierType.ULTIMATE)),
+                HTResultHelper.INSTANCE.item(circuit(HTTierType.ULTIMATE)),
                 HTIngredientHelper.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.IRIDESCENTIUM),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.ELDRITCH_PEARL),
                 HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
@@ -246,14 +246,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.REDSTONE_BOARD, 4),
+                HTResultHelper.INSTANCE.item(RagiumItems.REDSTONE_BOARD, 4),
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.item(Items.SMOOTH_STONE_SLAB),
             ).save(output)
         // Repeater
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(Items.REPEATER, 2),
+                HTResultHelper.INSTANCE.item(Items.REPEATER, 2),
                 HTIngredientHelper.item(Items.REDSTONE_TORCH),
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.item(RagiumItems.REDSTONE_BOARD),
@@ -261,7 +261,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Comparator
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(Items.COMPARATOR, 2),
+                HTResultHelper.INSTANCE.item(Items.COMPARATOR, 2),
                 HTIngredientHelper.item(Items.REDSTONE_TORCH),
                 HTIngredientHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.QUARTZ),
                 HTIngredientHelper.item(Items.REPEATER),
@@ -273,7 +273,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // LED
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.LED, 4),
+                HTResultHelper.INSTANCE.item(RagiumItems.LED, 4),
                 HTIngredientHelper.item(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER),
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
@@ -295,7 +295,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Solar Panel
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.SOLAR_PANEL),
+                HTResultHelper.INSTANCE.item(RagiumItems.SOLAR_PANEL),
                 HTIngredientHelper.item(RagiumModTags.Items.PLASTICS),
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE, 2),
             ).save(output)

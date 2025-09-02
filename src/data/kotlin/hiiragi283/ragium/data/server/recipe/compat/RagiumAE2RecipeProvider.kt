@@ -23,7 +23,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .infusing(
                 HTIngredientHelper.item(AEBlocks.QUARTZ_BLOCK),
                 HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 8000),
-                HTResultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ),
+                HTResultHelper.INSTANCE.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ),
             ).save(output)
     }
 
@@ -33,7 +33,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .simulating(
                 null,
                 HTIngredientHelper.item(budding),
-                HTResultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count),
+                HTResultHelper.INSTANCE.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count),
             ).saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
     }
 }

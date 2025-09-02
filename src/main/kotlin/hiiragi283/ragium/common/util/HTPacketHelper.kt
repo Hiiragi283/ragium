@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.network
+package hiiragi283.ragium.common.util
 
+import hiiragi283.ragium.api.network.HTCustomPayload
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos

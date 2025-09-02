@@ -8,6 +8,7 @@ import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -22,7 +23,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumPayloadRegister
-import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem

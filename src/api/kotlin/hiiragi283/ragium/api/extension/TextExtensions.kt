@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.item.HTEnergyItem
-import hiiragi283.ragium.api.item.HTFluidItem
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -110,11 +109,14 @@ fun addFluidTooltip(
 }
 
 fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
-    HTEnergyItem.getStorage(stack)?.let(::energyText)?.let(consumer::accept)
+    HTMultiCapability.ENERGY
+        .getCapability(stack)
+        ?.let(::energyText)
+        ?.let(consumer::accept)
 }
 
 fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
-    val handler: IFluidHandlerItem = HTFluidItem.getHandler(stack) ?: return
+    val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(stack) ?: return
     for (i: Int in handler.tankRange) {
         addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
     }

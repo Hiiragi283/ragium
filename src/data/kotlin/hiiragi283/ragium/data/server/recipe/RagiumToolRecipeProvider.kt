@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.util.HTLootTicketHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTColorMaterial
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -21,7 +22,6 @@ import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items

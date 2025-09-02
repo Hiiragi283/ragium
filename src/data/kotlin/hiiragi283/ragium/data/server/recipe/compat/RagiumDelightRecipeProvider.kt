@@ -38,14 +38,14 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .infusing(
                 HTIngredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
                 HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 250),
-                HTResultHelper.item(ModItems.RICH_SOIL.get()),
+                HTResultHelper.INSTANCE.item(ModItems.RICH_SOIL.get()),
             ).save(output)
 
         // Rice Panicle
         HTItemToChancedItemRecipeBuilder
             .crushing(HTIngredientHelper.item(ModItems.RICE_PANICLE.get()))
-            .addResult(HTResultHelper.item(ModItems.RICE.get()))
-            .addResult(HTResultHelper.item(ModItems.STRAW.get()), 0.5f)
+            .addResult(HTResultHelper.INSTANCE.item(ModItems.RICE.get()))
+            .addResult(HTResultHelper.INSTANCE.item(ModItems.STRAW.get()), 0.5f)
             .save(output)
 
         knife()

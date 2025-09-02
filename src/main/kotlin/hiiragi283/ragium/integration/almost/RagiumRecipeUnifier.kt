@@ -6,7 +6,7 @@ import com.almostreliable.unified.api.unification.recipe.RecipeUnifier
 import com.almostreliable.unified.api.unification.recipe.UnificationHelper
 import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey

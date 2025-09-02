@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.network.HTPacketHelper
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
+import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Tooltip

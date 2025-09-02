@@ -40,7 +40,7 @@ object HTDynamicRecipes {
                 .infusing(
                     HTIngredientHelper.item(Tags.Items.BUCKETS_EMPTY),
                     HTIngredientHelper.fluid(fluid, 1000),
-                    HTResultHelper.item(FluidUtil.getFilledBucket(FluidStack(fluid, 1000))),
+                    HTResultHelper.INSTANCE.item(FluidUtil.getFilledBucket(FluidStack(fluid, 1000))),
                 ).createRecipe()
             RecipeHolder(id, recipe)
         }.iterator()
@@ -54,7 +54,7 @@ object HTDynamicRecipes {
             val recipe: HTItemToFluidRecipe = HTItemToObjRecipeBuilder
                 .melting(
                     HTIngredientHelper.item(FluidUtil.getFilledBucket(FluidStack(fluid, 1000)).item),
-                    HTResultHelper.fluid(fluid, 1000),
+                    HTResultHelper.INSTANCE.fluid(fluid, 1000),
                 ).createRecipe()
             RecipeHolder(id, recipe)
         }.iterator()

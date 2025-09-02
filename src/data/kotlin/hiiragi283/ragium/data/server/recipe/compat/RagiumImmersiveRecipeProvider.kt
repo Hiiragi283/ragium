@@ -35,14 +35,14 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .infusing(
                 HTIngredientHelper.item(ItemTags.PLANKS),
                 HTIngredientHelper.fluid(IETags.fluidCreosote, 125),
-                HTResultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!),
+                HTResultHelper.INSTANCE.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!),
             ).save(output)
         // Redstone Acid
         HTFluidTransformRecipeBuilder
             .mixing(
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 HTIngredientHelper.water(1000),
-                HTResultHelper.fluid(IETags.fluidRedstoneAcid, 1000),
+                HTResultHelper.INSTANCE.fluid(IETags.fluidRedstoneAcid, 1000),
             ).save(output)
 
         raginite()

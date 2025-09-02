@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tag
+package hiiragi283.ragium.common.util
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
@@ -32,7 +32,7 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
         val error: DataResult<Holder<T>> = DataResult.error { "Failed to find lookup for $registryKey" }
         val getter: HolderGetter<T> = provider?.lookupOrThrow(registryKey)
-            ?: RagiumAPI.getInstance().resolveLookup(registryKey)
+            ?: RagiumAPI.Companion.getInstance().resolveLookup(registryKey)
             ?: return error
         return getFirstHolder(getter)
     }

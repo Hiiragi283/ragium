@@ -1,4 +1,4 @@
-package hiiragi283.ragium.util
+package hiiragi283.ragium.common.util
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.addon.HTAddon
@@ -8,7 +8,7 @@ import org.objectweb.asm.Type
 import org.slf4j.Logger
 import java.lang.reflect.Constructor
 
-internal object HTAddonCollector {
+internal object HTAddonHelper {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
 

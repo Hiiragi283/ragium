@@ -105,21 +105,21 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Quartz Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
+                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
                 HTIngredientHelper.item(Items.QUARTZ_BLOCK),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
+                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
                 HTIngredientHelper.item(Items.SOUL_SAND),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
+                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)

@@ -23,6 +23,6 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
         .get(key)
         .map { EnchantmentInstance(it, level) }
         .map(EnchantedBookItem::createForEnchantment)
-        .map(HTResultHelper::item)
+        .map(HTResultHelper.INSTANCE::item)
         .orElseThrow()
 }

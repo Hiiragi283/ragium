@@ -39,7 +39,7 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                HTMultiCapability.Companion.FLUID.getCapability(stack)?.let { handler: IFluidHandlerItem ->
+                HTMultiCapability.FLUID.getCapability(stack)?.let { handler: IFluidHandlerItem ->
                     for (i: Int in handler.tankRange) {
                         if (tank.isFluidValid(handler.getFluidInTank(i))) return@HTFluidFuelItemStackSlot false
                     }

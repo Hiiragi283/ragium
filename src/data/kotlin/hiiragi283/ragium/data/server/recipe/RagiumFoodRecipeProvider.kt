@@ -33,7 +33,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .mixing(
                 HTIngredientHelper.item(Tags.Items.MUSHROOMS, 2),
                 HTIngredientHelper.milk(250),
-                HTResultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250),
+                HTResultHelper.INSTANCE.fluid(RagiumFluidContents.MUSHROOM_STEW, 250),
             ).save(output)
 
         extractAndInfuse(
@@ -48,14 +48,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
                 HTIngredientHelper.milk(250),
-                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).saveSuffixed(output, "_from_milk")
 
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
-                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).save(output)
         // Melon Pie
         HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
@@ -69,7 +69,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .infusing(
                 HTIngredientHelper.item(Items.SNOWBALL),
                 HTIngredientHelper.milk(250),
-                HTResultHelper.item(RagiumItems.ICE_CREAM),
+                HTResultHelper.INSTANCE.item(RagiumItems.ICE_CREAM),
             ).save(output)
         // Ice Cream Soda
         save(
@@ -80,7 +80,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Ambrosia
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.item(RagiumItems.AMBROSIA),
+                HTResultHelper.INSTANCE.item(RagiumItems.AMBROSIA),
                 HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
                 HTIngredientHelper.item(Items.HONEY_BLOCK, 64),
             ).save(output)
@@ -137,7 +137,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                         Ingredient.of(Items.ROTTEN_FLESH),
                     ),
                 ),
-                HTResultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
             ).save(output)
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.MEAT), 3)
@@ -149,7 +149,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .solidifying(
                 null,
                 HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),
-                HTResultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT),
             ).save(output)
 
         HTCookingRecipeBuilder
