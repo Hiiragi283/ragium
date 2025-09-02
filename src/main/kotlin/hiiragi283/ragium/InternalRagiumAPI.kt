@@ -20,11 +20,9 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.common.util.RagiumResultHelper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
@@ -33,7 +31,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -149,8 +146,4 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
-
-    override fun getEnergyComponent(): DataComponentType<Int> = RagiumDataComponents.ENERGY.get()
-
-    override fun getFluidComponent(): DataComponentType<SimpleFluidContent> = RagiumDataComponents.FLUID_CONTENT.get()
 }

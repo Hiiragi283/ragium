@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.fluid
 
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
@@ -9,7 +10,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
  * [HTFluidTank]に基づいた[HTSidedFluidHandler]の拡張インターフェース
  * @see [mekanism.api.fluid.IMekanismFluidHandler]
  */
-interface HTFluidHandler : HTSidedFluidHandler {
+interface HTFluidHandler :
+    HTSidedFluidHandler,
+    HTContentListener {
     companion object {
         fun toAction(simulate: Boolean): IFluidHandler.FluidAction = when (simulate) {
             true -> IFluidHandler.FluidAction.SIMULATE

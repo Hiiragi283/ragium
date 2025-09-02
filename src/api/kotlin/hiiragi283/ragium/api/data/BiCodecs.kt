@@ -23,6 +23,7 @@ import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
 
@@ -127,6 +128,25 @@ object BiCodecs {
     fun itemStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, ItemStack> = when (allowEmpty) {
         true -> ITEM_STACK
         false -> ITEM_STACK_NON_EMPTY
+    }
+
+    @JvmStatic
+    private val FLUID_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
+
+    @JvmStatic
+    private val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(
+        FluidStack.OPTIONAL_CODEC,
+        FluidStack.OPTIONAL_STREAM_CODEC,
+    )
+
+    /**
+     * [FluidStack]の[BiCodec]を返します。
+     * @param allowEmpty [FluidStack.EMPTY]を許容するかどうか
+     */
+    @JvmStatic
+    fun fluidStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, FluidStack> = when (allowEmpty) {
+        true -> FLUID_STACK
+        false -> FLUID_STACK_NON_EMPTY
     }
 
     // Registry

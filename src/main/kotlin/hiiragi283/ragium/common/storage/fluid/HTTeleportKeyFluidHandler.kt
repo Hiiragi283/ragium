@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storage.fluid
 
-import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack

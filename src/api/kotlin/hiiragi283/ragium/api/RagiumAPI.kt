@@ -10,12 +10,9 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.storage.energy.HTComponentEnergyStorage
-import hiiragi283.ragium.api.storage.fluid.HTComponentFluidHandler
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -25,7 +22,6 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 import java.util.*
 
 interface RagiumAPI {
@@ -95,14 +91,4 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [HTComponentEnergyStorage]
-     */
-    fun getEnergyComponent(): DataComponentType<Int>
-
-    /**
-     * @see [HTComponentFluidHandler]
-     */
-    fun getFluidComponent(): DataComponentType<SimpleFluidContent>
 }
