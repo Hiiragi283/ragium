@@ -6,7 +6,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
-class HTSlotConfigurationMenu(containerId: Int, inventory: Inventory, blockEntity: HTMachineBlockEntity) :
-    HTContainerWithContextMenu<HTMachineBlockEntity>(RagiumMenuTypes.SLOT_CONFIG, containerId, inventory, blockEntity) {
+class HTAccessConfigurationMenu(containerId: Int, inventory: Inventory, blockEntity: HTMachineBlockEntity) :
+    HTContainerWithContextMenu<HTMachineBlockEntity>(RagiumMenuTypes.ACCESS_CONFIG, containerId, inventory, blockEntity) {
     override fun stillValid(player: Player): Boolean = !context.isRemoved && context.level?.isInWorldBounds(context.blockPos) == true
 }

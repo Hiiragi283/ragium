@@ -21,7 +21,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
-import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
+import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
@@ -41,8 +41,8 @@ object RagiumMenuTypes {
     val DRUM: DeferredBEMenu<HTDrumBlockEntity> = registerBE("drum")
 
     @JvmField
-    val SLOT_CONFIG: HTDeferredMenuType<HTSlotConfigurationMenu> =
-        REGISTER.registerType("slot_configuration", ::HTSlotConfigurationMenu, ::getBlockEntityFromBuf)
+    val ACCESS_CONFIG: HTDeferredMenuType<HTAccessConfigurationMenu> =
+        REGISTER.registerType("access_configuration", ::HTAccessConfigurationMenu, ::getBlockEntityFromBuf)
 
     //    Item    //
 

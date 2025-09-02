@@ -4,8 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
-import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
@@ -118,7 +118,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
             // Client -> Server
             registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
-            registerC2S(HTUpdateTransferIOPayload.TYPE, HTUpdateTransferIOPayload.STREAM_CODEC)
+            registerC2S(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC)
         }
 
         LOGGER.info("Registered packets!")

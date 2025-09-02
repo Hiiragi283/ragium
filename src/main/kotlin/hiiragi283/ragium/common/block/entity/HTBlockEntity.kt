@@ -207,6 +207,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
 
     // Energy
+
     /**
      * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers]
      */

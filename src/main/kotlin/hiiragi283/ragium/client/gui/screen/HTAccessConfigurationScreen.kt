@@ -2,9 +2,10 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.HTTransferIO
-import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
-import hiiragi283.ragium.common.inventory.HTSlotConfigurationMenu
+import hiiragi283.ragium.api.storage.HTAccessConfiguration
+import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -21,25 +22,29 @@ import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton
 
 @OnlyIn(Dist.CLIENT)
-class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Inventory, title: Component) :
-    HTContainerScreen<HTSlotConfigurationMenu>(
+class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: Inventory, title: Component) :
+    HTContainerScreen<HTAccessConfigurationMenu>(
         menu,
         inventory,
         title,
     ) {
+    private val blockEntity: HTMachineBlockEntity = menu.context
+
     override val texture: ResourceLocation? = null
 
-    private fun addButton(direction: Direction, x: Int, y: Int): IOButton = IOButton(
-        menu.context.blockPos,
-        direction,
+    private fun addButton(side: Direction, x: Int, y: Int): ConfigButton = ConfigButton(
+        blockEntity.blockPos,
+        side,
         startX + HTSlotHelper.getSlotPosX(x) - 4,
         startY + HTSlotHelper.getSlotPosY(y) - 4,
         Component.empty(),
     ).apply {
-        getTransferIO(direction)?.description?.let(Tooltip::create)?.let(this::setTooltip)
+        blockEntity
+            .getAccessConfiguration(side)
+            .getComponent()
+            .let(Tooltip::create)
+            .let(::setTooltip)
     }
-
-    private fun getTransferIO(direction: Direction): HTTransferIO? = (menu.context as? HTTransferIO.Provider)?.get(direction)
 
     override fun init() {
         super.init()
@@ -58,18 +63,21 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
 
     //    Button    //
 
-    private inner class IOButton(
+    private inner class ConfigButton(
         private val pos: BlockPos,
-        private val direction: Direction,
+        private val side: Direction,
         x: Int,
         y: Int,
         message: Component,
     ) : ExtendedButton(x, y, 24, 24, message, {}) {
         override fun onPress() {
             super.onPress()
-            val transferIO1: HTTransferIO = getTransferIO(direction)?.nextEntry ?: return
-            tooltip = Tooltip.create(transferIO1.description)
-            HTPacketHelper.sendToServer(HTUpdateTransferIOPayload(pos, direction, transferIO1))
+            val value: HTAccessConfiguration = blockEntity.getAccessConfiguration(side).nextEntry
+            tooltip = Tooltip.create(value.getComponent())
+            // Client update
+            blockEntity.setAccessConfiguration(side, value)
+            // Server update
+            HTPacketHelper.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
         }
 
         override fun renderWidget(
@@ -80,13 +88,12 @@ class HTSlotConfigurationScreen(menu: HTSlotConfigurationMenu, inventory: Invent
         ) {
             if (!visible) return
             // Render background
-            val transferIO: HTTransferIO = getTransferIO(direction) ?: return
-            setShaderColor(guiGraphics, transferIO.color) {
+            setShaderColor(guiGraphics, blockEntity.getAccessConfiguration(side).color) {
                 guiGraphics.blitSprite(SPRITES.get(this.active, this.isHoveredOrFocused), x, y, width, height)
             }
             // Render icon
             val minecraft: Minecraft = Minecraft.getInstance()
-            val state: BlockState = minecraft.level?.getBlockState(pos.relative(direction)) ?: return
+            val state: BlockState = minecraft.level?.getBlockState(pos.relative(side)) ?: return
             guiGraphics.renderItem(ItemStack(state.block), x + 4, y + 4)
         }
     }

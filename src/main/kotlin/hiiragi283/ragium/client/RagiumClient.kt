@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
@@ -17,7 +18,6 @@ import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
-import hiiragi283.ragium.client.gui.screen.HTSlotConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -35,7 +35,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
-import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -80,19 +79,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
-        // Exp Berry Bush
-        event.register(
-            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                when {
-                    tint != 0 -> return@register -1
-                    else -> when {
-                        getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
-                        else -> FoliageColor.getDefaultColor()
-                    }
-                }
-            },
-            RagiumBlocks.EXP_BERRIES.get(),
-        )
         // Water Collector
         event.register(
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
@@ -235,7 +221,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SLOT_CONFIG.get(), ::HTSlotConfigurationScreen)
+        event.register(RagiumMenuTypes.ACCESS_CONFIG.get(), ::HTAccessConfigurationScreen)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
 
         LOGGER.info("Registered Screens!")

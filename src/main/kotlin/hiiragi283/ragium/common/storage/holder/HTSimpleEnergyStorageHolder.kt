@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage.holder
 
-import hiiragi283.ragium.api.storage.HTTransferIO
+import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTSimpleEnergyStorageHolder(
-    transferProvider: HTTransferIO.Provider?,
+    transferProvider: HTAccessConfiguration.Holder?,
     private val storage: IEnergyStorage?,
     private val canInsert: Boolean,
     private val canExtract: Boolean,
@@ -14,15 +14,15 @@ class HTSimpleEnergyStorageHolder(
     HTEnergyStorageHolder {
     companion object {
         @JvmStatic
-        fun input(transferProvider: HTTransferIO.Provider?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
+        fun input(transferProvider: HTAccessConfiguration.Holder?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
             HTSimpleEnergyStorageHolder(transferProvider, storage, canInsert = true, canExtract = false)
 
         @JvmStatic
-        fun output(transferProvider: HTTransferIO.Provider?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
+        fun output(transferProvider: HTAccessConfiguration.Holder?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
             HTSimpleEnergyStorageHolder(transferProvider, storage, canInsert = false, canExtract = true)
 
         @JvmStatic
-        fun generic(transferProvider: HTTransferIO.Provider?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
+        fun generic(transferProvider: HTAccessConfiguration.Holder?, storage: IEnergyStorage): HTSimpleEnergyStorageHolder =
             HTSimpleEnergyStorageHolder(transferProvider, storage, canInsert = true, canExtract = true)
     }
 

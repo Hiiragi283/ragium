@@ -46,7 +46,7 @@ object RagiumConst {
 
     //    Nbt    //
 
-    const val TRANSFER_IO = "transfer_io"
+    const val ACCESS_CONFIG = "access_config"
     const val UPGRADES = "upgrades"
     const val OWNER = "owner"
 

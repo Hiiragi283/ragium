@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage.holder
 
-import hiiragi283.ragium.api.storage.HTTransferIO
+import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import net.minecraft.core.Direction
 
 class HTSimpleFluidTankHolder(
-    transferProvider: HTTransferIO.Provider?,
+    transferProvider: HTAccessConfiguration.Holder?,
     private val inputTank: HTFluidTank?,
     private val outputTank: HTFluidTank?,
     private val generic: HTFluidTank?,
@@ -14,15 +14,15 @@ class HTSimpleFluidTankHolder(
     HTFluidTankHolder {
     companion object {
         @JvmStatic
-        fun input(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+        fun input(transferProvider: HTAccessConfiguration.Holder?, tank: HTFluidTank): HTSimpleFluidTankHolder =
             HTSimpleFluidTankHolder(transferProvider, tank, null, null)
 
         @JvmStatic
-        fun output(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+        fun output(transferProvider: HTAccessConfiguration.Holder?, tank: HTFluidTank): HTSimpleFluidTankHolder =
             HTSimpleFluidTankHolder(transferProvider, null, tank, null)
 
         @JvmStatic
-        fun generic(transferProvider: HTTransferIO.Provider?, tank: HTFluidTank): HTSimpleFluidTankHolder =
+        fun generic(transferProvider: HTAccessConfiguration.Holder?, tank: HTFluidTank): HTSimpleFluidTankHolder =
             HTSimpleFluidTankHolder(transferProvider, null, null, tank)
     }
 

@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.variant.HTVariantKey
-import hiiragi283.ragium.common.storage.HTTransferIOCache
+import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
@@ -38,20 +38,19 @@ import java.util.*
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
     HTOwnedBlockEntity,
-    HTTransferIO.Provider,
-    HTTransferIO.Receiver {
+    HTAccessConfiguration.Holder {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         super.writeNbt(writer)
         writer.writeNullable(BiCodecs.UUID, RagiumConst.OWNER, ownerId)
-        writer.write(RagiumConst.TRANSFER_IO, transferIOCache)
+        writer.write(RagiumConst.ACCESS_CONFIG, accessConfigCache)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
         super.readNbt(reader)
         reader.read(BiCodecs.UUID, RagiumConst.OWNER).ifSuccess { ownerId = it }
-        reader.read(RagiumConst.TRANSFER_IO, transferIOCache)
+        reader.read(RagiumConst.ACCESS_CONFIG, accessConfigCache)
     }
 
     override fun onRightClickedWithItem(
@@ -64,7 +63,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            RagiumMenuTypes.SLOT_CONFIG.openMenu(player, name, this, ::writeExtraContainerData)
+            RagiumMenuTypes.ACCESS_CONFIG.openMenu(player, name, this, ::writeExtraContainerData)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
         return super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
@@ -160,14 +159,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         return ownerId!!
     }
 
-    //    HTTransferIOReceiver    //
+    //    HTAccessConfiguration    //
 
-    private val transferIOCache = HTTransferIOCache()
+    private val accessConfigCache = HTAccessConfigCache()
 
-    override fun apply(direction: Direction): HTTransferIO = transferIOCache[direction]
+    override fun getAccessConfiguration(side: Direction): HTAccessConfiguration = accessConfigCache.getAccessConfiguration(side)
 
-    override fun accept(direction: Direction, transferIO: HTTransferIO) {
-        transferIOCache[direction] = transferIO
+    override fun setAccessConfiguration(side: Direction, value: HTAccessConfiguration) {
+        accessConfigCache.setAccessConfiguration(side, value)
     }
 
     //    Menu    //

@@ -90,7 +90,6 @@ class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
         val list: ListTag = save(provider, containers)
         if (!list.isEmpty()) {
             nbt.put(containerTag, list)
-            LOGGER.debug("Saved containers!")
         }
     }
 
@@ -102,7 +101,6 @@ class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
             nbt.putInt(containerKey, slot)
             list.add(nbt)
         }
-        LOGGER.debug("Saved containers: {}", list)
         return list
     }
 
@@ -115,7 +113,6 @@ class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
     }
 
     private fun read(provider: HolderLookup.Provider, containers: List<CONTAINER>, list: ListTag) {
-        LOGGER.debug("Read containers: {}", list)
         if (list.isEmpty()) return
         for (i: Int in list.indices) {
             val nbt: CompoundTag = list.getCompound(i)
@@ -125,7 +122,6 @@ class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
                 containers[slot].deserializeNBT(provider, nbt)
             }
         }
-        LOGGER.debug("Read containers!")
     }
 
     fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)
