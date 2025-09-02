@@ -15,6 +15,8 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.HTKeyOrTagEntry
+import hiiragi283.ragium.common.collection.HTWrappedMultiMap
+import hiiragi283.ragium.common.collection.HTWrappedTable
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
@@ -24,8 +26,6 @@ import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
-import hiiragi283.ragium.util.HTWrappedMultiMap
-import hiiragi283.ragium.util.HTWrappedTable
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
