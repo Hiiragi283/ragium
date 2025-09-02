@@ -2,6 +2,8 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.tool.HTToolVariant
@@ -11,11 +13,9 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
-import net.neoforged.neoforge.registries.DeferredItem
-import net.neoforged.neoforge.registries.DeferredRegister
 
 object HTHammerToolVariant : HTToolVariant {
-    override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<*> =
+    override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
         register.registerItem(
             "${material.serializedName}_hammer",
             { prop: Item.Properties -> HTHammerItem(tier, prop) },

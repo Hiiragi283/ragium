@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.HTLanguageProvider
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.storage.HTTransferIO
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -89,48 +89,48 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun block() {
-        addBlock(RagiumBlocks.SILT, "Silt")
-        addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
-        addBlock(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
+        add(RagiumBlocks.SILT, "Silt")
+        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
+        add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        addBlock(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
-        addItem(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
-        addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
+        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
+        add(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
+        add(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
-        addBlock(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
-        addBlock(RagiumBlocks.AZURE_TILES, "Azure Tiles")
-        addBlock(RagiumBlocks.ELDRITCH_STONE, "Eldritch Stone")
-        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE, "Polished Eldritch Stone")
-        addBlock(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "Polished Eldritch Stone Bricks")
-        addBlock(RagiumBlocks.PLASTIC_BRICKS, "Plastic Bricks")
-        addBlock(RagiumBlocks.PLASTIC_TILES, "Plastic Tiles")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
-        addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
+        add(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
+        add(RagiumBlocks.AZURE_TILES, "Azure Tiles")
+        add(RagiumBlocks.ELDRITCH_STONE, "Eldritch Stone")
+        add(RagiumBlocks.POLISHED_ELDRITCH_STONE, "Polished Eldritch Stone")
+        add(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "Polished Eldritch Stone Bricks")
+        add(RagiumBlocks.PLASTIC_BRICKS, "Plastic Bricks")
+        add(RagiumBlocks.PLASTIC_TILES, "Plastic Tiles")
+        add(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
+        add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
 
         for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            addBlock(variant.slab, variant.translate(type, "Slab"))
-            addBlock(variant.stairs, variant.translate(type, "Stairs"))
-            addBlock(variant.wall, variant.translate(type, "Wall"))
+            add(variant.slab, variant.translate(type, "Slab"))
+            add(variant.stairs, variant.translate(type, "Stairs"))
+            add(variant.wall, variant.translate(type, "Wall"))
         }
 
-        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
-            addBlock(block, "${color.getTranslatedName(type)} LED Block")
+        for ((color: HTColorVariant, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
+            add(block, "${color.getTranslatedName(type)} LED Block")
         }
 
-        addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
+        add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Dynamo
         // Machine
-        addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
-        addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
-        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
+        add(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
+        add(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
+        add(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
         // Device
-        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
-        addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
-        addBlock(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
-        addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
+        add(RagiumBlocks.DEVICE_CASING, "Device Casing")
+        add(RagiumBlocks.STONE_CASING, "Stone Casing")
+        add(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
+        add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Storage
     }
 
@@ -170,67 +170,67 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun item() {
         // Material
-        addItem(RagiumItems.BASALT_MESH, "Basalt Mesh")
-        addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
-        addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
-        addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
-        addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
-        addItem(RagiumItems.RESIN, "Resin")
-        addItem(RagiumItems.SILICON, "Indigo Silicon")
-        addItem(RagiumItems.TAR, "Tar")
-        addItem(RagiumItems.WITHER_DOLl, "Wither Doll")
+        add(RagiumItems.BASALT_MESH, "Basalt Mesh")
+        add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
+        add(RagiumItems.DEEP_SCRAP, "Deep Scrap")
+        add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.RAGI_COKE, "Ragi-Coke")
+        add(RagiumItems.RESIN, "Resin")
+        add(RagiumItems.SILICON, "Indigo Silicon")
+        add(RagiumItems.TAR, "Tar")
+        add(RagiumItems.WITHER_DOLl, "Wither Doll")
 
         addPatterned()
         // Armor
         // Tool
-        addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
-        addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
+        add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
+        add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
 
-        addItem(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
-        addItem(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
-        addItem(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
+        add(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
+        add(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
+        add(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
 
-        addItem(RagiumItems.DRILL, "Electric Drill")
+        add(RagiumItems.DRILL, "Electric Drill")
 
-        addItem(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
+        add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
-        addItem(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
-        addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
-        addItem(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
-        addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
-        addItem(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
-        addItem(RagiumItems.MAGNET, "Ragi-Magnet")
-        addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
-        addItem(RagiumItems.SLOT_COVER, "Slot Cover")
-        addItem(RagiumItems.TELEPORT_KEY, "Teleport Key")
-        addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
-        addItem(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
-        addItem(RagiumItems.WRENCH, "Ragi-Wrench")
+        add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
+        add(RagiumItems.BLAST_CHARGE, "Blast Charge")
+        add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
+        add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
+        add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
+        add(RagiumItems.MAGNET, "Ragi-Magnet")
+        add(RagiumItems.POTION_BUNDLE, "Potion Bundle")
+        add(RagiumItems.SLOT_COVER, "Slot Cover")
+        add(RagiumItems.TELEPORT_KEY, "Teleport Key")
+        add(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
+        add(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
+        add(RagiumItems.WRENCH, "Ragi-Wrench")
         // Food
-        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
-        addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
+        add(RagiumItems.ICE_CREAM, "Ice Cream")
+        add(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 
-        addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
+        add(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
-        addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "Slice of Sweet Berries Cake")
-        addItem(RagiumItems.MELON_PIE, "Melon Pie")
+        add(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "Slice of Sweet Berries Cake")
+        add(RagiumItems.MELON_PIE, "Melon Pie")
 
-        addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        addItem(RagiumItems.FEVER_CHERRY, "Fever Cherry")
+        add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
+        add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
-        addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
-        addItem(RagiumItems.AMBROSIA, "Ambrosia")
+        add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
+        add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
-        addItem(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
-        addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        addItem(RagiumItems.LED, "Light Emitting Diode")
-        addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
-        addItem(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
-        addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
-        addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
-        addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        addItem(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
-        addItem(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
+        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
+        add(RagiumItems.LED, "Light Emitting Diode")
+        add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
+        add(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
+        add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
+        add(RagiumItems.REDSTONE_BOARD, "Redstone Board")
+        add(RagiumItems.SOLAR_PANEL, "Solar Panel")
+        add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
     }
 
     private fun itemGroup() {
@@ -462,13 +462,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun delight() {
-        addBlock(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
-        addBlock(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "Ragi-Cherry Toast Tower")
+        add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "Ragi-Cherry Toast Tower")
 
-        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
-        addItem(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
-        addItem(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
+        add(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
+        add(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
     }
 
     private fun jade() {
@@ -478,8 +478,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun mekanism() {
-        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "Raginite")
-        addChemical(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "Azure Essence")
+        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "Raginite")
+        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "Azure Essence")
     }
 
     private fun replication() {

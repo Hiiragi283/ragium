@@ -4,12 +4,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -62,7 +62,7 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> B,
-    ): HTBasicDeferredBlockHolder<B> =
+    ): HTBasicDeferredBlock<B> =
         REGISTER.registerSimple(type.id.path, properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
 
     @JvmStatic
@@ -85,21 +85,21 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val SILT: HTBasicDeferredBlockHolder<HTSiltBlock> = REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
+    val SILT: HTBasicDeferredBlock<HTSiltBlock> = REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
 
     @JvmField
-    val CRIMSON_SOIL: HTBasicDeferredBlockHolder<HTCrimsonSoilBlock> = REGISTER.registerSimple(
+    val CRIMSON_SOIL: HTBasicDeferredBlock<HTCrimsonSoilBlock> = REGISTER.registerSimple(
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
     )
 
     @JvmField
-    val EXP_BERRIES: HTDeferredBlockHolder<HTExpBerriesBushBlock, ItemNameBlockItem> =
+    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, ItemNameBlockItem> =
         REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::ItemNameBlockItem)
 
     @JvmField
-    val WARPED_WART: HTDeferredBlockHolder<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(
+    val WARPED_WART: HTDeferredBlock<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(
         "warped_wart",
         copyOf(Blocks.NETHER_WART),
         ::HTWarpedWartBlock,
@@ -108,11 +108,11 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RESONANT_DEBRIS: HTSimpleDeferredBlockHolder =
+    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
         REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     @JvmField
-    val MYSTERIOUS_OBSIDIAN: HTSimpleDeferredBlockHolder =
+    val MYSTERIOUS_OBSIDIAN: HTSimpleDeferredBlock =
         REGISTER.registerSimple("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
 
     // val ELDRITCH_PORTAL: DeferredBlock<Block> = REGISTER.registerBlock("eldritch_portal", ::HTEldritchPortalBlock, copyOf(Blocks.END_GATEWAY))
@@ -120,7 +120,7 @@ object RagiumBlocks {
     //    Materials    //
 
     @JvmField
-    val ORES: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
+    val ORES: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         listOf(
             HTBlockMaterialVariant.ORE,
             HTBlockMaterialVariant.DEEP_ORE,
@@ -157,7 +157,7 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlockHolder> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
@@ -227,63 +227,58 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlockHolder =
-        MATERIALS.get(variant, material)
-            ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
+    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
+        ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
-    fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material)
+    fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material)
 
     @JvmStatic
-    fun getGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder = getMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material)
+    fun getGlass(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material)
 
     @JvmStatic
-    fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlockHolder =
-        getMaterial(HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material)
+    fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material)
 
     //    Buildings    //
 
     @JvmField
-    val RAGI_BRICKS: HTSimpleDeferredBlockHolder =
+    val RAGI_BRICKS: HTSimpleDeferredBlock = 
         REGISTER.registerSimple("ragi_bricks", copyOf(Blocks.BRICKS, MapColor.COLOR_RED))
 
     @JvmField
-    val AZURE_TILES: HTSimpleDeferredBlockHolder =
+    val AZURE_TILES: HTSimpleDeferredBlock =
         REGISTER.registerSimple("azure_tiles", copyOf(Blocks.STONE, MapColor.TERRACOTTA_BLUE))
 
     @JvmField
-    val ELDRITCH_STONE: HTSimpleDeferredBlockHolder =
+    val ELDRITCH_STONE: HTSimpleDeferredBlock =
         REGISTER.registerSimple("eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
 
     @JvmField
-    val POLISHED_ELDRITCH_STONE: HTSimpleDeferredBlockHolder =
+    val POLISHED_ELDRITCH_STONE: HTSimpleDeferredBlock =
         REGISTER.registerSimple("polished_eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
 
     @JvmField
-    val POLISHED_ELDRITCH_STONE_BRICKS: HTSimpleDeferredBlockHolder =
+    val POLISHED_ELDRITCH_STONE_BRICKS: HTSimpleDeferredBlock =
         REGISTER.registerSimple("polished_eldritch_stone_bricks", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
 
     @JvmField
-    val PLASTIC_BRICKS: HTSimpleDeferredBlockHolder =
+    val PLASTIC_BRICKS: HTSimpleDeferredBlock =
         REGISTER.registerSimple("plastic_bricks", copyOf(Blocks.BRICKS, MapColor.NONE))
 
     @JvmField
-    val PLASTIC_TILES: HTSimpleDeferredBlockHolder =
+    val PLASTIC_TILES: HTSimpleDeferredBlock =
         REGISTER.registerSimple("plastic_tiles", copyOf(Blocks.BRICKS, MapColor.NONE))
 
     @JvmField
-    val BLUE_NETHER_BRICKS: HTSimpleDeferredBlockHolder =
+    val BLUE_NETHER_BRICKS: HTSimpleDeferredBlock =
         REGISTER.registerSimple("blue_nether_bricks", copyOf(Blocks.NETHER_BRICKS, MapColor.COLOR_BLUE))
 
     @JvmField
-    val SPONGE_CAKE: HTBasicDeferredBlockHolder<HTSpongeCakeBlock> = REGISTER.registerSimple(
-        "sponge_cake",
-        copyOf(Blocks.YELLOW_WOOL),
-        ::HTSpongeCakeBlock,
-    )
+    val SPONGE_CAKE: HTBasicDeferredBlock<HTSpongeCakeBlock> = 
+        REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL), ::HTSpongeCakeBlock)
 
     @JvmField
-    val DECORATION_MAP: Map<HTDecorationVariant, HTDeferredBlockHolder<*, *>> = mapOf(
+    val DECORATION_MAP: Map<HTDecorationVariant, HTDeferredBlock<*, *>> = mapOf(
         HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
         HTDecorationVariant.AZURE_TILE to AZURE_TILES,
         HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
@@ -296,7 +291,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<SlabBlock>> =
+    val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_slab",
@@ -305,9 +300,9 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<StairBlock>> =
+    val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlock<StairBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            val base: HTDeferredBlockHolder<*, *> = variant.base
+            val base: HTDeferredBlock<*, *> = variant.base
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
                 { StairBlock(base.get().defaultBlockState(), copyOf(base.get())) },
@@ -315,7 +310,7 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlockHolder<WallBlock>> =
+    val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlock<WallBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_wall",
@@ -324,71 +319,71 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val LED_BLOCKS: Map<HTColorVariant, HTSimpleDeferredBlockHolder> =
+    val LED_BLOCKS: Map<HTColorVariant, HTSimpleDeferredBlock> =
         HTColorVariant.entries.associateWith { color: HTColorVariant ->
             REGISTER.registerSimple("${color.serializedName}_led_block", glass().mapColor(color.color).lightLevel { 15 })
         }
 
     @JvmStatic
-    fun getLedBlock(color: HTColorVariant): HTSimpleDeferredBlockHolder = LED_BLOCKS[color]!!
+    fun getLedBlock(color: HTColorVariant): HTSimpleDeferredBlock = LED_BLOCKS[color]!!
 
     //    Foods    //
 
     @JvmField
-    val SWEET_BERRIES_CAKE: HTBasicDeferredBlockHolder<HTSweetBerriesCakeBlock> =
+    val SWEET_BERRIES_CAKE: HTBasicDeferredBlock<HTSweetBerriesCakeBlock> =
         REGISTER.registerSimple("sweet_berries_cake", copyOf(Blocks.YELLOW_WOOL).forceSolidOn(), ::HTSweetBerriesCakeBlock)
 
     //    Generators    //
 
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
+    val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlock<HTEntityBlock>> =
         createMap<HTGeneratorVariant>(machineProperty(), ::HTHorizontalEntityBlock)
 
     //    Machines    //
 
     @JvmField
-    val BASIC_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
+    val BASIC_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
         REGISTER.registerSimple("basic_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
 
     @JvmField
-    val ADVANCED_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
+    val ADVANCED_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
         REGISTER.registerSimple("advanced_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
 
     @JvmField
-    val ELITE_MACHINE_FRAME: HTBasicDeferredBlockHolder<TransparentBlock> =
+    val ELITE_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
         REGISTER.registerSimple("elite_machine_frame", machineProperty(), ::TransparentBlock)
 
     @JvmField
-    val FRAMES: List<HTBasicDeferredBlockHolder<TransparentBlock>> = listOf(
+    val FRAMES: List<HTBasicDeferredBlock<TransparentBlock>> = listOf(
         BASIC_MACHINE_FRAME,
         ADVANCED_MACHINE_FRAME,
         ELITE_MACHINE_FRAME,
     )
 
     @JvmField
-    val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
+    val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTEntityBlock>> =
         createMap<HTMachineVariant>(machineProperty(), ::HTHorizontalEntityBlock)
 
     //    Devices    //
 
     @JvmField
-    val WOODEN_CASING: HTSimpleDeferredBlockHolder =
+    val WOODEN_CASING: HTSimpleDeferredBlock =
         REGISTER.registerSimple("wooden_casing", copyOf(Blocks.NOTE_BLOCK))
 
     @JvmField
-    val STONE_CASING: HTSimpleDeferredBlockHolder =
+    val STONE_CASING: HTSimpleDeferredBlock =
         REGISTER.registerSimple("stone_casing", copyOf(Blocks.COBBLESTONE))
 
     @JvmField
-    val REINFORCED_STONE_CASING: HTSimpleDeferredBlockHolder =
+    val REINFORCED_STONE_CASING: HTSimpleDeferredBlock =
         REGISTER.registerSimple("reinforced_stone_casing", copyOf(Blocks.COBBLED_DEEPSLATE))
 
     @JvmField
-    val DEVICE_CASING: HTSimpleDeferredBlockHolder =
+    val DEVICE_CASING: HTSimpleDeferredBlock =
         REGISTER.registerSimple("device_casing", machineProperty())
 
     @JvmField
-    val CASINGS: List<HTSimpleDeferredBlockHolder> = listOf(
+    val CASINGS: List<HTSimpleDeferredBlock> = listOf(
         WOODEN_CASING,
         STONE_CASING,
         REINFORCED_STONE_CASING,
@@ -396,14 +391,14 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val DEVICES: Map<HTDeviceVariant, HTBasicDeferredBlockHolder<HTEntityBlock>> =
+    val DEVICES: Map<HTDeviceVariant, HTBasicDeferredBlock<HTEntityBlock>> =
         createMap<HTDeviceVariant>(machineProperty(), HTEntityBlock::Simple)
 
     @JvmStatic
     private inline fun <reified V> createMap(
         properties: BlockBehaviour.Properties,
         noinline factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> HTEntityBlock,
-    ): Map<V, HTBasicDeferredBlockHolder<HTEntityBlock>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
+    ): Map<V, HTBasicDeferredBlock<HTEntityBlock>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
         enumEntries<V>().associateWith { variant: V ->
             val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
             registerEntity(type, properties, factory)
@@ -412,7 +407,7 @@ object RagiumBlocks {
     //    Storages    //
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, HTDeferredBlockHolder<HTDrumBlock, HTDrumItem>> = HTDrumVariant.entries
+    val DRUMS: Map<HTDrumVariant, HTDeferredBlock<HTDrumBlock, HTDrumItem>> = HTDrumVariant.entries
         .associateWith { variant: HTDrumVariant ->
             val base: Block = when (variant) {
                 HTDrumVariant.SMALL -> Blocks.IRON_BLOCK

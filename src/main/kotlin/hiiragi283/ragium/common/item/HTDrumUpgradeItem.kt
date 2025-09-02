@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
@@ -25,7 +25,7 @@ import java.util.function.Supplier
  * @see [me.desht.pneumaticcraft.common.item.AbstractChestUpgradeKitItem]
  */
 abstract class HTDrumUpgradeItem(
-    private val filter: List<HTDeferredBlockHolder<*, *>>,
+    private val filter: List<HTDeferredBlock<*, *>>,
     private val newDrum: Supplier<out Block>,
     properties: Properties,
 ) : Item(properties) {

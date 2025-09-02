@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.util.material
 
+import hiiragi283.ragium.api.util.RagiumConst
+
 object HTCommonMaterialTypes {
     //    Common Metal    //
 
@@ -111,6 +113,8 @@ object HTCommonMaterialTypes {
     //    MaterialImpl    //
 
     private data class MaterialImpl(private val name: String) : HTMaterialType {
+        override val translationKey: String = "material.${RagiumConst.COMMON}.$serializedName"
+
         override fun getSerializedName(): String = name
     }
 }

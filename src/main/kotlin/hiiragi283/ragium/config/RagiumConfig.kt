@@ -202,6 +202,6 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
         path: String,
         defaultValue: Double,
         min: Double,
-        max: Double
+        max: Double,
     ): ModConfigSpec.DoubleValue = defineInRange(path, defaultValue, min, max)
 }

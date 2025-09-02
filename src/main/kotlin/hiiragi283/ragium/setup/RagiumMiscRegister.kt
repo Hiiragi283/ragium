@@ -13,7 +13,8 @@ import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
-import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import net.minecraft.core.registries.Registries
@@ -23,7 +24,6 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.RegisterEvent
 
 object RagiumMiscRegister {
@@ -36,7 +36,7 @@ object RagiumMiscRegister {
     @JvmStatic
     private fun recipeSerializers(helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>>) {
         fun <R : Recipe<*>> register(
-            holder: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<R>>,
+            holder: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<R>>,
             codec: MapBiCodec<RegistryFriendlyByteBuf, R>,
         ) {
             helper.register(

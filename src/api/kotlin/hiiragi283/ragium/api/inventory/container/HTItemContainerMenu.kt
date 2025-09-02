@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.inventory.container
 
-import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player

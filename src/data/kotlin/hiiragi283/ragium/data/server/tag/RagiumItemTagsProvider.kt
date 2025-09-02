@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTTable
@@ -39,7 +41,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
@@ -133,8 +134,8 @@ class RagiumItemTagsProvider(
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
-    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>>) {
-        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: DeferredItem<*>) ->
+    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>>) {
+        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: HTDeferredItem<*>) ->
             if (variant is HTMaterialVariant.ItemTag) {
                 builder.addItem(variant, material, item)
 
@@ -206,11 +207,11 @@ class RagiumItemTagsProvider(
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Armors
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: DeferredItem<*>) ->
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: HTDeferredItem<*>) ->
             builder.add(variant.tagKey, item)
         }
         // Tools
-        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: DeferredItem<*>) ->
+        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTDeferredItem<*>) ->
             builder.add(variant.tagKey, item)
         }
 
@@ -293,7 +294,7 @@ class RagiumItemTagsProvider(
     //    Extensions    //
 
     private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: ItemLike): HTTagBuilder<Item> = apply {
-        add(tagKey, item.asItemHolder())
+        add(tagKey, item.asItemHolder().idOrThrow)
     }
 
     private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) =

@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.registry
+package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -8,10 +9,9 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.registries.DeferredHolder
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(key: ResourceKey<RecipeType<*>>) :
-    DeferredHolder<RecipeType<*>, RecipeType<RECIPE>>(key) {
+    HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>(key) {
     companion object {
         @JvmStatic
         fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createType(key: ResourceLocation): HTDeferredRecipeType<INPUT, RECIPE> =

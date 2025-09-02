@@ -2,9 +2,9 @@ package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.material.HTTierType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
@@ -32,7 +32,7 @@ enum class HTGeneratorVariant(
 
     val energyRate: Int get() = RagiumConfig.CONFIG.generatorEnergyRate[this]!!.asInt
 
-    override val blockHolder: HTBasicDeferredBlockHolder<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
+    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
         RagiumBlockEntityTypes.registerTick("${serializedName}_generator", factory)
 

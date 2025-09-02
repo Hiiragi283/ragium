@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
-import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity

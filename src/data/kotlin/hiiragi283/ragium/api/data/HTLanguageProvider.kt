@@ -6,11 +6,15 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.api.util.material.HTMaterialType
+import hiiragi283.ragium.api.util.translate.HTHasTranslationKey
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -22,18 +26,13 @@ import hiiragi283.ragium.util.variant.HTDeviceVariant
 import hiiragi283.ragium.util.variant.HTDrumVariant
 import hiiragi283.ragium.util.variant.HTGeneratorVariant
 import hiiragi283.ragium.util.variant.HTMachineVariant
-import mekanism.common.registration.impl.DeferredChemical
+import mekanism.api.text.IHasTranslationKey
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
-import net.neoforged.neoforge.registries.DeferredHolder
-import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
@@ -56,13 +55,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         // Delight
         for ((material: RagiumMaterialType, knife) in RagiumDelightAddon.KNIFE_MAP) {
-            addItem(knife, HTKnifeToolVariant.translate(type, material.getTranslatedName(type)))
+            add(knife, HTKnifeToolVariant.translate(type, material.getTranslatedName(type)))
         }
         // Mekanism
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val value: String = data.getTranslatedName(type)
             addFluid(data.molten, value)
-            addChemical(RagiumMekanismAddon.getChemical(data.material), value)
+            add(RagiumMekanismAddon.getChemical(data.material), value)
         }
 
         addItems(RagiumMekanismAddon.MATERIAL_ITEMS)
@@ -74,20 +73,24 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun addBlocks(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Block>>) {
-        table.forEach { (variant: HTVariantKey, material: HTMaterialType, block: Supplier<out Block>) ->
+    private fun addBlocks(table: HTTable<out HTVariantKey, out HTMaterialType, out HTDeferredBlock<*, *>>) {
+        table.forEach { (variant: HTVariantKey, material: HTMaterialType, block: HTDeferredBlock<*, *>) ->
             if (material is HTMaterialType.Translatable) {
-                addBlock(block, material.translate(type, variant))
+                add(block, material.translate(type, variant))
             }
         }
     }
 
-    private fun addItems(table: HTTable<out HTVariantKey, HTMaterialType, out Supplier<out Item>>) {
-        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: Supplier<out Item>) ->
+    private fun addItems(table: HTTable<out HTVariantKey, out HTMaterialType, out HTDeferredItem<*>>) {
+        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: HTDeferredItem<*>) ->
             if (material is HTMaterialType.Translatable) {
-                addItem(item, material.translate(type, variant))
+                add(item, material.translate(type, variant))
             }
         }
+    }
+
+    fun add(translatable: HTHasTranslationKey, value: String) {
+        add(translatable.translationKey, value)
     }
 
     fun addAdvancement(key: HTAdvancementKey, title: String, desc: String) {
@@ -112,16 +115,17 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         add(RagiumTranslationKeys.getTooltipKey(ItemStack(item)), values.joinToString(separator = "\n"))
     }
 
-    fun addItemGroup(group: DeferredHolder<CreativeModeTab, CreativeModeTab>, value: String) {
-        add(group.id.toDescriptionKey("itemGroup"), value)
+    fun addItemGroup(group: HTHolderLike, value: String) {
+        add(group.getId().toDescriptionKey("itemGroup"), value)
     }
 
     fun addMatterType(type: IMatterType, value: String) {
         add("${RagiumConst.REPLICATION}.matter_type.${type.name}", value)
     }
 
-    fun addChemical(chemical: DeferredChemical<*>, value: String) {
-        add(chemical.translationKey, value)
+    // Mekanism
+    fun add(translatable: IHasTranslationKey, value: String) {
+        add(translatable.translationKey, value)
     }
 
     //    English    //

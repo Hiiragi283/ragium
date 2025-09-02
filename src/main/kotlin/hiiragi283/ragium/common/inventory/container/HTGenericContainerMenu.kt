@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
-import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory

@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.values
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.client.network.HTUpdateTransferIOPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -27,6 +26,7 @@ import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -87,7 +87,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
-            RagiumItems.REGISTER.values
+            RagiumItems.REGISTER
+                .entries
+                .map(ItemLike::asItem)
                 .filter { item: Item -> item is ProjectileItem }
                 .associateWith(::ProjectileDispenseBehavior)
                 .forEach(DispenserBlock::registerBehavior)

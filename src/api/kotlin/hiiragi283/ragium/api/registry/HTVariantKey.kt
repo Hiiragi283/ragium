@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
@@ -17,7 +19,7 @@ interface HTVariantKey : StringRepresentable {
     interface WithBE<BE : BlockEntity> :
         HTVariantKey,
         ItemLike {
-        val blockHolder: HTDeferredBlockHolder<*, *>
+        val blockHolder: HTDeferredBlock<*, *>
         val blockEntityHolder: HTDeferredBlockEntityType<out BE>
 
         override fun asItem(): Item = blockHolder.asItem()

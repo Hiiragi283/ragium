@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.util.material
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLanguageType
 import net.minecraft.world.item.Rarity
 
@@ -45,6 +46,8 @@ enum class HTTierType(val rarity: Rarity) : HTMaterialType.Translatable {
             ULTIMATE,
         )
     }
+
+    override val translationKey: String = "variant.tier.${RagiumAPI.MOD_ID}.$serializedName"
 
     override fun getSerializedName(): String = name.lowercase()
 }

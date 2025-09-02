@@ -9,7 +9,9 @@ import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -21,14 +23,12 @@ import hiiragi283.ragium.util.variant.HTDecorationVariant
 import hiiragi283.ragium.util.variant.RagiumMaterialVariants
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -58,18 +58,18 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
         }.forEach(::simpleBlockItem)
 
-        for ((variant: HTDecorationVariant, wall: DeferredHolder<Block, *>) in RagiumBlocks.WALLS) {
+        for ((variant: HTDecorationVariant, wall: HTBasicDeferredBlock<WallBlock>) in RagiumBlocks.WALLS) {
             withExistingParent(wall.id.path, vanillaId("block/wall_inventory"))
                 .texture("wall", variant.textureId)
         }
-        for (block: HTSimpleDeferredBlockHolder in RagiumBlocks.LED_BLOCKS.values) {
+        for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
             withExistingParent(block.id.path, RagiumAPI.id("block/led_block"))
         }
     }
 
     private fun registerItems() {
-        val compounds: Map<HTMaterialType, DeferredItem<*>> = RagiumItems.MATERIALS.row(RagiumMaterialVariants.COMPOUND)
-        val tools: Collection<DeferredItem<*>> = RagiumItems.TOOLS.values
+        val compounds: Map<HTMaterialType, HTDeferredItem<*>> = RagiumItems.MATERIALS.row(RagiumMaterialVariants.COMPOUND)
+        val tools: Collection<HTDeferredItem<*>> = RagiumItems.TOOLS.values
 
         buildSet {
             // Ragium
@@ -97,7 +97,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         basicItem(RagiumDelightAddon.RAGI_CHERRY_PIE)
         // basicItem(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
 
-        for ((material: HTMaterialType, compound: DeferredItem<*>) in compounds) {
+        for ((material: HTMaterialType, compound: HTDeferredItem<*>) in compounds) {
             val baseId: String = when (material) {
                 RagiumMaterialType.RAGI_ALLOY -> "copper_ingot"
                 RagiumMaterialType.ADVANCED_RAGI_ALLOY -> "gold_ingot"

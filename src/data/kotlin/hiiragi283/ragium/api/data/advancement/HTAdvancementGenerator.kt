@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.setup.RagiumItems
@@ -15,7 +16,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredItem
 
 abstract class HTAdvancementGenerator {
     protected lateinit var root: AdvancementHolder
@@ -86,7 +86,8 @@ abstract class HTAdvancementGenerator {
     protected fun HTAdvancementBuilder.hasAnyItem(key: String, items: Collection<ItemLike>): HTAdvancementBuilder =
         hasAnyItem(key, *items.toTypedArray())
 
-    protected fun HTAdvancementBuilder.hasAnyItem(item: DeferredItem<*>): HTAdvancementBuilder = hasAnyItem("has_${item.id.path}", item)
+    protected fun <ITEM> HTAdvancementBuilder.hasAnyItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
+        hasAnyItem("has_${item.getId().path}", item)
 
     protected fun HTAdvancementBuilder.hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
         hasItem(key, ItemPredicate.Builder.item().of(*items))
@@ -97,6 +98,6 @@ abstract class HTAdvancementGenerator {
     protected fun HTAdvancementBuilder.hasItemsIn(key: String, tagKey: TagKey<Item>): HTAdvancementBuilder =
         hasItem(key, ItemPredicate.Builder.item().of(tagKey))
 
-    protected fun HTAdvancementBuilder.useItem(item: DeferredItem<*>): HTAdvancementBuilder =
-        addCriterion("use_${item.id.path}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
+    protected fun <ITEM> HTAdvancementBuilder.useItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
+        addCriterion("use_${item.getId().path}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
 }

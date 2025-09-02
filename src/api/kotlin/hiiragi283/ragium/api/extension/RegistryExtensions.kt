@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
@@ -22,9 +23,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.function.Supplier
 import java.util.stream.Stream
 
 //    ResourceLocation    //
@@ -39,12 +37,6 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConst.COMMON, path)
-
-fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, function: (ResourceLocation) -> I) {
-    register(holder.id.path, function)
-}
-
-val <T : Any> DeferredRegister<T>.values: List<T> get() = entries.map(Supplier<out T>::get)
 
 fun ResourceKey<*>.toDescriptionKey(prefix: String, suffix: String? = null): String = location().toDescriptionKey(prefix, suffix)
 
@@ -75,7 +67,7 @@ val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThr
  * @throws [Holder.unwrapKey]が空の場合
  */
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
-    is DeferredHolder<T, *> -> this.id
+    is HTHolderLike -> this.getId()
     else -> keyOrThrow.location()
 }
 
@@ -85,14 +77,14 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
 fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
 /**
- * `block/`で前置された[DeferredHolder.getId]
+ * `block/`で前置された[HTHolderLike.getId]
  */
-val DeferredHolder<Block, *>.blockId: ResourceLocation get() = id.withPrefix("block/")
+val HTHolderLike.blockId: ResourceLocation get() = getId().withPrefix("block/")
 
 /**
- * `item/`で前置された[DeferredHolder.getId]
+ * `item/`で前置された[HTHolderLike.getId]
  */
-val DeferredHolder<Item, *>.itemId: ResourceLocation get() = id.withPrefix("item/")
+val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
 
 //    HolderSet    //
 

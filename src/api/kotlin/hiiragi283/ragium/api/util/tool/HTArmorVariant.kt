@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.util.tool
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
@@ -13,8 +15,6 @@ import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.registries.DeferredItem
-import net.neoforged.neoforge.registries.DeferredRegister
 
 enum class HTArmorVariant(
     private val armorType: ArmorItem.Type,
@@ -55,11 +55,11 @@ enum class HTArmorVariant(
     }
 
     fun registerItem(
-        register: DeferredRegister.Items,
+        register: HTDeferredItemRegister,
         material: HTMaterialType,
         armorMaterial1: Holder<ArmorMaterial>,
         multiplier: Int,
-    ): DeferredItem<ArmorItem> = register.registerItem(
+    ): HTDeferredItem<ArmorItem> = register.registerItem(
         "${material.serializedName}_$serializedName",
         { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
         Item.Properties().durability(armorType.getDurability(multiplier)),

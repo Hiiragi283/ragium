@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.registry
+package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -8,10 +9,9 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.registries.DeferredHolder
 
 class HTDeferredBlockEntityType<BE : BlockEntity> private constructor(key: ResourceKey<BlockEntityType<*>>) :
-    DeferredHolder<BlockEntityType<*>, BlockEntityType<BE>>(key) {
+    HTDeferredHolder<BlockEntityType<*>, BlockEntityType<BE>>(key) {
         companion object {
             @JvmStatic
             fun <T : BlockEntity> createType(key: ResourceLocation): HTDeferredBlockEntityType<T> = createType(

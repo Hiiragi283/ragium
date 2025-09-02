@@ -1,9 +1,9 @@
 package hiiragi283.ragium.util.variant
 
 import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTDeferredBlockHolder
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
@@ -24,7 +24,7 @@ enum class HTDrumVariant(
     HUGE(HTDrumBlockEntity::Huge, "Huge Drum", "ドラム（特大）"),
     ;
 
-    override val blockHolder: HTDeferredBlockHolder<HTDrumBlock, HTDrumItem> get() = RagiumBlocks.DRUMS[this]!!
+    override val blockHolder: HTDeferredBlock<HTDrumBlock, HTDrumItem> get() = RagiumBlocks.DRUMS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
         RagiumBlockEntityTypes.registerTick("${serializedName}_drum", factory)
 

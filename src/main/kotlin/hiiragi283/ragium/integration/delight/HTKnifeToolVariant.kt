@@ -1,6 +1,8 @@
 package hiiragi283.ragium.integration.delight
 
 import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.tool.HTToolVariant
@@ -8,14 +10,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
-import net.neoforged.neoforge.registries.DeferredItem
-import net.neoforged.neoforge.registries.DeferredRegister
 import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.ModTags
 
 object HTKnifeToolVariant : HTToolVariant {
-    override fun registerItem(register: DeferredRegister.Items, material: HTMaterialType, tier: Tier): DeferredItem<KnifeItem> =
+    override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<KnifeItem> =
         register.register("${material.serializedName}_knife") { _: ResourceLocation ->
             KnifeItem(
                 tier,

@@ -1,9 +1,10 @@
-package hiiragi283.ragium.api.registry
+package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemMenuType
 import hiiragi283.ragium.api.inventory.container.type.HTMenuTypeWithContext
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
@@ -19,14 +20,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
- * Ragiumで使用する[MenuType]向けの[DeferredHolder]
+ * Ragiumで使用する[MenuType]向けの[HTDeferredHolder]
  * @see [mekanism.common.registration.impl.ContainerTypeRegistryObject]
  */
 class HTDeferredMenuType<MENU : AbstractContainerMenu> private constructor(key: ResourceKey<MenuType<*>>) :
-    DeferredHolder<MenuType<*>, MenuType<MENU>>(key) {
+    HTDeferredHolder<MenuType<*>, MenuType<MENU>>(key) {
         companion object {
             @JvmStatic
             fun <MENU : AbstractContainerMenu> createType(key: ResourceLocation): HTDeferredMenuType<MENU> =

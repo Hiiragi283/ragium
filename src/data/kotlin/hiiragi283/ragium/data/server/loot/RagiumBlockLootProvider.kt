@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.loot
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -29,7 +29,6 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
@@ -50,7 +49,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Decorations
-        for (slab: DeferredHolder<Block, *> in RagiumBlocks.SLABS.values) {
+        for (slab: HTDeferredBlock<*, *> in RagiumBlocks.SLABS.values) {
             add(slab.get(), ::createSlabItemTable)
         }
 
@@ -59,7 +58,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumBlocks.WARPED_WART)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->
+        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: HTDeferredBlock<*, *>) ->
             val factory: (Block) -> LootTable.Builder = when (material) {
                 RagiumMaterialType.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
@@ -111,7 +110,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }*/
 
         // Storages
-        for (holder: DeferredHolder<Block, *> in RagiumBlocks.DRUMS.values) {
+        for (holder: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
             add(holder.get()) {
                 copyComponent(
                     it,

@@ -4,9 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.registry.HTBasicDeferredBlockHolder
-import hiiragi283.ragium.api.registry.HTDeferredBlockRegister
-import hiiragi283.ragium.api.registry.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTVanillaMaterialType
@@ -28,7 +29,6 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.registries.DeferredItem
 import vectorwing.farmersdelight.common.block.FeastBlock
 import vectorwing.farmersdelight.common.block.PieBlock
 import vectorwing.farmersdelight.common.item.KnifeItem
@@ -43,14 +43,14 @@ object RagiumDelightAddon : RagiumAddon {
     val BLOCK_REGISTER = HTDeferredBlockRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val RAGI_CHERRY_PIE: HTBasicDeferredBlockHolder<PieBlock> = BLOCK_REGISTER.registerSimple(
+    val RAGI_CHERRY_PIE: HTBasicDeferredBlock<PieBlock> = BLOCK_REGISTER.registerSimple(
         "${RagiumConst.RAGI_CHERRY}_pie",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> PieBlock(prop, RAGI_CHERRY_PIE_SLICE) },
     )
 
     @JvmField
-    val RAGI_CHERRY_TOAST_BLOCk: HTBasicDeferredBlockHolder<FeastBlock> = BLOCK_REGISTER.registerSimple(
+    val RAGI_CHERRY_TOAST_BLOCk: HTBasicDeferredBlock<FeastBlock> = BLOCK_REGISTER.registerSimple(
         "${RagiumConst.RAGI_CHERRY}_toast_block",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> FeastBlock(prop, RAGI_CHERRY_TOAST, true) },
@@ -63,15 +63,15 @@ object RagiumDelightAddon : RagiumAddon {
 
     // Knives
     @JvmField
-    val RAGI_ALLOY_KNIFE: DeferredItem<KnifeItem> =
+    val RAGI_ALLOY_KNIFE: HTDeferredItem<KnifeItem> =
         HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
 
     @JvmField
-    val RAGI_CRYSTAL_KNIFE: DeferredItem<KnifeItem> =
+    val RAGI_CRYSTAL_KNIFE: HTDeferredItem<KnifeItem> =
         HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_CRYSTAL)
 
     @JvmField
-    val KNIFE_MAP: Map<RagiumMaterialType, DeferredItem<KnifeItem>> = buildMap {
+    val KNIFE_MAP: Map<RagiumMaterialType, HTDeferredItem<KnifeItem>> = buildMap {
         put(RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
         put(RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
     }
@@ -90,23 +90,23 @@ object RagiumDelightAddon : RagiumAddon {
 
     // Food
     @JvmStatic
-    private fun registerFood(name: String, food: FoodProperties): DeferredItem<Item> =
+    private fun registerFood(name: String, food: FoodProperties): HTDeferredItem<Item> =
         ITEM_REGISTER.registerSimpleItem(name, Item.Properties().food(food))
 
     @JvmField
-    val RAGI_CHERRY_PULP: DeferredItem<Item> =
+    val RAGI_CHERRY_PULP: HTDeferredItem<Item> =
         registerFood("${RagiumConst.RAGI_CHERRY}_pulp", RagiumDelightFoods.RAGI_CHERRY_PULP)
 
     @JvmField
-    val RAGI_CHERRY_PIE_SLICE: DeferredItem<Item> =
+    val RAGI_CHERRY_PIE_SLICE: HTDeferredItem<Item> =
         registerFood("${RagiumConst.RAGI_CHERRY}_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
 
     @JvmField
-    val RAGI_CHERRY_JAM: DeferredItem<Item> =
+    val RAGI_CHERRY_JAM: HTDeferredItem<Item> =
         registerFood("${RagiumConst.RAGI_CHERRY}_jam", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     @JvmField
-    val RAGI_CHERRY_TOAST: DeferredItem<Item> =
+    val RAGI_CHERRY_TOAST: HTDeferredItem<Item> =
         registerFood("${RagiumConst.RAGI_CHERRY}_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //
@@ -135,7 +135,7 @@ object RagiumDelightAddon : RagiumAddon {
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
-            for ((material: RagiumMaterialType, knife: DeferredItem<KnifeItem>) in KNIFE_MAP) {
+            for ((material: RagiumMaterialType, knife: HTDeferredItem<KnifeItem>) in KNIFE_MAP) {
                 event.insertAfter(
                     RagiumItems.getTool(HTHammerToolVariant, material).toStack(),
                     knife.toStack(),
@@ -143,7 +143,7 @@ object RagiumDelightAddon : RagiumAddon {
                 )
             }
 
-            val items: List<DeferredItem<*>> = listOf(
+            val items: List<HTDeferredItem<*>> = listOf(
                 // Cherry
                 RagiumItems.RAGI_CHERRY,
                 RAGI_CHERRY_PULP,
@@ -157,8 +157,8 @@ object RagiumDelightAddon : RagiumAddon {
             )
 
             for (i: Int in items.indices) {
-                val item: DeferredItem<*> = items[i]
-                val nextItem: DeferredItem<*> = items.getOrNull(i + 1) ?: continue
+                val item: HTDeferredItem<*> = items[i]
+                val nextItem: HTDeferredItem<*> = items.getOrNull(i + 1) ?: continue
                 event.insertAfter(
                     item.toStack(),
                     nextItem.toStack(),

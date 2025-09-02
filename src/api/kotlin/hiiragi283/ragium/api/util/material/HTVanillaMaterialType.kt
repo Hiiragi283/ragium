@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.util.material
 
 import hiiragi283.ragium.api.data.HTLanguageType
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.util.RagiumConst
 
 enum class HTVanillaMaterialType(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     // Metal
@@ -34,6 +35,8 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
         }
     },
     ;
+
+    override val translationKey: String = "material.${RagiumConst.MINECRAFT}.$serializedName"
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName

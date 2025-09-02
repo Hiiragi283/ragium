@@ -8,7 +8,8 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
@@ -25,7 +26,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -88,7 +88,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun circuits() {
-        fun circuit(tier: HTTierType): DeferredItem<*> = RagiumItems.getMaterial(HTItemMaterialVariant.CIRCUIT, tier)
+        fun circuit(tier: HTTierType): HTDeferredItem<*> = RagiumItems.getMaterial(HTItemMaterialVariant.CIRCUIT, tier)
         // Circuit Boards
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -205,7 +205,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', basic)
             .save(output)
 
-        val elite: DeferredItem<*> = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ELITE)
+        val elite: HTDeferredItem<*> = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ELITE)
         HTShapedRecipeBuilder(elite)
             .crossLayered()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
@@ -284,7 +284,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
-        for ((color: HTColorVariant, block: HTSimpleDeferredBlockHolder) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorVariant, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             HTShapedRecipeBuilder(block, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)

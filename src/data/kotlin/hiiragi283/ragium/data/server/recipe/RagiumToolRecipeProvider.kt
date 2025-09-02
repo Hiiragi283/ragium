@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
 import hiiragi283.ragium.api.util.material.HTTierType
@@ -29,7 +30,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -115,7 +115,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, armor: DeferredItem<*>) ->
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, armor: HTDeferredItem<*>) ->
             val before: HTVanillaMaterialType = when (material) {
                 RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
                 RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND

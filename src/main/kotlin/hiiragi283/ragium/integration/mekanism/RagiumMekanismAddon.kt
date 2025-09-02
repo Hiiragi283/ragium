@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.registry.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -29,7 +30,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 
 @HTAddon(RagiumConst.MEKANISM)
 object RagiumMekanismAddon : RagiumAddon {
@@ -58,7 +58,7 @@ object RagiumMekanismAddon : RagiumAddon {
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val MATERIAL_ITEMS: HTTable<HTMaterialVariant, HTMaterialType, DeferredItem<*>> = buildTable {
+    val MATERIAL_ITEMS: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
         put(
             HTMekMaterialVariant.ENRICHED,

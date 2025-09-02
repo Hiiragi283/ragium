@@ -14,7 +14,8 @@ import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.registry.HTSimpleDeferredBlockHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -28,7 +29,6 @@ import hiiragi283.ragium.util.variant.HTMachineVariant
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -38,7 +38,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
-import net.neoforged.neoforge.registries.DeferredHolder
 import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
 
@@ -74,7 +73,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             wallBlock(wall.get(), textureId)
         }
 
-        for (block: HTSimpleDeferredBlockHolder in RagiumBlocks.LED_BLOCKS.values) {
+        for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
             altModelBlock(block, RagiumAPI.id("block/led_block"))
         }
 
@@ -82,7 +81,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlockHolder) ->
+        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
             val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
             val stoneTex: String = when (variant) {
                 HTBlockMaterialVariant.ORE -> "block/stone"
@@ -156,7 +155,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Machine
         fun machine(variant: HTMachineVariant, top: ResourceLocation, bottom: ResourceLocation) {
-            val holder: DeferredHolder<Block, *> = variant.blockHolder
+            val holder: HTDeferredBlock<*, *> = variant.blockHolder
             horizontalBlock(
                 holder.get(),
                 models()
@@ -185,7 +184,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.SIMULATOR, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
-        for ((variant: HTDeviceVariant, block: DeferredHolder<Block, *>) in RagiumBlocks.DEVICES) {
+        for ((variant: HTDeviceVariant, block: HTDeferredBlock<*, *>) in RagiumBlocks.DEVICES) {
             when (variant) {
                 HTDeviceVariant.WATER_COLLECTOR -> {
                     layeredBlock(
@@ -213,7 +212,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Storages
-        for (drum: DeferredHolder<Block, *> in RagiumBlocks.DRUMS.values) {
+        for (drum: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
             val id: ResourceLocation = drum.blockId
             simpleBlock(
                 drum.get(),
@@ -231,7 +230,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
     //    Extensions    //
 
-    private fun pieBlock(block: DeferredHolder<Block, out PieBlock>) {
+    private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
         val delight: String = RagiumConst.FARMERS_DELIGHT
         val blockId: ResourceLocation = block.blockId
 

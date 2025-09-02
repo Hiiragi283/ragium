@@ -10,50 +10,50 @@ import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.neoforged.neoforge.registries.DeferredHolder
 
 object RagiumRecipeSerializers {
     @JvmField
-    val ALLOYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTAlloyingRecipe>> =
+    val ALLOYING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTAlloyingRecipe>> =
         create(RagiumConst.ALLOYING)
 
     @JvmField
-    val COMPRESSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCompressingRecipe>> =
+    val COMPRESSING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCompressingRecipe>> =
         create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
+    val CRUSHING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
         create(RagiumConst.CRUSHING)
 
     @JvmField
-    val ENCHANTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEnchantingRecipe>> =
+    val ENCHANTING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEnchantingRecipe>> =
         create(RagiumConst.ENCHANTING)
 
     @JvmField
-    val EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =
+    val EXTRACTING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =
         create(RagiumConst.EXTRACTING)
 
     @JvmField
-    val FLUID_TRANSFORM: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
+    val FLUID_TRANSFORM: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
         create(RagiumConst.FLUID_TRANSFORM)
 
     @JvmField
-    val MELTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMeltingRecipe>> =
+    val MELTING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMeltingRecipe>> =
         create(RagiumConst.MELTING)
 
     @JvmField
-    val PULVERIZING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTPulverizingRecipe>> =
+    val PULVERIZING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTPulverizingRecipe>> =
         create("pulverizing")
 
     @JvmField
-    val SIMULATING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSimulatingRecipe>> =
+    val SIMULATING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSimulatingRecipe>> =
         create(RagiumConst.SIMULATING)
 
     @JvmStatic
-    private fun <RECIPE : Recipe<*>> create(path: String): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<RECIPE>> =
-        DeferredHolder.create(Registries.RECIPE_SERIALIZER, RagiumAPI.id(path))
+    private fun <RECIPE : Recipe<*>> create(path: String): HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<RECIPE>> =
+        HTDeferredHolder.create(Registries.RECIPE_SERIALIZER, RagiumAPI.id(path))
 }

@@ -1,10 +1,11 @@
-package hiiragi283.ragium.api.registry
+package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.inventory.container.HTContainerMenu
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemMenuType
 import hiiragi283.ragium.api.inventory.container.type.HTMenuTypeWithContext
+import hiiragi283.ragium.api.registry.HTDeferredRegister
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
@@ -12,13 +13,12 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.registries.DeferredRegister
 
 /**
- * Ragiumで使用する[MenuType]向けの[DeferredRegister]
+ * Ragiumで使用する[MenuType]向けの[HTDeferredRegister]
  * @see [mekanism.common.registration.impl.ContainerTypeDeferredRegister]
  */
-class HTDeferredMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
+class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
     /**
      * 指定された引数から[HTMenuTypeWithContext]を登録します。
      * @param MENU メニューのクラス

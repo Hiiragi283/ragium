@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
-import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.world.InteractionHand

@@ -3,8 +3,11 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
 import hiiragi283.ragium.api.registry.HTVariantKey
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.util.material.HTMaterialType
@@ -29,15 +32,12 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
-import net.neoforged.neoforge.registries.DeferredRegister
 import kotlin.enums.enumEntries
 
 object RagiumCreativeTabs {
     @JvmField
-    val REGISTER: DeferredRegister<CreativeModeTab> =
-        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
+    val REGISTER: HTDeferredRegister<CreativeModeTab> =
+        HTDeferredRegister(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
@@ -47,7 +47,7 @@ object RagiumCreativeTabs {
     }
 
     @JvmField
-    val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+    val BLOCKS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
         register("blocks", { HTMachineVariant.PULVERIZER.asItem() }, RagiumBlocks.REGISTER)
     /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Natural Resources
@@ -87,7 +87,7 @@ object RagiumCreativeTabs {
     }*/
 
     @JvmField
-    val INGREDIENTS: DeferredHolder<CreativeModeTab, CreativeModeTab> = register(
+    val INGREDIENTS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> = register(
         "ingredients",
         "ragi_alloy_ingot",
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
@@ -134,7 +134,7 @@ object RagiumCreativeTabs {
     }
 
     @JvmField
-    val ITEMS: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+    val ITEMS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
         register(
             "items",
             "ragi_ticket",
@@ -206,11 +206,11 @@ object RagiumCreativeTabs {
         name: String,
         icon: String,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+    ): HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
             .title(Component.translatable(id.toDescriptionKey("itemGroup")))
-            .icon(DeferredItem.createItem<Item>(RagiumAPI.id(icon))::toStack)
+            .icon(HTDeferredItem<Item>(RagiumAPI.id(icon))::toStack)
             .displayItems(action)
             .build()
     }
@@ -220,7 +220,7 @@ object RagiumCreativeTabs {
         name: String,
         icon: ItemLike,
         register: HTDoubleDeferredRegister<out ItemLike, *>,
-    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+    ): HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
             .title(Component.translatable(id.toDescriptionKey("itemGroup")))
@@ -230,7 +230,7 @@ object RagiumCreativeTabs {
     }
 
     fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
-        table: HTTable<V, HTMaterialType, DeferredItem<*>>,
+        table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
         variants: Iterable<V>,
         material: HTMaterialType,
     ) {
@@ -240,7 +240,7 @@ object RagiumCreativeTabs {
     }
 
     inline fun <reified V> CreativeModeTab.Output.acceptFromTable(
-        table: HTTable<V, HTMaterialType, DeferredItem<*>>,
+        table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
         material: HTMaterialType,
     ) where V : HTVariantKey, V : Enum<V> {
         acceptFromTable(table, enumEntries<V>(), material)
