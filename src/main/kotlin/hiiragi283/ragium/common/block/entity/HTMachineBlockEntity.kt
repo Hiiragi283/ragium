@@ -5,11 +5,14 @@ import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTTransferIO
-import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
-import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
+import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTTransferIOCache
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkWrapper
+import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -30,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import java.util.UUID
+import java.util.*
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
@@ -131,23 +134,20 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
         }
 
-    //    HTHandlerBlockEntity    //
+    //    Energy Storage    //
 
-    protected var network: IEnergyStorage? = null
+    val network: HTEnergyNetwork? get() = level?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+
+    protected lateinit var energyStorage: IEnergyStorage
         private set
-    private var externalNetwork: IEnergyStorage? = null
 
-    override fun afterLevelInit(level: Level) {
-        super.afterLevelInit(level)
-        val network: IEnergyStorage = level.getData(RagiumAttachmentTypes.ENERGY_NETWORK) ?: return
-        this.network = network
-        this.externalNetwork = wrapNetworkToExternal(network)
+    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? {
+        energyStorage = HTEnergyNetworkWrapper(this::network)
+        return createStorageHolder(energyStorage)
     }
 
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
-
-    protected open fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
-        HTFilteredEnergyStorage(network, HTEnergyFilter.RECEIVE_ONLY)
+    protected open fun createStorageHolder(energyStorage: IEnergyStorage): HTEnergyStorageHolder =
+        HTSimpleEnergyStorageHolder.input(this, energyStorage)
 
     //    HTOwnedBlockEntity    //
 

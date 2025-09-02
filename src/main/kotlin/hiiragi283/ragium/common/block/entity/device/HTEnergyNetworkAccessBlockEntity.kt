@@ -3,15 +3,17 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkWrapper
+import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -25,6 +27,15 @@ import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(variant, pos, state) {
+    private lateinit var energyStorage: IEnergyStorage
+
+    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? {
+        energyStorage = createEnergyStorage(listener)
+        return HTSimpleEnergyStorageHolder.generic(null, energyStorage)
+    }
+
+    protected abstract fun createEnergyStorage(listener: HTContentListener): IEnergyStorage
+
     private lateinit var extractSlot: HTItemSlot
     private lateinit var insertSlot: HTItemSlot
 
@@ -54,8 +65,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         return HTSimpleItemSlotHolder(null, listOf(extractSlot), listOf(extractSlot))
     }
 
-    protected abstract val network: IEnergyStorage?
-
     override fun onRightClicked(
         state: BlockState,
         level: Level,
@@ -78,11 +87,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, true)
         if (toExtract > 0) {
-            var mayReceive: Int = network?.receiveEnergy(toExtract, true) ?: 0
+            var mayReceive: Int = energyStorage.receiveEnergy(toExtract, true)
             mayReceive = min(toExtract, mayReceive)
             if (mayReceive > 0) {
                 energyIn.extractEnergy(mayReceive, false)
-                network?.receiveEnergy(mayReceive, false)
+                energyStorage.receiveEnergy(mayReceive, false)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -98,11 +107,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toReceive: Int = transferRate
         toReceive = energyIn.receiveEnergy(toReceive, true)
         if (toReceive > 0) {
-            var mayExtract: Int = network?.extractEnergy(toReceive, true) ?: 0
+            var mayExtract: Int = energyStorage.extractEnergy(toReceive, true)
             mayExtract = min(toReceive, mayExtract)
             if (mayExtract > 0) {
                 energyIn.receiveEnergy(mayExtract, false)
-                network?.extractEnergy(mayExtract, false)
+                energyStorage.extractEnergy(mayExtract, false)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -114,12 +123,10 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     protected abstract val transferRate: Int
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
-
     //    Creative    //
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
-        override val network: IEnergyStorage = object : IEnergyStorage {
+        override fun createEnergyStorage(listener: HTContentListener): IEnergyStorage = object : IEnergyStorage {
             override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = toReceive
 
             override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = toExtract
@@ -139,13 +146,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     //    Simple    //
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
-        override var network: IEnergyStorage? = null
+        override fun createEnergyStorage(listener: HTContentListener): IEnergyStorage =
+            HTEnergyNetworkWrapper { level?.getData(RagiumAttachmentTypes.ENERGY_NETWORK) }
 
         override val transferRate: Int = 1000
-
-        override fun afterLevelInit(level: Level) {
-            super.afterLevelInit(level)
-            network = level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
-        }
     }
 }

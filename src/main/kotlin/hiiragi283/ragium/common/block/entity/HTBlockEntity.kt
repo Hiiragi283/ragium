@@ -10,14 +10,17 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
+import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import hiiragi283.ragium.common.util.HTPacketHelper
@@ -34,6 +37,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.INBTSerializable
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import org.slf4j.Logger
@@ -51,6 +55,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     HTNbtCodec,
     HTItemHandler,
     HTFluidHandler,
+    HTEnergyHandler,
     HTHandlerBlockEntity {
     //    Ticking    //
 
@@ -175,10 +180,12 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     protected val fluidHandlerManager: HTFluidHandlerManager?
+    protected val energyStorageManager: HTEnergyStorageManager?
     protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
+        energyStorageManager = initializeEnergyStorage(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
 
@@ -198,6 +205,22 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
         fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
+
+    // Energy
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers]
+     */
+    protected open fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = null
+
+    /**
+     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleEnergy]
+     */
+    override fun hasEnergyStorage(): Boolean = energyStorageManager?.canHandle() ?: false
+
+    final override fun getEnergyHandler(side: Direction?): IEnergyStorage? = energyStorageManager?.getContainers(side)?.firstOrNull()
+
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
+        energyStorageManager?.resolve(HTMultiCapability.ENERGY, direction)
 
     // Item
 
