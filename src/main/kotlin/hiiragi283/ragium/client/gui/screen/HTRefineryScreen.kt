@@ -34,7 +34,7 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
         consumer(
             HTProgressWidget.burn(
-                menu.context::progress,
+                blockEntity::progress,
                 startX + HTSlotHelper.getSlotPosX(4),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),

@@ -10,12 +10,11 @@ import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.RandomSource
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
@@ -43,9 +42,6 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
 
-    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance =
-        createSound(SoundEvents.FURNACE_FIRE_CRACKLE, random, pos, 0.5f)
-
     //    Ticking    //
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: AbstractCookingRecipe): Boolean =
@@ -62,5 +58,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         inputSlot.shrinkStack(1, false)
+        // SEを鳴らす
+        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }
 }

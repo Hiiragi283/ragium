@@ -23,7 +23,7 @@ class HTFuelGeneratorScreen(menu: HTBlockEntityContainerMenu<HTFuelGeneratorBloc
     override fun init() {
         super.init()
         // Energy Widget
-        createEnergyWidget(menu.context.getDimension(), HTSlotHelper.getSlotPosX(4))
+        createEnergyWidget(blockEntity.getDimension(), HTSlotHelper.getSlotPosX(4))
         // Fluid Widget
         fluidWidget = createFluidWidget(0, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0))
     }

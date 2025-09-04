@@ -12,12 +12,11 @@ import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.RandomSource
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
@@ -46,8 +45,6 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SIMULATOR.openMenu(player, name, this, ::writeExtraContainerData)
 
-    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance = createSound(SoundEvents.LAVA_AMBIENT, random, pos)
-
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
         HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
 
@@ -65,5 +62,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // 実際にインプットを減らす
         inputSlot.shrinkStack(recipe.ingredient, false)
+        // SEを鳴らす
+        level.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.5f, 1f)
     }
 }

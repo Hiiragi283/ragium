@@ -55,7 +55,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         // dimension
         editBoxDim = setupEditBox()
 
-        val teleportPos: HTTeleportPos = menu.context.teleportPos ?: return
+        val teleportPos: HTTeleportPos = blockEntity.teleportPos ?: return
         editBoxX.number = teleportPos.x
         editBoxY.number = teleportPos.y
         editBoxZ.number = teleportPos.z
@@ -127,7 +127,6 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         val id: ResourceLocation = editBoxDim.value.let(ResourceLocation::tryParse) ?: return
         val dim: ResourceKey<Level> = ResourceKey.create(Registries.DIMENSION, id)
         val teleportPos = HTTeleportPos(dim, x, y, z)
-        val blockEntity: HTTelepadBlockentity = menu.context
         blockEntity.updateDestination(teleportPos)
         HTPacketHelper.sendToServer(HTUpdateTelepadPacket(blockEntity.blockPos, teleportPos))
     }

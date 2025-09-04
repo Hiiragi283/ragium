@@ -23,13 +23,14 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
         title,
     ),
     HTPositionScreen {
-    final override fun checkPosition(blockPos: BlockPos): Boolean = menu.context.blockPos == blockPos
+    val blockEntity: BE get() = menu.context
+
+    final override fun checkPosition(blockPos: BlockPos): Boolean = blockEntity.blockPos == blockPos
 
     //    Extensions    //
 
     fun createFluidWidget(index: Int, x: Int, y: Int): HTFluidTankWidget {
-        val context: BE = menu.context
-        val tanks: List<HTFluidTank> = context.getFluidTanks(context.getFluidSideFor())
+        val tanks: List<HTFluidTank> = blockEntity.getFluidTanks(blockEntity.getFluidSideFor())
         return HTFluidTankWidget(tanks[index], startX + x, startY + y).apply(::addRenderableWidget)
     }
 

@@ -17,13 +17,12 @@ import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.RandomSource
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -62,8 +61,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.REFINERY.openMenu(player, title, this, ::writeExtraContainerData)
 
-    override fun createSound(random: RandomSource, pos: BlockPos): SoundInstance = createSound(SoundEvents.LAVA_AMBIENT, random, pos)
-
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
@@ -91,6 +88,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         inputSlot.shrinkStack(recipe.itemIngredient, false)
         inputTank.shrinkStack(recipe.fluidIngredient, false)
+        // SEを鳴らす
+        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }
 
     //    HTFluidInteractable    //

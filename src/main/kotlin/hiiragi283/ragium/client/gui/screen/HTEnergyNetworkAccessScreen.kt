@@ -21,6 +21,6 @@ class HTEnergyNetworkAccessScreen(
     override fun init() {
         super.init()
         // Energy Widget
-        createEnergyWidget(menu.context.getDimension(), HTSlotHelper.getSlotPosX(4))
+        createEnergyWidget(blockEntity.getDimension(), HTSlotHelper.getSlotPosX(4))
     }
 }

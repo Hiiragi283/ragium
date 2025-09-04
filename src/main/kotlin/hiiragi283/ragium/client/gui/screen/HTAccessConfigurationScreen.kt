@@ -92,8 +92,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
                 guiGraphics.blitSprite(SPRITES.get(this.active, this.isHoveredOrFocused), x, y, width, height)
             }
             // Render icon
-            val minecraft: Minecraft = Minecraft.getInstance()
-            val state: BlockState = minecraft.level?.getBlockState(pos.relative(side)) ?: return
+            val state: BlockState = Minecraft.getInstance().level?.getBlockState(pos.relative(side)) ?: return
             guiGraphics.renderItem(ItemStack(state.block), x + 4, y + 4)
         }
     }

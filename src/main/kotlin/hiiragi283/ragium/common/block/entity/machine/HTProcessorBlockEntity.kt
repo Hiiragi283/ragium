@@ -4,18 +4,11 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.sounds.SimpleSoundInstance
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvent
-import net.minecraft.sounds.SoundSource
-import net.minecraft.util.RandomSource
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -61,7 +54,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
 
     protected open fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
 
-    protected open fun getRequiredEnergy(recipe: RECIPE): Int = 2000 // TODO
+    protected open fun getRequiredEnergy(recipe: RECIPE): Int = variant.energyUsage * 20 * 10
 
     protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 
@@ -72,20 +65,4 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
         input: INPUT,
         recipe: RECIPE,
     )
-
-    override fun onUpdateClient(level: Level, pos: BlockPos, state: BlockState) {
-        if (ticks % 20 == 0) {
-            Minecraft.getInstance().soundManager.play(createSound(level.random, pos))
-        }
-    }
-
-    protected abstract fun createSound(random: RandomSource, pos: BlockPos): SoundInstance
-
-    protected fun createSound(
-        sound: SoundEvent,
-        random: RandomSource,
-        pos: BlockPos,
-        volume: Float = 1f,
-        pitch: Float = 1f,
-    ): SoundInstance = SimpleSoundInstance(sound, SoundSource.BLOCKS, volume, pitch, random, pos)
 }

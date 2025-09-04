@@ -1,6 +1,5 @@
-package hiiragi283.ragium.setup
+package hiiragi283.ragium.api.network
 
-import hiiragi283.ragium.api.network.HTCustomPayload
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -11,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 
-class RagiumPayloadRegister(private val registrar: PayloadRegistrar) {
+class HTPayloadRegister(private val registrar: PayloadRegistrar) {
     fun <T : HTCustomPayload.S2C> registerS2C(type: CustomPacketPayload.Type<T>, streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>) {
         registrar.playToClient(type, streamCodec) { payload: T, context: IPayloadContext ->
             context

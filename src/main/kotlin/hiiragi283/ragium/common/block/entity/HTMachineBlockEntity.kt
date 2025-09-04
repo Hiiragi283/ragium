@@ -100,6 +100,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
      */
     protected abstract val energyUsage: Int
 
+    protected var isActive: Boolean = false
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
 
@@ -114,7 +115,9 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val network: IEnergyStorage = this.network ?: return false
-        return onUpdateServer(level, pos, state, network)
+        val result: Boolean = onUpdateServer(level, pos, state, network)
+        isActive = result
+        return result
     }
 
     protected abstract fun onUpdateServer(

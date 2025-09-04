@@ -65,6 +65,6 @@ class HTItemToItemScreen<BE : HTProcessorBlockEntity<SingleRecipeInput, *>>(
     }
 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
-        consumer(factory(menu.context::progress, startX + HTSlotHelper.getSlotPosX(3.5), startY + HTSlotHelper.getSlotPosY(1)))
+        consumer(factory(blockEntity::progress, startX + HTSlotHelper.getSlotPosX(3.5), startY + HTSlotHelper.getSlotPosY(1)))
     }
 }

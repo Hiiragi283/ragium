@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.network.HTPayloadRegister
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -22,7 +23,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
-import hiiragi283.ragium.setup.RagiumPayloadRegister
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
@@ -112,7 +112,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
-        with(RagiumPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
+        with(HTPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
             // Server -> Client
             registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
             registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)

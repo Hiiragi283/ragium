@@ -37,13 +37,13 @@ open class HTMachineScreen<BE : HTMachineBlockEntity>(
         // Progress Widget
         addProgressBar(::addRenderableOnly)
         // Energy Widget
-        energyWidget = createEnergyWidget(menu.context.getDimension())
+        energyWidget = createEnergyWidget(blockEntity.getDimension())
     }
 
     protected open fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
         consumer(
             HTProgressWidget.arrow(
-                menu.context::progress,
+                blockEntity::progress,
                 startX + HTSlotHelper.getSlotPosX(3.5),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),
