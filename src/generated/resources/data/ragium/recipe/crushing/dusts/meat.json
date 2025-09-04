@@ -1,19 +1,8 @@
 {
   "type": "ragium:pulverizing",
   "ingredient": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:foods/raw_meat"
-      },
-      {
-        "tag": "c:foods/raw_fish"
-      },
-      {
-        "item": "minecraft:rotten_flesh"
-      }
-    ],
-    "count": 1
+    "count": 1,
+    "tag": "ragium:raw_meat"
   },
   "result": {
     "count": 1,

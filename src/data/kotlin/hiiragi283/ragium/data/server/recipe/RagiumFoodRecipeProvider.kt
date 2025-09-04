@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
@@ -22,9 +23,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -130,13 +129,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Minced Meat
         HTItemToObjRecipeBuilder
             .pulverizing(
-                HTIngredientHelper.item(
-                    CompoundIngredient.of(
-                        Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
-                        Ingredient.of(Tags.Items.FOODS_RAW_FISH),
-                        Ingredient.of(Items.ROTTEN_FLESH),
-                    ),
-                ),
+                HTIngredientHelper.item(RagiumModTags.Items.RAW_MEAT),
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
             ).save(output)
         // Meat Ingot

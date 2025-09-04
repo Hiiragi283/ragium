@@ -178,6 +178,10 @@ class RagiumItemTagsProvider(
         )
 
         builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, RagiumCommonTags.Items.INGOTS_CHOCOLATE)
+
+        builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_MEAT)
+        builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
+        builder.addItem(RagiumModTags.Items.RAW_MEAT, Items.ROTTEN_FLESH)
         // Delight
         builder.addItem(
             RagiumCommonTags.Items.FOODS_CHERRY,

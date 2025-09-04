@@ -380,6 +380,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")
         add(RagiumModTags.Items.PLASTICS, "プラスチック")
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
+        add(RagiumModTags.Items.RAW_MEAT, "生肉")
         add(RagiumModTags.Items.WIP, "開発中")
 
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "合金炉で使う基本融剤")

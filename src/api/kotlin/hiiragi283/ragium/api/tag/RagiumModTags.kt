@@ -72,6 +72,9 @@ object RagiumModTags {
         val POLYMER_RESIN: TagKey<Item> = create("polymer_resin")
 
         @JvmField
+        val RAW_MEAT: TagKey<Item> = create("raw_meat")
+        
+        @JvmField
         val WIP: TagKey<Item> = create("work_in_progress")
 
         // Flux

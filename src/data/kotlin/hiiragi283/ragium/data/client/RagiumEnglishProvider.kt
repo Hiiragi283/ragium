@@ -380,6 +380,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")
         add(RagiumModTags.Items.PLASTICS, "Plastics")
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
+        add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
         add(RagiumModTags.Items.WIP, "Work In Progress")
 
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "Basic Fluxes for Alloy Smelter")
