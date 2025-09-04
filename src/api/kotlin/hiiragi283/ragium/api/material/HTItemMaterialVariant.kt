@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.tags.TagKey

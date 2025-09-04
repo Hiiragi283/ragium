@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.client
 
-import hiiragi283.ragium.api.data.HTLanguageProvider
+import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTHasTranslationKey

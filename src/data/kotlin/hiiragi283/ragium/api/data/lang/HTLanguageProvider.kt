@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.lang
 
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
@@ -33,6 +33,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
+import kotlin.collections.iterator
 import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
@@ -112,7 +113,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)
 
     fun addInfo(item: ItemLike, vararg values: String) {
-        add(RagiumTranslation.getTooltipKey(ItemStack(item)), values.joinToString(separator = "\n"))
+        add(
+            RagiumTranslation.getTooltipKey(ItemStack(item)),
+            values.joinToString(separator = "\n"),
+        )
     }
 
     fun addItemGroup(group: HTHolderLike, value: String) {

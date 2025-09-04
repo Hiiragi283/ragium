@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.variant
 
-import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.tags.TagKey

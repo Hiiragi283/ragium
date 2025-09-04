@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.mekanism
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf
@@ -12,8 +12,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
 
-class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val amount: Long) :
-    HTRecipeResult<ChemicalStack> {
+class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val amount: Long) : HTRecipeResult<ChemicalStack> {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTChemicalResult> = BiCodec.composite(
@@ -21,19 +20,19 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
             HTChemicalResult::entry,
             BiCodec.LONG.fieldOf("amount"),
             HTChemicalResult::amount,
-            ::HTChemicalResult
+            ::HTChemicalResult,
         )
     }
-    
+
     override val id: ResourceLocation = entry.id
 
-    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<ChemicalStack> =
-        entry.getFirstHolder(provider)
-            .map  { holder: Holder<Chemical> -> ChemicalStack(holder, amount) }
-            .flatMap { stack: ChemicalStack ->
-                when {
-                    stack.isEmpty -> DataResult.error { "Empty chemical stack is not valid for recipe result" }
-                    else -> DataResult.success(stack)
-                }
+    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<ChemicalStack> = entry
+        .getFirstHolder(provider)
+        .map { holder: Holder<Chemical> -> ChemicalStack(holder, amount) }
+        .flatMap { stack: ChemicalStack ->
+            when {
+                stack.isEmpty -> DataResult.error { "Empty chemical stack is not valid for recipe result" }
+                else -> DataResult.success(stack)
             }
+        }
 }

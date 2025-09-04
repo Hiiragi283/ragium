@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.material
 
-import hiiragi283.ragium.api.data.HTLanguageType
-import hiiragi283.ragium.api.data.HTTranslatedNameProvider
+import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
 import hiiragi283.ragium.api.variant.HTVariantKey
 import net.minecraft.util.StringRepresentable
 

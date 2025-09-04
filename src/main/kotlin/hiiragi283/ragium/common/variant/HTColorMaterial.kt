@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.data.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
