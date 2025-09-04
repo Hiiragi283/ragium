@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
 /**
@@ -45,7 +44,4 @@ interface HTMultiItemToObjRecipe : HTRecipe<HTMultiItemRecipeInput> {
             return slots.isNotEmpty() && slots.size == ingredients.size
         }
     }
-
-    override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
-        if (test(input)) getResultItem(registries) else ItemStack.EMPTY
 }

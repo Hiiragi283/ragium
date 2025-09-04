@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe.result
 import com.mojang.serialization.DataResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * レシピの完成品を表すインターフェース
@@ -26,8 +27,9 @@ interface HTRecipeResult<STACK : Any> {
     /**
      * 指定された[provider]から完成品を返します。
      * @param provider レジストリへのアクセス
+     * @return 完成品がない場合は`null`
      */
-    fun getOrEmpty(provider: HolderLookup.Provider?): STACK
+    fun getStackOrNull(provider: HolderLookup.Provider?): STACK? = getStackResult(provider).result().getOrNull()
 
     /**
      * 完成品が存在するか判定します。

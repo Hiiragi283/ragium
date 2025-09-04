@@ -10,7 +10,8 @@ import net.minecraft.world.item.ItemStack
 abstract class HTCombineItemToItemRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult) : HTMultiItemToObjRecipe {
     final override fun test(input: HTMultiItemRecipeInput): Boolean = HTMultiItemToObjRecipe.hasMatchingSlots(ingredients, input.items)
 
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
+    final override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
+        getItemResult(input, registries, result)
 
     final override fun isIncomplete(): Boolean =
         ingredients.isEmpty() || ingredients.any(HTItemIngredient::hasNoMatchingStacks) || result.hasNoMatchingStack()

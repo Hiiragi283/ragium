@@ -32,7 +32,7 @@ interface HTItemToChancedItemRecipe : HTRecipe<SingleRecipeInput> {
      * @return 完成品のプレビューの一覧
      */
     fun getPreviewItems(input: SingleRecipeInput, registries: HolderLookup.Provider): List<ItemStack> =
-        getResultItems(input).map { it.getOrEmpty(registries) }.filterNot(ItemStack::isEmpty)
+        getResultItems(input).mapNotNull { it.getStackOrNull(registries) }.filterNot(ItemStack::isEmpty)
 
     /**
      * 確率付きの完成品を表すクラス

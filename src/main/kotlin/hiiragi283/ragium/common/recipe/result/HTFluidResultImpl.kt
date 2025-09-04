@@ -26,7 +26,7 @@ class HTFluidResultImpl(entry: HTKeyOrTagEntry<Fluid>, amount: Int, components: 
     override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): DataResult<FluidStack> {
         val stack = FluidStack(holder, amount, components)
         return when {
-            stack.isEmpty -> DataResult.error { "Empty Fluid Stack is not valid for recipe result!" }
+            stack.isEmpty -> DataResult.error { "Empty fluid stack is not valid for recipe result" }
             else -> DataResult.success(stack)
         }
     }

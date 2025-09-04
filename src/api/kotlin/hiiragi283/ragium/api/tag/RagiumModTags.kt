@@ -73,7 +73,7 @@ object RagiumModTags {
 
         @JvmField
         val RAW_MEAT: TagKey<Item> = create("raw_meat")
-        
+
         @JvmField
         val WIP: TagKey<Item> = create("work_in_progress")
 

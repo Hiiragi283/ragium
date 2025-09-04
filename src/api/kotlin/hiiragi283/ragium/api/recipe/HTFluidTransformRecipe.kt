@@ -25,13 +25,10 @@ interface HTFluidTransformRecipe : HTFluidRecipe<HTItemWithFluidRecipeInput> {
     }
 
     override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
-        if (test(input)) getResultItem(registries) else ItemStack.EMPTY
-
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
-        itemResult.map { result: HTItemResult -> result.getOrEmpty(registries) }.orElse(ItemStack.EMPTY)
+        getItemResult(input, registries, itemResult)
 
     override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
-        if (test(input) && fluidResult.isPresent) fluidResult.get().getOrEmpty(registries) else FluidStack.EMPTY
+        getFluidResult(input, registries, fluidResult)
 
     override fun isIncomplete(): Boolean {
         if (itemResult.isEmpty && fluidResult.isEmpty) return true

@@ -22,7 +22,8 @@ abstract class HTItemWithCatalystToItemRecipe(
         return !isIncomplete && bool1 && bool2
     }
 
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
+    final override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
+        getItemResult(input, registries, result)
 
     final override fun isIncomplete(): Boolean {
         val bool1: Boolean = ingredient.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)

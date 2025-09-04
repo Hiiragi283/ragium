@@ -26,7 +26,7 @@ class HTItemResultImpl(entry: HTKeyOrTagEntry<Item>, amount: Int, components: Da
     override fun createStack(holder: Holder<Item>, amount: Int, components: DataComponentPatch): DataResult<ItemStack> {
         val stack = ItemStack(holder, amount, components)
         return when {
-            stack.isEmpty -> DataResult.error { "Empty Item Stack is not valid for recipe result!" }
+            stack.isEmpty -> DataResult.error { "Empty item stack is not valid for recipe result" }
             else -> DataResult.success(stack)
         }
     }

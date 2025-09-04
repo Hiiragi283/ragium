@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
 
 abstract class HTItemToItemRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) :
     HTItemToObjRecipe<HTItemResult> {
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getOrEmpty(registries)
+    final override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
+        getItemResult(input, registries, result)
 }
