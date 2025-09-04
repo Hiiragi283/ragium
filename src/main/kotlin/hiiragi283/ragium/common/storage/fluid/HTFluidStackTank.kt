@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.storage.fluid
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
+import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -90,8 +90,8 @@ open class HTFluidStackTank protected constructor(
 
     override fun isFluidValid(stack: FluidStack): Boolean = filter.test(stack)
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        setStackUnchecked(FluidStack.parseOptional(provider, nbt.getCompound(RagiumConst.FLUID)), false)
+    override fun deserialize(input: HTValueInput) {
+        input.read(RagiumConst.FLUID, BiCodecs.fluidStack(true))?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {

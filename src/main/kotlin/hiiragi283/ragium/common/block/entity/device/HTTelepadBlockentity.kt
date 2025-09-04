@@ -2,10 +2,11 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTTeleportPos
-import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.variant.HTDeviceVariant
@@ -60,14 +61,14 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        super.writeNbt(writer)
-        writer.writeNullable(HTTeleportPos.CODEC, "teleport_pos", teleportPos)
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.store("teleport_pos", HTTeleportPos.CODEC, teleportPos)
     }
 
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        super.readNbt(reader)
-        reader.read(HTTeleportPos.CODEC, "teleport_pos").ifSuccess { teleportPos = it }
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        teleportPos = input.read("teleport_pos", HTTeleportPos.CODEC)
     }
 
     override fun onRightClicked(

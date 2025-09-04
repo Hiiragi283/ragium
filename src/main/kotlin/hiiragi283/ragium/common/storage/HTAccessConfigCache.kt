@@ -1,22 +1,27 @@
 package hiiragi283.ragium.common.storage
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtOps
-import net.minecraft.nbt.Tag
-import net.neoforged.neoforge.common.util.INBTSerializable
+import net.minecraft.network.FriendlyByteBuf
 import org.slf4j.Logger
 
 class HTAccessConfigCache :
     HTAccessConfiguration.Holder,
-    INBTSerializable<CompoundTag> {
+    HTValueSerializable {
     companion object {
         @JvmField
         val LOGGER: Logger = LogUtils.getLogger()
+
+        @JvmField
+        val CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfiguration>> =
+            BiCodecs.mapOf(BiCodecs.DIRECTION, HTAccessConfiguration.CODEC)
     }
 
     private val cache: MutableMap<Direction, HTAccessConfiguration> = mutableMapOf()
@@ -29,23 +34,14 @@ class HTAccessConfigCache :
         LOGGER.debug("Updated access config: {} -> {}", old, value)
     }
 
-    //    INBTSerializable    //
+    //    HTNbtSerializable    //
 
-    override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        for (side: Direction in Direction.entries) {
-            val configuration: HTAccessConfiguration = cache[side] ?: continue
-            HTAccessConfiguration.CODEC
-                .encode(NbtOps.INSTANCE, configuration)
-                .ifSuccess { this.put(side.serializedName, it) }
-        }
+    override fun serialize(output: HTValueOutput) {
+        if (cache.isEmpty()) return
+        output.store(RagiumConst.ACCESS_CONFIG, CODEC, cache)
     }
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        for (side: Direction in Direction.entries) {
-            val tag: Tag = nbt.get(side.serializedName) ?: continue
-            HTAccessConfiguration.CODEC
-                .decode(NbtOps.INSTANCE, tag)
-                .ifSuccess { setAccessConfiguration(side, it) }
-        }
+    override fun deserialize(input: HTValueInput) {
+        input.read(RagiumConst.ACCESS_CONFIG, CODEC)?.forEach(cache::put)
     }
 }

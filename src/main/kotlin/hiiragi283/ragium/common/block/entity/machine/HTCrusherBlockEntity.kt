@@ -73,7 +73,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                var remainder: ItemStack = result.getOrEmpty(level.registryAccess())
+                var remainder: ItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
                 for (slot: HTItemSlot in outputSlots) {
                     remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
                     if (remainder.isEmpty) break

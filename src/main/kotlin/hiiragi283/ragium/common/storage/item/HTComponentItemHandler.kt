@@ -4,12 +4,11 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -66,7 +65,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
             ::setStack,
         )
 
-        override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {}
+        override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
     }

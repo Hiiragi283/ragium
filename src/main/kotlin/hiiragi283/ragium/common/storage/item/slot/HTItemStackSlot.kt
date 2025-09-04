@@ -8,8 +8,7 @@ import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
+import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
@@ -144,8 +143,8 @@ open class HTItemStackSlot protected constructor(
 
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked)
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        setStackUnchecked(ItemStack.parseOptional(provider, nbt.getCompound(RagiumConst.ITEM)), false)
+    override fun deserialize(input: HTValueInput) {
+        input.read(RagiumConst.ITEM, BiCodecs.itemStack(true))?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {

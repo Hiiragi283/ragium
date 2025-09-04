@@ -1,15 +1,14 @@
 package hiiragi283.ragium.api.storage.item
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.common.util.INBTSerializable
 import java.util.Optional
 import kotlin.math.min
 
@@ -18,7 +17,7 @@ import kotlin.math.min
  * @see [mekanism.api.inventory.IInventorySlot]
  */
 interface HTItemSlot :
-    INBTSerializable<CompoundTag>,
+    HTValueSerializable,
     HTContentListener {
     /**
      * 保持している[ItemStack]を返します。
@@ -197,9 +196,7 @@ interface HTItemSlot :
      */
     val count: Int get() = getStack().count
 
-    override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        if (!this@HTItemSlot.isEmpty) {
-            put(RagiumConst.ITEM, getStack().saveOptional(provider))
-        }
+    override fun serialize(output: HTValueOutput) {
+        output.store(RagiumConst.ITEM, BiCodecs.itemStack(true), getStack())
     }
 }

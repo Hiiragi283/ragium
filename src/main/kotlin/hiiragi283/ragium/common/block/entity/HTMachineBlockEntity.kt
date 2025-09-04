@@ -3,11 +3,12 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.data.BiCodecs
-import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
@@ -41,16 +42,16 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTAccessConfiguration.Holder {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        super.writeNbt(writer)
-        writer.writeNullable(BiCodecs.UUID, RagiumConst.OWNER, ownerId)
-        writer.write(RagiumConst.ACCESS_CONFIG, accessConfigCache)
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.store(RagiumConst.OWNER, BiCodecs.UUID, ownerId)
+        accessConfigCache.serialize(output)
     }
 
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        super.readNbt(reader)
-        reader.read(BiCodecs.UUID, RagiumConst.OWNER).ifSuccess { ownerId = it }
-        reader.read(RagiumConst.ACCESS_CONFIG, accessConfigCache)
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        ownerId = input.read(RagiumConst.OWNER, BiCodecs.UUID)
+        accessConfigCache.deserialize(input)
     }
 
     override fun onRightClickedWithItem(

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.data.BiCodecs.UUID
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
@@ -64,6 +65,12 @@ object BiCodecs {
     @JvmField
     val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
         BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
+
+    /**
+     * [Direction]の[BiCodec]
+     */
+    @JvmField
+    val DIRECTION: BiCodec<ByteBuf, Direction> = BiCodec.of(Direction.CODEC, Direction.STREAM_CODEC)
 
     /**
      * [Component]の[BiCodec]

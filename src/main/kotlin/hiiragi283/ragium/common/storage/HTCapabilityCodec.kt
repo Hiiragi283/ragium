@@ -5,16 +5,14 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.Tag
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
@@ -23,7 +21,7 @@ import org.slf4j.Logger
 /**
  * @see [mekanism.common.attachments.containers.ContainerType]
  */
-class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
+class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
@@ -82,44 +80,36 @@ class HTCapabilityCodec<CONTAINER : INBTSerializable<CompoundTag>>(
 
     //    Save & Read    //
 
-    fun saveTo(nbt: CompoundTag, provider: HolderLookup.Provider, blockEntity: HTBlockEntity) {
-        saveTo(nbt, provider, getContainers(blockEntity))
+    fun saveTo(output: HTValueOutput, blockEntity: HTBlockEntity) {
+        saveTo(output, getContainers(blockEntity))
     }
 
-    fun saveTo(nbt: CompoundTag, provider: HolderLookup.Provider, containers: List<CONTAINER>) {
-        val list: ListTag = save(provider, containers)
-        if (!list.isEmpty()) {
-            nbt.put(containerTag, list)
+    fun saveTo(output: HTValueOutput, containers: List<CONTAINER>) {
+        save(output.childrenList(containerTag), containers)
+    }
+
+    private fun save(list: HTValueOutput.ValueOutputList, containers: List<CONTAINER>) {
+        containers.forEachIndexed { slot: Int, container: CONTAINER ->
+            val output: HTValueOutput = list.addChild()
+            container.serialize(output)
+            output.putInt(containerKey, slot)
         }
     }
 
-    private fun save(provider: HolderLookup.Provider, containers: List<CONTAINER>): ListTag {
-        val list = ListTag()
-        for (slot: Int in containers.indices) {
-            val nbt: CompoundTag = containers[slot].serializeNBT(provider)
-            if (nbt.isEmpty) continue
-            nbt.putInt(containerKey, slot)
-            list.add(nbt)
-        }
-        return list
+    fun loadFrom(input: HTValueInput, blockEntity: HTBlockEntity) {
+        loadFrom(input, getContainers(blockEntity))
     }
 
-    fun readFrom(nbt: CompoundTag, provider: HolderLookup.Provider, blockEntity: HTBlockEntity) {
-        readFrom(nbt, provider, getContainers(blockEntity))
+    fun loadFrom(input: HTValueInput, containers: List<CONTAINER>) {
+        load(input.childrenListOrEmpty(containerTag), containers)
     }
 
-    fun readFrom(nbt: CompoundTag, provider: HolderLookup.Provider, containers: List<CONTAINER>) {
-        read(provider, containers, nbt.getList(containerTag, Tag.TAG_COMPOUND.toInt()))
-    }
-
-    private fun read(provider: HolderLookup.Provider, containers: List<CONTAINER>, list: ListTag) {
-        if (list.isEmpty()) return
-        for (i: Int in list.indices) {
-            val nbt: CompoundTag = list.getCompound(i)
-            if (nbt.isEmpty) continue
-            val slot: Int = nbt.getInt(containerKey)
-            if (slot in (0 until containers.size)) {
-                containers[slot].deserializeNBT(provider, nbt)
+    private fun load(list: HTValueInput.ValueInputList, containers: List<CONTAINER>) {
+        if (list.isEmpty) return
+        for (input: HTValueInput in list) {
+            val slot: Int = input.getInt(containerKey) ?: continue
+            if (slot in containers.indices) {
+                containers[slot].deserialize(input)
             }
         }
     }

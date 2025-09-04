@@ -1,13 +1,12 @@
 package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.data.BiCodecs
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.neoforged.neoforge.common.util.INBTSerializable
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -21,7 +20,7 @@ import kotlin.math.min
  */
 interface HTFluidTank :
     IFluidTank,
-    INBTSerializable<CompoundTag>,
+    HTValueSerializable,
     HTContentListener {
     /**
      * 保持している[FluidStack]を返します。
@@ -180,10 +179,8 @@ interface HTFluidTank :
 
     fun getNeeded(): Int = max(0, capacity - fluidAmount)
 
-    override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag = buildNbt {
-        if (!this@HTFluidTank.isEmpty) {
-            put(RagiumConst.FLUID, getStack().saveOptional(provider))
-        }
+    override fun serialize(output: HTValueOutput) {
+        output.store(RagiumConst.FLUID, BiCodecs.fluidStack(true), getStack())
     }
 
     //    IFluidTank    //

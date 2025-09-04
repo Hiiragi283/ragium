@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -52,16 +52,15 @@ open class HTFluidItemStackSlot(
         isFilling = false
     }
 
-    override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag {
-        val nbt: CompoundTag = super<HTFluidItemSlot>.serializeNBT(provider)
-        nbt.putBoolean("draining", isDraining)
-        nbt.putBoolean("filling", isFilling)
-        return nbt
+    override fun serialize(output: HTValueOutput) {
+        super<HTFluidItemSlot>.serialize(output)
+        output.putBoolean("draining", isDraining)
+        output.putBoolean("filling", isFilling)
     }
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        this.isDraining = nbt.getBoolean("draining")
-        this.isFilling = nbt.getBoolean("filling")
-        super.deserializeNBT(provider, nbt)
+    override fun deserialize(input: HTValueInput) {
+        this.isDraining = input.getBoolean("draining", false)
+        this.isFilling = input.getBoolean("filling", false)
+        super.deserialize(input)
     }
 }

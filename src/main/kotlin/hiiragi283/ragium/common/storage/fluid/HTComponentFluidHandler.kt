@@ -2,11 +2,10 @@ package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 import net.neoforged.neoforge.fluids.FluidStack
@@ -45,7 +44,7 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int
 
         override fun isFluidValid(stack: FluidStack): Boolean = true
 
-        override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {}
+        override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
     }
