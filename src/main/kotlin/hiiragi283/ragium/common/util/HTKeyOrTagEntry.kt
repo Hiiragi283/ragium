@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.util
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter

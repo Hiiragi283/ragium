@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.storage.energy
 
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
 import io.netty.buffer.ByteBuf
 import net.minecraft.util.Mth

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient

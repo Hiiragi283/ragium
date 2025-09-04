@@ -2,8 +2,8 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import net.minecraft.core.component.DataComponentType

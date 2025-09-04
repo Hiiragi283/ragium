@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.storage
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries

@@ -1,8 +1,7 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.data.BiCodecs.UUID
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder

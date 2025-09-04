@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.MapBiCodec
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder

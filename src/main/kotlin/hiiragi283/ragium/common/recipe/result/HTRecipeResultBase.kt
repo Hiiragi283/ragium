@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.recipe.result
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.data.BiCodec
-import hiiragi283.ragium.api.data.BiCodecs
-import hiiragi283.ragium.api.data.MapBiCodec
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf

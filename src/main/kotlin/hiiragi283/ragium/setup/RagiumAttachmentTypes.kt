@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
 import net.minecraft.network.RegistryFriendlyByteBuf

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.data.MapBiCodec
+import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe

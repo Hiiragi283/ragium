@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.bracketText
 import hiiragi283.ragium.api.extension.joinedText

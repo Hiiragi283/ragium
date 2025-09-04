@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.storage.value
 
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 
 interface HTValueOutput {
     fun <T : Any> store(key: String, codec: BiCodec<*, T>, value: T?)

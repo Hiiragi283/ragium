@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.storage.nbt
 
-import hiiragi283.ragium.api.data.BiCodec
+import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

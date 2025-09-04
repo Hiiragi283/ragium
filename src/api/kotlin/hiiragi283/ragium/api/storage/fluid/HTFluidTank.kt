@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.BiCodecs
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess

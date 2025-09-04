@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec

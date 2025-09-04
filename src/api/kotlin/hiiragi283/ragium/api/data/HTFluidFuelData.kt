@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import io.netty.buffer.ByteBuf
 
 data class HTFluidFuelData(val amount: Int) {
