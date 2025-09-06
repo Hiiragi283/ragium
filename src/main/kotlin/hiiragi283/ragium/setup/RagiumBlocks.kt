@@ -63,7 +63,7 @@ object RagiumBlocks {
         properties: BlockBehaviour.Properties,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> B,
     ): HTBasicDeferredBlock<B> =
-        REGISTER.registerSimple(type.id.path, properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
+        REGISTER.registerSimple(type.getPath(), properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -417,7 +417,7 @@ object RagiumBlocks {
             }
             val type: HTDeferredBlockEntityType<HTBlockEntity> = variant.blockEntityHolder
             REGISTER.register(
-                type.id.path,
+                type.getPath(),
                 { HTDrumBlock(type, copyOf(base)) },
                 ::HTDrumItem,
             )

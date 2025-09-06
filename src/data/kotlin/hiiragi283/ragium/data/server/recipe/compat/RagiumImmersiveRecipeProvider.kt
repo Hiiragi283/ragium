@@ -94,13 +94,13 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
                 .output(sap.get(), HTMoltenCrystalData.LOG_TO_SAP)
                 .input(log)
                 .setEnergy(6400)
-                .build(output, id("squeezer/${sap.id.path}"))
+                .build(output, id("squeezer/${sap.getPath()}"))
             // sap -> molten
             RefineryRecipeBuilder
                 .builder()
                 .input(sap.commonTag, 1000)
                 .output(molten.get(), HTMoltenCrystalData.SAP_TO_MOLTEN)
-                .build(output, id("refinery/${molten.id.path}"))
+                .build(output, id("refinery/${molten.getPath()}"))
         }
 
         // Crimson + Warped -> Eldritch Flux

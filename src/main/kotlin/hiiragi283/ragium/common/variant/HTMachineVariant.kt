@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
@@ -45,6 +46,7 @@ enum class HTMachineVariant(
     REFINERY(::HTRefineryBlockEntity, HTTierType.ADVANCED, "Refinery", "精製機"),
 
     // Elite
+    MULTI_SMELTER(::HTMultiSmelterBlockEntity, HTTierType.ELITE, "Multi Smelter", "並列製錬炉"),
     SIMULATOR(::HTSimulatorBlockEntity, HTTierType.ELITE, "Simulation Chamber", "シミュレーション室"),
     ;
 

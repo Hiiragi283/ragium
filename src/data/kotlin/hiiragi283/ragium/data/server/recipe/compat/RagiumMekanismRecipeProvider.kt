@@ -175,7 +175,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                     chemicalHelper.from(material, 1),
                     material.asStack(1),
                     molten.toStack(1),
-                ).build(output, id("rotary/${molten.id.path}"))
+                ).build(output, id("rotary/${molten.getPath()}"))
             // Chemical -> Item
             ChemicalCrystallizerRecipeBuilder
                 .crystallizing(

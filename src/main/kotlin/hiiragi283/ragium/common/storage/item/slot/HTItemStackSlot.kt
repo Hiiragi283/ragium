@@ -2,14 +2,12 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
-import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -35,19 +33,8 @@ open class HTItemStackSlot protected constructor(
             BiPredicate { _: ItemStack, _: HTStorageAccess -> true }
 
         @JvmField
-        val SIMPLE_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemSlot> = BiCodec
-            .composite(
-                BiCodecs.itemStack(true).fieldOf("stack"),
-                HTItemStackSlot::stack,
-                BiCodec.INT.fieldOf("x"),
-                HTItemStackSlot::x,
-                BiCodec.INT.fieldOf("y"),
-                HTItemStackSlot::y,
-            ) { stack: ItemStack, x: Int, y: Int ->
-                val slot: HTItemStackSlot = create(null, x, y)
-                slot.setStack(stack)
-                slot
-            }.let(BiCodec.Companion::downCast)
+        val MANUAL_ONLY: BiPredicate<ItemStack, HTStorageAccess> =
+            BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.MANUAL }
 
         @JvmStatic
         fun create(

@@ -87,7 +87,7 @@ abstract class HTAdvancementGenerator {
         hasAnyItem(key, *items.toTypedArray())
 
     protected fun <ITEM> HTAdvancementBuilder.hasAnyItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
-        hasAnyItem("has_${item.getId().path}", item)
+        hasAnyItem("has_${item.getPath()}", item)
 
     protected fun HTAdvancementBuilder.hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
         hasItem(key, ItemPredicate.Builder.item().of(*items))
@@ -99,5 +99,5 @@ abstract class HTAdvancementGenerator {
         hasItem(key, ItemPredicate.Builder.item().of(tagKey))
 
     protected fun <ITEM> HTAdvancementBuilder.useItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
-        addCriterion("use_${item.getId().path}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
+        addCriterion("use_${item.getPath()}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
 }

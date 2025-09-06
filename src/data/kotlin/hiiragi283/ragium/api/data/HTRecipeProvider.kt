@@ -137,7 +137,7 @@ sealed class HTRecipeProvider {
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
                 HTResultHelper.INSTANCE.item(solid),
-            ).saveSuffixed(output, "_from_${fluid.id.path}")
+            ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun meltAndFreeze(
@@ -158,7 +158,7 @@ sealed class HTRecipeProvider {
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
                 HTResultHelper.INSTANCE.item(solid),
-            ).saveSuffixed(output, "_from_${fluid.id.path}")
+            ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun extractAndInfuse(
@@ -179,7 +179,7 @@ sealed class HTRecipeProvider {
                 empty,
                 HTIngredientHelper.fluid(fluid, amount),
                 HTResultHelper.INSTANCE.item(filled),
-            ).saveSuffixed(output, "_from_${fluid.id.path}")
+            ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun distillation(
@@ -188,7 +188,7 @@ sealed class HTRecipeProvider {
         vararg results: Pair<HTFluidResult, HTItemIngredient?>,
     ) {
         val (content: HTFluidContent<*, *, *>, amount: Int) = input
-        val suffix = "_from_${content.id.path}"
+        val suffix = "_from_${content.getPath()}"
         val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(content, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {

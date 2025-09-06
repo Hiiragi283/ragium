@@ -161,6 +161,17 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ELITE)
             .define('D', Items.DEEPSLATE_TILES)
             .save(output)
+
+        HTShapedRecipeBuilder(HTMachineVariant.MULTI_SMELTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', Tags.Items.RODS_BLAZE)
+            .define('C', HTMachineVariant.ALLOY_SMELTER)
+            .define('D', Items.DEEPSLATE_TILES)
+            .save(output)
     }
 
     @JvmStatic

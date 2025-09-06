@@ -26,4 +26,6 @@ open class HTDeferredHolder<R : Any, T : R>(key: ResourceKey<R>) :
         @JvmStatic
         fun <R : Any> createSimple(key: ResourceKey<R>): HTDeferredHolder<R, *> = HTDeferredHolder(key)
     }
+
+    fun isOf(value: R): Boolean = this.value() == value
 }

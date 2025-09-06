@@ -127,8 +127,7 @@ class HTFluidContentRegister(modId: String) {
         val blockHolder: HTDeferredHolder<Block, *>,
         val bucketHolder: HTDeferredItem<*>,
     ) : HTFluidContent<TYPE, STILL, FLOW> {
-        override val id: ResourceLocation = stillHolder.id
-        private val commonId: ResourceLocation = commonId(id.path)
+        private val commonId: ResourceLocation = commonId(getPath())
 
         override val commonTag: TagKey<Fluid> = fluidTagKey(commonId)
 
@@ -143,5 +142,7 @@ class HTFluidContentRegister(modId: String) {
         override fun getBlock(): Block = blockHolder.get()
 
         override fun getBucket(): Item = bucketHolder.get()
+
+        override fun getId(): ResourceLocation = stillHolder.id
     }
 }

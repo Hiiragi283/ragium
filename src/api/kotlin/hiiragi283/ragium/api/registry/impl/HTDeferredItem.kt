@@ -28,6 +28,8 @@ class HTDeferredItem<ITEM : Item>(key: ResourceKey<Item>) :
         return stack
     }
 
+    fun isOf(stack: ItemStack): Boolean = isOf(stack.item)
+
     override fun asItem(): Item = get()
 
     override val translationKey: String get() = get().descriptionId

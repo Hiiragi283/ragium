@@ -22,7 +22,7 @@ fun modelFile(namespace: String, path: String): ModelFile = modelFile(ResourceLo
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
 fun BlockModelProvider.layeredModel(holder: HTDeferredBlock<*, *>, layer0: ResourceLocation, layer1: ResourceLocation): BlockModelBuilder =
-    withExistingParent(holder.id.path, RagiumAPI.id("block/layered"))
+    withExistingParent(holder.getPath(), RagiumAPI.id("block/layered"))
         .texture("layer0", layer0)
         .texture("layer1", layer1)
         .renderType("cutout")
@@ -59,21 +59,21 @@ fun BlockStateProvider.altModelBlock(holder: HTDeferredBlock<*, *>, id: Resource
 fun BlockStateProvider.altTextureBlock(holder: HTDeferredBlock<*, *>, all: ResourceLocation) {
     simpleBlock(
         holder.get(),
-        ConfiguredModel(models().cubeAll(holder.id.path, all)),
+        ConfiguredModel(models().cubeAll(holder.getPath(), all)),
     )
 }
 
 fun BlockStateProvider.cutoutSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
     simpleBlock(
         holder.get(),
-        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("cutout")),
+        ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("cutout")),
     )
 }
 
 fun BlockStateProvider.translucentSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
     simpleBlock(
         holder.get(),
-        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("translucent")),
+        ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("translucent")),
     )
 }
 

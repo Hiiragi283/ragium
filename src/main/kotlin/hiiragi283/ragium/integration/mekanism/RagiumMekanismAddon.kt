@@ -44,7 +44,7 @@ object RagiumMekanismAddon : RagiumAddon {
         put(RagiumMaterialType.AZURE, CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc))
 
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
-            put(data.material, CHEMICAL_REGISTER.register(data.molten.id.path, data.color))
+            put(data.material, CHEMICAL_REGISTER.register(data.molten.getPath(), data.color))
         }
     }
 

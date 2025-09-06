@@ -37,11 +37,7 @@ abstract class HTGenericItemContainerMenu(
         check(handler.slots >= rows) { "Item handler size ${handler.slots} is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
-        for (y: Int in (0 until rows)) {
-            for (x: Int in (0 until 9)) {
-                handler.getItemSlot(x + y * 9, handler.getItemSideFor())?.createContainerSlot()?.let(::addSlot)
-            }
-        }
+        addSlots(handler)
 
         addPlayerInv(inventory, i)
     }

@@ -16,6 +16,8 @@ open class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
         context,
     ) {
     init {
+        addSlots(context.upgradeHandler)
+
         addDataSlots(context.containerData)
     }
 }

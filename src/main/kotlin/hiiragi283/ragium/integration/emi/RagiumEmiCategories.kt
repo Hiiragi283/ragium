@@ -88,6 +88,7 @@ object RagiumEmiCategories {
 
         for (category: EmiRecipeCategory in SMELTING) {
             registry.addWorkstation(category, EmiStack.of(HTMachineVariant.SMELTER))
+            registry.addWorkstation(category, EmiStack.of(HTMachineVariant.MULTI_SMELTER))
         }
         registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, EmiStack.of(HTMachineVariant.ENGRAVER))
 

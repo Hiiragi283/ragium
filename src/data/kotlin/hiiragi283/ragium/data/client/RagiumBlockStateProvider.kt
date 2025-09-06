@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.common.block.HTCropBlock
@@ -26,6 +27,7 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -94,7 +96,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 ore.get(),
                 ConfiguredModel(
                     models()
-                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .withExistingParent(ore.getPath(), RagiumAPI.id("block/layered"))
                         .texture("layer0", vanillaId(stoneTex))
                         .texture("layer1", textureId)
                         .renderType("cutout"),
@@ -159,7 +161,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             horizontalBlock(
                 holder.get(),
                 models()
-                    .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
+                    .withExistingParent("block/" + holder.getPath(), RagiumAPI.id("block/machine_base"))
                     .texture("top", top)
                     .texture("bottom", bottom)
                     .texture("front", holder.id.withPath { "block/${it}_front" }),
@@ -181,6 +183,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
+        machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, vanillaId("block/deepslate_tiles"))
         machine(HTMachineVariant.SIMULATOR, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
@@ -224,6 +227,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
+        // Fluids
+        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+            getVariantBuilder(content.getBlock())
+                .partialState()
+                .addModels(
+                    models()
+                        .getBuilder("block/${content.getPath()}")
+                        .texture("particle", vanillaId("block/water_still"))
+                        .let(::ConfiguredModel),
+                )
+        }
+
         // Delight
         pieBlock(RagiumDelightAddon.RAGI_CHERRY_PIE)
     }
@@ -238,7 +253,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             val bites: Int = state.getValue(PieBlock.BITES)
             val suffix: String = if (bites > 0) "_slice$bites" else ""
             val pieModel: BlockModelBuilder = models()
-                .getBuilder(block.id.path + suffix)
+                .getBuilder(block.getPath() + suffix)
                 .parent(modelFile(delight, "block/pie$suffix"))
                 .texture("particle", blockId.withSuffix("_top"))
                 .texture("bottom", "$delight:block/pie_bottom")

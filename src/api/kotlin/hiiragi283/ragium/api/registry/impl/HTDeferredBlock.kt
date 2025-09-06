@@ -40,5 +40,5 @@ class HTDeferredBlock<BLOCK : Block, ITEM : Item>(first: HTDeferredHolder<Block,
 
     fun isOf(state: BlockState): Boolean = state.`is`(this)
 
-    fun isOf(stack: ItemStack): Boolean = stack.`is`(itemHolder)
+    fun isOf(stack: ItemStack): Boolean = itemHolder.isOf(stack)
 }

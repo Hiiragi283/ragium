@@ -11,9 +11,11 @@ import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
+import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
+import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -42,16 +44,20 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTAccessConfiguration.Holder {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
+    val upgradeHandler = HTMachineUpgradeItemHandler(::setOnlySave)
+
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
         output.store(RagiumConst.OWNER, BiCodecs.UUID, ownerId)
         accessConfigCache.serialize(output)
+        HTCapabilityCodec.ITEM.saveTo(output, upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()))
     }
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
         ownerId = input.read(RagiumConst.OWNER, BiCodecs.UUID)
         accessConfigCache.deserialize(input)
+        HTCapabilityCodec.ITEM.loadFrom(input, upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()))
     }
 
     override fun onRightClickedWithItem(

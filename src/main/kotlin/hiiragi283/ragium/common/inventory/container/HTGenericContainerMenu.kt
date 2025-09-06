@@ -34,11 +34,7 @@ class HTGenericContainerMenu(
         check(context.slots >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
-        for (y: Int in (0 until rows)) {
-            for (x: Int in (0 until 9)) {
-                context.getItemSlot(x + y * 9, context.getItemSideFor())?.createContainerSlot()?.let(::addSlot)
-            }
-        }
+        addSlots(context)
 
         addPlayerInv(inventory, i)
     }

@@ -18,12 +18,13 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
-interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Supplier<STILL> {
+interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
+    Supplier<STILL>,
+    HTHolderLike {
     companion object {
         @JvmField
         val WATER: HTFluidContent<FluidType, FlowingFluid, FlowingFluid> =
             object : HTFluidContent<FluidType, FlowingFluid, FlowingFluid> {
-                override val id: ResourceLocation = vanillaId("water")
                 override val commonTag: TagKey<Fluid> = Tags.Fluids.WATER
                 override val bucketTag: TagKey<Item> = Tags.Items.BUCKETS_WATER
 
@@ -36,12 +37,13 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
                 override fun getBlock(): Block = Blocks.WATER
 
                 override fun getBucket(): Item = Items.WATER_BUCKET
+
+                override fun getId(): ResourceLocation = vanillaId("water")
             }
 
         @JvmField
         val LAVA: HTFluidContent<FluidType, FlowingFluid, FlowingFluid> =
             object : HTFluidContent<FluidType, FlowingFluid, FlowingFluid> {
-                override val id: ResourceLocation = vanillaId("lava")
                 override val commonTag: TagKey<Fluid> = Tags.Fluids.LAVA
                 override val bucketTag: TagKey<Item> = Tags.Items.BUCKETS_LAVA
 
@@ -54,12 +56,13 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
                 override fun getBlock(): Block = Blocks.LAVA
 
                 override fun getBucket(): Item = Items.LAVA_BUCKET
+
+                override fun getId(): ResourceLocation = vanillaId("lava")
             }
 
         @JvmField
         val MILK: HTFluidContent<FluidType, Fluid, Fluid> =
             object : HTFluidContent<FluidType, Fluid, Fluid> {
-                override val id: ResourceLocation = vanillaId("milk")
                 override val commonTag: TagKey<Fluid> = Tags.Fluids.MILK
                 override val bucketTag: TagKey<Item> = Tags.Items.BUCKETS_MILK
 
@@ -72,10 +75,11 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> : Suppli
                 override fun getBlock(): Block = Blocks.AIR
 
                 override fun getBucket(): Item = Items.MILK_BUCKET
+
+                override fun getId(): ResourceLocation = vanillaId("milk")
             }
     }
 
-    val id: ResourceLocation
     val commonTag: TagKey<Fluid>
     val bucketTag: TagKey<Item>
 

@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.inventory.slot.HTInventorySlot
 import hiiragi283.ragium.api.inventory.slot.HTMainInventorySlot
 import hiiragi283.ragium.api.inventory.slot.HTSlot
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -151,6 +153,13 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
                 ),
             )
         }
+    }
+
+    protected fun addSlots(handler: HTItemHandler) {
+        handler
+            .getItemSlots(handler.getItemSideFor())
+            .mapNotNull(HTItemSlot::createContainerSlot)
+            .forEach(::addSlot)
     }
 
     protected open fun onOpen(player: Player) {}

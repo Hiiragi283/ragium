@@ -26,7 +26,12 @@ interface HTEmiRecipe : EmiRecipe {
         else -> addSlot(result ?: EmiStack.EMPTY, x, y)
     }.recipeContext(this@HTEmiRecipe).drawBack(false)
 
-    fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): TankWidget {
+    fun WidgetHolder.addTank(
+        result: EmiIngredient?,
+        x: Int,
+        y: Int,
+        capacity: Int,
+    ): TankWidget {
         addTexture(
             RagiumEmiTextures.TANK,
             x,
@@ -38,7 +43,7 @@ interface HTEmiRecipe : EmiRecipe {
             y,
             18,
             18 * 3,
-            8000,
+            capacity,
         )
     }
 }

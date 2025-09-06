@@ -7,4 +7,6 @@ import net.minecraft.resources.ResourceLocation
  */
 fun interface HTHolderLike {
     fun getId(): ResourceLocation
+
+    fun getPath(): String = getId().path
 }
