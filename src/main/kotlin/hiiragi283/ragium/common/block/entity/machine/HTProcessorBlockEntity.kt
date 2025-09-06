@@ -13,18 +13,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
-    private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(variant, pos, state) {
-    constructor(
-        recipeType: RecipeType<RECIPE>,
-        variant: HTMachineVariant,
-        pos: BlockPos,
-        state: BlockState,
-    ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
-
     final override val energyUsage: Int get() = variant.energyUsage
 
     override fun onUpdateServer(
@@ -52,7 +44,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
 
     protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): INPUT
 
-    protected open fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
+    protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
     protected open fun getRequiredEnergy(recipe: RECIPE): Int = variant.energyUsage * 20 * 10
 
@@ -65,4 +57,20 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
         input: INPUT,
         recipe: RECIPE,
     )
+
+    abstract class Cached<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+        private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
+        variant: HTMachineVariant,
+        pos: BlockPos,
+        state: BlockState,
+    ) : HTProcessorBlockEntity<INPUT, RECIPE>(variant, pos, state) {
+        constructor(
+            recipeType: RecipeType<RECIPE>,
+            variant: HTMachineVariant,
+            pos: BlockPos,
+            state: BlockState,
+        ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
+
+        final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
+    }
 }

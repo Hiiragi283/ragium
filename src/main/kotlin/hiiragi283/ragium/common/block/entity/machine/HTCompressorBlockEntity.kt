@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity(
+    HTSingleItemInputBlockEntity.ToItem<HTItemToItemRecipe>(
         RagiumRecipeTypes.COMPRESSING.get(),
         HTMachineVariant.COMPRESSOR,
         pos,
@@ -32,6 +32,8 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemToItemRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
+        // インプットを減らす
+        inputSlot.shrinkStack(recipe.ingredient, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.25f, 0.5f)
     }

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTEnchantingRecipe(ingredients: List<HTItemIngredient>, result: HTItemResult) : HTCombineItemToItemRecipe(ingredients, result) {
+class HTEnchantingRecipe(override val ingredients: List<HTItemIngredient>, override val result: HTItemResult) : HTCombineItemToItemRecipe {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()

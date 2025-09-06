@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.material.HTTierType
-import hiiragi283.ragium.common.recipe.HTFakeRecipeCache
 import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -33,12 +32,12 @@ import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.min
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity<HTItemToItemRecipe>(
-        HTFakeRecipeCache(),
+    HTProcessorBlockEntity<SingleRecipeInput, HTItemToItemRecipe>(
         HTMachineVariant.MULTI_SMELTER,
         pos,
         state,
     ) {
+    private lateinit var inputSlot: HTItemSlot
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -54,6 +53,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val baseCache: HTMultiRecipeCache<SingleRecipeInput, AbstractCookingRecipe> =
         HTMultiRecipeCache(RecipeType.SMELTING, RecipeType.SMOKING, RecipeType.BLASTING)
+
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTItemToItemRecipe? {
         val baseRecipe: AbstractCookingRecipe = baseCache.getFirstRecipe(input, level) ?: return null
@@ -104,7 +105,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }
 
-    private class MultiSmeltingRecipe(ingredient: HTItemIngredient, result: HTItemResult) : HTItemToItemRecipe(ingredient, result) {
+    private class MultiSmeltingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) : HTItemToItemRecipe {
         override fun getSerializer(): RecipeSerializer<*> = error("")
 
         override fun getType(): RecipeType<*> = error("")

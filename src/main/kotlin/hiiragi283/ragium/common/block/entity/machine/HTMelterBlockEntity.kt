@@ -9,8 +9,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.recipe.HTDynamicRecipeCache
-import hiiragi283.ragium.common.recipe.HTDynamicRecipes
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -34,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleItemInputBlockEntity<HTItemToFluidRecipe>(
-        HTDynamicRecipeCache(RagiumRecipeTypes.MELTING.get(), HTDynamicRecipes::bucketEmptying),
+        RagiumRecipeTypes.MELTING.get(),
         HTMachineVariant.MELTER,
         pos,
         state,

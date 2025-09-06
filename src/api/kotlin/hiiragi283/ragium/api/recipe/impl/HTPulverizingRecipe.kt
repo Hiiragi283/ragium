@@ -10,8 +10,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-class HTPulverizingRecipe(ingredient: HTItemIngredient, result: HTItemResult) :
-    HTItemToItemRecipe(ingredient, result),
+class HTPulverizingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) :
+    HTItemToItemRecipe,
     HTItemToChancedItemRecipe {
     override fun getIngredientCount(input: SingleRecipeInput): Int = ingredient.getRequiredAmount(input.item())
 

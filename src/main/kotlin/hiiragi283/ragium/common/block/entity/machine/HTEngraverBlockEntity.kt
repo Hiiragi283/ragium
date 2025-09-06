@@ -24,12 +24,12 @@ import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity<StonecutterRecipe>(
-        RecipeType.STONECUTTING,
+    HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
         HTMachineVariant.ENGRAVER,
         pos,
         state,
     ) {
+    private lateinit var inputSlot: HTItemSlot
     private lateinit var catalystSlot: HTItemSlot
     private lateinit var outputSlots: List<HTItemSlot>
 
@@ -53,14 +53,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean {
-        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
-        for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insertItem(remainder, true, HTStorageAccess.INTERNAl)
-            if (remainder.isEmpty) break
-        }
-        return remainder.isEmpty
-    }
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
         val allRecipes: List<RecipeHolder<StonecutterRecipe>> = level.recipeManager.getAllRecipesFor(RecipeType.STONECUTTING)
@@ -77,6 +70,15 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
         return matchedRecipe
+    }
+
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean {
+        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
+        for (slot: HTItemSlot in outputSlots) {
+            remainder = slot.insertItem(remainder, true, HTStorageAccess.INTERNAl)
+            if (remainder.isEmpty) break
+        }
+        return remainder.isEmpty
     }
 
     override fun completeRecipe(

@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
+    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
         RagiumRecipeTypes.SIMULATING.get(),
         HTMachineVariant.SIMULATOR,
         pos,

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTMeltingRecipe(itemIngredient: HTItemIngredient, result: HTFluidResult) : HTItemToFluidRecipe(itemIngredient, result) {
+class HTMeltingRecipe(override val ingredient: HTItemIngredient, override val result: HTFluidResult) : HTItemToFluidRecipe {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING.get()

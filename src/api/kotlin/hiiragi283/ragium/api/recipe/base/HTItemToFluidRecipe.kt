@@ -2,18 +2,17 @@ package hiiragi283.ragium.api.recipe.base
 
 import hiiragi283.ragium.api.recipe.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
-abstract class HTItemToFluidRecipe(override val ingredient: HTItemIngredient, override val result: HTFluidResult) :
+interface HTItemToFluidRecipe :
     HTItemToObjRecipe<HTFluidResult>,
     HTFluidRecipe<SingleRecipeInput> {
-    final override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack =
+    override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack =
         getFluidResult(input, registries, result)
 
-    final override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+    override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 }

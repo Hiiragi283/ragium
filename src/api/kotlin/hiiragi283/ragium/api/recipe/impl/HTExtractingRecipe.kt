@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTExtractingRecipe(ingredient: HTItemIngredient, result: HTItemResult) : HTItemToItemRecipe(ingredient, result) {
+class HTExtractingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) : HTItemToItemRecipe {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.EXTRACTING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTING.get()

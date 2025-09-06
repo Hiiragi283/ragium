@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity(
+    HTSingleItemInputBlockEntity.ToItem<HTItemToItemRecipe>(
         RagiumRecipeTypes.EXTRACTING.get(),
         HTMachineVariant.EXTRACTOR,
         pos,
@@ -32,6 +32,8 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemToItemRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
+        // インプットを減らす
+        inputSlot.shrinkStack(recipe.ingredient, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1f, 0.5f)
     }

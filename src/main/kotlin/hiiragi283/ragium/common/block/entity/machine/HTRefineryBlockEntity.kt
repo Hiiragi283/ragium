@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
+    HTProcessorBlockEntity.Cached<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
         RagiumRecipeTypes.FLUID_TRANSFORM.get(),
         HTMachineVariant.REFINERY,
         pos,
