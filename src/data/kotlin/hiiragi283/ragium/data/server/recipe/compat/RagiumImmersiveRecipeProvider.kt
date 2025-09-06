@@ -8,9 +8,9 @@ import blusunrize.immersiveengineering.data.recipes.builder.BottlingMachineRecip
 import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.material.HTItemMaterialVariant

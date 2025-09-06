@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
@@ -200,7 +200,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder(adv)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.QUARTZ)
+            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
             .define('D', basic)
             .save(output)
@@ -208,8 +208,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         val elite: HTDeferredItem<*> = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ELITE)
         HTShapedRecipeBuilder(elite)
             .crossLayered()
-            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ELITE)
             .define('D', adv)
             .save(output)

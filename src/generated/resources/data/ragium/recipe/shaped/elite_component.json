@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:ingots/azure_steel"
     },
     "B": {
-      "tag": "c:glass_blocks/quartz"
+      "tag": "c:gems/ragi_crystal"
     },
     "C": {
       "tag": "c:circuits/elite"
