@@ -106,7 +106,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
-                HTIngredientHelper.item(Items.QUARTZ_BLOCK),
+                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
                 HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass

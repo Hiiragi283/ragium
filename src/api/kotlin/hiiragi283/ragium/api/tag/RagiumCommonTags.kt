@@ -18,28 +18,7 @@ object RagiumCommonTags {
 
     object Blocks {
         @JvmField
-        val GLASS_BLOCKS_OBSIDIAN: TagKey<Block> = create(RagiumConst.GLASS_BLOCKS, RagiumConst.OBSIDIAN)
-
-        @JvmField
-        val GLASS_BLOCKS_QUARTZ: TagKey<Block> = create(RagiumConst.GLASS_BLOCKS, RagiumConst.QUARTZ)
-
-        @JvmField
-        val GLASS_BLOCKS_SOUL: TagKey<Block> = create(RagiumConst.GLASS_BLOCKS, RagiumConst.SOUL)
-
-        @JvmField
         val OBSIDIANS_MYSTERIOUS: TagKey<Block> = create("obsidians", "mysterious")
-
-        @JvmField
-        val ORES_RAGINITE: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.RAGINITE)
-
-        @JvmField
-        val ORES_RAGI_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.RAGI_CRYSTAL)
-
-        @JvmField
-        val ORES_CRIMSON_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.CRIMSON_CRYSTAL)
-
-        @JvmField
-        val ORES_WARPED_CRYSTAL: TagKey<Block> = create(RagiumConst.ORES, RagiumConst.WARPED_CRYSTAL)
 
         @JvmField
         val ORES_DEEP_SCRAP: TagKey<Block> = create(RagiumConst.ORES, "deep_scrap")
@@ -86,9 +65,6 @@ object RagiumCommonTags {
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
 
-        @JvmField
-        val SILICON: TagKey<Item> = create("silicon")
-
         // Crops
         @JvmField
         val CROPS_WARPED_WART: TagKey<Item> = create("crops", "warped_wart")
@@ -113,30 +89,6 @@ object RagiumCommonTags {
 
         @JvmField
         val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", RagiumConst.RAGI_CHERRY)
-
-        // Ingots
-        private const val INGOTS: String = RagiumConst.INGOTS
-
-        @JvmField
-        val INGOTS_RAGI_ALLOY: TagKey<Item> = create(INGOTS, RagiumConst.RAGI_ALLOY)
-
-        @JvmField
-        val INGOTS_ADVANCED_RAGI_ALLOY: TagKey<Item> = create(INGOTS, RagiumConst.ADVANCED_RAGI_ALLOY)
-
-        @JvmField
-        val INGOTS_AZURE_STEEL: TagKey<Item> = create(INGOTS, RagiumConst.AZURE_STEEL)
-
-        @JvmField
-        val INGOTS_DEEP_STEEL: TagKey<Item> = create(INGOTS, RagiumConst.DEEP_STEEL)
-
-        @JvmField
-        val INGOTS_CHOCOLATE: TagKey<Item> = create(INGOTS, RagiumConst.CHOCOLATE)
-
-        @JvmField
-        val INGOTS_MEAT: TagKey<Item> = create(INGOTS, RagiumConst.MEAT)
-
-        @JvmField
-        val INGOTS_COOKED_MEAT: TagKey<Item> = create(INGOTS, RagiumConst.COOKED_MEAT)
 
         // Obsidians
         @JvmField

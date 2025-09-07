@@ -45,6 +45,7 @@
     "ragium:engraver",
     "ragium:exp_collector",
     "ragium:extractor",
+    "ragium:gildium_block",
     "ragium:huge_drum",
     "ragium:iridescentium_block",
     "ragium:item_buffer",

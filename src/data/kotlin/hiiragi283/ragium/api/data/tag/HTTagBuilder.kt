@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 import java.util.function.BiConsumer
-import java.util.function.Function
 
 /**
  * 登録した[TagKey]をソートして生成するビルダー
@@ -22,13 +21,6 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
 
     fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> =
         add(tagKey, ResourceLocation.fromNamespaceAndPath(modId, path), DependType.OPTIONAL)
-
-    fun add(
-        tagKey: TagKey<T>,
-        obj: T,
-        keyGetter: Function<T, ResourceLocation>,
-        type: DependType = DependType.REQUIRED,
-    ): HTTagBuilder<T> = add(tagKey, keyGetter.apply(obj), type)
 
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)

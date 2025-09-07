@@ -108,6 +108,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         RagiumDataMaps.FUELS.forEach(event::register)
 
+        event.register(RagiumDataMaps.SOLAR_POWER)
+
         LOGGER.info("Registered data map types!")
     }
 

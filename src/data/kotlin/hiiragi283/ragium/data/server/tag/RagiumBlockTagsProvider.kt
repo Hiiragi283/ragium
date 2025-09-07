@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -19,6 +20,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.tag.ModTags
@@ -26,6 +28,16 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     HTTagsProvider<Block>(output, Registries.BLOCK, provider, helper) {
+    companion object {
+        @Suppress("DEPRECATION")
+        @JvmField
+        val VANILLA_STORAGE_BLOCKS: Map<HTVanillaMaterialType, HTHolderLike> = mapOf(
+            HTVanillaMaterialType.AMETHYST to Blocks.AMETHYST_BLOCK,
+            HTVanillaMaterialType.GLOWSTONE to Blocks.GLOWSTONE,
+            HTVanillaMaterialType.QUARTZ to Blocks.QUARTZ_BLOCK,
+        ).mapValues { (_, block: Block) -> HTHolderLike.fromBlock(block) }
+    }
+
     override fun addTags(builder: HTTagBuilder<Block>) {
         mineable(builder)
         category(builder)
@@ -108,6 +120,10 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                     builder.addBlock(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
                 }
             }
+
+        for ((material: HTVanillaMaterialType, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
+            builder.addBlock(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)
+        }
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
@@ -20,7 +19,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -76,11 +74,6 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
 }
 
 /**
- * この[ItemLike]から[Holder]を返します。
- */
-fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
-
-/**
  * `block/`で前置された[HTHolderLike.getId]
  */
 val HTHolderLike.blockId: ResourceLocation get() = getId().withPrefix("block/")
@@ -100,10 +93,6 @@ val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
 fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component>): MutableComponent = unwrap()
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
-
-//    HolderGetter    //
-
-operator fun <T> HolderGetter<T>.contains(tagKey: TagKey<T>): Boolean = get(tagKey).isPresent
 
 //    HolderLookup    //
 

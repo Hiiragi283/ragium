@@ -157,6 +157,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
+
+        addFluid(RagiumFluidContents.GILDED_LAVA, "金メッキされた溶岩")
     }
 
     private fun item() {
@@ -167,7 +169,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.RESIN, "樹脂")
-        add(RagiumItems.SILICON, "紺碧のシリコン")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
 

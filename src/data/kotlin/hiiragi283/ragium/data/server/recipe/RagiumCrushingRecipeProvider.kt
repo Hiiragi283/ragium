@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -39,11 +40,17 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                HTIngredientHelper.item(Items.GLOWSTONE),
-                HTResultHelper.INSTANCE.item(Items.GLOWSTONE_DUST, 4),
-            ).saveSuffixed(output, "_from_glowstone")
+        mapOf(
+            HTVanillaMaterialType.AMETHYST to Items.AMETHYST_SHARD,
+            HTVanillaMaterialType.GLOWSTONE to Items.GLOWSTONE_DUST,
+            HTVanillaMaterialType.QUARTZ to Items.QUARTZ,
+        ).forEach { (material: HTMaterialType, result: Item) ->
+            HTItemToObjRecipeBuilder
+                .pulverizing(
+                    HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, material),
+                    HTResultHelper.INSTANCE.item(result, 4),
+                ).saveSuffixed(output, "_from_block")
+        }
 
         HTItemToObjRecipeBuilder
             .pulverizing(

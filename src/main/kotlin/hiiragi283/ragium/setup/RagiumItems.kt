@@ -91,9 +91,6 @@ object RagiumItems {
     val RESIN: HTDeferredItem<Item> = register("resin")
 
     @JvmField
-    val SILICON: HTDeferredItem<Item> = register("silicon")
-
-    @JvmField
     val TAR: HTDeferredItem<Item> = register("tar")
 
     @JvmField
@@ -145,6 +142,7 @@ object RagiumItems {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
             // Foods
             RagiumMaterialType.CHOCOLATE,
@@ -157,6 +155,7 @@ object RagiumItems {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
         ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates

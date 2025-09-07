@@ -4,16 +4,15 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
-import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -93,6 +92,9 @@ class RagiumItemTagsProvider(
         RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, _) ->
             copy(variant, material)
         }
+        for (material: HTMaterialType in RagiumBlockTagsProvider.VANILLA_STORAGE_BLOCKS.keys) {
+            copy(HTBlockMaterialVariant.STORAGE_BLOCK, material)
+        }
 
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
         copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
@@ -149,13 +151,15 @@ class RagiumItemTagsProvider(
     //    Foods    //
 
     private fun food(builder: HTTagBuilder<Item>) {
+        fun ingot(material: HTMaterialType): TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
+
         // Crop
         builder.addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
+        builder.addTag(Tags.Items.FOODS, ingot(RagiumMaterialType.COOKED_MEAT))
+        builder.addTag(Tags.Items.FOODS, ingot(RagiumMaterialType.MEAT))
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_CHOCOLATE)
         builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.JAMS)
-        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
-        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.INGOTS_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
@@ -177,7 +181,10 @@ class RagiumItemTagsProvider(
             RagiumItems.RAGI_CHERRY,
         )
 
-        builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, RagiumCommonTags.Items.INGOTS_CHOCOLATE)
+        builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, ingot(RagiumMaterialType.CHOCOLATE))
+
+        builder.addTag(ItemTags.MEAT, ingot(RagiumMaterialType.COOKED_MEAT))
+        builder.addTag(ItemTags.MEAT, ingot(RagiumMaterialType.MEAT))
 
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_MEAT)
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
@@ -247,7 +254,6 @@ class RagiumItemTagsProvider(
             builder.addItem(color.dyedTag, block)
         }
         // Parts
-        builder.add(RagiumCommonTags.Items.SILICON, RagiumItems.SILICON)
         builder.add(Tags.Items.LEATHERS, RagiumItems.SYNTHETIC_LEATHER)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.RESIN)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
@@ -270,9 +276,6 @@ class RagiumItemTagsProvider(
             HTTagBuilder.DependType.OPTIONAL,
         )
         // Other
-        builder.addTag(ItemTags.MEAT, RagiumCommonTags.Items.INGOTS_MEAT)
-        builder.addTag(ItemTags.MEAT, RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
-
         builder.addTag(
             ItemTags.PIGLIN_LOVED,
             HTItemMaterialVariant.INGOT.itemTagKey(RagiumMaterialType.ADVANCED_RAGI_ALLOY),
@@ -298,7 +301,7 @@ class RagiumItemTagsProvider(
     //    Extensions    //
 
     private fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: ItemLike): HTTagBuilder<Item> = apply {
-        add(tagKey, item.asItemHolder().idOrThrow)
+        add(tagKey, HTHolderLike.fromItem(item))
     }
 
     private fun HTTagBuilder<Item>.addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) =

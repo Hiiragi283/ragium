@@ -2,7 +2,7 @@
   "type": "ragium:simulating",
   "catalyst": {
     "count": 1,
-    "item": "minecraft:dragon_egg"
+    "item": "minecraft:dragon_head"
   },
   "ingredient": {
     "count": 1,

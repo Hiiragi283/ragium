@@ -7,8 +7,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -17,6 +15,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -68,7 +67,7 @@ sealed class HTRecipeProvider {
     //    Direct    //
 
     abstract class Direct : HTRecipeProvider() {
-        override fun modifyId(id: ResourceLocation): ResourceLocation = RagiumAPI.Companion.id(id.path)
+        override fun modifyId(id: ResourceLocation): ResourceLocation = RagiumAPI.id(id.path)
 
         override fun modifyOutput(output: RecipeOutput): RecipeOutput = output
     }
@@ -79,12 +78,12 @@ sealed class HTRecipeProvider {
         protected fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modid, path)
 
         override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
-            RagiumAPI.Companion.MOD_ID -> id
-            RagiumConst.COMMON -> RagiumAPI.Companion.id(id.path)
-            RagiumConst.MINECRAFT -> RagiumAPI.Companion.id(id.path)
+            RagiumAPI.MOD_ID -> id
+            RagiumConst.COMMON -> RagiumAPI.id(id.path)
+            RagiumConst.MINECRAFT -> RagiumAPI.id(id.path)
             else -> {
                 val path: List<String> = id.path.split("/", limit = 2)
-                RagiumAPI.Companion.id(path[0] + "/$namespace/" + path[1])
+                RagiumAPI.id(path[0] + "/$namespace/" + path[1])
             }
         }
 
@@ -124,13 +123,13 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder.Companion
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(solid),
                 HTResultHelper.INSTANCE.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${solid.asItemHolder().idOrThrow.path}")
+            ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(solid).getPath()}")
         // Solidifying
-        HTFluidTransformRecipeBuilder.Companion
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -145,13 +144,13 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder.Companion
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(solid),
                 HTResultHelper.INSTANCE.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.location.path}")
         // Solidifying
-        HTFluidTransformRecipeBuilder.Companion
+        HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -166,13 +165,13 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder.Companion
+        HTItemToObjRecipeBuilder
             .melting(
                 HTIngredientHelper.item(filled),
                 HTResultHelper.INSTANCE.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${filled.asItemHolder().idOrThrow.path}")
+            ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(filled).getPath()}")
         // Infusing
-        HTFluidTransformRecipeBuilder.Companion
+        HTFluidTransformRecipeBuilder
             .infusing(
                 empty,
                 HTIngredientHelper.fluid(fluid, amount),
@@ -190,7 +189,7 @@ sealed class HTRecipeProvider {
         val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(content, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTFluidTransformRecipeBuilder.Companion
+            HTFluidTransformRecipeBuilder
                 .refining(ingredient, result, catalyst, itemResult)
                 .saveSuffixed(output, suffix)
         }
@@ -199,7 +198,7 @@ sealed class HTRecipeProvider {
     protected fun rawToIngot(material: HTMaterialType) {
         val ingot: TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
         // Basic
-        HTCombineItemToObjRecipeBuilder.Companion
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.INSTANCE.item(ingot, 3),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
@@ -207,7 +206,7 @@ sealed class HTRecipeProvider {
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
         // Advanced
-        HTCombineItemToObjRecipeBuilder.Companion
+        HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.INSTANCE.item(ingot, 2),
                 HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),

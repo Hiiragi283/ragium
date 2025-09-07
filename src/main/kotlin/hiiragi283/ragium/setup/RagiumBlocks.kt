@@ -170,6 +170,7 @@ object RagiumBlocks {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
             RagiumMaterialType.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialType.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
+            RagiumMaterialType.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
             RagiumMaterialType.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
             RagiumMaterialType.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),

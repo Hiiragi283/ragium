@@ -2,10 +2,10 @@
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 1,
-    "item": "minecraft:glowstone"
+    "tag": "c:storage_blocks/amethyst"
   },
   "result": {
     "count": 4,
-    "id": "minecraft:glowstone_dust"
+    "id": "minecraft:amethyst_shard"
   }
 }

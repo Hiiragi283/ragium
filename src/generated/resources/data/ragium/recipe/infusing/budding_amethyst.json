@@ -6,7 +6,7 @@
   },
   "item_ingredient": {
     "count": 1,
-    "item": "minecraft:amethyst_block"
+    "tag": "c:storage_blocks/amethyst"
   },
   "item_result": {
     "count": 1,
