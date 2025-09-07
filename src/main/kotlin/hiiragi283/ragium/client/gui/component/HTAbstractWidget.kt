@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
-import hiiragi283.ragium.api.gui.component.HTWidgetExtension
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.math.HTBoundsProvider
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
@@ -22,7 +22,7 @@ abstract class HTAbstractWidget(
         height,
         message,
     ),
-    HTWidgetExtension {
+    HTBoundsProvider {
     final override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {}
 
     //    Extensions    //

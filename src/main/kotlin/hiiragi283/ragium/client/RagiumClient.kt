@@ -181,6 +181,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         liquid(RagiumFluidContents.SAP, Color(0x996633))
 
+        molten(RagiumFluidContents.GILDED_LAVA, Color(0xffcc00))
+
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val color = Color(data.color)
             // molten

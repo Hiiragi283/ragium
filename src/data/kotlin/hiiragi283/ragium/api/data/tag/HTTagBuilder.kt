@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
+import java.util.function.BiConsumer
+import java.util.function.Function
 
 /**
  * 登録した[TagKey]をソートして生成するビルダー
@@ -24,9 +26,9 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
     fun add(
         tagKey: TagKey<T>,
         obj: T,
-        keyGetter: (T) -> ResourceLocation,
+        keyGetter: Function<T, ResourceLocation>,
         type: DependType = DependType.REQUIRED,
-    ): HTTagBuilder<T> = add(tagKey, keyGetter(obj), type)
+    ): HTTagBuilder<T> = add(tagKey, keyGetter.apply(obj), type)
 
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
@@ -45,7 +47,7 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
         entryCache.put(tagKey, Entry(child.location, true, type))
     }
 
-    fun build(action: (TagKey<T>, TagEntry) -> Unit) {
+    fun build(action: BiConsumer<TagKey<T>, TagEntry>) {
         entryCache.map.forEach { (tagKey: TagKey<T>, entries: Collection<Entry>) ->
             entries
                 .sortedWith(
@@ -55,7 +57,7 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
                         .thenComparing(Entry::id),
                 ).toSet()
                 .forEach { entry: Entry ->
-                    action(tagKey, entry.toTagEntry())
+                    action.accept(tagKey, entry.toTagEntry())
                 }
         }
     }

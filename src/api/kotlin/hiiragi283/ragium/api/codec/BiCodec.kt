@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
+import com.mojang.datafixers.util.Function3
+import com.mojang.datafixers.util.Function4
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
@@ -11,7 +13,9 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.ExtraCodecs
 import java.util.*
+import java.util.function.BiFunction
 import java.util.function.Function
+import java.util.function.Supplier
 
 /**
  * [Codec]と[StreamCodec]を束ねたデータクラス
@@ -83,13 +87,16 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
          * @param C 変換後のコーデックの対象となるクラス
          */
         @JvmStatic
-        fun <B : ByteBuf, C : Any, T1 : Any> composite(codec: MapBiCodec<in B, T1>, getter: (C) -> T1, factory: (T1) -> C): BiCodec<B, C> =
-            of(
-                RecordCodecBuilder.create { instance ->
-                    instance.group(codec.codec.forGetter(getter)).apply(instance, factory)
-                },
-                StreamCodec.composite(codec.streamCodec, getter, factory),
-            )
+        fun <B : ByteBuf, C : Any, T1 : Any> composite(
+            codec: MapBiCodec<in B, T1>,
+            getter: Function<C, T1>,
+            factory: Function<T1, C>,
+        ): BiCodec<B, C> = of(
+            RecordCodecBuilder.create { instance ->
+                instance.group(codec.codec.forGetter(getter)).apply(instance, factory)
+            },
+            StreamCodec.composite(codec.streamCodec, getter, factory),
+        )
 
         /**
          * 指定された[codec1], [codec2]に基づいて，別の[BiCodec]を生成します。
@@ -100,10 +107,10 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any> composite(
             codec1: MapBiCodec<in B, T1>,
-            getter1: (C) -> T1,
+            getter1: Function<C, T1>,
             codec2: MapBiCodec<in B, T2>,
-            getter2: (C) -> T2,
-            factory: (T1, T2) -> C,
+            getter2: Function<C, T2>,
+            factory: BiFunction<T1, T2, C>,
         ): BiCodec<B, C> = of(
             RecordCodecBuilder.create { instance ->
                 instance
@@ -125,12 +132,12 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any> composite(
             codec1: MapBiCodec<in B, T1>,
-            getter1: (C) -> T1,
+            getter1: Function<C, T1>,
             codec2: MapBiCodec<in B, T2>,
-            getter2: (C) -> T2,
+            getter2: Function<C, T2>,
             codec3: MapBiCodec<in B, T3>,
-            getter3: (C) -> T3,
-            factory: (T1, T2, T3) -> C,
+            getter3: Function<C, T3>,
+            factory: Function3<T1, T2, T3, C>,
         ): BiCodec<B, C> = of(
             RecordCodecBuilder.create { instance ->
                 instance
@@ -162,14 +169,14 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any, T4 : Any> composite(
             codec1: MapBiCodec<in B, T1>,
-            getter1: (C) -> T1,
+            getter1: Function<C, T1>,
             codec2: MapBiCodec<in B, T2>,
-            getter2: (C) -> T2,
+            getter2: Function<C, T2>,
             codec3: MapBiCodec<in B, T3>,
-            getter3: (C) -> T3,
+            getter3: Function<C, T3>,
             codec4: MapBiCodec<in B, T4>,
-            getter4: (C) -> T4,
-            factory: (T1, T2, T3, T4) -> C,
+            getter4: Function<C, T4>,
+            factory: Function4<T1, T2, T3, T4, C>,
         ): BiCodec<B, C> = of(
             RecordCodecBuilder.create { instance ->
                 instance
@@ -236,7 +243,7 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      * @param from [S]から[V]に変換するブロック
      * @return [S]を対象とする[BiCodec]
      */
-    fun <S : Any> xmap(to: (V) -> S, from: (S) -> V): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
+    fun <S : Any> xmap(to: Function<V, S>, from: Function<S, V>): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
     /**
      * 指定された[to]と[from]に基づいて，別の[BiCodec]に変換します。
@@ -245,28 +252,31 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      * @param from [S]から[V]の[DataResult]にに変換するブロック
      * @return [S]を対象とする[BiCodec]
      */
-    fun <S : Any> flatXmap(to: (V) -> DataResult<S>, from: (S) -> DataResult<V>): BiCodec<B, S> = of(
+    fun <S : Any> flatXmap(to: Function<V, DataResult<S>>, from: Function<S, DataResult<V>>): BiCodec<B, S> = of(
         codec.flatXmap(to, from),
         streamCodec.map(
-            { value: V -> to(value).orThrow },
-            { value: S -> from(value).orThrow },
+            { value: V -> to.apply(value).orThrow },
+            { value: S -> from.apply(value).orThrow },
         ),
     )
 
-    fun validate(validator: (V) -> DataResult<V>): BiCodec<B, V> = flatXmap(validator, validator)
+    fun validate(validator: Function<V, DataResult<V>>): BiCodec<B, V> = flatXmap(validator, validator)
 
     fun <E : Any> dispatch(
         typeKey: String,
-        type: (E) -> V,
-        codec: (V) -> MapCodec<out E>,
-        streamCodec: (V) -> StreamCodec<in B, out E>,
+        type: Function<E, V>,
+        codec: Function<V, MapCodec<out E>>,
+        streamCodec: Function<V, StreamCodec<in B, out E>>,
     ): BiCodec<B, E> = of(
         this.codec.dispatch(typeKey, type, codec),
         this.streamCodec.dispatch(type, streamCodec),
     )
 
-    fun <E : Any> dispatch(type: (E) -> V, codec: (V) -> MapCodec<out E>, streamCodec: (V) -> StreamCodec<in B, out E>): BiCodec<B, E> =
-        dispatch("type", type, codec, streamCodec)
+    fun <E : Any> dispatch(
+        type: Function<E, V>,
+        codec: Function<V, MapCodec<out E>>,
+        streamCodec: Function<V, StreamCodec<in B, out E>>,
+    ): BiCodec<B, E> = dispatch("type", type, codec, streamCodec)
 
     /**
      * 現在の[BiCodec]を[MapBiCodec]に変換します。
@@ -287,9 +297,9 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     fun optionalFieldOf(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.optionalFieldOf(name, defaultValue), streamCodec)
 
-    fun optionalFieldOf(name: String, defaultValue: () -> V): MapBiCodec<B, V> = optionalFieldOf(name).xmap(
+    fun optionalFieldOf(name: String, defaultValue: Supplier<V>): MapBiCodec<B, V> = optionalFieldOf(name).xmap(
         { optional: Optional<V> -> optional.orElseGet(defaultValue) },
-        { value: V -> if (value == defaultValue()) Optional.empty() else Optional.of(value) },
+        { value: V -> if (value == defaultValue.get()) Optional.empty() else Optional.of(value) },
     )
 
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =

@@ -7,6 +7,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
+import java.util.function.BiConsumer
 
 /**
  * Ragiumのアドオン向けのインターフェース
@@ -39,5 +40,5 @@ interface RagiumAddon {
 
     //    Extension    //
 
-    fun registerMaterial(consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit) {}
+    fun registerMaterial(consumer: BiConsumer<HTMaterialType, HTMaterialVariant.ItemTag>) {}
 }

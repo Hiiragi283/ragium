@@ -24,6 +24,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import java.util.function.Function
 import kotlin.streams.asSequence
 
 //    ResourceLocation    //
@@ -96,7 +97,7 @@ val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
  * @param transform 値を[Component]に変換するブロック
  * @return [TagKey]の場合は[getName]，それ以外の場合は[transform]を連結
  */
-fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): MutableComponent = unwrap()
+fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component>): MutableComponent = unwrap()
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 

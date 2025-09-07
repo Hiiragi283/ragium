@@ -17,7 +17,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import java.util.function.Consumer
 
+/**
+ * @see [mekanism.common.tile.interfaces.ITileWrapper.getLevel]
+ */
 interface HTBlockEntityExtension {
     val isClientSide: Boolean
 
@@ -112,7 +116,7 @@ interface HTBlockEntityExtension {
     /**
      * ブロックが破壊されたときにインベントリの中身をドロップします。
      */
-    fun dropInventory(consumer: (ItemStack) -> Unit) {}
+    fun dropInventory(consumer: Consumer<ItemStack>) {}
 
     /**
      * ブロックのコンパレータ出力を返します。

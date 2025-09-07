@@ -34,16 +34,16 @@ abstract class HTAdvancementGenerator {
 
     //    Extension    //
 
-    protected fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
+    protected inline fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
         HTAdvancementBuilder.root().apply(builderAction).save(output, key)
 
-    protected fun child(
+    protected inline fun child(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         builderAction: HTAdvancementBuilder.() -> Unit,
     ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
 
-    protected fun createSimple(
+    protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         variant: HTItemMaterialVariant,
@@ -57,7 +57,7 @@ abstract class HTAdvancementGenerator {
         builderAction,
     )
 
-    protected fun createSimple(
+    protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         item: ItemLike,

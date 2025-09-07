@@ -11,7 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
-class HTItemResultImpl(entry: HTKeyOrTagEntry<Item>, amount: Int, components: DataComponentPatch) :
+internal class HTItemResultImpl(entry: HTKeyOrTagEntry<Item>, amount: Int, components: DataComponentPatch) :
     HTRecipeResultBase<Item, ItemStack>(entry, amount, components),
     HTItemResult {
     companion object {
