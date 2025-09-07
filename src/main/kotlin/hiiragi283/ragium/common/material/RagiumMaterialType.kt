@@ -15,8 +15,8 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     // Gem
     RAGI_CRYSTAL("Ragi-Crystal", "ラギクリスタリル"),
     AZURE("Azure Shard", "紺碧の欠片"),
-    CRIMSON_CRYSTAL("Crimson Crystal", "深紅の結晶"),
-    WARPED_CRYSTAL("Warped Crystal", "歪んだ結晶"),
+    CRIMSON_CRYSTAL("Crimson Crystal", "深紅のクリスタリル"),
+    WARPED_CRYSTAL("Warped Crystal", "歪んだクリスタリル"),
     ELDRITCH_PEARL("Eldritch Pearl", "異質な真珠"),
 
     // Metal
