@@ -10,6 +10,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -23,7 +24,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import java.util.stream.Stream
+import kotlin.streams.asSequence
 
 //    ResourceLocation    //
 
@@ -50,9 +51,11 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
 
 //    Registry    //
 
-fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Stream<Holder.Reference<T>> = holders()
+fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder.Reference<T>> = holders().asSequence()
+
+fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder.Reference<T>> = holdersSequence()
     .filter(Holder.Reference<T>::isBound)
-    .filter { holder: Holder.Reference<T> -> !holder.`is`(defaultKey) }
+    .filterNot { holder: Holder.Reference<T> -> holder.`is`(defaultKey) }
 
 //    Holder    //
 
