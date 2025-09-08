@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.minecraft.core.Holder
@@ -33,7 +34,7 @@ interface RagiumAPI {
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */
         @JvmStatic
-        fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
+        fun id(path: String): ResourceLocation = MOD_ID.toId(path)
 
         @JvmStatic
         fun id(prefix: String, suffix: String): ResourceLocation = id("$prefix/$suffix")

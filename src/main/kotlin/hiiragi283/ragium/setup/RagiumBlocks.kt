@@ -4,7 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.andThen
 import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -62,8 +64,7 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> B,
-    ): HTBasicDeferredBlock<B> =
-        REGISTER.registerSimple(type.getPath(), properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
+    ): HTBasicDeferredBlock<B> = REGISTER.registerSimple(type.getPath(), properties, factory.partially1(type))
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -195,7 +196,7 @@ object RagiumBlocks {
                 REGISTER.registerSimple(
                     "${material.serializedName}_glass",
                     properties.apply { if (blastProof) strength(5f, 1200f) },
-                    { prop: BlockBehaviour.Properties -> HTGlassBlock(canPlayerThrough, prop) },
+                    ::HTGlassBlock.partially1(canPlayerThrough),
                 ),
             )
         }
@@ -217,7 +218,7 @@ object RagiumBlocks {
                 REGISTER.registerSimple(
                     "tinted_${material.serializedName}_glass",
                     properties.apply { if (blastProof) strength(5f, 1200f) },
-                    { prop: BlockBehaviour.Properties -> HTTintedGlassBlock(canPlayerThrough, prop) },
+                    ::HTTintedGlassBlock.partially1(canPlayerThrough),
                 ),
             )
         }
@@ -296,7 +297,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_slab",
-                { SlabBlock(copyOf(variant.base.get())) },
+                variant.base::get.andThen(::copyOf).andThen(::SlabBlock),
             )
         }
 
@@ -306,7 +307,10 @@ object RagiumBlocks {
             val base: HTDeferredBlock<*, *> = variant.base
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
-                { StairBlock(base.get().defaultBlockState(), copyOf(base.get())) },
+                {
+                    val block: Block = base.get()
+                    StairBlock(block.defaultBlockState(), copyOf(block))
+                },
             )
         }
 
@@ -315,7 +319,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_wall",
-                { WallBlock(copyOf(variant.base.get()).forceSolidOn()) },
+                variant.base::get.andThen(::copyOf).andThen(::WallBlock),
             )
         }
 

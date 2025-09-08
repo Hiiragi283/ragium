@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.model.generators.ModelFile
 
 fun modelFile(path: String): ModelFile = modelFile(vanillaId(path))
 
-fun modelFile(namespace: String, path: String): ModelFile = modelFile(ResourceLocation.fromNamespaceAndPath(namespace, path))
+fun modelFile(namespace: String, path: String): ModelFile = modelFile(namespace.toId(path))
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 

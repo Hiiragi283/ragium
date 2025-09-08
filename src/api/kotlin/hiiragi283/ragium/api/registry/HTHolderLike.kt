@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.extension.andThen
 import hiiragi283.ragium.api.extension.idOrThrow
+import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
@@ -18,22 +20,18 @@ fun interface HTHolderLike {
 
     @Suppress("DEPRECATION")
     companion object {
-        @JvmStatic
-        fun fromId(id: ResourceLocation): HTHolderLike = HTHolderLike { id }
+        private fun <T : Any> fromHolder(f: () -> Holder<T>): HTHolderLike = f.andThen(Holder<T>::idOrThrow).let(::HTHolderLike)
 
         @JvmStatic
-        fun fromBlock(block: Block): HTHolderLike = HTHolderLike(block.builtInRegistryHolder()::idOrThrow)
+        fun fromBlock(block: Block): HTHolderLike = block::builtInRegistryHolder.let(::fromHolder)
 
         @JvmStatic
-        fun fromEntity(type: EntityType<*>): HTHolderLike = HTHolderLike(type.builtInRegistryHolder()::idOrThrow)
+        fun fromEntity(type: EntityType<*>): HTHolderLike = type::builtInRegistryHolder.let(::fromHolder)
 
         @JvmStatic
-        fun fromFluid(fluid: Fluid): HTHolderLike = HTHolderLike(fluid.builtInRegistryHolder()::idOrThrow)
+        fun fromFluid(fluid: Fluid): HTHolderLike = fluid::builtInRegistryHolder.let(::fromHolder)
 
         @JvmStatic
-        fun fromItem(item: ItemLike): HTHolderLike = fromItem(item.asItem())
-
-        @JvmStatic
-        fun fromItem(item: Item): HTHolderLike = HTHolderLike(item.builtInRegistryHolder()::idOrThrow)
+        fun fromItem(item: ItemLike): HTHolderLike = item::asItem.andThen(Item::builtInRegistryHolder).let(::fromHolder)
     }
 }

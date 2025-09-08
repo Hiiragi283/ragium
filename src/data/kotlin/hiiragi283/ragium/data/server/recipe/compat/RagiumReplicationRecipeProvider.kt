@@ -6,6 +6,7 @@ import com.buuz135.replication.calculation.MatterValue
 import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -96,10 +97,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
     private fun register(tagKey: TagKey<Item>, vararg instances: MatterValue) {
         val id: ResourceLocation = tagKey.location
         register(
-            ResourceLocation.fromNamespaceAndPath(
-                RagiumConst.REPLICATION,
-                "matter_values/${id.namespace}/tags/${id.path}",
-            ),
+            RagiumConst.REPLICATION.toId("matter_values/${id.namespace}/tags/${id.path}"),
             Ingredient.of(tagKey),
             *instances,
         )

@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
@@ -19,7 +20,6 @@ import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.function.BiConsumer
 
 object RagiumFluidContents {
     @JvmField
@@ -139,7 +139,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM
-                interactLevel = BiConsumer { level: Level, pos: BlockPos ->
+                interactLevel = { level: Level, pos: BlockPos ->
                     level.setBlockAndUpdate(pos, Blocks.GILDED_BLACKSTONE.defaultBlockState())
                 }
             },

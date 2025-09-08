@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.textureId
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
@@ -206,7 +207,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 HTDeviceVariant.MILK_COLLECTOR -> {
                     layeredBlock(
                         block,
-                        ResourceLocation.fromNamespaceAndPath(NeoForgeVersion.MOD_ID, "block/milk_still"),
+                        NeoForgeVersion.MOD_ID.toId("block/milk_still"),
                         RagiumAPI.id("block/device_overlay"),
                     )
                 }

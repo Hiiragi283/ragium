@@ -97,7 +97,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     private fun category(builder: HTTagBuilder<Block>) {
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTHolderLike) ->
-            builder.addBlock(HTBlockMaterialVariant.ORE, material, ore)
+            builder.addMaterial(HTBlockMaterialVariant.ORE, material, ore)
             val groundTag: TagKey<Block> = when (variant) {
                 HTBlockMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE
                 HTBlockMaterialVariant.DEEP_ORE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
@@ -115,19 +115,19 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                 if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
                     builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
                 }
-                builder.addBlock(variant, material, block)
+                builder.addMaterial(variant, material, block)
                 if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
-                    builder.addBlock(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
+                    builder.addMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
                 }
             }
 
         for ((material: HTVanillaMaterialType, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
-            builder.addBlock(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)
+            builder.addMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)
         }
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
-        builder.addBlock(
+        builder.add(
             Tags.Blocks.OBSIDIANS,
             RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
@@ -150,15 +150,15 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Block>.addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
+    private fun HTTagBuilder<Block>.add(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
         addTag(parent, child)
         add(child, block)
     }
 
-    private fun HTTagBuilder<Block>.addBlock(variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) {
+    private fun HTTagBuilder<Block>.addMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) {
         val blockCommonTag: TagKey<Block> = variant.blockCommonTag ?: return
         val tagKey: TagKey<Block> = variant.blockTagKey(material)
-        addBlock(blockCommonTag, tagKey, block)
+        add(blockCommonTag, tagKey, block)
     }
 
     private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, HTHolderLike>) {

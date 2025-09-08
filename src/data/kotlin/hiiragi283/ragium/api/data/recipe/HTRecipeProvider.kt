@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -75,7 +76,7 @@ sealed class HTRecipeProvider {
     //    Integration    //
 
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
-        protected fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modid, path)
+        protected fun id(path: String): ResourceLocation = modid.toId(path)
 
         override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
             RagiumAPI.MOD_ID -> id

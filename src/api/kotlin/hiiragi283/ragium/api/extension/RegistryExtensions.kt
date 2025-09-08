@@ -27,6 +27,8 @@ import kotlin.streams.asSequence
 
 //    ResourceLocation    //
 
+fun String.toId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this, path)
+
 /**
  * 名前空間が`minecraft`となる[ResourceLocation]を返します。
  */
@@ -36,7 +38,7 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
-fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConst.COMMON, path)
+fun commonId(path: String): ResourceLocation = RagiumConst.COMMON.toId(path)
 
 fun ResourceKey<*>.toDescriptionKey(prefix: String, suffix: String? = null): String = location().toDescriptionKey(prefix, suffix)
 

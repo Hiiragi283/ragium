@@ -254,10 +254,7 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun <S : Any> flatXmap(to: Function<V, DataResult<S>>, from: Function<S, DataResult<V>>): BiCodec<B, S> = of(
         codec.flatXmap(to, from),
-        streamCodec.map(
-            { value: V -> to.apply(value).orThrow },
-            { value: S -> from.apply(value).orThrow },
-        ),
+        streamCodec.map(to.andThen(DataResult<S>::getOrThrow), from.andThen(DataResult<V>::getOrThrow)),
     )
 
     fun validate(validator: Function<V, DataResult<V>>): BiCodec<B, V> = flatXmap(validator, validator)
