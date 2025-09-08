@@ -19,7 +19,7 @@ abstract class HTItemWithCatalystToItemRecipe(
             .map { ingredient: HTItemIngredient -> ingredient.testOnlyType(stackIn) }
             .orElse(stackIn.isEmpty)
         val bool2: Boolean = catalyst.test(input.getItem(1))
-        return !isIncomplete && bool1 && bool2
+        return bool1 && bool2
     }
 
     final override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =

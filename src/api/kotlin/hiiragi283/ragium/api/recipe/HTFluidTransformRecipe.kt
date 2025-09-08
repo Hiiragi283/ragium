@@ -21,7 +21,7 @@ interface HTFluidTransformRecipe : HTFluidRecipe<HTItemWithFluidRecipeInput> {
         val bool2: Boolean = itemIngredient
             .map { ingredient: HTItemIngredient -> ingredient.testOnlyType(input.item) }
             .orElse(input.item.isEmpty)
-        return !isIncomplete && bool1 && bool2
+        return bool1 && bool2
     }
 
     override fun assemble(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ItemStack =
