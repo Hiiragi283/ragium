@@ -65,7 +65,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             HTTierType.ELITE,
             RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
             RagiumDelightAddon.RAGI_ALLOY_KNIFE,
-        ).save(output)
+        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .save(output)
     }
 
     @JvmStatic

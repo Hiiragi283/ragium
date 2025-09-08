@@ -140,8 +140,24 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
-        advMachine(HTMachineVariant.MELTER, Ingredient.of(Items.BLAST_FURNACE))
-        advMachine(HTMachineVariant.REFINERY, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.QUARTZ))
+        HTShapedRecipeBuilder(HTMachineVariant.MELTER)
+            .crossLayered()
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
+            .define('C', Items.BLAST_FURNACE)
+            .define('D', RagiumBlocks.REINFORCED_STONE_CASING)
+            .save(output)
+
+        HTShapedRecipeBuilder(HTMachineVariant.REFINERY)
+            .pattern(
+                " A ",
+                "ABA",
+                "CDC",
+            ).define('A', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            .define('B', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ADVANCED))
+            .define('C', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('D', RagiumItems.getMaterial(RagiumMaterialVariants.COIL, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .save(output)
 
         mapOf(
             HTMachineVariant.ALLOY_SMELTER to HTMachineVariant.SMELTER,
@@ -162,16 +178,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.DEEPSLATE_TILES)
             .save(output)
 
-        HTShapedRecipeBuilder(HTMachineVariant.MULTI_SMELTER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('B', Tags.Items.RODS_BLAZE)
-            .define('C', HTMachineVariant.ALLOY_SMELTER)
-            .define('D', Items.DEEPSLATE_TILES)
-            .save(output)
+        mapOf(
+            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
+        ).forEach { (elite: HTMachineVariant, adv: HTMachineVariant) ->
+            createComponentUpgrade(HTTierType.ELITE, elite, adv).save(output)
+        }
     }
 
     @JvmStatic
@@ -182,17 +193,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .define('C', side)
             .define('D', RagiumBlocks.STONE_CASING)
-            .save(output)
-    }
-
-    @JvmStatic
-    private fun advMachine(variant: HTMachineVariant, side: Ingredient) {
-        HTShapedRecipeBuilder(variant)
-            .crossLayered()
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
-            .define('C', side)
-            .define('D', RagiumBlocks.REINFORCED_STONE_CASING)
             .save(output)
     }
 

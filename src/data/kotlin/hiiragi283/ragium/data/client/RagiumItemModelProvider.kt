@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.textureId
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -29,6 +30,7 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -37,7 +39,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         registerItems()
     }
 
-    private val generated: ModelFile = modelFile("item/generated")
+    private val generated: ModelFile = modelFile(vanillaId("item/generated"))
 
     private fun registerBlocks() {
         // Blocks
@@ -116,7 +118,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.getId().withSuffix("_bucket").path)
-                .parent(modelFile("neoforge", "item/bucket"))
+                .parent(modelFile(NeoForgeVersion.MOD_ID.toId("item/bucket")))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }

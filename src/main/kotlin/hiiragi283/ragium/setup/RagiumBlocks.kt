@@ -367,7 +367,7 @@ object RagiumBlocks {
 
     @JvmField
     val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createMap<HTMachineVariant>(machineProperty(), ::HTHorizontalEntityBlock)
+        createMap<HTMachineVariant>(machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
 
     //    Devices    //
 

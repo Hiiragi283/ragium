@@ -8,6 +8,18 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -47,6 +59,28 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     fun <BE : HTBlockEntity> registerTick(name: String, factory: (BlockPos, BlockState) -> BE): HTDeferredBlockEntityType<BE> =
         REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
+
+    @JvmField
+    val MACHINES: Map<HTMachineVariant, HTDeferredBlockEntityType<HTBlockEntity>> = HTMachineVariant.entries.associateWith { variant ->
+        val factory = when (variant) {
+            // Basic
+            HTMachineVariant.BLOCK_BREAKER -> ::HTBlockBreakerBlockEntity
+            HTMachineVariant.COMPRESSOR -> ::HTCompressorBlockEntity
+            HTMachineVariant.ENGRAVER -> ::HTEngraverBlockEntity
+            HTMachineVariant.EXTRACTOR -> ::HTExtractorBlockEntity
+            HTMachineVariant.PULVERIZER -> ::HTPulverizerBlockEntity
+            HTMachineVariant.SMELTER -> ::HTSmelterBlockEntity
+            // Advanced
+            HTMachineVariant.ALLOY_SMELTER -> ::HTAlloySmelterBlockEntity
+            HTMachineVariant.CRUSHER -> ::HTCrusherBlockEntity
+            HTMachineVariant.MELTER -> ::HTMelterBlockEntity
+            HTMachineVariant.REFINERY -> ::HTRefineryBlockEntity
+            // Elite
+            HTMachineVariant.MULTI_SMELTER -> ::HTMultiSmelterBlockEntity
+            HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity
+        }
+        registerTick(variant.serializedName, factory)
+    }
 
     //    Dynamo    //
 

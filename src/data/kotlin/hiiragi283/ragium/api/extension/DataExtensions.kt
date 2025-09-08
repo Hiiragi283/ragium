@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockModelProvider
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -14,10 +15,6 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 
 //    ModelFile    //
-
-fun modelFile(path: String): ModelFile = modelFile(vanillaId(path))
-
-fun modelFile(namespace: String, path: String): ModelFile = modelFile(namespace.toId(path))
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
@@ -52,8 +49,12 @@ fun BlockStateProvider.cubeColumn(
     simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, end))
 }
 
-fun BlockStateProvider.altModelBlock(holder: HTDeferredBlock<*, *>, id: ResourceLocation = holder.blockId) {
-    simpleBlock(holder.get(), modelFile(id))
+fun BlockStateProvider.altModelBlock(
+    holder: HTDeferredBlock<*, *>,
+    id: ResourceLocation = holder.blockId,
+    factory: (Block, ModelFile) -> Unit = ::simpleBlock,
+) {
+    factory(holder.get(), modelFile(id))
 }
 
 fun BlockStateProvider.altTextureBlock(holder: HTDeferredBlock<*, *>, all: ResourceLocation) {

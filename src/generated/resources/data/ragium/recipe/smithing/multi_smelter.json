@@ -1,14 +1,12 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "c:gems/ragi_crystal"
-  },
+  "addition": [],
   "base": {
-    "item": "ragium:ragi_alloy_hammer"
+    "item": "ragium:alloy_smelter"
   },
   "result": {
     "count": 1,
-    "id": "ragium:ragi_crystal_hammer"
+    "id": "ragium:multi_smelter"
   },
   "template": {
     "item": "ragium:elite_component"

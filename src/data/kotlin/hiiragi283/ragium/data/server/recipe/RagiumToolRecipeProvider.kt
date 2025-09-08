@@ -226,7 +226,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             HTTierType.ELITE,
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
             hammer(RagiumMaterialType.RAGI_ALLOY),
-        ).save(output)
+        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .save(output)
     }
 
     @JvmStatic

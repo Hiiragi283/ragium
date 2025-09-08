@@ -6,7 +6,9 @@
     }
   ],
   "type": "minecraft:smithing_transform",
-  "addition": [],
+  "addition": {
+    "tag": "c:gems/ragi_crystal"
+  },
   "base": {
     "item": "ragium:ragi_alloy_knife"
   },

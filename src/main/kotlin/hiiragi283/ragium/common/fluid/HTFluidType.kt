@@ -1,13 +1,16 @@
 package hiiragi283.ragium.common.fluid
 
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-class HTFluidType(builder: Builder, properties: Properties) : FluidType(properties) {
+class HTFluidType(private val builder: Builder, properties: Properties) : FluidType(properties) {
     companion object {
         @JvmField
         val IS_ULTRA_WARM: (Level, BlockPos, FluidStack) -> Boolean = { level: Level, _, _ ->
@@ -42,6 +45,26 @@ class HTFluidType(builder: Builder, properties: Properties) : FluidType(properti
     }
 
     val dropItem: HTItemResult? = builder.dropItem
+
+    override fun isVaporizedOnPlacement(level: Level, pos: BlockPos, stack: FluidStack): Boolean =
+        builder.canVaporize?.invoke(level, pos, stack) ?: super.isVaporizedOnPlacement(level, pos, stack)
+
+    override fun onVaporize(
+        player: Player?,
+        level: Level,
+        pos: BlockPos,
+        stack: FluidStack,
+    ) {
+        super.onVaporize(player, level, pos, stack)
+        builder.interactLevel?.invoke(level, pos)
+        dropItem?.getStackOrNull(level.registryAccess())?.let { stack: ItemStack ->
+            if (player != null) {
+                dropStackAt(player, stack)
+            } else {
+                dropStackAt(level, pos, stack)
+            }
+        }
+    }
 
     class Builder {
         var canVaporize: ((Level, BlockPos, FluidStack) -> Boolean)? = null
