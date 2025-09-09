@@ -6,10 +6,10 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:blast_furnace"
+      "item": "ragium:advanced_ragi_alloy_coil_block"
     },
     "C": {
-      "item": "ragium:advanced_ragi_alloy_coil_block"
+      "item": "minecraft:blast_furnace"
     },
     "D": {
       "item": "minecraft:nether_bricks"

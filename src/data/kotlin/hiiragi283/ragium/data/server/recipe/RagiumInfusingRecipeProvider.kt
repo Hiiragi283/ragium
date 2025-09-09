@@ -171,7 +171,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Items.SOUL_SOIL),
-                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 2000),
                 HTResultHelper.INSTANCE.item(RagiumBlocks.CRIMSON_SOIL),
             ).save(output)
     }
@@ -196,7 +196,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(Tags.Items.CROPS_BEETROOT),
-                HTIngredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 1000),
                 HTResultHelper.INSTANCE.item(RagiumBlocks.WARPED_WART),
             ).save(output)
     }

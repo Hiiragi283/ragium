@@ -186,6 +186,14 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.GILDIUM),
             ).save(output)
+
+        HTFluidTransformRecipeBuilder
+            .refining(
+                HTIngredientHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+                HTResultHelper.INSTANCE.fluid(HTFluidContent.LAVA, 750),
+                HTIngredientHelper.item(RagiumItems.PLATING_CATALYST),
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.GILDIUM, 3),
+            ).saveSuffixed(output, "_alt")
         // Iridescentium
         HTCombineItemToObjRecipeBuilder
             .alloying(

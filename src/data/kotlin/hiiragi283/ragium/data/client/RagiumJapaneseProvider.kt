@@ -221,6 +221,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.LED, "発光ダイオード")
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
+        add(RagiumItems.PLATING_CATALYST, "メッキ触媒")
         add(RagiumItems.POLYMER_CATALYST, "重合触媒")
         add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         add(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")

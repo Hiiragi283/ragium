@@ -29,9 +29,7 @@ class HTFluidTransformingEmiRecipe(
 
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.FLUID_TRANSFORM
 
-    override fun getInputs(): List<EmiIngredient> = listOf(fluidIngredient)
-
-    override fun getCatalysts(): List<EmiIngredient> = listOf(itemIngredient)
+    override fun getInputs(): List<EmiIngredient> = listOf(itemIngredient, fluidIngredient)
 
     override fun getOutputs(): List<EmiStack> = listOf(itemResult, fluidResult)
 

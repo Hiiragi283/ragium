@@ -117,8 +117,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "BCB",
                 "DDD",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', Items.BLAST_FURNACE)
-            .define('C', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('B', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('C', Items.BLAST_FURNACE)
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 

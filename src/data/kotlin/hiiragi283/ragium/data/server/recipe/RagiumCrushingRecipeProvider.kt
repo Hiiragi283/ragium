@@ -103,14 +103,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(Items.GILDED_BLACKSTONE))
-            .addResult(HTResultHelper.INSTANCE.item(Items.BLACKSTONE))
-            .addResult(HTResultHelper.INSTANCE.item(Items.GOLD_NUGGET, 3))
-            .addResult(HTResultHelper.INSTANCE.item(Items.GOLD_NUGGET, 3), 1 / 2f)
-            .addResult(HTResultHelper.INSTANCE.item(Items.GOLD_NUGGET, 3), 1 / 4f)
-            .saveSuffixed(output, "_from_gilded")
-
         HTItemToObjRecipeBuilder
             .pulverizing(
                 HTIngredientHelper.item(Tags.Items.OBSIDIANS_NORMAL),

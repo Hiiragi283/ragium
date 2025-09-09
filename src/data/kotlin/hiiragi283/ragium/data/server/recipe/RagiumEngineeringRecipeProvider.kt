@@ -29,13 +29,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        // Polymer Catalyst
-        HTShapedRecipeBuilder(RagiumItems.POLYMER_CATALYST)
-            .cross8()
-            .define('A', Tags.Items.RODS_BREEZE)
-            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('C', Items.IRON_BARS)
-            .save(output)
         // Plastic Plate
         HTItemToObjRecipeBuilder
             .compressing(
@@ -79,11 +72,30 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
             ).save(output)
 
+        catalyst()
         circuits()
         components()
 
         redStones()
         diode()
+    }
+
+    @JvmStatic
+    private fun catalyst() {
+        // Plating Catalyst
+        HTShapedRecipeBuilder(RagiumItems.PLATING_CATALYST)
+            .cross8()
+            .define('A', Tags.Items.RODS_BLAZE)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.GILDIUM)
+            .define('C', Items.IRON_BARS)
+            .save(output)
+        // Polymer Catalyst
+        HTShapedRecipeBuilder(RagiumItems.POLYMER_CATALYST)
+            .cross8()
+            .define('A', Tags.Items.RODS_BREEZE)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('C', Items.IRON_BARS)
+            .save(output)
     }
 
     @JvmStatic

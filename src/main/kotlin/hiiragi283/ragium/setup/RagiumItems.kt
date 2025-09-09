@@ -382,6 +382,9 @@ object RagiumItems {
     val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
+    val PLATING_CATALYST: HTDeferredItem<Item> = register("plating_catalyst", ::HTCatalystItem)
+
+    @JvmField
     val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll", Item.Properties())
 
     // LED

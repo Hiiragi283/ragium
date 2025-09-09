@@ -221,6 +221,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.LED, "Light Emitting Diode")
         add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
+        add(RagiumItems.PLATING_CATALYST, "Plating Catalyst")
         add(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
         add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         add(RagiumItems.REDSTONE_BOARD, "Redstone Board")

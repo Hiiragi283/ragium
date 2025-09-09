@@ -104,6 +104,8 @@ object RagiumCreativeTabs {
             .forEach(output::accept)
         // Ingredients
         output.accept(RagiumItems.TAR)
+        output.accept(RagiumItems.PLATING_CATALYST)
+
         output.accept(RagiumItems.ELDER_HEART)
         output.accept(RagiumItems.WITHER_DOLl)
 

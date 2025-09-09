@@ -133,10 +133,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
             ).save(output)
         // Meat Ingot
-        HTShapedRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.MEAT), 3)
-            .pattern("AAA")
-            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT)
-            .save(output)
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
+                HTResultHelper.INSTANCE.item(RagiumItems.getIngot(RagiumMaterialType.MEAT)),
+            ).save(output)
 
         HTFluidTransformRecipeBuilder
             .solidifying(
