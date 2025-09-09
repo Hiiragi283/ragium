@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -19,13 +19,15 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import java.util.stream.Stream
+import java.util.function.Function
+import kotlin.streams.asSequence
 
 //    ResourceLocation    //
+
+fun String.toId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this, path)
 
 /**
  * 名前空間が`minecraft`となる[ResourceLocation]を返します。
@@ -36,7 +38,7 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
-fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConst.COMMON, path)
+fun commonId(path: String): ResourceLocation = RagiumConst.COMMON.toId(path)
 
 fun ResourceKey<*>.toDescriptionKey(prefix: String, suffix: String? = null): String = location().toDescriptionKey(prefix, suffix)
 
@@ -50,9 +52,11 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
 
 //    Registry    //
 
-fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Stream<Holder.Reference<T>> = holders()
+fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder.Reference<T>> = holders().asSequence()
+
+fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder.Reference<T>> = holdersSequence()
     .filter(Holder.Reference<T>::isBound)
-    .filter { holder: Holder.Reference<T> -> !holder.`is`(defaultKey) }
+    .filterNot { holder: Holder.Reference<T> -> holder.`is`(defaultKey) }
 
 //    Holder    //
 
@@ -72,11 +76,6 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
 }
 
 /**
- * この[ItemLike]から[Holder]を返します。
- */
-fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
-
-/**
  * `block/`で前置された[HTHolderLike.getId]
  */
 val HTHolderLike.blockId: ResourceLocation get() = getId().withPrefix("block/")
@@ -93,13 +92,9 @@ val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
  * @param transform 値を[Component]に変換するブロック
  * @return [TagKey]の場合は[getName]，それ以外の場合は[transform]を連結
  */
-fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): MutableComponent = unwrap()
+fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component>): MutableComponent = unwrap()
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
-
-//    HolderGetter    //
-
-operator fun <T> HolderGetter<T>.contains(tagKey: TagKey<T>): Boolean = get(tagKey).isPresent
 
 //    HolderLookup    //
 

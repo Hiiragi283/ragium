@@ -110,6 +110,7 @@ class InternalRagiumAPI : RagiumAPI {
         consumer(RagiumMaterialType.ADVANCED_RAGI_ALLOY, HTItemMaterialVariant.INGOT)
         consumer(RagiumMaterialType.AZURE_STEEL, HTItemMaterialVariant.INGOT)
         consumer(RagiumMaterialType.DEEP_STEEL, HTItemMaterialVariant.INGOT)
+        consumer(RagiumMaterialType.GILDIUM, HTItemMaterialVariant.INGOT)
         consumer(RagiumMaterialType.IRIDESCENTIUM, HTItemMaterialVariant.INGOT)
 
         consumer(RagiumMaterialType.CHOCOLATE, HTItemMaterialVariant.INGOT)

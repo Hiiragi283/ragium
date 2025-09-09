@@ -38,6 +38,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import org.slf4j.Logger
+import java.util.function.Consumer
 
 /**
  * @see [mekanism.common.tile.base.TileEntityMekanism]
@@ -217,7 +218,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    override fun dropInventory(consumer: (ItemStack) -> Unit) {
+    override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
         getItemSlots(getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
     }

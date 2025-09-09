@@ -3,22 +3,29 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
+import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
@@ -39,6 +46,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         combustionFuels()
         thermalFuels()
+        solarPower()
     }
 
     //    Vanilla    //
@@ -92,11 +100,41 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             .add("blaze_blood", 5)
     }
 
+    private fun solarPower() {
+        builder(RagiumDataMaps.SOLAR_POWER)
+            // low
+            .add(Tags.Blocks.PUMPKINS_JACK_O_LANTERNS, HTSolarPower(0.5f), false)
+            // medium
+            .add(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GLOWSTONE, HTSolarPower(1f))
+            .add(Blocks.SHROOMLIGHT, HTSolarPower(1f))
+            // high
+            .add(Tags.Blocks.OBSIDIANS_CRYING, HTSolarPower(1.5f), false)
+            .add(Blocks.AMETHYST_CLUSTER, HTSolarPower(2f))
+            // highest
+            .add(Blocks.BEACON, HTSolarPower(4f))
+            .add(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.GILDIUM, HTSolarPower(4f))
+    }
+
     //    Extensions    //
+
+    private fun <T : Any, R : Any> Builder<T, R>.add(holder: HTHolderLike, value: T): Builder<T, R> = add(holder.getId(), value, false)
+
+    // Block
+    private fun <T : Any> Builder<T, Block>.add(block: Block, value: T): Builder<T, Block> = add(HTHolderLike.fromBlock(block), value)
+
+    private fun <T : Any> Builder<T, Block>.add(
+        variant: HTMaterialVariant.BlockTag,
+        material: HTMaterialType,
+        value: T,
+    ): Builder<T, Block> = add(variant.blockTagKey(material), value, false)
+
+    // Item
+    private fun <T : Any> Builder<T, Item>.add(item: ItemLike, value: T): Builder<T, Item> = add(HTHolderLike.fromItem(item), value)
 
     private fun <T : Any> Builder<T, Item>.add(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, value: T): Builder<T, Item> =
         add(variant.itemTagKey(material), value, false)
 
+    // fluid
     private fun Builder<HTFluidFuelData, Fluid>.add(content: HTFluidContent<*, *, *>, amount: Int): Builder<HTFluidFuelData, Fluid> =
         add(content.commonTag, HTFluidFuelData(amount), false)
 
@@ -104,5 +142,5 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         add(fluidTagKey(commonId(path)), HTFluidFuelData(amount), false)
 
     private fun Builder<HTFluidFuelData, Fluid>.add(modId: String, path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
-        add(ResourceLocation.fromNamespaceAndPath(modId, path), HTFluidFuelData(amount), false, ModLoadedCondition(modId))
+        add(modId.toId(path), HTFluidFuelData(amount), false, ModLoadedCondition(modId))
 }

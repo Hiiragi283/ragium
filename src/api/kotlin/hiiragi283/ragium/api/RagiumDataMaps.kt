@@ -2,9 +2,11 @@ package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.HTFluidFuelData
+import hiiragi283.ragium.api.data.HTSolarPower
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -23,6 +25,10 @@ object RagiumDataMaps {
         THERMAL_FUEL,
         COMBUSTION_FUEL,
     )
+
+    @JvmField
+    val SOLAR_POWER: DataMapType<Block, HTSolarPower> =
+        create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

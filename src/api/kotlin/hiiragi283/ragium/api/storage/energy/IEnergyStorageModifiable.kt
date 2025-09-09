@@ -6,4 +6,6 @@ interface IEnergyStorageModifiable : IEnergyStorage {
     fun setEnergyStored(amount: Int)
 
     fun setMaxEnergyStored(capacity: Int)
+
+    fun getNeeded(): Int = maxEnergyStored - energyStored
 }

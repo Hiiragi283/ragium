@@ -23,6 +23,7 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
     COAL("Coal", "石炭"),
     CHARCOAL("Charcoal", "木炭"),
     REDSTONE("Redstone", "レッドストーン"),
+    GLOWSTONE("Glowstone", "グロウストーン"),
     SOUL("Soul", "ソウル"),
     OBSIDIAN("Obsidian", "黒曜石"),
     WOOD("Wood", "木") {

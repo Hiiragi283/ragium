@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ragium:block/advanced_ragi_alloy_coil_block_top",
+    "side": "ragium:block/advanced_ragi_alloy_coil_block_side"
+  }
+}

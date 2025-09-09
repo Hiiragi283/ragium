@@ -31,7 +31,7 @@ object RagiumAttachmentTypes {
     @JvmStatic
     private fun <T : Any> register(
         name: String,
-        supplier: () -> T,
+        supplier: Supplier<T>,
         codec: BiCodec<in RegistryFriendlyByteBuf, T>,
     ): Supplier<AttachmentType<T>> = REGISTER.register(name) { _: ResourceLocation ->
         AttachmentType

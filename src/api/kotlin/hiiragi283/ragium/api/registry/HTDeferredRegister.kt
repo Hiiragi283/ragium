@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.extension.toId
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -12,6 +13,8 @@ import java.util.function.Supplier
  */
 open class HTDeferredRegister<T : Any>(registryKey: ResourceKey<out Registry<T>>, namespace: String) :
     DeferredRegister<T>(registryKey, namespace) {
+    fun createId(path: String): ResourceLocation = namespace.toId(path)
+
     override fun getEntries(): Collection<HTDeferredHolder<T, out T>> = super.getEntries().filterIsInstance<HTDeferredHolder<T, out T>>()
 
     override fun <I : T> register(name: String, func: Function<ResourceLocation, out I>): HTDeferredHolder<T, I> =

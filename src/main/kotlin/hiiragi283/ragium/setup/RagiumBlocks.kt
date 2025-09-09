@@ -4,7 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.andThen
 import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -34,14 +36,15 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.StairBlock
-import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -62,8 +65,7 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> B,
-    ): HTBasicDeferredBlock<B> =
-        REGISTER.registerSimple(type.getPath(), properties, { prop: BlockBehaviour.Properties -> factory(type, prop) })
+    ): HTBasicDeferredBlock<B> = REGISTER.registerSimple(type.getPath(), properties, factory.partially1(type))
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -157,7 +159,7 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
@@ -170,6 +172,7 @@ object RagiumBlocks {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
             RagiumMaterialType.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialType.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
+            RagiumMaterialType.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
             RagiumMaterialType.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
             RagiumMaterialType.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
@@ -194,7 +197,7 @@ object RagiumBlocks {
                 REGISTER.registerSimple(
                     "${material.serializedName}_glass",
                     properties.apply { if (blastProof) strength(5f, 1200f) },
-                    { prop: BlockBehaviour.Properties -> HTGlassBlock(canPlayerThrough, prop) },
+                    ::HTGlassBlock.partially1(canPlayerThrough),
                 ),
             )
         }
@@ -216,7 +219,7 @@ object RagiumBlocks {
                 REGISTER.registerSimple(
                     "tinted_${material.serializedName}_glass",
                     properties.apply { if (blastProof) strength(5f, 1200f) },
-                    { prop: BlockBehaviour.Properties -> HTTintedGlassBlock(canPlayerThrough, prop) },
+                    ::HTTintedGlassBlock.partially1(canPlayerThrough),
                 ),
             )
         }
@@ -224,10 +227,25 @@ object RagiumBlocks {
         tintedGlass(HTVanillaMaterialType.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
         tintedGlass(HTVanillaMaterialType.SOUL, glass(), canPlayerThrough = true, blastProof = false)
         tintedGlass(HTVanillaMaterialType.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
+
+        // Coil Block
+        fun addCoil(material: RagiumMaterialType) {
+            put(
+                RagiumMaterialVariants.COIL_BLOCK,
+                material,
+                REGISTER.registerSimple(
+                    "${material.serializedName}_coil_block",
+                    copyOf(Blocks.COPPER_BLOCK),
+                    ::RotatedPillarBlock,
+                ),
+            )
+        }
+        addCoil(RagiumMaterialType.RAGI_ALLOY)
+        addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
         ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
@@ -295,7 +313,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_slab",
-                { SlabBlock(copyOf(variant.base.get())) },
+                variant.base::get.andThen(::copyOf).andThen(::SlabBlock),
             )
         }
 
@@ -305,7 +323,10 @@ object RagiumBlocks {
             val base: HTDeferredBlock<*, *> = variant.base
             REGISTER.registerSimple(
                 "${variant.serializedName}_stairs",
-                { StairBlock(base.get().defaultBlockState(), copyOf(base.get())) },
+                {
+                    val block: Block = base.get()
+                    StairBlock(block.defaultBlockState(), copyOf(block))
+                },
             )
         }
 
@@ -314,7 +335,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.serializedName}_wall",
-                { WallBlock(copyOf(variant.base.get()).forceSolidOn()) },
+                variant.base::get.andThen(::copyOf).andThen(::WallBlock),
             )
         }
 
@@ -342,29 +363,10 @@ object RagiumBlocks {
     //    Machines    //
 
     @JvmField
-    val BASIC_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("basic_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
-
-    @JvmField
-    val ADVANCED_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("advanced_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
-
-    @JvmField
-    val ELITE_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("elite_machine_frame", machineProperty(), ::TransparentBlock)
-
-    @JvmField
-    val FRAMES: List<HTBasicDeferredBlock<TransparentBlock>> = listOf(
-        BASIC_MACHINE_FRAME,
-        ADVANCED_MACHINE_FRAME,
-        ELITE_MACHINE_FRAME,
-    )
-
-    @JvmField
     val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createMap<HTMachineVariant>(machineProperty(), ::HTHorizontalEntityBlock)
+        createMap<HTMachineVariant>(machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
 
-    //    Devices    //
+    //    Parts    //
 
     @JvmField
     val WOODEN_CASING: HTSimpleDeferredBlock =

@@ -176,11 +176,18 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     private fun components() {
         // Coil
         fun registerCoil(material: HTMaterialType, core: HTMaterialType) {
-            // Shaped
-            HTShapedRecipeBuilder(RagiumItems.getMaterial(RagiumMaterialVariants.COIL, material), 4)
+            val coil: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COIL, material)
+            // Item
+            HTShapedRecipeBuilder(coil, 4)
                 .hollow4()
                 .define('A', HTItemMaterialVariant.INGOT, material)
                 .define('B', ingotOrRod(core))
+                .save(output)
+            // Block
+            HTShapedRecipeBuilder(RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, material))
+                .hollow8()
+                .define('A', coil)
+                .define('B', HTItemMaterialVariant.INGOT, core)
                 .save(output)
         }
         registerCoil(RagiumMaterialType.RAGI_ALLOY, HTVanillaMaterialType.IRON)

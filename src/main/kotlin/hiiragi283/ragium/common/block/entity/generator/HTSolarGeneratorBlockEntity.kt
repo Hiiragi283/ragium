@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
+import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -8,6 +9,7 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import kotlin.math.roundToInt
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGeneratorBlockEntity(HTGeneratorVariant.SOLAR, pos, state) {
     override fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
@@ -18,14 +20,27 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
         state: BlockState,
         network: IEnergyStorage,
     ): Boolean {
-        // 空のない次元では停止
-        if (!level.dimensionType().hasSkyLight) return false
-        // 日中出ない場合はスキップ
-        if (!level.isDay) return false
-        // 現在地から空が見えない場合はスキップ
-        if (level.canSeeSky(pos)) return false
-        // 発電を行う
-        val generated: Int = network.receiveEnergy(energyUsage, false)
-        return false
+        val multiplier: Float = getGenerationMultiplier(level, pos)
+        if (multiplier < 0f) return false
+        return network.receiveEnergy((energyUsage * multiplier).roundToInt(), false) > 0
+    }
+
+    private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {
+        // 太陽光を供給できる場合は，その倍率を返す
+        val power: Float? = level
+            .getBlockState(pos.above())
+            .blockHolder
+            .getData(RagiumDataMaps.SOLAR_POWER)
+            ?.multiplier
+        if (power != null) return power
+        return when {
+            // 空のない次元では停止
+            !level.dimensionType().hasSkyLight -> 0f
+            // 日中出ない場合はスキップ
+            !level.isDay -> 0f
+            // 現在地から空が見えない場合はスキップ
+            level.canSeeSky(pos.above()) -> 1f
+            else -> 0f
+        }
     }
 }

@@ -3,7 +3,7 @@
   "ingredients": [
     {
       "count": 1,
-      "item": "minecraft:quartz_block"
+      "tag": "c:storage_blocks/quartz"
     },
     {
       "count": 1,

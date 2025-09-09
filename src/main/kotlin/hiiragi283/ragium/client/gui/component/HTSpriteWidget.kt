@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.drawQuad
 import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
@@ -25,6 +26,8 @@ abstract class HTSpriteWidget(
     message: Component,
 ) : HTAbstractWidget(x, y, width, height, message),
     HTBackgroundRenderable {
+    protected val font: Font = Minecraft.getInstance().font
+
     final override fun renderWidget(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -34,7 +37,7 @@ abstract class HTSpriteWidget(
         // Render sprite
         renderSprite(guiGraphics)
         // Render tooltip
-        renderTooltip(x, y, mouseX, mouseY, width, height) {
+        if (getBounds().contains(mouseX, mouseY)) {
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList { collectTooltips(this::add, getTooltipFlag()) },

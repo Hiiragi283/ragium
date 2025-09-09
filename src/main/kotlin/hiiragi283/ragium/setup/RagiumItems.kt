@@ -82,6 +82,9 @@ object RagiumItems {
     //    Materials    //
 
     @JvmField
+    val RAGI_ALLOY_COMPOUND: HTDeferredItem<Item> = register("${RagiumConst.RAGI_ALLOY}_compound")
+
+    @JvmField
     val RAGI_COKE: HTDeferredItem<Item> = register("ragi_coke")
 
     @JvmField
@@ -89,9 +92,6 @@ object RagiumItems {
 
     @JvmField
     val RESIN: HTDeferredItem<Item> = register("resin")
-
-    @JvmField
-    val SILICON: HTDeferredItem<Item> = register("silicon")
 
     @JvmField
     val TAR: HTDeferredItem<Item> = register("tar")
@@ -134,17 +134,12 @@ object RagiumItems {
         ).forEach { put(HTItemMaterialVariant.GEM, it, register(it.serializedName)) }
         // Ingots
         listOf(
-            RagiumMaterialType.RAGI_ALLOY,
-            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
-            RagiumMaterialType.AZURE_STEEL,
-        ).forEach { put(RagiumMaterialVariants.COMPOUND, it, register("${it.serializedName}_compound")) }
-
-        listOf(
             // Metals
             RagiumMaterialType.RAGI_ALLOY,
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
             // Foods
             RagiumMaterialType.CHOCOLATE,
@@ -157,6 +152,7 @@ object RagiumItems {
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
             RagiumMaterialType.DEEP_STEEL,
+            RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
         ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates

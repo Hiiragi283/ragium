@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -19,6 +20,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.tag.ModTags
@@ -26,6 +28,16 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     HTTagsProvider<Block>(output, Registries.BLOCK, provider, helper) {
+    companion object {
+        @Suppress("DEPRECATION")
+        @JvmField
+        val VANILLA_STORAGE_BLOCKS: Map<HTVanillaMaterialType, HTHolderLike> = mapOf(
+            HTVanillaMaterialType.AMETHYST to Blocks.AMETHYST_BLOCK,
+            HTVanillaMaterialType.GLOWSTONE to Blocks.GLOWSTONE,
+            HTVanillaMaterialType.QUARTZ to Blocks.QUARTZ_BLOCK,
+        ).mapValues { (_, block: Block) -> HTHolderLike.fromBlock(block) }
+    }
+
     override fun addTags(builder: HTTagBuilder<Block>) {
         mineable(builder)
         category(builder)
@@ -60,7 +72,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.FRAMES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.GENERATORS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
@@ -85,7 +96,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     private fun category(builder: HTTagBuilder<Block>) {
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTHolderLike) ->
-            builder.addBlock(HTBlockMaterialVariant.ORE, material, ore)
+            builder.addMaterial(HTBlockMaterialVariant.ORE, material, ore)
             val groundTag: TagKey<Block> = when (variant) {
                 HTBlockMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE
                 HTBlockMaterialVariant.DEEP_ORE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
@@ -98,20 +109,24 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
-        RagiumBlocks.MATERIALS
-            .forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) ->
-                if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
-                    builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
-                }
-                builder.addBlock(variant, material, block)
-                if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
-                    builder.addBlock(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
-                }
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTHolderLike) ->
+            if (variant !is HTMaterialVariant.BlockTag) return@forEach
+            if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
+                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
             }
+            builder.addMaterial(variant, material, block)
+            if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
+                builder.addMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
+            }
+        }
+
+        for ((material: HTVanillaMaterialType, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
+            builder.addMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)
+        }
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
-        builder.addBlock(
+        builder.add(
             Tags.Blocks.OBSIDIANS,
             RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
@@ -134,15 +149,15 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Block>.addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
+    private fun HTTagBuilder<Block>.add(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
         addTag(parent, child)
         add(child, block)
     }
 
-    private fun HTTagBuilder<Block>.addBlock(variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) {
+    private fun HTTagBuilder<Block>.addMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) {
         val blockCommonTag: TagKey<Block> = variant.blockCommonTag ?: return
         val tagKey: TagKey<Block> = variant.blockTagKey(material)
-        addBlock(blockCommonTag, tagKey, block)
+        add(blockCommonTag, tagKey, block)
     }
 
     private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, HTHolderLike>) {

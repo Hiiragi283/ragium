@@ -11,7 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTFluidResultImpl(entry: HTKeyOrTagEntry<Fluid>, amount: Int, components: DataComponentPatch) :
+internal class HTFluidResultImpl(entry: HTKeyOrTagEntry<Fluid>, amount: Int, components: DataComponentPatch) :
     HTRecipeResultBase<Fluid, FluidStack>(entry, amount, components),
     HTFluidResult {
     companion object {

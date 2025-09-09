@@ -3,9 +3,9 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -40,7 +40,7 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Extensions    //
 
     private fun HTTagBuilder<Fluid>.addContent(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-        add(tagKey, content.getStill(), BuiltInRegistries.FLUID::getKey)
-        add(tagKey, content.getFlow(), BuiltInRegistries.FLUID::getKey)
+        add(tagKey, HTHolderLike.fromFluid(content.getStill()))
+        add(tagKey, HTHolderLike.fromFluid(content.getFlow()))
     }
 }

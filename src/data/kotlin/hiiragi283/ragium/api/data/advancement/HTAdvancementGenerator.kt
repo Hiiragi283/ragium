@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTHolderLike
@@ -11,7 +9,6 @@ import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -34,16 +31,16 @@ abstract class HTAdvancementGenerator {
 
     //    Extension    //
 
-    protected fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
+    protected inline fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
         HTAdvancementBuilder.root().apply(builderAction).save(output, key)
 
-    protected fun child(
+    protected inline fun child(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         builderAction: HTAdvancementBuilder.() -> Unit,
     ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
 
-    protected fun createSimple(
+    protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         variant: HTItemMaterialVariant,
@@ -57,26 +54,23 @@ abstract class HTAdvancementGenerator {
         builderAction,
     )
 
-    protected fun createSimple(
+    protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: AdvancementHolder,
         item: ItemLike,
         tagKey: TagKey<Item>? = null,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
-    ): AdvancementHolder {
-        val id: ResourceLocation = item.asItemHolder().idOrThrow
-        return child(key, parent) {
-            display {
-                setIcon(item)
-                setTitleFromKey(key)
-                setDescFromKey(key)
-                builderAction()
-            }
-            if (tagKey != null) {
-                hasItemsIn("has_${tagKey.location.toDebugFileName()}", tagKey)
-            } else {
-                hasAllItem("has_${id.path}", item)
-            }
+    ): AdvancementHolder = child(key, parent) {
+        display {
+            setIcon(item)
+            setTitleFromKey(key)
+            setDescFromKey(key)
+            builderAction()
+        }
+        if (tagKey != null) {
+            hasItemsIn("has_${tagKey.location.toDebugFileName()}", tagKey)
+        } else {
+            hasAllItem("has_${HTHolderLike.fromItem(item).getPath()}", item)
         }
     }
 

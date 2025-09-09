@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.tag
 
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.multiMapOf
+import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
+import java.util.function.BiConsumer
 
 /**
  * 登録した[TagKey]をソートして生成するビルダー
@@ -18,15 +20,7 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
     private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 
-    fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> =
-        add(tagKey, ResourceLocation.fromNamespaceAndPath(modId, path), DependType.OPTIONAL)
-
-    fun add(
-        tagKey: TagKey<T>,
-        obj: T,
-        keyGetter: (T) -> ResourceLocation,
-        type: DependType = DependType.REQUIRED,
-    ): HTTagBuilder<T> = add(tagKey, keyGetter(obj), type)
+    fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)
 
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
@@ -45,7 +39,7 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
         entryCache.put(tagKey, Entry(child.location, true, type))
     }
 
-    fun build(action: (TagKey<T>, TagEntry) -> Unit) {
+    fun build(action: BiConsumer<TagKey<T>, TagEntry>) {
         entryCache.map.forEach { (tagKey: TagKey<T>, entries: Collection<Entry>) ->
             entries
                 .sortedWith(
@@ -55,7 +49,7 @@ class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
                         .thenComparing(Entry::id),
                 ).toSet()
                 .forEach { entry: Entry ->
-                    action(tagKey, entry.toTagEntry())
+                    action.accept(tagKey, entry.toTagEntry())
                 }
         }
     }

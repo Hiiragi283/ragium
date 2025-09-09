@@ -15,7 +15,7 @@ class HTDeferredBlockEntityTypeRegister(namespace: String) :
     HTDeferredRegister<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE, namespace) {
     fun <BE : BlockEntity> registerType(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> {
         val holder: HTDeferredBlockEntityType<BE> =
-            HTDeferredBlockEntityType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
+            HTDeferredBlockEntityType.createType(createId(name))
         register(name) { _: ResourceLocation -> BlockEntityType.Builder.of(factory).build(null) }
         return holder
     }

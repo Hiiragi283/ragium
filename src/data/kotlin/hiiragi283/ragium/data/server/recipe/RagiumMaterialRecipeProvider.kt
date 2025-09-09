@@ -6,20 +6,23 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTCommonMaterialTypes
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
@@ -39,12 +42,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun compound(material: HTMaterialType): ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPOUND, material)
-
-    @JvmStatic
     private fun raginite() {
         // Ragi-Alloy
-        HTShapedRecipeBuilder(compound(RagiumMaterialType.RAGI_ALLOY))
+        HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
             .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER)
@@ -52,7 +52,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         HTCookingRecipeBuilder
             .blasting(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY))
-            .addIngredient(compound(RagiumMaterialType.RAGI_ALLOY))
+            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
@@ -69,19 +69,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL)
             .save(output)
         // Advanced Ragi-Alloy
-        HTShapedRecipeBuilder(compound(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-            .cross8()
-            .define('A', Tags.Items.DUSTS_GLOWSTONE)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .define('C', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
-            .save(output)
-
-        HTCookingRecipeBuilder
-            .blasting(RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-            .addIngredient(compound(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
-
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY),
@@ -119,44 +106,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.gemOrDust(HTVanillaMaterialType.LAPIS),
             ).save(output)
         // Azure Steel
-        HTShapedRecipeBuilder(compound(RagiumMaterialType.AZURE_STEEL))
-            .hollow4()
-            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE)
-            .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
-            .save(output)
-
-        HTCookingRecipeBuilder
-            .blasting(RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL))
-            .addIngredient(compound(RagiumMaterialType.AZURE_STEEL))
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
-
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL),
                 HTIngredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
                 HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE, 2),
             ).save(output)
-        // Azure Silicon
-        HTCookingRecipeBuilder
-            .blasting(RagiumItems.SILICON)
-            .addIngredient(gemOrDust(RagiumMaterialType.AZURE))
-            .setExp(0.7f)
-            .save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                HTResultHelper.INSTANCE.item(RagiumItems.SILICON, 2),
-                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                HTResultHelper.INSTANCE.item(RagiumItems.SILICON, 4),
-                HTIngredientHelper.gemOrDust(RagiumMaterialType.AZURE),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-            ).saveSuffixed(output, "_alt")
     }
 
     @JvmStatic
@@ -217,6 +172,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
+        // Gildium
+        HTItemToObjRecipeBuilder
+            .melting(
+                HTIngredientHelper.item(Items.GILDED_BLACKSTONE),
+                HTResultHelper.INSTANCE.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+            ).save(output)
+
+        HTFluidTransformRecipeBuilder
+            .refining(
+                HTIngredientHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+                HTResultHelper.INSTANCE.fluid(HTFluidContent.LAVA, 750),
+                null,
+                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.GILDIUM),
+            ).save(output)
         // Iridescentium
         HTCombineItemToObjRecipeBuilder
             .alloying(

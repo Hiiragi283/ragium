@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:advanced_ragi_alloy_coil"
+    },
+    "B": {
+      "tag": "c:ingots/azure_steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_ragi_alloy_coil_block"
+  }
+}

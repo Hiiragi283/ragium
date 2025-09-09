@@ -12,7 +12,7 @@ abstract class HTItemToChancedItemRecipeBase(val ingredient: HTItemIngredient, v
 
     final override fun getResultItems(input: SingleRecipeInput): List<HTItemToChancedItemRecipe.ChancedResult> = results
 
-    final override fun test(input: SingleRecipeInput): Boolean = !isIncomplete && ingredient.test(input.item())
+    final override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
     final override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
         getItemResult(input, registries, results.getOrNull(0))

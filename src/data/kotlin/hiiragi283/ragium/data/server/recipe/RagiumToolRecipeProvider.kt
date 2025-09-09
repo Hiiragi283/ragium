@@ -226,7 +226,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             HTTierType.ELITE,
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
             hammer(RagiumMaterialType.RAGI_ALLOY),
-        ).save(output)
+        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .save(output)
     }
 
     @JvmStatic
@@ -291,7 +292,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
+    private inline fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
             .cross8()
             .apply(builderAction)

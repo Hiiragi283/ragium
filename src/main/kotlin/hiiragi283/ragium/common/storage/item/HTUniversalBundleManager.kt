@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -14,15 +13,12 @@ class HTUniversalBundleManager private constructor(map: Map<DyeColor, HTItemHand
 
     private val map: MutableMap<DyeColor, HTItemHandler> = map.toMutableMap()
 
-    fun getHandler(color: DyeColor): HTItemHandler = map.computeIfAbsent(color) { _: DyeColor -> BundleHandler() }
+    fun getHandler(color: DyeColor): HTItemHandler =
+        map.computeIfAbsent(color) { _: DyeColor -> BundleHandler(HTGenericContainerRows.createHandler(3)) }
 
     private class BundleHandler(private val delegate: HTItemHandler) :
         HTItemHandler by delegate,
         HTMenuCallback {
-        constructor() : this(HTGenericContainerRows.createHandler(3))
-
-        constructor(slots: List<HTItemSlot>) : this(HTItemStackHandler(slots, null))
-
         override fun openMenu(player: Player) {
             player.level().playSound(null, player.blockPosition(), SoundEvents.WOOL_PLACE, SoundSource.PLAYERS)
         }

@@ -71,7 +71,7 @@ class HTFluidContentRegister(modId: String) {
         val typeHolder: HTDeferredHolder<FluidType, TYPE> =
             typeRegister.register(name) { _: ResourceLocation -> typeFactory(properties) }
 
-        val stillId: ResourceLocation = ResourceLocation.fromNamespaceAndPath(fluidRegister.namespace, name)
+        val stillId: ResourceLocation = fluidRegister.createId(name)
         val flowId: ResourceLocation = stillId.withPrefix("flowing_")
         val bucketId: ResourceLocation = stillId.withSuffix("_bucket")
 

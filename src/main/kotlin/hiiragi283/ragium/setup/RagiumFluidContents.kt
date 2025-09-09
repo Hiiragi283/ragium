@@ -2,15 +2,16 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
-import hiiragi283.ragium.common.fluid.HTNetherVaporizableFluidType
-import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
+import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
@@ -71,7 +72,7 @@ object RagiumFluidContents {
     //    Oil    //
 
     @JvmField
-    val CRUDE_OIL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val CRUDE_OIL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "crude_oil",
         molten()
             .canSwim(false)
@@ -79,36 +80,36 @@ object RagiumFluidContents {
             .density(3000)
             .viscosity(6000)
             .motionScale(0.0001),
-        HTExplosiveFluidType.create(2f),
+        HTFluidType.explosive(2f),
     )
 
     @JvmField
-    val NATURAL_GAS: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val NATURAL_GAS: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "natural_gas",
         gaseous(),
-        HTExplosiveFluidType.create(4f),
+        HTFluidType.explosive(4f),
     )
 
     @JvmField
-    val NAPHTHA: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val NAPHTHA: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "naphtha",
         properties(),
-        HTExplosiveFluidType.create(3f),
+        HTFluidType.explosive(3f),
     )
 
     @JvmField
-    val FUEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val FUEL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "fuel",
         properties(),
-        HTExplosiveFluidType.create(4f),
+        HTFluidType.explosive(4f),
     )
 
     @JvmField
-    val CRIMSON_FUEL: HTFluidContent<HTExplosiveFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val CRIMSON_FUEL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
             "crimson_fuel",
             properties(),
-            HTExplosiveFluidType.create(6f),
+            HTFluidType.explosive(6f),
         )
 
     @JvmField
@@ -118,8 +119,8 @@ object RagiumFluidContents {
     //    Sap    //
 
     @JvmField
-    val SAP: HTFluidContent<HTVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", properties(), HTVaporizableFluidType.create(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
+    val SAP: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("sap", properties(), HTFluidType.solidify(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -132,29 +133,38 @@ object RagiumFluidContents {
     //    Molten    //
 
     @JvmField
-    val CRIMSON_BLOOD: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val GILDED_LAVA: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
-            "crimson_blood",
+            "gilded_lava",
             molten(),
-            HTNetherVaporizableFluidType.create(
-                HTResultHelper.INSTANCE.item(
-                    HTItemMaterialVariant.GEM,
-                    RagiumMaterialType.CRIMSON_CRYSTAL,
-                ),
-            ),
+            HTFluidType.create {
+                canVaporize = HTFluidType.IS_ULTRA_WARM
+                interactLevel = { level: Level, pos: BlockPos ->
+                    level.setBlockAndUpdate(pos, Blocks.GILDED_BLACKSTONE.defaultBlockState())
+                }
+            },
         )
 
     @JvmField
-    val DEW_OF_THE_WARP: HTFluidContent<HTNetherVaporizableFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+    val CRIMSON_BLOOD: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register(
+            "crimson_blood",
+            molten(),
+            HTFluidType.create {
+                canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
+                dropItem = HTResultHelper.INSTANCE.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+            },
+        )
+
+    @JvmField
+    val DEW_OF_THE_WARP: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
             "dew_of_the_warp",
             molten(),
-            HTNetherVaporizableFluidType.create(
-                HTResultHelper.INSTANCE.item(
-                    HTItemMaterialVariant.GEM,
-                    RagiumMaterialType.WARPED_CRYSTAL,
-                ),
-            ),
+            HTFluidType.create {
+                canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
+                dropItem = HTResultHelper.INSTANCE.item(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            },
         )
 
     @JvmField
@@ -193,6 +203,13 @@ object RagiumFluidContents {
             HTFluidContent.LAVA.getType(),
             Blocks.AIR.defaultBlockState(),
             Blocks.SOUL_SAND.defaultBlockState(),
+        )
+
+        registerInteraction(
+            HTFluidContent.WATER,
+            ELDRITCH_FLUX.getType(),
+            Blocks.AIR.defaultBlockState(),
+            RagiumBlocks.ELDRITCH_STONE.get().defaultBlockState(),
         )
     }
 }

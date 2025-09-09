@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.extension.andThen
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -30,7 +31,7 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
         first: (ResourceLocation) -> F,
         second: (F) -> S,
         wrapper: (HTDeferredHolder<FIRST, F>, HTDeferredHolder<SECOND, S>) -> H,
-    ): H = registerAdvanced(name, first, { holder: HTDeferredHolder<FIRST, F> -> second(holder.get()) }, wrapper)
+    ): H = registerAdvanced(name, first, HTDeferredHolder<FIRST, F>::get.andThen(second), wrapper)
 
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerAdvanced(
         name: String,

@@ -23,7 +23,7 @@ interface HTRecipe<INPUT : RecipeInput> :
      */
     override fun test(input: INPUT): Boolean
 
-    override fun matches(input: INPUT, level: Level): Boolean = test(input)
+    override fun matches(input: INPUT, level: Level): Boolean = !isIncomplete && test(input)
 
     @Deprecated("Not used in Ragium")
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true

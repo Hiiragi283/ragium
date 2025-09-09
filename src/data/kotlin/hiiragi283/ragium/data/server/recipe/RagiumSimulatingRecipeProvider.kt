@@ -70,7 +70,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 HTIngredientHelper.item(Items.GLASS_BOTTLE),
-                HTIngredientHelper.item(Items.DRAGON_EGG),
+                HTIngredientHelper.item(Items.DRAGON_HEAD),
                 HTResultHelper.INSTANCE.item(Items.DRAGON_BREATH),
             ).save(output)
 

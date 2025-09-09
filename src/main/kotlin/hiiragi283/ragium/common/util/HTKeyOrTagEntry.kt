@@ -30,10 +30,9 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     val registryKey: ResourceKey<out Registry<T>> = entry.map(ResourceKey<T>::registryKey, TagKey<T>::registry)
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val error: DataResult<Holder<T>> = DataResult.error { "Failed to find lookup for $registryKey" }
         val getter: HolderGetter<T> = provider?.lookupOrThrow(registryKey)
-            ?: RagiumAPI.Companion.getInstance().resolveLookup(registryKey)
-            ?: return error
+            ?: RagiumAPI.getInstance().resolveLookup(registryKey)
+            ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
     }
 
@@ -51,5 +50,5 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
         .get(tagKey)
         .flatMap(HTTagHelper::getFirstHolder)
         .map(DataResult<Holder<T>>::success)
-        .orElse(DataResult.error { "Missing tag in ${tagKey.registry()}: ${tagKey.location}" })
+        .orElse(DataResult.error { "Missing tag in ${tagKey.registry().location()}: ${tagKey.location}" })
 }

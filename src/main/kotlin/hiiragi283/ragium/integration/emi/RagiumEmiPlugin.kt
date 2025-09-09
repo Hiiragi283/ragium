@@ -30,10 +30,10 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.fluid.HTVaporizableFluidType
-import hiiragi283.ragium.common.recipe.HTDynamicRecipes
+import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.util.HTRegistryHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
@@ -44,6 +44,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -251,15 +252,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        HTDynamicRecipes.bucketEmptying().forEach { (id: ResourceLocation, recipe: HTItemToFluidRecipe) ->
-            registry.addRecipe(
-                HTMeltingEmiRecipe(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }
         // Mixing
         /*RagiumRecipeTypes.MIXING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToFluidRecipe ->
             registry.addRecipe(
@@ -295,58 +287,6 @@ class RagiumEmiPlugin : EmiPlugin {
         }*/
     }
 
-    /*private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {
-        // 液体源でない場合はスキップ
-        val fluid: Fluid = holder.value()
-        if (!fluid.isSource(fluid.defaultFluidState())) return
-        // バケツが存在しない場合はスキップ
-        val bucket: ItemStack = FluidUtil.getFilledBucket(FluidStack(fluid, 1))
-        if (bucket.isEmpty) return
-        addRecipeSafe(holder.idOrThrow.withPrefix("/extracting/bucket/")) { id: ResourceLocation ->
-            HTExtractingEmiRecipe(
-                id,
-                HTRecipeDefinition(
-                    listOf(
-                        SizedIngredient.of(bucket.item, 1),
-                    ),
-                    listOf(),
-                    listOf(
-                        HTItemOutput.of(bucket.craftingRemainingItem),
-                    ),
-                    listOf(
-                        HTFluidOutput.of(fluid, 1000),
-                    ),
-                ),
-            )
-        }
-    }
-
-    private fun addBucketFilling(holder: Holder.Reference<Fluid>) {
-        // 液体源でない場合はスキップ
-        val fluid: Fluid = holder.value()
-        if (!fluid.isSource(fluid.defaultFluidState())) return
-        // バケツが存在しない場合はスキップ
-        val bucket: ItemStack = FluidUtil.getFilledBucket(FluidStack(fluid, 1))
-        if (bucket.isEmpty) return
-        addRecipeSafe(holder.idOrThrow.withPrefix("/infusing/bucket/")) { id: ResourceLocation ->
-            HTInfusingEmiRecipe(
-                id,
-                HTRecipeDefinition(
-                    listOf(
-                        SizedIngredient.of(bucket.craftingRemainingItem.item, 1),
-                    ),
-                    listOf(
-                        SizedFluidIngredient.of(fluid, 1000),
-                    ),
-                    listOf(
-                        HTItemOutput.of(bucket),
-                    ),
-                    listOf(),
-                ),
-            )
-        }
-    }*/
-
     private fun addInteractions() {
         // Water Well
         addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
@@ -376,17 +316,21 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // World Vaporization
-        for (fluid: Fluid in HTDynamicRecipes.fluidStream()) {
+        for (fluid: Fluid in HTRegistryHelper.fluidStream()) {
             val type: FluidType = fluid.fluidType
-            if (type is HTVaporizableFluidType) {
-                addInteraction(type.drop.toEmi()) {
+            if (type is HTFluidType) {
+                val result: EmiStack = type.dropItem?.toEmi() ?: continue
+                addInteraction(result) {
                     leftInput(EmiStack.of(fluid.bucket))
                     rightInput(EmiStack.EMPTY, false)
                 }
             }
         }
-        // Crude Oil + Lava -> Magma Block / Soul Sand
+        // Crude Oil + Lava -> Soul Sand
         addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidContent.LAVA)
+
+        // Water + Eldritch Flux -> Eldritch Stone
+        addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidContent.WATER, RagiumFluidContents.ELDRITCH_FLUX)
     }
 
     private fun addInteraction(

@@ -97,7 +97,6 @@ object RagiumCreativeTabs {
         listOf(
             HTItemMaterialVariant.RAW_MATERIAL,
             HTItemMaterialVariant.GEM,
-            RagiumMaterialVariants.COMPOUND,
             HTItemMaterialVariant.INGOT,
             HTItemMaterialVariant.NUGGET,
             HTItemMaterialVariant.DUST,
@@ -290,8 +289,7 @@ object RagiumCreativeTabs {
 
         if (INGREDIENTS.`is`(key)) {
             insertAfter(RagiumItems.getDust(RagiumMaterialType.RAGINITE), RagiumItems.RAGI_COKE)
-
-            insertAfter(RagiumItems.getGem(RagiumMaterialType.AZURE), RagiumItems.SILICON)
+            insertBefore(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY), RagiumItems.RAGI_ALLOY_COMPOUND)
 
             insertAfter(RagiumItems.getDust(HTVanillaMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)

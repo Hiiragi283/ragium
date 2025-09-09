@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
+import java.util.function.Supplier
 
 object BiCodecs {
     /**
@@ -111,7 +112,7 @@ object BiCodecs {
     )
 
     @JvmStatic
-    inline fun <reified V> enum(noinline values: () -> Array<V>): BiCodec<FriendlyByteBuf, V> where V : StringRepresentable, V : Enum<V> =
+    inline fun <reified V> enum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : StringRepresentable, V : Enum<V> =
         BiCodec.of(
             StringRepresentable.fromEnum(values),
             NeoForgeStreamCodecs.enumCodec(V::class.java),

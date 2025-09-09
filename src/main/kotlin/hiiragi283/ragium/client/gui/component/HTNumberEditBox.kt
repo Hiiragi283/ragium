@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
-import hiiragi283.ragium.api.gui.component.HTWidgetExtension
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.math.HTBoundsProvider
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.network.chat.Component
@@ -27,7 +27,7 @@ class HTNumberEditBox<N>(
         height,
         Component.empty(),
     ),
-    HTWidgetExtension where N : Number, N : Comparable<N> {
+    HTBoundsProvider where N : Number, N : Comparable<N> {
     var number: N
         get() = value.let(getter)
         set(value) {

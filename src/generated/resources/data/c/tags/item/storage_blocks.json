@@ -1,15 +1,19 @@
 {
   "values": [
     "#c:storage_blocks/advanced_ragi_alloy",
+    "#c:storage_blocks/amethyst",
     "#c:storage_blocks/azure_steel",
     "#c:storage_blocks/chocolate",
     "#c:storage_blocks/cooked_meat",
     "#c:storage_blocks/crimson_crystal",
     "#c:storage_blocks/deep_steel",
     "#c:storage_blocks/eldritch_pearl",
+    "#c:storage_blocks/gildium",
+    "#c:storage_blocks/glowstone",
     "#c:storage_blocks/iridescentium",
     "#c:storage_blocks/meat",
     "#c:storage_blocks/plastic",
+    "#c:storage_blocks/quartz",
     "#c:storage_blocks/ragi_alloy",
     "#c:storage_blocks/ragi_crystal",
     "#c:storage_blocks/warped_crystal"

@@ -38,10 +38,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult {
-        if (isClientSide) RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
-        return InteractionResult.sidedSuccess(isClientSide)
-    }
+    ): InteractionResult = RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))

@@ -9,8 +9,10 @@ import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -204,7 +206,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
         // Budding Amethyst
         HTFluidTransformRecipeBuilder
             .infusing(
-                HTIngredientHelper.item(Items.AMETHYST_BLOCK),
+                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.AMETHYST),
                 HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 4000),
                 HTResultHelper.INSTANCE.item(Items.BUDDING_AMETHYST),
             ).save(output)

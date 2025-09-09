@@ -13,6 +13,7 @@ object RagiumFoods {
     @JvmStatic
     val AMBROSIA: FoodProperties = HTFoodBuilder.create {
         nutrition = FoodConstants.MAX_FOOD
+        saturation = 0.5f
         alwaysEat = true
     }
 

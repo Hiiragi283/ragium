@@ -34,7 +34,7 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) : IEne
 
     override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int {
         if (!canReceive() || toReceive <= 0) return 0
-        val received: Int = Mth.clamp(maxEnergyStored - energyStored, 0, toReceive)
+        val received: Int = Mth.clamp(getNeeded(), 0, toReceive)
         if (!simulate) {
             this.amount += received
         }

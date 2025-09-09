@@ -24,7 +24,7 @@ interface HTItemToObjRecipe<RESULT : HTRecipeResult<*>> : HTRecipe<SingleRecipeI
      */
     val result: RESULT
 
-    override fun test(input: SingleRecipeInput): Boolean = !isIncomplete && ingredient.test(input.item())
+    override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
     override fun isIncomplete(): Boolean = ingredient.hasNoMatchingStacks() || result.hasNoMatchingStack()
 }
