@@ -150,6 +150,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
+
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
@@ -175,6 +177,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.RESIN, "Resin")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
+
+        add(RagiumItems.POTATO_SPROUTS, "Potato Sprouts")
+        add(RagiumItems.GREEN_CAKE, "Green Cake")
+        add(RagiumItems.GREEN_CAKE_DUST, "Green Cake Dust")
+        add(RagiumItems.GREEN_PELLET, "Green Pellet")
 
         addPatterned()
         // Armor

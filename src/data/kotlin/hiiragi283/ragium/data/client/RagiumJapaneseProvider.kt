@@ -141,6 +141,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
+
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.NATURAL_GAS, "天然ガス")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
@@ -166,6 +168,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.RESIN, "樹脂")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
+
+        add(RagiumItems.POTATO_SPROUTS, "ジャガイモの芽")
+        add(RagiumItems.GREEN_CAKE, "グリーンケーキ")
+        add(RagiumItems.GREEN_CAKE_DUST, "グリーンケーキの粉")
+        add(RagiumItems.GREEN_PELLET, "グリーンペレット")
 
         addPatterned()
         // Armor

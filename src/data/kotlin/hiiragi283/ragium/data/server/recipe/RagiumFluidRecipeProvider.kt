@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -25,14 +26,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        melting()
-
-        crudeOil()
-        sap()
-    }
-
-    @JvmStatic
-    private fun melting() {
         // Magma Block <-> Lava
         meltAndFreeze(
             HTIngredientHelper.item(Tags.Items.GLASS_BLOCKS),
@@ -40,6 +33,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             HTFluidContent.LAVA,
             125,
         )
+
+        crudeOil()
+        sap()
+        mutagen()
     }
 
     @JvmStatic
@@ -149,5 +146,48 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             // sap -> molten
             distillation(sap to 1000, null, HTResultHelper.INSTANCE.fluid(molten, HTMoltenCrystalData.SAP_TO_MOLTEN) to null)
         }
+    }
+
+    @JvmStatic
+    private fun mutagen() {
+        // Organic Mutagen
+        HTFluidTransformRecipeBuilder
+            .mixing(
+                HTIngredientHelper.item(Tags.Items.FOODS_FOOD_POISONING),
+                HTIngredientHelper.water(1000),
+                HTResultHelper.INSTANCE.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 1000),
+            ).save(output)
+
+        // Poisonous Potato
+        HTFluidTransformRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(Tags.Items.CROPS_POTATO),
+                HTIngredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+                HTResultHelper.INSTANCE.item(Items.POISONOUS_POTATO),
+            ).save(output)
+        // Potato Sprouts
+        HTItemToObjRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Items.POISONOUS_POTATO),
+                HTResultHelper.INSTANCE.item(RagiumItems.POTATO_SPROUTS),
+            ).save(output)
+        // Green Cake
+        HTItemToObjRecipeBuilder
+            .compressing(
+                HTIngredientHelper.item(RagiumItems.POTATO_SPROUTS, 16),
+                HTResultHelper.INSTANCE.item(RagiumItems.GREEN_CAKE),
+            ).save(output)
+
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                HTIngredientHelper.item(RagiumItems.GREEN_CAKE),
+                HTResultHelper.INSTANCE.item(RagiumItems.GREEN_CAKE_DUST, 8),
+            ).save(output)
+        // Green Pellet
+        HTShapedRecipeBuilder(RagiumItems.GREEN_PELLET, 8)
+            .hollow8()
+            .define('A', RagiumItems.GREEN_CAKE_DUST)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
+            .save(output)
     }
 }

@@ -81,23 +81,50 @@ object RagiumItems {
 
     //    Materials    //
 
+    // Raginite
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTDeferredItem<Item> = register("${RagiumConst.RAGI_ALLOY}_compound")
 
     @JvmField
     val RAGI_COKE: HTDeferredItem<Item> = register("ragi_coke")
 
+    // Deep Steel
+    @JvmField
+    val DEEP_SCRAP: HTDeferredItem<Item> = register("deep_scrap")
+
+    // Wood
     @JvmField
     val COMPRESSED_SAWDUST: HTDeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
     val RESIN: HTDeferredItem<Item> = register("resin")
 
+    // Oil
     @JvmField
     val TAR: HTDeferredItem<Item> = register("tar")
 
+    // Nuclear Fuel
     @JvmField
-    val DEEP_SCRAP: HTDeferredItem<Item> = register("deep_scrap")
+    val POTATO_SPROUTS: HTDeferredItem<Item> = register("potato_sprouts")
+
+    @JvmField
+    val GREEN_CAKE: HTDeferredItem<Item> = register("green_cake")
+
+    @JvmField
+    val GREEN_CAKE_DUST: HTDeferredItem<Item> = register("green_cake_dust")
+
+    @JvmField
+    val GREEN_PELLET: HTDeferredItem<Item> = register("green_pellet")
+
+    // Misc
+    @JvmField
+    val BASALT_MESH: HTDeferredItem<Item> = register("basalt_mesh")
+
+    @JvmField
+    val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
+
+    @JvmField
+    val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll", Item.Properties())
 
     @JvmField
     val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
@@ -375,17 +402,12 @@ object RagiumItems {
 
     //    Machine Parts    //
 
-    @JvmField
-    val BASALT_MESH: HTDeferredItem<Item> = register("basalt_mesh")
-
-    @JvmField
-    val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
-
+    // Catalyst
     @JvmField
     val PLATING_CATALYST: HTDeferredItem<Item> = register("plating_catalyst", ::HTCatalystItem)
 
     @JvmField
-    val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll", Item.Properties())
+    val POLYMER_CATALYST: HTDeferredItem<Item> = register("polymer_catalyst", ::HTCatalystItem)
 
     // LED
     @JvmField
@@ -404,9 +426,6 @@ object RagiumItems {
     // Plastics
     @JvmField
     val POLYMER_RESIN: HTDeferredItem<Item> = register("polymer_resin")
-
-    @JvmField
-    val POLYMER_CATALYST: HTDeferredItem<Item> = register("polymer_catalyst", ::HTCatalystItem)
 
     @JvmField
     val SYNTHETIC_FIBER: HTDeferredItem<Item> = register("synthetic_fiber")

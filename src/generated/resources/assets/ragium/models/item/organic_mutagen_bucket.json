@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:organic_mutagen",
+  "loader": "neoforge:fluid_container"
+}

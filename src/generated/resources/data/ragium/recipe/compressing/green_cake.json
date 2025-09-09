@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 16,
+    "item": "ragium:potato_sprouts"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:green_cake"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "item": "ragium:green_cake"
+  },
+  "result": {
+    "count": 8,
+    "id": "ragium:green_cake_dust"
+  }
+}

@@ -172,6 +172,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
+        liquid(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
+
         molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -16,6 +17,7 @@ enum class HTMekMaterialVariant(private val enUsPattern: String, private val jaJ
     CLUMP("%s Clump", "%sの塊", "clumps"),
     SHARD("%s Shard", "%sの欠片", "shards"),
     CRYSTAL("%s Crystal", "%sの結晶", "crystals"),
+    PELLET("%s Pellet", "%sペレット", "pellets"),
 
     // Mekanism
     ENRICHED("Enriched %s", "濃縮%s", "enriched"),
@@ -27,6 +29,7 @@ enum class HTMekMaterialVariant(private val enUsPattern: String, private val jaJ
             CLUMP -> MekanismTags.Items.CLUMPS
             SHARD -> MekanismTags.Items.SHARDS
             CRYSTAL -> MekanismTags.Items.CRYSTALS
+            PELLET -> RagiumCommonTags.Items.PELLETS
             ENRICHED -> MekanismTags.Items.ENRICHED
         }
 

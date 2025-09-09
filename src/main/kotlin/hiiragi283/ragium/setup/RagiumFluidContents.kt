@@ -41,7 +41,7 @@ object RagiumFluidContents {
         REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory)
 
     @JvmStatic
-    private fun properties(): FluidType.Properties = FluidType.Properties
+    private fun liquid(): FluidType.Properties = FluidType.Properties
         .create()
         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
@@ -53,21 +53,27 @@ object RagiumFluidContents {
         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
 
     @JvmStatic
-    private fun gaseous(): FluidType.Properties = properties().density(-1000)
+    private fun gaseous(): FluidType.Properties = liquid().density(-1000)
 
     //    Vanilla    //
 
     @JvmField
     val HONEY: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("honey", properties())
+        register("honey", liquid())
 
     @JvmField
     val EXPERIENCE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("experience", properties())
+        register("experience", liquid())
 
     @JvmField
     val MUSHROOM_STEW: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("mushroom_stew", properties())
+        register("mushroom_stew", liquid())
+
+    //    Organic    //
+
+    @JvmField
+    val ORGANIC_MUTAGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("organic_mutagen", liquid())
 
     //    Oil    //
 
@@ -93,14 +99,14 @@ object RagiumFluidContents {
     @JvmField
     val NAPHTHA: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "naphtha",
-        properties(),
+        liquid(),
         HTFluidType.explosive(3f),
     )
 
     @JvmField
     val FUEL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "fuel",
-        properties(),
+        liquid(),
         HTFluidType.explosive(4f),
     )
 
@@ -108,27 +114,27 @@ object RagiumFluidContents {
     val CRIMSON_FUEL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
             "crimson_fuel",
-            properties(),
+            liquid(),
             HTFluidType.explosive(6f),
         )
 
     @JvmField
     val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("lubricant", properties())
+        register("lubricant", liquid())
 
     //    Sap    //
 
     @JvmField
     val SAP: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", properties(), HTFluidType.solidify(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
+        register("sap", liquid(), HTFluidType.solidify(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("crimson_sap", properties())
+        register("crimson_sap", liquid())
 
     @JvmField
     val WARPED_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("warped_sap", properties())
+        register("warped_sap", liquid())
 
     //    Molten    //
 

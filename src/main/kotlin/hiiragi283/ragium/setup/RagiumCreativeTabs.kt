@@ -106,6 +106,10 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.TAR)
         output.accept(RagiumItems.PLATING_CATALYST)
 
+        output.accept(RagiumItems.POTATO_SPROUTS)
+        output.accept(RagiumItems.GREEN_CAKE)
+        output.accept(RagiumItems.GREEN_CAKE_DUST)
+
         output.accept(RagiumItems.ELDER_HEART)
         output.accept(RagiumItems.WITHER_DOLl)
 
