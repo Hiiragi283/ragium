@@ -35,7 +35,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
         protected fun getContents(): ItemContainerContents = parent.getOrDefault(component, ItemContainerContents.EMPTY)
 
         override fun getStack(): ItemStack = when (slot) {
-            in (0 until getContents().slots) -> getContents().getStackInSlot(slot)
+            in (0..<getContents().slots) -> getContents().getStackInSlot(slot)
             else -> ItemStack.EMPTY
         }
 

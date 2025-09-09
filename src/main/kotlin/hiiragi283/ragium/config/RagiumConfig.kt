@@ -73,6 +73,10 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val hugeDrumCapacity: HTIntConfigValue
 
+    // Item
+    @JvmField
+    val teleportKeyCost: HTIntConfigValue
+
     // Recipe
     @JvmField
     val tagOutputPriority: HTListConfigValue<String>
@@ -94,11 +98,11 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
                 HTTierType.ELITE -> 512
                 else -> 2048
             }
-            val value = HTIntConfigValue(builder.definePositiveInt("energyRate", defaultValue))
+            val value = builder.definePositiveInt("energyRate", defaultValue)
             builder.pop()
             value
         }
-        generatorInputTankCapacity = HTIntConfigValue(builder.definePositiveInt("tankCapacity", 8000))
+        generatorInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
         // Machine
         builder.push("machine")
@@ -112,21 +116,21 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
                 HTTierType.ELITE -> 256
                 else -> 1024
             }
-            val value = HTIntConfigValue(builder.definePositiveInt("energyUsage", defaultValue))
+            val value = builder.definePositiveInt("energyUsage", defaultValue)
             builder.pop()
             value
         }
 
         builder.push("melter")
-        melterTankCapacity = HTIntConfigValue(builder.definePositiveInt("tankCapacity", 8000))
+        melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
         builder.push("refinery")
         builder.push("input")
-        refineryInputTankCapacity = HTIntConfigValue(builder.definePositiveInt("tankCapacity", 8000))
+        refineryInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
         builder.push("output")
-        refineryOutputTankCapacity = HTIntConfigValue(builder.definePositiveInt("tankCapacity", 8000))
+        refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop(2)
 
         builder.pop()
@@ -135,41 +139,45 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
         deviceTickRate = HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
             val name: String = variant.serializedName
             builder.push(name)
-            val value = HTIntConfigValue(builder.definePositiveInt("tickRate", 20))
+            val value: HTIntConfigValue = builder.definePositiveInt("tickRate", 20)
             builder.pop()
             value
         }
         builder.push("collector")
-        deviceCollectorTankCapacity = HTIntConfigValue(builder.definePositiveInt("tankCapacity", 8000))
-        deviceCollectorEntityRange = HTDoubleConfigValue(builder.definePositiveDouble("entityRange", 5.0, 1.0, 16.0))
+        deviceCollectorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        deviceCollectorEntityRange = builder.definePositiveDouble("entityRange", 5.0, 1.0, 16.0)
         builder.pop()
 
         builder.push("exp_collector")
-        expCollectorMultiplier = HTIntConfigValue(builder.definePositiveInt("multiplier", 20))
+        expCollectorMultiplier = builder.definePositiveInt("multiplier", 20)
         builder.pop()
 
         builder.push("milk_collector")
-        milkCollectorMultiplier = HTIntConfigValue(builder.definePositiveInt("multiplier", 20))
+        milkCollectorMultiplier = builder.definePositiveInt("multiplier", 20)
         builder.pop()
 
         builder.pop()
         // Drum
         builder.push("drum")
         builder.push("small")
-        smallDrumCapacity = HTIntConfigValue(builder.definePositiveInt("capacity", 16_000))
+        smallDrumCapacity = builder.definePositiveInt("capacity", 16_000)
         builder.pop()
 
         builder.push("medium")
-        mediumDrumCapacity = HTIntConfigValue(builder.definePositiveInt("capacity", 32_000))
+        mediumDrumCapacity = builder.definePositiveInt("capacity", 32_000)
         builder.pop()
 
         builder.push("large")
-        largeDrumCapacity = HTIntConfigValue(builder.definePositiveInt("capacity", 64_000))
+        largeDrumCapacity = builder.definePositiveInt("capacity", 64_000)
         builder.pop()
 
         builder.push("huge")
-        hugeDrumCapacity = HTIntConfigValue(builder.definePositiveInt("capacity", 256_000))
+        hugeDrumCapacity = builder.definePositiveInt("capacity", 256_000)
         builder.pop()
+        builder.pop()
+        // Item
+        builder.push("item")
+        teleportKeyCost = builder.definePositiveInt("teleportKeyCost", 10)
         builder.pop()
         // Recipe
         builder.push("recipe")
@@ -195,13 +203,13 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
 
     //    Extension    //
 
-    private fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min: Int = 1): ModConfigSpec.IntValue =
-        defineInRange(path, defaultValue, min, Int.MAX_VALUE)
+    private fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min: Int = 1): HTIntConfigValue =
+        defineInRange(path, defaultValue, min, Int.MAX_VALUE).let(::HTIntConfigValue)
 
     private fun ModConfigSpec.Builder.definePositiveDouble(
         path: String,
         defaultValue: Double,
         min: Double,
         max: Double,
-    ): ModConfigSpec.DoubleValue = defineInRange(path, defaultValue, min, max)
+    ): HTDoubleConfigValue = defineInRange(path, defaultValue, min, max).let(::HTDoubleConfigValue)
 }

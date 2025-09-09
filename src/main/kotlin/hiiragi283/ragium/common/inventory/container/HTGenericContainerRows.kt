@@ -22,7 +22,7 @@ interface HTGenericContainerRows {
             canInsert: Predicate<ItemStack> = Predicates.alwaysTrue(),
             filter: Predicate<ItemStack> = Predicates.alwaysTrue(),
         ): HTItemHandler = HTItemStackHandler(
-            (0 until rows * 9).map { index: Int ->
+            (0..<(rows * 9)).map { index: Int ->
                 HTItemStackSlot.create(
                     null,
                     HTSlotHelper.getSlotPosX(index % 9),

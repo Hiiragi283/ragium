@@ -66,8 +66,7 @@ abstract class HTSpriteWidget(
         RenderSystem.defaultBlendFunc()
         setShaderColor(guiGraphics, color) {
             RenderSystem.enableBlend()
-            val times: Int = 1 + (Mth.ceil(fillLevel) / width)
-            for (i: Int in (0 until times)) {
+            for (i: Int in (0..(Mth.ceil(fillLevel) / width))) {
                 val subHeight: Float = min(width.toFloat(), fillLevel - (width * i))
                 val offsetY: Float = height - width * i - subHeight
                 drawQuad(

@@ -1,17 +1,12 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addEnergyTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.registries.Registries
+import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.roundToInt
 
@@ -37,22 +32,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         fun getMaxEnergyStored(stack: ItemStack): Int = getStorage(stack)?.maxEnergyStored ?: 0
 
         @JvmStatic
-        fun getEnergyUsage(stack: ItemStack, amount: Int): Int {
-            var result: Int = amount
-            val enchGetter: HolderGetter<Enchantment> = RagiumAPI.getInstance().resolveLookup(Registries.ENCHANTMENT) ?: return amount
-            enchGetter
-                .get(Enchantments.UNBREAKING)
-                .ifPresent { holder: Holder.Reference<Enchantment> ->
-                    val level: Int = stack.getEnchantmentLevel(holder)
-                    if (level > 0) {
-                        result /= (level + 1)
-                    }
-                }
-            return result
-        }
-
-        @JvmStatic
-        fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean = getEnergyStored(stack) >= getEnergyUsage(stack, amount)
+        fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean = getEnergyStored(stack) >= HTItemHelper.getFixedUsage(stack, amount)
     }
 
     //    Item    //
@@ -80,7 +60,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     abstract class User(properties: Properties) : HTEnergyItem(properties) {
         protected abstract val energyUsage: Int
 
-        protected fun getEnergyUsage(stack: ItemStack): Int = getEnergyUsage(stack, energyUsage)
+        protected fun getEnergyUsage(stack: ItemStack): Int = HTItemHelper.getFixedUsage(stack, energyUsage)
 
         protected fun canConsumeEnergy(stack: ItemStack): Boolean = canConsumeEnergy(stack, energyUsage)
     }

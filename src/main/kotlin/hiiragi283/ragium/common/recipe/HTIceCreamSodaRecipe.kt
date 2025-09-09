@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.indices
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumItems
@@ -21,7 +22,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
         var isCherry = false
         var isPotion = false
         var isDye = false
-        for (index: Int in (0 until input.size())) {
+        for (index: Int in input.indices) {
             val stackIn: ItemStack = input.getItem(index)
             if (stackIn.isEmpty) continue
             if (stackIn.`is`(RagiumItems.ICE_CREAM) && !isIceCream) {
@@ -39,7 +40,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (index: Int in (0 until input.size())) {
+        for (index: Int in input.indices) {
             val stackIn: ItemStack = input.getItem(index)
             if (stackIn.isEmpty) continue
             if (stackIn.has(DataComponents.POTION_CONTENTS)) {

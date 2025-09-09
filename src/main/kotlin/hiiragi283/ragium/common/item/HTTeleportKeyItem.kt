@@ -1,14 +1,18 @@
 package hiiragi283.ragium.common.item
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.component.HTTeleportPos
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvent
@@ -17,7 +21,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -31,19 +34,23 @@ import net.minecraft.world.level.portal.DimensionTransition
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(Rarity.RARE)) {
-    private val fuelStack: FluidStack
-        get() = RagiumFluidContents.DEW_OF_THE_WARP.toStack(125)
-
     override fun onItemUseFirst(stack: ItemStack, context: UseOnContext): InteractionResult {
+        // サーバー側のみで実行
         val level: Level = context.level
         if (level.isClientSide) return InteractionResult.PASS
         val pos: BlockPos = context.clickedPos
         // 右クリックしたブロックの座標を保持する
-        context.itemInHand.set(
-            RagiumDataComponents.TELEPORT_POS,
-            HTTeleportPos(level.dimension(), pos.above()),
-        )
-        return InteractionResult.sidedSuccess(false)
+        // すでに保存されている場合はスキップ
+        return when {
+            stack.has(RagiumDataComponents.TELEPORT_POS) -> InteractionResult.PASS
+            else -> {
+                stack.set(
+                    RagiumDataComponents.TELEPORT_POS,
+                    HTTeleportPos(level.dimension(), pos.above()),
+                )
+                InteractionResult.sidedSuccess(false)
+            }
+        }
     }
 
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
@@ -51,12 +58,10 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         if (level.isClientSide) return stack
         // 実行者がプレイヤーの場合のみ実行
         if (livingEntity is ServerPlayer) {
-            // テレポートに成功したらチケットを消費
-            val sound: SoundEvent = if (tryToTeleport(livingEntity, stack)) {
-                CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
-                SoundEvents.PLAYER_TELEPORT
-            } else {
-                SoundEvents.OMINOUS_BOTTLE_DISPOSE
+            val player: ServerPlayer = livingEntity
+            val sound: SoundEvent = when (teleportPlayer(stack, player)) {
+                true -> SoundEvents.PLAYER_TELEPORT
+                false -> SoundEvents.OMINOUS_BOTTLE_DISPOSE
             }
             // SEを鳴らす
             level.playSound(
@@ -68,56 +73,45 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
                 SoundSource.PLAYERS,
             )
         }
-        return stack
+        return super.finishUsingItem(stack, level, livingEntity)
     }
 
-    private fun tryToTeleport(player: ServerPlayer, stack: ItemStack): Boolean {
-        val teleportPos: HTTeleportPos = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
-        val targetLevel: ServerLevel = player.server.getLevel(teleportPos.dimension) ?: return false
-        // テレポート可能か判定する
-        return canTeleportTo(targetLevel, teleportPos, stack)
-            .ifError {
-                player.displayClientMessage(
-                    Component.translatable(it.message()).withStyle(ChatFormatting.RED),
-                    true,
-                )
-            }.map {
-                // 実際にテレポートを行う
-                if (player.connection.isAcceptingMessages) {
-                    val drain: Int = getFluidUsage(stack, fuelStack)
-                    drainFluid(stack, drain, false)
+    private fun teleportPlayer(stack: ItemStack, player: ServerPlayer): Boolean {
+        val (dim: ResourceKey<Level>, pos: BlockPos) = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
+        val level: ServerLevel = player.server.getLevel(dim) ?: return false
+        // 燃料を消費できなければスキップ
+        val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.CONFIG.teleportKeyCost.asInt
+        val fuelStack: FluidStack = RagiumFluidContents.DEW_OF_THE_WARP.toStack(usage)
+        if (!canConsumeFluid(stack, 0, fuelStack)) {
+            player.displayClientMessage(
+                Component.translatable("Required fuel: ${fuelStack.amount} mb").withStyle(ChatFormatting.RED),
+                true,
+            )
+            return false
+        }
+        // 実際にテレポートを行う
+        if (player.connection.isAcceptingMessages) {
+            val tank: HTFluidTank = getFluidTank(stack, 0) ?: return false
+            val drain: Int = HTItemHelper.getFixedUsage(stack, fuelStack.amount)
+            tank.extract(drain, false, HTStorageAccess.INTERNAl)
 
-                    player.changeDimension(toTransition(targetLevel, teleportPos, player))
-                    player.resetFallDistance()
-                    player.resetCurrentImpulseContext()
-                    CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
-                    return@map true
-                }
-                return@map false
-            }.result()
-            .orElse(false)
+            val transition = DimensionTransition(
+                level,
+                pos.toCenterVec3(),
+                player.deltaMovement,
+                player.yRot,
+                player.xRot,
+                DimensionTransition.DO_NOTHING,
+            )
+            player.changeDimension(transition)
+            player.resetFallDistance()
+            player.resetCurrentImpulseContext()
+            CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
+            return true
+        } else {
+            return false
+        }
     }
-
-    private fun canTeleportTo(serverLevel: ServerLevel, teleportPos: HTTeleportPos, stack: ItemStack): DataResult<Unit> = when {
-        // 指定した座標が読み込まれていなければエラー
-        !serverLevel.isLoaded(teleportPos.pos) -> DataResult.error { "" }
-        // 燃料タンクが見つからなければエラー
-        !hasHandler(stack) -> DataResult.error { "Failed to get fluid handler" }
-        // 燃料を消費できなければエラー
-        !canConsumeFluid(stack, 1, fuelStack) -> DataResult.error { "Low fuel!" }
-
-        else -> DataResult.success(Unit)
-    }
-
-    private fun toTransition(serverLevel: ServerLevel, teleportPos: HTTeleportPos, target: Entity): DimensionTransition =
-        DimensionTransition(
-            serverLevel,
-            teleportPos.pos.toCenterVec3(),
-            target.deltaMovement,
-            target.yRot,
-            target.xRot,
-            DimensionTransition.DO_NOTHING,
-        )
 
     override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = 20 * 2
 
