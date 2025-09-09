@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/advanced_ragi_alloy"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "ragium:advanced_ragi_alloy_coil"
+      "item": "minecraft:furnace"
     },
     "C": {
-      "item": "minecraft:blast_furnace"
+      "item": "ragium:ragi_alloy_coil_block"
     },
     "D": {
-      "item": "minecraft:nether_bricks"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [

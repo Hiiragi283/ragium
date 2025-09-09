@@ -14,12 +14,14 @@ object RagiumMaterialVariants {
         override fun getSerializedName(): String = name
     }
 
+    // Block
+    @JvmField
+    val COIL_BLOCK: HTMaterialVariant = createCustom("coil_block", "%s Coil Block", "%sコイルブロック")
+
+    // Item
     @JvmField
     val COIL: HTMaterialVariant = createCustom("coil", "%s Coil", "%sコイル")
 
     @JvmField
     val COMPONENT: HTMaterialVariant = createCustom("component", "%s Component", "%s構造体")
-
-    @JvmField
-    val COMPOUND: HTMaterialVariant = createCustom("compound", "%s Compound", "%s混合物")
 }

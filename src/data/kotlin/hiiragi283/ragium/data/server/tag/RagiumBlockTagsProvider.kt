@@ -72,7 +72,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.FRAMES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.GENERATORS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
@@ -110,16 +109,16 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
-        RagiumBlocks.MATERIALS
-            .forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) ->
-                if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
-                    builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
-                }
-                builder.addMaterial(variant, material, block)
-                if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
-                    builder.addMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
-                }
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTHolderLike) ->
+            if (variant !is HTMaterialVariant.BlockTag) return@forEach
+            if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
+                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
             }
+            builder.addMaterial(variant, material, block)
+            if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
+                builder.addMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
+            }
+        }
 
         for ((material: HTVanillaMaterialType, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
             builder.addMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)

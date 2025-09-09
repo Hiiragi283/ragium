@@ -14,15 +14,14 @@ import hiiragi283.ragium.setup.RagiumBlocks
 enum class HTMachineVariant(val tier: HTTierType, private val enUsPattern: String, private val jaJpPattern: String) :
     HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
+    ALLOY_SMELTER(HTTierType.ADVANCED, "Alloy Smelter", "合金炉"),
     BLOCK_BREAKER(HTTierType.BASIC, "Block Breaker", "採掘機"),
     COMPRESSOR(HTTierType.BASIC, "Compressor", "圧縮機"),
     ENGRAVER(HTTierType.BASIC, "Engraver", "彫刻機"),
     EXTRACTOR(HTTierType.BASIC, "Extractor", "抽出機"),
     PULVERIZER(HTTierType.BASIC, "Pulverizer", "粉砕機"),
-    SMELTER(HTTierType.BASIC, "Smelter", "精錬炉"),
 
     // Advanced
-    ALLOY_SMELTER(HTTierType.ADVANCED, "Alloy Smelter", "合金炉"),
     CRUSHER(HTTierType.ADVANCED, "Crusher", "破砕機"),
     MELTER(HTTierType.ADVANCED, "Melter", "溶融炉"),
     REFINERY(HTTierType.ADVANCED, "Refinery", "精製機"),

@@ -112,17 +112,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         }
 
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
-        // Dynamo
-        // Machine
-        add(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")
-        add(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
-        add(RagiumBlocks.ELITE_MACHINE_FRAME, "精鋭機械フレーム")
-        // Device
+        // Parts
         add(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
         add(RagiumBlocks.STONE_CASING, "石材筐体")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "強化石材筐体")
         add(RagiumBlocks.WOODEN_CASING, "木材筐体")
-        // Storage
     }
 
     private fun enchantment() {
@@ -167,6 +161,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.DEEP_SCRAP, "深層の欠片")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.RESIN, "樹脂")
         add(RagiumItems.TAR, "タール")

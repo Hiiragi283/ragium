@@ -9,21 +9,17 @@ import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
@@ -70,14 +66,13 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
     }
 
     private fun registerItems() {
-        val compounds: Map<HTMaterialType, HTDeferredItem<*>> = RagiumItems.MATERIALS.row(RagiumMaterialVariants.COMPOUND)
         val tools: Collection<HTDeferredItem<*>> = RagiumItems.TOOLS.values
 
         buildSet {
             // Ragium
             addAll(RagiumItems.REGISTER.entries)
 
-            removeAll(compounds.values)
+            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             remove(RagiumItems.BLAST_CHARGE)
             remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
@@ -99,22 +94,10 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         basicItem(RagiumDelightAddon.RAGI_CHERRY_PIE)
         // basicItem(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
 
-        for ((material: HTMaterialType, compound: HTDeferredItem<*>) in compounds) {
-            val baseId: String = when (material) {
-                RagiumMaterialType.RAGI_ALLOY -> "copper_ingot"
-                RagiumMaterialType.ADVANCED_RAGI_ALLOY -> "gold_ingot"
-                RagiumMaterialType.AZURE_STEEL -> "iron_ingot"
-                else -> continue
-            }
-            val layerId: ResourceLocation = when (material) {
-                RagiumMaterialType.ADVANCED_RAGI_ALLOY -> compounds[RagiumMaterialType.RAGI_ALLOY]!!
-                else -> compound
-            }.itemId
-            getBuilder(compound.getPath())
-                .parent(generated)
-                .texture("layer0", "minecraft:item/$baseId")
-                .texture("layer1", layerId)
-        }
+        getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND.getPath())
+            .parent(generated)
+            .texture("layer0", "minecraft:item/copper_ingot")
+            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.getId().withSuffix("_bucket").path)

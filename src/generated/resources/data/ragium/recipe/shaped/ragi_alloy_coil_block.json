@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/netherite"
+      "item": "ragium:ragi_alloy_coil"
     },
     "B": {
-      "tag": "c:dusts/eldritch_pearl"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "AAA"
   ],
   "result": {
-    "count": 4,
-    "id": "ragium:elite_machine_frame"
+    "count": 1,
+    "id": "ragium:ragi_alloy_coil_block"
   }
 }

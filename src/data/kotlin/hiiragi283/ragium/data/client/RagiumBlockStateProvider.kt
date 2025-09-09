@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -82,6 +83,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
+
+        RagiumBlocks.MATERIALS.rowValues(RagiumMaterialVariants.COIL_BLOCK).forEach(::cubeColumn)
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
@@ -154,8 +157,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             vanillaId("block/blast_furnace_top"),
         )
 
-        RagiumBlocks.FRAMES.forEach(::cutoutSimpleBlock)
-
         // Machine
         fun machine(
             variant: HTMachineVariant,
@@ -178,24 +179,25 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             machine(variant, top, bottom, variant.blockHolder.id.withPath { "block/${it}_front" })
         }
 
+        val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")
+
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        machine(HTMachineVariant.ALLOY_SMELTER, basicMachine, vanillaId("block/bricks"), smelterFront)
         machine(HTMachineVariant.BLOCK_BREAKER, basicMachine, vanillaId("block/stone"))
         machine(HTMachineVariant.COMPRESSOR, basicMachine, basicMachine)
         machine(HTMachineVariant.ENGRAVER, basicMachine, vanillaId("block/smooth_stone"))
         machine(HTMachineVariant.EXTRACTOR, basicMachine, basicMachine)
         machine(HTMachineVariant.PULVERIZER, basicMachine, vanillaId("block/bricks"))
-        machine(HTMachineVariant.SMELTER, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
         val blackstone: ResourceLocation = vanillaId("block/polished_blackstone_bricks")
-        machine(HTMachineVariant.ALLOY_SMELTER, advancedMachine, blackstone, RagiumAPI.id("block/smelter_front"))
         machine(HTMachineVariant.CRUSHER, advancedMachine, blackstone, RagiumAPI.id("block/pulverizer_front"))
         machine(HTMachineVariant.MELTER, advancedMachine, blackstone)
         altModelBlock(HTMachineVariant.REFINERY.blockHolder, factory = ::horizontalBlock)
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
         val deepslateTiles: ResourceLocation = vanillaId("block/deepslate_tiles")
-        machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, RagiumAPI.id("block/smelter_front"))
+        machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device

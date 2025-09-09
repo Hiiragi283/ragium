@@ -52,24 +52,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
-        // Machine
-        HTShapedRecipeBuilder(RagiumBlocks.BASIC_MACHINE_FRAME, 2)
-            .hollow8()
-            .define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .save(output)
-        // Advanced Machine
-        HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_FRAME, 2)
-            .hollow8()
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.AZURE)
-            .save(output)
-        // Elite Machine
-        HTShapedRecipeBuilder(RagiumBlocks.ELITE_MACHINE_FRAME, 4)
-            .hollow8()
-            .define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.ELDRITCH_PEARL)
-            .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
@@ -91,6 +73,17 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun machines() {
         // Basic
+        HTShapedRecipeBuilder(HTMachineVariant.ALLOY_SMELTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', Items.FURNACE)
+            .define('C', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.RAGI_ALLOY))
+            .define('D', Items.BRICKS)
+            .save(output)
+
         basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(HTMachineVariant.ENGRAVER, Ingredient.of(Items.STONECUTTER))
@@ -106,29 +99,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .define('D', Items.BRICKS)
             .save(output)
-
-        HTShapedRecipeBuilder(HTMachineVariant.SMELTER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', RagiumItems.getMaterial(RagiumMaterialVariants.COIL, RagiumMaterialType.RAGI_ALLOY))
-            .define('C', Items.FURNACE)
-            .define('D', Items.BRICKS)
-            .save(output)
         // Advanced
-        HTShapedRecipeBuilder(HTMachineVariant.ALLOY_SMELTER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumItems.getMaterial(RagiumMaterialVariants.COIL, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-            .define('C', Items.BLAST_FURNACE)
-            .define('D', Items.NETHER_BRICKS)
-            .save(output)
-
         HTShapedRecipeBuilder(HTMachineVariant.CRUSHER)
             .pattern(
                 "AAA",
@@ -141,11 +112,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapedRecipeBuilder(HTMachineVariant.MELTER)
-            .crossLayered()
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
-            .define('C', Items.BLAST_FURNACE)
-            .define('D', RagiumBlocks.REINFORCED_STONE_CASING)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', Items.BLAST_FURNACE)
+            .define('C', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('D', Items.NETHER_BRICKS)
             .save(output)
 
         HTShapedRecipeBuilder(HTMachineVariant.REFINERY)
@@ -156,11 +130,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
             .define('B', RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ADVANCED))
             .define('C', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('D', RagiumItems.getMaterial(RagiumMaterialVariants.COIL, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('D', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .save(output)
 
         mapOf(
-            HTMachineVariant.ALLOY_SMELTER to HTMachineVariant.SMELTER,
+            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
             HTMachineVariant.CRUSHER to HTMachineVariant.PULVERIZER,
             HTMachineVariant.MELTER to HTMachineVariant.EXTRACTOR,
         ).forEach { (adv: HTMachineVariant, basic: HTMachineVariant) ->
@@ -177,12 +151,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ELITE)
             .define('D', Items.DEEPSLATE_TILES)
             .save(output)
-
-        mapOf(
-            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
-        ).forEach { (elite: HTMachineVariant, adv: HTMachineVariant) ->
-            createComponentUpgrade(HTTierType.ELITE, elite, adv).save(output)
-        }
     }
 
     @JvmStatic
@@ -192,7 +160,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .define('C', side)
-            .define('D', RagiumBlocks.STONE_CASING)
+            .define('D', Items.BRICKS)
             .save(output)
     }
 

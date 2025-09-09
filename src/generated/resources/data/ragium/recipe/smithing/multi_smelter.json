@@ -9,6 +9,6 @@
     "id": "ragium:multi_smelter"
   },
   "template": {
-    "item": "ragium:elite_component"
+    "item": "ragium:advanced_component"
   }
 }

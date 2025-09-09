@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/azure"
+      "item": "ragium:advanced_ragi_alloy_coil"
     },
     "B": {
-      "tag": "c:ingots/iron"
+      "tag": "c:ingots/azure_steel"
     }
   },
   "pattern": [
-    " A ",
+    "AAA",
     "ABA",
-    " A "
+    "AAA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:azure_steel_compound"
+    "id": "ragium:advanced_ragi_alloy_coil_block"
   }
 }

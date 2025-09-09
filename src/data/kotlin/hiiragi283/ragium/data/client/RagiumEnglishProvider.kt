@@ -121,17 +121,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
-        // Dynamo
-        // Machine
-        add(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
-        add(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
-        add(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
-        // Device
+        // Parts
         add(RagiumBlocks.DEVICE_CASING, "Device Casing")
         add(RagiumBlocks.STONE_CASING, "Stone Casing")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
         add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
-        // Storage
     }
 
     private fun enchantment() {
@@ -176,6 +170,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
         add(RagiumItems.RESIN, "Resin")
         add(RagiumItems.TAR, "Tar")

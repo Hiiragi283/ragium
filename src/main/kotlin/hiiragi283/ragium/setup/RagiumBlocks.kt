@@ -36,14 +36,15 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.StairBlock
-import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -158,7 +159,7 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
@@ -226,10 +227,25 @@ object RagiumBlocks {
         tintedGlass(HTVanillaMaterialType.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
         tintedGlass(HTVanillaMaterialType.SOUL, glass(), canPlayerThrough = true, blastProof = false)
         tintedGlass(HTVanillaMaterialType.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
+
+        // Coil Block
+        fun addCoil(material: RagiumMaterialType) {
+            put(
+                RagiumMaterialVariants.COIL_BLOCK,
+                material,
+                REGISTER.registerSimple(
+                    "${material.serializedName}_coil_block",
+                    copyOf(Blocks.COPPER_BLOCK),
+                    ::RotatedPillarBlock,
+                ),
+            )
+        }
+        addCoil(RagiumMaterialType.RAGI_ALLOY)
+        addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
         ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
@@ -347,29 +363,10 @@ object RagiumBlocks {
     //    Machines    //
 
     @JvmField
-    val BASIC_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("basic_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
-
-    @JvmField
-    val ADVANCED_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("advanced_machine_frame", copyOf(Blocks.IRON_BLOCK).noOcclusion(), ::TransparentBlock)
-
-    @JvmField
-    val ELITE_MACHINE_FRAME: HTBasicDeferredBlock<TransparentBlock> =
-        REGISTER.registerSimple("elite_machine_frame", machineProperty(), ::TransparentBlock)
-
-    @JvmField
-    val FRAMES: List<HTBasicDeferredBlock<TransparentBlock>> = listOf(
-        BASIC_MACHINE_FRAME,
-        ADVANCED_MACHINE_FRAME,
-        ELITE_MACHINE_FRAME,
-    )
-
-    @JvmField
     val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTEntityBlock>> =
         createMap<HTMachineVariant>(machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
 
-    //    Devices    //
+    //    Parts    //
 
     @JvmField
     val WOODEN_CASING: HTSimpleDeferredBlock =
