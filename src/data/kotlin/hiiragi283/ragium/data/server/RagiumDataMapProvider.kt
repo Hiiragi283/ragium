@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.server
 
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -20,6 +20,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -32,6 +33,7 @@ import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.concurrent.CompletableFuture
+import java.util.function.Supplier
 
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>) :
@@ -75,22 +77,22 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             .add("oil", 100)
             .add("creosote", 100)
             // low
-            .add(RagiumConst.ACTUALLY, "canola_oil", 50)
+            .add(InitFluids.CANOLA_OIL, HTFluidFuelData(50))
             // medium
             .add(RagiumFluidContents.NATURAL_GAS, 20)
             .add("ethanol", 20)
             .add("bioethanol", 20)
             .add("lpg", 20)
-            .add(RagiumConst.ACTUALLY, "refined_canola_oil", 20)
+            .add(InitFluids.REFINED_CANOLA_OIL, HTFluidFuelData(20))
             // high
             .add(RagiumFluidContents.FUEL, 10)
             .add("diesel", 10)
             .add("biodiesel", 10)
-            .add(RagiumConst.ACTUALLY, "crystallized_oil", 10)
+            .add(InitFluids.CRYSTALLIZED_OIL, HTFluidFuelData(10))
             // highest
             .add(RagiumFluidContents.CRIMSON_FUEL, 5)
             .add("high_power_biodiesel", 5)
-            .add(RagiumConst.ACTUALLY, "empowered_oil", 5)
+            .add(InitFluids.EMPOWERED_OIL, HTFluidFuelData(5))
     }
 
     private fun thermalFuels() {
@@ -117,7 +119,15 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
     //    Extensions    //
 
-    private fun <T : Any, R : Any> Builder<T, R>.add(holder: HTHolderLike, value: T): Builder<T, R> = add(holder.getId(), value, false)
+    private fun <T : Any, R : Any> Builder<T, R>.add(holder: HTHolderLike, value: T): Builder<T, R> {
+        val id: ResourceLocation = holder.getId()
+        val conditions: Array<ModLoadedCondition> = id.namespace
+            .takeUnless(RagiumConst.BUILTIN_IDS::contains)
+            ?.let(::ModLoadedCondition)
+            .let(::listOfNotNull)
+            .toTypedArray()
+        return add(id, value, false, *conditions)
+    }
 
     // Block
     private fun <T : Any> Builder<T, Block>.add(block: Block, value: T): Builder<T, Block> = add(HTHolderLike.fromBlock(block), value)
@@ -135,12 +145,12 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         add(variant.itemTagKey(material), value, false)
 
     // fluid
+    private fun <T : Any> Builder<T, Fluid>.add(fluid: Supplier<out Fluid>, value: T): Builder<T, Fluid> =
+        add(HTHolderLike.fromFluid(fluid.get()), value)
+
     private fun Builder<HTFluidFuelData, Fluid>.add(content: HTFluidContent<*, *, *>, amount: Int): Builder<HTFluidFuelData, Fluid> =
         add(content.commonTag, HTFluidFuelData(amount), false)
 
     private fun Builder<HTFluidFuelData, Fluid>.add(path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
         add(fluidTagKey(commonId(path)), HTFluidFuelData(amount), false)
-
-    private fun Builder<HTFluidFuelData, Fluid>.add(modId: String, path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
-        add(modId.toId(path), HTFluidFuelData(amount), false, ModLoadedCondition(modId))
 }

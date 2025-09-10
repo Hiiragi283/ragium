@@ -63,7 +63,7 @@ object RagiumDatagen {
                         .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredProvider)
                         .add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
                         .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider),
-                    setOf(RagiumConst.MINECRAFT, RagiumAPI.MOD_ID),
+                    RagiumConst.BUILTIN_IDS,
                 ),
             ).registryProvider
 

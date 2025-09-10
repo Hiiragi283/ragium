@@ -39,6 +39,12 @@ interface RagiumAPI {
         @JvmStatic
         fun id(prefix: String, suffix: String): ResourceLocation = id("$prefix/$suffix")
 
+        @JvmStatic
+        fun wrapId(other: ResourceLocation): ResourceLocation = when (other.namespace) {
+            MOD_ID -> other
+            else -> id(other.path)
+        }
+
         private lateinit var instance: RagiumAPI
 
         @JvmStatic

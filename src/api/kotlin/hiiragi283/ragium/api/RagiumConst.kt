@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api
 
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
+
 object RagiumConst {
     //    Materials    //
 
@@ -24,6 +26,9 @@ object RagiumConst {
 
     //    Mod ID    //
 
+    const val MINECRAFT = "minecraft"
+    const val NEOFORGE: String = NeoForgeVersion.MOD_ID
+
     const val ACTUALLY = "actuallyadditions"
     const val AE2 = "ae2"
     const val ALMOST = "almostunified"
@@ -36,13 +41,16 @@ object RagiumConst {
     const val FOREGOING = "industrialforegoing"
     const val IMMERSIVE = "immersiveengineering"
     const val MEKANISM = "mekanism"
-    const val MINECRAFT = "minecraft"
+
     const val MODERN = "modern_industrialization"
     const val ORITECH = "oritech"
     const val PNEUMATIC = "pneumaticcraft"
     const val RAILCRAFT = "railcraft"
     const val REPLICATION = "replication"
     const val TWILIGHT = "twilightforest"
+
+    @JvmField
+    val BUILTIN_IDS: Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON, RagiumAPI.MOD_ID)
 
     //    Nbt    //
 

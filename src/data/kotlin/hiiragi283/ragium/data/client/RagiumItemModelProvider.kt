@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.basicItem
 import hiiragi283.ragium.api.extension.handheldItem
 import hiiragi283.ragium.api.extension.itemId
@@ -26,7 +27,6 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -101,7 +101,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.getId().withSuffix("_bucket").path)
-                .parent(modelFile(NeoForgeVersion.MOD_ID.toId("item/bucket")))
+                .parent(modelFile(RagiumConst.NEOFORGE.toId("item/bucket")))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }

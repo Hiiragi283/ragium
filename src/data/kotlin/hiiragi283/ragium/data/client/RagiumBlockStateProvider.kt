@@ -41,7 +41,6 @@ import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
 
@@ -220,7 +219,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 HTDeviceVariant.MILK_COLLECTOR -> {
                     layeredBlock(
                         block,
-                        NeoForgeVersion.MOD_ID.toId("block/milk_still"),
+                        RagiumConst.NEOFORGE.toId("block/milk_still"),
                         RagiumAPI.id("block/device_overlay"),
                     )
                 }

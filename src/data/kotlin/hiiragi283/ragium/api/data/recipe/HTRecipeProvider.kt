@@ -79,9 +79,7 @@ sealed class HTRecipeProvider {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
         override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
-            RagiumAPI.MOD_ID -> id
-            RagiumConst.COMMON -> RagiumAPI.id(id.path)
-            RagiumConst.MINECRAFT -> RagiumAPI.id(id.path)
+            in RagiumConst.BUILTIN_IDS -> RagiumAPI.wrapId(id)
             else -> {
                 val path: List<String> = id.path.split("/", limit = 2)
                 RagiumAPI.id(path[0] + "/$namespace/" + path[1])

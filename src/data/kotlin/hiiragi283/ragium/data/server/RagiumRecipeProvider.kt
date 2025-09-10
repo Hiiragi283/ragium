@@ -13,6 +13,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumMachineRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumImmersiveRecipeProvider
@@ -42,6 +43,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumSimulatingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
+        RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumImmersiveRecipeProvider.buildRecipes(recipeOutput, holderLookup)
