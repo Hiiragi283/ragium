@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.storage.nbt
 
 import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.extension.resultOrNull
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -11,7 +12,6 @@ import net.minecraft.nbt.StringTag
 import net.minecraft.nbt.Tag
 import net.minecraft.nbt.TagType
 import net.minecraft.resources.RegistryOps
-import kotlin.jvm.optionals.getOrNull
 
 internal class HTTagValueInput private constructor(private val lookup: HolderLookup.Provider, private val compoundTag: CompoundTag) :
     HTValueInput {
@@ -40,7 +40,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         override fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? {
             val tagIn: Tag = compoundTag.get(key) ?: return null
-            return codec.decode(registryOps, tagIn).result().getOrNull()
+            return codec.decode(registryOps, tagIn).resultOrNull()
         }
 
         override fun child(key: String): HTValueInput? {
@@ -147,7 +147,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
             override fun iterator(): Iterator<T> = list
                 .mapNotNull { tag: Tag ->
-                    codec.decode(registryOps, tag).result().get()
+                    codec.decode(registryOps, tag).resultOrNull()
                 }.iterator()
         }
     }

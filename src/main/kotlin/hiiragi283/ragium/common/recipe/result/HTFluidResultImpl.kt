@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.recipe.result
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.extension.filterNot
+import hiiragi283.ragium.api.extension.wrapDataResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import net.minecraft.core.Holder
@@ -23,11 +25,8 @@ internal class HTFluidResultImpl(entry: HTKeyOrTagEntry<Fluid>, amount: Int, com
         ).let(BiCodec.Companion::downCast)
     }
 
-    override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): DataResult<FluidStack> {
-        val stack = FluidStack(holder, amount, components)
-        return when {
-            stack.isEmpty -> DataResult.error { "Empty fluid stack is not valid for recipe result" }
-            else -> DataResult.success(stack)
-        }
-    }
+    override fun createStack(holder: Holder<Fluid>, amount: Int, components: DataComponentPatch): DataResult<FluidStack> =
+        FluidStack(holder, amount, components)
+            .wrapDataResult()
+            .filterNot(FluidStack::isEmpty, "Empty fluid stack is not valid for recipe result")
 }

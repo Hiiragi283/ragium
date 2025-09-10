@@ -1,7 +1,8 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
-import net.minecraft.core.NonNullList
+import hiiragi283.ragium.api.extension.toNonNullList
+import hiiragi283.ragium.api.extension.wrapOptional
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
@@ -10,7 +11,6 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe
 import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult
-import java.util.Optional
 
 /**
  * @see [vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder]
@@ -55,8 +55,8 @@ class HTCuttingBoardRecipeBuilder(output: ChanceResult) : HTIngredientRecipeBuil
                 group ?: "",
                 ingredients[0],
                 ingredients[1],
-                NonNullList.copyOf(results),
-                Optional.ofNullable(sound),
+                results.toNonNullList(),
+                sound.wrapOptional(),
             ),
             null,
         )

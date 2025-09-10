@@ -5,6 +5,7 @@ import com.google.common.collect.HashMultimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
+import net.minecraft.core.NonNullList
 
 //    MultiMap    //
 
@@ -43,3 +44,7 @@ inline fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.rowValues(row: R): Collection<V> = row(row).values
 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.columnValues(column: C): Collection<V> = column(column).values
+
+//    NonNullList    //
+
+fun <T : Any> Collection<T>.toNonNullList(): NonNullList<T> = NonNullList.copyOf(this)

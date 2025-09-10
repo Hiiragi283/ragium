@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.extension.wrapDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -41,14 +42,11 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
         { tagKey: TagKey<T> -> getFirstHolderFromTag(lookup, tagKey) },
     )
 
-    private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> = lookup
-        .get(key)
-        .map(DataResult<Holder<T>>::success)
-        .orElse(DataResult.error { "Missing key in ${key.registry()}: $key" })
+    private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> =
+        lookup.get(key).wrapDataResult("Missing key in ${key.registry()}: $key")
 
     private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): DataResult<out Holder<T>> = lookup
         .get(tagKey)
         .flatMap(HTTagHelper::getFirstHolder)
-        .map(DataResult<Holder<T>>::success)
-        .orElse(DataResult.error { "Missing tag in ${tagKey.registry().location()}: ${tagKey.location}" })
+        .wrapDataResult("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}")
 }

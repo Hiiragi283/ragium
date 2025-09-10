@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.extension.wrapOptional
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
@@ -29,6 +30,5 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : RecipeMan
      */
     fun getFirstHolder(input: INPUT, level: Level): RecipeHolder<RECIPE>?
 
-    override fun getRecipeFor(input: INPUT, level: Level): Optional<RecipeHolder<RECIPE>> =
-        Optional.ofNullable(getFirstHolder(input, level))
+    override fun getRecipeFor(input: INPUT, level: Level): Optional<RecipeHolder<RECIPE>> = getFirstHolder(input, level).wrapOptional()
 }

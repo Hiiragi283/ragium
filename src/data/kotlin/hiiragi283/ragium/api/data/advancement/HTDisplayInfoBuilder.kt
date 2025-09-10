@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
@@ -7,7 +8,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import java.util.*
 
 @HTDslMarker
 class HTDisplayInfoBuilder {
@@ -49,7 +49,7 @@ class HTDisplayInfoBuilder {
         icon,
         title,
         description,
-        Optional.ofNullable(backGround),
+        backGround.wrapOptional(),
         type,
         showToast,
         showChat,

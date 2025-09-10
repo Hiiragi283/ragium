@@ -10,13 +10,13 @@ object HTTagHelper {
     @JvmStatic
     fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
         for (modId: String in RagiumConfig.CONFIG.tagOutputPriority.get()) {
-            val foundHolder: Holder<T>? = getFirstHolder(holderSet, modId)
-            if (foundHolder != null) return Optional.of(foundHolder)
+            val foundHolder: Optional<Holder<T>> = getFirstHolder(holderSet, modId)
+            if (foundHolder.isPresent) return foundHolder
         }
-        return Optional.ofNullable(holderSet.firstOrNull())
+        return holderSet.stream().findFirst()
     }
 
     @JvmStatic
-    private fun <T : Any> getFirstHolder(holderSet: HolderSet<T>, namespace: String): Holder<T>? =
-        holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == namespace }
+    private fun <T : Any> getFirstHolder(holderSet: HolderSet<T>, namespace: String): Optional<Holder<T>> =
+        holderSet.stream().filter { holder: Holder<T> -> holder.idOrThrow.namespace == namespace }.findFirst()
 }

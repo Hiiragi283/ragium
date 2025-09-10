@@ -2,6 +2,7 @@ package hiiragi283.ragium.integration.mekanism
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.extension.filterNot
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf
@@ -29,10 +30,5 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
     override fun getStackResult(provider: HolderLookup.Provider?): DataResult<ChemicalStack> = entry
         .getFirstHolder(provider)
         .map { holder: Holder<Chemical> -> ChemicalStack(holder, amount) }
-        .flatMap { stack: ChemicalStack ->
-            when {
-                stack.isEmpty -> DataResult.error { "Empty chemical stack is not valid for recipe result" }
-                else -> DataResult.success(stack)
-            }
-        }
+        .filterNot(ChemicalStack::isEmpty, "Empty chemical stack is not valid for recipe result")
 }

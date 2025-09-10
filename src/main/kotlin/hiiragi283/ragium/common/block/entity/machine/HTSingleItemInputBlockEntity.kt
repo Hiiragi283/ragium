@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -17,12 +16,12 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> : HTProcessorBlockEntity.Cached<SingleRecipeInput, RECIPE> {
-    constructor(
+    /*constructor(
         recipeCache: HTRecipeCache<SingleRecipeInput, RECIPE>,
         variant: HTMachineVariant,
         pos: BlockPos,
         state: BlockState,
-    ) : super(recipeCache, variant, pos, state)
+    ) : super(recipeCache, variant, pos, state)*/
 
     constructor(
         recipeType: RecipeType<RECIPE>,

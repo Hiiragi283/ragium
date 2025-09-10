@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -9,7 +10,6 @@ import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.common.conditions.ICondition
-import java.util.Optional
 
 @HTDslMarker
 class HTAdvancementBuilder private constructor(private val parent: HTAdvancementKey?) {
@@ -47,8 +47,8 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
     fun save(output: HTAdvancementOutput, key: HTAdvancementKey): AdvancementHolder {
         val id: ResourceLocation = key.id
         val adv = Advancement(
-            Optional.ofNullable(parent?.id),
-            Optional.ofNullable(display),
+            parent?.id.wrapOptional(),
+            display.wrapOptional(),
             rewards,
             criteria,
             this.requirements ?: strategy.create(criteria.keys),

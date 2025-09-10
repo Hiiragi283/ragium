@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.item
 
 import com.google.common.base.Suppliers
+import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffect
@@ -9,7 +10,6 @@ import net.minecraft.world.food.FoodConstants
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import java.util.*
 import java.util.function.Supplier
 import kotlin.jvm.optionals.getOrNull
 
@@ -81,7 +81,7 @@ class HTFoodBuilder private constructor() {
         FoodConstants.saturationByModifier(nutrition, saturation),
         alwaysEat,
         eatSeconds,
-        Optional.ofNullable(convertTo),
+        convertTo.wrapOptional(),
         effects,
     )
 }
