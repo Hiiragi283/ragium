@@ -101,6 +101,8 @@ object HTCommonMaterialTypes {
         // Forbidden
         "arcane_crystal",
         "corrupted_arcane_crystal",
+        // Magitech,
+        "tourmaline",
         // Oritech
         "fluxite",
         // Twilight Forest

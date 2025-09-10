@@ -24,6 +24,7 @@ fusion = "1.2.10-neoforge-mc1.21"
 guide = "21.1.14"
 immersive = "1.21.1-12.4.2-pre.20"
 jade = "15.10.3+neoforge"
+magitech = "0.11.1"
 mek = "1.21.1-10.7.15.81"
 oritech = "6FLqYpTF"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
@@ -47,6 +48,7 @@ jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
+magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "maven.modrinth", name = "oritech", version.ref = "oritech" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
@@ -68,14 +70,15 @@ mods-impl = [
     "immersive",
     "jade",
     "oritech",
-    "patchouli-gen",
     "pneuma",
     "replica",
 ]
 
 mods-transitive = []
 
-mods-compile = []
+mods-compile = [
+    "magitech"
+]
 
 mods-runtime = [
     "dire",
