@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -18,14 +21,14 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
-class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
-        HTMachineVariant.ENGRAVER,
+class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity<SingleRecipeInput, SingleItemRecipe>(
+        HTMachineVariant.CUTTING_MACHINE,
         pos,
         state,
     ) {
@@ -49,30 +52,18 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.ENGRAVER.openMenu(player, title, this, ::writeExtraContainerData)
+        RagiumMenuTypes.CUTTING_MACHINE.openMenu(player, title, this, ::writeExtraContainerData)
 
     //    Ticking    //
 
+    private val recipeCache = SingleItemCache()
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
-    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
-        val allRecipes: List<RecipeHolder<StonecutterRecipe>> = level.recipeManager.getAllRecipesFor(RecipeType.STONECUTTING)
-        if (allRecipes.isEmpty()) return null
-        // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
-        var matchedRecipe: StonecutterRecipe? = null
-        for (holder: RecipeHolder<StonecutterRecipe> in allRecipes) {
-            val recipe: StonecutterRecipe = holder.value
-            if (!recipe.matches(input, level)) continue
-            val result: ItemStack = recipe.assemble(input, level.registryAccess())
-            if (ItemStack.isSameItemSameComponents(catalystSlot.getStack(), result)) {
-                matchedRecipe = recipe
-                break
-            }
-        }
-        return matchedRecipe
-    }
+    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): SingleItemRecipe? =
+        recipeCache.getFirstRecipe(input, level)
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: StonecutterRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: SingleItemRecipe): Boolean {
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
         for (slot: HTItemSlot in outputSlots) {
             remainder = slot.insertItem(remainder, true, HTStorageAccess.INTERNAl)
@@ -86,7 +77,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: StonecutterRecipe,
+        recipe: SingleItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
@@ -98,5 +89,30 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         inputSlot.shrinkStack(1, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1f, 1f)
+    }
+
+    private inner class SingleItemCache : HTRecipeCache<SingleRecipeInput, SingleItemRecipe> {
+        override fun getFirstHolder(input: SingleRecipeInput, level: Level): RecipeHolder<SingleItemRecipe>? =
+            getFirstHolder(RagiumRecipeTypes.SAWMILL, input, level)
+                ?: getFirstHolder(RagiumRecipeTypes.STONECUTTER, input, level)
+
+        private fun getFirstHolder(
+            recipeType: HTDeferredRecipeType<SingleRecipeInput, out SingleItemRecipe>,
+            input: SingleRecipeInput,
+            level: Level,
+        ): RecipeHolder<SingleItemRecipe>? {
+            // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
+            var matchedHolder: RecipeHolder<SingleItemRecipe>? = null
+            for (holder: RecipeHolder<out SingleItemRecipe> in recipeType.getAllRecipes(level.recipeManager)) {
+                val recipe: SingleItemRecipe = holder.value
+                if (!recipe.matches(input, level)) continue
+                val result: ItemStack = recipe.assemble(input, level.registryAccess())
+                if (ItemStack.isSameItemSameComponents(catalystSlot.getStack(), result)) {
+                    matchedHolder = RecipeHolder(holder.id, recipe)
+                    break
+                }
+            }
+            return matchedHolder
+        }
     }
 }

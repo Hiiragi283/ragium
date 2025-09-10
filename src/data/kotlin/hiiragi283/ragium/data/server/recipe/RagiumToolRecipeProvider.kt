@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -53,7 +53,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Items.GLASS_BOTTLE)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(RagiumItems.SLOT_COVER, 3)
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumItems.SLOT_COVER, 3)
             .addIngredient(Items.SMOOTH_STONE_SLAB)
             .save(output)
 

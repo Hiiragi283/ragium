@@ -19,4 +19,8 @@ interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>
     fun addIngredient(vararg items: ItemLike): BUILDER = addIngredient(Ingredient.of(*items))
 
     fun addIngredient(ingredient: Ingredient): BUILDER
+
+    abstract class Prefixed<BUILDER : Prefixed<BUILDER>>(prefix: String) :
+        HTRecipeBuilder.Prefixed(prefix),
+        HTIngredientRecipeBuilder<BUILDER>
 }

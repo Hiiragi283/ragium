@@ -2,7 +2,7 @@
   "parent": "ragium:block/machine_base",
   "textures": {
     "bottom": "minecraft:block/smooth_stone",
-    "front": "ragium:block/engraver_front",
+    "front": "ragium:block/cutting_machine_front",
     "top": "ragium:block/basic_machine_casing"
   }
 }

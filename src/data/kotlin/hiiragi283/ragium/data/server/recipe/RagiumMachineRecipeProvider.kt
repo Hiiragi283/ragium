@@ -92,7 +92,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
         basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
-        basicMachine(HTMachineVariant.ENGRAVER, Ingredient.of(Items.STONECUTTER))
+        basicMachine(HTMachineVariant.CUTTING_MACHINE, Ingredient.of(Items.STONECUTTER))
         basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
 
         HTShapedRecipeBuilder

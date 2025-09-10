@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
@@ -13,6 +14,7 @@ import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.impl.HTSawmillRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
@@ -28,6 +30,17 @@ object RagiumRecipeBiCodecs {
         BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
         HTItemToChancedItemRecipe.ChancedResult::chance,
         HTItemToChancedItemRecipe::ChancedResult,
+    )
+
+    @JvmField
+    val SAWMILL: MapBiCodec<RegistryFriendlyByteBuf, HTSawmillRecipe> = MapBiCodec.composite(
+        BiCodec.STRING.optionalFieldOf("group", ""),
+        HTSawmillRecipe::getGroup,
+        BiCodecs.ingredient(false).fieldOf("ingredient"),
+        HTSawmillRecipe::getIngredient,
+        BiCodecs.itemStack(false).fieldOf("result"),
+        HTSawmillRecipe::getResult,
+        ::HTSawmillRecipe,
     )
 
     @JvmStatic

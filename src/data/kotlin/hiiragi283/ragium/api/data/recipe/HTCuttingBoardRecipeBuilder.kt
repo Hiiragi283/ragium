@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.toNonNullList
 import hiiragi283.ragium.api.extension.wrapOptional
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.item.ItemStack
@@ -15,7 +14,7 @@ import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult
 /**
  * @see [vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder]
  */
-class HTCuttingBoardRecipeBuilder(output: ChanceResult) : HTIngredientRecipeBuilder<HTCuttingBoardRecipeBuilder> {
+class HTCuttingBoardRecipeBuilder(output: ChanceResult) : HTIngredientRecipeBuilder.Prefixed<HTCuttingBoardRecipeBuilder>("cutting") {
     constructor(stack: ItemStack, chance: Float = 1f) : this(ChanceResult(stack, chance))
 
     constructor(item: ItemLike, count: Int = 1, chance: Float = 1f) : this(ItemStack(item, count), chance)
@@ -48,17 +47,11 @@ class HTCuttingBoardRecipeBuilder(output: ChanceResult) : HTIngredientRecipeBuil
         this.group = groupName
     }
 
-    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(
-            id.withPrefix("cutting/"),
-            CuttingBoardRecipe(
-                group ?: "",
-                ingredients[0],
-                ingredients[1],
-                results.toNonNullList(),
-                sound.wrapOptional(),
-            ),
-            null,
-        )
-    }
+    override fun createRecipe(): CuttingBoardRecipe = CuttingBoardRecipe(
+        group ?: "",
+        ingredients[0],
+        ingredients[1],
+        results.toNonNullList(),
+        sound.wrapOptional(),
+    )
 }

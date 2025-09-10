@@ -184,7 +184,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.ALLOY_SMELTER, basicMachine, vanillaId("block/bricks"), smelterFront)
         machine(HTMachineVariant.BLOCK_BREAKER, basicMachine, vanillaId("block/stone"))
         machine(HTMachineVariant.COMPRESSOR, basicMachine, basicMachine)
-        machine(HTMachineVariant.ENGRAVER, basicMachine, vanillaId("block/smooth_stone"))
+        machine(HTMachineVariant.CUTTING_MACHINE, basicMachine, vanillaId("block/smooth_stone"))
         machine(HTMachineVariant.EXTRACTOR, basicMachine, basicMachine)
         machine(HTMachineVariant.PULVERIZER, basicMachine, vanillaId("block/bricks"))
 

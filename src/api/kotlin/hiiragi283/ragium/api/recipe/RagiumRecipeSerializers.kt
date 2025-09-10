@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
+import hiiragi283.ragium.api.recipe.impl.HTSawmillRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import net.minecraft.core.registries.Registries
@@ -17,6 +18,10 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 object RagiumRecipeSerializers {
+    @JvmField
+    val SAWMILL: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSawmillRecipe>> = create("sawmill")
+
+    // Machine
     @JvmField
     val ALLOYING: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTAlloyingRecipe>> =
         create(RagiumConst.ALLOYING)

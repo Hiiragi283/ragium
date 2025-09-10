@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.codec.BiCodecs.UUID
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -23,6 +24,7 @@ import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
@@ -155,6 +157,15 @@ object BiCodecs {
         true -> FLUID_STACK
         false -> FLUID_STACK_NON_EMPTY
     }
+
+    @JvmStatic
+    fun ingredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(
+        when (allowEmpty) {
+            true -> Ingredient.CODEC
+            false -> Ingredient.CODEC_NONEMPTY
+        },
+        Ingredient.CONTENTS_STREAM_CODEC,
+    )
 
     // Registry
 

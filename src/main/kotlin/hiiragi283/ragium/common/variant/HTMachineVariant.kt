@@ -17,7 +17,7 @@ enum class HTMachineVariant(val tier: HTTierType, private val enUsPattern: Strin
     ALLOY_SMELTER(HTTierType.ADVANCED, "Alloy Smelter", "合金炉"),
     BLOCK_BREAKER(HTTierType.BASIC, "Block Breaker", "採掘機"),
     COMPRESSOR(HTTierType.BASIC, "Compressor", "圧縮機"),
-    ENGRAVER(HTTierType.BASIC, "Engraver", "彫刻機"),
+    CUTTING_MACHINE(HTTierType.BASIC, "Cutting Machine", "裁断機"),
     EXTRACTOR(HTTierType.BASIC, "Extractor", "抽出機"),
     PULVERIZER(HTTierType.BASIC, "Pulverizer", "粉砕機"),
 

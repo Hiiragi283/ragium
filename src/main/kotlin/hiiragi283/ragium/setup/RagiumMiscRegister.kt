@@ -49,6 +49,8 @@ object RagiumMiscRegister {
             )
         }
 
+        register(RagiumRecipeSerializers.SAWMILL, RagiumRecipeBiCodecs.SAWMILL)
+        // Machine
         register(
             RagiumRecipeSerializers.ALLOYING,
             RagiumRecipeBiCodecs.combineItemToObj(::HTAlloyingRecipe, 2..3),
@@ -93,6 +95,8 @@ object RagiumMiscRegister {
             helper.register(holder.id, RecipeType.simple<R>(holder.id))
         }
 
+        register(RagiumRecipeTypes.SAWMILL)
+        // Machine
         register(RagiumRecipeTypes.ALLOYING)
         register(RagiumRecipeTypes.COMPRESSING)
         register(RagiumRecipeTypes.CRUSHING)

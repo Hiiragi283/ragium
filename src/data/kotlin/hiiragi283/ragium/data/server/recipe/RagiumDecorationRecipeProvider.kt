@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.impl.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
@@ -53,7 +53,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', RagiumBlocks.ELDRITCH_STONE)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE)
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .addIngredient(RagiumBlocks.ELDRITCH_STONE)
             .save(output)
 
@@ -63,7 +64,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS)
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS)
             .addIngredient(RagiumBlocks.ELDRITCH_STONE, RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
         // Plastics
@@ -73,7 +75,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS)
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumBlocks.PLASTIC_BRICKS)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
 
@@ -83,7 +86,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', RagiumBlocks.PLASTIC_BRICKS)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(RagiumBlocks.PLASTIC_TILES)
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumBlocks.PLASTIC_TILES)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
@@ -105,7 +109,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTDecorationVariant.entries.forEach(::registerBuildings)
+
         glass()
+        wood()
     }
 
     @JvmStatic
@@ -148,6 +154,31 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
+    private val WOOD_NAMES: List<String> = listOf(
+        "oak",
+        "spruce",
+        "birch",
+        "jungle",
+        "acacia",
+        "cherry",
+        "dark_oak",
+        "mangrove",
+        "bamboo",
+        "bamboo_mosaic",
+        "crimson",
+        "warped",
+    )
+
+    @JvmStatic
+    private fun wood() {
+        // Planks -> 2x Slab
+        HTSingleItemRecipeBuilder
+            .sawmill(Items.OAK_SLAB, 2)
+            .addIngredient(Items.OAK_PLANKS)
+            .save(output)
+    }
+
+    @JvmStatic
     private fun registerBuildings(variant: HTDecorationVariant) {
         val base: HTDeferredBlock<*, *> = variant.base
         val slab: HTDeferredBlock<SlabBlock, *> = variant.slab
@@ -179,15 +210,18 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Stonecutting
         val cuttingIngredient: Ingredient = getCuttingIngredient(variant)
 
-        HTStonecuttingRecipeBuilder(slab, 2)
+        HTSingleItemRecipeBuilder
+            .stonecutter(slab, 2)
             .addIngredient(cuttingIngredient)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(stairs)
+        HTSingleItemRecipeBuilder
+            .stonecutter(stairs)
             .addIngredient(cuttingIngredient)
             .save(output)
 
-        HTStonecuttingRecipeBuilder(wall)
+        HTSingleItemRecipeBuilder
+            .stonecutter(wall)
             .addIngredient(cuttingIngredient)
             .save(output)
     }

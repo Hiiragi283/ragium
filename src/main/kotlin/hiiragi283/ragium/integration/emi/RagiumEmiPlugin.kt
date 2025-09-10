@@ -38,6 +38,7 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
@@ -58,6 +59,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -199,6 +201,24 @@ class RagiumEmiPlugin : EmiPlugin {
             }
             registry.addRecipe(recipe)
         }
+        // Cutting
+        val cutting: (ResourceLocation, SingleItemRecipe) -> Unit = { id: ResourceLocation, recipe: SingleItemRecipe ->
+            registry.addRecipe(
+                HTCuttingEmiRecipe(
+                    id.withPrefix("/"),
+                    EmiIngredient.of(recipe.ingredients[0]),
+                    RagiumAPI
+                        .getInstance()
+                        .getCurrentServer()
+                        ?.registryAccess()
+                        ?.let(recipe::getResultItem)
+                        ?.let(EmiStack::of)
+                        ?: EmiStack.EMPTY,
+                ),
+            )
+        }
+        RagiumRecipeTypes.SAWMILL.forEach(recipeManager, cutting)
+        RagiumRecipeTypes.STONECUTTER.forEach(recipeManager, cutting)
         // Extracting
         RagiumRecipeTypes.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToItemRecipe ->
             registry.addRecipe(

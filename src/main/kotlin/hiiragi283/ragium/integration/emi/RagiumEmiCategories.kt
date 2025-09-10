@@ -35,6 +35,9 @@ object RagiumEmiCategories {
     val COMPRESSING: HTEmiRecipeCategory = machine(RagiumConst.COMPRESSING, HTMachineVariant.COMPRESSOR)
 
     @JvmField
+    val CUTTING: HTEmiRecipeCategory = machine("cutting", HTMachineVariant.CUTTING_MACHINE)
+
+    @JvmField
     val CRUSHING: HTEmiRecipeCategory = machine(RagiumConst.CRUSHING, HTMachineVariant.PULVERIZER)
 
     @JvmField
@@ -56,6 +59,7 @@ object RagiumEmiCategories {
         // Basic
         ALLOYING,
         COMPRESSING,
+        CUTTING,
         CRUSHING,
         EXTRACTING,
         // Advanced
@@ -89,7 +93,6 @@ object RagiumEmiCategories {
         for (category: EmiRecipeCategory in SMELTING) {
             registry.addWorkstation(category, EmiStack.of(HTMachineVariant.MULTI_SMELTER))
         }
-        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, EmiStack.of(HTMachineVariant.ENGRAVER))
 
         registry.addWorkstation(CRUSHING, EmiStack.of(HTMachineVariant.CRUSHER))
     }

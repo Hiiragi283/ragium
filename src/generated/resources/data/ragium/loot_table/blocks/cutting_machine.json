@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:engraver"
+          "name": "ragium:cutting_machine"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/engraver"
+  "random_sequence": "ragium:blocks/cutting_machine"
 }

@@ -12,7 +12,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
@@ -66,7 +66,7 @@ object RagiumBlockEntityTypes {
             HTMachineVariant.ALLOY_SMELTER -> ::HTAlloySmelterBlockEntity
             HTMachineVariant.BLOCK_BREAKER -> ::HTBlockBreakerBlockEntity
             HTMachineVariant.COMPRESSOR -> ::HTCompressorBlockEntity
-            HTMachineVariant.ENGRAVER -> ::HTEngraverBlockEntity
+            HTMachineVariant.CUTTING_MACHINE -> ::HTCuttingMachineBlockEntity
             HTMachineVariant.EXTRACTOR -> ::HTExtractorBlockEntity
             HTMachineVariant.PULVERIZER -> ::HTPulverizerBlockEntity
             // Advanced
