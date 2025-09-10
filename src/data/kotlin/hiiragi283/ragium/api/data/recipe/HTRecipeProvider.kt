@@ -215,7 +215,7 @@ sealed class HTRecipeProvider {
     }
 
     protected fun resetComponent(item: ItemLike) {
-        HTShapelessRecipeBuilder(item).addIngredient(item).saveSuffixed(output, "_to_reset")
+        HTShapelessRecipeBuilder.misc(item).addIngredient(item).saveSuffixed(output, "_to_reset")
     }
 
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(

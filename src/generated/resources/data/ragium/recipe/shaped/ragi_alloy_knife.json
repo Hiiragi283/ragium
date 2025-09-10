@@ -6,7 +6,7 @@
     }
   ],
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "equipment",
   "key": {
     "A": {
       "tag": "c:ingots/ragi_alloy"

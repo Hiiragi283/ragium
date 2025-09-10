@@ -115,7 +115,8 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Nether Star
-        HTShapedRecipeBuilder(RagiumItems.WITHER_DOLl)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.WITHER_DOLl)
             .pattern(
                 "AAA",
                 "BBB",

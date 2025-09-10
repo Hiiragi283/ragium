@@ -33,7 +33,8 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        HTShapedRecipeBuilder(RagiumItems.DRILL)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.DRILL)
             .pattern(
                 " A ",
                 "ABA",
@@ -43,7 +44,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.POTION_BUNDLE)
             .pattern(
                 " A ",
                 "BBB",
@@ -55,7 +57,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Items.SMOOTH_STONE_SLAB)
             .save(output)
 
-        HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
+        HTShapelessRecipeBuilder
+            .equipment(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
             .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
@@ -72,7 +75,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun raginite() {
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.WRENCH)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.WRENCH)
             .pattern(
                 " A ",
                 " BA",
@@ -81,7 +85,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.MAGNET)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.MAGNET)
             .pattern(
                 "A A",
                 "B B",
@@ -99,13 +104,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         ).save(output)
 
         // Elite
-        HTShapedRecipeBuilder(RagiumItems.DYNAMIC_LANTERN)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.DYNAMIC_LANTERN)
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.LOOT_TICKET)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.LOOT_TICKET)
             .cross8()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Tags.Items.DYES_RED)
@@ -161,13 +168,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun molten() {
         // Crimson
-        HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.BLAST_CHARGE, 8)
             .hollow8()
             .define('A', Tags.Items.GUNPOWDERS)
             .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
         // Warped
-        HTShapedRecipeBuilder(RagiumItems.TELEPORT_KEY)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.TELEPORT_KEY)
             .cross8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
@@ -176,13 +185,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         resetComponent(RagiumItems.TELEPORT_KEY)
         // Eldritch
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.ELDRITCH_EGG)
             .hollow4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .define('B', Tags.Items.EGGS)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.UNIVERSAL_BUNDLE)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.UNIVERSAL_BUNDLE)
             .pattern(
                 "ABA",
                 "BCB",
@@ -193,7 +204,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color))
+            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color), CraftingBookCategory.EQUIPMENT)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
                 .savePrefixed(output, "${variant.serializedName}_")
@@ -207,7 +218,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getTool(HTHammerToolVariant, material)
 
         fun crafting(variant: HTItemMaterialVariant, material: HTMaterialType) {
-            HTShapedRecipeBuilder(hammer(material), category = CraftingBookCategory.EQUIPMENT)
+            HTShapedRecipeBuilder
+                .equipment(hammer(material))
                 .pattern(
                     " AA",
                     "BBA",
@@ -258,7 +270,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun addTemplate(template: ItemLike, material: HTMaterialType) {
-        HTShapedRecipeBuilder(template)
+        HTShapedRecipeBuilder
+            .equipment(template)
             .pattern(
                 "A A",
                 "A A",
@@ -266,7 +279,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', HTItemMaterialVariant.INGOT, material)
             .save(output)
 
-        HTShapelessRecipeBuilder(template, 2)
+        HTShapelessRecipeBuilder
+            .equipment(template, 2)
             .addIngredient(template)
             .addIngredient(HTItemMaterialVariant.INGOT, material)
             .addIngredient(HTItemMaterialVariant.INGOT, material)
@@ -293,7 +307,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private inline fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
-        HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
+        HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey), CraftingBookCategory.EQUIPMENT)
             .cross8()
             .apply(builderAction)
             .define('C', RagiumItems.LOOT_TICKET)

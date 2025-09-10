@@ -11,12 +11,25 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 
-class HTShapelessRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory = CraftingBookCategory.MISC) :
+class HTShapelessRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
     HTIngredientRecipeBuilder<HTShapelessRecipeBuilder> {
-    constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
-        ItemStack(item, count),
-        category,
-    )
+    companion object {
+        @JvmStatic
+        fun building(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(ItemStack(item, count), CraftingBookCategory.BUILDING)
+
+        @JvmStatic
+        fun redstone(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(ItemStack(item, count), CraftingBookCategory.REDSTONE)
+
+        @JvmStatic
+        fun equipment(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(ItemStack(item, count), CraftingBookCategory.EQUIPMENT)
+
+        @JvmStatic
+        fun misc(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(ItemStack(item, count), CraftingBookCategory.MISC)
+    }
 
     private val ingredients: NonNullList<Ingredient> = NonNullList.create()
 

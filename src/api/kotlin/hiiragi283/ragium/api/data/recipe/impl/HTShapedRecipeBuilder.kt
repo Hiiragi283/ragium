@@ -16,12 +16,24 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
-class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory = CraftingBookCategory.MISC) :
-    HTRecipeBuilder {
-    constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
-        ItemStack(item, count),
-        category,
-    )
+class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) : HTRecipeBuilder {
+    companion object {
+        @JvmStatic
+        fun building(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.BUILDING)
+
+        @JvmStatic
+        fun redstone(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.REDSTONE)
+
+        @JvmStatic
+        fun equipment(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.EQUIPMENT)
+
+        @JvmStatic
+        fun misc(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.MISC)
+    }
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
 

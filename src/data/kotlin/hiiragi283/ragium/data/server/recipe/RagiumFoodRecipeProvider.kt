@@ -57,7 +57,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).save(output)
         // Melon Pie
-        HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.MELON_PIE)
             .addIngredient(Tags.Items.CROPS_MELON)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.EGGS)
@@ -93,13 +94,15 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun cherry() {
         // Ragi-Cherry
-        HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY, 8)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.RAGI_CHERRY, 8)
             .hollow8()
             .define('A', RagiumCommonTags.Items.FOODS_APPLE)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Fever Cherry
-        HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.FEVER_CHERRY)
             .hollow8()
             .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GOLD)
             .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
@@ -152,7 +155,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .setExp(0.35f)
             .save(output)
         // Canned Cooked Meat
-        HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.COOKED_MEAT)
             .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
@@ -162,7 +166,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun sponge() {
         // Cakes
-        HTShapedRecipeBuilder(Items.CAKE)
+        HTShapedRecipeBuilder
+            .misc(Items.CAKE)
             .pattern(
                 " A ",
                 "BCB",
@@ -173,7 +178,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
-        HTShapedRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
+        HTShapedRecipeBuilder
+            .misc(RagiumBlocks.SWEET_BERRIES_CAKE)
             .pattern(
                 " A ",
                 "BCB",
@@ -184,11 +190,13 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
-        HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
             .save(output)
 
-        HTShapelessRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
+        HTShapelessRecipeBuilder
+            .misc(RagiumBlocks.SWEET_BERRIES_CAKE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)

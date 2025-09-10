@@ -44,7 +44,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun raginite() {
         // Ragi-Alloy
-        HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
             .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER)
@@ -63,7 +64,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 2),
             ).save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.RAGI_COKE)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.RAGI_COKE)
             .hollow4()
             .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('B', HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL)
@@ -76,7 +78,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4),
             ).save(output)
         // Ragi-Crystal
-        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
             .hollow8()
             .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND)
@@ -93,7 +96,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun azure() {
         // Azure Shard
-        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
             .mosaic4()
             .define('A', Tags.Items.GEMS_AMETHYST)
             .define('B', Tags.Items.GEMS_LAPIS)
@@ -117,7 +121,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun eldritch() {
         // Eldritch Pearl
-        HTShapedRecipeBuilder(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
             .cross4()
             .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
             .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
@@ -141,7 +146,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
             .save(output)
 
-        HTShapelessRecipeBuilder(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
             .addIngredient(RagiumItems.DEEP_SCRAP)
             .addIngredient(RagiumItems.DEEP_SCRAP)
             .addIngredient(RagiumItems.DEEP_SCRAP)
@@ -161,7 +167,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun miscMaterials() {
         // Sawdust
-        HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD)
             .define('B', RagiumItems.getDust(HTVanillaMaterialType.WOOD))
@@ -202,7 +209,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(Tags.Items.NETHER_STARS),
             ).save(output)
         // Other
-        HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
+        HTShapelessRecipeBuilder
+            .misc(Items.GUNPOWDER, 3)
             .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR)
             .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER)
             .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
@@ -217,11 +225,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
             RagiumBlocks.MATERIALS.get(HTBlockMaterialVariant.STORAGE_BLOCK, material)?.let { storage: ItemLike ->
                 // Block -> Base
-                HTShapelessRecipeBuilder(base, 9)
+                HTShapelessRecipeBuilder
+                    .misc(base, 9)
                     .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, material)
                     .saveSuffixed(output, "_from_block")
                 // Base -> Block
-                HTShapedRecipeBuilder(storage)
+                HTShapedRecipeBuilder
+                    .building(storage)
                     .hollow8()
                     .define('A', baseVariant, material)
                     .define('B', base)
@@ -230,11 +240,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
             RagiumItems.MATERIALS.get(HTItemMaterialVariant.NUGGET, material)?.let { nugget: ItemLike ->
                 // Base -> Nugget
-                HTShapelessRecipeBuilder(nugget, 9)
+                HTShapelessRecipeBuilder
+                    .misc(nugget, 9)
                     .addIngredient(baseVariant, material)
                     .saveSuffixed(output, "_from_base")
                 // Nugget -> Base
-                HTShapedRecipeBuilder(base)
+                HTShapedRecipeBuilder
+                    .misc(base)
                     .hollow8()
                     .define('A', HTItemMaterialVariant.NUGGET, material)
                     .define('B', nugget)

@@ -22,6 +22,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Function
 import kotlin.streams.asSequence
 
@@ -72,6 +73,7 @@ val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThr
  */
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
     is HTHolderLike -> this.getId()
+    is DeferredHolder<*, *> -> this.id
     else -> keyOrThrow.location()
 }
 

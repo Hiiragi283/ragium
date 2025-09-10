@@ -36,23 +36,27 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
             ).save(output)
         // Synthetic Fiber
-        HTShapelessRecipeBuilder(RagiumItems.SYNTHETIC_FIBER, 2)
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.SYNTHETIC_FIBER, 2)
             .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
             .addIngredient(Tags.Items.STRINGS)
             .savePrefixed(output, "2x_")
 
-        HTShapedRecipeBuilder(RagiumItems.SYNTHETIC_FIBER, 9)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.SYNTHETIC_FIBER, 9)
             .hollow8()
             .define('A', RagiumModTags.Items.POLYMER_RESIN)
             .define('B', Tags.Items.STRINGS)
             .savePrefixed(output, "9x_")
         // Synthetic Leather
-        HTShapelessRecipeBuilder(RagiumItems.SYNTHETIC_LEATHER, 2)
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.SYNTHETIC_LEATHER, 2)
             .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
             .addIngredient(Tags.Items.LEATHERS)
             .savePrefixed(output, "2x_")
 
-        HTShapedRecipeBuilder(RagiumItems.SYNTHETIC_LEATHER, 9)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.SYNTHETIC_LEATHER, 9)
             .hollow8()
             .define('A', RagiumModTags.Items.POLYMER_RESIN)
             .define('B', Tags.Items.LEATHERS)
@@ -83,14 +87,16 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun catalyst() {
         // Plating Catalyst
-        HTShapedRecipeBuilder(RagiumItems.PLATING_CATALYST)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.PLATING_CATALYST)
             .cross8()
             .define('A', Tags.Items.RODS_BLAZE)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.GILDIUM)
             .define('C', Items.IRON_BARS)
             .save(output)
         // Polymer Catalyst
-        HTShapedRecipeBuilder(RagiumItems.POLYMER_CATALYST)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.POLYMER_CATALYST)
             .cross8()
             .define('A', Tags.Items.RODS_BREEZE)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
@@ -116,7 +122,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.BASALT_MESH),
             ).save(output)
         // Basic
-        HTShapedRecipeBuilder(circuit(HTTierType.BASIC))
+        HTShapedRecipeBuilder
+            .misc(circuit(HTTierType.BASIC))
             .pattern(
                 "AAA",
                 "BCB",
@@ -126,7 +133,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
             .save(output)
 
-        HTShapedRecipeBuilder(circuit(HTTierType.BASIC), 2)
+        HTShapedRecipeBuilder
+            .misc(circuit(HTTierType.BASIC), 2)
             .pattern(
                 "AAA",
                 "BCB",
@@ -144,7 +152,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Advanced
-        HTShapedRecipeBuilder(circuit(HTTierType.ADVANCED))
+        HTShapedRecipeBuilder
+            .misc(circuit(HTTierType.ADVANCED))
             .crossLayered()
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
@@ -152,7 +161,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
             .saveSuffixed(output, "_from_basic")
 
-        HTShapedRecipeBuilder(circuit(HTTierType.ADVANCED))
+        HTShapedRecipeBuilder
+            .misc(circuit(HTTierType.ADVANCED))
             .cross8()
             .define('A', gemOrDust(RagiumMaterialType.AZURE))
             .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
@@ -190,13 +200,15 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         fun registerCoil(material: HTMaterialType, core: HTMaterialType) {
             val coil: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COIL, material)
             // Item
-            HTShapedRecipeBuilder(coil, 4)
+            HTShapedRecipeBuilder
+                .misc(coil, 4)
                 .hollow4()
                 .define('A', HTItemMaterialVariant.INGOT, material)
                 .define('B', ingotOrRod(core))
                 .save(output)
             // Block
-            HTShapedRecipeBuilder(RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, material))
+            HTShapedRecipeBuilder
+                .building(RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, material))
                 .hollow8()
                 .define('A', coil)
                 .define('B', HTItemMaterialVariant.INGOT, core)
@@ -207,7 +219,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
         // Component
         val basic: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.BASIC)
-        HTShapedRecipeBuilder(basic)
+        HTShapedRecipeBuilder
+            .misc(basic)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
@@ -216,7 +229,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         val adv: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ADVANCED)
-        HTShapedRecipeBuilder(adv)
+        HTShapedRecipeBuilder
+            .misc(adv)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
@@ -225,7 +239,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         val elite: HTDeferredItem<*> = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ELITE)
-        HTShapedRecipeBuilder(elite)
+        HTShapedRecipeBuilder
+            .misc(elite)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
@@ -234,7 +249,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         val ultimate: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, HTTierType.ULTIMATE)
-        HTShapedRecipeBuilder(ultimate)
+        HTShapedRecipeBuilder
+            .misc(ultimate)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
@@ -242,7 +258,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', elite)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.ETERNAL_COMPONENT)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.ETERNAL_COMPONENT)
             .cross8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
             .define('B', Items.CLOCK)
@@ -257,7 +274,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun redStones() {
         // Redstone Board
-        HTShapedRecipeBuilder(RagiumItems.REDSTONE_BOARD, 4)
+        HTShapedRecipeBuilder
+            .redstone(RagiumItems.REDSTONE_BOARD, 4)
             .hollow4()
             .define('A', Items.SMOOTH_STONE_SLAB)
             .define('B', HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
@@ -297,14 +315,16 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
         // LED Block
-        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(HTColorMaterial.WHITE), 8)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.getLedBlock(HTColorMaterial.WHITE), 8)
             .hollow8()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
-            HTShapedRecipeBuilder(block, 8)
+            HTShapedRecipeBuilder
+                .building(block, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)
                 .define('B', color.dyeTag)

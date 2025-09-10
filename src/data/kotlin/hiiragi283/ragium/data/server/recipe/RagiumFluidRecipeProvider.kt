@@ -184,7 +184,8 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(RagiumItems.GREEN_CAKE_DUST, 8),
             ).save(output)
         // Green Pellet
-        HTShapedRecipeBuilder(RagiumItems.GREEN_PELLET, 8)
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.GREEN_PELLET, 8)
             .hollow8()
             .define('A', RagiumItems.GREEN_CAKE_DUST)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)

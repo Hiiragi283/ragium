@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
@@ -27,25 +26,29 @@ import net.neoforged.neoforge.common.Tags
 object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Ragi-Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 8, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.RAGI_BRICKS, 8)
             .hollow8()
             .define('A', ItemTags.STONE_BRICKS)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Azure Tiles
-        HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILES, 8, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.AZURE_TILES, 8)
             .hollow8()
             .define('A', Items.DEEPSLATE_TILES)
             .define('B', gemOrDust(RagiumMaterialType.AZURE))
             .save(output)
         // Eldritch Stone
-        HTShapedRecipeBuilder(RagiumBlocks.ELDRITCH_STONE, 8, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.ELDRITCH_STONE, 8)
             .hollow8()
             .define('A', Items.BLACKSTONE)
             .define('B', gemOrDust(RagiumMaterialType.ELDRITCH_PEARL))
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE, 4)
             .storage4()
             .define('A', RagiumBlocks.ELDRITCH_STONE)
             .save(output)
@@ -54,7 +57,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumBlocks.ELDRITCH_STONE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, 4)
             .storage4()
             .define('A', RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
@@ -63,7 +67,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumBlocks.ELDRITCH_STONE, RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
         // Plastics
-        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BRICKS, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.PLASTIC_BRICKS, 4)
             .storage4()
             .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
@@ -72,7 +77,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_TILES, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.PLASTIC_TILES, 4)
             .storage4()
             .define('A', RagiumBlocks.PLASTIC_BRICKS)
             .save(output)
@@ -81,7 +87,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, 1, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.BLUE_NETHER_BRICKS, 1)
             .pattern(
                 "AB",
                 "BA",
@@ -89,7 +96,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
         // Sponge Cake
-        HTShapedRecipeBuilder(RagiumBlocks.SPONGE_CAKE, 4)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.SPONGE_CAKE, 4)
             .cross8()
             .define('A', Tags.Items.CROPS_WHEAT)
             .define('B', Items.SUGAR)
@@ -130,7 +138,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             HTVanillaMaterialType.SOUL,
             HTVanillaMaterialType.OBSIDIAN,
         ).forEach { material: HTVanillaMaterialType ->
-            HTShapedRecipeBuilder(RagiumBlocks.getTintedGlass(material))
+            HTShapedRecipeBuilder
+                .building(RagiumBlocks.getTintedGlass(material))
                 .hollow4()
                 .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
                 .define('B', HTBlockMaterialVariant.GLASS_BLOCK, material)
@@ -145,12 +154,14 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         val stairs: HTDeferredBlock<StairBlock, *> = variant.stairs
         val wall: HTDeferredBlock<WallBlock, *> = variant.wall
         // Base -> Slab
-        HTShapedRecipeBuilder(slab, 6)
+        HTShapedRecipeBuilder
+            .building(slab, 6)
             .pattern("AAA")
             .define('A', base)
             .save(output)
         // Base -> Stairs
-        HTShapedRecipeBuilder(stairs, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(stairs, 4)
             .pattern(
                 "A  ",
                 "AA ",
@@ -158,7 +169,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', base)
             .save(output)
         // Base -> Wall
-        HTShapedRecipeBuilder(wall, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder
+            .building(wall, 4)
             .pattern(
                 "AAA",
                 "AAA",

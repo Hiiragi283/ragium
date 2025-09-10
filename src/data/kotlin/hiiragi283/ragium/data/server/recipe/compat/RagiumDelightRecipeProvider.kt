@@ -55,7 +55,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun knife() {
-        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+        HTShapedRecipeBuilder
+            .equipment(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
             .pattern("A", "B")
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
@@ -76,7 +77,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
         // Pie
-        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PIE)
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .pattern(
                 "AAA",
                 "BBB",
@@ -92,7 +94,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PIE)
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .storage4()
             .define('A', RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE)
             .saveSuffixed(output, "_from_slice")
@@ -110,7 +113,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
             .pattern(
                 "ABA",
                 "ACA",

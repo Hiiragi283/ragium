@@ -32,35 +32,40 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun casings() {
         // Wooden
-        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.WOODEN_CASING, 4)
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
             .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
         // Stone
-        HTShapedRecipeBuilder(RagiumBlocks.STONE_CASING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.STONE_CASING)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.REINFORCED_STONE_CASING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.REINFORCED_STONE_CASING)
             .casing()
             .define('A', Items.BASALT)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
         // Device
-        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.DEVICE_CASING)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.DEVICE_CASING, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
@@ -73,7 +78,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun machines() {
         // Basic
-        HTShapedRecipeBuilder(HTMachineVariant.ALLOY_SMELTER)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.ALLOY_SMELTER)
             .pattern(
                 "AAA",
                 "BCB",
@@ -89,7 +95,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         basicMachine(HTMachineVariant.ENGRAVER, Ingredient.of(Items.STONECUTTER))
         basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
 
-        HTShapedRecipeBuilder(HTMachineVariant.PULVERIZER)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.PULVERIZER)
             .pattern(
                 "AAA",
                 "BCB",
@@ -100,7 +107,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.BRICKS)
             .save(output)
         // Advanced
-        HTShapedRecipeBuilder(HTMachineVariant.CRUSHER)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.CRUSHER)
             .pattern(
                 "AAA",
                 "BCB",
@@ -111,7 +119,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
-        HTShapedRecipeBuilder(HTMachineVariant.MELTER)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.MELTER)
             .pattern(
                 "AAA",
                 "BCB",
@@ -122,7 +131,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.NETHER_BRICKS)
             .save(output)
 
-        HTShapedRecipeBuilder(HTMachineVariant.REFINERY)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.REFINERY)
             .pattern(
                 " A ",
                 "ABA",
@@ -141,7 +151,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             createComponentUpgrade(HTTierType.ADVANCED, adv, basic).save(output)
         }
         // Elite
-        HTShapedRecipeBuilder(HTMachineVariant.SIMULATOR)
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.SIMULATOR)
             .pattern(
                 "AAA",
                 "BCB",
@@ -155,7 +166,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
-        HTShapedRecipeBuilder(variant)
+        HTShapedRecipeBuilder
+            .misc(variant)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
@@ -211,7 +223,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDrumVariant.HUGE -> continue
             }
 
-            HTShapedRecipeBuilder(drum)
+            HTShapedRecipeBuilder
+                .misc(drum)
                 .pattern(
                     "ABA",
                     "ACA",
@@ -238,7 +251,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDrumVariant.HUGE -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.NETHERITE
             }
 
-            HTShapedRecipeBuilder(upgrade)
+            HTShapedRecipeBuilder
+                .misc(upgrade)
                 .pattern(
                     "ABA",
                     "C C",
