@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.collection.HTWrappedMultiMap
@@ -32,7 +33,9 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.CommonHooks
@@ -140,9 +143,17 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
         CommonHooks.resolveLookup(registryKey)
 
-    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = RagiumAttachmentTypes.getEnergyNetwork(level)
+    override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =
+        server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
-    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumAttachmentTypes.getEnergyNetwork(key)
+    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = when (level) {
+        is ServerLevel -> level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+        else -> level?.dimension()?.let(::getEnergyNetwork)
+    }
+
+    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = getCurrentServer()
+        ?.getLevel(key)
+        ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //
 

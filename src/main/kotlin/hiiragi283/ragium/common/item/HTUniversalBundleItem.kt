@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -29,7 +29,7 @@ class HTUniversalBundleItem(properties: Properties) : Item(properties) {
         val stack: ItemStack = player.getItemInHand(usedHand)
         val color: DyeColor = stack.get(RagiumDataComponents.COLOR) ?: return InteractionResultHolder.fail(stack)
         if (level is ServerLevel) {
-            val handler: HTItemHandler = RagiumAttachmentTypes.getBundleManager(level.server).getHandler(color)
+            val handler: HTItemHandler = RagiumAPI.getInstance().getUniversalBundle(level.server, color)
             RagiumMenuTypes.UNIVERSAL_BUNDLE.openMenu(player, stack.hoverName, handler) {}
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)

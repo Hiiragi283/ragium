@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.core.Holder
@@ -22,6 +23,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
@@ -80,6 +82,8 @@ interface RagiumAPI {
     fun getCurrentServer(): MinecraftServer?
 
     fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>?
+
+    fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 
     /**
      * エネルギーネットワークのマネージャを返します。
