@@ -19,6 +19,17 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 
 class HTThrownCaptureEgg : ThrowableItemProjectile {
+    companion object {
+        @JvmStatic
+        fun getCapturedStack(target: Entity): ItemStack? {
+            val targetType: EntityType<*> = target.type
+            // 対象がブラックリストに入っていたらパス
+            if (targetType.`is`(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST)) return null
+            // クリックしたモブのスポーンエッグを取得する
+            return SpawnEggItem.byId(targetType)?.let(::ItemStack)
+        }
+    }
+
     constructor(entityType: EntityType<out HTThrownCaptureEgg>, level: Level) : super(entityType, level)
 
     constructor(level: Level, shooter: LivingEntity) : super(RagiumEntityTypes.ELDRITCH_EGG.get(), shooter, level)
@@ -35,11 +46,8 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
         super.onHitEntity(result)
         if (!level().isClientSide) {
             val target: Entity = result.entity
-            val targetType: EntityType<*> = target.type
-            // 対象がブラックリストに入っていたらパス
-            if (targetType.`is`(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST)) return
             // クリックしたモブのスポーンエッグを取得する
-            val spawnEgg: ItemStack = SpawnEggItem.byId(targetType)?.let(::ItemStack) ?: return
+            val spawnEgg: ItemStack = getCapturedStack(target) ?: return
             // SEを鳴らす
             playSound(SoundEvents.FIREWORK_ROCKET_BLAST)
             // パーティクルを出す

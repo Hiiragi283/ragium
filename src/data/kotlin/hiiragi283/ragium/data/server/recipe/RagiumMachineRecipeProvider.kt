@@ -209,6 +209,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createComponentUpgrade(HTTierType.ELITE, HTDeviceVariant.TELEPAD, RagiumBlocks.DEVICE_CASING)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
+
+        createComponentUpgrade(HTTierType.ELITE, HTDeviceVariant.MOB_CAPTURER, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.ELDRITCH_PEARL)
+            .save(output)
     }
 
     @JvmStatic

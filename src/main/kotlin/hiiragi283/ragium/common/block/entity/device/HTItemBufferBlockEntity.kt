@@ -51,7 +51,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
-            blockPos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
+            pos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
         )
         if (itemEntities.isEmpty()) return false
         // それぞれのItem Entityに対して回収を行う

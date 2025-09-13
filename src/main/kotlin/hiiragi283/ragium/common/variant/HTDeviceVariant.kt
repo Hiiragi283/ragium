@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.material.HTTierType
@@ -42,6 +43,7 @@ enum class HTDeviceVariant(
     // Elite
     DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, HTTierType.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
     TELEPAD(::HTTelepadBlockentity, HTTierType.ELITE, "Telepad", "テレパッド"),
+    MOB_CAPTURER(::HTMobCapturerBlockEntity, HTTierType.ELITE, "Mob Capturer", "モブ捕獲機"),
 
     // Creative
     CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTTierType.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
