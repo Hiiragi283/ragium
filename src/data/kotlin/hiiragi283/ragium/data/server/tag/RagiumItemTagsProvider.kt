@@ -133,6 +133,8 @@ class RagiumItemTagsProvider(
         val coalCoke: TagKey<Item> = HTItemMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
         builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag, coalCoke)
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
+
+        builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
         // Mekanism Addon
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
     }
@@ -286,13 +288,12 @@ class RagiumItemTagsProvider(
     //    Integration    //
 
     private fun curios(builder: HTTagBuilder<Item>) {
+        builder.addCurio(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
         builder.addCurio(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
         builder.addCurio(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
-
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
-
         builder.addCurio(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
     }
 

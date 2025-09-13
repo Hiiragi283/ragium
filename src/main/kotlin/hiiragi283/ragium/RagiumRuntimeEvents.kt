@@ -4,16 +4,21 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import io.wispforest.accessories.api.AccessoriesCapability
+import io.wispforest.accessories.api.slot.SlotEntryReference
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
 import net.minecraft.world.entity.player.Player
@@ -29,6 +34,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.EffectCure
 import net.neoforged.neoforge.common.EffectCures
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
@@ -155,6 +161,19 @@ object RagiumRuntimeEvents {
             event.isCanceled = true
         }
     }*/
+
+    @SubscribeEvent
+    fun inEntityDamaged(event: LivingDamageEvent.Pre) {
+        val accessoryCap: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(event.entity) ?: return
+        val reference: SlotEntryReference = accessoryCap.getFirstEquipped { stack: ItemStack ->
+            stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)
+        } ?: return
+        val entry: HTKeyOrTagEntry<DamageType> = reference.stack.get(RagiumDataComponents.IMMUNE_DAMAGE_TYPES) ?: return
+        val source: DamageSource = event.source
+        if (entry.map(source::`is`, source::`is`)) {
+            event.newDamage = 0f
+        }
+    }
 
     @SubscribeEvent
     fun onEntityDeath(event: LivingDeathEvent) {

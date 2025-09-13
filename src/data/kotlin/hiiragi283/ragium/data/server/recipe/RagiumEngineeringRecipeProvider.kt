@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -233,7 +232,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .misc(adv)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.QUARTZ)
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ADVANCED)
             .define('D', basic)
             .save(output)
@@ -253,7 +252,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .misc(ultimate)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.ULTIMATE)
             .define('D', elite)
             .save(output)

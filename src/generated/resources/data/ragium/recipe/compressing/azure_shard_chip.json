@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 3,
+    "tag": "c:gems/azure"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_shard_chip"
+  }
+}

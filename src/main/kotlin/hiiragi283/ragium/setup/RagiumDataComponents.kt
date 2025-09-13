@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTTeleportPos
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -13,6 +14,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
+import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -61,6 +63,10 @@ object RagiumDataComponents {
     @JvmField
     val FLUID_CONTENT: Supplier<DataComponentType<SimpleFluidContent>> =
         register("fluid_content", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+
+    @JvmField
+    val IMMUNE_DAMAGE_TYPES: Supplier<DataComponentType<HTKeyOrTagEntry<DamageType>>> =
+        register("immune_damage_types", HTKeyOrTagEntry.codec(Registries.DAMAGE_TYPE).cast())
 
     @JvmField
     val INTRINSIC_ENCHANTMENT: Supplier<DataComponentType<HTIntrinsicEnchantment>> =

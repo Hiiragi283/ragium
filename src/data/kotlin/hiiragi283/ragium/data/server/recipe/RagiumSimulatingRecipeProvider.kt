@@ -66,6 +66,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 HTResultHelper.INSTANCE.item(Items.EGG),
             ).save(output)
 
+        // Heart of the Sea
+        HTItemWithCatalystToItemRecipeBuilder
+            .simulating(
+                HTIngredientHelper.item(RagiumItems.ELDER_HEART),
+                HTIngredientHelper.item(Items.ELDER_GUARDIAN_SPAWN_EGG),
+                HTResultHelper.INSTANCE.item(Items.HEART_OF_THE_SEA),
+            ).save(output)
+
         // Dragon Breath
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(

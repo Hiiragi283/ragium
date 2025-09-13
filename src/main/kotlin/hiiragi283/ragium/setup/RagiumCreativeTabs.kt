@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
@@ -48,7 +47,15 @@ object RagiumCreativeTabs {
 
     @JvmField
     val BLOCKS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
-        register("blocks", { HTMachineVariant.PULVERIZER.asItem() }, RagiumBlocks.REGISTER)
+        REGISTER.register("blocks") { id: ResourceLocation ->
+            CreativeModeTab
+                .builder()
+                .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+                .icon { ItemStack(HTMachineVariant.PULVERIZER.asItem()) }
+                .displayItems(RagiumBlocks.REGISTER.firstEntries)
+                .build()
+        }
+
     /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Natural Resources
         output.accept(RagiumBlocks.ASH_LOG)
@@ -97,6 +104,7 @@ object RagiumCreativeTabs {
         listOf(
             HTItemMaterialVariant.RAW_MATERIAL,
             HTItemMaterialVariant.GEM,
+            HTItemMaterialVariant.CHIP,
             HTItemMaterialVariant.INGOT,
             HTItemMaterialVariant.NUGGET,
             HTItemMaterialVariant.DUST,
@@ -221,20 +229,6 @@ object RagiumCreativeTabs {
             .build()
     }
 
-    @JvmStatic
-    private fun register(
-        name: String,
-        icon: ItemLike,
-        register: HTDoubleDeferredRegister<out ItemLike, *>,
-    ): HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
-        CreativeModeTab
-            .builder()
-            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
-            .icon { ItemStack(icon) }
-            .displayItems(register.firstEntries)
-            .build()
-    }
-
     fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
         table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
         variants: Iterable<V>,
@@ -302,6 +296,9 @@ object RagiumCreativeTabs {
             insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
 
             insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)
+
+            insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), Items.ECHO_SHARD)
+            insertAfter(Items.ECHO_SHARD, RagiumItems.ECHO_STAR)
         }
     }
 }

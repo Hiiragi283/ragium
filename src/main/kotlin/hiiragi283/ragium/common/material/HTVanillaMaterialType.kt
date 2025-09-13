@@ -18,6 +18,7 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
     AMETHYST("Amethyst", "アメシスト"),
     DIAMOND("Diamond", "ダイアモンド"),
     EMERALD("Emerald", "エメラルド"),
+    ECHO("Echo", "残響"),
 
     // Other
     COAL("Coal", "石炭"),

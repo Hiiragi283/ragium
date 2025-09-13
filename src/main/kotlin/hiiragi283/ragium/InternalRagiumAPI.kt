@@ -96,6 +96,7 @@ class InternalRagiumAPI : RagiumAPI {
         consumer(HTVanillaMaterialType.AMETHYST, HTItemMaterialVariant.GEM)
         consumer(HTVanillaMaterialType.DIAMOND, HTItemMaterialVariant.GEM)
         consumer(HTVanillaMaterialType.EMERALD, HTItemMaterialVariant.GEM)
+        consumer(HTVanillaMaterialType.ECHO, HTItemMaterialVariant.GEM)
 
         consumer(HTVanillaMaterialType.COAL, HTItemMaterialVariant.FUEL)
         consumer(HTVanillaMaterialType.CHARCOAL, HTItemMaterialVariant.FUEL)

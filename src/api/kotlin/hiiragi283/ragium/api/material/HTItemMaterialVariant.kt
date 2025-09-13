@@ -22,6 +22,7 @@ enum class HTItemMaterialVariant(private val enUsPattern: String, private val ja
     // Item - Custom
     CIRCUIT("%s Circuit", "%s回路", RagiumConst.CIRCUITS),
     FUEL("%s", "%s", RagiumConst.FUELS),
+    CHIP("%s Chip", "%sチップ", RagiumConst.CHIPS),
     ;
 
     override val itemCommonTag: TagKey<Item> = itemTagKey(commonId(tagPrefix))

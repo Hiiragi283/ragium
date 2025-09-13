@@ -64,6 +64,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
 
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.ECHO_STAR)
+            .cross8()
+            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.ECHO)
+            .define('B', HTItemMaterialVariant.CHIP, HTVanillaMaterialType.ECHO)
+            .define('C', Tags.Items.NETHER_STARS)
+            .save(output)
+
         raginite()
         azureAndDeepSteel()
         molten()

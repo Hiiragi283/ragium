@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -35,6 +36,7 @@ import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -120,10 +122,13 @@ object RagiumItems {
     val BASALT_MESH: HTDeferredItem<Item> = register("basalt_mesh")
 
     @JvmField
+    val ECHO_STAR: HTDeferredItem<Item> = register("echo_star")
+
+    @JvmField
     val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
-    val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll", Item.Properties())
+    val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll")
 
     @JvmField
     val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
@@ -136,6 +141,7 @@ object RagiumItems {
             // Vanilla - Gem
             HTVanillaMaterialType.LAPIS,
             HTVanillaMaterialType.AMETHYST,
+            HTVanillaMaterialType.ECHO,
             // Vanilla - Other
             HTVanillaMaterialType.OBSIDIAN,
             // Common
@@ -158,6 +164,13 @@ object RagiumItems {
             RagiumMaterialType.WARPED_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
         ).forEach { put(HTItemMaterialVariant.GEM, it, register(it.serializedName)) }
+        // Chips
+        mapOf(
+            RagiumMaterialType.RAGI_CRYSTAL to RagiumConst.RAGI_CRYSTAL + "_chip",
+            RagiumMaterialType.AZURE to "azure_shard_chip",
+            RagiumMaterialType.ELDRITCH_PEARL to RagiumConst.ELDRITCH_PEARL + "_chip",
+            HTVanillaMaterialType.ECHO to "echo_shard_chip",
+        ).forEach { put(HTItemMaterialVariant.CHIP, it.key, register(it.value)) }
         // Ingots
         listOf(
             // Metals
@@ -507,6 +520,13 @@ object RagiumItems {
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
+        event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
+            builder.set(
+                RagiumDataComponents.IMMUNE_DAMAGE_TYPES.get(),
+                HTKeyOrTagEntry(RagiumCommonTags.DamageTypes.IS_SONIC),
+            )
+        }
+
         event.modify(UNIVERSAL_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.COLOR.get(), DyeColor.WHITE)
         }

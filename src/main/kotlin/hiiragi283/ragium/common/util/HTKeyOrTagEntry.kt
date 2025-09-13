@@ -14,8 +14,9 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import java.util.function.Function
 
-class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
+data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     companion object {
         @JvmStatic
         fun <T : Any> codec(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, HTKeyOrTagEntry<T>> = BiCodecs
@@ -27,8 +28,10 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
 
     constructor(tagKey: TagKey<T>) : this(Either.right(tagKey))
 
-    val id: ResourceLocation = entry.map(ResourceKey<T>::location, TagKey<T>::location)
-    val registryKey: ResourceKey<out Registry<T>> = entry.map(ResourceKey<T>::registryKey, TagKey<T>::registry)
+    val id: ResourceLocation = map(ResourceKey<T>::location, TagKey<T>::location)
+    val registryKey: ResourceKey<out Registry<T>> = map(ResourceKey<T>::registryKey, TagKey<T>::registry)
+
+    fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U = entry.map(fromKey, fromTag)
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
         val getter: HolderGetter<T> = provider?.lookupOrThrow(registryKey)
@@ -37,7 +40,7 @@ class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
         return getFirstHolder(getter)
     }
 
-    fun getFirstHolder(lookup: HolderGetter<T>): DataResult<out Holder<T>> = entry.map(
+    fun getFirstHolder(lookup: HolderGetter<T>): DataResult<out Holder<T>> = map(
         { key: ResourceKey<T> -> getFirstHolderFromId(lookup, key) },
         { tagKey: TagKey<T> -> getFirstHolderFromTag(lookup, tagKey) },
     )

@@ -252,13 +252,29 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .define('B', nugget)
                     .saveSuffixed(output, "_from_nugget")
             }
+
+            gemToChip(material)
         }
 
         rawToIngot(HTVanillaMaterialType.COPPER)
         rawToIngot(HTVanillaMaterialType.IRON)
         rawToIngot(HTVanillaMaterialType.GOLD)
 
+        gemToChip(HTVanillaMaterialType.ECHO)
+
         HTCommonMaterialTypes.METALS.values.forEach(::rawToIngot)
+    }
+
+    @JvmStatic
+    private fun gemToChip(material: HTMaterialType) {
+        RagiumItems.MATERIALS.get(HTItemMaterialVariant.CHIP, material)?.let { chip: ItemLike ->
+            // 3x Gem -> Chip
+            HTItemToObjRecipeBuilder
+                .compressing(
+                    HTIngredientHelper.item(HTItemMaterialVariant.GEM, material, 3),
+                    HTResultHelper.INSTANCE.item(chip),
+                ).save(output)
+        }
     }
 
     @JvmStatic

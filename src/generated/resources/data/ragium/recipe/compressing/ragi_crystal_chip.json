@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 3,
+    "tag": "c:gems/ragi_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_crystal_chip"
+  }
+}
