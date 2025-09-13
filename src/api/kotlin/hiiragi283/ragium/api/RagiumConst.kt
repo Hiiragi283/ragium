@@ -35,6 +35,7 @@ object RagiumConst {
     const val ARS_NOUVEAU = "ars_nouveau"
     const val COMMON = "c"
     const val CREATE = "create"
+    const val CURIOS = "curios"
     const val EIO = "enderio"
     const val EIO_BASE = "enderio_base"
     const val FARMERS_DELIGHT = "farmersdelight"

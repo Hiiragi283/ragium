@@ -67,9 +67,6 @@ object RagiumDataComponents {
         register("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC.cast())
 
     @JvmField
-    val IS_ACTIVE: Supplier<DataComponentType<Boolean>> = register("is_active", BiCodec.BOOL.cast())
-
-    @JvmField
     val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceKey<LootTable>>> =
         register("loot_table_id", BiCodecs.resourceKey(Registries.LOOT_TABLE).cast())
 

@@ -75,6 +75,9 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
 
     // Item
     @JvmField
+    val expBerriesValue: HTIntConfigValue
+
+    @JvmField
     val teleportKeyCost: HTIntConfigValue
 
     // Recipe
@@ -177,6 +180,7 @@ class RagiumConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Item
         builder.push("item")
+        expBerriesValue = builder.definePositiveInt("expBerriesValue", 8)
         teleportKeyCost = builder.definePositiveInt("teleportKeyCost", 10)
         builder.pop()
         // Recipe

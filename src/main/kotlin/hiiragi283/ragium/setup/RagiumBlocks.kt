@@ -26,8 +26,9 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.item.HTDrumItem
-import hiiragi283.ragium.common.item.HTWarpedWartItem
+import hiiragi283.ragium.common.item.block.HTDrumItem
+import hiiragi283.ragium.common.item.block.HTExpBerriesItem
+import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTColorMaterial
@@ -38,7 +39,6 @@ import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
@@ -97,8 +97,8 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, ItemNameBlockItem> =
-        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::ItemNameBlockItem)
+    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
+        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val WARPED_WART: HTDeferredBlock<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(

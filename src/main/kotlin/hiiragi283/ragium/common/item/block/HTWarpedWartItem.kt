@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.common.block.HTWarpedWartBlock

@@ -14,21 +14,21 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.curio.HTDynamicLightingCurio
+import hiiragi283.ragium.common.curio.HTMagnetizationCurio
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
-import hiiragi283.ragium.common.item.HTDestructionHammerItem
-import hiiragi283.ragium.common.item.HTDrillItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
-import hiiragi283.ragium.common.item.HTDynamicLanternItem
-import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
-import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
+import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
+import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -48,6 +48,9 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.entity.ExperienceOrb
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
@@ -63,6 +66,8 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import org.slf4j.Logger
+import top.theillusivec4.curios.api.CuriosApi
+import top.theillusivec4.curios.api.type.capability.ICurioItem
 
 object RagiumItems {
     @JvmStatic
@@ -254,13 +259,13 @@ object RagiumItems {
     val WRENCH: HTDeferredItem<Item> = register("wrench", Item.Properties().stacksTo(1))
 
     @JvmField
-    val MAGNET: HTDeferredItem<Item> = register("ragi_magnet", ::HTSimpleMagnetItem)
+    val MAGNET: HTDeferredItem<Item> = register("ragi_magnet")
 
     @JvmField
-    val ADVANCED_MAGNET: HTDeferredItem<Item> = register("advanced_ragi_magnet", ::HTExpMagnetItem)
+    val ADVANCED_MAGNET: HTDeferredItem<Item> = register("advanced_ragi_magnet")
 
     @JvmField
-    val DYNAMIC_LANTERN: HTDeferredItem<Item> = register("ragi_lantern", ::HTDynamicLanternItem)
+    val DYNAMIC_LANTERN: HTDeferredItem<Item> = register("ragi_lantern")
 
     @JvmField
     val LOOT_TICKET: HTDeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
@@ -286,7 +291,7 @@ object RagiumItems {
     val ELDRITCH_EGG: HTDeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
 
     @JvmField
-    val UNIVERSAL_BUNDLE: HTDeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem, Item.Properties().stacksTo(1))
+    val UNIVERSAL_BUNDLE: HTDeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem)
 
     @JvmField
     val ETERNAL_COMPONENT: HTDeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
@@ -298,13 +303,13 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val POTION_BUNDLE: HTDeferredItem<Item> = register("potion_bundle", ::HTPotionBundleItem, Item.Properties().stacksTo(1))
+    val POTION_BUNDLE: HTDeferredItem<Item> = register("potion_bundle", ::HTPotionBundleItem)
 
     @JvmField
     val SLOT_COVER: HTDeferredItem<Item> = register("slot_cover")
 
     @JvmField
-    val TRADER_CATALOG: HTDeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
+    val TRADER_CATALOG: HTDeferredItem<Item> = register("trader_catalog", ::HTTraderCatalogItem)
 
     @JvmField
     val MEDIUM_DRUM_UPGRADE: HTDeferredItem<Item> = register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
@@ -474,6 +479,27 @@ object RagiumItems {
         // Energy
         HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
+        // Curio
+        registerApp(DYNAMIC_LANTERN, HTDynamicLightingCurio)
+        registerApp(
+            MAGNET,
+            HTMagnetizationCurio.create { entity: ItemEntity, player: Player ->
+                // IEのコンベヤ上にいるアイテムは無視する
+                if (entity.persistentData.getBoolean(RagiumConst.PREVENT_ITEM_MAGNET)) return@create
+                if (entity.isAlive && !entity.hasPickUpDelay()) {
+                    entity.playerTouch(player)
+                }
+            },
+        )
+        registerApp(
+            ADVANCED_MAGNET,
+            HTMagnetizationCurio.create { entity: ExperienceOrb, player: Player ->
+                if (entity.value > 0) {
+                    entity.playerTouch(player)
+                }
+            },
+        )
+
         LOGGER.info("Registered item capabilities!")
     }
 
@@ -486,6 +512,11 @@ object RagiumItems {
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
         factory(stack, capacity * modifier)
+    }
+
+    @JvmStatic
+    private fun registerApp(item: ItemLike, curio: ICurioItem) {
+        CuriosApi.registerCurio(item.asItem(), curio)
     }
 
     @JvmStatic

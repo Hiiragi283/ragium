@@ -13,12 +13,9 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
-import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -40,29 +37,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeEvents {
     //    Block    //
-
-    /*fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
-        val hand: InteractionHand = event.hand
-        val stack: ItemStack = event.itemStack
-
-        val hitResult: BlockHitResult = event.hitVec
-        val level: Level = event.level
-        val state: BlockState = level.getBlockState(hitResult.blockPos)
-        // 有効な最初のレシピを取得
-        val input = HTInteractRecipeInput(hitResult.blockPos, stack)
-        val firstRecipe: HTBlockInteractingRecipe = level.recipeManager
-            .getRecipeFor(RagiumRecipeTypes.BLOCK_INTERACTING.get(), input, level)
-            .getOrNull()
-            ?.value ?: return
-        // サーバー側のプレイヤーに進捗を付与
-        val player: Player = event.entity
-        if (player is ServerPlayer) HTBlockInteractionTrigger.trigger(player, state)
-        // レシピの処理を実行
-        firstRecipe.applyActions(UseOnContext(level, player, hand, stack, hitResult))
-        // 次のイベントをキャンセルする
-        event.isCanceled = true
-        event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-    }*/
 
     @SubscribeEvent
     fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
@@ -87,20 +61,6 @@ object RagiumRuntimeEvents {
             event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             return
         }*/
-        // 行商人のカタログの場合もGUIを開く
-        if (stack.`is`(RagiumItems.TRADER_CATALOG)) {
-            event.cancellationResult =
-                WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, InteractionHand.MAIN_HAND)
-            return
-        }
-        // 経験値ベリーの場合は経験値を与える
-        if (RagiumBlocks.EXP_BERRIES.isOf(stack)) {
-            player.giveExperiencePoints(8)
-            stack.consume(1, player)
-            level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS)
-            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-            return
-        }
         // アイテムがハチ入りの瓶の場合はハチを開放する
         if (stack.`is`(RagiumItems.BOTTLED_BEE)) {
             val result: InteractionResult = Items.BEE_SPAWN_EGG.use(event.level, player, event.hand).result

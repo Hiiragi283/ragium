@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
-import hiiragi283.ragium.common.item.HTDrumItem
+import hiiragi283.ragium.common.item.block.HTDrumItem
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos

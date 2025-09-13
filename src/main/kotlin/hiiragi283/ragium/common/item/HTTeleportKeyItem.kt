@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.item.base.HTFluidItem
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents

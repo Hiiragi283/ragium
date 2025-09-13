@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.extension.addEnergyTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.curio.HTCurioSlots
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
@@ -38,7 +39,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import top.theillusivec4.curios.api.CuriosTags
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
@@ -286,9 +286,9 @@ class RagiumItemTagsProvider(
     //    Integration    //
 
     private fun curios(builder: HTTagBuilder<Item>) {
-        builder.add(CuriosTags.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.add(CuriosTags.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.add(CuriosTags.CHARM, RagiumItems.MAGNET)
+        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.ADVANCED_MAGNET)
+        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.DYNAMIC_LANTERN)
+        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.MAGNET)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
@@ -309,6 +309,8 @@ class RagiumItemTagsProvider(
         val tagKey: TagKey<Item> = variant.itemTagKey(material)
         return add(itemCommonTag, tagKey, holder)
     }
+
+    private fun HTTagBuilder<Item>.addCurio(curio: HTCurioSlots, holder: HTHolderLike): HTTagBuilder<Item> = add(curio.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()
