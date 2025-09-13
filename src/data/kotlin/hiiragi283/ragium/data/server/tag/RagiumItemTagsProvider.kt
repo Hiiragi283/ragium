@@ -292,6 +292,8 @@ class RagiumItemTagsProvider(
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
         builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
+
+        builder.addCurio(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLE)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {

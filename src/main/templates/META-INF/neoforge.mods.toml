@@ -86,10 +86,10 @@ config="${mod_id}.mixins.json"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
-    modId="curios"
+    modId="accessories"
     type="required"
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[9.5.1+1.21.1,)"
+    versionRange="*"
     ordering="NONE"
     side="BOTH"
 

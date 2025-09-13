@@ -154,6 +154,7 @@ object RagiumCreativeTabs {
 
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL))
             output.accept(RagiumItems.DYNAMIC_LANTERN)
+            output.accept(RagiumItems.NIGHT_VISION_GOGGLE)
             // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)

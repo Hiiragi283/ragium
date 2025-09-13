@@ -293,7 +293,7 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun optionalFieldOf(name: String, defaultValue: Supplier<V>): MapBiCodec<B, V> = optionalFieldOf(name).xmap(
         { optional: Optional<V> -> optional.orElseGet(defaultValue) },
-        { value: V -> if (value == defaultValue.get()) Optional.empty() else Optional.of(value) },
+        { value: V -> Optional.of(value).filter { valueIn: V -> value == valueIn } },
     )
 
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =

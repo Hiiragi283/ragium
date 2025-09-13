@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
+import hiiragi283.ragium.client.accessory.HTGoggleAccessoryRenderer
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
@@ -19,7 +21,6 @@ import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
-import hiiragi283.ragium.client.renderer.HTBundleAccessoryRenderer
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
@@ -83,13 +84,15 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::registerAccessories)
 
-        LOGGER.info("Loaded client setup!")
+        LOGGER.info("Loaded Client Setup!")
     }
 
     private fun registerAccessories() {
         accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
         accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
-        LOGGER.info("Registered curios renderer")
+
+        accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLE, ::HTGoggleAccessoryRenderer)
+        LOGGER.info("Registered Accessory Renderer!")
     }
 
     private fun accessoryRenderer(item: ItemLike, supplier: () -> AccessoryRenderer) {

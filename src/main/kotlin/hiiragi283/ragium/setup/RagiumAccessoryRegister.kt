@@ -3,8 +3,10 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.accessory.HTDynamicLightingAccessory
 import hiiragi283.ragium.common.accessory.HTMagnetizationAccessory
+import hiiragi283.ragium.common.accessory.HTMobEffectAccessory
 import io.wispforest.accessories.api.AccessoriesAPI
 import io.wispforest.accessories.api.Accessory
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
@@ -33,6 +35,9 @@ object RagiumAccessoryRegister {
                 }
             },
         )
+
+        // Face
+        register(RagiumItems.NIGHT_VISION_GOGGLE, HTMobEffectAccessory(MobEffects.NIGHT_VISION, -1, ambient = true))
     }
 
     @JvmStatic

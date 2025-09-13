@@ -61,7 +61,6 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 [bundles]
 
 mods-impl = [
-    "aa",
     "ae2",
     "almost",
     "delight",
@@ -76,6 +75,7 @@ mods-impl = [
 ]
 
 mods-transitive = [
+    "aa",
     "accessories"
 ]
 

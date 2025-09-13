@@ -178,6 +178,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addPatterned()
         // Armor
+        add(RagiumItems.NIGHT_VISION_GOGGLE, "暗視ゴーグル")
         // Tool
         add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")

@@ -263,6 +263,9 @@ object RagiumItems {
     @JvmField
     val LOOT_TICKET: HTDeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
 
+    @JvmField
+    val NIGHT_VISION_GOGGLE: HTDeferredItem<Item> = register("night_vision_goggle", Item.Properties().stacksTo(1))
+
     // Azure
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> =
