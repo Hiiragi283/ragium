@@ -5,12 +5,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTPayloadRegister
+import hiiragi283.ragium.client.network.HTOpenPotionBundlePacket
+import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumAccessoryRegister
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -97,6 +100,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             RagiumFluidContents.registerInteractions()
             LOGGER.info("Registered dispenser behaviors!")
         }
+        event.enqueueWork(RagiumAccessoryRegister::register)
         event.enqueueWork(RagiumFluidContents::registerInteractions)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
@@ -119,8 +123,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
             registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
             // Client -> Server
-            registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
+            registerC2S(HTOpenPotionBundlePacket.TYPE, HTOpenPotionBundlePacket.STREAM_CODEC)
+            registerC2S(HTOpenUniversalBundlePacket.TYPE, HTOpenUniversalBundlePacket.STREAM_CODEC)
             registerC2S(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC)
+            registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
         }
 
         LOGGER.info("Registered packets!")

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTColorMaterial
@@ -31,6 +32,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         fluid()
         item()
         itemGroup()
+        keyMapping()
         modTags()
         text()
         information()
@@ -241,6 +243,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - ブロック")
         addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - 素材")
         addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - アイテム")
+    }
+
+    private fun keyMapping() {
+        add(RagiumTranslation.KEY_CATEGORY, "Ragium")
+
+        add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "ポーションバンドルを開く")
+        add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
     }
 
     /*private fun material() {

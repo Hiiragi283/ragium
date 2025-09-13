@@ -21,17 +21,20 @@ class HTUniversalBundleItem(properties: Properties) : Item(properties.stacksTo(1
         fun createBundle(color: DyeColor): ItemStack = createItemStack(RagiumItems.UNIVERSAL_BUNDLE) {
             set(RagiumDataComponents.COLOR, color)
         }
+
+        @JvmStatic
+        fun openBundle(level: Level, player: Player, stack: ItemStack): InteractionResultHolder<ItemStack> {
+            val color: DyeColor = stack.get(RagiumDataComponents.COLOR) ?: return InteractionResultHolder.fail(stack)
+            if (level is ServerLevel) {
+                val handler: HTItemHandler = RagiumAPI.getInstance().getUniversalBundle(level.server, color)
+                RagiumMenuTypes.UNIVERSAL_BUNDLE.openMenu(player, stack.hoverName, handler) {}
+            }
+            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+        }
     }
 
     override fun getDefaultInstance(): ItemStack = createBundle(DyeColor.WHITE)
 
-    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
-        val stack: ItemStack = player.getItemInHand(usedHand)
-        val color: DyeColor = stack.get(RagiumDataComponents.COLOR) ?: return InteractionResultHolder.fail(stack)
-        if (level is ServerLevel) {
-            val handler: HTItemHandler = RagiumAPI.getInstance().getUniversalBundle(level.server, color)
-            RagiumMenuTypes.UNIVERSAL_BUNDLE.openMenu(player, stack.hoverName, handler) {}
-        }
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
-    }
+    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> =
+        openBundle(level, player, player.getItemInHand(usedHand))
 }

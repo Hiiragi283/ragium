@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTColorMaterial
@@ -31,6 +32,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         fluid()
         item()
         itemGroup()
+        keyMapping()
         modTags()
         text()
         information()
@@ -241,6 +243,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - Blocks")
         addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - Ingredients")
         addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - Items")
+    }
+
+    private fun keyMapping() {
+        add(RagiumTranslation.KEY_CATEGORY, "Ragium")
+
+        add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "Open Potion Bundle")
+        add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
     }
 
     /*private fun material() {

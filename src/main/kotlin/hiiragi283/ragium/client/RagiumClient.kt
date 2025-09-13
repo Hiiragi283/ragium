@@ -19,6 +19,7 @@ import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.renderer.HTBundleAccessoryRenderer
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
@@ -30,11 +31,14 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
+import io.wispforest.accessories.api.client.AccessoryRenderer
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -45,6 +49,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
@@ -70,12 +75,25 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
         eventBus.addListener(::registerTooltipRenderer)
+        eventBus.addListener(::registerKeyMappings)
 
         container.registerExtensionPoint(IConfigScreenFactory::class.java, IConfigScreenFactory(::ConfigurationScreen))
     }
 
     private fun clientSetup(event: FMLClientSetupEvent) {
+        event.enqueueWork(::registerAccessories)
+        
         LOGGER.info("Loaded client setup!")
+    }
+
+    private fun registerAccessories() {
+        accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
+        accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
+        LOGGER.info("Registered curios renderer")
+    }
+
+    private fun accessoryRenderer(item: ItemLike, supplier: () -> AccessoryRenderer) {
+        AccessoriesRendererRegistry.registerRenderer(item.asItem(), supplier)
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
@@ -240,5 +258,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
         LOGGER.info("Registered ClientTooltipComponents!")
+    }
+
+    private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
+        RagiumKeyMappings.KEYS.forEach(event::register)
+
+        LOGGER.info("Registered Key Mappings!")
     }
 }

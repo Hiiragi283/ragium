@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.accessory.HTAccessorySlot
 import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.curio.HTCurioSlots
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
@@ -286,9 +286,12 @@ class RagiumItemTagsProvider(
     //    Integration    //
 
     private fun curios(builder: HTTagBuilder<Item>) {
-        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.addCurio(HTCurioSlots.CHARM, RagiumItems.MAGNET)
+        builder.addCurio(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
+        builder.addCurio(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
+
+        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
+        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
+        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
@@ -310,7 +313,7 @@ class RagiumItemTagsProvider(
         return add(itemCommonTag, tagKey, holder)
     }
 
-    private fun HTTagBuilder<Item>.addCurio(curio: HTCurioSlots, holder: HTHolderLike): HTTagBuilder<Item> = add(curio.slotTag, holder)
+    private fun HTTagBuilder<Item>.addCurio(curio: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> = add(curio.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

@@ -14,8 +14,6 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.curio.HTDynamicLightingCurio
-import hiiragi283.ragium.common.curio.HTMagnetizationCurio
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
@@ -48,9 +46,6 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.entity.ExperienceOrb
-import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
@@ -66,8 +61,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import org.slf4j.Logger
-import top.theillusivec4.curios.api.CuriosApi
-import top.theillusivec4.curios.api.type.capability.ICurioItem
 
 object RagiumItems {
     @JvmStatic
@@ -479,27 +472,6 @@ object RagiumItems {
         // Energy
         HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
-        // Curio
-        registerApp(DYNAMIC_LANTERN, HTDynamicLightingCurio)
-        registerApp(
-            MAGNET,
-            HTMagnetizationCurio.create { entity: ItemEntity, player: Player ->
-                // IEのコンベヤ上にいるアイテムは無視する
-                if (entity.persistentData.getBoolean(RagiumConst.PREVENT_ITEM_MAGNET)) return@create
-                if (entity.isAlive && !entity.hasPickUpDelay()) {
-                    entity.playerTouch(player)
-                }
-            },
-        )
-        registerApp(
-            ADVANCED_MAGNET,
-            HTMagnetizationCurio.create { entity: ExperienceOrb, player: Player ->
-                if (entity.value > 0) {
-                    entity.playerTouch(player)
-                }
-            },
-        )
-
         LOGGER.info("Registered item capabilities!")
     }
 
@@ -512,11 +484,6 @@ object RagiumItems {
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
         factory(stack, capacity * modifier)
-    }
-
-    @JvmStatic
-    private fun registerApp(item: ItemLike, curio: ICurioItem) {
-        CuriosApi.registerCurio(item.asItem(), curio)
     }
 
     @JvmStatic

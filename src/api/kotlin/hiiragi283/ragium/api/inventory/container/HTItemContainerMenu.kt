@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.inventory.container
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -21,5 +22,12 @@ abstract class HTItemContainerMenu(
         containerId,
         inventory,
     ) {
-    override fun stillValid(player: Player): Boolean = !stack.isEmpty && player.getItemInHand(hand).`is`(stack.item)
+    override fun stillValid(player: Player): Boolean = when {
+        stack.isEmpty -> false
+        !player.getItemInHand(hand).`is`(stack.item) -> {
+            RagiumAPI.getInstance().getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
+        }
+
+        else -> true
+    }
 }

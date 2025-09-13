@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
+import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -23,6 +24,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -104,6 +106,10 @@ interface RagiumAPI {
     //    Recipe    //
 
     fun getResultHelper(): HTResultHelper
+
+    //    Accessory    //
+
+    fun getAccessoryCap(entity: LivingEntity): AccessoriesCapability? = AccessoriesCapability.get(entity)
 
     //    Platform    //
 

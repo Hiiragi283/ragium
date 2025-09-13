@@ -13,6 +13,7 @@ kff-version-range = "[5.9,)"
 ktlint = "12.3.0"
 
 aa = "1.3.19+mc1.21.1"
+accessories = "1.1.0-beta.49+1.21.1"
 ae2 = "19.2.15"
 almost = "1.21.1-1.2.5"
 ars = "5.10.2.1197"
@@ -37,6 +38,7 @@ rs2 = "2.0.0-beta.10"
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
+accessories = { group = "io.wispforest", name = "accessories-neoforge", version.ref = "accessories" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 almost = { group = "com.almostreliable.mods", name = "almostunified-neoforge", version.ref = "almost" }
 ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
@@ -62,7 +64,6 @@ mods-impl = [
     "aa",
     "ae2",
     "almost",
-    "curious",
     "delight",
     "emi",
     "fusion",
@@ -74,13 +75,16 @@ mods-impl = [
     "replica",
 ]
 
-mods-transitive = []
+mods-transitive = [
+    "accessories"
+]
 
 mods-compile = [
     "magitech"
 ]
 
 mods-runtime = [
+    "curious",
     "dire",
     "rs2",
 ]
