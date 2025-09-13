@@ -13,10 +13,15 @@ import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.collection.HTWrappedMultiMap
 import hiiragi283.ragium.common.collection.HTWrappedTable
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.storage.nbt.HTTagValueInput
+import hiiragi283.ragium.common.storage.nbt.HTTagValueOutput
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.common.util.RagiumResultHelper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -24,13 +29,13 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.CommonHooks
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -135,8 +140,17 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
         CommonHooks.resolveLookup(registryKey)
 
-    override fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage? =
-        getCurrentServer()?.getLevel(key)?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = RagiumAttachmentTypes.getEnergyNetwork(level)
+
+    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumAttachmentTypes.getEnergyNetwork(key)
+
+    //    Storage    //
+
+    override fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput =
+        HTTagValueInput.create(lookup, compoundTag)
+
+    override fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
+        HTTagValueOutput(lookup, compoundTag)
 
     //    Recipe    //
 

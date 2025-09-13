@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -25,7 +26,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -73,7 +73,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
+        network: HTEnergyBattery,
     ): Boolean {
         // スロット内のアイテムを液体に変換する
         slot.fillOrBurn()
@@ -81,9 +81,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         val required: Int = getRequiredAmount(tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
-        return if (network.receiveEnergy(energyUsage, true) == energyUsage) {
+        return if (network.insertEnergy(energyUsage, true, HTStorageAccess.INTERNAl) == energyUsage) {
             tank.extract(required, false, HTStorageAccess.INTERNAl)
-            network.receiveEnergy(energyUsage, false)
+            network.insertEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
             true
         } else {
             false

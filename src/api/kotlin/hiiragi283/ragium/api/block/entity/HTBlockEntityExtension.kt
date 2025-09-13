@@ -17,13 +17,14 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.util.TriState
 import java.util.function.Consumer
 
 /**
  * @see [mekanism.common.tile.interfaces.ITileWrapper.getLevel]
  */
 interface HTBlockEntityExtension {
-    val isClientSide: Boolean
+    val isClientSide: TriState
 
     /**
      * @see [mekanism.common.tile.interfaces.ITileWrapper.getLevel]

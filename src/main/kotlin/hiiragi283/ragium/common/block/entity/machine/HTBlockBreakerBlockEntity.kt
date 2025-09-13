@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.block.entity.machine
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -26,7 +28,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
@@ -50,7 +51,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
+        network: HTEnergyBattery,
     ): Boolean {
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
@@ -74,7 +75,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
             return false
         }
         // エネルギーを消費する
-        usedEnergy += network.extractEnergy(energyUsage, false)
+        usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
         if (usedEnergy < requiredEnergy) return false
         usedEnergy = 0
         // ブロックを採掘する

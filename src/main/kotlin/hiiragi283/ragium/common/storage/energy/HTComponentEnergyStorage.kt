@@ -1,32 +1,36 @@
 package hiiragi283.ragium.common.storage.energy
 
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
-import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.util.Mth
 import net.neoforged.neoforge.common.MutableDataComponentHolder
-import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.min
 
 /**
  * [HTEnergyHandler]に基づいたコンポーネント向けの実装
  */
 open class HTComponentEnergyStorage(private val parent: MutableDataComponentHolder, capacity: Int) : HTEnergyHandler {
-    protected val storage: IEnergyStorage = createStorage(capacity)
+    protected val storage: HTEnergyBattery = createBattery(capacity)
 
-    protected open fun createStorage(capacity: Int): IEnergyStorage = ComponentStorage(parent, capacity)
+    protected open fun createBattery(capacity: Int): HTEnergyBattery = ComponentStorage(parent, capacity)
 
-    override fun getEnergyHandler(side: Direction?): IEnergyStorage? = storage
+    override fun getEnergyHandler(side: Direction?): HTEnergyBattery? = storage
 
     override fun onContentsChanged() {}
 
     protected open class ComponentStorage(private val parent: MutableDataComponentHolder, private val capacity: Int) :
-        IEnergyStorageModifiable {
+        HTEnergyBattery {
         protected val component: DataComponentType<Int> get() = RagiumDataComponents.ENERGY.get()
 
-        override fun setEnergyStored(amount: Int) {
+        override fun getAmount(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
+
+        override fun setAmount(amount: Int) {
             val fixedAmount: Int = Mth.clamp(amount, 0, capacity)
             if (fixedAmount > 0) {
                 parent.set(component, fixedAmount)
@@ -35,32 +39,30 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
             }
         }
 
-        override fun setMaxEnergyStored(capacity: Int) {}
+        override fun getCapacity(): Int = capacity
 
-        override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int {
-            if (!canReceive() || toReceive <= 0) return 0
-            val energyReceived: Int = Mth.clamp(getNeeded(), 0, min(capacity, toReceive))
+        override fun insertEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int {
+            if (amount <= 0) return 0
+            val energyReceived: Int = Mth.clamp(getNeeded(), 0, min(capacity, amount))
             if (!simulate && energyReceived > 0) {
-                energyStored += energyReceived
+                setAmount(getAmount() + energyReceived)
             }
             return energyReceived
         }
 
-        override fun extractEnergy(toExtract: Int, simulate: Boolean): Int {
-            if (!canExtract() || toExtract <= 0) return 0
-            val energyExtracted: Int = min(energyStored, min(capacity, toExtract))
+        override fun extractEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int {
+            if (amount <= 0) return 0
+            val energyExtracted: Int = min(getAmount(), min(capacity, amount))
             if (!simulate && energyExtracted > 0) {
-                energyStored -= energyExtracted
+                setAmount(getAmount() - energyExtracted)
             }
             return energyExtracted
         }
 
-        override fun getEnergyStored(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
+        override fun serialize(output: HTValueOutput) {}
 
-        override fun getMaxEnergyStored(): Int = capacity
+        override fun deserialize(input: HTValueInput) {}
 
-        override fun canExtract(): Boolean = true
-
-        override fun canReceive(): Boolean = true
+        override fun onContentsChanged() {}
     }
 }

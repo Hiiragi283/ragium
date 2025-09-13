@@ -1,6 +1,10 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -10,7 +14,6 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
     protected val variant: HTMachineVariant,
@@ -23,7 +26,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
+        network: HTEnergyBattery,
     ): Boolean {
         // インプットに一致するレシピを探索する
         val input: INPUT = createRecipeInput(level, pos)
@@ -70,6 +73,20 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
             pos: BlockPos,
             state: BlockState,
         ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
+
+        override fun writeValue(output: HTValueOutput) {
+            super.writeValue(output)
+            if (recipeCache is HTValueSerializable) {
+                recipeCache.serialize(output)
+            }
+        }
+
+        override fun readValue(input: HTValueInput) {
+            super.readValue(input)
+            if (recipeCache is HTValueSerializable) {
+                recipeCache.deserialize(input)
+            }
+        }
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }

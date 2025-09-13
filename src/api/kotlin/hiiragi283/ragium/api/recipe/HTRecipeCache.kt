@@ -1,6 +1,12 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.wrapOptional
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.value.HTValueSerializable
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
@@ -31,4 +37,18 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : RecipeMan
     fun getFirstHolder(input: INPUT, level: Level): RecipeHolder<RECIPE>?
 
     override fun getRecipeFor(input: INPUT, level: Level): Optional<RecipeHolder<RECIPE>> = getFirstHolder(input, level).wrapOptional()
+
+    abstract class Serializable<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
+        HTRecipeCache<INPUT, RECIPE>,
+        HTValueSerializable {
+        protected var lastRecipe: ResourceLocation? = null
+
+        override fun deserialize(input: HTValueInput) {
+            lastRecipe = input.read(RagiumConst.LAST_RECIPE, BiCodecs.RL)
+        }
+
+        override fun serialize(output: HTValueOutput) {
+            output.store(RagiumConst.LAST_RECIPE, BiCodecs.RL, lastRecipe)
+        }
+    }
 }

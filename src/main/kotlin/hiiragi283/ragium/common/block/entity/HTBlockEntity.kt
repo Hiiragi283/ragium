@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -18,8 +20,6 @@ import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
-import hiiragi283.ragium.common.storage.nbt.HTTagValueInput
-import hiiragi283.ragium.common.storage.nbt.HTTagValueOutput
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
@@ -104,7 +104,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        val output: HTValueOutput = HTTagValueOutput(registries, tag)
+        val output: HTValueOutput = RagiumAPI.getInstance().createValueOutput(registries, tag)
         // Capability
         for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -121,7 +121,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        val input: HTValueInput = HTTagValueInput.create(registries, tag)
+        val input: HTValueInput = RagiumAPI.getInstance().createValueInput(registries, tag)
         // Capability
         for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -199,7 +199,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      */
     override fun hasEnergyStorage(): Boolean = energyStorageManager?.canHandle() ?: false
 
-    final override fun getEnergyHandler(side: Direction?): IEnergyStorage? = energyStorageManager?.getContainers(side)?.firstOrNull()
+    final override fun getEnergyHandler(side: Direction?): HTEnergyBattery? = energyStorageManager?.getContainers(side)?.firstOrNull()
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
         energyStorageManager?.resolve(HTMultiCapability.ENERGY, direction)

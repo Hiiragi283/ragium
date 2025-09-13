@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.storage.holder
 
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.core.Direction
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**
- * [IEnergyStorage]向けの[HTCapabilityHolder]の拡張インターフェース
+ * [HTEnergyBattery]向けの[HTCapabilityHolder]の拡張インターフェース
  */
 interface HTEnergyStorageHolder : HTCapabilityHolder {
-    fun getEnergyHandler(side: Direction?): IEnergyStorage?
+    fun getEnergyBattery(side: Direction?): HTEnergyBattery?
 }

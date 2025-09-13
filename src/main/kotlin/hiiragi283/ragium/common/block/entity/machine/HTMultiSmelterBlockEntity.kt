@@ -10,6 +10,8 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -46,6 +48,16 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+    }
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        baseCache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        baseCache.deserialize(input)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

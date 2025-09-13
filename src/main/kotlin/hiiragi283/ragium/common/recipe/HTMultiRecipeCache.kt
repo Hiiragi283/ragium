@@ -1,17 +1,15 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
-class HTMultiRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeTypes: List<RecipeType<out R>>) : HTRecipeCache<I, R> {
+class HTMultiRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeTypes: List<RecipeType<out R>>) :
+    HTRecipeCache.Serializable<I, R>() {
     constructor(vararg recipeTypes: RecipeType<out R>) : this(recipeTypes.toList())
-
-    private var lastRecipe: ResourceLocation? = null
 
     override fun getFirstHolder(input: I, level: Level): RecipeHolder<R>? {
         for (type: RecipeType<out R> in recipeTypes) {

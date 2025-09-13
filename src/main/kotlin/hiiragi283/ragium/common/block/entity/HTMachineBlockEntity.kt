@@ -1,22 +1,23 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkWrapper
+import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
-import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -34,7 +35,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.*
 
@@ -111,9 +111,9 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
 
-    protected fun doProgress(network: IEnergyStorage): Boolean {
+    protected fun doProgress(network: HTEnergyBattery): Boolean {
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, false)
+            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
         }
         if (usedEnergy < requiredEnergy) return false
         usedEnergy -= requiredEnergy
@@ -121,7 +121,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     }
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        val network: IEnergyStorage = this.network ?: return false
+        val network: HTEnergyBattery = getter(level) ?: return false
         val result: Boolean = onUpdateServer(level, pos, state, network)
         isActive = result
         return result
@@ -131,7 +131,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
+        network: HTEnergyBattery,
     ): Boolean
 
     val progress: Float
@@ -145,18 +145,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Energy Storage    //
 
-    val network: HTEnergyNetwork? get() = level?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+    private val getter: (Level?) -> HTEnergyBattery? = RagiumAPI.getInstance()::getEnergyNetwork
 
-    protected lateinit var energyStorage: IEnergyStorage
-        private set
+    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = createStorageHolder(
+        HTEnergyBatteryWrapper { getter(level) },
+    )
 
-    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? {
-        energyStorage = HTEnergyNetworkWrapper(this::network)
-        return createStorageHolder(energyStorage)
-    }
-
-    protected open fun createStorageHolder(energyStorage: IEnergyStorage): HTEnergyStorageHolder =
-        HTSimpleEnergyStorageHolder.input(this, energyStorage)
+    protected open fun createStorageHolder(battery: HTEnergyBattery): HTEnergyStorageHolder =
+        HTSimpleEnergyStorageHolder.input(this, battery)
 
     //    HTOwnedBlockEntity    //
 

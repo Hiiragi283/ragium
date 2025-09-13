@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -67,10 +68,12 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     )
 }
 
-fun energyText(storage: IEnergyStorage): MutableComponent = RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(
-    intText(storage.energyStored),
-    intText(storage.maxEnergyStored),
-)
+private fun energyText(amount: Int, capacity: Int): MutableComponent =
+    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
+
+fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.energyStored, storage.maxEnergyStored)
+
+fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
 
 /**
  * 指定した[stack]からツールチップを生成します

@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.util.TriState
 import org.slf4j.Logger
 
 /**
@@ -30,7 +31,13 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         private val LOGGER: Logger = LogUtils.getLogger()
     }
 
-    override val isClientSide: Boolean get() = !(level?.isClientSide ?: true)
+    override val isClientSide: TriState get() {
+        val level: Level = this.level ?: return TriState.DEFAULT
+        return when (level.isClientSide) {
+            true -> TriState.TRUE
+            false -> TriState.FALSE
+        }
+    }
 
     //    Save & Read    //
 
@@ -82,16 +89,16 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      * @see [mekanism.common.tile.base.TileEntityUpdateable.setChanged]
      */
     protected open fun setChanged(updateComparator: Boolean) {
-        val level: ServerLevel = this.level as? ServerLevel ?: return
+        val level: Level = this.level ?: return
         val time: Long = level.gameTime
         if (lastSaveTime != time) {
             level.blockEntityChanged(blockPos)
             lastSaveTime = time
         }
-        if (updateComparator && !isClientSide) {
+        if (updateComparator && !isClientSide.isTrue) {
             markDirtyComparator()
         }
-        sendPassivePacket(level)
+        (level as? ServerLevel)?.let(::sendPassivePacket)
     }
 
     protected open fun markDirtyComparator() {}

@@ -11,9 +11,13 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -22,7 +26,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 
 interface RagiumAPI {
@@ -81,7 +84,18 @@ interface RagiumAPI {
     /**
      * エネルギーネットワークのマネージャを返します。
      */
-    fun getEnergyNetwork(key: ResourceKey<Level>): IEnergyStorage?
+    fun getEnergyNetwork(level: Level?): HTEnergyBattery?
+
+    /**
+     * エネルギーネットワークのマネージャを返します。
+     */
+    fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
+
+    //    Storage    //
+
+    fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
+
+    fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
 
     //    Recipe    //
 

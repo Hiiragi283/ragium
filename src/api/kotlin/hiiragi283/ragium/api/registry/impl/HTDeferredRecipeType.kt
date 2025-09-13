@@ -10,25 +10,26 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(key: ResourceKey<RecipeType<*>>) :
+class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> private constructor(key: ResourceKey<RecipeType<*>>) :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>(key) {
-    companion object {
-        @JvmStatic
-        fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createType(key: ResourceLocation): HTDeferredRecipeType<INPUT, RECIPE> =
-            createType(ResourceKey.create(Registries.RECIPE_TYPE, key))
+        companion object {
+            @JvmStatic
+            fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createType(key: ResourceLocation): HTDeferredRecipeType<INPUT, RECIPE> =
+                createType(ResourceKey.create(Registries.RECIPE_TYPE, key))
 
-        @JvmStatic
-        fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createType(key: ResourceKey<RecipeType<*>>): HTDeferredRecipeType<INPUT, RECIPE> =
-            HTDeferredRecipeType(key)
-    }
+            @JvmStatic
+            fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createType(
+                key: ResourceKey<RecipeType<*>>,
+            ): HTDeferredRecipeType<INPUT, RECIPE> = HTDeferredRecipeType(key)
+        }
 
-    fun getAllRecipes(recipeManager: RecipeManager): Iterable<RecipeHolder<RECIPE>> = recipeManager.getAllRecipesFor(get())
+        fun getAllRecipes(recipeManager: RecipeManager): Iterable<RecipeHolder<RECIPE>> = recipeManager.getAllRecipesFor(get())
 
-    inline fun forEach(recipeManager: RecipeManager, action: (ResourceLocation, RECIPE) -> Unit) {
-        for (holder: RecipeHolder<RECIPE> in getAllRecipes(recipeManager)) {
-            val id: ResourceLocation = holder.id
-            val recipe: RECIPE = holder.value
-            action(id, recipe)
+        inline fun forEach(recipeManager: RecipeManager, action: (ResourceLocation, RECIPE) -> Unit) {
+            for (holder: RecipeHolder<RECIPE> in getAllRecipes(recipeManager)) {
+                val id: ResourceLocation = holder.id
+                val recipe: RECIPE = holder.value
+                action(id, recipe)
+            }
         }
     }
-}

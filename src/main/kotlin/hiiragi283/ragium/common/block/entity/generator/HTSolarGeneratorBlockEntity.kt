@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -8,7 +10,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.roundToInt
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGeneratorBlockEntity(HTGeneratorVariant.SOLAR, pos, state) {
@@ -18,11 +19,11 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
+        network: HTEnergyBattery,
     ): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false
-        return network.receiveEnergy((energyUsage * multiplier).roundToInt(), false) > 0
+        return network.insertEnergy((energyUsage * multiplier).roundToInt(), false, HTStorageAccess.INTERNAl) > 0
     }
 
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {

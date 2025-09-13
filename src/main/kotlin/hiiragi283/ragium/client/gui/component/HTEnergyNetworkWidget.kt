@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.energyText
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -11,12 +12,11 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 @OnlyIn(Dist.CLIENT)
 class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int) :
     HTSpriteWidget(x, y - 1, 16, 18 * 3 - 2, Component.empty()) {
-    fun getNetwork(): IEnergyStorage? = RagiumAPI.getInstance().getEnergyNetwork(key)
+    fun getBattery(): HTEnergyBattery? = RagiumAPI.getInstance().getEnergyNetwork(key)
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(
@@ -33,8 +33,8 @@ class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int)
     }
 
     override fun shouldRender(): Boolean {
-        val network: IEnergyStorage = getNetwork() ?: return false
-        return network.energyStored > 0
+        val battery: HTEnergyBattery = getBattery() ?: return false
+        return battery.getAmount() > 0
     }
 
     override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
@@ -42,12 +42,12 @@ class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int)
     override fun getColor(): Int = -1
 
     override fun getLevel(): Float {
-        val network: IEnergyStorage = getNetwork() ?: return 0f
-        return network.energyStored / network.maxEnergyStored.toFloat()
+        val battery: HTEnergyBattery = getBattery() ?: return 0f
+        return battery.getAmount() / battery.getCapacity().toFloat()
     }
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        val network: IEnergyStorage = getNetwork() ?: return
-        consumer(energyText(network))
+        val battery: HTEnergyBattery = getBattery() ?: return
+        consumer(energyText(battery))
     }
 }

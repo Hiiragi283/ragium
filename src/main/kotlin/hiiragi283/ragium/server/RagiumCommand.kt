@@ -3,8 +3,8 @@ package hiiragi283.ragium.server
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
-import hiiragi283.ragium.setup.RagiumAttachmentTypes
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -54,7 +54,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val amount: Int = getEnergyNetwork(source).energyStored
+        val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
     }
@@ -63,7 +63,7 @@ object RagiumCommand {
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
-        val received: Int = getEnergyNetwork(source).receiveEnergy(value, false)
+        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, false, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
     }
@@ -71,11 +71,11 @@ object RagiumCommand {
     @JvmStatic
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-        getEnergyNetwork(source).energyStored = value
+        getEnergyNetwork(source)?.setAmount(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
         return value
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyNetwork = source.level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumAPI.getInstance().getEnergyNetwork(source.level)
 }
