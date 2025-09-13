@@ -1,29 +1,26 @@
 package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
+import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.item.base.HTContainerItem
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 
 abstract class HTGenericItemContainerMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
-    hand: InteractionHand,
-    stack: ItemStack,
+    context: HTItemContainerContext,
     isClientSide: Boolean,
     final override val rows: Int,
 ) : HTItemContainerMenu(
         menuType,
         containerId,
         inventory,
-        hand,
-        stack,
+        context,
     ),
     HTGenericContainerRows {
     protected val handler: HTItemHandler = when (isClientSide) {

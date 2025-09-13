@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.inventory.container.HTContainerMenu
+import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemMenuType
@@ -9,10 +10,8 @@ import hiiragi283.ragium.api.registry.HTDeferredRegister
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.MenuType
-import net.minecraft.world.item.ItemStack
 
 /**
  * Ragiumで使用する[MenuType]向けの[HTDeferredRegister]
@@ -50,9 +49,8 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
         register(name) { _: ResourceLocation ->
             HTItemMenuType(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
                 checkNotNull(buf)
-                val hand: InteractionHand = buf.readEnum(InteractionHand::class.java)
-                val stack: ItemStack = ItemStack.STREAM_CODEC.decode(buf)
-                factory.create(containerId, inventory, hand, stack, true)
+                val context: HTItemContainerContext = HTItemContainerContext.CODEC.decode(buf)
+                factory.create(containerId, inventory, context, true)
             }
         }
         return holder

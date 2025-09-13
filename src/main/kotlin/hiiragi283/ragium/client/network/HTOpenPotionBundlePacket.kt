@@ -11,7 +11,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.InteractionHand
 
 data object HTOpenPotionBundlePacket : HTCustomPayload.C2S {
     @JvmField
@@ -25,6 +24,6 @@ data object HTOpenPotionBundlePacket : HTCustomPayload.C2S {
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
         val capability: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(player) ?: return
         val slot: SlotEntryReference = capability.getFirstEquipped(RagiumItems.POTION_BUNDLE.get()) ?: return
-        RagiumMenuTypes.POTION_BUNDLE.openMenu(player, InteractionHand.MAIN_HAND, slot.stack)
+        RagiumMenuTypes.POTION_BUNDLE.openMenu(player, null, slot.stack)
     }
 }

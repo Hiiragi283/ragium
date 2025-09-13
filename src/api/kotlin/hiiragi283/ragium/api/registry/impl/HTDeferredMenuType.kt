@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.inventory.container.type.HTContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemMenuType
@@ -65,7 +66,7 @@ class HTDeferredMenuType<MENU : AbstractContainerMenu> private constructor(key: 
          * @return [get]の戻り値が[HTItemContainerFactory]を継承していない場合は`null`
          */
         @Suppress("UNCHECKED_CAST")
-        fun getProvider(hand: InteractionHand, stack: ItemStack): MenuProvider? {
+        fun getProvider(hand: InteractionHand?, stack: ItemStack): MenuProvider? {
             val menuType: HTItemMenuType<MENU> = get() as? HTItemMenuType<MENU> ?: return null
             val constructor: MenuConstructor = menuType.create(hand, stack) ?: return null
             return SimpleMenuProvider(constructor, stack.hoverName)
@@ -100,13 +101,13 @@ class HTDeferredMenuType<MENU : AbstractContainerMenu> private constructor(key: 
          * @param stack このGUIを開く[ItemStack]
          * @return クライアント側の場合は[InteractionResult.SUCCESS]，サーバー側の場合はGUIを開いたうえで[InteractionResult.CONSUME], [getProvider]が`null`の場合は[InteractionResult.FAIL]
          */
-        fun openMenu(player: Player, hand: InteractionHand, stack: ItemStack): InteractionResult = when {
+        fun openMenu(player: Player, hand: InteractionHand?, stack: ItemStack): InteractionResult = when {
             player.level().isClientSide -> InteractionResult.SUCCESS
             else -> {
                 val provider: MenuProvider = getProvider(hand, stack) ?: return InteractionResult.FAIL
                 player.openMenu(provider) { buf: RegistryFriendlyByteBuf ->
-                    buf.writeEnum(hand)
-                    ItemStack.STREAM_CODEC.encode(buf, stack)
+                    val context = HTItemContainerContext(hand, stack)
+                    HTItemContainerContext.CODEC.encode(buf, context)
                 }
                 InteractionResult.CONSUME
             }

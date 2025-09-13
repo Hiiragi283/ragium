@@ -22,6 +22,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
@@ -75,6 +76,12 @@ object BiCodecs {
     val DIRECTION: BiCodec<ByteBuf, Direction> = BiCodec.of(Direction.CODEC, Direction.STREAM_CODEC)
 
     /**
+     * [InteractionHand]の[BiCodec]
+     */
+    @JvmField
+    val HAND: BiCodec<ByteBuf, InteractionHand> = enum(InteractionHand::values)
+
+    /**
      * [Component]の[BiCodec]
      */
     @JvmField
@@ -114,7 +121,11 @@ object BiCodecs {
     )
 
     @JvmStatic
-    inline fun <reified V> enum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : StringRepresentable, V : Enum<V> =
+    inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
+        NON_NEGATIVE_INT.xmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
+
+    @JvmStatic
+    inline fun <reified V> stringEnum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : StringRepresentable, V : Enum<V> =
         BiCodec.of(
             StringRepresentable.fromEnum(values),
             NeoForgeStreamCodecs.enumCodec(V::class.java),

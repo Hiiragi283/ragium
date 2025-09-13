@@ -82,7 +82,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::registerAccessories)
-        
+
         LOGGER.info("Loaded client setup!")
     }
 

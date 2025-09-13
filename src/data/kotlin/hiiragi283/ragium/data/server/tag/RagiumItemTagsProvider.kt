@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.accessory.HTAccessorySlot
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
@@ -17,6 +16,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.accessory.HTAccessorySlot
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant

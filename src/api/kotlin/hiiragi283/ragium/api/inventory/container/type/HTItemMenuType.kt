@@ -18,7 +18,7 @@ class HTItemMenuType<MENU : AbstractContainerMenu>(factory: HTItemContainerFacto
      * 指定された[hand]と[stack]から[MenuConstructor]を返します。
      * @return [ItemStack.isEmpty]が`true`の場合は`null`
      */
-    fun create(hand: InteractionHand, stack: ItemStack): MenuConstructor? = when {
+    fun create(hand: InteractionHand?, stack: ItemStack): MenuConstructor? = when {
         !stack.isEmpty -> MenuConstructor { containerId: Int, inventory: Inventory, _: Player ->
             factory.create(containerId, inventory, hand, stack, false)
         }

@@ -23,7 +23,7 @@ enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean
 
     companion object {
         @JvmField
-        val CODEC: BiCodec<FriendlyByteBuf, HTAccessConfiguration> = BiCodecs.enum(HTAccessConfiguration::values)
+        val CODEC: BiCodec<FriendlyByteBuf, HTAccessConfiguration> = BiCodecs.stringEnum(HTAccessConfiguration::values)
     }
 
     override val translationKey: String = RagiumAPI.id(name.lowercase()).toDescriptionKey("access")
