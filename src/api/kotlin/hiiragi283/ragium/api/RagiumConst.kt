@@ -14,6 +14,7 @@ object RagiumConst {
     const val CRIMSON_CRYSTAL = "crimson_crystal"
     const val DEEP_STEEL = "deep_steel"
     const val ELDRITCH_PEARL = "eldritch_pearl"
+    const val IRIDESCENTIUM = "iridescentium"
     const val MEAT = "meat"
     const val OBSIDIAN = "obsidian"
     const val QUARTZ = "quartz"
@@ -42,7 +43,6 @@ object RagiumConst {
     const val FOREGOING = "industrialforegoing"
     const val IMMERSIVE = "immersiveengineering"
     const val MEKANISM = "mekanism"
-
     const val MODERN = "modern_industrialization"
     const val ORITECH = "oritech"
     const val PNEUMATIC = "pneumaticcraft"

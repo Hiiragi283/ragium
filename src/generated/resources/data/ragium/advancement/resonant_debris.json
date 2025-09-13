@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:eldritch_pearl",
+  "parent": "ragium:simulator",
   "criteria": {
-    "has_c_ingots_iridescentium": {
+    "has_c_ores_deep_scrap": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iridescentium"
+            "items": "#c:ores/deep_scrap"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.iridescentium.desc"
+      "translate": "advancements.ragium.resonant_debris.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:iridescentium_ingot"
+      "id": "ragium:resonant_debris"
     },
     "title": {
-      "translate": "advancements.ragium.iridescentium.title"
+      "translate": "advancements.ragium.resonant_debris.title"
     }
   },
   "requirements": [
     [
-      "has_c_ingots_iridescentium"
+      "has_c_ores_deep_scrap"
     ]
   ],
   "sends_telemetry_event": true

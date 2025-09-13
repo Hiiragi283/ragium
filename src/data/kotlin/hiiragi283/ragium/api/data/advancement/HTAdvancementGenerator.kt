@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
@@ -15,62 +14,60 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 abstract class HTAdvancementGenerator {
-    protected lateinit var root: AdvancementHolder
-
     protected lateinit var output: HTAdvancementOutput
 
     fun generate(provider: HolderLookup.Provider, output: HTAdvancementOutput, helper: ExistingFileHelper) {
         this.output = output
-        root = createRoot()
         generate(provider)
     }
-
-    protected abstract fun createRoot(): AdvancementHolder
 
     protected abstract fun generate(registries: HolderLookup.Provider)
 
     //    Extension    //
 
-    protected inline fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit): AdvancementHolder =
+    protected inline fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit) {
         HTAdvancementBuilder.root().apply(builderAction).save(output, key)
+    }
 
-    protected inline fun child(
-        key: HTAdvancementKey,
-        parent: AdvancementHolder,
-        builderAction: HTAdvancementBuilder.() -> Unit,
-    ): AdvancementHolder = HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
+    protected inline fun child(key: HTAdvancementKey, parent: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit) {
+        HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
+    }
 
     protected inline fun createSimple(
         key: HTAdvancementKey,
-        parent: AdvancementHolder,
+        parent: HTAdvancementKey,
         variant: HTItemMaterialVariant,
         material: HTMaterialType,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
-    ): AdvancementHolder = createSimple(
-        key,
-        parent,
-        RagiumItems.getMaterial(variant, material),
-        variant.itemTagKey(material),
-        builderAction,
-    )
+    ) {
+        createSimple(
+            key,
+            parent,
+            RagiumItems.getMaterial(variant, material),
+            variant.itemTagKey(material),
+            builderAction,
+        )
+    }
 
     protected inline fun createSimple(
         key: HTAdvancementKey,
-        parent: AdvancementHolder,
+        parent: HTAdvancementKey,
         item: ItemLike,
         tagKey: TagKey<Item>? = null,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
-    ): AdvancementHolder = child(key, parent) {
-        display {
-            setIcon(item)
-            setTitleFromKey(key)
-            setDescFromKey(key)
-            builderAction()
-        }
-        if (tagKey != null) {
-            hasItemsIn("has_${tagKey.location.toDebugFileName()}", tagKey)
-        } else {
-            hasAllItem("has_${HTHolderLike.fromItem(item).getPath()}", item)
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            if (tagKey != null) {
+                hasItemsIn("has_${tagKey.location.toDebugFileName()}", tagKey)
+            } else {
+                hasAllItem("has_${HTHolderLike.fromItem(item).getPath()}", item)
+            }
         }
     }
 

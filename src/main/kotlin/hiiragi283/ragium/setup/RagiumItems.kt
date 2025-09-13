@@ -122,7 +122,7 @@ object RagiumItems {
     val BASALT_MESH: HTDeferredItem<Item> = register("basalt_mesh")
 
     @JvmField
-    val ECHO_STAR: HTDeferredItem<Item> = register("echo_star")
+    val ECHO_STAR: HTDeferredItem<Item> = register("echo_star", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
     val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
@@ -405,7 +405,7 @@ object RagiumItems {
 
     @JvmField
     val FEVER_CHERRY: HTDeferredItem<Item> =
-        registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, properties = Item.Properties().rarity(Rarity.EPIC))
+        registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, properties = Item.Properties().rarity(Rarity.RARE))
 
     // Other
     @JvmField
@@ -521,6 +521,7 @@ object RagiumItems {
         setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
         event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(
                 RagiumDataComponents.IMMUNE_DAMAGE_TYPES.get(),
                 HTKeyOrTagEntry(RagiumCommonTags.DamageTypes.IS_SONIC),

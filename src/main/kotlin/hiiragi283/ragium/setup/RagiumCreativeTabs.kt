@@ -104,7 +104,6 @@ object RagiumCreativeTabs {
         listOf(
             HTItemMaterialVariant.RAW_MATERIAL,
             HTItemMaterialVariant.GEM,
-            HTItemMaterialVariant.CHIP,
             HTItemMaterialVariant.INGOT,
             HTItemMaterialVariant.NUGGET,
             HTItemMaterialVariant.DUST,
@@ -117,6 +116,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.POTATO_SPROUTS)
         output.accept(RagiumItems.GREEN_CAKE)
         output.accept(RagiumItems.GREEN_CAKE_DUST)
+        output.accept(RagiumItems.GREEN_PELLET)
 
         output.accept(RagiumItems.ELDER_HEART)
         output.accept(RagiumItems.WITHER_DOLl)

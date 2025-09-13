@@ -25,9 +25,15 @@ object RagiumAdvancements {
     @JvmField
     val RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.RAGI_ALLOY)
 
+    @JvmField
+    val ALLOY_SMELTER: HTAdvancementKey = create("alloy_smelter")
+
     // Advanced
     @JvmField
     val ADV_RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.ADVANCED_RAGI_ALLOY)
+
+    @JvmField
+    val MELTER: HTAdvancementKey = create("melter")
 
     // Elite
     @JvmField
@@ -45,10 +51,27 @@ object RagiumAdvancements {
     val AZURE_SHARD: HTAdvancementKey = create("azure_shard")
 
     @JvmField
-    val AZURE_STEEL: HTAdvancementKey = create("azure_steel")
+    val AZURE_STEEL: HTAdvancementKey = create(RagiumConst.AZURE_STEEL)
 
     @JvmField
     val AZURE_GEARS: HTAdvancementKey = create("azure_gears")
+
+    @JvmField
+    val SIMULATOR: HTAdvancementKey = create("simulator")
+
+    //    Deep    //
+
+    @JvmField
+    val RESONANT_DEBRIS: HTAdvancementKey = create("resonant_debris")
+
+    @JvmField
+    val DEEP_STEEL: HTAdvancementKey = create(RagiumConst.DEEP_STEEL)
+
+    @JvmField
+    val DEEP_GEARS: HTAdvancementKey = create("deep_gears")
+
+    @JvmField
+    val ECHO_STAR: HTAdvancementKey = create("echo_star")
 
     //    Crimson    //
 
@@ -83,7 +106,7 @@ object RagiumAdvancements {
     //    Iridescentium    //
 
     @JvmField
-    val IRIDESCENTIUM: HTAdvancementKey = create("iridescentium")
+    val IRIDESCENTIUM: HTAdvancementKey = create(RagiumConst.IRIDESCENTIUM)
 
     @JvmField
     val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")

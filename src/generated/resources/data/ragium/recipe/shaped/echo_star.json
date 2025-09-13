@@ -6,10 +6,10 @@
       "tag": "c:dusts/echo"
     },
     "B": {
-      "tag": "c:chips/echo"
+      "tag": "c:gems/echo"
     },
     "C": {
-      "tag": "c:nether_stars"
+      "tag": "c:storage_blocks/deep_steel"
     }
   },
   "pattern": [

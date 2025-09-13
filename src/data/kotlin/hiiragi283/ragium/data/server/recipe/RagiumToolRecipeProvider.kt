@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -68,8 +69,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .equipment(RagiumItems.ECHO_STAR)
             .cross8()
             .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.ECHO)
-            .define('B', HTItemMaterialVariant.CHIP, HTVanillaMaterialType.ECHO)
-            .define('C', Tags.Items.NETHER_STARS)
+            .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO)
+            .define('C', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.DEEP_STEEL)
             .save(output)
 
         raginite()

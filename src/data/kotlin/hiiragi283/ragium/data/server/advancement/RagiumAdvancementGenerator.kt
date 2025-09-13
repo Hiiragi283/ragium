@@ -5,17 +5,16 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
@@ -24,27 +23,30 @@ import net.minecraft.network.chat.Component
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
-    override fun createRoot(): AdvancementHolder = root(RagiumAdvancements.ROOT) {
-        display {
-            setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
-            title = Component.literal(RagiumAPI.MOD_NAME)
-            setDescFromKey(RagiumAdvancements.ROOT)
-            backGround = vanillaId("textures/block/smooth_stone.png")
-            showToast = false
-            showChat = false
-        }
-        addCriterion("automatic", PlayerTrigger.TriggerInstance.tick())
-    }
-
     override fun generate(registries: HolderLookup.Provider) {
+        root(RagiumAdvancements.ROOT) {
+            display {
+                setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
+                title = Component.literal(RagiumAPI.MOD_NAME)
+                setDescFromKey(RagiumAdvancements.ROOT)
+                backGround = RagiumAPI.id("textures/block/${RagiumConst.IRIDESCENTIUM}_block.png")
+                showToast = false
+                showChat = false
+            }
+            addCriterion("automatic", PlayerTrigger.TriggerInstance.tick())
+        }
+
         raginite()
         azure()
+        deep()
+
         crimson()
         warped()
         eldritch()
+
         iridescentium()
 
-        child(RagiumAdvancements.CRAFTABLE_TEMPLATES, root) {
+        child(RagiumAdvancements.CRAFTABLE_TEMPLATES, RagiumAdvancements.ROOT) {
             display {
                 setIcon(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
                 setTitleFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
@@ -59,28 +61,33 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun raginite() {
-        val raginite: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.RAGINITE,
-            root,
+            RagiumAdvancements.ROOT,
             HTItemMaterialVariant.DUST,
             RagiumMaterialType.RAGINITE,
         )
         // Basic
-        val ragiAlloy: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.RAGI_ALLOY,
-            raginite,
+            RagiumAdvancements.RAGINITE,
             HTItemMaterialVariant.INGOT,
             RagiumMaterialType.RAGI_ALLOY,
         )
+        createSimple(
+            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumAdvancements.RAGI_ALLOY,
+            HTMachineVariant.ALLOY_SMELTER,
+        ) { setGoal() }
 
-        val ragiCherry: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.RAGI_CHERRY,
-            raginite,
+            RagiumAdvancements.RAGINITE,
             RagiumItems.RAGI_CHERRY,
             RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
         )
-        val ragiCherryToast: AdvancementHolder = HTAdvancementBuilder
-            .child(ragiCherry)
+        HTAdvancementBuilder
+            .child(RagiumAdvancements.RAGI_CHERRY)
             .display {
                 setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
@@ -90,28 +97,31 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             .addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
             .save(output, RagiumAdvancements.RAGI_CHERRY_TOAST)
         // Advanced
-        val advRagiAlloy: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            ragiAlloy,
+            RagiumAdvancements.RAGI_ALLOY,
             HTItemMaterialVariant.INGOT,
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
         )
+        createSimple(
+            RagiumAdvancements.MELTER,
+            RagiumAdvancements.ADV_RAGI_ALLOY,
+            HTMachineVariant.MELTER,
+        ) { setGoal() }
 
         // Elite
-        val ragiCrystal: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.RAGI_CRYSTAL,
-            raginite,
+            RagiumAdvancements.RAGINITE,
             HTItemMaterialVariant.GEM,
             RagiumMaterialType.RAGI_CRYSTAL,
         )
-        val ragiCrystalHammer: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            ragiCrystal,
+            RagiumAdvancements.RAGI_CRYSTAL,
             RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL),
-        ) {
-            setGoal()
-        }
-        val ragiTicket: AdvancementHolder = child(RagiumAdvancements.RAGI_TICKET, ragiCrystal) {
+        ) { setGoal() }
+        child(RagiumAdvancements.RAGI_TICKET, RagiumAdvancements.RAGI_CRYSTAL) {
             display {
                 setIcon(RagiumItems.LOOT_TICKET)
                 setTitleFromKey(RagiumAdvancements.RAGI_TICKET)
@@ -123,21 +133,19 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun azure() {
-        val azureShard: AdvancementHolder =
-            createSimple(
-                RagiumAdvancements.AZURE_SHARD,
-                root,
-                HTItemMaterialVariant.GEM,
-                RagiumMaterialType.AZURE,
-            )
-        val azureSteel: AdvancementHolder =
-            createSimple(
-                RagiumAdvancements.AZURE_STEEL,
-                azureShard,
-                HTItemMaterialVariant.INGOT,
-                RagiumMaterialType.AZURE_STEEL,
-            )
-        val azureGears: AdvancementHolder = child(RagiumAdvancements.AZURE_GEARS, azureSteel) {
+        createSimple(
+            RagiumAdvancements.AZURE_SHARD,
+            RagiumAdvancements.ALLOY_SMELTER,
+            HTItemMaterialVariant.GEM,
+            RagiumMaterialType.AZURE,
+        )
+        createSimple(
+            RagiumAdvancements.AZURE_STEEL,
+            RagiumAdvancements.AZURE_SHARD,
+            HTItemMaterialVariant.INGOT,
+            RagiumMaterialType.AZURE_STEEL,
+        )
+        child(RagiumAdvancements.AZURE_GEARS, RagiumAdvancements.AZURE_STEEL) {
             display {
                 setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialType.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
@@ -146,16 +154,52 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialType.AZURE_STEEL))
         }
+
+        createSimple(
+            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.AZURE_STEEL,
+            HTMachineVariant.SIMULATOR,
+        ) { setGoal() }
+    }
+
+    private fun deep() {
+        createSimple(
+            RagiumAdvancements.RESONANT_DEBRIS,
+            RagiumAdvancements.SIMULATOR,
+            RagiumBlocks.RESONANT_DEBRIS,
+            RagiumCommonTags.Items.ORES_DEEP_SCRAP,
+        )
+        createSimple(
+            RagiumAdvancements.DEEP_STEEL,
+            RagiumAdvancements.RESONANT_DEBRIS,
+            HTItemMaterialVariant.INGOT,
+            RagiumMaterialType.DEEP_STEEL,
+        )
+        child(RagiumAdvancements.DEEP_GEARS, RagiumAdvancements.DEEP_STEEL) {
+            display {
+                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialType.DEEP_STEEL))
+                setTitleFromKey(RagiumAdvancements.DEEP_GEARS)
+                setDescFromKey(RagiumAdvancements.DEEP_GEARS)
+                setGoal()
+            }
+            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialType.DEEP_STEEL))
+        }
+
+        createSimple(
+            RagiumAdvancements.ECHO_STAR,
+            RagiumAdvancements.DEEP_STEEL,
+            RagiumItems.ECHO_STAR,
+        ) { setChallenge() }
     }
 
     private fun crimson() {
-        val crimsonCrystal: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.CRIMSON_CRYSTAL,
-            root,
+            RagiumAdvancements.MELTER,
             HTItemMaterialVariant.GEM,
             RagiumMaterialType.CRIMSON_CRYSTAL,
         )
-        val crimsonSoil: AdvancementHolder = child(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
+        child(RagiumAdvancements.CRIMSON_SOIL, RagiumAdvancements.CRIMSON_CRYSTAL) {
             display {
                 setIcon(RagiumBlocks.CRIMSON_SOIL)
                 setTitleFromKey(RagiumAdvancements.CRIMSON_SOIL)
@@ -167,13 +211,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun warped() {
-        val warpedCrystal: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.WARPED_CRYSTAL,
-            root,
+            RagiumAdvancements.MELTER,
             HTItemMaterialVariant.GEM,
             RagiumMaterialType.WARPED_CRYSTAL,
         )
-        val dimAnchor: AdvancementHolder = child(RagiumAdvancements.DIM_ANCHOR, warpedCrystal) {
+        child(RagiumAdvancements.DIM_ANCHOR, RagiumAdvancements.WARPED_CRYSTAL) {
             display {
                 setIcon(HTDeviceVariant.DIM_ANCHOR)
                 setTitleFromKey(RagiumAdvancements.DIM_ANCHOR)
@@ -185,7 +229,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.blockHolder.get()),
             )
         }
-        val teleportKey: AdvancementHolder = child(RagiumAdvancements.TELEPORT_KEY, warpedCrystal) {
+        child(RagiumAdvancements.TELEPORT_KEY, RagiumAdvancements.WARPED_CRYSTAL) {
             display {
                 setIcon(RagiumItems.TELEPORT_KEY)
                 setTitleFromKey(RagiumAdvancements.TELEPORT_KEY)
@@ -197,13 +241,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun eldritch() {
-        val eldritchPearl: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
-            root,
+            RagiumAdvancements.MELTER,
             HTItemMaterialVariant.GEM,
             RagiumMaterialType.ELDRITCH_PEARL,
         )
-        val eldritchEgg: AdvancementHolder = child(RagiumAdvancements.ELDRITCH_EGG, eldritchPearl) {
+        child(RagiumAdvancements.ELDRITCH_EGG, RagiumAdvancements.ELDRITCH_PEARL) {
             display {
                 setIcon(RagiumItems.ELDRITCH_EGG)
                 setTitleFromKey(RagiumAdvancements.ELDRITCH_EGG)
@@ -212,7 +256,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             addCriterion("use_eldritch_egg", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.ELDRITCH_EGG))
         }
-        val mysteriousObsidian: AdvancementHolder = child(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {
+        child(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, RagiumAdvancements.ELDRITCH_PEARL) {
             display {
                 setIcon(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
                 setTitleFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)
@@ -224,15 +268,15 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun iridescentium() {
-        val iridescentium: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.IRIDESCENTIUM,
-            root,
+            RagiumAdvancements.ELDRITCH_PEARL,
             HTItemMaterialVariant.INGOT,
             RagiumMaterialType.IRIDESCENTIUM,
         )
-        val eternalComponent: AdvancementHolder = createSimple(
+        createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
-            iridescentium,
+            RagiumAdvancements.IRIDESCENTIUM,
             RagiumItems.ETERNAL_COMPONENT,
         ) { setChallenge() }
     }

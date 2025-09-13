@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:eldritch_pearl",
+  "parent": "ragium:ragi_alloy",
   "criteria": {
-    "has_c_ingots_iridescentium": {
+    "has_alloy_smelter": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iridescentium"
+            "items": "ragium:alloy_smelter"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.iridescentium.desc"
+      "translate": "advancements.ragium.alloy_smelter.desc"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:iridescentium_ingot"
+      "id": "ragium:alloy_smelter"
     },
     "title": {
-      "translate": "advancements.ragium.iridescentium.title"
+      "translate": "advancements.ragium.alloy_smelter.title"
     }
   },
   "requirements": [
     [
-      "has_c_ingots_iridescentium"
+      "has_alloy_smelter"
     ]
   ],
   "sends_telemetry_event": true

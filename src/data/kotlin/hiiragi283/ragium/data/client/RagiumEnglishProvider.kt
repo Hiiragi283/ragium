@@ -48,12 +48,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "This thing craftable...!", "Craft any Upgrade Templates added by Ragium")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
-        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
-
         addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Get Ragi-Cherry")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "The Last Breakfast", "Get Ragi-Cherry Toast Tower")
+        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
+        addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
 
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "This is red, not orange!", "Get Advanced Ragi-Alloy Ingot")
+        addAdvancement(RagiumAdvancements.MELTER, "Melty Kiss", "Get Melter")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
         addAdvancement(
@@ -66,6 +67,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
+        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "Get Simulator")
+        // Deep
+        addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "Debris in the Ancient", "Get Resonant Debris")
+        addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
+        addAdvancement(RagiumAdvancements.DEEP_GEARS, "Black Hazard", "Get any Deep Steel Tool or Armor")
+
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         addAdvancement(
@@ -79,7 +87,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "Lock Open!", "Use teleport key to teleport linked position")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
-        addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Gotcha!", "Throw Eldritch Egg to capture mobs")
+        addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")
         addAdvancement(
             RagiumAdvancements.MYSTERIOUS_OBSIDIAN,
             "Who is Falling Meteorites?",

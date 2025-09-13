@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.accessory
 
 import com.mojang.blaze3d.vertex.PoseStack
+import hiiragi283.ragium.api.extension.scale
 import io.wispforest.accessories.api.client.AccessoryRenderer
 import io.wispforest.accessories.api.client.Side
 import io.wispforest.accessories.api.client.SimpleAccessoryRenderer
@@ -19,6 +20,7 @@ class HTBackAccessoryRenderer : SimpleAccessoryRenderer {
     ) {
         if (model is HumanoidModel<M>) {
             AccessoryRenderer.transformToFace(matrices, model.body, Side.BACK)
+            matrices.scale(2.5)
         }
     }
 }

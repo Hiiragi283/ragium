@@ -48,12 +48,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "こいつ…作れるぞ！", "Ragiumで追加された鍛冶型を作る")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "レッドストーンではない", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
-        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
-
         addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "最後の朝食", "らぎチェリーのトーストタワーを手に入れる")
 
+        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
+
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "赤色です。", "発展ラギ合金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.MELTER, "メルティーキッス", "溶融炉を手に入れる")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
         addAdvancement(
@@ -66,6 +68,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
+        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
+        // Deep
+        addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "「古代」の残骸", "共振の残骸を手に入れる")
+        addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
+        addAdvancement(RagiumAdvancements.DEEP_GEARS, "黒き天災", "深層鋼インゴットで作られたツールか装備を手に入れる")
+
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅の結晶を手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:eldritch_pearl",
+  "parent": "ragium:deep_steel",
   "criteria": {
-    "has_c_ingots_iridescentium": {
+    "has_echo_star": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iridescentium"
+            "items": "ragium:echo_star"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.iridescentium.desc"
+      "translate": "advancements.ragium.echo_star.desc"
     },
+    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:iridescentium_ingot"
+      "id": "ragium:echo_star"
     },
     "title": {
-      "translate": "advancements.ragium.iridescentium.title"
+      "translate": "advancements.ragium.echo_star.title"
     }
   },
   "requirements": [
     [
-      "has_c_ingots_iridescentium"
+      "has_echo_star"
     ]
   ],
   "sends_telemetry_event": true

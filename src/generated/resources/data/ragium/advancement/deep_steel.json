@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:eldritch_pearl",
+  "parent": "ragium:resonant_debris",
   "criteria": {
-    "has_c_ingots_iridescentium": {
+    "has_c_ingots_deep_steel": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iridescentium"
+            "items": "#c:ingots/deep_steel"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.iridescentium.desc"
+      "translate": "advancements.ragium.deep_steel.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:iridescentium_ingot"
+      "id": "ragium:deep_steel_ingot"
     },
     "title": {
-      "translate": "advancements.ragium.iridescentium.title"
+      "translate": "advancements.ragium.deep_steel.title"
     }
   },
   "requirements": [
     [
-      "has_c_ingots_iridescentium"
+      "has_c_ingots_deep_steel"
     ]
   ],
   "sends_telemetry_event": true

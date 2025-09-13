@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:eldritch_pearl",
+  "parent": "ragium:azure_steel",
   "criteria": {
-    "has_c_ingots_iridescentium": {
+    "has_simulator": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iridescentium"
+            "items": "ragium:simulator"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.iridescentium.desc"
+      "translate": "advancements.ragium.simulator.desc"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:iridescentium_ingot"
+      "id": "ragium:simulator"
     },
     "title": {
-      "translate": "advancements.ragium.iridescentium.title"
+      "translate": "advancements.ragium.simulator.title"
     }
   },
   "requirements": [
     [
-      "has_c_ingots_iridescentium"
+      "has_simulator"
     ]
   ],
   "sends_telemetry_event": true

@@ -39,6 +39,10 @@ fun PoseStack.translate(pos: Vec3) {
     translate(pos.x, pos.y, pos.z)
 }
 
+fun PoseStack.scale(i: Number) {
+    scale(i.toFloat(), i.toFloat(), i.toFloat())
+}
+
 fun PoseStack.scale(x: Number, y: Number, z: Number) {
     scale(x.toFloat(), y.toFloat(), z.toFloat())
 }
