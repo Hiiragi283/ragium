@@ -37,7 +37,7 @@ object RagiumAccessoryRegister {
         )
 
         // Face
-        register(RagiumItems.NIGHT_VISION_GOGGLE, HTMobEffectAccessory(MobEffects.NIGHT_VISION, -1, ambient = true))
+        register(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectAccessory(MobEffects.NIGHT_VISION, -1, ambient = true))
     }
 
     @JvmStatic

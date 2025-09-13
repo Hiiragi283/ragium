@@ -53,8 +53,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputTank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        inputTank = HTVariableFluidStackTank.input(listener, RagiumConfig.CONFIG.refineryInputTankCapacity)
-        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.refineryOutputTankCapacity)
+        inputTank = HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity)
+        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity)
         return HTSimpleFluidTankHolder(this, inputTank, outputTank, null)
     }
 

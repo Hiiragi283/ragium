@@ -74,21 +74,21 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
         override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
-            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.smallDrumCapacity)
+            HTVariableFluidStackTank.create(listener, RagiumConfig.COMMON.smallDrumCapacity)
     }
 
     class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
         override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
-            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.mediumDrumCapacity)
+            HTVariableFluidStackTank.create(listener, RagiumConfig.COMMON.mediumDrumCapacity)
     }
 
     class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
         override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
-            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.largeDrumCapacity)
+            HTVariableFluidStackTank.create(listener, RagiumConfig.COMMON.largeDrumCapacity)
     }
 
     class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
         override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
-            HTVariableFluidStackTank.create(listener, RagiumConfig.CONFIG.hugeDrumCapacity)
+            HTVariableFluidStackTank.create(listener, RagiumConfig.COMMON.hugeDrumCapacity)
     }
 }

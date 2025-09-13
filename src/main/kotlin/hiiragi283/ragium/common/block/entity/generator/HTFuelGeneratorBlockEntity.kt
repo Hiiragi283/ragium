@@ -58,7 +58,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
         tank = HTVariableFluidStackTank.input(
             listener,
-            RagiumConfig.CONFIG.generatorInputTankCapacity,
+            RagiumConfig.COMMON.generatorInputTankCapacity,
             filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 },
         )
         return HTSimpleFluidTankHolder.input(this, tank)

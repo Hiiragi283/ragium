@@ -79,7 +79,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onModConstruct(eventBus, dist)
         }
 
-        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.CONFIG_SPEC)
+        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+        container.registerConfig(ModConfig.Type.CLIENT, RagiumConfig.CLIENT_SPEC)
 
         LOGGER.info("Ragium loaded!")
     }

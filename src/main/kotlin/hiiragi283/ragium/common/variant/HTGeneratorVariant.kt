@@ -30,7 +30,7 @@ enum class HTGeneratorVariant(
     SOLAR(::HTSolarGeneratorBlockEntity, HTTierType.ADVANCED, "Solar", "太陽光"),
     ;
 
-    val energyRate: Int get() = RagiumConfig.CONFIG.generatorEnergyRate[this]!!.asInt
+    val energyRate: Int get() = RagiumConfig.COMMON.generatorEnergyRate[this]!!.asInt
 
     override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> get() = RagiumBlocks.GENERATORS[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

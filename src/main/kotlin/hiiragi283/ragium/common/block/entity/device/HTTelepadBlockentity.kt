@@ -44,7 +44,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTVariableFluidStackTank.input(
             listener,
-            RagiumConfig.CONFIG.deviceCollectorTankCapacity,
+            RagiumConfig.COMMON.deviceCollectorTankCapacity,
             filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf,
         )
         return HTSimpleFluidTankHolder.input(null, tank)

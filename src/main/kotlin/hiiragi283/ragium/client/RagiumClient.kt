@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
-import hiiragi283.ragium.client.accessory.HTGoggleAccessoryRenderer
+import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
@@ -91,7 +91,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
         accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
 
-        accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLE, ::HTGoggleAccessoryRenderer)
+        accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLES, ::HTGogglesAccessoryRenderer)
         LOGGER.info("Registered Accessory Renderer!")
     }
 

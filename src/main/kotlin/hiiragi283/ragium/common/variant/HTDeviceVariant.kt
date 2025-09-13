@@ -47,7 +47,7 @@ enum class HTDeviceVariant(
     CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTTierType.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
 
-    val tickRate: IntSupplier get() = RagiumConfig.CONFIG.deviceTickRate[this]!!
+    val tickRate: IntSupplier get() = RagiumConfig.COMMON.deviceTickRate[this]!!
 
     override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =

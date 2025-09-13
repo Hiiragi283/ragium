@@ -17,7 +17,7 @@ object HTDynamicLightingAccessory : Accessory {
         super.tick(stack, reference)
         val entity: LivingEntity = reference.entity()
         val level: Level = entity.level()
-        val range: Int = RagiumConfig.CONFIG.deviceCollectorEntityRange.asDouble
+        val range: Int = RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble
             .roundToInt()
         for (pos: BlockPos in BlockPos.betweenClosed(-range, -range, -range, range, range, range)) {
             val posIn: BlockPos = entity.blockPosition().offset(pos)

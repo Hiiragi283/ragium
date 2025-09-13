@@ -26,7 +26,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.deviceCollectorTankCapacity)
+        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity)
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
@@ -36,12 +36,12 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 範囲内のExp Orbを取得する
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
-            blockPos.getRangedAABB(RagiumConfig.CONFIG.deviceCollectorEntityRange.asDouble),
+            blockPos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
         )
         if (expOrbs.isEmpty()) return false
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * RagiumConfig.CONFIG.expCollectorMultiplier.asInt
+            val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
             if (tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) {
                 tank.insert(stack, false, HTStorageAccess.INTERNAl)

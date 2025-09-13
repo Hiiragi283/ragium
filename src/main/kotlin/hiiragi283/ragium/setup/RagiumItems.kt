@@ -41,6 +41,7 @@ import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.common.variant.RagiumMaterialVariants
+import hiiragi283.ragium.config.RagiumCommonConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -264,7 +265,7 @@ object RagiumItems {
     val LOOT_TICKET: HTDeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
-    val NIGHT_VISION_GOGGLE: HTDeferredItem<Item> = register("night_vision_goggle", Item.Properties().stacksTo(1))
+    val NIGHT_VISION_GOGGLES: HTDeferredItem<Item> = register("night_vision_goggles", Item.Properties().stacksTo(1))
 
     // Azure
     @JvmField
@@ -463,11 +464,11 @@ object RagiumItems {
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
             val capacity: Int = when (variant) {
-                HTDrumVariant.SMALL -> RagiumConfig::smallDrumCapacity
-                HTDrumVariant.MEDIUM -> RagiumConfig::mediumDrumCapacity
-                HTDrumVariant.LARGE -> RagiumConfig::largeDrumCapacity
-                HTDrumVariant.HUGE -> RagiumConfig::hugeDrumCapacity
-            }(RagiumConfig.CONFIG).asInt
+                HTDrumVariant.SMALL -> RagiumCommonConfig::smallDrumCapacity
+                HTDrumVariant.MEDIUM -> RagiumCommonConfig::mediumDrumCapacity
+                HTDrumVariant.LARGE -> RagiumCommonConfig::largeDrumCapacity
+                HTDrumVariant.HUGE -> RagiumCommonConfig::hugeDrumCapacity
+            }(RagiumConfig.COMMON).asInt
             HTCapabilityCodec.registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
         }
         HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)

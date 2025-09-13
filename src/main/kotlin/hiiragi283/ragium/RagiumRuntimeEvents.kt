@@ -181,7 +181,7 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun onEffectRemove(event: MobEffectEvent.Remove) {
         val cure: EffectCure = event.cure ?: return
-        if (cure == EffectCures.MILK && RagiumConfig.CONFIG.disableMilkCure.asBoolean) {
+        if (cure == EffectCures.MILK && RagiumConfig.COMMON.disableMilkCure.asBoolean) {
             event.isCanceled = true
         }
     }

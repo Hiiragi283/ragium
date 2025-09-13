@@ -41,7 +41,7 @@ class HTFluidTransformingEmiRecipe(
                 fluidIngredient,
                 getPosition(1),
                 getPosition(0),
-                RagiumConfig.CONFIG.refineryInputTankCapacity.asInt,
+                RagiumConfig.COMMON.refineryInputTankCapacity.asInt,
             ).drawBack(false)
         widgets.addSlot(itemIngredient, getPosition(2.5), getPosition(0)).drawBack(false)
         // Output
@@ -51,7 +51,7 @@ class HTFluidTransformingEmiRecipe(
                 fluidResult,
                 getPosition(5),
                 getPosition(0),
-                RagiumConfig.CONFIG.refineryOutputTankCapacity.asInt,
+                RagiumConfig.COMMON.refineryOutputTankCapacity.asInt,
             ).drawBack(false)
             .recipeContext(this)
     }

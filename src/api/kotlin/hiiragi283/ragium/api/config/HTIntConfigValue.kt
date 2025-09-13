@@ -1,4 +1,4 @@
-package hiiragi283.ragium.config
+package hiiragi283.ragium.api.config
 
 import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.IntSupplier

@@ -40,7 +40,7 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
                 result,
                 getPosition(4.5),
                 getPosition(0),
-                RagiumConfig.CONFIG.melterTankCapacity.asInt,
+                RagiumConfig.COMMON.melterTankCapacity.asInt,
             ).drawBack(false)
             .recipeContext(this)
     }

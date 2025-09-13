@@ -21,7 +21,7 @@ class HTMagnetizationAccessory<T : Entity>(val entityClass: Class<T>, val intera
         super.tick(stack, reference)
         val player: Player = reference.entity() as? Player ?: return
         val level: Level = player.level()
-        val range: Double = RagiumConfig.CONFIG.deviceCollectorEntityRange.asDouble * 2.0
+        val range: Double = RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble * 2.0
         val entitiesInRange: List<T> = level.getEntitiesOfClass(
             entityClass,
             player.position().getRangedAABB(range),

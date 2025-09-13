@@ -9,7 +9,7 @@ import java.util.Optional
 object HTTagHelper {
     @JvmStatic
     fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
-        for (modId: String in RagiumConfig.CONFIG.tagOutputPriority.get()) {
+        for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {
             val foundHolder: Optional<Holder<T>> = getFirstHolder(holderSet, modId)
             if (foundHolder.isPresent) return foundHolder
         }

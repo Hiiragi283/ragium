@@ -187,7 +187,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addPatterned()
         // Armor
-        add(RagiumItems.NIGHT_VISION_GOGGLE, "Night Vision Goggles")
+        add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
         add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")

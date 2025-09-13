@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level
 class HTExpBerriesItem(block: HTExpBerriesBushBlock, properties: Properties) : HTBlockItem<HTExpBerriesBushBlock>(block, properties) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
-        val amount: Int = RagiumConfig.CONFIG.expBerriesValue.asInt
+        val amount: Int = RagiumConfig.COMMON.expBerriesValue.asInt
         when {
             player.isShiftKeyDown -> giveExp(player, stack, amount * stack.count, stack.count)
             else -> giveExp(player, stack, amount, 1)

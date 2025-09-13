@@ -51,7 +51,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.CONFIG.melterTankCapacity)
+        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity)
         return HTSimpleFluidTankHolder.output(this, tank)
     }
 

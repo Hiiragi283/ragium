@@ -18,7 +18,7 @@ class HTMilkCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidCollectorBlockEntity(HTDeviceVariant.MILK_COLLECTOR, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         val area = AABB(pos.above())
-        val multiplier: Int = RagiumConfig.CONFIG.milkCollectorMultiplier.asInt
+        val multiplier: Int = RagiumConfig.COMMON.milkCollectorMultiplier.asInt
         // Milk from Cow
         val cows: List<Cow> = level.getEntitiesOfClass(Cow::class.java, area)
         if (cows.isNotEmpty()) {
