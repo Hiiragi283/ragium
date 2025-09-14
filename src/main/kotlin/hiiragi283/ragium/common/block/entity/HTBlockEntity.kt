@@ -104,7 +104,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        val output: HTValueOutput = RagiumAPI.getInstance().createValueOutput(registries, tag)
+        RagiumAPI.getInstance().createValueOutput(registries, tag).let(::writeValue)
+    }
+
+    protected open fun writeValue(output: HTValueOutput) {
         // Capability
         for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -113,15 +116,14 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         output.store("custom_name", BiCodecs.TEXT, customName)
-        // Custom
-        writeValue(output)
     }
-
-    protected open fun writeValue(output: HTValueOutput) {}
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        val input: HTValueInput = RagiumAPI.getInstance().createValueInput(registries, tag)
+        RagiumAPI.getInstance().createValueInput(registries, tag).let(::readValue)
+    }
+
+    protected open fun readValue(input: HTValueInput) {
         // Capability
         for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -130,11 +132,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         customName = input.read("custom_name", BiCodecs.TEXT)
-        // Custom
-        readValue(input)
     }
-
-    protected open fun readValue(input: HTValueInput) {}
 
     override fun sendPassivePacket(level: ServerLevel) {
         super.sendPassivePacket(level)
