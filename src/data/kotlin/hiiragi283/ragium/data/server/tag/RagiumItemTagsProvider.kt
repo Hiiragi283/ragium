@@ -126,6 +126,7 @@ class RagiumItemTagsProvider(
 
     private fun material(builder: HTTagBuilder<Item>) {
         materialTable(builder, RagiumItems.MATERIALS)
+        materialTable(builder, RagiumItems.TIERED)
 
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
@@ -139,7 +140,7 @@ class RagiumItemTagsProvider(
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
-    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, HTMaterialType, out HTHolderLike>) {
+    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, out HTMaterialType, out HTHolderLike>) {
         table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: HTHolderLike) ->
             if (variant is HTMaterialVariant.ItemTag) {
                 builder.addMaterial(variant, material, item)

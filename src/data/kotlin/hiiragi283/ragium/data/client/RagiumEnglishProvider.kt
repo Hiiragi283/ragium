@@ -207,8 +207,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumItems.DRILL, "Electric Drill")
 
-        add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
-
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
         add(RagiumItems.BLAST_CHARGE, "Blast Charge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")

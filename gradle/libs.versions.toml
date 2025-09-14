@@ -25,7 +25,7 @@ fusion = "1.2.10-neoforge-mc1.21"
 guide = "21.1.14"
 immersive = "1.21.1-12.4.2-pre.20"
 jade = "15.10.3+neoforge"
-magitech = "0.12.0"
+magitech = "0.12.1"
 mek = "1.21.1-10.7.15.81"
 oritech = "6FLqYpTF"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
@@ -76,12 +76,11 @@ mods-impl = [
 
 mods-transitive = [
     "aa",
-    "accessories"
-]
-
-mods-compile = [
+    "accessories",
     "magitech"
 ]
+
+mods-compile = []
 
 mods-runtime = [
     "curious",

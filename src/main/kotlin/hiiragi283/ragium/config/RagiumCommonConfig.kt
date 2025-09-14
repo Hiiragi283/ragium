@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.extension.definePositiveDouble
 import hiiragi283.ragium.api.extension.definePositiveInt
-import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -86,13 +85,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
             val name: String = variant.serializedName
             builder.push(name)
             // Energy Rate
-            val defaultValue: Int = when (variant.tier) {
-                HTTierType.BASIC -> 32
-                HTTierType.ADVANCED -> 128
-                HTTierType.ELITE -> 512
-                else -> 2048
-            }
-            val value = builder.definePositiveInt("energyRate", defaultValue)
+            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", variant.tier.generatorRate)
             builder.pop()
             value
         }
@@ -104,13 +97,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
             val name: String = variant.serializedName
             builder.push(name)
             // Energy Usage
-            val defaultValue: Int = when (variant.tier) {
-                HTTierType.BASIC -> 16
-                HTTierType.ADVANCED -> 64
-                HTTierType.ELITE -> 256
-                else -> 1024
-            }
-            val value = builder.definePositiveInt("energyUsage", defaultValue)
+            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", variant.tier.processorRate)
             builder.pop()
             value
         }

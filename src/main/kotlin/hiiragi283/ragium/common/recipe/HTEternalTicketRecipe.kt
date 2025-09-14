@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.indices
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -20,7 +21,7 @@ class HTEternalTicketRecipe(category: CraftingBookCategory) : CustomRecipe(categ
         for (index: Int in input.indices) {
             val stackIn: ItemStack = input.getItem(index)
             if (stackIn.isEmpty) continue
-            if (stackIn.`is`(RagiumItems.ETERNAL_COMPONENT) && !isTicket) {
+            if (RagiumItems.getComponent(HTComponentTier.ETERNAL).isOf(stackIn) && !isTicket) {
                 isTicket = true
             } else if (stackIn.isDamageableItem && !isEquipment) {
                 isEquipment = true

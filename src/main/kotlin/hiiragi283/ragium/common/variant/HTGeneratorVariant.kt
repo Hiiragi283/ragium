@@ -9,7 +9,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -18,16 +18,16 @@ import net.minecraft.world.level.block.state.BlockState
 
 enum class HTGeneratorVariant(
     factory: (BlockPos, BlockState) -> HTBlockEntity,
-    val tier: HTTierType,
+    val tier: HTMachineTier,
     private val enUsPattern: String,
     private val jaJpPattern: String,
 ) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
-    THERMAL(::HTThermalGeneratorBlockEntity, HTTierType.BASIC, "Thermal", "火力"),
+    THERMAL(::HTThermalGeneratorBlockEntity, HTMachineTier.BASIC, "Thermal", "火力"),
 
     // Advanced
-    COMBUSTION(::HTCombustionGeneratorBlockEntity, HTTierType.ADVANCED, "Combustion", "燃焼"),
-    SOLAR(::HTSolarGeneratorBlockEntity, HTTierType.ADVANCED, "Solar", "太陽光"),
+    COMBUSTION(::HTCombustionGeneratorBlockEntity, HTMachineTier.ADVANCED, "Combustion", "燃焼"),
+    SOLAR(::HTSolarGeneratorBlockEntity, HTMachineTier.ADVANCED, "Solar", "太陽光"),
     ;
 
     val energyRate: Int get() = RagiumConfig.COMMON.generatorEnergyRate[this]!!.asInt

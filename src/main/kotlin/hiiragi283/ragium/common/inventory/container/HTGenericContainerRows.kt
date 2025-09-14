@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.inventory.container
 
-import com.google.common.base.Predicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemPredicate
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.world.item.Item
@@ -18,9 +18,9 @@ interface HTGenericContainerRows {
         fun createHandler(
             rows: Int,
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: Predicate<ItemStack> = Predicates.alwaysTrue(),
-            canInsert: Predicate<ItemStack> = Predicates.alwaysTrue(),
-            filter: Predicate<ItemStack> = Predicates.alwaysTrue(),
+            canExtract: Predicate<ItemStack> = HTItemPredicate.TRUE,
+            canInsert: Predicate<ItemStack> = HTItemPredicate.TRUE,
+            filter: Predicate<ItemStack> = HTItemPredicate.TRUE,
         ): HTItemHandler = HTItemStackHandler(
             (0..<(rows * 9)).map { index: Int ->
                 HTItemStackSlot.create(

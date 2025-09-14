@@ -18,9 +18,8 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -224,8 +223,8 @@ sealed class HTRecipeProvider {
         .addIngredient(input)
         .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
-    protected fun createComponentUpgrade(tier: HTTierType, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
+    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder(output)
-            .addIngredient(RagiumItems.getMaterial(RagiumMaterialVariants.COMPONENT, tier))
+            .addIngredient(RagiumItems.getComponent(tier))
             .addIngredient(ingredient)
 }

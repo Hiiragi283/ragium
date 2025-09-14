@@ -10,13 +10,13 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
-import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -43,7 +43,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTAccessConfiguration.Holder {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    val upgradeHandler = HTMachineUpgradeItemHandler(::setOnlySave)
+    val upgradeHandler: HTMachineUpgradeHandler get() = RagiumAPI.getInstance().getMachineUpgrade(this)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

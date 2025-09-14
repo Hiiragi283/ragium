@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
+import hiiragi283.ragium.api.data.HTTierData
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -14,6 +16,7 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tier.HTMaterialTier
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -49,6 +52,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         combustionFuels()
         thermalFuels()
         solarPower()
+        tier()
     }
 
     //    Vanilla    //
@@ -115,6 +119,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             // highest
             .add(Blocks.BEACON, HTSolarPower(4f))
             .add(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.GILDIUM, HTSolarPower(4f))
+    }
+
+    private fun tier() {
+        val builder: Builder<HTTierData, Item> = builder(RagiumDataMaps.TIER)
+        // Circuit, Component
+        RagiumItems.TIERED.forEach { (_, tier: HTMaterialTier, item: HTHolderLike) ->
+            builder.add(item, HTTierData(tier))
+        }
     }
 
     //    Extensions    //

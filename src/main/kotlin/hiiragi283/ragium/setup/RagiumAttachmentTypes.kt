@@ -3,18 +3,24 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.impl.HTDeferredAttachmentRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredAttachmentType
+import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
 
-object RagiumAttachmentTypes {
+internal object RagiumAttachmentTypes {
     @JvmField
     val REGISTER = HTDeferredAttachmentRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    internal val UNIVERSAL_BUNDLE: HTDeferredAttachmentType<HTUniversalBundleManager> =
+    val UNIVERSAL_BUNDLE: HTDeferredAttachmentType<HTUniversalBundleManager> =
         REGISTER.registerSerializable("universal_bundle", ::HTUniversalBundleManager)
 
     @JvmField
-    internal val ENERGY_NETWORK: HTDeferredAttachmentType<HTEnergyNetwork> =
+    val ENERGY_NETWORK: HTDeferredAttachmentType<HTEnergyNetwork> =
         REGISTER.registerSerializable("energy_network", ::HTEnergyNetwork)
+
+    @JvmField
+    val MACHINE_UPGRADE: HTDeferredAttachmentType<HTMachineUpgradeHandler> =
+        REGISTER.registerSerializable("machine_upgrade", HTMachineUpgradeItemHandler::fromHolder)
 }

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
+import java.util.function.Predicate
 import kotlin.math.min
 
 /**
@@ -195,6 +196,8 @@ interface HTItemSlot :
      * このスロットの個数を返します。
      */
     val count: Int get() = getStack().count
+
+    fun matchItem(filter: Predicate<ItemStack>): Boolean = filter.test(getStack())
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.ITEM, BiCodecs.itemStack(true), getStack())

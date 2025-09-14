@@ -45,6 +45,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addBlocks(RagiumBlocks.MATERIALS)
 
         addItems(RagiumItems.MATERIALS)
+        addItems(RagiumItems.TIERED)
 
         addItems(RagiumItems.ARMORS)
         addItems(RagiumItems.TOOLS)

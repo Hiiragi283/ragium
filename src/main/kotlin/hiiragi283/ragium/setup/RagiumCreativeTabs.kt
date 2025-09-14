@@ -137,13 +137,8 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.BASALT_MESH)
         output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
 
-        listOf(
-            RagiumMaterialVariants.COIL,
-            HTItemMaterialVariant.CIRCUIT,
-            RagiumMaterialVariants.COMPONENT,
-        ).flatMap(RagiumItems.MATERIALS::rowValues)
-            .forEach(output::accept)
-        output.accept(RagiumItems.ETERNAL_COMPONENT)
+        RagiumItems.MATERIALS.rowValues(RagiumMaterialVariants.COIL).forEach(output::accept)
+        RagiumItems.TIERED.values.forEach(output::accept)
     }
 
     @JvmField

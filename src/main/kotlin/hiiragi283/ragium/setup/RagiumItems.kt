@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -14,6 +15,7 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tier.HTMaterialTier
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -25,11 +27,11 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
+import hiiragi283.ragium.common.item.HTTierBasedItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
-import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
@@ -37,6 +39,8 @@ import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
+import hiiragi283.ragium.common.tier.HTCircuitTier
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
@@ -199,13 +203,6 @@ object RagiumItems {
         // Plates
         put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
 
-        // Circuits, Components
-        for (tier: HTTierType in HTTierType.COMMON) {
-            val properties: Item.Properties = Item.Properties().rarity(tier.rarity)
-            put(HTItemMaterialVariant.CIRCUIT, tier, register("${tier.serializedName}_circuit", properties))
-            put(RagiumMaterialVariants.COMPONENT, tier, register("${tier.serializedName}_component", properties))
-        }
-
         // Coils
         fun addCoil(material: RagiumMaterialType) {
             put(RagiumMaterialVariants.COIL, material, register("${material.serializedName}_coil"))
@@ -232,6 +229,26 @@ object RagiumItems {
 
     @JvmStatic
     fun getPlate(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.PLATE, material)
+
+    @JvmField
+    val TIERED: HTTable<HTMaterialVariant, HTMaterialTier, HTDeferredItem<*>> = buildTable {
+        fun register(entries: Iterable<HTMaterialTier>, variant: HTMaterialVariant, suffix: String) {
+            for (tier: HTMaterialTier in entries) {
+                put(variant, tier, register("${tier.serializedName}_$suffix", ::HTTierBasedItem.partially1(tier)))
+            }
+        }
+
+        // Circuits
+        register(HTCircuitTier.entries, HTItemMaterialVariant.CIRCUIT, "circuit")
+        // Components
+        register(HTComponentTier.entries, RagiumMaterialVariants.COMPONENT, "component")
+    }
+
+    @JvmStatic
+    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = TIERED.get(HTItemMaterialVariant.CIRCUIT, tier)!!
+
+    @JvmStatic
+    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = TIERED.get(RagiumMaterialVariants.COMPONENT, tier)!!
 
     //    Armors    //
 
@@ -304,9 +321,6 @@ object RagiumItems {
 
     @JvmField
     val UNIVERSAL_BUNDLE: HTDeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem)
-
-    @JvmField
-    val ETERNAL_COMPONENT: HTDeferredItem<Item> = register("eternal_component", Item.Properties().rarity(Rarity.EPIC))
 
     // Deep
     @JvmField

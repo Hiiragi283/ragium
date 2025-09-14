@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,28 +25,28 @@ import java.util.function.IntSupplier
 
 enum class HTDeviceVariant(
     factory: (BlockPos, BlockState) -> HTBlockEntity,
-    val tier: HTTierType,
+    val tier: HTMachineTier,
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
 ) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
-    ITEM_BUFFER(::HTItemBufferBlockEntity, HTTierType.BASIC, "Item Buffer", "アイテムバッファ"),
-    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, HTTierType.BASIC, "Milk Collector", "搾乳機"),
-    WATER_COLLECTOR(::HTWaterCollectorBlockEntity, HTTierType.BASIC, "Water Collector", "水収集機"),
+    ITEM_BUFFER(::HTItemBufferBlockEntity, HTMachineTier.BASIC, "Item Buffer", "アイテムバッファ"),
+    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, HTMachineTier.BASIC, "Milk Collector", "搾乳機"),
+    WATER_COLLECTOR(::HTWaterCollectorBlockEntity, HTMachineTier.BASIC, "Water Collector", "水収集機"),
 
     // Advanced
-    ENI(HTEnergyNetworkAccessBlockEntity::Simple, HTTierType.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
-    EXP_COLLECTOR(::HTExpCollectorBlockEntity, HTTierType.ADVANCED, "Exp Collector", "経験値収集機"),
-    LAVA_COLLECTOR(::HTLavaCollectorBlockEntity, HTTierType.ADVANCED, "Lava Collector", "溶岩収集機"),
+    ENI(HTEnergyNetworkAccessBlockEntity::Simple, HTMachineTier.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
+    EXP_COLLECTOR(::HTExpCollectorBlockEntity, HTMachineTier.ADVANCED, "Exp Collector", "経験値収集機"),
+    LAVA_COLLECTOR(::HTLavaCollectorBlockEntity, HTMachineTier.ADVANCED, "Lava Collector", "溶岩収集機"),
 
     // Elite
-    DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, HTTierType.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
-    TELEPAD(::HTTelepadBlockentity, HTTierType.ELITE, "Telepad", "テレパッド"),
-    MOB_CAPTURER(::HTMobCapturerBlockEntity, HTTierType.ELITE, "Mob Capturer", "モブ捕獲機"),
+    DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, HTMachineTier.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
+    TELEPAD(::HTTelepadBlockentity, HTMachineTier.ELITE, "Telepad", "テレパッド"),
+    MOB_CAPTURER(::HTMobCapturerBlockEntity, HTMachineTier.ELITE, "Mob Capturer", "モブ捕獲機"),
 
     // Creative
-    CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTTierType.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
+    CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTMachineTier.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
 
     val tickRate: IntSupplier get() = RagiumConfig.COMMON.deviceTickRate[this]!!

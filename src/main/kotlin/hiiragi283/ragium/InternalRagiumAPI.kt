@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.collection.HTWrappedMultiMap
@@ -37,6 +38,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
@@ -152,6 +154,9 @@ class InternalRagiumAPI : RagiumAPI {
     override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = getCurrentServer()
         ?.getLevel(key)
         ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+
+    override fun getMachineUpgrade(blockEntity: BlockEntity): HTMachineUpgradeHandler =
+        blockEntity.getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
     //    Storage    //
 

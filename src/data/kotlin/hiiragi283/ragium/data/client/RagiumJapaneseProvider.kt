@@ -192,7 +192,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Tool
         add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
-        add(RagiumItems.ETERNAL_COMPONENT, "エターナル構造体")
 
         add(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
         add(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")

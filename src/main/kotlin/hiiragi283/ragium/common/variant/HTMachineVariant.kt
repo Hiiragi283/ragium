@@ -6,29 +6,29 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 
-enum class HTMachineVariant(val tier: HTTierType, private val enUsPattern: String, private val jaJpPattern: String) :
+enum class HTMachineVariant(val tier: HTMachineTier, private val enUsPattern: String, private val jaJpPattern: String) :
     HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
-    ALLOY_SMELTER(HTTierType.ADVANCED, "Alloy Smelter", "合金炉"),
-    BLOCK_BREAKER(HTTierType.BASIC, "Block Breaker", "採掘機"),
-    COMPRESSOR(HTTierType.BASIC, "Compressor", "圧縮機"),
-    CUTTING_MACHINE(HTTierType.BASIC, "Cutting Machine", "裁断機"),
-    EXTRACTOR(HTTierType.BASIC, "Extractor", "抽出機"),
-    PULVERIZER(HTTierType.BASIC, "Pulverizer", "粉砕機"),
+    ALLOY_SMELTER(HTMachineTier.ADVANCED, "Alloy Smelter", "合金炉"),
+    BLOCK_BREAKER(HTMachineTier.BASIC, "Block Breaker", "採掘機"),
+    COMPRESSOR(HTMachineTier.BASIC, "Compressor", "圧縮機"),
+    CUTTING_MACHINE(HTMachineTier.BASIC, "Cutting Machine", "裁断機"),
+    EXTRACTOR(HTMachineTier.BASIC, "Extractor", "抽出機"),
+    PULVERIZER(HTMachineTier.BASIC, "Pulverizer", "粉砕機"),
 
     // Advanced
-    CRUSHER(HTTierType.ADVANCED, "Crusher", "破砕機"),
-    MELTER(HTTierType.ADVANCED, "Melter", "溶融炉"),
-    REFINERY(HTTierType.ADVANCED, "Refinery", "精製機"),
+    CRUSHER(HTMachineTier.ADVANCED, "Crusher", "破砕機"),
+    MELTER(HTMachineTier.ADVANCED, "Melter", "溶融炉"),
+    REFINERY(HTMachineTier.ADVANCED, "Refinery", "精製機"),
 
     // Elite
-    MULTI_SMELTER(HTTierType.ELITE, "Multi Smelter", "並列製錬炉"),
-    SIMULATOR(HTTierType.ELITE, "Simulation Chamber", "シミュレーション室"),
+    MULTI_SMELTER(HTMachineTier.ELITE, "Multi Smelter", "並列製錬炉"),
+    SIMULATOR(HTMachineTier.ELITE, "Simulation Chamber", "シミュレーション室"),
     ;
 
     val energyUsage: Int get() = RagiumConfig.COMMON.machineEnergyUsage[this]!!.asInt

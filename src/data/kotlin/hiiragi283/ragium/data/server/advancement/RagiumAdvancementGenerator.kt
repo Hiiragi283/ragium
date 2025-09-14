@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -277,7 +278,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
             RagiumAdvancements.IRIDESCENTIUM,
-            RagiumItems.ETERNAL_COMPONENT,
+            RagiumItems.getComponent(HTComponentTier.ETERNAL),
         ) { setChallenge() }
     }
 }

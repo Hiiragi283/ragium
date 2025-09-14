@@ -11,8 +11,8 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -63,7 +63,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         createComponentUpgrade(
-            HTTierType.ELITE,
+            HTComponentTier.ELITE,
             RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
             RagiumDelightAddon.RAGI_ALLOY_KNIFE,
         ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)

@@ -1,35 +1,45 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.neoforge.attachment.IAttachmentHolder
 
-class HTMachineUpgradeItemHandler(private val listener: HTContentListener?) : HTItemHandler {
-    private val slots: List<HTItemStackSlot> = (0..3).map { i ->
-        when (i) {
-            3 -> ComponentSlot(listener)
+internal class HTMachineUpgradeItemHandler(private val listener: HTContentListener?) : HTMachineUpgradeHandler {
+    companion object {
+        @JvmStatic
+        fun fromHolder(holder: IAttachmentHolder): HTMachineUpgradeHandler =
+            HTMachineUpgradeItemHandler(checkNotNull(holder as? BlockEntity)::setChanged)
 
-            else
-            -> HTItemStackSlot.create(
-                listener,
-                HTSlotHelper.getSlotPosX(7),
-                HTSlotHelper.getSlotPosX(i),
-                canExtract = HTItemStackSlot.MANUAL_ONLY,
-                canInsert = HTItemStackSlot.MANUAL_ONLY,
-            )
-        }
+        @JvmStatic
+        fun getComponentTier(stack: ItemStack): HTBaseTier? = stack.itemHolder.getData(RagiumDataMaps.TIER)?.tier
     }
 
-    val componentTier: HTTierType? get() = slots[3].getStack().let(ComponentSlot::getTier)
+    private val slots: List<HTItemSlot> = (0..3).map { i ->
+        HTItemStackSlot.create(
+            listener,
+            HTSlotHelper.getSlotPosX(8),
+            HTSlotHelper.getSlotPosX(i) + 1,
+            canExtract = HTItemStackSlot.MANUAL_ONLY,
+            canInsert = HTItemStackSlot.MANUAL_ONLY,
+            filter = { stack: ItemStack ->
+                when (i) {
+                    3 -> getComponentTier(stack) != null
+                    else -> getComponentTier(stack) == null
+                }
+            },
+        )
+    }
 
     override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
 
@@ -37,29 +47,13 @@ class HTMachineUpgradeItemHandler(private val listener: HTContentListener?) : HT
         listener?.onContentsChanged()
     }
 
-    //    Component Slot    //
-
-    class ComponentSlot(listener: HTContentListener?) :
-        HTItemStackSlot(
-            1,
-            MANUAL_ONLY,
-            MANUAL_ONLY,
-            { stack: ItemStack -> getTier(stack) != null },
-            listener,
-            HTSlotHelper.getSlotPosX(7),
-            HTSlotHelper.getSlotPosX(3),
-        ) {
-        companion object {
-            @JvmStatic
-            fun getTier(stack: ItemStack): HTTierType? {
-                for ((tier: HTMaterialType, item: HTDeferredItem<*>) in RagiumItems.MATERIALS.row(RagiumMaterialVariants.COMPONENT)) {
-                    if (tier !is HTTierType) return null
-                    if (item.isOf(stack)) {
-                        return tier
-                    }
-                }
-                return null
-            }
-        }
+    override fun serialize(output: HTValueOutput) {
+        HTCapabilityCodec.ITEM.saveTo(output, getItemSlots(getItemSideFor()))
     }
+
+    override fun deserialize(input: HTValueInput) {
+        HTCapabilityCodec.ITEM.loadFrom(input, getItemSlots(getItemSideFor()))
+    }
+
+    override fun getTier(): HTBaseTier? = getItemSlot(3, getItemSideFor())?.getStack()?.let(::getComponentTier)
 }

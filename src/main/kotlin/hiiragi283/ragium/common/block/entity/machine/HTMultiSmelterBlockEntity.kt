@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.common.material.HTTierType
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -90,12 +90,12 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    private fun getMaxParallel(): Int = when (upgradeHandler.componentTier) {
-        HTTierType.BASIC -> 2
-        HTTierType.ADVANCED -> 4
-        HTTierType.ELITE -> 8
-        HTTierType.ULTIMATE -> 16
-        HTTierType.CREATIVE -> inputSlot.getStack().maxStackSize
+    private fun getMaxParallel(): Int = when (upgradeHandler.getTier()) {
+        HTBaseTier.BASIC -> 2
+        HTBaseTier.ADVANCED -> 4
+        HTBaseTier.ELITE -> 8
+        HTBaseTier.ULTIMATE -> 16
+        HTBaseTier.CREATIVE -> inputSlot.getStack().maxStackSize
         null -> 1
     }
 

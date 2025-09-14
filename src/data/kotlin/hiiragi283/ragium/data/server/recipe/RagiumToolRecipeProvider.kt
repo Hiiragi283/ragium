@@ -12,9 +12,10 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
-import hiiragi283.ragium.common.material.HTTierType
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTCircuitTier
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTLootTicketHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTColorMaterial
@@ -42,7 +43,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTTierType.BASIC)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.BASIC)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -108,7 +109,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         // Advanced
         createComponentUpgrade(
-            HTTierType.ADVANCED,
+            HTComponentTier.ADVANCED,
             RagiumItems.ADVANCED_MAGNET,
             RagiumItems.MAGNET,
         ).save(output)
@@ -245,7 +246,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
         createComponentUpgrade(
-            HTTierType.ELITE,
+            HTComponentTier.ELITE,
             hammer(RagiumMaterialType.RAGI_CRYSTAL),
             hammer(RagiumMaterialType.RAGI_ALLOY),
         ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)

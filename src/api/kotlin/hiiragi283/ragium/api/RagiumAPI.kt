@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import io.wispforest.accessories.api.AccessoriesCapability
@@ -29,6 +30,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 import java.util.*
 
 interface RagiumAPI {
@@ -93,6 +95,8 @@ interface RagiumAPI {
      * エネルギーネットワークのマネージャを返します。
      */
     fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
+
+    fun getMachineUpgrade(blockEntity: BlockEntity): HTMachineUpgradeHandler
 
     //    Storage    //
 
