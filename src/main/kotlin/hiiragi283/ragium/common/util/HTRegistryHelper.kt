@@ -9,13 +9,13 @@ import kotlin.sequences.filter
 
 object HTRegistryHelper {
     @JvmStatic
-    fun fluidHolderStream(): Sequence<Holder.Reference<Fluid>> = BuiltInRegistries.FLUID
+    fun fluidHolderStream(): Sequence<Holder<Fluid>> = BuiltInRegistries.FLUID
         .holdersNotEmpty()
-        .filter { holder: Holder.Reference<Fluid> ->
+        .filter { holder: Holder<Fluid> ->
             val fluid: Fluid = holder.value()
             (fluid as? FlowingFluid)?.isSource(fluid.defaultFluidState()) ?: false
         }
 
     @JvmStatic
-    fun fluidStream(): Sequence<Fluid> = fluidHolderStream().map(Holder.Reference<Fluid>::value)
+    fun fluidStream(): Sequence<Fluid> = fluidHolderStream().map(Holder<Fluid>::value)
 }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.energy
 
+import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
@@ -32,11 +33,7 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
 
         override fun setAmount(amount: Int) {
             val fixedAmount: Int = Mth.clamp(amount, 0, capacity)
-            if (fixedAmount > 0) {
-                parent.set(component, fixedAmount)
-            } else {
-                parent.remove(component)
-            }
+            parent.setOrRemove(component, fixedAmount) { it > 0 }
         }
 
         override fun getCapacity(): Int = capacity

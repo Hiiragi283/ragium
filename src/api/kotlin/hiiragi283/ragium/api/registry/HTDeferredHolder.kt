@@ -27,5 +27,7 @@ open class HTDeferredHolder<R : Any, T : R> protected constructor(key: ResourceK
             fun <R : Any> createSimple(key: ResourceKey<R>): HTDeferredHolder<R, *> = HTDeferredHolder(key)
         }
 
+        override fun getKey(): ResourceKey<R> = super.key
+
         fun isOf(value: R): Boolean = this.value() == value
     }

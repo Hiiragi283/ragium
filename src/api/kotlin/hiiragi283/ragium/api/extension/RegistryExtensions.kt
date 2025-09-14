@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
@@ -24,6 +25,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 import kotlin.streams.asSequence
 
 //    ResourceLocation    //
@@ -53,19 +55,13 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
 
 //    Registry    //
 
-fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder.Reference<T>> = holders().asSequence()
+fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
 
-fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder.Reference<T>> = holdersSequence()
-    .filter(Holder.Reference<T>::isBound)
-    .filterNot { holder: Holder.Reference<T> -> holder.`is`(defaultKey) }
+fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder<T>> = holdersSequence()
+    .filter(Holder<T>::isBound)
+    .filterNot { holder: Holder<T> -> holder.`is`(defaultKey) }
 
 //    Holder    //
-
-/**
- * [Holder]から[ResourceKey]を返します。
- * @throws [Holder.unwrapKey]が空の場合
- */
-val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThrow()
 
 /**
  * [Holder]から[ResourceLocation]を返します。
@@ -74,7 +70,7 @@ val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThr
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
     is HTHolderLike -> this.getId()
     is DeferredHolder<*, *> -> this.id
-    else -> keyOrThrow.location()
+    else -> unwrapKey().orElseThrow().location()
 }
 
 /**
@@ -98,7 +94,16 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 
+//    HolderGetter    //
+
+fun <T : Any> HolderGetter<T>.getOrNull(key: ResourceKey<T>): Holder<T>? = get(key).getOrNull()
+
+fun <T : Any> HolderGetter<T>.getOrNull(key: TagKey<T>): HolderSet<T>? = get(key).getOrNull()
+
 //    HolderLookup    //
+
+fun <T : Any> HolderLookup.Provider.lookupOrNull(key: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
+    lookup(key).getOrNull()
 
 fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
 

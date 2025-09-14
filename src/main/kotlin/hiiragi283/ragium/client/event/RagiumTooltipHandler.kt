@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.event
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -8,14 +9,11 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.client.resources.language.I18n
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -59,19 +57,11 @@ object RagiumTooltipHandler {
         provider: HolderLookup.Provider?,
         flag: TooltipFlag,
     ) {
-        val enchLookup: HolderLookup.RegistryLookup<Enchantment> = provider?.lookupOrThrow(Registries.ENCHANTMENT) ?: return
-        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getInstance(enchLookup)?.ifPresent { instance: EnchantmentInstance ->
-            if (flag.hasShiftDown()) {
-                consumer(
-                    RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(
-                        Enchantment.getFullname(instance.enchantment, instance.level),
-                    ),
-                )
-            } else {
-                consumer(
-                    RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW),
-                )
-            }
+        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider?.enchLookup())?.let { text: Component ->
+            when {
+                flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
+                else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)
+            }.let(consumer)
         }
     }
 

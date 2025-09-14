@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.fluid
 
+import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.value.HTValueInput
@@ -34,10 +35,7 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int
         override fun getStack(): FluidStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).copy()
 
         override fun setStack(stack: FluidStack) {
-            when {
-                stack.isEmpty -> parent.remove(component)
-                else -> parent.set(component, SimpleFluidContent.copyOf(stack))
-            }
+            parent.setOrRemove(component, SimpleFluidContent.copyOf(stack), SimpleFluidContent::isEmpty)
         }
 
         override fun getCapacity(): Int = capacity

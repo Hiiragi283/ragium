@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -46,11 +47,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
             // val oldStack: ItemStack = list[slot]
             list[slot] = stack
             contents = ItemContainerContents.fromItems(list)
-            if (contents.nonEmptyStream().toList().isEmpty()) {
-                parent.remove(component)
-            } else {
-                parent.set(component, contents)
-            }
+            parent.setOrRemove(component, contents) { it.nonEmptyStream().findAny().isEmpty }
             onContentsChanged()
         }
 

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.ItemStack
@@ -14,8 +15,8 @@ object HTItemHelper {
         RagiumAPI
             .getInstance()
             .resolveLookup(Registries.ENCHANTMENT)
-            ?.get(Enchantments.UNBREAKING)
-            ?.ifPresent { holder: Holder.Reference<Enchantment> ->
+            ?.getOrNull(Enchantments.UNBREAKING)
+            ?.let { holder: Holder<Enchantment> ->
                 val level: Int = stack.getEnchantmentLevel(holder)
                 if (level > 0) {
                     result /= (level + 1)

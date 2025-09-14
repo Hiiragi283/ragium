@@ -5,6 +5,8 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.wrapDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
@@ -24,6 +26,8 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
             .xmap(::HTKeyOrTagEntry, HTKeyOrTagEntry<T>::entry)
     }
 
+    constructor(registryKey: ResourceKey<out Registry<T>>, id: ResourceLocation) : this(ResourceKey.create(registryKey, id))
+
     constructor(key: ResourceKey<T>) : this(Either.left(key))
 
     constructor(tagKey: TagKey<T>) : this(Either.right(tagKey))
@@ -34,7 +38,7 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
     fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U = entry.map(fromKey, fromTag)
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val getter: HolderGetter<T> = provider?.lookupOrThrow(registryKey)
+        val getter: HolderGetter<T> = provider?.lookupOrNull(registryKey)
             ?: RagiumAPI.getInstance().resolveLookup(registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
@@ -46,10 +50,10 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
     )
 
     private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> =
-        lookup.get(key).wrapDataResult("Missing key in ${key.registry()}: $key")
+        lookup.getOrNull(key).wrapDataResult("Missing key in ${key.registry()}: $key")
 
     private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): DataResult<out Holder<T>> = lookup
-        .get(tagKey)
-        .flatMap(HTTagHelper::getFirstHolder)
+        .getOrNull(tagKey)
+        ?.let(HTTagHelper::getFirstHolder)
         .wrapDataResult("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}")
 }

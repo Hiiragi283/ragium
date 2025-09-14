@@ -27,11 +27,7 @@ class HTEternalTicketEmiRecipe(private val equipment: Item, id: ResourceLocation
     )
 
     override fun getOutputWidget(x: Int, y: Int): SlotWidget = SlotWidget(
-        EmiStack.of(
-            createItemStack(equipment) {
-                set(DataComponents.UNBREAKABLE, Unbreakable(true))
-            },
-        ),
+        createItemStack(equipment, DataComponents.UNBREAKABLE, Unbreakable(true)).let(EmiStack::of),
         x,
         y,
     )

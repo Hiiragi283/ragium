@@ -18,9 +18,7 @@ import net.minecraft.world.level.Level
 class HTUniversalBundleItem(properties: Properties) : Item(properties.stacksTo(1)) {
     companion object {
         @JvmStatic
-        fun createBundle(color: DyeColor): ItemStack = createItemStack(RagiumItems.UNIVERSAL_BUNDLE) {
-            set(RagiumDataComponents.COLOR, color)
-        }
+        fun createBundle(color: DyeColor): ItemStack = createItemStack(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR, color)
 
         @JvmStatic
         fun openBundle(level: Level, player: Player, stack: ItemStack): InteractionResultHolder<ItemStack> {

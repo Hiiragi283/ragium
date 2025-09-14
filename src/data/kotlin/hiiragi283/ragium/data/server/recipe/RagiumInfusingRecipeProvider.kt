@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
@@ -19,6 +18,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
@@ -75,7 +75,7 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider.Direct() {
             .infusing(
                 HTIngredientHelper.item(Items.GLASS_BOTTLE),
                 HTIngredientHelper.water(250),
-                HTResultHelper.INSTANCE.item(createPotionStack(Potions.WATER)),
+                HTResultHelper.INSTANCE.item(PotionContents.createItemStack(Items.POTION, Potions.WATER)),
             ).save(output, RagiumAPI.id("water_bottle"))
 
         // Concretes

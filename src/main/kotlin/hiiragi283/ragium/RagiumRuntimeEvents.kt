@@ -2,7 +2,6 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import hiiragi283.ragium.config.RagiumConfig
@@ -25,7 +24,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -111,10 +109,7 @@ object RagiumRuntimeEvents {
         val enchantments: ItemEnchantments.Mutable = event.enchantments
         val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
 
-        val enchantment: HTIntrinsicEnchantment = stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT) ?: return
-        enchantment.getInstance(lookup).ifPresent { instance: EnchantmentInstance ->
-            enchantments.set(instance.enchantment, instance.level)
-        }
+        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.useInstance(lookup, enchantments::set)
     }
 
     //    Entity    //
@@ -163,7 +158,7 @@ object RagiumRuntimeEvents {
     }*/
 
     @SubscribeEvent
-    fun inEntityDamaged(event: LivingDamageEvent.Pre) {
+    fun beforeEntityDamaged(event: LivingDamageEvent.Pre) {
         val accessoryCap: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(event.entity) ?: return
         val reference: SlotEntryReference = accessoryCap.getFirstEquipped { stack: ItemStack ->
             stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)

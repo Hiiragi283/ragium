@@ -14,7 +14,6 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
-import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
@@ -56,6 +55,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeManager
@@ -111,7 +111,7 @@ class RagiumEmiPlugin : EmiPlugin {
             HTDeferredRecipeType.createType(vanillaId("crafting"))
         crafting.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
-                EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
+                EmiPort.getPotionRegistry().holders().forEach { holder: Holder<Potion> ->
                     addRecipeSafe(
                         holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
                     ) { id: ResourceLocation ->
@@ -119,7 +119,7 @@ class RagiumEmiPlugin : EmiPlugin {
                             listOf(
                                 EmiStack.of(RagiumItems.ICE_CREAM),
                                 EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
-                                EmiStack.of(createPotionStack(holder)),
+                                EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
                                 EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),
                             EmiStack.of(RagiumAPI.getInstance().createSoda(holder)),
@@ -133,7 +133,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 EmiPort
                     .getItemRegistry()
                     .holders()
-                    .forEach { holder: Holder.Reference<Item> ->
+                    .forEach { holder: Holder<Item> ->
                         val item: Item = holder.value()
                         if (!item.defaultInstance.isDamageableItem) return@forEach
                         addRecipeSafe(

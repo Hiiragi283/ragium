@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item.tool
 
-import hiiragi283.ragium.api.extension.restDamage
 import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.ItemStack
@@ -14,7 +13,7 @@ open class HTHammerItem(tier: Tier, properties: Properties) : DiggerItem(tier, R
         val ABILITIES: Set<ItemAbility> = setOf(ItemAbilities.PICKAXE_DIG, ItemAbilities.SHOVEL_DIG)
     }
 
-    override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = stack.restDamage > 0
+    override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = stack.maxDamage > stack.damageValue
 
     override fun getCraftingRemainingItem(stack: ItemStack): ItemStack {
         if (hasCraftingRemainingItem(stack)) {

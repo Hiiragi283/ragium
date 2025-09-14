@@ -50,6 +50,5 @@ fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get
 
 fun HTFluidContent<*, *, *>.toBucketEmi(): EmiStack = EmiStack.of(getBucket())
 
-fun createErrorStack(error: DataResult.Error<*>): EmiStack = createItemStack(Items.BARRIER) {
-    set(DataComponents.ITEM_NAME, Component.literal(error.message()))
-}.let(EmiStack::of)
+fun createErrorStack(error: DataResult.Error<*>): EmiStack =
+    createItemStack(Items.BARRIER, DataComponents.ITEM_NAME, Component.literal(error.message())).let(EmiStack::of)

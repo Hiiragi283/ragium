@@ -4,19 +4,18 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import java.util.Optional
 
 object HTTagHelper {
     @JvmStatic
-    fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
+    fun <T : Any> getFirstHolder(holderSet: HolderSet<T>): Holder<T>? {
         for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {
-            val foundHolder: Optional<Holder<T>> = getFirstHolder(holderSet, modId)
-            if (foundHolder.isPresent) return foundHolder
+            val foundHolder: Holder<T>? = getFirstHolder(holderSet, modId)
+            if (foundHolder != null) return foundHolder
         }
-        return holderSet.stream().findFirst()
+        return holderSet.firstOrNull()
     }
 
     @JvmStatic
-    private fun <T : Any> getFirstHolder(holderSet: HolderSet<T>, namespace: String): Optional<Holder<T>> =
-        holderSet.stream().filter { holder: Holder<T> -> holder.idOrThrow.namespace == namespace }.findFirst()
+    private fun <T : Any> getFirstHolder(holderSet: HolderSet<T>, namespace: String): Holder<T>? =
+        holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == namespace }
 }

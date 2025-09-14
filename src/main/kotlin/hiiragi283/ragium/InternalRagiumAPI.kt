@@ -133,9 +133,7 @@ class InternalRagiumAPI : RagiumAPI {
     //    Item    //
 
     override fun createSoda(instances: List<MobEffectInstance>, count: Int): ItemStack =
-        createItemStack(RagiumItems.ICE_CREAM_SODA, count) {
-            set(DataComponents.FOOD, HTFoodBuilder.create { instances.forEach(this::addEffect) })
-        }
+        createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.FOOD, HTFoodBuilder.create { instances.forEach(this::addEffect) }, count)
 
     //    Server    //
 

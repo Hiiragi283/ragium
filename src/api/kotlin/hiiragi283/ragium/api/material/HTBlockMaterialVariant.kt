@@ -21,8 +21,8 @@ enum class HTBlockMaterialVariant(private val enUsPattern: String, private val j
     TINTED_GLASS_BLOCK("Tinted %s Glass", "遮光%sガラス", null),
     ;
 
-    override val blockCommonTag: TagKey<Block>? = tagPrefix?.let { blockTagKey(commonId(it)) }
-    override val itemCommonTag: TagKey<Item>? = tagPrefix?.let { itemTagKey(commonId(it)) }
+    override val blockCommonTag: TagKey<Block>? = tagPrefix?.let(::commonId)?.let(::blockTagKey)
+    override val itemCommonTag: TagKey<Item>? = tagPrefix?.let(::commonId)?.let(::itemTagKey)
 
     override fun canGenerateTag(): Boolean = tagPrefix != null
 

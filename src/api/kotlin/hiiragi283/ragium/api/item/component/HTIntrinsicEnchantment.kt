@@ -2,14 +2,17 @@ package hiiragi283.ragium.api.item.component
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.extension.getOrNull
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.EnchantedBookItem
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
-import java.util.Optional
 
 data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: Int) {
     companion object {
@@ -23,6 +26,12 @@ data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: 
         )
     }
 
-    fun getInstance(lookup: HolderGetter<Enchantment>): Optional<EnchantmentInstance> =
-        lookup.get(key).map { holder: Holder.Reference<Enchantment> -> EnchantmentInstance(holder, level) }
+    fun <T> useInstance(lookup: HolderGetter<Enchantment>?, action: (Holder<Enchantment>, Int) -> T): T? =
+        lookup?.getOrNull(key)?.let { holder: Holder<Enchantment> -> action(holder, level) }
+
+    fun getFullName(lookup: HolderGetter<Enchantment>?): Component? = useInstance(lookup, Enchantment::getFullname)
+
+    fun toInstance(lookup: HolderGetter<Enchantment>?): EnchantmentInstance? = useInstance(lookup, ::EnchantmentInstance)
+
+    fun toEnchBook(lookup: HolderGetter<Enchantment>?): ItemStack? = toInstance(lookup)?.let(EnchantedBookItem::createForEnchantment)
 }

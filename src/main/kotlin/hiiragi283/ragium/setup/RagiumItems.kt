@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
-import hiiragi283.ragium.api.extension.getEnchantmentLevel
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -47,6 +47,7 @@ import hiiragi283.ragium.config.RagiumCommonConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
@@ -499,7 +500,13 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+        val level: Int = RagiumAPI
+            .getInstance()
+            .resolveLookup(Registries.ENCHANTMENT)
+            ?.getOrNull(RagiumEnchantments.CAPACITY)
+            ?.let(stack::getEnchantmentLevel)
+            ?: 0
+        val modifier: Int = level + 1
         factory(stack, capacity * modifier)
     }
 
