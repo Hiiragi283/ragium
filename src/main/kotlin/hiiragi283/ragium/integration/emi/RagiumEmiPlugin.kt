@@ -156,7 +156,8 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTFluidFuelEmiRecipe(
                     RagiumEmiCategories.getGenerator(variant),
                     key.location().withPrefix("/${dataMapType.id().path}/"),
-                    EmiStack.of(fluid).setAmount(fuelData.amount.toLong()),
+                    EmiStack.of(fluid),
+                    fuelData.amount,
                     variant.energyRate,
                 ),
             )

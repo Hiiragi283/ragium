@@ -15,6 +15,7 @@ class HTFluidFuelEmiRecipe(
     private val category: EmiRecipeCategory,
     private val id: ResourceLocation,
     private val fluid: EmiStack,
+    private val amount: Int,
     private val energyRate: Int,
 ) : HTEmiRecipe {
     override fun getCategory(): EmiRecipeCategory = category
@@ -36,7 +37,7 @@ class HTFluidFuelEmiRecipe(
         widgets.addAnimatedTexture(EmiTexture.FULL_FLAME, 1, 1, 2000, false, true, true)
         widgets.addSlot(fluid, getPosition(1), 0).recipeContext(this)
         widgets.addText(
-            Component.literal("$energyRate FE/t"),
+            Component.literal("${energyRate / amount.toFloat()} FE/t"),
             getPosition(2) + 2,
             5,
             -1,

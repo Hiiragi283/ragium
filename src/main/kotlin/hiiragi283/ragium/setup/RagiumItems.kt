@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
+import hiiragi283.ragium.common.item.HTPotionSodaItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
@@ -387,7 +388,7 @@ object RagiumItems {
     val ICE_CREAM: HTDeferredItem<Item> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: HTDeferredItem<Item> = register("ice_cream_soda")
+    val ICE_CREAM_SODA: HTDeferredItem<Item> = register("ice_cream_soda", ::HTPotionSodaItem)
 
     // Meat
     @JvmField

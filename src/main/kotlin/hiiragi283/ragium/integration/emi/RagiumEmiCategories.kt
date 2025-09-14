@@ -15,7 +15,7 @@ object RagiumEmiCategories {
     @JvmField
     val GENERATORS: Map<HTGeneratorVariant, HTEmiRecipeCategory> =
         HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant), EmiRecipeSorting.identifier())
+            HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant), EmiRecipeSorting.compareInputThenOutput())
         }
 
     @JvmStatic

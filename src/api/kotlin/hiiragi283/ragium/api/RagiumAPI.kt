@@ -23,7 +23,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
@@ -73,11 +72,9 @@ interface RagiumAPI {
 
     //    Item    //
 
-    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(potion.value().effects, count)
+    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
 
-    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack = createSoda(potion.allEffects.toList(), count)
-
-    fun createSoda(instances: List<MobEffectInstance>, count: Int = 1): ItemStack
+    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
 
     //    Server    //
 

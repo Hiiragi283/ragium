@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.createItemStack
-import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -34,9 +33,9 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.server.ServerLifecycleHooks
@@ -132,8 +131,8 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Item    //
 
-    override fun createSoda(instances: List<MobEffectInstance>, count: Int): ItemStack =
-        createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.FOOD, HTFoodBuilder.create { instances.forEach(this::addEffect) }, count)
+    override fun createSoda(potion: PotionContents, count: Int): ItemStack =
+        createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.POTION_CONTENTS, potion, count)
 
     //    Server    //
 
