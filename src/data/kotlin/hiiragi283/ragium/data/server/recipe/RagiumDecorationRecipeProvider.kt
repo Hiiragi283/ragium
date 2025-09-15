@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
@@ -14,10 +15,12 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.data.HTWoodType
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -153,30 +156,38 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
-    @JvmStatic
-    private val WOOD_NAMES: List<String> = listOf(
-        "oak",
-        "spruce",
-        "birch",
-        "jungle",
-        "acacia",
-        "cherry",
-        "dark_oak",
-        "mangrove",
-        "bamboo",
-        "bamboo_mosaic",
-        "crimson",
-        "warped",
-    )
+    //    Wood    //
 
     @JvmStatic
     private fun wood() {
-        // Planks -> 2x Slab
-        HTSingleItemRecipeBuilder
-            .sawmill(Items.OAK_SLAB, 2)
-            .addIngredient(Items.OAK_PLANKS)
-            .save(output)
+        for (type: HTWoodType in HTWoodType.entries) {
+            val planks: ItemLike = type.planks
+            // Log -> 6x Planks
+            HTSingleItemRecipeBuilder
+                .sawmill(planks, 6)
+                .addIngredient(type.log)
+                .modCondition(type.modId)
+                .save(output)
+            // Planks -> 2x Slab
+            itemLookup.getOrNull(type.getId("${type.serializedName}_slab"))?.let { slab ->
+                HTSingleItemRecipeBuilder
+                    .sawmill(slab.value(), 2)
+                    .addIngredient(planks)
+                    .modCondition(type.modId)
+                    .save(output)
+            }
+            // Planks -> Stairs
+            itemLookup.getOrNull(type.getId("${type.serializedName}_stairs"))?.let { stairs ->
+                HTSingleItemRecipeBuilder
+                    .sawmill(stairs.value())
+                    .addIngredient(planks)
+                    .modCondition(type.modId)
+                    .save(output)
+            }
+        }
     }
+
+    //    Decorations    //
 
     @JvmStatic
     private fun registerBuildings(variant: HTDecorationVariant) {

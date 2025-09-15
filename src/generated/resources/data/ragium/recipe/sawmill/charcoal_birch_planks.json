@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "magitech"
+    }
+  ],
+  "type": "ragium:sawmill",
+  "ingredient": {
+    "tag": "magitech:charcoal_birch_logs"
+  },
+  "result": {
+    "count": 6,
+    "id": "magitech:charcoal_birch_planks"
+  }
+}

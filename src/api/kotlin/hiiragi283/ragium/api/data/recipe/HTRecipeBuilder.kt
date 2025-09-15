@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.minecraft.advancements.Criterion
@@ -66,7 +67,11 @@ interface HTRecipeBuilder : RecipeBuilder {
 
         private val conditions: MutableList<ICondition> = mutableListOf()
 
-        fun modCondition(modId: String): Prefixed = addCondition(ModLoadedCondition(modId))
+        fun modCondition(modId: String): Prefixed = apply {
+            if (modId !in RagiumConst.BUILTIN_IDS) {
+                addCondition(ModLoadedCondition(modId))
+            }
+        }
 
         fun tagCondition(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): Prefixed =
             tagCondition(variant.itemTagKey(material))

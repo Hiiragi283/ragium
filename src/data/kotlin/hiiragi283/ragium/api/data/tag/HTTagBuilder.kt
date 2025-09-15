@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -16,9 +15,8 @@ import java.util.function.BiConsumer
  * 登録した[TagKey]をソートして生成するビルダー
  */
 @Suppress("UNCHECKED_CAST")
-class HTTagBuilder<T : Any>(lookup: HolderLookup.RegistryLookup<T>) {
+class HTTagBuilder<T : Any>(private val registryKey: ResourceKey<out Registry<T>>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
-    private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 
     fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)
 

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.wrapDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
@@ -17,6 +16,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 
 data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     companion object {
@@ -38,7 +38,7 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
     fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U = entry.map(fromKey, fromTag)
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val getter: HolderGetter<T> = provider?.lookupOrNull(registryKey)
+        val getter: HolderGetter<T> = provider?.lookup(registryKey)?.getOrNull()
             ?: RagiumAPI.getInstance().resolveLookup(registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)

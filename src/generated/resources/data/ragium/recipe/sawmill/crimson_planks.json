@@ -1,0 +1,10 @@
+{
+  "type": "ragium:sawmill",
+  "ingredient": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "result": {
+    "count": 6,
+    "id": "minecraft:crimson_planks"
+  }
+}

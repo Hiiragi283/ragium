@@ -102,8 +102,11 @@ fun <T : Any> HolderGetter<T>.getOrNull(key: TagKey<T>): HolderSet<T>? = get(key
 
 //    HolderLookup    //
 
-fun <T : Any> HolderLookup.Provider.lookupOrNull(key: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
-    lookup(key).getOrNull()
+@Suppress("UNCHECKED_CAST")
+val <T : Any> HolderLookup.RegistryLookup<T>.registryKey: ResourceKey<out Registry<T>> get() =
+    this.key() as ResourceKey<out Registry<T>>
+
+fun <T : Any> HolderLookup.RegistryLookup<T>.getOrNull(id: ResourceLocation): Holder<T>? = getOrNull(ResourceKey.create(registryKey, id))
 
 fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
 

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.loot
 
+import hiiragi283.ragium.api.data.loot.HTLootTableProvider
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -10,14 +11,12 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
@@ -32,7 +31,10 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
-    BlockLootSubProvider(setOf(), FeatureFlags.REGISTRY.allFlags(), provider) {
+    BlockLootSubProvider(setOf(), FeatureFlags.REGISTRY.allFlags(), provider),
+    HTLootTableProvider {
+    override val enchLookup: HolderLookup.RegistryLookup<Enchantment> = registries.enchLookup()
+
     override fun generate() {
         RagiumBlocks.REGISTER.firstEntries.forEach(::dropSelf)
 
@@ -131,8 +133,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     override fun getKnownBlocks(): Iterable<Block> = blocks
 
     //    Extensions    //
-
-    private val fortune: Holder.Reference<Enchantment> get() = registries.enchLookup().getOrThrow(Enchantments.FORTUNE)
 
     private fun dropSelf(holder: Supplier<out Block>) {
         dropSelf(holder.get())

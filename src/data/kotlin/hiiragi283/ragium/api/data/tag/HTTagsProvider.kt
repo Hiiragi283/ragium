@@ -24,11 +24,7 @@ abstract class HTTagsProvider<T : Any>(
         helper,
     ) {
     final override fun addTags(provider: HolderLookup.Provider) {
-        val builder: HTTagBuilder<T> = HTTagBuilder(provider.lookupOrThrow(registryKey))
-
-        addTags(builder)
-
-        builder.build { tagKey: TagKey<T>, entry: TagEntry ->
+        HTTagBuilder(registryKey).apply(::addTags).build { tagKey: TagKey<T>, entry: TagEntry ->
             tag(tagKey).add(entry)
         }
     }
