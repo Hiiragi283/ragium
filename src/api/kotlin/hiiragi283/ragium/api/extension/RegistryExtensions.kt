@@ -55,6 +55,10 @@ fun ResourceLocation.toDescriptionKey(prefix: String, suffix: String? = null): S
 
 //    Registry    //
 
+typealias RegistryKey<T> = ResourceKey<out Registry<T>>
+
+fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
+
 fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
 
 fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder<T>> = holdersSequence()
@@ -103,10 +107,11 @@ fun <T : Any> HolderGetter<T>.getOrNull(key: TagKey<T>): HolderSet<T>? = get(key
 //    HolderLookup    //
 
 @Suppress("UNCHECKED_CAST")
-val <T : Any> HolderLookup.RegistryLookup<T>.registryKey: ResourceKey<out Registry<T>> get() =
-    this.key() as ResourceKey<out Registry<T>>
+val <T : Any> HolderLookup.RegistryLookup<T>.registryKey: RegistryKey<T>
+    get() =
+        this.key() as RegistryKey<T>
 
-fun <T : Any> HolderLookup.RegistryLookup<T>.getOrNull(id: ResourceLocation): Holder<T>? = getOrNull(ResourceKey.create(registryKey, id))
+fun <T : Any> HolderLookup.RegistryLookup<T>.getOrNull(id: ResourceLocation): Holder<T>? = getOrNull(registryKey.createKey(id))
 
 fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
 

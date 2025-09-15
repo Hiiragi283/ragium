@@ -1,10 +1,11 @@
-package hiiragi283.ragium.common.data
+package hiiragi283.ragium.impl.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.extension.RegistryKey
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
@@ -47,7 +48,7 @@ class RagiumDataMapsImpl : RagiumDataMaps {
 
     override fun <TYPE : Any, DATA : Any> getData(
         access: RegistryAccess,
-        registryKey: ResourceKey<out Registry<TYPE>>,
+        registryKey: RegistryKey<TYPE>,
         holder: Holder<TYPE>,
         type: DataMapType<TYPE, DATA>,
     ): DATA? {

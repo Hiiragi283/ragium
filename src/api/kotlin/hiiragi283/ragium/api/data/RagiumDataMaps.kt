@@ -1,11 +1,10 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.RegistryKey
 import net.minecraft.core.Holder
-import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -25,7 +24,7 @@ interface RagiumDataMaps {
 
     fun <TYPE : Any, DATA : Any> getData(
         access: RegistryAccess,
-        registryKey: ResourceKey<out Registry<TYPE>>,
+        registryKey: RegistryKey<TYPE>,
         holder: Holder<TYPE>,
         type: DataMapType<TYPE, DATA>,
     ): DATA?

@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.andThen
-import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.bus.api.IEventBus
 
@@ -15,7 +14,7 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
 ) {
     protected constructor(
         namespace: String,
-        first: ResourceKey<out Registry<FIRST>>,
+        first: RegistryKey<FIRST>,
         second: HTDeferredRegister<SECOND>,
     ) : this(HTDeferredRegister(first, namespace), second)
 

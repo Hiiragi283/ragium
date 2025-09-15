@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import java.util.function.Function
@@ -31,6 +31,6 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
 
     override fun <I : Item> register(name: String, sup: Supplier<out I>): HTDeferredItem<I> = super.register(name, sup) as HTDeferredItem<I>
 
-    override fun <I : Item> createHolder(registryKey: ResourceKey<out Registry<Item>>, key: ResourceLocation): HTDeferredItem<I> =
-        HTDeferredItem(ResourceKey.create(registryKey, key))
+    override fun <I : Item> createHolder(registryKey: RegistryKey<Item>, key: ResourceLocation): HTDeferredItem<I> =
+        HTDeferredItem(registryKey.createKey(key))
 }

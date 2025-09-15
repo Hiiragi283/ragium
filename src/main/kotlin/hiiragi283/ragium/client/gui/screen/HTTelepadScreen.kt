@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.screen
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
@@ -125,7 +126,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         val y: Int = editBoxY.number
         val z: Int = editBoxZ.number
         val id: ResourceLocation = editBoxDim.value.let(ResourceLocation::tryParse) ?: return
-        val dim: ResourceKey<Level> = ResourceKey.create(Registries.DIMENSION, id)
+        val dim: ResourceKey<Level> = Registries.DIMENSION.createKey(id)
         val teleportPos = HTTeleportPos(dim, x, y, z)
         blockEntity.updateDestination(teleportPos)
         HTPacketHelper.sendToServer(HTUpdateTelepadPacket(blockEntity.blockPos, teleportPos))

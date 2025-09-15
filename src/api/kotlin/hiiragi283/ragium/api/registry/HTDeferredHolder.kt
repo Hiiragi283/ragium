@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry
 
-import net.minecraft.core.Registry
+import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.createKey
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -8,26 +9,22 @@ import net.neoforged.neoforge.registries.DeferredHolder
 /**
  * @see [mekanism.common.registration.MekanismDeferredHolder]
  */
-open class HTDeferredHolder<R : Any, T : R> protected constructor(key: ResourceKey<R>) :
-    DeferredHolder<R, T>(key),
+open class HTDeferredHolder<R : Any, T : R> :
+    DeferredHolder<R, T>,
     HTHolderLike {
-        companion object {
-            @JvmStatic
-            fun <R : Any, T : R> create(key: ResourceKey<out Registry<R>>, id: ResourceLocation): HTDeferredHolder<R, T> =
-                create(ResourceKey.create(key, id))
+    constructor(key: ResourceKey<R>) : super(key)
 
-            @JvmStatic
-            fun <R : Any, T : R> create(key: ResourceKey<R>): HTDeferredHolder<R, T> = HTDeferredHolder(key)
+    constructor(key: RegistryKey<R>, id: ResourceLocation) : super(key.createKey(id))
 
-            @JvmStatic
-            fun <R : Any> createSimple(key: ResourceKey<out Registry<R>>, id: ResourceLocation): HTDeferredHolder<R, *> =
-                createSimple(ResourceKey.create(key, id))
+    companion object {
+        @JvmStatic
+        fun <R : Any> createSimple(key: RegistryKey<R>, id: ResourceLocation): HTDeferredHolder<R, *> = createSimple(key.createKey(id))
 
-            @JvmStatic
-            fun <R : Any> createSimple(key: ResourceKey<R>): HTDeferredHolder<R, *> = HTDeferredHolder(key)
-        }
-
-        override fun getKey(): ResourceKey<R> = super.key
-
-        fun isOf(value: R): Boolean = this.value() == value
+        @JvmStatic
+        fun <R : Any> createSimple(key: ResourceKey<R>): HTDeferredHolder<R, *> = HTDeferredHolder(key)
     }
+
+    override fun getKey(): ResourceKey<R> = super.key
+
+    fun isOf(value: R): Boolean = this.value() == value
+}

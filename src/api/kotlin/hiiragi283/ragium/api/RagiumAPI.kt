@@ -5,6 +5,7 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
@@ -17,7 +18,6 @@ import hiiragi283.ragium.api.storage.value.HTValueOutput
 import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -83,7 +83,7 @@ interface RagiumAPI {
 
     fun enchLookup(): HolderLookup.RegistryLookup<Enchantment> = resolveLookup(Registries.ENCHANTMENT)!!
 
-    fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>?
+    fun <T : Any> resolveLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>?
 
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 

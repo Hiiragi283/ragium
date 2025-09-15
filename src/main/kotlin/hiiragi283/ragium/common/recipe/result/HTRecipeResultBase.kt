@@ -4,15 +4,14 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 
 abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
@@ -23,7 +22,7 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
     companion object {
         @JvmStatic
         fun <T : Any, R : HTRecipeResultBase<T, *>> createCodec(
-            registryKey: ResourceKey<out Registry<T>>,
+            registryKey: RegistryKey<T>,
             amountCodec: MapBiCodec<ByteBuf, Int>,
             factory: (HTKeyOrTagEntry<T>, Int, DataComponentPatch) -> R,
         ): BiCodec<RegistryFriendlyByteBuf, R> = BiCodec.composite(

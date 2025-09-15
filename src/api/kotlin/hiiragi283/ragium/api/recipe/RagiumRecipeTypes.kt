@@ -21,13 +21,13 @@ import net.minecraft.world.item.crafting.SmithingRecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
-    val CRAFTING: HTDeferredRecipeType<CraftingInput, CraftingRecipe> = HTDeferredRecipeType.createType(vanillaId("crafting"))
+    val CRAFTING: HTDeferredRecipeType<CraftingInput, CraftingRecipe> = HTDeferredRecipeType(vanillaId("crafting"))
 
     @JvmField
-    val SMITHING: HTDeferredRecipeType<SmithingRecipeInput, SmithingRecipe> = HTDeferredRecipeType.createType(vanillaId("smithing"))
+    val SMITHING: HTDeferredRecipeType<SmithingRecipeInput, SmithingRecipe> = HTDeferredRecipeType(vanillaId("smithing"))
 
     @JvmField
-    val STONECUTTER: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = HTDeferredRecipeType.createType(vanillaId("stonecutting"))
+    val STONECUTTER: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = HTDeferredRecipeType(vanillaId("stonecutting"))
 
     @JvmField
     val SAWMILL: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = create("sawmill")
@@ -59,5 +59,5 @@ object RagiumRecipeTypes {
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =
-        HTDeferredRecipeType.createType(RagiumAPI.id(path))
+        HTDeferredRecipeType(RagiumAPI.id(path))
 }

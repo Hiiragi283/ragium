@@ -332,7 +332,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // World Vaporization
-        for (fluid: Fluid in HTRegistryHelper.fluidStream()) {
+        for (fluid: Fluid in HTRegistryHelper.fluidSequence()) {
             val type: FluidType = fluid.fluidType
             if (type is HTFluidType) {
                 val result: EmiStack = type.dropItem?.toEmi() ?: continue

@@ -30,7 +30,7 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
         factory: HTContainerFactory<MENU, C>,
         decoder: (RegistryFriendlyByteBuf?) -> C,
     ): HTDeferredMenuType<MENU> {
-        val holder: HTDeferredMenuType<MENU> = HTDeferredMenuType.createType(createId(name))
+        val holder = HTDeferredMenuType<MENU>(createId(name))
         register(name) { _: ResourceLocation ->
             HTMenuTypeWithContext(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
                 factory.create(containerId, inventory, decoder(buf))
@@ -45,7 +45,7 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
      * @return 登録された[MenuType]の[HTDeferredMenuType]
      */
     fun <MENU : HTContainerMenu> registerItemType(name: String, factory: HTItemContainerFactory<MENU>): HTDeferredMenuType<MENU> {
-        val holder: HTDeferredMenuType<MENU> = HTDeferredMenuType.createType(createId(name))
+        val holder = HTDeferredMenuType<MENU>(createId(name))
         register(name) { _: ResourceLocation ->
             HTItemMenuType(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
                 checkNotNull(buf)

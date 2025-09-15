@@ -1,4 +1,4 @@
-package hiiragi283.ragium
+package hiiragi283.ragium.impl
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -14,18 +15,17 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.common.collection.HTWrappedMultiMap
-import hiiragi283.ragium.common.collection.HTWrappedTable
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.storage.nbt.HTTagValueInput
-import hiiragi283.ragium.common.storage.nbt.HTTagValueOutput
 import hiiragi283.ragium.common.util.HTAddonHelper
+import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
+import hiiragi283.ragium.impl.collection.HTWrappedTable
+import hiiragi283.ragium.impl.storage.value.HTTagValueInput
+import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -136,7 +136,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>? =
+    override fun <T : Any> resolveLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
         CommonHooks.resolveLookup(registryKey)
 
     override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =

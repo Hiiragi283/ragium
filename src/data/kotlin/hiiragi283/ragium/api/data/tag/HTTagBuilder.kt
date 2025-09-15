@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.data.tag
 
 import hiiragi283.ragium.api.collection.HTMultiMap
+import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
-import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
@@ -15,7 +15,7 @@ import java.util.function.BiConsumer
  * 登録した[TagKey]をソートして生成するビルダー
  */
 @Suppress("UNCHECKED_CAST")
-class HTTagBuilder<T : Any>(private val registryKey: ResourceKey<out Registry<T>>) {
+class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
 
     fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)

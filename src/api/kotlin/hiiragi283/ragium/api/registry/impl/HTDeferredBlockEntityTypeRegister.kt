@@ -14,8 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 class HTDeferredBlockEntityTypeRegister(namespace: String) :
     HTDeferredRegister<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE, namespace) {
     fun <BE : BlockEntity> registerType(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> {
-        val holder: HTDeferredBlockEntityType<BE> =
-            HTDeferredBlockEntityType.createType(createId(name))
+        val holder = HTDeferredBlockEntityType<BE>(createId(name))
         register(name) { _: ResourceLocation -> BlockEntityType.Builder.of(factory).build(null) }
         return holder
     }

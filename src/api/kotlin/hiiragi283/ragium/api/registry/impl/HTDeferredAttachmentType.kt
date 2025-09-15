@@ -7,16 +7,10 @@ import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.attachment.IAttachmentHolder
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
-class HTDeferredAttachmentType<TYPE : Any>(key: ResourceKey<AttachmentType<*>>) :
-    HTDeferredHolder<AttachmentType<*>, AttachmentType<TYPE>>(key) {
-    companion object {
-        @JvmStatic
-        fun <TYPE : Any> createType(key: ResourceLocation): HTDeferredAttachmentType<TYPE> =
-            createType(ResourceKey.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, key))
+class HTDeferredAttachmentType<TYPE : Any> : HTDeferredHolder<AttachmentType<*>, AttachmentType<TYPE>> {
+    constructor(key: ResourceKey<AttachmentType<*>>) : super(key)
 
-        @JvmStatic
-        fun <TYPE : Any> createType(key: ResourceKey<AttachmentType<*>>): HTDeferredAttachmentType<TYPE> = HTDeferredAttachmentType(key)
-    }
+    constructor(id: ResourceLocation) : super(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, id)
 
     fun hasData(holder: IAttachmentHolder): Boolean = holder.hasData(this)
 

@@ -8,12 +8,9 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import dev.emi.emi.recipe.EmiSmithingRecipe
-import hiiragi283.ragium.api.extension.holdersNotEmpty
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
+import hiiragi283.ragium.common.util.HTRegistryHelper
 import net.minecraft.client.Minecraft
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.SmithingRecipeInput
 import java.util.*
 import java.util.function.Supplier
@@ -21,10 +18,8 @@ import java.util.function.Supplier
 class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient, private val recipe: HTSmithingModifyRecipe) :
     EmiSmithingRecipe(
         template,
-        BuiltInRegistries.ITEM
-            .holdersNotEmpty()
-            .map(Holder<Item>::value)
-            .map(Item::getDefaultInstance)
+        HTRegistryHelper
+            .itemStackSequence()
             .filter(recipe::isBaseIngredient)
             .map(EmiStack::of)
             .toList()

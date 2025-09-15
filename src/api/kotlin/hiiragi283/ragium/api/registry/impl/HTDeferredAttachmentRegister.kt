@@ -13,7 +13,7 @@ import java.util.function.Supplier
 class HTDeferredAttachmentRegister(namespace: String) :
     HTDeferredRegister<AttachmentType<*>>(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, namespace) {
     fun <TYPE : Any> registerType(name: String, supplier: Supplier<AttachmentType.Builder<TYPE>>): HTDeferredAttachmentType<TYPE> {
-        val holder: HTDeferredAttachmentType<TYPE> = HTDeferredAttachmentType.createType(createId(name))
+        val holder = HTDeferredAttachmentType<TYPE>(createId(name))
         register(name) { _: ResourceLocation -> supplier.get().build() }
         return holder
     }

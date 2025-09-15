@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.createKey
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -12,15 +13,15 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 data class HTWorldGenData(private val name: String) {
     @JvmField
     val configuredKey: ResourceKey<ConfiguredFeature<*, *>> =
-        ResourceKey.create(Registries.CONFIGURED_FEATURE, RagiumAPI.id(name))
+        Registries.CONFIGURED_FEATURE.createKey(RagiumAPI.id(name))
 
     @JvmField
     val placedKey: ResourceKey<PlacedFeature> =
-        ResourceKey.create(Registries.PLACED_FEATURE, RagiumAPI.id(name))
+        Registries.PLACED_FEATURE.createKey(RagiumAPI.id(name))
 
     @JvmField
     val modifierKey: ResourceKey<BiomeModifier> =
-        ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumAPI.id(name))
+        NeoForgeRegistries.Keys.BIOME_MODIFIERS.createKey(RagiumAPI.id(name))
 
     lateinit var configuredHolder: Holder<ConfiguredFeature<*, *>>
         internal set

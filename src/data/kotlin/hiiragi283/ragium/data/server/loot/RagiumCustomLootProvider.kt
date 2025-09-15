@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.loot.HTLootTableProvider
+import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.EnchantmentPredicate
@@ -38,7 +39,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
         val DROP_TRADER_CATALOG: ResourceKey<LootTable> = create("drop_trader_catalog")
 
         @JvmStatic
-        private fun create(path: String): ResourceKey<LootTable> = ResourceKey.create(Registries.LOOT_TABLE, RagiumAPI.id(path))
+        private fun create(path: String): ResourceKey<LootTable> = Registries.LOOT_TABLE.createKey(RagiumAPI.id(path))
     }
 
     override val enchLookup: HolderLookup.RegistryLookup<Enchantment> = provider.enchLookup()

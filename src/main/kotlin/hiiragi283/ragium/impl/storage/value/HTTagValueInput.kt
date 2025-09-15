@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.nbt
+package hiiragi283.ragium.impl.storage.value
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.extension.resultOrNull

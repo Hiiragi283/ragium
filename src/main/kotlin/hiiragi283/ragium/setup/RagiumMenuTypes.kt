@@ -132,7 +132,7 @@ object RagiumMenuTypes {
 
     @JvmStatic
     inline fun <reified BE : HTBlockEntity> registerBE(name: String): DeferredBEMenu<BE> {
-        val holder: DeferredBEMenu<BE> = HTDeferredMenuType.createType(RagiumAPI.id(name))
+        val holder: DeferredBEMenu<BE> = HTDeferredMenuType(RagiumAPI.id(name))
         return REGISTER.registerType(
             name,
             { containerId: Int, inventory: Inventory, context: BE -> HTBlockEntityContainerMenu(holder, containerId, inventory, context) },
@@ -142,7 +142,7 @@ object RagiumMenuTypes {
 
     @JvmStatic
     inline fun <reified BE : HTMachineBlockEntity> registerMachine(name: String): DeferredMachineMenu<BE> {
-        val holder: DeferredMachineMenu<BE> = HTDeferredMenuType.createType(RagiumAPI.id(name))
+        val holder: DeferredMachineMenu<BE> = HTDeferredMenuType(RagiumAPI.id(name))
         return REGISTER.registerType(
             name,
             { containerId: Int, inventory: Inventory, context: BE -> HTMachineContainerMenu(holder, containerId, inventory, context) },

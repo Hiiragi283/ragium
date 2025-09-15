@@ -80,8 +80,8 @@ class HTFluidContentRegister(modId: String) {
                 typeHolder,
                 HTDeferredHolder.createSimple(Registries.FLUID, stillId),
                 HTDeferredHolder.createSimple(Registries.FLUID, flowId),
-            ).bucket(HTDeferredHolder.createSimple(Registries.ITEM, bucketId))
-            .block(HTDeferredHolder.create(Registries.BLOCK, stillId))
+            ).bucket(HTDeferredItem(bucketId))
+            .block(HTDeferredHolder(Registries.BLOCK, stillId))
         val stillFluid: HTDeferredHolder<Fluid, BaseFlowingFluid.Source> =
             fluidRegister.register(stillId.path) { _: ResourceLocation -> BaseFlowingFluid.Source(fluidProp) }
         val flowFluid: HTDeferredHolder<Fluid, BaseFlowingFluid.Flowing> =

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.codec
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.codec.BiCodecs.UUID
+import hiiragi283.ragium.api.extension.RegistryKey
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -185,7 +186,7 @@ object BiCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> resourceKey(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, ResourceKey<T>> =
+    fun <T : Any> resourceKey(registryKey: RegistryKey<T>): BiCodec<ByteBuf, ResourceKey<T>> =
         BiCodec.of(ResourceKey.codec(registryKey), ResourceKey.streamCodec(registryKey))
 
     /**
@@ -193,7 +194,7 @@ object BiCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> tagKey(registryKey: ResourceKey<out Registry<T>>): BiCodec<ByteBuf, TagKey<T>> = BiCodec.of(
+    fun <T : Any> tagKey(registryKey: RegistryKey<T>): BiCodec<ByteBuf, TagKey<T>> = BiCodec.of(
         TagKey.hashedCodec(registryKey),
         ResourceLocation.STREAM_CODEC.map(
             { id: ResourceLocation -> TagKey.create(registryKey, id) },
@@ -214,7 +215,7 @@ object BiCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holder(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, Holder<T>> =
+    fun <T : Any> holder(registryKey: RegistryKey<T>): BiCodec<RegistryFriendlyByteBuf, Holder<T>> =
         BiCodec.of(RegistryFixedCodec.create(registryKey), ByteBufCodecs.holderRegistry(registryKey))
 
     /**
@@ -222,6 +223,6 @@ object BiCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: ResourceKey<out Registry<T>>): BiCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): BiCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
         BiCodec.of(RegistryCodecs.homogeneousList(registryKey), ByteBufCodecs.holderSet(registryKey))
 }

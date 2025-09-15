@@ -14,12 +14,14 @@ import net.minecraft.world.level.ItemLike
 /**
  * @see [net.neoforged.neoforge.registries.DeferredItem]
  */
-class HTDeferredItem<ITEM : Item>(key: ResourceKey<Item>) :
-    HTDeferredHolder<Item, ITEM>(key),
+class HTDeferredItem<ITEM : Item> :
+    HTDeferredHolder<Item, ITEM>,
     ItemLike,
     HTHasTranslationKey,
     HTHasComponent {
-    constructor(id: ResourceLocation) : this(ResourceKey.create(Registries.ITEM, id))
+    constructor(key: ResourceKey<Item>) : super(key)
+
+    constructor(id: ResourceLocation) : super(Registries.ITEM, id)
 
     fun toStack(count: Int = 1): ItemStack {
         val stack: ItemStack = asItem().defaultInstance
