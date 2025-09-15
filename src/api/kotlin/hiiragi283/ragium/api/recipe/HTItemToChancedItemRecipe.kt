@@ -1,8 +1,11 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -39,5 +42,16 @@ interface HTItemToChancedItemRecipe : HTRecipe<SingleRecipeInput> {
      * @param base 元となる完成品
      * @param chance 完成品を生成する確率
      */
-    data class ChancedResult(val base: HTItemResult, val chance: Float) : HTItemResult by base
+    data class ChancedResult(val base: HTItemResult, val chance: Float) : HTItemResult by base {
+        companion object {
+            @JvmField
+            val CODEC: BiCodec<RegistryFriendlyByteBuf, ChancedResult> = BiCodec.composite(
+                HTResultHelper.INSTANCE.itemCodec().toMap(),
+                ChancedResult::base,
+                BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
+                ChancedResult::chance,
+                HTItemToChancedItemRecipe::ChancedResult,
+            )
+        }
+    }
 }

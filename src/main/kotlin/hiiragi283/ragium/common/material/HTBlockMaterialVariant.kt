@@ -10,7 +10,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
-enum class HTBlockMaterialVariant(private val enUsPattern: String, private val jaJpPattern: String, private val tagPrefix: String?) :
+enum class HTBlockMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String?) :
     HTMaterialVariant.BlockTag {
     ORE("%s Ore", "%s鉱石", RagiumConst.ORES),
     DEEP_ORE("Deepslate %s Ore", "深層%s鉱石", null),
@@ -34,8 +34,8 @@ enum class HTBlockMaterialVariant(private val enUsPattern: String, private val j
     override fun itemTagKey(path: String): TagKey<Item> = itemTagKey(commonId("${checkTagPrefix()}/$path"))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
     override fun getSerializedName(): String = name.lowercase()

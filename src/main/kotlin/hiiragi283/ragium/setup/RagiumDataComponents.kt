@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTTeleportPos
-import hiiragi283.ragium.common.util.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -69,7 +70,7 @@ object RagiumDataComponents {
 
     @JvmField
     val IMMUNE_DAMAGE_TYPES: Supplier<DataComponentType<HTKeyOrTagEntry<DamageType>>> =
-        register("immune_damage_types", HTKeyOrTagEntry.codec(Registries.DAMAGE_TYPE).cast())
+        register("immune_damage_types", HTKeyOrTagHelper.INSTANCE.codec(Registries.DAMAGE_TYPE).cast())
 
     @JvmField
     val INTRINSIC_ENCHANTMENT: Supplier<DataComponentType<HTIntrinsicEnchantment>> =

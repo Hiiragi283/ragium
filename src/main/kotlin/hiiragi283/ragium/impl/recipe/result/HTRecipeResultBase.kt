@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe.result
+package hiiragi283.ragium.impl.recipe.result
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
-import hiiragi283.ragium.common.util.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -26,7 +27,7 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
             amountCodec: MapBiCodec<ByteBuf, Int>,
             factory: (HTKeyOrTagEntry<T>, Int, DataComponentPatch) -> R,
         ): BiCodec<RegistryFriendlyByteBuf, R> = BiCodec.composite(
-            HTKeyOrTagEntry.codec(registryKey).fieldOf("id"),
+            HTKeyOrTagHelper.INSTANCE.codec(registryKey).fieldOf("id"),
             HTRecipeResultBase<T, *>::entry,
             amountCodec,
             HTRecipeResultBase<T, *>::amount,
@@ -40,7 +41,7 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
 
     //    HTRecipeResult    //
 
-    final override val id: ResourceLocation = entry.id
+    final override val id: ResourceLocation = entry.getId()
 
     final override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
         entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }

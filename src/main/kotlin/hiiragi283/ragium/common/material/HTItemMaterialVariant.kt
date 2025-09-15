@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
-enum class HTItemMaterialVariant(private val enUsPattern: String, private val jaJpPattern: String, private val tagPrefix: String) :
+enum class HTItemMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String) :
     HTMaterialVariant.ItemTag {
     // Item - Common
     DUST("%s Dust", "%sの粉", RagiumConst.DUSTS),
@@ -34,8 +34,8 @@ enum class HTItemMaterialVariant(private val enUsPattern: String, private val ja
         .itemTagKey(commonId("$tagPrefix/$path"))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
     override fun getSerializedName(): String = name.lowercase()

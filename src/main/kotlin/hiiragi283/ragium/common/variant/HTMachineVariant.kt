@@ -11,7 +11,7 @@ import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 
-enum class HTMachineVariant(val tier: HTMachineTier, private val enUsPattern: String, private val jaJpPattern: String) :
+enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: String, private val jaPattern: String) :
     HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     ALLOY_SMELTER(HTMachineTier.ADVANCED, "Alloy Smelter", "合金炉"),
@@ -37,8 +37,8 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enUsPattern: St
     override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> get() = RagiumBlockEntityTypes.MACHINES[this]!!
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }
 
     override fun getSerializedName(): String = name.lowercase()

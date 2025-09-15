@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.HTSimpleRecipeSerializer
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
@@ -17,8 +18,6 @@ import hiiragi283.ragium.api.recipe.impl.HTSawmillRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
-import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
@@ -69,7 +68,7 @@ class RagiumRecipeSerializersImpl : RagiumRecipeSerializers {
         @JvmField
         val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
             RagiumConst.COMPRESSING,
-            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTCompressingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTCompressingRecipe),
         )
 
         @JvmField
@@ -87,7 +86,7 @@ class RagiumRecipeSerializersImpl : RagiumRecipeSerializers {
         @JvmField
         val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
             RagiumConst.EXTRACTING,
-            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTExtractingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTExtractingRecipe),
         )
 
         @JvmField
@@ -99,13 +98,13 @@ class RagiumRecipeSerializersImpl : RagiumRecipeSerializers {
         @JvmField
         val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
             RagiumConst.MELTING,
-            RagiumRecipeBiCodecs.itemToObj(HTFluidResultImpl.CODEC, ::HTMeltingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.fluidCodec(), ::HTMeltingRecipe),
         )
 
         @JvmField
         val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
             "pulverizing",
-            RagiumRecipeBiCodecs.itemToObj(HTItemResultImpl.CODEC, ::HTPulverizingRecipe),
+            RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTPulverizingRecipe),
         )
 
         @JvmField

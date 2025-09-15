@@ -10,7 +10,7 @@ import mekanism.common.tags.MekanismTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
-enum class HTMekMaterialVariant(private val enUsPattern: String, private val jaJpPattern: String, private val tagPrefix: String) :
+enum class HTMekMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String) :
     HTMaterialVariant.ItemTag {
     // Common
     DIRTY_DUST("Dirty %s Dust", "汚れた%sの粉", "dirty_dusts"),
@@ -41,8 +41,8 @@ enum class HTMekMaterialVariant(private val enUsPattern: String, private val jaJ
     }("$tagPrefix/$path").let(::itemTagKey)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
     override fun getSerializedName(): String = name.lowercase()

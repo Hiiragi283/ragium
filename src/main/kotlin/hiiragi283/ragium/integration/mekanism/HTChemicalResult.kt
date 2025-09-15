@@ -4,7 +4,8 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.extension.filterNot
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
-import hiiragi283.ragium.common.util.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import io.netty.buffer.ByteBuf
 import mekanism.api.MekanismAPI
 import mekanism.api.chemical.Chemical
@@ -17,7 +18,7 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTChemicalResult> = BiCodec.composite(
-            HTKeyOrTagEntry.codec(MekanismAPI.CHEMICAL_REGISTRY_NAME).fieldOf("id"),
+            HTKeyOrTagHelper.INSTANCE.codec(MekanismAPI.CHEMICAL_REGISTRY_NAME).fieldOf("id"),
             HTChemicalResult::entry,
             BiCodec.LONG.fieldOf("amount"),
             HTChemicalResult::amount,
@@ -25,7 +26,7 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
         )
     }
 
-    override val id: ResourceLocation = entry.id
+    override val id: ResourceLocation = entry.getId()
 
     override fun getStackResult(provider: HolderLookup.Provider?): DataResult<ChemicalStack> = entry
         .getFirstHolder(provider)

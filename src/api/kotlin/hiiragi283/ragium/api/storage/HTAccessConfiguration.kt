@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasComponent
 import hiiragi283.ragium.api.text.HTHasTranslationKey
+import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.util.StringRepresentable
 
@@ -23,7 +23,7 @@ enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean
 
     companion object {
         @JvmField
-        val CODEC: BiCodec<FriendlyByteBuf, HTAccessConfiguration> = BiCodecs.stringEnum(HTAccessConfiguration::values)
+        val CODEC: BiCodec<ByteBuf, HTAccessConfiguration> = BiCodecs.enum(HTAccessConfiguration::values)
     }
 
     override val translationKey: String = RagiumAPI.id(name.lowercase()).toDescriptionKey("access")

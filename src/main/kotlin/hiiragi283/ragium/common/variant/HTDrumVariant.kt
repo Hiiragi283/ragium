@@ -13,11 +13,8 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-enum class HTDrumVariant(
-    factory: (BlockPos, BlockState) -> HTBlockEntity,
-    private val enUsPattern: String,
-    private val jaJpPattern: String,
-) : HTVariantKey.WithBE<HTBlockEntity> {
+enum class HTDrumVariant(factory: (BlockPos, BlockState) -> HTBlockEntity, private val enPattern: String, private val jaPattern: String) :
+    HTVariantKey.WithBE<HTBlockEntity> {
     SMALL(HTDrumBlockEntity::Small, "Small Drum", "ドラム（小）"),
     MEDIUM(HTDrumBlockEntity::Medium, "Medium Drum", "ドラム（中）"),
     LARGE(HTDrumBlockEntity::Large, "Large Drum", "ドラム（大）"),
@@ -29,8 +26,8 @@ enum class HTDrumVariant(
         RagiumBlockEntityTypes.registerTick("${serializedName}_drum", factory)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }
 
     override fun getSerializedName(): String = name.lowercase()

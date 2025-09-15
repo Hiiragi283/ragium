@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -39,7 +40,6 @@ import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -532,7 +532,7 @@ object RagiumItems {
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(
                 RagiumDataComponents.IMMUNE_DAMAGE_TYPES.get(),
-                HTKeyOrTagEntry(RagiumCommonTags.DamageTypes.IS_SONIC),
+                HTKeyOrTagHelper.INSTANCE.create(RagiumCommonTags.DamageTypes.IS_SONIC),
             )
         }
 

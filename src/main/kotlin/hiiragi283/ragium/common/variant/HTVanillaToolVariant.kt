@@ -22,7 +22,7 @@ import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tier
 
-enum class HTVanillaToolVariant(private val enUsPattern: String, private val jaJpPattern: String, override val tagKey: TagKey<Item>) :
+enum class HTVanillaToolVariant(private val enPattern: String, private val jaPattern: String, override val tagKey: TagKey<Item>) :
     HTToolVariant {
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
@@ -105,8 +105,8 @@ enum class HTVanillaToolVariant(private val enUsPattern: String, private val jaJ
     override fun getParentId(path: String): ResourceLocation = vanillaId(path)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
     override fun getSerializedName(): String = name.lowercase()
