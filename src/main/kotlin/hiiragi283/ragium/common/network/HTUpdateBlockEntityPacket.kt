@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level
  * @see [mekanism.common.network.to_client.PacketUpdateTile]
  */
 @ConsistentCopyVisibility
+@JvmRecord
 data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
         @JvmField

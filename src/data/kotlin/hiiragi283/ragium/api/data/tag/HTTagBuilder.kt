@@ -57,6 +57,7 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
         OPTIONAL,
     }
 
+    @JvmRecord
     private data class Entry(val id: ResourceLocation, val isTag: Boolean, val type: DependType) {
         fun toTagEntry(): TagEntry = if (isTag) {
             when (type) {

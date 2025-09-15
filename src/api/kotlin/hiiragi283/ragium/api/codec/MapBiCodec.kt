@@ -16,6 +16,7 @@ import java.util.function.Function
  * @see [BiCodecs]
  */
 @ConsistentCopyVisibility
+@JvmRecord
 data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCodec<V>, val streamCodec: StreamCodec<B, V>) {
     companion object {
         @JvmStatic

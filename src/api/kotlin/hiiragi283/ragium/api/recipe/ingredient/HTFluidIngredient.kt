@@ -10,6 +10,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
  * @see [mekanism.api.recipes.ingredients.FluidStackIngredient]
  */
 @ConsistentCopyVisibility
+@JvmRecord
 data class HTFluidIngredient private constructor(private val delegate: SizedFluidIngredient) : HTIngredient<FluidStack> {
     companion object {
         @JvmField

@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
  * @see [mekanism.api.recipes.ingredients.ItemStackIngredient]
  */
 @ConsistentCopyVisibility
+@JvmRecord
 data class HTItemIngredient private constructor(private val delegate: SizedIngredient) : HTIngredient<ItemStack> {
     companion object {
         @JvmField

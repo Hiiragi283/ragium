@@ -15,6 +15,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.fluids.FluidStack
 
 @ConsistentCopyVisibility
+@JvmRecord
 data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val index: Int, val stack: FluidStack) : HTCustomPayload.S2C {
     companion object {
         @JvmField

@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 
+@JvmRecord
 data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: Int) {
     companion object {
         @JvmField

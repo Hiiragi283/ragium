@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
+@JvmRecord
 data class HTItemContainerContext(val hand: Optional<InteractionHand>, val stack: ItemStack) {
     companion object {
         @JvmField

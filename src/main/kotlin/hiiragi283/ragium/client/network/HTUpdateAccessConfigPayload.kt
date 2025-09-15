@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
+@JvmRecord
 data class HTUpdateAccessConfigPayload(val pos: BlockPos, val direction: Direction, val transferIO: HTAccessConfiguration) :
     HTCustomPayload.C2S {
     companion object {

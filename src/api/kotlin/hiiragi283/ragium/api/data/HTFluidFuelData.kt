@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import io.netty.buffer.ByteBuf
 
+@JvmRecord
 data class HTFluidFuelData(val amount: Int) {
     companion object {
         @JvmField

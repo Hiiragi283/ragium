@@ -114,6 +114,7 @@ object HTCommonMaterialTypes {
 
     //    MaterialImpl    //
 
+    @JvmRecord
     private data class MaterialImpl(private val name: String) : HTMaterialType {
         override fun getSerializedName(): String = name
     }
