@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.registryOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
@@ -14,7 +15,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import kotlin.jvm.optionals.getOrNull
 
 class RagiumDataMapsImpl : RagiumDataMaps {
     companion object {
@@ -51,12 +51,8 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         registryKey: RegistryKey<TYPE>,
         holder: Holder<TYPE>,
         type: DataMapType<TYPE, DATA>,
-    ): DATA? {
-        if (holder.kind() == Holder.Kind.REFERENCE) {
-            return holder.getData(type)
-        } else {
-            val registry: Registry<TYPE> = access.registry(registryKey).getOrNull() ?: return null
-            return registry.wrapAsHolder(holder.value()).getData(type)
-        }
+    ): DATA? = when (Holder.Kind.REFERENCE) {
+        holder.kind() -> holder.getData(type)
+        else -> access.registryOrNull(registryKey)?.wrapAsHolder(holder.value())?.getData(type)
     }
 }

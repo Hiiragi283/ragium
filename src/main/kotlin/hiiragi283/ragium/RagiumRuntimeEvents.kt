@@ -11,7 +11,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesCapability
 import io.wispforest.accessories.api.slot.SlotEntryReference
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
@@ -27,8 +26,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Equipable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.SubscribeEvent
@@ -71,7 +68,6 @@ object RagiumRuntimeEvents {
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
         val player: Player = event.entity
-        val level: Level = player.level()
         // エンダーバンドルの場合はGUIを開く
         /*if (stack.`is`(RagiumItems.ENDER_BUNDLE)) {
             // SEを再生する
@@ -129,11 +125,9 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
-        val stack: ItemStack = event.stack
-        val enchantments: ItemEnchantments.Mutable = event.enchantments
-        val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
-
-        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.useInstance(lookup, enchantments::set)
+        event.stack
+            .get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)
+            ?.useInstance(event::getHolder, event.enchantments::set)
     }
 
     //    Entity    //

@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
 import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
+import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -19,7 +19,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -98,22 +97,14 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 
-//    HolderGetter    //
-
-fun <T : Any> HolderGetter<T>.getOrNull(key: ResourceKey<T>): Holder<T>? = get(key).getOrNull()
-
-fun <T : Any> HolderGetter<T>.getOrNull(key: TagKey<T>): HolderSet<T>? = get(key).getOrNull()
-
 //    HolderLookup    //
 
-@Suppress("UNCHECKED_CAST")
-val <T : Any> HolderLookup.RegistryLookup<T>.registryKey: RegistryKey<T>
-    get() =
-        this.key() as RegistryKey<T>
+fun <T : Any> HolderLookup.Provider.lookupOrNull(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
+    lookup(registryKey).getOrNull()
 
-fun <T : Any> HolderLookup.RegistryLookup<T>.getOrNull(id: ResourceLocation): Holder<T>? = getOrNull(registryKey.createKey(id))
+//    RegistryAccess    //
 
-fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
+fun <T : Any> RegistryAccess.registryOrNull(registryKey: RegistryKey<T>): Registry<T>? = registry(registryKey).getOrNull()
 
 //    TagKey    //
 

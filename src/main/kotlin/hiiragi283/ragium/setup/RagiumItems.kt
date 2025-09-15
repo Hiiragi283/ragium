@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
-import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -506,8 +505,7 @@ object RagiumItems {
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         val level: Int = RagiumAPI
             .INSTANCE
-            .enchLookup()
-            .getOrNull(RagiumEnchantments.CAPACITY)
+            .getHolder(RagiumEnchantments.CAPACITY)
             ?.let(stack::getEnchantmentLevel)
             ?: 0
         val modifier: Int = level + 1

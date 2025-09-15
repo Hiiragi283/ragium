@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -35,7 +34,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 
@@ -136,9 +134,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
-    override fun <T : Any> resolveLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
-        CommonHooks.resolveLookup(registryKey)
-
     override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =
         server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
@@ -147,8 +142,8 @@ class InternalRagiumAPI : RagiumAPI {
         else -> level?.dimension()?.let(::getEnergyNetwork)
     }
 
-    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = getCurrentServer()
-        ?.getLevel(key)
+    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumAPI.INSTANCE
+        .getLevel(key)
         ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //

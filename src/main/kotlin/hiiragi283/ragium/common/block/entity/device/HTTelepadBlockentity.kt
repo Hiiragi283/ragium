@@ -16,7 +16,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
-import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -54,8 +53,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         private set
 
     fun updateDestination(teleportPos: HTTeleportPos) {
-        val server: MinecraftServer = RagiumAPI.INSTANCE.getCurrentServer() ?: return
-        if (server.getLevel(teleportPos.dimension) != null) {
+        if (RagiumAPI.INSTANCE.getLevel(teleportPos.dimension) != null) {
             this.teleportPos = teleportPos
             setOnlySave()
         }

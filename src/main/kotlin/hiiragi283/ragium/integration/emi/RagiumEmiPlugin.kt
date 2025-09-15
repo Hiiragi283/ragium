@@ -205,8 +205,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     EmiIngredient.of(recipe.ingredients[0]),
                     RagiumAPI
                         .INSTANCE
-                        .getCurrentServer()
-                        ?.registryAccess()
+                        .getRegistryAccess()
                         ?.let(recipe::getResultItem)
                         ?.let(EmiStack::of)
                         ?: EmiStack.EMPTY,

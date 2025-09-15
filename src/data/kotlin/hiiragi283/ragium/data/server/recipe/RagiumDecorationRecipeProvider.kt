@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
-import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -15,6 +14,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.data.HTWoodType
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -167,17 +167,17 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 .modCondition(type.modId)
                 .save(output)
             // Planks -> 2x Slab
-            itemLookup.getOrNull(type.getId("${type.serializedName}_slab"))?.let { slab ->
+            BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_slab")).ifPresent { slab ->
                 HTSingleItemRecipeBuilder
-                    .sawmill(slab.value(), 2)
+                    .sawmill(slab, 2)
                     .addIngredient(planks)
                     .modCondition(type.modId)
                     .save(output)
             }
             // Planks -> Stairs
-            itemLookup.getOrNull(type.getId("${type.serializedName}_stairs"))?.let { stairs ->
+            BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_stairs")).ifPresent { stairs ->
                 HTSingleItemRecipeBuilder
-                    .sawmill(stairs.value())
+                    .sawmill(stairs)
                     .addIngredient(planks)
                     .modCondition(type.modId)
                     .save(output)

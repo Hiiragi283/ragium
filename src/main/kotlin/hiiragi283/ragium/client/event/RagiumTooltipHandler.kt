@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -57,7 +56,7 @@ object RagiumTooltipHandler {
         provider: HolderLookup.Provider?,
         flag: TooltipFlag,
     ) {
-        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider?.enchLookup())?.let { text: Component ->
+        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider)?.ifPresent { text: Component ->
             when {
                 flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
                 else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -16,21 +17,24 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import io.wispforest.accessories.api.AccessoriesCapability
+import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
+import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
+import net.neoforged.fml.loading.FMLEnvironment
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 interface RagiumAPI {
     companion object {
@@ -81,9 +85,16 @@ interface RagiumAPI {
 
     fun getCurrentServer(): MinecraftServer?
 
-    fun enchLookup(): HolderLookup.RegistryLookup<Enchantment> = resolveLookup(Registries.ENCHANTMENT)!!
+    fun getLevel(key: ResourceKey<Level>): ServerLevel? = getCurrentServer()?.getLevel(key)
 
-    fun <T : Any> resolveLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>?
+    fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess() ?: when {
+        FMLEnvironment.dist.isClient -> Minecraft.getInstance().level?.registryAccess()
+        else -> null
+    }
+
+    fun <T : Any> getLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? = getRegistryAccess()?.lookupOrNull(registryKey)
+
+    fun <T : Any> getHolder(key: ResourceKey<T>): Holder<T>? = getRegistryAccess()?.holder(key)?.getOrNull()
 
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 

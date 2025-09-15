@@ -1,9 +1,7 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.loot.HTLootTableProvider
 import hiiragi283.ragium.api.extension.createKey
-import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.EnchantmentPredicate
 import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate
@@ -12,8 +10,9 @@ import net.minecraft.advancements.critereon.ItemSubPredicates
 import net.minecraft.advancements.critereon.MinMaxBounds
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -27,7 +26,7 @@ import net.neoforged.neoforge.common.ItemAbilities
 import net.neoforged.neoforge.common.loot.CanItemPerformAbility
 import java.util.function.BiConsumer
 
-sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provider) : HTLootTableProvider {
+sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provider) : LootTableSubProvider {
     companion object {
         @JvmField
         val DROP_RAGI_CHERRY: ResourceKey<LootTable> = create("drop_ragi_cherry")
@@ -42,7 +41,6 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
         private fun create(path: String): ResourceKey<LootTable> = Registries.LOOT_TABLE.createKey(RagiumAPI.id(path))
     }
 
-    override val enchLookup: HolderLookup.RegistryLookup<Enchantment> = provider.enchLookup()
     protected val hasShears: LootItemCondition.Builder =
         CanItemPerformAbility.canItemPerformAbility(ItemAbilities.SHEARS_DIG)
 
@@ -54,7 +52,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
                 ItemEnchantmentsPredicate.enchantments(
                     listOf(
                         EnchantmentPredicate(
-                            silkTouch,
+                            provider.holderOrThrow(Enchantments.SILK_TOUCH),
                             MinMaxBounds.Ints.atLeast(1),
                         ),
                     ),
@@ -88,7 +86,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
                                     .lootTableItem(RagiumItems.RAGI_CHERRY)
                                     .`when`(
                                         BonusLevelTableCondition.bonusLevelFlatChance(
-                                            fortune,
+                                            provider.holderOrThrow(Enchantments.FORTUNE),
                                             0.005f,
                                             0.0055f,
                                             0.00625f,

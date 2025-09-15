@@ -7,8 +7,9 @@ import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createKey
-import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.lookupOrNull
+import hiiragi283.ragium.api.extension.mapNotNull
 import hiiragi283.ragium.api.extension.wrapDataResult
 import hiiragi283.ragium.config.RagiumConfig
 import io.netty.buffer.ByteBuf
@@ -20,7 +21,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import java.util.function.Function
-import kotlin.jvm.optionals.getOrNull
 
 data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>) {
     companion object {
@@ -42,8 +42,8 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
     fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U = entry.map(fromKey, fromTag)
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val getter: HolderGetter<T> = provider?.lookup(registryKey)?.getOrNull()
-            ?: RagiumAPI.INSTANCE.resolveLookup(registryKey)
+        val getter: HolderGetter<T> = provider?.lookupOrNull(registryKey)
+            ?: RagiumAPI.INSTANCE.getLookup(registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
     }
@@ -54,11 +54,11 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
     )
 
     private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> =
-        lookup.getOrNull(key).wrapDataResult("Missing key in ${key.registry()}: $key")
+        lookup.get(key).wrapDataResult("Missing key in ${key.registry()}: $key")
 
     private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): DataResult<out Holder<T>> = lookup
-        .getOrNull(tagKey)
-        ?.let(::getFirstHolder)
+        .get(tagKey)
+        .mapNotNull(::getFirstHolder)
         .wrapDataResult("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}")
 
     private fun getFirstHolder(holderSet: HolderSet<T>): Holder<T>? {
