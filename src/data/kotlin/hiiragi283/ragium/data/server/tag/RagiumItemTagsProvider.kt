@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.extension.toTable
+import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -127,7 +127,7 @@ class RagiumItemTagsProvider(
 
     private fun material(builder: HTTagBuilder<Item>) {
         materialTable(builder, RagiumItems.MATERIALS)
-        materialTable(builder, RagiumItems.CIRCUITS.toTable(HTItemMaterialVariant.CIRCUIT))
+        materialTable(builder, RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
 
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
@@ -220,8 +220,11 @@ class RagiumItemTagsProvider(
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Armors
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: HTHolderLike) ->
-            builder.add(variant.tagKey, item)
+        for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.AZURE_ARMORS) {
+            builder.add(variant.tagKey, armor)
+        }
+        for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.DEEP_ARMORS) {
+            builder.add(variant.tagKey, armor)
         }
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->

@@ -27,9 +27,15 @@ fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> = Rag
 inline fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
     mutableTableOf<R, C, V>().apply(builderAction)
 
-fun <R : Any, C : Any, V : Any> Map<C, V>.toTable(rowKey: R): HTTable<R, C, V> = buildTable {
-    for ((column: C, value: V) in this@toTable) {
+fun <R : Any, C : Any, V : Any> Map<C, V>.toRowTableBy(rowKey: R): HTTable<R, C, V> = buildTable {
+    for ((column: C, value: V) in this@toRowTableBy) {
         put(rowKey, column, value)
+    }
+}
+
+fun <R : Any, C : Any, V : Any> Map<R, V>.toColumnTableBy(columnKey: C): HTTable<R, C, V> = buildTable {
+    for ((row: R, value: V) in this@toColumnTableBy) {
+        put(row, columnKey, value)
     }
 }
 

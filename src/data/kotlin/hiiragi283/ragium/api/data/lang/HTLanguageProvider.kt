@@ -6,8 +6,9 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.toColumnTableBy
 import hiiragi283.ragium.api.extension.toDescriptionKey
-import hiiragi283.ragium.api.extension.toTable
+import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -48,11 +49,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addBlocks(RagiumBlocks.MATERIALS)
 
         addItems(RagiumItems.MATERIALS)
-        addItems(RagiumItems.CIRCUITS.toTable(HTItemMaterialVariant.CIRCUIT))
-        addItems(RagiumItems.COILS.toTable(RagiumMaterialVariants.COIL))
-        addItems(RagiumItems.COMPONENTS.toTable(RagiumMaterialVariants.COMPONENT))
+        addItems(RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
+        addItems(RagiumItems.COILS.toRowTableBy(RagiumMaterialVariants.COIL))
+        addItems(RagiumItems.COMPONENTS.toRowTableBy(RagiumMaterialVariants.COMPONENT))
 
-        addItems(RagiumItems.ARMORS)
+        addItems(RagiumItems.AZURE_ARMORS.toColumnTableBy(RagiumMaterialType.AZURE_STEEL))
+        addItems(RagiumItems.DEEP_ARMORS.toColumnTableBy(RagiumMaterialType.DEEP_STEEL))
         addItems(RagiumItems.TOOLS)
 
         addVariants<HTGeneratorVariant>()

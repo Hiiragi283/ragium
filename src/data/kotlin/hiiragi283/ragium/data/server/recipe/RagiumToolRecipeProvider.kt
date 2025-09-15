@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -133,47 +132,48 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, material: HTMaterialType, armor: HTDeferredItem<*>) ->
-            val before: HTVanillaMaterialType = when (material) {
-                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
-                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
-                else -> return@forEach
-            }
-            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, before) ?: return@forEach
-            when (material) {
-                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
-                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
-                else -> return@forEach
-            }(armor, beforeArmor)
-        }
-
-        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, material: HTMaterialType, tool: ItemLike) ->
-            val before: HTVanillaMaterialType = when (material) {
-                RagiumMaterialType.AZURE_STEEL -> HTVanillaMaterialType.IRON
-                RagiumMaterialType.DEEP_STEEL -> HTVanillaMaterialType.DIAMOND
-                else -> return@forEach
-            }
-            val beforeTool: ItemLike = when (variant) {
-                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, before)
-                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, before)
-                is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[before]?.get()
-                else -> null
-            } ?: return@forEach
-            when (material) {
-                RagiumMaterialType.AZURE_STEEL -> ::addAzureSmithing
-                RagiumMaterialType.DEEP_STEEL -> ::addDeepSmithing
-                else -> return@forEach
-            }(tool, beforeTool)
-        }
-
-        addTemplate(
-            RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
+        addEquipments(
+            RagiumItems.AZURE_ARMORS,
             RagiumMaterialType.AZURE_STEEL,
+            HTVanillaMaterialType.IRON,
+            RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
+            ::addAzureSmithing,
         )
-        addTemplate(
-            RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
+
+        addEquipments(
+            RagiumItems.DEEP_ARMORS,
             RagiumMaterialType.DEEP_STEEL,
+            HTVanillaMaterialType.DIAMOND,
+            RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
+            ::addDeepSmithing,
         )
+    }
+
+    @JvmStatic
+    private fun addEquipments(
+        armors: Map<HTArmorVariant, HTDeferredItem<*>>,
+        material: HTMaterialType,
+        beforeMaterial: HTVanillaMaterialType,
+        upgrade: HTDeferredItem<*>,
+        upgradeFactory: (ItemLike, ItemLike) -> Unit,
+    ) {
+        // Template
+        addTemplate(upgrade, material)
+        // Armor
+        for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
+            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, beforeMaterial) ?: continue
+            upgradeFactory(armor, beforeArmor)
+        }
+        // Tool
+        for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material)) {
+            val beforeTool: ItemLike = when (variant) {
+                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, beforeMaterial)
+                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, beforeMaterial)
+                is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[beforeMaterial]?.get()
+                else -> null
+            } ?: continue
+            upgradeFactory(tool, beforeTool)
+        }
     }
 
     @JvmStatic

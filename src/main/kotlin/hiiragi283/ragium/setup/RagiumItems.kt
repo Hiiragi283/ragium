@@ -247,30 +247,20 @@ object RagiumItems {
     //    Armors    //
 
     @JvmField
-    val ARMORS: HTTable<HTArmorVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
-        for (variant: HTArmorVariant in HTArmorVariant.entries) {
-            // Azure
-            put(
-                variant,
-                RagiumMaterialType.AZURE_STEEL,
-                variant.registerItem(REGISTER, RagiumMaterialType.AZURE_STEEL, RagiumArmorMaterials.AZURE_STEEL, 20),
-            )
-            // Deep
-            put(
-                variant,
-                RagiumMaterialType.DEEP_STEEL,
-                variant.registerItem(REGISTER, RagiumMaterialType.DEEP_STEEL, RagiumArmorMaterials.DEEP_STEEL, 20),
-            )
-        }
+    val AZURE_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
+        variant.registerItem(REGISTER, RagiumMaterialType.AZURE_STEEL, RagiumArmorMaterials.AZURE_STEEL, 20)
+    }
+
+    @JvmField
+    val DEEP_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
+        variant.registerItem(REGISTER, RagiumMaterialType.DEEP_STEEL, RagiumArmorMaterials.DEEP_STEEL, 20)
     }
 
     @JvmStatic
-    fun getAzureArmor(variant: HTArmorVariant): HTDeferredItem<*> = ARMORS.get(variant, RagiumMaterialType.AZURE_STEEL)
-        ?: error("Unknown azure steel ${variant.serializedName} item")
+    fun getAzureArmor(variant: HTArmorVariant): HTDeferredItem<*> = AZURE_ARMORS[variant]!!
 
     @JvmStatic
-    fun getDeepArmor(variant: HTArmorVariant): HTDeferredItem<*> = ARMORS.get(variant, RagiumMaterialType.DEEP_STEEL)
-        ?: error("Unknown deep steel ${variant.serializedName} item")
+    fun getDeepArmor(variant: HTArmorVariant): HTDeferredItem<*> = DEEP_ARMORS[variant]!!
 
     //    Tools    //
 
@@ -534,7 +524,6 @@ object RagiumItems {
 
         setEnch(getDeepTool(HTVanillaToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
-        setEnch(getDeepArmor(HTArmorVariant.CHESTPLATE), RagiumEnchantments.SONIC_PROTECTION)
         // Other
         event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)

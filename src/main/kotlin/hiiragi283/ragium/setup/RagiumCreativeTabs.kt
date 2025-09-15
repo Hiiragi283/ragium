@@ -30,7 +30,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import kotlin.enums.enumEntries
 
 object RagiumCreativeTabs {
     @JvmField
@@ -160,7 +159,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.AZURE_STEEL)
+            RagiumItems.AZURE_ARMORS.values.forEach(output::accept)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.AZURE_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL))
             // Molten
@@ -173,7 +172,7 @@ object RagiumCreativeTabs {
             DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
             // Deep
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptFromTable(RagiumItems.ARMORS, RagiumMaterialType.DEEP_STEEL)
+            RagiumItems.DEEP_ARMORS.values.forEach(output::accept)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.DEEP_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL))
             // Other
@@ -232,13 +231,6 @@ object RagiumCreativeTabs {
         variants
             .mapNotNull(table.column(material)::get)
             .forEach(this::accept)
-    }
-
-    inline fun <reified V> CreativeModeTab.Output.acceptFromTable(
-        table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
-        material: HTMaterialType,
-    ) where V : HTVariantKey, V : Enum<V> {
-        acceptFromTable(table, enumEntries<V>(), material)
     }
 
     @JvmStatic
