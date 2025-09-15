@@ -236,6 +236,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Parts
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
+        add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
         add(RagiumItems.LED, "Light Emitting Diode")
         add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
         add(RagiumItems.PLATING_CATALYST, "Plating Catalyst")

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.recipe.HTSimpleRecipeSerializer
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
@@ -13,13 +13,12 @@ import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.impl.HTSimulatingRecipe
-import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeSerializer
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -35,18 +34,8 @@ object RagiumMiscRegister {
 
     @JvmStatic
     private fun recipeSerializers(helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>>) {
-        fun <R : Recipe<*>> register(
-            holder: HTDeferredHolder<RecipeSerializer<*>, RecipeSerializer<R>>,
-            codec: MapBiCodec<RegistryFriendlyByteBuf, R>,
-        ) {
-            helper.register(
-                holder.id,
-                object : RecipeSerializer<R> {
-                    override fun codec(): MapCodec<R> = codec.codec
-
-                    override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, R> = codec.streamCodec
-                },
-            )
+        fun <RECIPE : Recipe<*>> register(holder: HTDeferredRecipeSerializer<RECIPE>, codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) {
+            helper.register(holder.id, HTSimpleRecipeSerializer(codec))
         }
 
         register(RagiumRecipeSerializers.SAWMILL, RagiumRecipeBiCodecs.SAWMILL)

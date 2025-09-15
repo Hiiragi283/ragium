@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -27,23 +26,22 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.fluid.HTFluidType
-import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.util.HTRegistryHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCuttingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTSmithingModifyEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -52,14 +50,13 @@ import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.SingleItemRecipe
+import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -107,9 +104,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addCustomRecipe() {
         // Crafting
-        val crafting: HTDeferredRecipeType<CraftingInput, CraftingRecipe> =
-            HTDeferredRecipeType.createType(vanillaId("crafting"))
-        crafting.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
+        RagiumRecipeTypes.CRAFTING.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder<Potion> ->
                     addRecipeSafe(
@@ -129,17 +124,17 @@ class RagiumEmiPlugin : EmiPlugin {
                     }
                 }
             }
-            if (recipe is HTEternalTicketRecipe) {
-                EmiPort
-                    .getItemRegistry()
-                    .holders()
-                    .forEach { holder: Holder<Item> ->
-                        val item: Item = holder.value()
-                        if (!item.defaultInstance.isDamageableItem) return@forEach
-                        addRecipeSafe(
-                            holder.idOrThrow.withPrefix("/shapeless/eternal_ticket/"),
-                        ) { id: ResourceLocation -> HTEternalTicketEmiRecipe(item, id) }
-                    }
+        }
+        // Smithing
+        RagiumRecipeTypes.SMITHING.forEach(recipeManager) { _: ResourceLocation, recipe: SmithingRecipe ->
+            if (recipe is HTSmithingModifyRecipe) {
+                registry.addRecipe(
+                    HTSmithingModifyEmiRecipe(
+                        recipe.template.let(EmiIngredient::of),
+                        recipe.addition.let(EmiIngredient::of),
+                        recipe,
+                    ),
+                )
             }
         }
         // Fluid Fuel

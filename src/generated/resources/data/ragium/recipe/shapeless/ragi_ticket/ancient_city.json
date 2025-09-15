@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "item": "minecraft:deepslate_tiles"
+    },
+    {
+      "tag": "c:gems/echo"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_table_id": "minecraft:chests/ancient_city"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

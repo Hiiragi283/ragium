@@ -420,6 +420,9 @@ object RagiumItems {
 
     //    Machine Parts    //
 
+    @JvmField
+    val GRAVITATIONAL_UNIT: HTDeferredItem<Item> = register("gravitational_unit")
+
     // Catalyst
     @JvmField
     val PLATING_CATALYST: HTDeferredItem<Item> = register("plating_catalyst", ::HTCatalystItem)

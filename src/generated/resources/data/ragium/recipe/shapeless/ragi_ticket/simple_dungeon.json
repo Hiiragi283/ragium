@@ -1,21 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "equipment",
-  "key": {
-    "A": {
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
       "tag": "c:cobblestones/mossy"
     },
-    "B": {
+    {
       "item": "minecraft:rotten_flesh"
-    },
-    "C": {
-      "item": "ragium:ragi_ticket"
     }
-  },
-  "pattern": [
-    "ABA",
-    "BCB",
-    "ABA"
   ],
   "result": {
     "components": {

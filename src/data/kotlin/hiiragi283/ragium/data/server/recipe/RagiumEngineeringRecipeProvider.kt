@@ -11,18 +11,23 @@ import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
+import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTColorMaterial
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -34,32 +39,24 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
                 HTResultHelper.INSTANCE.item(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
             ).save(output)
-        // Synthetic Fiber
-        HTShapelessRecipeBuilder
-            .misc(RagiumItems.SYNTHETIC_FIBER, 2)
-            .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
-            .addIngredient(Tags.Items.STRINGS)
-            .savePrefixed(output, "2x_")
+        // Synthetic Fiber / Leather
+        mapOf(
+            RagiumItems.SYNTHETIC_FIBER to Tags.Items.STRINGS,
+            RagiumItems.SYNTHETIC_LEATHER to Tags.Items.LEATHERS,
+        ).forEach { (result: ItemLike, parent: TagKey<Item>) ->
+            HTShapelessRecipeBuilder
+                .misc(result, 2)
+                .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
+                .addIngredient(parent)
+                .savePrefixed(output, "2x_")
 
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.SYNTHETIC_FIBER, 9)
-            .hollow8()
-            .define('A', RagiumModTags.Items.POLYMER_RESIN)
-            .define('B', Tags.Items.STRINGS)
-            .savePrefixed(output, "9x_")
-        // Synthetic Leather
-        HTShapelessRecipeBuilder
-            .misc(RagiumItems.SYNTHETIC_LEATHER, 2)
-            .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
-            .addIngredient(Tags.Items.LEATHERS)
-            .savePrefixed(output, "2x_")
-
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.SYNTHETIC_LEATHER, 9)
-            .hollow8()
-            .define('A', RagiumModTags.Items.POLYMER_RESIN)
-            .define('B', Tags.Items.LEATHERS)
-            .savePrefixed(output, "9x_")
+            HTShapedRecipeBuilder
+                .misc(result, 9)
+                .hollow8()
+                .define('A', RagiumModTags.Items.POLYMER_RESIN)
+                .define('B', parent)
+                .savePrefixed(output, "9x_")
+        }
         // Blaze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -74,6 +71,27 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 HTIngredientHelper.item(Items.WIND_CHARGE, 6),
                 HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
             ).save(output)
+
+        // Gravity-Unit
+        val gravityUnit: HTDeferredItem<Item> = RagiumItems.GRAVITATIONAL_UNIT
+        HTShapedRecipeBuilder
+            .misc(gravityUnit)
+            .cross8()
+            .define('A', Items.SHULKER_SHELL)
+            .define('B', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ULTIMATE)
+            .define('C', Items.END_CRYSTAL)
+            .save(output)
+        save(
+            gravityUnit.id.withPrefix("smithing/"),
+            HTSmithingModifyRecipe(
+                Ingredient.of(gravityUnit),
+                Ingredient.of(),
+                DataComponentPatch
+                    .builder()
+                    .set(RagiumDataComponents.ANTI_GRAVITY.get(), true)
+                    .build(),
+            ),
+        )
 
         catalyst()
         circuits()
@@ -187,7 +205,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 HTResultHelper.INSTANCE.item(RagiumItems.getCircuit(HTCircuitTier.ULTIMATE)),
                 HTIngredientHelper.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.IRIDESCENTIUM),
-                HTIngredientHelper.gemOrDust(RagiumMaterialType.ELDRITCH_PEARL),
+                HTIngredientHelper.gemOrDust(HTVanillaMaterialType.ECHO),
                 HTIngredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
             ).save(output)
     }
@@ -236,7 +254,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', basic)
             .save(output)
 
-        val elite: HTDeferredItem<*> = RagiumItems.getComponent(HTComponentTier.ELITE)
+        val elite: ItemLike = RagiumItems.getComponent(HTComponentTier.ELITE)
         HTShapedRecipeBuilder
             .misc(elite)
             .crossLayered()
@@ -256,16 +274,24 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', elite)
             .save(output)
 
+        val eternal: ItemLike = RagiumItems.getComponent(HTComponentTier.ETERNAL)
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getComponent(HTComponentTier.ETERNAL))
+            .misc(eternal)
             .cross8()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM)
             .define('B', Items.CLOCK)
             .define('C', ultimate)
             .save(output)
         save(
-            RagiumAPI.id("shapeless/eternal_ticket"),
-            HTEternalTicketRecipe(CraftingBookCategory.MISC),
+            RagiumAPI.id("smithing/eternal_ticket"),
+            HTSmithingModifyRecipe(
+                Ingredient.of(eternal),
+                Ingredient.of(),
+                DataComponentPatch
+                    .builder()
+                    .set(DataComponents.UNBREAKABLE, Unbreakable(true))
+                    .build(),
+            ),
         )
     }
 
@@ -320,7 +346,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
-        for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
+        for ((color: HTColorMaterial, block: ItemLike) in RagiumBlocks.LED_BLOCKS) {
             HTShapedRecipeBuilder
                 .building(block, 8)
                 .hollow8()

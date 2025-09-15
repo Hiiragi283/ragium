@@ -10,12 +10,22 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
+import net.minecraft.world.item.crafting.CraftingInput
+import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.item.crafting.SmithingRecipe
+import net.minecraft.world.item.crafting.SmithingRecipeInput
 
 object RagiumRecipeTypes {
+    @JvmField
+    val CRAFTING: HTDeferredRecipeType<CraftingInput, CraftingRecipe> = HTDeferredRecipeType.createType(vanillaId("crafting"))
+
+    @JvmField
+    val SMITHING: HTDeferredRecipeType<SmithingRecipeInput, SmithingRecipe> = HTDeferredRecipeType.createType(vanillaId("smithing"))
+
     @JvmField
     val STONECUTTER: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = HTDeferredRecipeType.createType(vanillaId("stonecutting"))
 

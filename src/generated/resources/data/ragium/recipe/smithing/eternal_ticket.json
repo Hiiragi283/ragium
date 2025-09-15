@@ -1,0 +1,10 @@
+{
+  "type": "ragium:smithing_modify",
+  "addition": [],
+  "components": {
+    "minecraft:unbreakable": {}
+  },
+  "template": {
+    "item": "ragium:eternal_component"
+  }
+}

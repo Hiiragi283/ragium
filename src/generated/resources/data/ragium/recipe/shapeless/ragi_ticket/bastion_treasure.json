@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "item": "minecraft:blackstone"
+    },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_table_id": "minecraft:chests/bastion_treasure"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

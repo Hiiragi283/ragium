@@ -108,6 +108,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.GREEN_PELLET)
 
         output.accept(RagiumItems.ELDER_HEART)
+        output.accept(RagiumItems.GRAVITATIONAL_UNIT)
         output.accept(RagiumItems.WITHER_DOLl)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)

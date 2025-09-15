@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "tag": "c:obsidians/normal"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_table_id": "minecraft:chests/ruined_portal"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

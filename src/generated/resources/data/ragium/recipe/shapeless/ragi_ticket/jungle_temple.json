@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "tag": "c:cobblestones/mossy"
+    },
+    {
+      "item": "minecraft:vine"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_table_id": "minecraft:chests/jungle_temple"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

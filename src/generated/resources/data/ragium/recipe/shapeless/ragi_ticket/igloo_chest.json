@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "item": "minecraft:snow_block"
+    },
+    {
+      "tag": "minecraft:beds"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_table_id": "minecraft:chests/igloo_chest"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

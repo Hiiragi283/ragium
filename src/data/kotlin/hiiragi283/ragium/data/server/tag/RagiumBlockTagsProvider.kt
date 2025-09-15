@@ -81,6 +81,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         // Other
+        @Suppress("DEPRECATION")
         tag(RagiumModTags.Blocks.INCORRECT_FOR_DESTRUCTION_TOOL)
 
         builder.addTag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_PICKAXE)

@@ -18,9 +18,13 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.damagesource.DamageType
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.animal.Bee
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Equipable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
@@ -31,6 +35,8 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.EffectCure
 import net.neoforged.neoforge.common.EffectCures
+import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
@@ -40,6 +46,24 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeEvents {
+    //    Attribute    //
+
+    @JvmStatic
+    private val CREATIVE_FLIGHT = AttributeModifier(
+        RagiumAPI.id("anti_gravity"),
+        1.0,
+        AttributeModifier.Operation.ADD_VALUE,
+    )
+
+    @SubscribeEvent
+    fun modifyItemAttribute(event: ItemAttributeModifierEvent) {
+        val stack: ItemStack = event.itemStack
+        val slot: EquipmentSlot = stack.equipmentSlot ?: Equipable.get(stack)?.equipmentSlot ?: return
+        if (stack.getOrDefault(RagiumDataComponents.ANTI_GRAVITY, false)) {
+            event.addModifier(NeoForgeMod.CREATIVE_FLIGHT, CREATIVE_FLIGHT, EquipmentSlotGroup.bySlot(slot))
+        }
+    }
+
     //    Block    //
 
     @SubscribeEvent

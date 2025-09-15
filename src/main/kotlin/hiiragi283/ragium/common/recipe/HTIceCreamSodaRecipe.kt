@@ -52,5 +52,5 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width >= 2 && height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.ICE_CREAM_SODA.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.ICE_CREAM_SODA
 }

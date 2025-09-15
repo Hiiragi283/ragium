@@ -257,23 +257,70 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun lootTickets() {
         // End City
         addLootTicket(BuiltInLootTables.END_CITY_TREASURE) {
-            define('A', Items.PURPUR_BLOCK)
-            define('B', Items.SHULKER_SHELL)
+            addIngredient(Items.PURPUR_BLOCK)
+            addIngredient(Items.SHULKER_SHELL)
         }
         // Simple Dungeon
         addLootTicket(BuiltInLootTables.SIMPLE_DUNGEON) {
-            define('A', Tags.Items.COBBLESTONES_MOSSY)
-            define('B', Items.ROTTEN_FLESH)
+            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
+            addIngredient(Items.ROTTEN_FLESH)
         }
         // Mineshaft
         addLootTicket(BuiltInLootTables.ABANDONED_MINESHAFT) {
-            define('A', ItemTags.PLANKS)
-            define('B', ItemTags.RAILS)
+            addIngredient(ItemTags.PLANKS)
+            addIngredient(ItemTags.RAILS)
         }
         // Nether Fortress
         addLootTicket(BuiltInLootTables.NETHER_BRIDGE) {
-            define('A', Items.NETHER_BRICKS)
-            define('B', Tags.Items.CROPS_NETHER_WART)
+            addIngredient(Items.NETHER_BRICKS)
+            addIngredient(Tags.Items.CROPS_NETHER_WART)
+        }
+
+        // Desert Pyramid
+        addLootTicket(BuiltInLootTables.DESERT_PYRAMID) {
+            addIngredient(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
+            addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
+        }
+        // Jungle Temple
+        addLootTicket(BuiltInLootTables.JUNGLE_TEMPLE) {
+            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
+            addIngredient(Items.VINE)
+        }
+        // Igloo Chest
+        addLootTicket(BuiltInLootTables.IGLOO_CHEST) {
+            addIngredient(Items.SNOW_BLOCK)
+            addIngredient(ItemTags.BEDS)
+        }
+        // Mansion
+        addLootTicket(BuiltInLootTables.WOODLAND_MANSION) {
+            addIngredient(Items.DARK_OAK_PLANKS)
+            addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
+        }
+
+        // Buried Treasure
+        addLootTicket(BuiltInLootTables.BURIED_TREASURE) {
+            addIngredient(Tags.Items.SANDS_COLORLESS)
+            addIngredient(Items.PUFFERFISH)
+        }
+        // Shipwreck
+        addLootTicket(BuiltInLootTables.SHIPWRECK_TREASURE) {
+            addIngredient(Tags.Items.CHESTS_WOODEN)
+            addIngredient(Items.KELP)
+        }
+        // Bastion Remnant
+        addLootTicket(BuiltInLootTables.BASTION_TREASURE) {
+            addIngredient(Items.BLACKSTONE)
+            addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
+        }
+        // Ancient City
+        addLootTicket(BuiltInLootTables.ANCIENT_CITY) {
+            addIngredient(Items.DEEPSLATE_TILES)
+            addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO)
+        }
+        // Ruined Portal
+        addLootTicket(BuiltInLootTables.RUINED_PORTAL) {
+            addIngredient(Tags.Items.OBSIDIANS_NORMAL)
+            addIngredient(Tags.Items.CROPS_NETHER_WART)
         }
     }
 
@@ -317,11 +364,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private inline fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
-        HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey), CraftingBookCategory.EQUIPMENT)
-            .cross8()
+    private inline fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
+        HTShapelessRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey), CraftingBookCategory.EQUIPMENT)
+            .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
-            .define('C', RagiumItems.LOOT_TICKET)
             .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
     }
 }

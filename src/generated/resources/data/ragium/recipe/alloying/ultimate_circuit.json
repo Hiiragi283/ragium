@@ -9,10 +9,10 @@
       "type": "neoforge:compound",
       "children": [
         {
-          "tag": "c:dusts/eldritch_pearl"
+          "tag": "c:dusts/echo"
         },
         {
-          "tag": "c:gems/eldritch_pearl"
+          "tag": "c:gems/echo"
         }
       ],
       "count": 1

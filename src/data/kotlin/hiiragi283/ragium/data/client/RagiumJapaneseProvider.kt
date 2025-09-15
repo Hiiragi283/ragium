@@ -238,6 +238,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Parts
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         add(RagiumItems.PLATING_CATALYST, "メッキ触媒")

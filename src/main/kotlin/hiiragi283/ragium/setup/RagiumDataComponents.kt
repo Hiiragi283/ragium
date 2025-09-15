@@ -40,6 +40,9 @@ object RagiumDataComponents {
         register(name, codec.codec, codec.streamCodec)
 
     @JvmField
+    val ANTI_GRAVITY: Supplier<DataComponentType<Boolean>> = register("anti_gravity", BiCodec.BOOL.cast())
+
+    @JvmField
     val BLAST_POWER: Supplier<DataComponentType<Float>> = register("blast_power", BiCodecs.POSITIVE_FLOAT.cast())
 
     @JvmField
