@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.slf4j.event.Level
 
 plugins {
     idea
@@ -62,6 +63,7 @@ repositories {
     maven(url = "https://maven.k-4u.nl/") // TOP
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.saps.dev/releases") // AA
+    maven(url = "https://maven.su5ed.dev/releases") // FFAPI
     maven(url = "https://maven.tamaized.com/releases") // Twilight
     maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
@@ -162,7 +164,7 @@ neoForge {
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            logLevel = org.slf4j.event.Level.DEBUG
+            logLevel = Level.DEBUG
         }
     }
 
@@ -210,6 +212,8 @@ dependencies {
 
     implementation(libs.immersive.get().toString() + ":datagen")
     implementation(libs.mek.get().toString() + ":all")
+
+    listOf("net.fabricmc.fabric-api:fabric-api-base:0.4.63+9ec45cd89c").forEach(::compileOnly)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

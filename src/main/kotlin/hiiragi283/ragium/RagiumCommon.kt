@@ -115,8 +115,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         event.register(RagiumDataMaps.SOLAR_POWER)
 
-        event.register(RagiumDataMaps.TIER)
-
         LOGGER.info("Registered data map types!")
     }
 

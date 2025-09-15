@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storage.fluid
 
-import com.google.common.base.Predicates
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.predicate.HTFluidPredicate
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
 import java.util.function.IntSupplier
@@ -21,13 +21,13 @@ class HTVariableFluidStackTank(
     companion object {
         @JvmStatic
         fun create(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank =
-            HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, Predicates.alwaysTrue(), listener)
+            HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, HTFluidPredicate.TRUE, listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: IntSupplier,
-            canInsert: Predicate<FluidStack> = Predicates.alwaysTrue(),
+            canInsert: Predicate<FluidStack> = HTFluidPredicate.TRUE,
             filter: Predicate<FluidStack> = canInsert,
         ): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
@@ -42,7 +42,7 @@ class HTVariableFluidStackTank(
             capacity,
             ALWAYS_TRUE,
             { _: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
-            Predicates.alwaysTrue(),
+            HTFluidPredicate.TRUE,
             listener,
         )
     }

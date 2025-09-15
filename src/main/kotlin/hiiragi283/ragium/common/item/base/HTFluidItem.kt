@@ -2,10 +2,8 @@ package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -29,15 +27,6 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
         fun hasHandler(stack: ItemStack): Boolean {
             val handler: HTFluidHandler = getHandler(stack) ?: return false
             return !handler.getFluidTanks(handler.getFluidSideFor()).isEmpty()
-        }
-
-        @JvmStatic
-        fun canConsumeFluid(stack: ItemStack, tank: Int, fluid: FluidStack): Boolean {
-            val tank: HTFluidTank = getFluidTank(stack, tank) ?: return false
-            val bool1: Boolean = FluidStack.isSameFluidSameComponents(tank.getStack(), fluid)
-            val bool2: Boolean =
-                tank.extract(fluid.amount, true, HTStorageAccess.INTERNAl).amount >= HTItemHelper.getFixedUsage(stack, fluid.amount)
-            return bool1 && bool2
         }
     }
 

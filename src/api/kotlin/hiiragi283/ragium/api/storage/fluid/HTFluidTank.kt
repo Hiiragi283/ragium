@@ -5,12 +5,14 @@ import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.predicate.HTFluidPredicate
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
+import java.util.function.Predicate
 import kotlin.math.max
 import kotlin.math.min
 
@@ -179,6 +181,8 @@ interface HTFluidTank :
 
     fun getNeeded(): Int = max(0, capacity - fluidAmount)
 
+    fun matchFluid(filter: Predicate<FluidStack>): Boolean = filter.test(getStack())
+
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.FLUID, BiCodecs.fluidStack(true), getStack())
     }
@@ -200,7 +204,7 @@ interface HTFluidTank :
 
     @Deprecated("Use extract(FluidStack, Boolean, HTStorageAccess) instead of this")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        if (!FluidStack.isSameFluidSameComponents(resource, getStack())) return FluidStack.EMPTY
+        if (!matchFluid(HTFluidPredicate.byFluidAndComponent(resource))) return FluidStack.EMPTY
         return extract(resource.amount, action.simulate(), HTStorageAccess.EXTERNAL)
     }
 }

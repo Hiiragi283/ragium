@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.storage.fluid
 
-import com.google.common.base.Predicates
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.predicate.HTFluidPredicate
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
@@ -34,13 +34,13 @@ open class HTFluidStackTank protected constructor(
 
         @JvmStatic
         fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank =
-            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, Predicates.alwaysTrue(), listener)
+            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, HTFluidPredicate.TRUE, listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: Int,
-            canInsert: Predicate<FluidStack> = Predicates.alwaysTrue(),
+            canInsert: Predicate<FluidStack> = HTFluidPredicate.TRUE,
             filter: Predicate<FluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
@@ -55,7 +55,7 @@ open class HTFluidStackTank protected constructor(
             validateCapacity(capacity),
             ALWAYS_TRUE,
             { _: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
-            Predicates.alwaysTrue(),
+            HTFluidPredicate.TRUE,
             listener,
         )
     }

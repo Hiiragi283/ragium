@@ -8,7 +8,6 @@ import hiiragi283.ragium.common.item.base.HTFluidItem
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
@@ -32,7 +31,6 @@ import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.portal.DimensionTransition
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(Rarity.RARE)) {
     override fun onItemUseFirst(stack: ItemStack, context: UseOnContext): InteractionResult {
@@ -81,20 +79,19 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         val (dim: ResourceKey<Level>, pos: BlockPos) = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
         val level: ServerLevel = player.server.getLevel(dim) ?: return false
         // 燃料を消費できなければスキップ
+        val tank: HTFluidTank = getFluidTank(stack, 0) ?: return false
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
-        val fuelStack: FluidStack = RagiumFluidContents.DEW_OF_THE_WARP.toStack(usage)
-        if (!canConsumeFluid(stack, 0, fuelStack)) {
+        val toDrain: Int = HTItemHelper.getFixedUsage(stack, usage)
+        if (tank.extract(toDrain, true, HTStorageAccess.INTERNAl).amount < toDrain) {
             player.displayClientMessage(
-                Component.translatable("Required fuel: ${fuelStack.amount} mb").withStyle(ChatFormatting.RED),
+                Component.translatable("Required fuel: $toDrain mb").withStyle(ChatFormatting.RED),
                 true,
             )
             return false
         }
         // 実際にテレポートを行う
         if (player.connection.isAcceptingMessages) {
-            val tank: HTFluidTank = getFluidTank(stack, 0) ?: return false
-            val drain: Int = HTItemHelper.getFixedUsage(stack, fuelStack.amount)
-            tank.extract(drain, false, HTStorageAccess.INTERNAl)
+            tank.extract(toDrain, false, HTStorageAccess.INTERNAl)
 
             val transition = DimensionTransition(
                 level,

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.storage.predicate.HTFluidPredicate
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -20,6 +21,7 @@ import java.util.function.Supplier
 
 interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
     Supplier<STILL>,
+    HTFluidPredicate,
     HTHolderLike {
     companion object {
         @JvmField
@@ -95,7 +97,7 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
 
     override fun get(): STILL = getStill()
 
-    fun isOf(stack: FluidStack): Boolean = stack.`is`(commonTag)
+    override fun test(stack: FluidStack): Boolean = stack.`is`(commonTag)
 
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 

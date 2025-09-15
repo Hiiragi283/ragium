@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.item.HTItemPredicate
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.predicate.HTItemPredicate
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item

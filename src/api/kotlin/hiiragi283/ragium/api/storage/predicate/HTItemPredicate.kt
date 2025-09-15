@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.item
+package hiiragi283.ragium.api.storage.predicate
 
 import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.partially1

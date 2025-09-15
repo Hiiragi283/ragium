@@ -16,7 +16,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 /**
  * [HTFluidHandler]に基づいたコンポーネント向けの実装
  */
-open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int) :
+open class HTComponentFluidHandler(private val stack: ItemStack, capacity: Int) :
     IFluidHandlerItem,
     HTFluidHandler {
     protected val tank: HTFluidTank = createTank(capacity)
