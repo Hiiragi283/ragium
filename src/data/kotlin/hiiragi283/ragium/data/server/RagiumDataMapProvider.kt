@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents

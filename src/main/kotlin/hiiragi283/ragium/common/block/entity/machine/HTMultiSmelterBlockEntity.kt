@@ -85,7 +85,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         result.count = outputCount
 
         return MultiSmeltingRecipe(
-            HTIngredientHelper.item(baseRecipe.ingredients[0], inputCount),
+            HTIngredientHelper.INSTANCE.item(baseRecipe.ingredients[0], inputCount),
             HTResultHelper.INSTANCE.item(result),
         )
     }

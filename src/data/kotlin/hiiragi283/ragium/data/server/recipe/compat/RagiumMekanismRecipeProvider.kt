@@ -1,16 +1,14 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -146,9 +144,9 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ethene + Catalyst -> HDPE
         HTFluidTransformRecipeBuilder
             .solidifying(
-                HTIngredientHelper.item(RagiumItems.POLYMER_CATALYST),
-                HTIngredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
-                HTResultHelper.INSTANCE.item(MekanismItems.HDPE_PELLET),
+                ingredientHelper.item(RagiumItems.POLYMER_CATALYST),
+                ingredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
+                resultHelper.item(MekanismItems.HDPE_PELLET),
             ).save(output)
     }
 

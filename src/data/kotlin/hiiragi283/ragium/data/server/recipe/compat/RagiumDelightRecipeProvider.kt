@@ -2,15 +2,13 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTCuttingBoardRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -28,7 +26,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     override fun buildRecipeInternal() {
         // Milk
         extractAndInfuse(
-            HTIngredientHelper.item(Items.GLASS_BOTTLE),
+            ingredientHelper.item(Items.GLASS_BOTTLE),
             ModItems.MILK_BOTTLE.get(),
             HTFluidContent.MILK,
             250,
@@ -36,16 +34,16 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         // Rich soil
         HTFluidTransformRecipeBuilder
             .infusing(
-                HTIngredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
-                HTIngredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
-                HTResultHelper.INSTANCE.item(ModItems.RICH_SOIL.get()),
+                ingredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
+                ingredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+                resultHelper.item(ModItems.RICH_SOIL.get()),
             ).save(output)
 
         // Rice Panicle
         HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(ModItems.RICE_PANICLE.get()))
-            .addResult(HTResultHelper.INSTANCE.item(ModItems.RICE.get()))
-            .addResult(HTResultHelper.INSTANCE.item(ModItems.STRAW.get()), 0.5f)
+            .crushing(ingredientHelper.item(ModItems.RICE_PANICLE.get()))
+            .addResult(resultHelper.item(ModItems.RICE.get()))
+            .addResult(resultHelper.item(ModItems.STRAW.get()), 0.5f)
             .save(output)
 
         knife()

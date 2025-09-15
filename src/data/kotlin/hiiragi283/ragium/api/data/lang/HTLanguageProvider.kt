@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.toColumnTableBy
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.extension.toRowTableBy
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -19,6 +18,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant

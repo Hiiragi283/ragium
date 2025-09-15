@@ -16,13 +16,13 @@ import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant

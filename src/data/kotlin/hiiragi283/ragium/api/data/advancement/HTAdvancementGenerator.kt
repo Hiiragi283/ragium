@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.InventoryChangeTrigger

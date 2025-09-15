@@ -1,10 +1,11 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.common.recipe.result.HTItemResultImpl
+import hiiragi283.ragium.common.util.HTKeyOrTagEntry
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation

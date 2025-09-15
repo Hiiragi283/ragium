@@ -8,8 +8,6 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.toRowTableBy
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -18,6 +16,8 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.accessory.HTAccessorySlot
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant

@@ -9,14 +9,12 @@ import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilde
 import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTArcFurnaceRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -33,16 +31,16 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         // Treated Planks
         HTFluidTransformRecipeBuilder
             .infusing(
-                HTIngredientHelper.item(ItemTags.PLANKS),
-                HTIngredientHelper.fluid(IETags.fluidCreosote, 125),
-                HTResultHelper.INSTANCE.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!),
+                ingredientHelper.item(ItemTags.PLANKS),
+                ingredientHelper.fluid(IETags.fluidCreosote, 125),
+                resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!),
             ).save(output)
         // Redstone Acid
         HTFluidTransformRecipeBuilder
             .mixing(
-                HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
-                HTIngredientHelper.water(1000),
-                HTResultHelper.INSTANCE.fluid(IETags.fluidRedstoneAcid, 1000),
+                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                ingredientHelper.water(1000),
+                resultHelper.fluid(IETags.fluidRedstoneAcid, 1000),
             ).save(output)
 
         raginite()

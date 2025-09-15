@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.andThen
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.partially1
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
@@ -29,6 +28,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.item.block.HTDrumItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTColorMaterial

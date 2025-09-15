@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.extension.columnValues
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant

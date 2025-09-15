@@ -1,17 +1,15 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
@@ -122,23 +120,23 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Quartz Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
-                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
-                HTIngredientHelper.item(Items.SOUL_SAND),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
+                ingredientHelper.item(Items.SOUL_SAND),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.INSTANCE.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
-                HTIngredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
+                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)
 
         // Normal -> Tinted

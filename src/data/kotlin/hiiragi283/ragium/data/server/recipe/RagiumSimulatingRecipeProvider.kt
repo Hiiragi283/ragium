@@ -1,12 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -21,15 +19,15 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
-                HTIngredientHelper.item(Items.BUDDING_AMETHYST),
-                HTResultHelper.INSTANCE.item(Items.AMETHYST_SHARD, 4),
+                ingredientHelper.item(Items.BUDDING_AMETHYST),
+                resultHelper.item(Items.AMETHYST_SHARD, 4),
             ).save(output)
         // Echo Shard
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.AMETHYST),
-                HTIngredientHelper.item(Items.SCULK_CATALYST),
-                HTResultHelper.INSTANCE.item(Items.ECHO_SHARD),
+                ingredientHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.AMETHYST),
+                ingredientHelper.item(Items.SCULK_CATALYST),
+                resultHelper.item(Items.ECHO_SHARD),
             ).save(output)
 
         mobExtracting()
@@ -41,87 +39,87 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
-                HTIngredientHelper.item(Items.ARMADILLO_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.ARMADILLO_SCUTE),
+                ingredientHelper.item(Items.ARMADILLO_SPAWN_EGG),
+                resultHelper.item(Items.ARMADILLO_SCUTE),
             ).save(output)
 
         // Honeycomb
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
-                HTIngredientHelper.item(Items.BEE_NEST),
-                HTResultHelper.INSTANCE.item(Items.HONEYCOMB),
+                ingredientHelper.item(Items.BEE_NEST),
+                resultHelper.item(Items.HONEYCOMB),
             ).save(output)
         // Honey Bottle
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Items.GLASS_BOTTLE),
-                HTIngredientHelper.item(Items.BEE_NEST),
-                HTResultHelper.INSTANCE.item(Items.HONEY_BOTTLE),
+                ingredientHelper.item(Items.GLASS_BOTTLE),
+                ingredientHelper.item(Items.BEE_NEST),
+                resultHelper.item(Items.HONEY_BOTTLE),
             ).save(output)
 
         // Egg
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Tags.Items.SEEDS),
-                HTIngredientHelper.item(Items.CHICKEN_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.EGG),
+                ingredientHelper.item(Tags.Items.SEEDS),
+                ingredientHelper.item(Items.CHICKEN_SPAWN_EGG),
+                resultHelper.item(Items.EGG),
             ).save(output)
 
         // Heart of the Sea
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(RagiumItems.ELDER_HEART),
-                HTIngredientHelper.item(Items.ELDER_GUARDIAN_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.HEART_OF_THE_SEA),
+                ingredientHelper.item(RagiumItems.ELDER_HEART),
+                ingredientHelper.item(Items.ELDER_GUARDIAN_SPAWN_EGG),
+                resultHelper.item(Items.HEART_OF_THE_SEA),
             ).save(output)
 
         // Dragon Breath
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Items.GLASS_BOTTLE),
-                HTIngredientHelper.item(Items.DRAGON_HEAD),
-                HTResultHelper.INSTANCE.item(Items.DRAGON_BREATH),
+                ingredientHelper.item(Items.GLASS_BOTTLE),
+                ingredientHelper.item(Items.DRAGON_HEAD),
+                resultHelper.item(Items.DRAGON_BREATH),
             ).save(output)
 
         // Poppy
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Tags.Items.FERTILIZERS),
-                HTIngredientHelper.item(Items.IRON_GOLEM_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.POPPY),
+                ingredientHelper.item(Tags.Items.FERTILIZERS),
+                ingredientHelper.item(Items.IRON_GOLEM_SPAWN_EGG),
+                resultHelper.item(Items.POPPY),
             ).save(output)
 
         // Ancient Debris
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Tags.Items.NETHERRACKS, 16),
-                HTIngredientHelper.item(Items.PIGLIN_BRUTE_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.ANCIENT_DEBRIS),
+                ingredientHelper.item(Tags.Items.NETHERRACKS, 16),
+                ingredientHelper.item(Items.PIGLIN_BRUTE_SPAWN_EGG),
+                resultHelper.item(Items.ANCIENT_DEBRIS),
             ).save(output)
 
         // Wool
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
-                HTIngredientHelper.item(Items.SHEEP_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.WHITE_WOOL),
+                ingredientHelper.item(Items.SHEEP_SPAWN_EGG),
+                resultHelper.item(Items.WHITE_WOOL),
             ).save(output)
 
         // Turtle Scute
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Items.SEAGRASS, 8),
-                HTIngredientHelper.item(Items.TURTLE_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(Items.TURTLE_SCUTE),
+                ingredientHelper.item(Items.SEAGRASS, 8),
+                ingredientHelper.item(Items.TURTLE_SPAWN_EGG),
+                resultHelper.item(Items.TURTLE_SCUTE),
             ).save(output)
 
         // Resonant Debris
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(Items.DEEPSLATE, 8),
-                HTIngredientHelper.item(Items.WARDEN_SPAWN_EGG),
-                HTResultHelper.INSTANCE.item(RagiumBlocks.RESONANT_DEBRIS),
+                ingredientHelper.item(Items.DEEPSLATE, 8),
+                ingredientHelper.item(Items.WARDEN_SPAWN_EGG),
+                resultHelper.item(RagiumBlocks.RESONANT_DEBRIS),
             ).save(output)
 
         // Nether Star
@@ -137,9 +135,9 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
 
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                HTIngredientHelper.item(RagiumItems.WITHER_DOLl),
-                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.IRIDESCENTIUM),
-                HTResultHelper.INSTANCE.item(Tags.Items.NETHER_STARS),
+                ingredientHelper.item(RagiumItems.WITHER_DOLl),
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.IRIDESCENTIUM),
+                resultHelper.item(Tags.Items.NETHER_STARS),
             ).save(output)
     }
 }

@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -31,6 +30,7 @@ import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.HTCapabilityCodec

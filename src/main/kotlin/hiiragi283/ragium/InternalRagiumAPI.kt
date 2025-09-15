@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.createItemStack
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -17,6 +16,7 @@ import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.collection.HTWrappedMultiMap
 import hiiragi283.ragium.common.collection.HTWrappedTable
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.nbt.HTTagValueInput

@@ -7,9 +7,9 @@ import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.extension.toId
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import net.minecraft.resources.ResourceLocation

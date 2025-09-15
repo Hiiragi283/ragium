@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.api.material.HTBlockMaterialVariant
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.world.item.DyeColor
@@ -18,44 +16,44 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Vanilla
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Tags.Items.GRAVELS),
-                HTResultHelper.INSTANCE.item(Items.FLINT),
+                ingredientHelper.item(Tags.Items.GRAVELS),
+                resultHelper.item(Items.FLINT),
             ).saveSuffixed(output, "_from_gravel")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
-                HTResultHelper.INSTANCE.item(Items.REDSTONE),
+                ingredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
+                resultHelper.item(Items.REDSTONE),
             ).saveSuffixed(output, "_from_red_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
-                HTResultHelper.INSTANCE.item(Items.BROWN_MUSHROOM, 3),
+                ingredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
+                resultHelper.item(Items.BROWN_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Items.RED_MUSHROOM_BLOCK),
-                HTResultHelper.INSTANCE.item(Items.RED_MUSHROOM, 3),
+                ingredientHelper.item(Items.RED_MUSHROOM_BLOCK),
+                resultHelper.item(Items.RED_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
-                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
+                ingredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.item(Tags.Items.GUNPOWDERS),
-                HTResultHelper.INSTANCE.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+                ingredientHelper.item(Tags.Items.GUNPOWDERS),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
         dyes()
@@ -66,14 +64,14 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
-                HTResultHelper.INSTANCE.item(Items.BROWN_DYE),
+                ingredientHelper.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
+                resultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(
-                HTIngredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
-                HTResultHelper.INSTANCE.item(Items.BLACK_DYE),
+                ingredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
+                resultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 
         for (color: DyeColor in DyeColor.entries) {
@@ -82,8 +80,8 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
 
             HTItemToObjRecipeBuilder
                 .extracting(
-                    HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
-                    HTResultHelper.INSTANCE.item(dye, 2),
+                    ingredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
+                    resultHelper.item(dye, 2),
                 ).saveSuffixed(output, "_from_$name")
         }
     }

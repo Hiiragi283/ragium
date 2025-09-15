@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.toId
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -18,6 +17,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumItems
@@ -43,6 +43,8 @@ sealed class HTRecipeProvider {
         private set
 
     val itemLookup: HolderLookup.RegistryLookup<Item> by lazy { provider.lookupOrThrow(Registries.ITEM) }
+    val ingredientHelper: HTIngredientHelper = HTIngredientHelper.INSTANCE
+    val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup
@@ -126,15 +128,15 @@ sealed class HTRecipeProvider {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(solid),
-                HTResultHelper.INSTANCE.fluid(fluid, amount),
+                ingredientHelper.item(solid),
+                resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(solid).getPath()}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
-                HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.INSTANCE.item(solid),
+                ingredientHelper.fluid(fluid, amount),
+                resultHelper.item(solid),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
@@ -147,15 +149,15 @@ sealed class HTRecipeProvider {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(solid),
-                HTResultHelper.INSTANCE.fluid(fluid, amount),
+                ingredientHelper.item(solid),
+                resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.location.path}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
-                HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.INSTANCE.item(solid),
+                ingredientHelper.fluid(fluid, amount),
+                resultHelper.item(solid),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
@@ -168,15 +170,15 @@ sealed class HTRecipeProvider {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
-                HTIngredientHelper.item(filled),
-                HTResultHelper.INSTANCE.fluid(fluid, amount),
+                ingredientHelper.item(filled),
+                resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(filled).getPath()}")
         // Infusing
         HTFluidTransformRecipeBuilder
             .infusing(
                 empty,
-                HTIngredientHelper.fluid(fluid, amount),
-                HTResultHelper.INSTANCE.item(filled),
+                ingredientHelper.fluid(fluid, amount),
+                resultHelper.item(filled),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
@@ -187,7 +189,7 @@ sealed class HTRecipeProvider {
     ) {
         val (content: HTFluidContent<*, *, *>, amount: Int) = input
         val suffix = "_from_${content.getPath()}"
-        val ingredient: HTFluidIngredient = HTIngredientHelper.fluid(content, amount)
+        val ingredient: HTFluidIngredient = ingredientHelper.fluid(content, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
             HTFluidTransformRecipeBuilder
@@ -201,17 +203,17 @@ sealed class HTRecipeProvider {
         // Basic
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.INSTANCE.item(ingot, 3),
-                HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                resultHelper.item(ingot, 3),
+                ingredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
         // Advanced
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                HTResultHelper.INSTANCE.item(ingot, 2),
-                HTIngredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),
-                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                resultHelper.item(ingot, 2),
+                ingredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL, material),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
     }

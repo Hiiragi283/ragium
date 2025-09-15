@@ -1,9 +1,9 @@
-package hiiragi283.ragium.api.material
+package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
@@ -25,11 +25,13 @@ enum class HTItemMaterialVariant(private val enUsPattern: String, private val ja
     CHIP("%s Chip", "%sチップ", RagiumConst.CHIPS),
     ;
 
-    override val itemCommonTag: TagKey<Item> = itemTagKey(commonId(tagPrefix))
+    override val itemCommonTag: TagKey<Item> = hiiragi283.ragium.api.extension
+        .itemTagKey(commonId(tagPrefix))
 
     override fun canGenerateTag(): Boolean = true
 
-    override fun itemTagKey(path: String): TagKey<Item> = itemTagKey(commonId("$tagPrefix/$path"))
+    override fun itemTagKey(path: String): TagKey<Item> = hiiragi283.ragium.api.extension
+        .itemTagKey(commonId("$tagPrefix/$path"))
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern
