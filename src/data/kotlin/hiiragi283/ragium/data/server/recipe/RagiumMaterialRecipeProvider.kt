@@ -215,6 +215,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER)
             .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
             .saveSuffixed(output, "_with_hammer")
+
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.getMaterial(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL))
+            .addIngredient(Items.BAMBOO)
+            .setExp(0.15f)
+            .save(output)
     }
 
     @JvmStatic

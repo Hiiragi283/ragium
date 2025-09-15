@@ -23,6 +23,7 @@ abstract class HTTagsProvider<T : Any>(
         RagiumAPI.MOD_ID,
         helper,
     ) {
+    @Suppress("DEPRECATION")
     final override fun addTags(provider: HolderLookup.Provider) {
         HTTagBuilder(registryKey).apply(::addTags).build { tagKey: TagKey<T>, entry: TagEntry ->
             tag(tagKey).add(entry)
@@ -30,4 +31,7 @@ abstract class HTTagsProvider<T : Any>(
     }
 
     protected abstract fun addTags(builder: HTTagBuilder<T>)
+
+    @Deprecated("use HTTagBuilder instead of this")
+    override fun tag(tag: TagKey<T>): TagAppender<T> = super.tag(tag)
 }

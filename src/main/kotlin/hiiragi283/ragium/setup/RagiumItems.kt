@@ -200,6 +200,9 @@ object RagiumItems {
         ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates
         put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
+
+        // Fuels
+        put(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL, register("bamboo_charcoal"))
     }
 
     @JvmStatic

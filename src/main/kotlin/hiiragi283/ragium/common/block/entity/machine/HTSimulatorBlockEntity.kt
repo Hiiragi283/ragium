@@ -39,7 +39,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         catalystSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // output
         outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
-        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot), catalystSlot)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

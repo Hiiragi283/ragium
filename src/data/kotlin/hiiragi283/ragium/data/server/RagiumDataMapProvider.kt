@@ -60,8 +60,9 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
     private fun furnaceFuels() {
         builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
             .add(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
+            .add(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6))
+            .add(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)
             .add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
             .add(RagiumItems.RESIN, FurnaceFuel(200 * 4), false)

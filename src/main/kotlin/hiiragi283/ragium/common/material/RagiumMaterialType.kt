@@ -42,6 +42,7 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     COOKED_MEAT("Cooked Meat", "焼肉"),
 
     // Other
+    BAMBOO_CHARCOAL("Bamboo Charcoal", "竹炭"),
     COAL_COKE("Coal Coke", "石炭コークス"),
     PLASTIC("Plastic", "プラスチック"),
     ;

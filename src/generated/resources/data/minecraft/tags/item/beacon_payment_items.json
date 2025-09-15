@@ -1,18 +1,18 @@
 {
   "values": [
     "#c:gems/azure",
-    "#c:gems/ragi_crystal",
     "#c:gems/crimson_crystal",
-    "#c:gems/warped_crystal",
     "#c:gems/eldritch_pearl",
-    "#c:ingots/ragi_alloy",
+    "#c:gems/ragi_crystal",
+    "#c:gems/warped_crystal",
     "#c:ingots/advanced_ragi_alloy",
     "#c:ingots/azure_steel",
+    "#c:ingots/chocolate",
+    "#c:ingots/cooked_meat",
     "#c:ingots/deep_steel",
     "#c:ingots/gildium",
     "#c:ingots/iridescentium",
-    "#c:ingots/chocolate",
     "#c:ingots/meat",
-    "#c:ingots/cooked_meat"
+    "#c:ingots/ragi_alloy"
   ]
 }

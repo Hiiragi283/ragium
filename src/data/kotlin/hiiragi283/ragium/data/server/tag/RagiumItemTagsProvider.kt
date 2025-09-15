@@ -137,16 +137,23 @@ class RagiumItemTagsProvider(
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
+    companion object {
+        @JvmField
+        val MATERIAL_TAG: Map<HTMaterialVariant.ItemTag, TagKey<Item>> = mapOf(
+            HTItemMaterialVariant.GEM to ItemTags.BEACON_PAYMENT_ITEMS,
+            HTItemMaterialVariant.INGOT to ItemTags.BEACON_PAYMENT_ITEMS,
+            HTItemMaterialVariant.FUEL to ItemTags.COALS,
+        )
+    }
+
     private fun materialTable(
         builder: HTTagBuilder<Item>,
         table: HTTable<HTMaterialVariant.ItemTag, out HTMaterialType, out HTHolderLike>,
     ) {
         table.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
             builder.addMaterial(variant, material, item)
-
-            if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
-                tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
-            }
+            val customTag: TagKey<Item> = MATERIAL_TAG[variant] ?: return@forEach
+            builder.addTag(customTag, variant.itemTagKey(material))
         }
     }
 

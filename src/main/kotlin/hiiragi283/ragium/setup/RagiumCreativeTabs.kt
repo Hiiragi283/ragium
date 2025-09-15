@@ -2,9 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.toDescriptionKey
-import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDeferredRegister
@@ -99,14 +97,7 @@ object RagiumCreativeTabs {
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Materials
-        listOf(
-            HTItemMaterialVariant.RAW_MATERIAL,
-            HTItemMaterialVariant.GEM,
-            HTItemMaterialVariant.INGOT,
-            HTItemMaterialVariant.NUGGET,
-            HTItemMaterialVariant.DUST,
-        ).flatMap(RagiumItems.MATERIALS::rowValues)
-            .forEach(output::accept)
+        output.acceptItems(RagiumItems.MATERIALS.values)
         // Ingredients
         output.accept(RagiumItems.TAR)
         output.accept(RagiumItems.PLATING_CATALYST)
