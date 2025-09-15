@@ -86,12 +86,8 @@ class RagiumItemTagsProvider(
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
 
-        RagiumBlocks.MATERIALS.rowKeys
-            .filterIsInstance<HTMaterialVariant.BlockTag>()
-            .forEach(::copy)
-
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, _) ->
-            if (variant !is HTMaterialVariant.BlockTag) return@forEach
+        RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, _) ->
             copy(variant, material)
         }
         for (material: HTMaterialType in RagiumBlockTagsProvider.VANILLA_STORAGE_BLOCKS.keys) {

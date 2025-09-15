@@ -69,6 +69,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         }
 
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CASINGS)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COILS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
@@ -109,8 +110,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTHolderLike) ->
-            if (variant !is HTMaterialVariant.BlockTag) return@forEach
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) ->
             if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
                 builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
             }

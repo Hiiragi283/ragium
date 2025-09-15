@@ -37,7 +37,6 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -159,7 +158,7 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
@@ -227,25 +226,10 @@ object RagiumBlocks {
         tintedGlass(HTVanillaMaterialType.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
         tintedGlass(HTVanillaMaterialType.SOUL, glass(), canPlayerThrough = true, blastProof = false)
         tintedGlass(HTVanillaMaterialType.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
-
-        // Coil Block
-        fun addCoil(material: RagiumMaterialType) {
-            put(
-                RagiumMaterialVariants.COIL_BLOCK,
-                material,
-                REGISTER.registerSimple(
-                    "${material.serializedName}_coil_block",
-                    copyOf(Blocks.COPPER_BLOCK),
-                    ::RotatedPillarBlock,
-                ),
-            )
-        }
-        addCoil(RagiumMaterialType.RAGI_ALLOY)
-        addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
         ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
@@ -256,6 +240,18 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material)
+
+    @JvmField
+    val COILS: Map<HTMaterialType, HTBasicDeferredBlock<RotatedPillarBlock>> = listOf(
+        RagiumMaterialType.RAGI_ALLOY,
+        RagiumMaterialType.ADVANCED_RAGI_ALLOY,
+    ).associateWith { material: HTMaterialType ->
+        REGISTER.registerSimple("${material.serializedName}_coil_block", copyOf(Blocks.COPPER_BLOCK), ::RotatedPillarBlock)
+    }
+
+    @JvmStatic
+    fun getCoilBlock(material: HTMaterialType): HTBasicDeferredBlock<RotatedPillarBlock> = COILS[material]
+        ?: error("Unknown coil block for ${material.serializedName}")
 
     //    Buildings    //
 

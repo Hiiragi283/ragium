@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -83,7 +82,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
         RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
 
-        RagiumBlocks.MATERIALS.rowValues(RagiumMaterialVariants.COIL_BLOCK).forEach(::cubeColumn)
+        RagiumBlocks.COILS.values.forEach(::cubeColumn)
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->

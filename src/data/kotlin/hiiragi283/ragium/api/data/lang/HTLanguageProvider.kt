@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
@@ -24,7 +25,6 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -37,7 +37,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
-import kotlin.collections.iterator
 import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
@@ -47,11 +46,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     fun addPatterned() {
         addBlocks(RagiumBlocks.ORES)
         addBlocks(RagiumBlocks.MATERIALS)
+        addBlocks(RagiumBlocks.COILS.toRowTableBy(MiscVariants.COIL_BLOCK))
 
         addItems(RagiumItems.MATERIALS)
         addItems(RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
-        addItems(RagiumItems.COILS.toRowTableBy(RagiumMaterialVariants.COIL))
-        addItems(RagiumItems.COMPONENTS.toRowTableBy(RagiumMaterialVariants.COMPONENT))
+        addItems(RagiumItems.COILS.toRowTableBy(MiscVariants.COIL))
+        addItems(RagiumItems.COMPONENTS.toRowTableBy(MiscVariants.COMPONENT))
 
         addItems(RagiumItems.AZURE_ARMORS.toColumnTableBy(RagiumMaterialType.AZURE_STEEL))
         addItems(RagiumItems.DEEP_ARMORS.toColumnTableBy(RagiumMaterialType.DEEP_STEEL))
@@ -154,5 +154,24 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
             add(content.getBucket(), "${value}入りバケツ")
         }
+    }
+
+    //    MiscVariants    //
+
+    private enum class MiscVariants(private val enPattern: String, private val jaPattern: String) : HTMaterialVariant {
+        // Block
+        COIL_BLOCK("%s Coil Block", "%sコイルブロック"),
+
+        // Item
+        COIL("%s Coil", "%sコイル"),
+        COMPONENT("%s Component", "%s構造体"),
+        ;
+
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> enPattern
+            HTLanguageType.JA_JP -> jaPattern
+        }.replace("%s", value)
+
+        override fun getSerializedName(): String = name.lowercase()
     }
 }

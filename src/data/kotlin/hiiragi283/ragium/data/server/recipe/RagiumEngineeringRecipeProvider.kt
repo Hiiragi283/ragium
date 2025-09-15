@@ -19,7 +19,6 @@ import hiiragi283.ragium.common.recipe.HTEternalTicketRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTColorMaterial
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -207,7 +206,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
             // Block
             HTShapedRecipeBuilder
-                .building(RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, material))
+                .building(RagiumBlocks.getCoilBlock(material))
                 .hollow8()
                 .define('A', coil)
                 .define('B', HTItemMaterialVariant.INGOT, core)

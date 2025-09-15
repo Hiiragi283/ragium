@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -87,7 +86,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "DDD",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Items.FURNACE)
-            .define('C', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.RAGI_ALLOY))
+            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY))
             .define('D', Items.BRICKS)
             .save(output)
 
@@ -127,7 +126,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "BCB",
                 "DDD",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .define('C', Items.BLAST_FURNACE)
             .define('D', Items.NETHER_BRICKS)
             .save(output)
@@ -141,7 +140,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
             .define('B', RagiumItems.getComponent(HTComponentTier.ADVANCED))
             .define('C', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('D', RagiumBlocks.getMaterial(RagiumMaterialVariants.COIL_BLOCK, RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .save(output)
 
         mapOf(
