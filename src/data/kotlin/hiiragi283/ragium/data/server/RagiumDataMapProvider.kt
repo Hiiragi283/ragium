@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
@@ -72,7 +72,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
     //    Ragium    //
 
     private fun combustionFuels() {
-        builder(RagiumDataMaps.COMBUSTION_FUEL)
+        builder(RagiumDataMaps.INSTANCE.combustionFuelType)
             // lowest
             .add(RagiumFluidContents.CRUDE_OIL, 100)
             .add("oil", 100)
@@ -97,14 +97,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
     }
 
     private fun thermalFuels() {
-        builder(RagiumDataMaps.THERMAL_FUEL)
+        builder(RagiumDataMaps.INSTANCE.thermalFuelType)
             .add("steam", 100)
             .add(HTFluidContent.LAVA, 10)
             .add("blaze_blood", 5)
     }
 
     private fun solarPower() {
-        builder(RagiumDataMaps.SOLAR_POWER)
+        builder(RagiumDataMaps.INSTANCE.solarPowerType)
             // low
             .add(Tags.Blocks.PUMPKINS_JACK_O_LANTERNS, HTSolarPower(0.5f), false)
             // medium

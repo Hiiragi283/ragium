@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class HTExtractingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) : HTItemToItemRecipe {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.EXTRACTING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.extracting
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTING.get()
 }

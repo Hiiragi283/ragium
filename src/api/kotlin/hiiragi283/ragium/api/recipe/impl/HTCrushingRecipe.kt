@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeType
 
 class HTCrushingRecipe(ingredient: HTItemIngredient, results: List<HTItemToChancedItemRecipe.ChancedResult>) :
     HTItemToChancedItemRecipeBase(ingredient, results) {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.crushing
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()
 }

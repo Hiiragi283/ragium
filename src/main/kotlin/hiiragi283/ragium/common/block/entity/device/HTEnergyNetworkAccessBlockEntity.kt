@@ -155,7 +155,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
-            HTEnergyBatteryWrapper { RagiumAPI.getInstance().getEnergyNetwork(level) }
+            HTEnergyBatteryWrapper { RagiumAPI.INSTANCE.getEnergyNetwork(level) }
 
         override val transferRate: Int = 1000
     }

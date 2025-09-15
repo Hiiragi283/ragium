@@ -104,7 +104,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        RagiumAPI.getInstance().createValueOutput(registries, tag).let(::writeValue)
+        RagiumAPI.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
     }
 
     protected open fun writeValue(output: HTValueOutput) {
@@ -120,7 +120,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        RagiumAPI.getInstance().createValueInput(registries, tag).let(::readValue)
+        RagiumAPI.INSTANCE.createValueInput(registries, tag).let(::readValue)
     }
 
     protected open fun readValue(input: HTValueInput) {

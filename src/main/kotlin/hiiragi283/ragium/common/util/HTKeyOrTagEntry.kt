@@ -39,7 +39,7 @@ data class HTKeyOrTagEntry<T : Any>(val entry: Either<ResourceKey<T>, TagKey<T>>
 
     fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
         val getter: HolderGetter<T> = provider?.lookup(registryKey)?.getOrNull()
-            ?: RagiumAPI.getInstance().resolveLookup(registryKey)
+            ?: RagiumAPI.INSTANCE.resolveLookup(registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
     }

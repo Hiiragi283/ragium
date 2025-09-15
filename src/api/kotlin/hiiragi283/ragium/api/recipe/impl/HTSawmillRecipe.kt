@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 
 class HTSawmillRecipe(group: String, ingredient: Ingredient, result: ItemStack) :
-    SingleItemRecipe(RagiumRecipeTypes.SAWMILL.get(), RagiumRecipeSerializers.SAWMILL.get(), group, ingredient, result) {
+    SingleItemRecipe(RagiumRecipeTypes.SAWMILL.get(), RagiumRecipeSerializers.INSTANCE.sawmill, group, ingredient, result) {
     fun getIngredient(): Ingredient = this.ingredient
 
     fun getResult(): ItemStack = this.result

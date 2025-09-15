@@ -12,7 +12,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.material.Fluid
 
-internal object RagiumResultHelper : HTResultHelper {
+class HTResultHelperImpl : HTResultHelper {
     override fun item(id: ResourceLocation, count: Int, component: DataComponentPatch): HTItemResult =
         HTItemResultImpl(HTKeyOrTagEntry(Registries.ITEM, id), count, component)
 

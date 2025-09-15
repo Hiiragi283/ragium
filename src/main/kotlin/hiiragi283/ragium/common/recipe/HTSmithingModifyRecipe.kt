@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
-import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
+import hiiragi283.ragium.setup.RagiumRecipeSerializersImpl
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -45,5 +45,5 @@ class HTSmithingModifyRecipe(val template: Ingredient, val addition: Ingredient,
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack(Items.BARRIER)
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.SMITHING_MODIFY
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializersImpl.SMITHING_MODIFY
 }

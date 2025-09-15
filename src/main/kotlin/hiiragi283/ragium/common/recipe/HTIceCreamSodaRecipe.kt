@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.indices
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeSerializersImpl
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -47,10 +47,10 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
                 potion = stackIn.get(DataComponents.POTION_CONTENTS)!!
             }
         }
-        return RagiumAPI.getInstance().createSoda(potion)
+        return RagiumAPI.INSTANCE.createSoda(potion)
     }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width >= 2 && height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumCustomRecipeSerializers.ICE_CREAM_SODA
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializersImpl.ICE_CREAM_SODA
 }

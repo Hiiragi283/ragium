@@ -15,5 +15,5 @@ class HTRefiningRecipe(
     itemResult: Optional<HTItemResult>,
     fluidResult: Optional<HTFluidResult>,
 ) : HTFluidTransformingRecipe(fluidIngredient, itemIngredient, itemResult, fluidResult) {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FLUID_TRANSFORM.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.fluidTransform
 }

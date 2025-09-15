@@ -2,9 +2,11 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.network.HTPayloadRegister
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.network.HTOpenPotionBundlePacket
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
@@ -19,16 +21,19 @@ import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
-import hiiragi283.ragium.setup.RagiumCustomRecipeSerializers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.setup.RagiumMiscRegister
+import hiiragi283.ragium.setup.RagiumRecipeSerializersImpl
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
@@ -40,6 +45,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
+import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 
@@ -54,11 +60,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         NeoForgeMod.enableMilkFluid()
 
         eventBus.addListener(::commonSetup)
+        eventBus.addListener(::onRegister)
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
         eventBus.addListener(::registerRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
-        eventBus.addListener(RagiumMiscRegister::onRegister)
 
         RagiumDataComponents.REGISTER.register(eventBus)
 
@@ -71,11 +77,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
-        RagiumCustomRecipeSerializers.REGISTER.register(eventBus)
+        RagiumRecipeSerializersImpl.REGISTER.register(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
-        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
+        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }
 
@@ -87,6 +93,28 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         LOGGER.info("Registered new registries!")
+    }
+
+    private fun onRegister(event: RegisterEvent) {
+        event.register(Registries.RECIPE_TYPE) { helper: RegisterEvent.RegisterHelper<RecipeType<*>> ->
+            register(helper, RagiumRecipeTypes.SAWMILL)
+            // Machine
+            register(helper, RagiumRecipeTypes.ALLOYING)
+            register(helper, RagiumRecipeTypes.COMPRESSING)
+            register(helper, RagiumRecipeTypes.CRUSHING)
+            register(helper, RagiumRecipeTypes.ENCHANTING)
+            register(helper, RagiumRecipeTypes.EXTRACTING)
+            register(helper, RagiumRecipeTypes.FLUID_TRANSFORM)
+            register(helper, RagiumRecipeTypes.MELTING)
+            register(helper, RagiumRecipeTypes.SIMULATING)
+        }
+    }
+
+    private fun <I : RecipeInput, R : Recipe<I>> register(
+        helper: RegisterEvent.RegisterHelper<RecipeType<*>>,
+        holder: HTDeferredRecipeType<I, R>,
+    ) {
+        helper.register(holder.id, RecipeType.simple<R>(holder.id))
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
@@ -104,16 +132,17 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.enqueueWork(RagiumAccessoryRegister::register)
         event.enqueueWork(RagiumFluidContents::registerInteractions)
 
-        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
+        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
             addon.onCommonSetup(event)
         }
         LOGGER.info("Loaded common setup!")
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        RagiumDataMaps.FUELS.forEach(event::register)
+        event.register(RagiumDataMaps.INSTANCE.thermalFuelType)
+        event.register(RagiumDataMaps.INSTANCE.combustionFuelType)
 
-        event.register(RagiumDataMaps.SOLAR_POWER)
+        event.register(RagiumDataMaps.INSTANCE.solarPowerType)
 
         LOGGER.info("Registered data map types!")
     }

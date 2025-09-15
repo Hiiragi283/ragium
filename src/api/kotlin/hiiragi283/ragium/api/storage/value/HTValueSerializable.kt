@@ -13,14 +13,14 @@ interface HTValueSerializable : INBTSerializable<CompoundTag> {
     @Deprecated("use serialize(HTValueOutput) instead of this")
     override fun serializeNBT(provider: HolderLookup.Provider): CompoundTag {
         val tag = CompoundTag()
-        val output: HTValueOutput = RagiumAPI.getInstance().createValueOutput(provider, tag)
+        val output: HTValueOutput = RagiumAPI.INSTANCE.createValueOutput(provider, tag)
         serialize(output)
         return tag
     }
 
     @Deprecated("use deserialize(HTValueInput) instead of this")
     override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        val input: HTValueInput = RagiumAPI.getInstance().createValueInput(provider, nbt)
+        val input: HTValueInput = RagiumAPI.INSTANCE.createValueInput(provider, nbt)
         deserialize(input)
     }
 }

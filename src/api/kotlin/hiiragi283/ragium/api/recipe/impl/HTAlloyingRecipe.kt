@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class HTAlloyingRecipe(override val ingredients: List<HTItemIngredient>, override val result: HTItemResult) : HTCombineItemToItemRecipe {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.alloying
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING.get()
 }

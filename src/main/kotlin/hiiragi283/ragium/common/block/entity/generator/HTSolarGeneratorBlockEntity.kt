@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -28,10 +28,9 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
 
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {
         // 太陽光を供給できる場合は，その倍率を返す
-        val power: Float? = level
-            .getBlockState(pos.above())
-            .blockHolder
-            .getData(RagiumDataMaps.SOLAR_POWER)
+        val state: BlockState = level.getBlockState(pos.above())
+        val power: Float? = RagiumDataMaps.INSTANCE
+            .getSolarPower(level.registryAccess(), state.blockHolder)
             ?.multiplier
         if (power != null) return power
         return when {

@@ -5,7 +5,6 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
@@ -19,6 +18,7 @@ import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -28,6 +28,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 import java.util.*
 
@@ -51,15 +52,15 @@ interface RagiumAPI {
             else -> id(other.path)
         }
 
-        private lateinit var instance: RagiumAPI
+        val INSTANCE: RagiumAPI by lazy(::getService)
 
+        /**
+         * @see [mekanism.api.MekanismAPI.getService]
+         */
+        @Suppress("UnstableApiUsage")
         @JvmStatic
-        fun getInstance(): RagiumAPI {
-            if (!::instance.isInitialized) {
-                instance = ServiceLoader.load(RagiumAPI::class.java).first()
-            }
-            return instance
-        }
+        inline fun <reified SERVICE : Any> getService(): SERVICE =
+            ServiceLoader.load(SERVICE::class.java, RagiumAPI::class.java.classLoader).first()
     }
 
     //    Addon    //
@@ -80,6 +81,8 @@ interface RagiumAPI {
 
     fun getCurrentServer(): MinecraftServer?
 
+    fun enchLookup(): HolderLookup.RegistryLookup<Enchantment> = resolveLookup(Registries.ENCHANTMENT)!!
+
     fun <T : Any> resolveLookup(registryKey: ResourceKey<out Registry<T>>): HolderLookup.RegistryLookup<T>?
 
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
@@ -99,10 +102,6 @@ interface RagiumAPI {
     fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
 
     fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
-
-    //    Recipe    //
-
-    fun getResultHelper(): HTResultHelper
 
     //    Accessory    //
 

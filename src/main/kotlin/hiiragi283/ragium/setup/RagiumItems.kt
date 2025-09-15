@@ -50,7 +50,6 @@ import hiiragi283.ragium.config.RagiumCommonConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
@@ -506,9 +505,9 @@ object RagiumItems {
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         val level: Int = RagiumAPI
-            .getInstance()
-            .resolveLookup(Registries.ENCHANTMENT)
-            ?.getOrNull(RagiumEnchantments.CAPACITY)
+            .INSTANCE
+            .enchLookup()
+            .getOrNull(RagiumEnchantments.CAPACITY)
             ?.let(stack::getEnchantmentLevel)
             ?: 0
         val modifier: Int = level + 1
@@ -548,17 +547,15 @@ object RagiumItems {
             builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.GENERIC_DRINK)
         }
 
+        val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+            builder.set(DataComponents.RARITY, Rarity.RARE)
+        }
         for (block: ItemLike in RagiumBlocks.MATERIALS.columnValues(RagiumMaterialType.IRIDESCENTIUM)) {
-            event.modify(block) { builder: DataComponentPatch.Builder ->
-                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                builder.set(DataComponents.RARITY, Rarity.RARE)
-            }
+            event.modify(block, iridescent)
         }
         for (item: ItemLike in MATERIALS.columnValues(RagiumMaterialType.IRIDESCENTIUM)) {
-            event.modify(item) { builder: DataComponentPatch.Builder ->
-                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                builder.set(DataComponents.RARITY, Rarity.RARE)
-            }
+            event.modify(item, iridescent)
         }
 
         event.modify(getIngot(RagiumMaterialType.CHOCOLATE)) { builder: DataComponentPatch.Builder ->

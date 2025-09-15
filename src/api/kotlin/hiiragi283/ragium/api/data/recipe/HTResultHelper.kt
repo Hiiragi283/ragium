@@ -19,7 +19,7 @@ import java.util.function.Supplier
 interface HTResultHelper {
     companion object {
         @JvmField
-        val INSTANCE: HTResultHelper = RagiumAPI.getInstance().getResultHelper()
+        val INSTANCE: HTResultHelper = RagiumAPI.getService()
     }
 
     //    Item    //

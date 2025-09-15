@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -23,7 +22,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.nbt.HTTagValueInput
 import hiiragi283.ragium.common.storage.nbt.HTTagValueOutput
 import hiiragi283.ragium.common.util.HTAddonHelper
-import hiiragi283.ragium.common.util.RagiumResultHelper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -160,10 +158,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
         HTTagValueOutput(lookup, compoundTag)
-
-    //    Recipe    //
-
-    override fun getResultHelper(): HTResultHelper = RagiumResultHelper
 
     //    Platform    //
 

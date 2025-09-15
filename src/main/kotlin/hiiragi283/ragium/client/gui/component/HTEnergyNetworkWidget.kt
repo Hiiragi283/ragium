@@ -16,7 +16,7 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int) :
     HTSpriteWidget(x, y - 1, 16, 18 * 3 - 2, Component.empty()) {
-    fun getBattery(): HTEnergyBattery? = RagiumAPI.getInstance().getEnergyNetwork(key)
+    fun getBattery(): HTEnergyBattery? = RagiumAPI.INSTANCE.getEnergyNetwork(key)
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(

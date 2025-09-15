@@ -152,7 +152,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Energy Storage    //
 
-    private val getter: (Level?) -> HTEnergyBattery? = RagiumAPI.getInstance()::getEnergyNetwork
+    private val getter: (Level?) -> HTEnergyBattery? = RagiumAPI.INSTANCE::getEnergyNetwork
 
     override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = createStorageHolder(
         HTEnergyBatteryWrapper { getter(level) },

@@ -11,7 +11,7 @@ import java.util.*
 
 class HTSimulatingRecipe(ingredient: Optional<HTItemIngredient>, catalyst: HTItemIngredient, result: HTItemResult) :
     HTItemWithCatalystToItemRecipe(ingredient, catalyst, result) {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SIMULATING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.simulating
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.SIMULATING.get()
 }

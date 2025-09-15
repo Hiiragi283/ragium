@@ -246,7 +246,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     private fun material() {
         // Builtin
         for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
             if (baseVariant == HTItemMaterialVariant.DUST) continue
             HTItemToObjRecipeBuilder
                 .pulverizing(

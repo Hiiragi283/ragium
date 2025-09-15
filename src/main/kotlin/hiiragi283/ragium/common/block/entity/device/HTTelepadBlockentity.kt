@@ -54,7 +54,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         private set
 
     fun updateDestination(teleportPos: HTTeleportPos) {
-        val server: MinecraftServer = RagiumAPI.getInstance().getCurrentServer() ?: return
+        val server: MinecraftServer = RagiumAPI.INSTANCE.getCurrentServer() ?: return
         if (server.getLevel(teleportPos.dimension) != null) {
             this.teleportPos = teleportPos
             setOnlySave()

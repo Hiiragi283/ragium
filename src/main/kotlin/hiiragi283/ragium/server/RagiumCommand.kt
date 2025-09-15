@@ -77,5 +77,5 @@ object RagiumCommand {
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumAPI.getInstance().getEnergyNetwork(source.level)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumAPI.INSTANCE.getEnergyNetwork(source.level)
 }

@@ -12,8 +12,8 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTFluidFuelData
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
@@ -117,7 +117,7 @@ class RagiumEmiPlugin : EmiPlugin {
                                 EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
                                 EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),
-                            EmiStack.of(RagiumAPI.getInstance().createSoda(holder)),
+                            EmiStack.of(RagiumAPI.INSTANCE.createSoda(holder)),
                             id,
                             true,
                         )
@@ -138,8 +138,8 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Fluid Fuel
-        addFuelRecipes(RagiumDataMaps.COMBUSTION_FUEL, HTGeneratorVariant.COMBUSTION)
-        addFuelRecipes(RagiumDataMaps.THERMAL_FUEL, HTGeneratorVariant.THERMAL)
+        addFuelRecipes(RagiumDataMaps.INSTANCE.combustionFuelType, HTGeneratorVariant.COMBUSTION)
+        addFuelRecipes(RagiumDataMaps.INSTANCE.thermalFuelType, HTGeneratorVariant.THERMAL)
     }
 
     private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant) {
@@ -204,7 +204,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     id.withPrefix("/"),
                     EmiIngredient.of(recipe.ingredients[0]),
                     RagiumAPI
-                        .getInstance()
+                        .INSTANCE
                         .getCurrentServer()
                         ?.registryAccess()
                         ?.let(recipe::getResultItem)

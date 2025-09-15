@@ -31,7 +31,7 @@ abstract class HTItemContainerMenu(
             .map { interactionHand: InteractionHand ->
                 player.getItemInHand(interactionHand).`is`(stack.item)
             }.orElseGet {
-                RagiumAPI.getInstance().getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
+                RagiumAPI.INSTANCE.getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
             }
     }
 }

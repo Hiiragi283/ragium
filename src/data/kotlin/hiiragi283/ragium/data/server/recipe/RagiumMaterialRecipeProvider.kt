@@ -226,7 +226,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun material() {
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.getInstance().getBaseVariant(material) ?: continue
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
             val base: ItemLike = RagiumItems.MATERIALS.get(baseVariant, material) ?: continue
 
             RagiumBlocks.MATERIALS.get(HTBlockMaterialVariant.STORAGE_BLOCK, material)?.let { storage: ItemLike ->

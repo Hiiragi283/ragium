@@ -183,7 +183,7 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun beforeEntityDamaged(event: LivingDamageEvent.Pre) {
-        val accessoryCap: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(event.entity) ?: return
+        val accessoryCap: AccessoriesCapability = RagiumAPI.INSTANCE.getAccessoryCap(event.entity) ?: return
         val reference: SlotEntryReference = accessoryCap.getFirstEquipped { stack: ItemStack ->
             stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)
         } ?: return

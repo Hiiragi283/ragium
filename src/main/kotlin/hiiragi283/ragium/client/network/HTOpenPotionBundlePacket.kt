@@ -22,7 +22,7 @@ data object HTOpenPotionBundlePacket : HTCustomPayload.C2S {
     override fun type(): CustomPacketPayload.Type<HTOpenPotionBundlePacket> = TYPE
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val capability: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(player) ?: return
+        val capability: AccessoriesCapability = RagiumAPI.INSTANCE.getAccessoryCap(player) ?: return
         val slot: SlotEntryReference = capability.getFirstEquipped(RagiumItems.POTION_BUNDLE.get()) ?: return
         RagiumMenuTypes.POTION_BUNDLE.openMenu(player, null, slot.stack)
     }

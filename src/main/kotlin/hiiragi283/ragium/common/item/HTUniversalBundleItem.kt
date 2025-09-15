@@ -24,7 +24,7 @@ class HTUniversalBundleItem(properties: Properties) : Item(properties.stacksTo(1
         fun openBundle(level: Level, player: Player, stack: ItemStack): InteractionResultHolder<ItemStack> {
             val color: DyeColor = stack.get(RagiumDataComponents.COLOR) ?: return InteractionResultHolder.fail(stack)
             if (level is ServerLevel) {
-                val handler: HTItemHandler = RagiumAPI.getInstance().getUniversalBundle(level.server, color)
+                val handler: HTItemHandler = RagiumAPI.INSTANCE.getUniversalBundle(level.server, color)
                 RagiumMenuTypes.UNIVERSAL_BUNDLE.openMenu(player, stack.hoverName, handler) {}
             }
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)

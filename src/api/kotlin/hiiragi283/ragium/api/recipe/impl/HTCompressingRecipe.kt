@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class HTCompressingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) : HTItemToItemRecipe {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.COMPRESSING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.compressing
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.COMPRESSING.get()
 }

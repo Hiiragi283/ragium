@@ -22,7 +22,7 @@ data object HTOpenUniversalBundlePacket : HTCustomPayload.C2S {
     override fun type(): CustomPacketPayload.Type<HTOpenUniversalBundlePacket> = TYPE
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val capability: AccessoriesCapability = RagiumAPI.getInstance().getAccessoryCap(player) ?: return
+        val capability: AccessoriesCapability = RagiumAPI.INSTANCE.getAccessoryCap(player) ?: return
         val slot: SlotEntryReference = capability.getFirstEquipped(RagiumItems.UNIVERSAL_BUNDLE.get()) ?: return
         HTUniversalBundleItem.openBundle(player.level(), player, slot.stack)
     }

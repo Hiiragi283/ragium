@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -16,6 +15,7 @@ import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -25,9 +25,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(
@@ -59,7 +57,10 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         tank = HTVariableFluidStackTank.input(
             listener,
             RagiumConfig.COMMON.generatorInputTankCapacity,
-            filter = { stack: FluidStack -> getRequiredAmount(stack) > 0 },
+            filter = { stack: FluidStack ->
+                val access: RegistryAccess = level?.registryAccess() ?: return@input false
+                getRequiredAmount(access, stack) > 0
+            },
         )
         return HTSimpleFluidTankHolder.input(this, tank)
     }
@@ -78,7 +79,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         // スロット内のアイテムを液体に変換する
         slot.fillOrBurn()
         // 燃料を消費して発電する
-        val required: Int = getRequiredAmount(tank.getStack())
+        val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
         val usage: Int = getModifiedEnergy(energyUsage)
@@ -95,10 +96,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
 
     protected abstract fun getFuelStack(value: Int): FluidStack
 
-    protected abstract fun getRequiredAmount(stack: FluidStack): Int
-
-    protected fun getRequiredAmount(stack: FluidStack, dataMap: DataMapType<Fluid, HTFluidFuelData>): Int =
-        stack.fluidHolder.getData(dataMap)?.amount ?: 0
+    protected abstract fun getRequiredAmount(access: RegistryAccess, stack: FluidStack): Int
 
     //    HTFluidInteractable    //
 

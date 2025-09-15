@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class HTEnchantingRecipe(override val ingredients: List<HTItemIngredient>, override val result: HTItemResult) : HTCombineItemToItemRecipe {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INSTANCE.enchanting
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
 }
