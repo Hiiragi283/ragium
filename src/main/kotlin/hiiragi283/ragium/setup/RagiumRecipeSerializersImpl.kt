@@ -1,10 +1,10 @@
 package hiiragi283.ragium.setup
 
+import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.HTSimpleRecipeSerializer
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.impl.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -42,7 +43,7 @@ class RagiumRecipeSerializersImpl : RagiumRecipeSerializers {
         private fun <RECIPE : Recipe<*>> register(
             name: String,
             codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>,
-        ): RecipeSerializer<RECIPE> = register(name, HTSimpleRecipeSerializer(codec))
+        ): RecipeSerializer<RECIPE> = register(name, SimpleSerializer(codec))
 
         //    Custom    //
 
@@ -125,4 +126,11 @@ class RagiumRecipeSerializersImpl : RagiumRecipeSerializers {
     override val melting: RecipeSerializer<HTMeltingRecipe> = MELTING
     override val pulverizing: RecipeSerializer<HTPulverizingRecipe> = PULVERIZING
     override val simulating: RecipeSerializer<HTSimulatingRecipe> = SIMULATING
+
+    private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :
+        RecipeSerializer<RECIPE> {
+        override fun codec(): MapCodec<RECIPE> = codec.codec
+
+        override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = codec.streamCodec
+    }
 }

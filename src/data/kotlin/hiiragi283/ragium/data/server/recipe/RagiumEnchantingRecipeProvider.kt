@@ -14,5 +14,5 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
     private fun ench(key: ResourceKey<Enchantment>, level: Int): HTItemResult = HTIntrinsicEnchantment(key, level)
         .toEnchBook(provider)
         .map(HTResultHelper.INSTANCE::item)
-        .orElseThrow()
+        .partialOrThrow
 }

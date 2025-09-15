@@ -56,7 +56,7 @@ object RagiumTooltipHandler {
         provider: HolderLookup.Provider?,
         flag: TooltipFlag,
     ) {
-        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider)?.ifPresent { text: Component ->
+        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider)?.ifSuccess { text: Component ->
             when {
                 flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
                 else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)

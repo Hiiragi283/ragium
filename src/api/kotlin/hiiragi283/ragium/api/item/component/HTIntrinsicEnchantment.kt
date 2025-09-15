@@ -1,10 +1,12 @@
 package hiiragi283.ragium.api.item.component
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.extension.lookupOrNull
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -13,36 +15,33 @@ import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
-import java.util.Optional
-import java.util.function.Function
 
+@ConsistentCopyVisibility
 @JvmRecord
-data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: Int) {
+data class HTIntrinsicEnchantment private constructor(val entry: HTKeyOrTagEntry<Enchantment>, val level: Int) {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTIntrinsicEnchantment> = BiCodec.composite(
-            BiCodecs.resourceKey(Registries.ENCHANTMENT).fieldOf("enchantment"),
-            HTIntrinsicEnchantment::key,
+            HTKeyOrTagHelper.INSTANCE.codec(Registries.ENCHANTMENT).fieldOf("enchantment"),
+            HTIntrinsicEnchantment::entry,
             BiCodec.INT.optionalFieldOf("level", 1),
             HTIntrinsicEnchantment::level,
             ::HTIntrinsicEnchantment,
         )
     }
 
-    fun <T : Any> useInstance(
-        function: Function<ResourceKey<Enchantment>, Optional<out Holder<Enchantment>>>,
-        action: (Holder<Enchantment>, Int) -> T,
-    ): Optional<T> = function.apply(key).map { holder: Holder<Enchantment> -> action(holder, level) }
+    constructor(key: ResourceKey<Enchantment>, level: Int) : this(HTKeyOrTagHelper.INSTANCE.create(key), level)
 
-    fun <T : Any> useInstance(provider: HolderLookup.Provider?, action: (Holder<Enchantment>, Int) -> T): Optional<T> =
-        useInstance({ key: ResourceKey<Enchantment> ->
-            provider?.lookupOrNull(Registries.ENCHANTMENT)?.get(key) ?: Optional.empty()
-        }, action)
+    fun <T : Any> useInstance(getter: HolderGetter<Enchantment>, action: (Holder<Enchantment>, Int) -> T): DataResult<T> =
+        entry.getFirstHolder(getter).map { holder: Holder<Enchantment> -> action(holder, level) }
 
-    fun getFullName(provider: HolderLookup.Provider?): Optional<Component> = useInstance(provider, Enchantment::getFullname)
+    fun <T : Any> useInstance(provider: HolderLookup.Provider?, action: (Holder<Enchantment>, Int) -> T): DataResult<T> =
+        entry.getFirstHolder(provider).map { holder: Holder<Enchantment> -> action(holder, level) }
 
-    fun toInstance(provider: HolderLookup.Provider?): Optional<EnchantmentInstance> = useInstance(provider, ::EnchantmentInstance)
+    fun getFullName(provider: HolderLookup.Provider?): DataResult<Component> = useInstance(provider, Enchantment::getFullname)
 
-    fun toEnchBook(provider: HolderLookup.Provider?): Optional<ItemStack> =
+    fun toInstance(provider: HolderLookup.Provider?): DataResult<EnchantmentInstance> = useInstance(provider, ::EnchantmentInstance)
+
+    fun toEnchBook(provider: HolderLookup.Provider?): DataResult<ItemStack> =
         toInstance(provider).map(EnchantedBookItem::createForEnchantment)
 }

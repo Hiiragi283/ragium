@@ -67,19 +67,21 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
     private var holderCache: Holder<T>? = null
 
     override fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        if (holderCache != null) {
-            return DataResult.success(holderCache!!)
-        }
         val getter: HolderGetter<T> = provider?.lookupOrNull(registryKey)
-            ?: RagiumAPI.Companion.INSTANCE.getLookup(registryKey)
+            ?: RagiumAPI.INSTANCE.getLookup(registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
     }
 
-    private fun getFirstHolder(lookup: HolderGetter<T>): DataResult<out Holder<T>> = map(
-        { key: ResourceKey<T> -> getFirstHolderFromId(lookup, key) },
-        { tagKey: TagKey<T> -> getFirstHolderFromTag(lookup, tagKey) },
-    ).ifSuccess { holderCache = it }
+    override fun getFirstHolder(getter: HolderGetter<T>): DataResult<out Holder<T>> {
+        if (holderCache != null) {
+            return DataResult.success(holderCache!!)
+        }
+        return map(
+            { key: ResourceKey<T> -> getFirstHolderFromId(getter, key) },
+            { tagKey: TagKey<T> -> getFirstHolderFromTag(getter, tagKey) },
+        ).ifSuccess { holderCache = it }
+    }
 
     private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> =
         lookup.get(key).wrapDataResult("Missing key in ${key.registry()}: $key")

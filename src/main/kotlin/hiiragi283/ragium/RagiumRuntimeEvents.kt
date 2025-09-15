@@ -127,7 +127,7 @@ object RagiumRuntimeEvents {
     fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
         event.stack
             .get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)
-            ?.useInstance(event::getHolder, event.enchantments::set)
+            ?.useInstance(event.lookup, event.enchantments::set)
     }
 
     //    Entity    //
