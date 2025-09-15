@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.util.HTLootTicketHelper
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -137,8 +136,9 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.BASALT_MESH)
         output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
 
-        RagiumItems.MATERIALS.rowValues(RagiumMaterialVariants.COIL).forEach(output::accept)
-        RagiumItems.TIERED.values.forEach(output::accept)
+        RagiumItems.COILS.values.forEach(output::accept)
+        RagiumItems.CIRCUITS.values.forEach(output::accept)
+        RagiumItems.COMPONENTS.values.forEach(output::accept)
     }
 
     @JvmField

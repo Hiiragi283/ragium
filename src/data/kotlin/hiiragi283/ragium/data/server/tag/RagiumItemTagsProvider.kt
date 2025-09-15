@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.toTable
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
 import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -126,7 +127,7 @@ class RagiumItemTagsProvider(
 
     private fun material(builder: HTTagBuilder<Item>) {
         materialTable(builder, RagiumItems.MATERIALS)
-        materialTable(builder, RagiumItems.TIERED)
+        materialTable(builder, RagiumItems.CIRCUITS.toTable(HTItemMaterialVariant.CIRCUIT))
 
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
@@ -140,14 +141,15 @@ class RagiumItemTagsProvider(
         materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
-    private fun materialTable(builder: HTTagBuilder<Item>, table: HTTable<HTMaterialVariant, out HTMaterialType, out HTHolderLike>) {
-        table.forEach { (variant: HTMaterialVariant, material: HTMaterialType, item: HTHolderLike) ->
-            if (variant is HTMaterialVariant.ItemTag) {
-                builder.addMaterial(variant, material, item)
+    private fun materialTable(
+        builder: HTTagBuilder<Item>,
+        table: HTTable<HTMaterialVariant.ItemTag, out HTMaterialType, out HTHolderLike>,
+    ) {
+        table.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
+            builder.addMaterial(variant, material, item)
 
-                if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
-                    tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
-                }
+            if (variant == HTItemMaterialVariant.GEM || variant == HTItemMaterialVariant.INGOT) {
+                tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(variant.itemTagKey(material))
             }
         }
     }

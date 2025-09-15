@@ -197,7 +197,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     private fun components() {
         // Coil
         fun registerCoil(material: HTMaterialType, core: HTMaterialType) {
-            val coil: ItemLike = RagiumItems.getMaterial(RagiumMaterialVariants.COIL, material)
+            val coil: ItemLike = RagiumItems.getCoil(material)
             // Item
             HTShapedRecipeBuilder
                 .misc(coil, 4)

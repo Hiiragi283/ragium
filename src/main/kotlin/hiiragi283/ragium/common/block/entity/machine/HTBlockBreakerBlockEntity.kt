@@ -33,10 +33,6 @@ import net.neoforged.neoforge.event.EventHooks
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
     override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
 
-    init {
-        requiredEnergy = energyUsage * 20
-    }
-
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -76,7 +72,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         }
         // エネルギーを消費する
         usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
-        if (usedEnergy < requiredEnergy) return false
+        if (usedEnergy < getModifiedEnergy(energyUsage * 20)) return false
         usedEnergy = 0
         // ブロックを採掘する
         val blockTo: Block = stateTo.block

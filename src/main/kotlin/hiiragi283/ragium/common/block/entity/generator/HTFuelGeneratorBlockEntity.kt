@@ -81,9 +81,10 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         val required: Int = getRequiredAmount(tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
-        return if (network.insertEnergy(energyUsage, true, HTStorageAccess.INTERNAl) == energyUsage) {
+        val usage: Int = getModifiedEnergy(energyUsage)
+        return if (network.insertEnergy(usage, true, HTStorageAccess.INTERNAl) > 0) {
             tank.extract(required, false, HTStorageAccess.INTERNAl)
-            network.insertEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
+            network.insertEnergy(usage, false, HTStorageAccess.INTERNAl)
             true
         } else {
             false

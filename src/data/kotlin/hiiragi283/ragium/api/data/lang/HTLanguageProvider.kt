@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.extension.toTable
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
@@ -21,6 +23,7 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -45,7 +48,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addBlocks(RagiumBlocks.MATERIALS)
 
         addItems(RagiumItems.MATERIALS)
-        addItems(RagiumItems.TIERED)
+        addItems(RagiumItems.CIRCUITS.toTable(HTItemMaterialVariant.CIRCUIT))
+        addItems(RagiumItems.COILS.toTable(RagiumMaterialVariants.COIL))
+        addItems(RagiumItems.COMPONENTS.toTable(RagiumMaterialVariants.COMPONENT))
 
         addItems(RagiumItems.ARMORS)
         addItems(RagiumItems.TOOLS)

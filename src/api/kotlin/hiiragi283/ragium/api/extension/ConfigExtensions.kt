@@ -10,6 +10,6 @@ fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min
 fun ModConfigSpec.Builder.definePositiveDouble(
     path: String,
     defaultValue: Double,
-    min: Double,
-    max: Double,
-): HTDoubleConfigValue = defineInRange(path, defaultValue, min, max).let(::HTDoubleConfigValue)
+    min: Number,
+    max: Number,
+): HTDoubleConfigValue = defineInRange(path, defaultValue, min.toDouble(), max.toDouble()).let(::HTDoubleConfigValue)

@@ -12,10 +12,10 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -74,8 +74,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         if (result.isEmpty) return null
         val resultMaxSize: Int = result.maxStackSize
 
-        val maxParallel: Int = getMaxParallel()
-        var inputCount: Int = min(inputSlot.count, maxParallel)
+        var inputCount: Int = min(inputSlot.count, getMaxParallel())
+        val maxParallel: Int = min(inputCount, getMaxParallel())
         var outputCount: Int = result.count * maxParallel
         if (outputCount > resultMaxSize) {
             outputCount = resultMaxSize - (resultMaxSize % maxParallel)
@@ -91,11 +91,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private fun getMaxParallel(): Int = when (upgradeHandler.getTier()) {
-        HTBaseTier.BASIC -> 2
-        HTBaseTier.ADVANCED -> 4
-        HTBaseTier.ELITE -> 8
-        HTBaseTier.ULTIMATE -> 16
-        HTBaseTier.CREATIVE -> inputSlot.getStack().maxStackSize
+        HTComponentTier.BASIC -> 2
+        HTComponentTier.ADVANCED -> 4
+        HTComponentTier.ELITE -> 8
+        HTComponentTier.ULTIMATE -> 16
+        HTComponentTier.ETERNAL -> inputSlot.getStack().maxStackSize
         null -> 1
     }
 

@@ -126,7 +126,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         }
         builder.push("collector")
         deviceCollectorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        deviceCollectorEntityRange = builder.definePositiveDouble("entityRange", 5.0, 1.0, 16.0)
+        deviceCollectorEntityRange = builder.definePositiveDouble("entityRange", 5.0, 1, 16)
         builder.pop()
 
         builder.push("exp_collector")

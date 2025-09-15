@@ -4,6 +4,10 @@
     "count": 1,
     "item": "minecraft:sculk_catalyst"
   },
+  "ingredient": {
+    "count": 1,
+    "tag": "c:gems/amethyst"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:echo_shard"

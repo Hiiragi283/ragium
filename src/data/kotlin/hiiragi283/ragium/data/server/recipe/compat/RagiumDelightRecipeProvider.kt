@@ -37,7 +37,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         HTFluidTransformRecipeBuilder
             .infusing(
                 HTIngredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
-                HTIngredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 250),
+                HTIngredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
                 HTResultHelper.INSTANCE.item(ModItems.RICH_SOIL.get()),
             ).save(output)
 

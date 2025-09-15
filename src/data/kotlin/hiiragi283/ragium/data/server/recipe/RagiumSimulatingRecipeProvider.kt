@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.impl.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -25,7 +27,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         // Echo Shard
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                null,
+                HTIngredientHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.AMETHYST),
                 HTIngredientHelper.item(Items.SCULK_CATALYST),
                 HTResultHelper.INSTANCE.item(Items.ECHO_SHARD),
             ).save(output)

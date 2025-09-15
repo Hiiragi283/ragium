@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.tier.HTMaterialTier
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -47,7 +46,6 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.common.variant.RagiumMaterialVariants
 import hiiragi283.ragium.config.RagiumCommonConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
@@ -137,7 +135,7 @@ object RagiumItems {
     val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll")
 
     @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIALS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Dusts
         listOf(
             // Vanilla - Metal
@@ -202,17 +200,10 @@ object RagiumItems {
         ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
         // Plates
         put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
-
-        // Coils
-        fun addCoil(material: RagiumMaterialType) {
-            put(RagiumMaterialVariants.COIL, material, register("${material.serializedName}_coil"))
-        }
-        addCoil(RagiumMaterialType.RAGI_ALLOY)
-        addCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY)
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant, material: HTMaterialType): HTDeferredItem<*> = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS.get(variant, material)
         ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
@@ -231,24 +222,27 @@ object RagiumItems {
     fun getPlate(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.PLATE, material)
 
     @JvmField
-    val TIERED: HTTable<HTMaterialVariant, HTMaterialTier, HTDeferredItem<*>> = buildTable {
-        fun register(entries: Iterable<HTMaterialTier>, variant: HTMaterialVariant, suffix: String) {
-            for (tier: HTMaterialTier in entries) {
-                put(variant, tier, register("${tier.serializedName}_$suffix", ::HTTierBasedItem.partially1(tier)))
-            }
-        }
+    val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+        .associateWith { material: HTMaterialType -> register("${material.serializedName}_coil") }
 
-        // Circuits
-        register(HTCircuitTier.entries, HTItemMaterialVariant.CIRCUIT, "circuit")
-        // Components
-        register(HTComponentTier.entries, RagiumMaterialVariants.COMPONENT, "component")
+    @JvmField
+    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
+        register("${tier.serializedName}_circuit", ::HTTierBasedItem.partially1(tier))
+    }
+
+    @JvmField
+    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
+        register("${tier.serializedName}_component", ::HTTierBasedItem.partially1(tier))
     }
 
     @JvmStatic
-    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = TIERED.get(HTItemMaterialVariant.CIRCUIT, tier)!!
+    fun getCoil(material: HTMaterialType): HTDeferredItem<*> = COILS[material]!!
 
     @JvmStatic
-    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = TIERED.get(RagiumMaterialVariants.COMPONENT, tier)!!
+    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
+
+    @JvmStatic
+    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
 
     //    Armors    //
 

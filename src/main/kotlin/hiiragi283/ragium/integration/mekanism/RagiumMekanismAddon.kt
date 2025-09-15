@@ -58,7 +58,7 @@ object RagiumMekanismAddon : RagiumAddon {
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val MATERIAL_ITEMS: HTTable<HTMaterialVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIAL_ITEMS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
         put(
             HTMekMaterialVariant.ENRICHED,

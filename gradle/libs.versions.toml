@@ -65,7 +65,6 @@ mods-impl = [
     "almost",
     "delight",
     "emi",
-    "fusion",
     "guide",
     "immersive",
     "jade",
@@ -84,8 +83,7 @@ mods-compile = []
 
 mods-runtime = [
     "curious",
-    "dire",
-    "rs2",
+    "fusion",
 ]
 
 [plugins]

@@ -12,6 +12,8 @@ abstract class HTGeneratorBlockEntity(protected val variant: HTGeneratorVariant,
     HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
     final override val energyUsage: Int = variant.energyRate
 
+    override fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyGeneratorRate(base) ?: base
+
     final override fun createStorageHolder(battery: HTEnergyBattery): HTEnergyStorageHolder =
         HTSimpleEnergyStorageHolder.output(this, battery)
 }

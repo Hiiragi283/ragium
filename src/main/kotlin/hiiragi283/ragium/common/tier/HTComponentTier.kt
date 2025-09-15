@@ -19,6 +19,22 @@ enum class HTComponentTier(private val base: HTBaseTier) : HTMaterialTier {
             entries.firstOrNull { tier: HTComponentTier -> tier.getBaseTier() == provider.getBaseTier() }
     }
 
+    fun modifyGeneratorRate(operand: Int): Int = when (this) {
+        BASIC -> operand
+        ADVANCED -> operand * 2
+        ELITE -> operand * 4
+        ULTIMATE -> operand * 6
+        ETERNAL -> Int.MAX_VALUE
+    }
+
+    fun modifyProcessorRate(operand: Int): Int = when (this) {
+        BASIC -> operand
+        ADVANCED -> operand * 3 / 4
+        ELITE -> operand * 2 / 4
+        ULTIMATE -> operand / 4
+        ETERNAL -> 0
+    }
+
     override fun getBaseTier(): HTBaseTier = base
 
     override fun getTranslatedName(type: HTLanguageType): String = when (this) {

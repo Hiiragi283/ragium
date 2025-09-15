@@ -10,13 +10,15 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
-import hiiragi283.ragium.api.storage.item.HTMachineUpgradeHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
+import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -36,6 +38,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.*
+import java.util.function.Consumer
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
@@ -43,7 +46,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTAccessConfiguration.Holder {
     constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    val upgradeHandler: HTMachineUpgradeHandler get() = RagiumAPI.getInstance().getMachineUpgrade(this)
+    val upgradeHandler: HTMachineUpgradeItemHandler get() = getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -94,6 +97,11 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         this.ownerId = placer?.uuid
     }
 
+    override fun dropInventory(consumer: Consumer<ItemStack>) {
+        super.dropInventory(consumer)
+        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+    }
+
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
 
@@ -116,6 +124,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         usedEnergy -= requiredEnergy
         return true
     }
+
+    protected open fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyProcessorRate(base) ?: base
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val network: HTEnergyBattery = getter(level) ?: return false

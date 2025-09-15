@@ -49,7 +49,7 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
 
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
-    protected open fun getRequiredEnergy(recipe: RECIPE): Int = variant.energyUsage * 20 * 10
+    protected open fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * 20 * 10)
 
     protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 
