@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.util.HTLootTicketHelper
+import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
@@ -196,7 +196,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
             output.accept(RagiumItems.LOOT_TICKET)
-            output.acceptAll(HTLootTicketHelper.getDefaultLootTickets().values)
+            output.acceptAll(HTDefaultLootTickets.getDefaultLootTickets().values)
         }
 
     //    Extensions    //

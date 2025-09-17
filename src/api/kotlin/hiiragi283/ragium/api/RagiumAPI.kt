@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -26,6 +27,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
@@ -35,6 +37,7 @@ import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
+import kotlin.random.Random
 
 interface RagiumAPI {
     companion object {
@@ -129,4 +132,9 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
+
+    /**
+     * @see [asKotlinRandom]
+     */
+    fun wrapRandom(random: RandomSource): Random
 }

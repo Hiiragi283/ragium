@@ -90,7 +90,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
         registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
-            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TABLE_ID.get()) },
+            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET.get()) },
         )
     }
 

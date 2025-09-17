@@ -6,15 +6,15 @@
       "item": "ragium:ragi_ticket"
     },
     {
-      "tag": "minecraft:planks"
+      "item": "minecraft:dark_oak_planks"
     },
     {
-      "tag": "minecraft:rails"
+      "tag": "c:gems/emerald"
     }
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/abandoned_mineshaft"
+      "ragium:loot_ticket": "minecraft:chests/woodland_mansion"
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

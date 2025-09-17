@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import net.minecraft.core.NonNullList
+import net.minecraft.util.RandomSource
+import kotlin.random.Random
 
 //    MultiMap    //
 
@@ -60,3 +62,7 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.columnValues(column: C): Collec
 //    NonNullList    //
 
 fun <T : Any> Collection<T>.toNonNullList(): NonNullList<T> = NonNullList.copyOf(this)
+
+//    RandomSource    //
+
+fun RandomSource.asKotlinRandom(): Random = RagiumAPI.INSTANCE.wrapRandom(this)

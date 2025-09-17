@@ -14,7 +14,10 @@
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/ancient_city"
+      "ragium:loot_ticket": [
+        "minecraft:chests/ancient_city",
+        "minecraft:chests/ancient_city_ice_box"
+      ]
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

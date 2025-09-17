@@ -6,15 +6,15 @@
       "item": "ragium:ragi_ticket"
     },
     {
-      "tag": "c:cobblestones/mossy"
+      "item": "minecraft:purpur_block"
     },
     {
-      "item": "minecraft:vine"
+      "item": "minecraft:shulker_shell"
     }
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/jungle_temple"
+      "ragium:loot_ticket": "minecraft:chests/end_city_treasure"
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

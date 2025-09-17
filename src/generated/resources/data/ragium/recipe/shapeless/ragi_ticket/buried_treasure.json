@@ -14,7 +14,7 @@
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/buried_treasure"
+      "ragium:loot_ticket": "minecraft:chests/buried_treasure"
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

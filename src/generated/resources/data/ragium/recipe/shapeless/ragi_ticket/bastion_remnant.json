@@ -14,7 +14,12 @@
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/bastion_treasure"
+      "ragium:loot_ticket": [
+        "minecraft:chests/bastion_treasure",
+        "minecraft:chests/bastion_other",
+        "minecraft:chests/bastion_bridge",
+        "minecraft:chests/bastion_hoglin_stable"
+      ]
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

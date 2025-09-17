@@ -1,11 +1,8 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -17,7 +14,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
@@ -27,8 +23,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.RARE)) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
-        val lootTableKey: ResourceKey<LootTable> =
-            stack.get(RagiumDataComponents.LOOT_TABLE_ID) ?: return InteractionResultHolder.fail(stack)
+        val lootTableKey: ResourceKey<LootTable> = stack
+            .get(RagiumDataComponents.LOOT_TICKET)
+            ?.getRandomLoot(player.random)
+            ?: return InteractionResultHolder.fail(stack)
         if (level is ServerLevel) {
             val lootTable: LootTable = level.server
                 .reloadableRegistries()
@@ -55,17 +53,5 @@ class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.R
             )
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
-    }
-
-    override fun appendHoverText(
-        stack: ItemStack,
-        context: TooltipContext,
-        tooltipComponents: MutableList<Component>,
-        tooltipFlag: TooltipFlag,
-    ) {
-        val lootTableKey: ResourceKey<LootTable> = stack.get(RagiumDataComponents.LOOT_TABLE_ID) ?: return
-        tooltipComponents.add(
-            RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.getColoredComponent(ChatFormatting.YELLOW, lootTableKey.location().toString()),
-        )
     }
 }

@@ -22,6 +22,7 @@ import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
 import hiiragi283.ragium.impl.collection.HTWrappedTable
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
 import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
+import hiiragi283.ragium.impl.util.RandomSourceWrapper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -30,12 +31,14 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
+import kotlin.random.Random
 
 class InternalRagiumAPI : RagiumAPI {
     companion object {
@@ -159,4 +162,6 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
+
+    override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 }

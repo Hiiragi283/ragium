@@ -6,15 +6,18 @@
       "item": "ragium:ragi_ticket"
     },
     {
-      "item": "minecraft:dark_oak_planks"
+      "tag": "c:cobblestones/mossy"
     },
     {
-      "tag": "c:gems/emerald"
+      "item": "minecraft:vine"
     }
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/woodland_mansion"
+      "ragium:loot_ticket": [
+        "minecraft:chests/jungle_temple",
+        "minecraft:chests/jungle_temple_dispenser"
+      ]
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

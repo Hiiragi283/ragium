@@ -7,12 +7,13 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.client.resources.language.I18n
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.world.food.FoodProperties
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.component.TooltipProvider
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -24,16 +25,17 @@ object RagiumTooltipHandler {
     fun onItemTooltip(event: ItemTooltipEvent) {
         val stack: ItemStack = event.itemStack
         val consumer: (Component) -> Unit = event.toolTip::add
-        val consumerTop: (Component) -> Unit = { text: Component ->
-            event.toolTip.add(1, text)
-        }
-        val provider: HolderLookup.Provider? = event.context.registries()
+        val context: Item.TooltipContext = event.context
         val flag: TooltipFlag = event.flags
 
-        information(stack, consumerTop, flag)
-        enchantmentInfo(stack, consumerTop, provider, flag)
+        information(stack, consumer, flag)
         food(stack, consumer, event.context.tickRate())
         workInProgress(stack, consumer)
+
+        RagiumDataComponents.REGISTER.entries
+            .mapNotNull(stack::get)
+            .filterIsInstance<TooltipProvider>()
+            .forEach { provider: TooltipProvider -> provider.addToTooltip(context, consumer, flag) }
     }
 
     @JvmStatic
@@ -46,21 +48,6 @@ object RagiumTooltipHandler {
             } else {
                 consumer(RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW))
             }
-        }
-    }
-
-    @JvmStatic
-    private fun enchantmentInfo(
-        stack: ItemStack,
-        consumer: (Component) -> Unit,
-        provider: HolderLookup.Provider?,
-        flag: TooltipFlag,
-    ) {
-        stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT)?.getFullName(provider)?.ifSuccess { text: Component ->
-            when {
-                flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
-                else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)
-            }.let(consumer)
         }
     }
 

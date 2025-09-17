@@ -26,7 +26,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
@@ -117,16 +116,6 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
 
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> =
         ItemUtils.startUsingInstantly(level, player, usedHand)
-
-    override fun appendHoverText(
-        stack: ItemStack,
-        context: TooltipContext,
-        tooltips: MutableList<Component>,
-        flag: TooltipFlag,
-    ) {
-        super.appendHoverText(stack, context, tooltips, flag)
-        stack.get(RagiumDataComponents.TELEPORT_POS)?.getDescription()?.let(tooltips::add)
-    }
 
     override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumDataComponents.TELEPORT_POS)
 }

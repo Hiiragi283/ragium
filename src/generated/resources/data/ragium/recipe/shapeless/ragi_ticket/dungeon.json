@@ -6,15 +6,15 @@
       "item": "ragium:ragi_ticket"
     },
     {
-      "item": "minecraft:snow_block"
+      "tag": "c:cobblestones/mossy"
     },
     {
-      "tag": "minecraft:beds"
+      "item": "minecraft:rotten_flesh"
     }
   ],
   "result": {
     "components": {
-      "ragium:loot_table_id": "minecraft:chests/igloo_chest"
+      "ragium:loot_ticket": "minecraft:chests/simple_dungeon"
     },
     "count": 1,
     "id": "ragium:ragi_ticket"

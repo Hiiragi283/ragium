@@ -8,12 +8,13 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import dev.emi.emi.recipe.EmiSmithingRecipe
+import hiiragi283.ragium.api.extension.compose
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.util.HTRegistryHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.world.item.crafting.SmithingRecipeInput
 import java.util.*
-import java.util.function.Supplier
+import kotlin.random.asKotlinRandom
 
 class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient, private val recipe: HTSmithingModifyRecipe) :
     EmiSmithingRecipe(
@@ -37,25 +38,17 @@ class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient
         widgets.addSlot(template, 0, 0)
         widgets
             .addGeneratedSlot({ random: Random -> getStack(random, 0) }, uniq, 18, 0)
-            .appendTooltip(Supplier { EmiTooltipComponents.getIngredientTooltipComponent(input.emiStacks) })
+            .appendTooltip(EmiTooltipComponents::getIngredientTooltipComponent.compose(EmiIngredient::getEmiStacks))
         widgets
             .addGeneratedSlot({ random: Random -> getStack(random, 1) }, uniq, 36, 0)
-            .appendTooltip(Supplier { EmiTooltipComponents.getIngredientTooltipComponent(addition.emiStacks) })
+            .appendTooltip(EmiTooltipComponents::getIngredientTooltipComponent.compose(EmiIngredient::getEmiStacks))
         widgets.addGeneratedSlot({ random: Random -> getStack(random, 2) }, uniq, 94, 0).recipeContext(this)
     }
 
     private fun getStack(random: Random, index: Int): EmiStack {
-        val input: EmiStack = this.input.emiStacks.let { stacks: List<EmiStack> ->
-            stacks[random.nextInt(stacks.size)]
-        }
-        val addition: EmiStack = this.addition.emiStacks.let { stacks: List<EmiStack> ->
-            stacks[random.nextInt(stacks.size)]
-        }
-        val recipeInput = SmithingRecipeInput(
-            template.emiStacks[0].itemStack,
-            input.itemStack,
-            addition.itemStack,
-        )
+        val input: EmiStack = this.input.emiStacks.random(random.asKotlinRandom())
+        val addition: EmiStack = this.addition.emiStacks.random(random.asKotlinRandom())
+        val recipeInput = SmithingRecipeInput(template.emiStacks[0].itemStack, input.itemStack, addition.itemStack)
         val result: EmiStack = Minecraft
             .getInstance()
             .level

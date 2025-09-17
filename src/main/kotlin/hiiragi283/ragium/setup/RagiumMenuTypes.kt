@@ -30,8 +30,10 @@ import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import net.minecraft.client.Minecraft
+import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.loading.FMLEnvironment
 
@@ -126,8 +128,10 @@ object RagiumMenuTypes {
     inline fun <reified BE : BlockEntity> getBlockEntityFromBuf(buf: FriendlyByteBuf?): BE {
         checkNotNull(buf)
         check(FMLEnvironment.dist.isClient) { "Only supported on client side" }
-        return Minecraft.getInstance().level?.getBlockEntity(buf.readBlockPos()) as? BE
-            ?: error("Failed to find block entity on client side")
+        val level: Level = checkNotNull(Minecraft.getInstance().level) { "Failed to find client level" }
+        val pos: BlockPos = buf.readBlockPos()
+        val blockEntity: BlockEntity = checkNotNull(level.getBlockEntity(pos)) { "No block entity is present at $pos" }
+        return blockEntity as BE
     }
 
     @JvmStatic
