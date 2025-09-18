@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl
+package hiiragi283.ragium.impl.data
 
 import hiiragi283.ragium.api.data.recipe.HTWoodType
 import net.minecraft.tags.ItemTags

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe.impl
+package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
