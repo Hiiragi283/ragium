@@ -290,6 +290,8 @@ tasks {
             rename { "${it}_ragium" }
         }
         from(apiModule.output)
+        from(dataModule.output)
+        exclude("**/ragium/data/**")
         exclude("**/unused/**")
     }
 
