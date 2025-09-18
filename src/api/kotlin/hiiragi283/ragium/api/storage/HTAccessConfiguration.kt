@@ -9,10 +9,8 @@ import hiiragi283.ragium.api.text.HTHasTranslationKey
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.util.StringRepresentable
 
 enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean, val color: Int) :
-    StringRepresentable,
     HTHasTranslationKey,
     HTHasComponent {
     INPUT_ONLY(true, false, 0xFF0033),
@@ -37,8 +35,6 @@ enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean
             BOTH -> NONE
             NONE -> INPUT_ONLY
         }
-
-    override fun getSerializedName(): String = name.lowercase()
 
     //    Holder    //
 

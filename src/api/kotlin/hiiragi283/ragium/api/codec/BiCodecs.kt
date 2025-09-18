@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.codec.BiCodecs.UUID
 import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.createTagKey
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -87,7 +87,7 @@ object BiCodecs {
         BiCodec.of(ComponentSerialization.CODEC, ComponentSerialization.STREAM_CODEC)
 
     /**
-     * [UUID]の[BiCodec]
+     * [java.util.UUID]の[BiCodec]
      */
     @JvmField
     val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
@@ -186,10 +186,7 @@ object BiCodecs {
     @JvmStatic
     fun <T : Any> tagKey(registryKey: RegistryKey<T>): BiCodec<ByteBuf, TagKey<T>> = BiCodec.of(
         TagKey.hashedCodec(registryKey),
-        ResourceLocation.STREAM_CODEC.map(
-            { id: ResourceLocation -> TagKey.create(registryKey, id) },
-            TagKey<T>::location,
-        ),
+        ResourceLocation.STREAM_CODEC.map(registryKey::createTagKey, TagKey<T>::location),
     )
 
     /**

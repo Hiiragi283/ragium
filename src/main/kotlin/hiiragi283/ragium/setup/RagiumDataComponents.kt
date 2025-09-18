@@ -5,16 +5,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -49,16 +48,10 @@ object RagiumDataComponents {
     val COLOR: Supplier<DataComponentType<DyeColor>> = register("color", BiCodecs.COLOR)
 
     @JvmField
-    val DRINK_SOUND: Supplier<DataComponentType<SoundEvent>> = register(
-        "drinking_sound",
-        BiCodecs.registryBased(BuiltInRegistries.SOUND_EVENT),
-    )
+    val DRINK_SOUND: Supplier<DataComponentType<HTItemSoundEvent>> = register("drinking_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
-    val EAT_SOUND: Supplier<DataComponentType<SoundEvent>> = register(
-        "eating_sound",
-        BiCodecs.registryBased(BuiltInRegistries.SOUND_EVENT),
-    )
+    val EAT_SOUND: Supplier<DataComponentType<HTItemSoundEvent>> = register("eating_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
     val ENERGY: Supplier<DataComponentType<Int>> = register("energy", BiCodecs.NON_NEGATIVE_INT)

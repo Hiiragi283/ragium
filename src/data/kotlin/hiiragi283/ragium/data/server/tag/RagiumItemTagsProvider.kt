@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -274,7 +273,7 @@ class RagiumItemTagsProvider(
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
         builder.addOptional(RagiumModTags.Items.POLYMER_RESIN, RagiumConst.ORITECH, "polymer_resin")
 
-        val plastics: TagKey<Item> = itemTagKey(commonId("plastic"))
+        val plastics: TagKey<Item> = builder.createTag(commonId("plastic"))
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, HTItemMaterialVariant.PLATE.itemTagKey(RagiumMaterialType.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)

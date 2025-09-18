@@ -3,14 +3,18 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "magitech"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "magitech"
     }
   ],
   "type": "ragium:sawmill",
   "ingredient": {
-    "tag": "magitech:celifern_logs"
+    "item": "magitech:celifern_planks"
   },
   "result": {
-    "count": 6,
-    "id": "magitech:celifern_planks"
+    "count": 2,
+    "id": "magitech:celifern_slab"
   }
 }

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.impl.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapedRecipeBuilder

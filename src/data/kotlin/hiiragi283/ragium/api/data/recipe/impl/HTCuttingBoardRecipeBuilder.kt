@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.impl
 
+import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.toNonNullList
 import hiiragi283.ragium.api.extension.wrapOptional

@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createKey
+import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.mapNotNull
@@ -60,7 +61,7 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
     override fun getId(): ResourceLocation = id
 
     override fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U = when (isTag) {
-        true -> fromTag.apply(TagKey.create(registryKey, id))
+        true -> fromTag.apply(registryKey.createTagKey(id))
         false -> fromKey.apply(registryKey.createKey(id))
     }
 

@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import net.minecraft.core.registries.Registries
@@ -129,9 +128,9 @@ class HTFluidContentRegister(modId: String) {
     ) : HTFluidContent<TYPE, STILL, FLOW> {
         private val commonId: ResourceLocation = commonId(getPath())
 
-        override val commonTag: TagKey<Fluid> = fluidTagKey(commonId)
+        override val commonTag: TagKey<Fluid> = Registries.FLUID.createTagKey(commonId)
 
-        override val bucketTag: TagKey<Item> = itemTagKey(commonId.withPrefix("buckets/"))
+        override val bucketTag: TagKey<Item> = Registries.ITEM.createTagKey(commonId.withPrefix("buckets/"))
 
         override fun getType(): TYPE = typeHolder.get()
 

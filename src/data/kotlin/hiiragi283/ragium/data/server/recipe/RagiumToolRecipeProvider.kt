@@ -365,6 +365,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapelessRecipeBuilder(HTDefaultLootTickets.getLootTicket(lootTicket), CraftingBookCategory.EQUIPMENT)
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
-            .saveSuffixed(output, "/${lootTicket.serializedName}")
+            .saveSuffixed(output, "/${lootTicket.name.lowercase()}")
     }
 }

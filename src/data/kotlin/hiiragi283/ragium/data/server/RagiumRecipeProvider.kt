@@ -17,6 +17,7 @@ import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumImmersiveRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumMagitechRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumOritechRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumReplicationRecipeProvider
@@ -47,6 +48,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumImmersiveRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumMagitechRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup)

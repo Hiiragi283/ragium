@@ -12,13 +12,11 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.data.HTWoodType
+import hiiragi283.ragium.impl.HTVanillaWoodType
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -110,9 +108,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTDecorationVariant.entries.forEach(::registerBuildings)
+        HTVanillaWoodType.entries.forEach(::addWoodSawing)
 
         glass()
-        wood()
     }
 
     @JvmStatic
@@ -151,37 +149,6 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
                 .define('B', HTBlockMaterialVariant.GLASS_BLOCK, material)
                 .save(output)
-        }
-    }
-
-    //    Wood    //
-
-    @JvmStatic
-    private fun wood() {
-        for (type: HTWoodType in HTWoodType.entries) {
-            val planks: ItemLike = type.planks
-            // Log -> 6x Planks
-            HTSingleItemRecipeBuilder
-                .sawmill(planks, 6)
-                .addIngredient(type.log)
-                .modCondition(type.modId)
-                .save(output)
-            // Planks -> 2x Slab
-            BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_slab")).ifPresent { slab ->
-                HTSingleItemRecipeBuilder
-                    .sawmill(slab, 2)
-                    .addIngredient(planks)
-                    .modCondition(type.modId)
-                    .save(output)
-            }
-            // Planks -> Stairs
-            BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_stairs")).ifPresent { stairs ->
-                HTSingleItemRecipeBuilder
-                    .sawmill(stairs)
-                    .addIngredient(planks)
-                    .modCondition(type.modId)
-                    .save(output)
-            }
         }
     }
 

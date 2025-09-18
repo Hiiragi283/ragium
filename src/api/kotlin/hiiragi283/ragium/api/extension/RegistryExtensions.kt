@@ -11,16 +11,12 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Function
@@ -41,6 +37,8 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
 fun commonId(path: String): ResourceLocation = RagiumConst.COMMON.toId(path)
+
+fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefix/$value")
 
 fun ResourceKey<*>.toDescriptionKey(prefix: String, suffix: String? = null): String = location().toDescriptionKey(prefix, suffix)
 
@@ -108,20 +106,11 @@ fun <T : Any> RegistryAccess.registryOrNull(registryKey: RegistryKey<T>): Regist
 
 //    TagKey    //
 
-/**
- * 指定した[id]から[TagKey]を返します。
- */
-fun blockTagKey(id: ResourceLocation): TagKey<Block> = TagKey.create(Registries.BLOCK, id)
+fun <T : Any> RegistryKey<T>.createTagKey(id: ResourceLocation): TagKey<T> = TagKey.create(this, id)
 
-/**
- * 指定した[id]から[TagKey]を返します。
- */
-fun fluidTagKey(id: ResourceLocation): TagKey<Fluid> = TagKey.create(Registries.FLUID, id)
+fun <T : Any> RegistryKey<T>.createCommonTag(path: String): TagKey<T> = createTagKey(commonId(path))
 
-/**
- * 指定した[id]から[TagKey]を返します。
- */
-fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.ITEM, id)
+fun <T : Any> RegistryKey<T>.createCommonTag(prefix: String, value: String): TagKey<T> = createTagKey(commonId(prefix, value))
 
 /**
  * [TagKey]の名前を返します。

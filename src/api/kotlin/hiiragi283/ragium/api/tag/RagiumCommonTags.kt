@@ -1,14 +1,9 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.createCommonTag
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
-import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -27,17 +22,7 @@ object RagiumCommonTags {
         val ORES_IN_GROUND_END_STONE: TagKey<Block> = create("ores_in_ground", "end_stone")
 
         @JvmStatic
-        private fun create(prefix: String, value: String): TagKey<Block> = blockTagKey(commonId("$prefix/$value"))
-    }
-
-    //    DamageTypes    //
-
-    object DamageTypes {
-        @JvmField
-        val IS_SONIC: TagKey<DamageType> = create("is_sonic")
-
-        @JvmStatic
-        private fun create(path: String): TagKey<DamageType> = TagKey.create(Registries.DAMAGE_TYPE, RagiumAPI.id(path))
+        private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
     }
 
     //    Fluids    //
@@ -50,7 +35,7 @@ object RagiumCommonTags {
         val MEAT: TagKey<Fluid> = create("meat")
 
         @JvmStatic
-        private fun create(path: String): TagKey<Fluid> = fluidTagKey(commonId(path))
+        private fun create(path: String): TagKey<Fluid> = Registries.FLUID.createCommonTag(path)
     }
 
     //    Items    //
@@ -102,9 +87,9 @@ object RagiumCommonTags {
         val ORES_DEEP_SCRAP: TagKey<Item> = create(RagiumConst.ORES, "deep_scrap")
 
         @JvmStatic
-        private fun create(path: String): TagKey<Item> = itemTagKey(commonId(path))
+        private fun create(path: String): TagKey<Item> = Registries.ITEM.createCommonTag(path)
 
         @JvmStatic
-        private fun create(prefix: String, value: String): TagKey<Item> = itemTagKey(commonId("$prefix/$value"))
+        private fun create(prefix: String, value: String): TagKey<Item> = Registries.ITEM.createCommonTag(prefix, value)
     }
 }

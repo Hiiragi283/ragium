@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.impl.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.impl.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.impl.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -24,6 +25,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -232,4 +234,30 @@ sealed class HTRecipeProvider {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.getComponent(tier))
             .addIngredient(ingredient)
+
+    protected fun addWoodSawing(type: HTWoodType) {
+        val planks: ItemLike = type.planks
+        // Log -> 6x Planks
+        HTSingleItemRecipeBuilder
+            .sawmill(planks, 6)
+            .addIngredient(type.log)
+            .modCondition(type.getModId())
+            .save(output)
+        // Planks -> 2x Slab
+        BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_slab")).ifPresent { slab ->
+            HTSingleItemRecipeBuilder
+                .sawmill(slab, 2)
+                .addIngredient(planks)
+                .modCondition(type.getModId())
+                .save(output)
+        }
+        // Planks -> Stairs
+        BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_stairs")).ifPresent { stairs ->
+            HTSingleItemRecipeBuilder
+                .sawmill(stairs)
+                .addIngredient(planks)
+                .modCondition(type.getModId())
+                .save(output)
+        }
+    }
 }

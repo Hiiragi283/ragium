@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.tag
 
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
@@ -18,6 +19,8 @@ import java.util.function.BiConsumer
 class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
 
+    fun createTag(id: ResourceLocation): TagKey<T> = registryKey.createTagKey(id)
+
     fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)
 
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
@@ -31,7 +34,7 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
     }
 
     fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
-        addTag(tagKey, TagKey.create(registryKey, child), type)
+        addTag(tagKey, registryKey.createTagKey(child), type)
 
     fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache.put(tagKey, Entry(child.location, true, type))

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
@@ -128,8 +129,8 @@ object RagiumDelightAddon : RagiumAddon {
         }
 
         event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.HONEY_DRINK)
-            builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.HONEY_DRINK)
+            builder.set(RagiumDataComponents.DRINK_SOUND.get(), HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND.get(), HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
         }
     }
 

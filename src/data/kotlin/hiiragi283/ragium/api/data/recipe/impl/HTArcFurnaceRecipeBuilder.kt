@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.impl
 
 import blusunrize.immersiveengineering.api.crafting.IngredientWithSize
 import blusunrize.immersiveengineering.api.crafting.TagOutput

@@ -3,14 +3,18 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "magitech"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "magitech"
     }
   ],
   "type": "ragium:sawmill",
   "ingredient": {
-    "item": "magitech:celifern_planks"
+    "item": "magitech:charcoal_birch_planks"
   },
   "result": {
     "count": 1,
-    "id": "magitech:celifern_stairs"
+    "id": "magitech:charcoal_birch_stairs"
   }
 }

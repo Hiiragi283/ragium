@@ -5,8 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.HTSolarPower
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.extension.createCommonTag
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -19,6 +18,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -153,5 +153,5 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         add(content.commonTag, HTFluidFuelData(amount), false)
 
     private fun Builder<HTFluidFuelData, Fluid>.add(path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
-        add(fluidTagKey(commonId(path)), HTFluidFuelData(amount), false)
+        add(Registries.FLUID.createCommonTag(path), HTFluidFuelData(amount), false)
 }

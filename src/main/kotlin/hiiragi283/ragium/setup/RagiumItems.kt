@@ -8,12 +8,13 @@ import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -532,7 +533,7 @@ object RagiumItems {
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(
                 RagiumDataComponents.IMMUNE_DAMAGE_TYPES.get(),
-                HTKeyOrTagHelper.INSTANCE.create(RagiumCommonTags.DamageTypes.IS_SONIC),
+                HTKeyOrTagHelper.INSTANCE.create(RagiumModTags.DamageTypes.IS_SONIC),
             )
         }
 
@@ -541,8 +542,8 @@ object RagiumItems {
         }
 
         event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND.get(), SoundEvents.GENERIC_DRINK)
-            builder.set(RagiumDataComponents.EAT_SOUND.get(), SoundEvents.GENERIC_DRINK)
+            builder.set(RagiumDataComponents.DRINK_SOUND.get(), HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND.get(), HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
         }
 
         val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->

@@ -20,7 +20,7 @@ public abstract class ItemStackMixin {
     public void ragium$getDrinkingSound(CallbackInfoReturnable<SoundEvent> cir) {
         var sound = ragium$self().get(RagiumDataComponents.DRINK_SOUND);
         if (sound != null) {
-            cir.setReturnValue(sound);
+            cir.setReturnValue(sound.getSound());
         }
     }
 
@@ -28,7 +28,7 @@ public abstract class ItemStackMixin {
     public void ragium$getEatingSound(CallbackInfoReturnable<SoundEvent> cir) {
         var sound = ragium$self().get(RagiumDataComponents.EAT_SOUND);
         if (sound != null) {
-            cir.setReturnValue(sound);
+            cir.setReturnValue(sound.getSound());
         }
     }
 }

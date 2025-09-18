@@ -5,12 +5,11 @@ import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceKey
-import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 
-enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) : StringRepresentable {
+enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
     END_CITY(BuiltInLootTables.END_CITY_TREASURE),
     DUNGEON(BuiltInLootTables.SIMPLE_DUNGEON),
     MINESHAFT(BuiltInLootTables.ABANDONED_MINESHAFT),
@@ -53,6 +52,4 @@ enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) : StringRepres
     }
 
     constructor(vararg lootTables: ResourceKey<LootTable>) : this(HTLootTicketTargets.create(*lootTables))
-
-    override fun getSerializedName(): String = name.lowercase()
 }

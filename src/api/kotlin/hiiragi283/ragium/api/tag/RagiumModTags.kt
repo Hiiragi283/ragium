@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
+import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -32,7 +32,17 @@ object RagiumModTags {
         val WIP: TagKey<Block> = create("work_in_progress")
 
         @JvmStatic
-        private fun create(path: String): TagKey<Block> = blockTagKey(RagiumAPI.id(path))
+        private fun create(path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(path))
+    }
+
+    //    DamageTypes    //
+
+    object DamageTypes {
+        @JvmField
+        val IS_SONIC: TagKey<DamageType> = create("is_sonic")
+
+        @JvmStatic
+        private fun create(path: String): TagKey<DamageType> = Registries.DAMAGE_TYPE.createTagKey(RagiumAPI.id(path))
     }
 
     //    EntityTypes    //
@@ -48,7 +58,7 @@ object RagiumModTags {
         val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
 
         @JvmStatic
-        private fun create(path: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, RagiumAPI.id(path))
+        private fun create(path: String): TagKey<EntityType<*>> = Registries.ENTITY_TYPE.createTagKey(RagiumAPI.id(path))
     }
 
     //    Fluids    //
@@ -92,9 +102,9 @@ object RagiumModTags {
         val TOOLS_HAMMER: TagKey<Item> = create("tools", "hammer")
 
         @JvmStatic
-        private fun create(path: String): TagKey<Item> = itemTagKey(RagiumAPI.id(path))
+        private fun create(path: String): TagKey<Item> = Registries.ITEM.createTagKey(RagiumAPI.id(path))
 
         @JvmStatic
-        private fun create(prefix: String, suffix: String): TagKey<Item> = itemTagKey(RagiumAPI.id(prefix, suffix))
+        private fun create(prefix: String, suffix: String): TagKey<Item> = create("$prefix/$suffix")
     }
 }
