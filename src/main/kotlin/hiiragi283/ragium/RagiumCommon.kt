@@ -26,7 +26,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.setup.RagiumRecipeSerializersImpl
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
@@ -77,7 +77,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
-        RagiumRecipeSerializersImpl.REGISTER.register(eventBus)
+        RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 

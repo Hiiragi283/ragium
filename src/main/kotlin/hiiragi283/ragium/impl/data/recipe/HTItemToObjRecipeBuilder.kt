@@ -3,14 +3,14 @@ package hiiragi283.ragium.impl.data.recipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
-import hiiragi283.ragium.api.recipe.impl.HTCompressingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.impl.HTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
+import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
+import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
+import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import net.minecraft.resources.ResourceLocation
 
 class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTItemToObjRecipe<RESULT>>(

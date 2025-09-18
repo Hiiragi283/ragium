@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.indices
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializersImpl
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -52,5 +52,5 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width >= 2 && height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializersImpl.ICE_CREAM_SODA
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ICE_CREAM_SODA
 }
