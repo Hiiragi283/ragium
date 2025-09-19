@@ -8,30 +8,34 @@ import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTTeleportPos
+import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
 object RagiumDataComponents {
     @JvmField
-    val REGISTER: DeferredRegister.DataComponents =
-        DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, RagiumAPI.MOD_ID)
+    val REGISTER: HTDeferredRegister<DataComponentType<*>> = HTDeferredRegister(Registries.DATA_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
     @JvmStatic
     private fun <T : Any> register(
         name: String,
         codec: Codec<T>,
         streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>,
-    ): Supplier<DataComponentType<T>> = REGISTER.registerComponentType<T>(name) { builder: DataComponentType.Builder<T> ->
-        builder.persistent(codec).networkSynchronized(streamCodec)
+    ): Supplier<DataComponentType<T>> = REGISTER.register(name) { _: ResourceLocation ->
+        DataComponentType
+            .builder<T>()
+            .persistent(codec)
+            .networkSynchronized(streamCodec)
+            .build()
     }
 
     @JvmStatic

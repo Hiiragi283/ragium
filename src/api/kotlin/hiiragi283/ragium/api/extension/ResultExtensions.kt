@@ -4,7 +4,6 @@ import com.mojang.serialization.DataResult
 import java.util.Optional
 import java.util.function.Function
 import java.util.function.Predicate
-import java.util.function.Supplier
 import kotlin.jvm.optionals.getOrNull
 
 //    DataResult    //
@@ -30,11 +29,6 @@ fun <T : Any> T?.wrapOptional(): Optional<T> = Optional.ofNullable(this)
 
 fun <T : Any, R : Any> Optional<T>.mapNotNull(function: Function<T, R?>): Optional<R> =
     flatMap { value: T -> Optional.ofNullable(function.apply(value)) }
-
-fun <T : Any> Optional<T>.mapIfEmpty(supplier: Supplier<T?>): Optional<T> = when {
-    this.isEmpty -> supplier.get().wrapOptional()
-    else -> this
-}
 
 fun <T : Any> Optional<T>.wrapDataResult(message: String = "Value is null"): DataResult<T> =
     this.map(DataResult<T>::success).orElseGet { DataResult.error { message } }

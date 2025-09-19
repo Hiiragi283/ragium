@@ -24,6 +24,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import kotlin.streams.asSequence
 
 class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.TELEPAD, pos, state),
@@ -32,10 +33,11 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         @JvmStatic
         fun validateStructure(level: Level, pos: BlockPos): Boolean = BlockPos
             .betweenClosedStream(-1, 0, -1, 1, 0, 1)
+            .asSequence()
             .map(pos::offset)
             .filter { posIn: BlockPos -> posIn != pos }
             .map(level::getBlockState)
-            .allMatch(RagiumBlocks.DEVICE_CASING::isOf)
+            .all(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
     private lateinit var tank: HTVariableFluidStackTank

@@ -14,6 +14,7 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.extension.holdersSequence
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
@@ -106,7 +107,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Crafting
         RagiumRecipeTypes.CRAFTING.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
-                EmiPort.getPotionRegistry().holders().forEach { holder: Holder<Potion> ->
+                EmiPort.getPotionRegistry().holdersSequence().forEach { holder: Holder<Potion> ->
                     addRecipeSafe(
                         holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
                     ) { id: ResourceLocation ->
@@ -236,27 +237,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        // Infusing
-        /*RagiumRecipeTypes.INFUSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToItemRecipe ->
-            registry.addRecipe(
-                HTItemWithFluidToItemEmiRecipe.infusing(
-                    id,
-                    recipe.fluidIngredient.toFluidEmi(),
-                    recipe.itemIngredient.toItemEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }
-        HTDynamicRecipes.bucketFilling().forEach { (id: ResourceLocation, recipe: HTItemWithFluidToItemRecipe) ->
-            registry.addRecipe(
-                HTItemWithFluidToItemEmiRecipe.infusing(
-                    id,
-                    recipe.fluidIngredient.toFluidEmi(),
-                    recipe.itemIngredient.toItemEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }*/
         // Melting
         RagiumRecipeTypes.MELTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToFluidRecipe ->
             registry.addRecipe(
@@ -267,17 +247,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        // Mixing
-        /*RagiumRecipeTypes.MIXING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithFluidToFluidRecipe ->
-            registry.addRecipe(
-                HTMixingEmiRecipe(
-                    id,
-                    recipe.fluidIngredient.toFluidEmi(),
-                    recipe.itemIngredient.toItemEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }*/
         // Simulating
         RagiumRecipeTypes.SIMULATING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
             registry.addRecipe(
@@ -289,17 +258,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        // Solidifying
-        /*RagiumRecipeTypes.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidWithCatalystToItemRecipe ->
-            registry.addRecipe(
-                HTFluidWithCatalystToItemEmiRecipe.solidifying(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.catalyst.toItemEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
-        }*/
     }
 
     private fun addInteractions() {

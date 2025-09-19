@@ -13,6 +13,8 @@ import java.util.function.Supplier
 open class HTDeferredRegister<T : Any>(registryKey: RegistryKey<T>, namespace: String) : DeferredRegister<T>(registryKey, namespace) {
     fun createId(path: String): ResourceLocation = namespace.toId(path)
 
+    open fun asSequence(): Sequence<HTDeferredHolder<T, out T>> = entries.asSequence()
+
     override fun getEntries(): Collection<HTDeferredHolder<T, out T>> = super.getEntries().filterIsInstance<HTDeferredHolder<T, out T>>()
 
     override fun <I : T> register(name: String, func: Function<ResourceLocation, out I>): HTDeferredHolder<T, I> =

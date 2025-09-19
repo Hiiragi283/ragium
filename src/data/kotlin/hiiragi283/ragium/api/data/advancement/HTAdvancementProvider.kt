@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.extension.wrapOptional
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -12,9 +13,7 @@ import net.neoforged.neoforge.common.conditions.WithConditions
 import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.nio.file.Path
-import java.util.*
 import java.util.concurrent.CompletableFuture
-import kotlin.collections.toTypedArray
 
 /**
  * @see [AdvancementProvider]
@@ -39,7 +38,7 @@ open class HTAdvancementProvider(
                     output,
                     provider,
                     Advancement.CONDITIONAL_CODEC,
-                    Optional.of(WithConditions(conditions, adv)),
+                    WithConditions(conditions, adv).wrapOptional(),
                     path,
                 ),
             )

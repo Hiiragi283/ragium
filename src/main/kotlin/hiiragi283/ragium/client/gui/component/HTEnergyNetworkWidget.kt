@@ -47,7 +47,6 @@ class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int)
     }
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        val battery: HTEnergyBattery = getBattery() ?: return
-        consumer(energyText(battery))
+        getBattery()?.let(::energyText)?.let(consumer)
     }
 }

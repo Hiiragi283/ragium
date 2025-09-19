@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -10,7 +11,6 @@ import net.minecraft.world.item.component.Tool
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.SimpleTier
 import net.neoforged.neoforge.registries.holdersets.AnyHolderSet
-import java.util.*
 
 object RagiumToolTiers {
     @JvmField
@@ -45,8 +45,8 @@ object RagiumToolTiers {
                 Tool.Rule.deniesDrops(block),
                 Tool.Rule(
                     AnyHolderSet(BuiltInRegistries.BLOCK.asLookup()),
-                    Optional.of(12f),
-                    Optional.of(true),
+                    12f.wrapOptional(),
+                    true.wrapOptional(),
                 ),
             ),
             1f,

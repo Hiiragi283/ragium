@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item.block
 
+import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import net.minecraft.world.effect.MobEffectCategory
@@ -13,7 +14,7 @@ class HTWarpedWartItem(block: HTWarpedWartBlock, properties: Properties) : HTBlo
         livingEntity.activeEffects
             .map(MobEffectInstance::getEffect)
             .filter { it.value().category == MobEffectCategory.HARMFUL }
-            .randomOrNull()
+            .randomOrNull(level.random.asKotlinRandom())
             ?.let(livingEntity::removeEffect)
         return super.finishUsingItem(stack, level, livingEntity)
     }

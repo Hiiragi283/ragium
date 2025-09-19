@@ -1,5 +1,8 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.extension.asNonEmptySequence
+import hiiragi283.ragium.api.extension.copy
+import hiiragi283.ragium.api.extension.getOrEmpty
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
@@ -7,7 +10,6 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.core.Direction
-import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.inventory.Slot
@@ -15,7 +17,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.common.MutableDataComponentHolder
-import kotlin.math.max
 
 /**
  * [HTItemHandler]に基づいたコンポーネント向けの実装
@@ -35,19 +36,11 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         protected fun getContents(): ItemContainerContents = parent.getOrDefault(component, ItemContainerContents.EMPTY)
 
-        override fun getStack(): ItemStack = when (slot) {
-            in (0..<getContents().slots) -> getContents().getStackInSlot(slot)
-            else -> ItemStack.EMPTY
-        }
+        override fun getStack(): ItemStack = getContents().getOrEmpty(slot)
 
         override fun setStack(stack: ItemStack) {
-            var contents: ItemContainerContents = getContents()
-            val list: NonNullList<ItemStack> = NonNullList.withSize(max(contents.slots, size), ItemStack.EMPTY)
-            contents.copyInto(list)
-            // val oldStack: ItemStack = list[slot]
-            list[slot] = stack
-            contents = ItemContainerContents.fromItems(list)
-            parent.setOrRemove(component, contents) { it.nonEmptyStream().findAny().isEmpty }
+            val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack) }
+            parent.setOrRemove(component, contents) { it.asNonEmptySequence().none() }
             onContentsChanged()
         }
 

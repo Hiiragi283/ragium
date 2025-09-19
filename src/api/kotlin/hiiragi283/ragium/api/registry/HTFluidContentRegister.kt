@@ -32,10 +32,8 @@ class HTFluidContentRegister(modId: String) {
     private val blockRegister: HTDeferredRegister<Block> = HTDeferredRegister(Registries.BLOCK, modId)
     private val itemRegister = HTDeferredItemRegister(modId)
 
-    val fluidEntries: Collection<HTDeferredHolder<Fluid, *>>
-        get() = fluidRegister.entries
-    val typeEntries: Collection<HTDeferredHolder<FluidType, *>>
-        get() = typeRegister.entries
+    val fluidEntries: Collection<HTDeferredHolder<Fluid, *>> get() = fluidRegister.entries
+    val typeEntries: Collection<HTDeferredHolder<FluidType, *>> get() = typeRegister.entries
     val blockEntries: Collection<HTDeferredHolder<Block, *>> get() = blockRegister.entries
     val itemEntries: Collection<HTDeferredItem<*>> get() = itemRegister.entries
 

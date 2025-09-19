@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.variant.HTDeviceVariant
@@ -24,7 +25,7 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
             .map(pos::offset)
             .filter { posIn: BlockPos -> posIn != pos }
             .toList()
-            .random()
+            .random(level.random.asKotlinRandom())
         // 水を消費できない場合はスキップ
         if (tank.extract(50, true, HTStorageAccess.INTERNAl).isEmpty) return TriState.DEFAULT
         // ランダムチックを呼び出す

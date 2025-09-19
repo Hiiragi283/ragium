@@ -24,6 +24,8 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
 
     //    HTDeferredRegister    //
 
+    override fun asSequence(): Sequence<HTDeferredItem<*>> = super.asSequence().filterIsInstance<HTDeferredItem<*>>()
+
     override fun getEntries(): Collection<HTDeferredItem<*>> = super.getEntries().filterIsInstance<HTDeferredItem<*>>()
 
     override fun <I : Item> register(name: String, func: Function<ResourceLocation, out I>): HTDeferredItem<I> =

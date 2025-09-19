@@ -32,7 +32,8 @@ object RagiumTooltipHandler {
         food(stack, consumer, event.context.tickRate())
         workInProgress(stack, consumer)
 
-        RagiumDataComponents.REGISTER.entries
+        RagiumDataComponents.REGISTER
+            .asSequence()
             .mapNotNull(stack::get)
             .filterIsInstance<TooltipProvider>()
             .forEach { provider: TooltipProvider -> provider.addToTooltip(context, consumer, flag) }

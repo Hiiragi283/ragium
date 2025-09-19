@@ -17,7 +17,7 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.storage.loot.LootTable
 
 @ConsistentCopyVisibility
-data class HTLootTicketTargets private constructor(val lootTables: List<ResourceKey<LootTable>>) : HTTooltipProvider {
+data class HTLootTicketTargets private constructor(private val lootTables: List<ResourceKey<LootTable>>) : HTTooltipProvider {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTLootTicketTargets> = BiCodecs
@@ -40,6 +40,7 @@ data class HTLootTicketTargets private constructor(val lootTables: List<Resource
 
     override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
         lootTables
+            .asSequence()
             .map(ResourceKey<LootTable>::location)
             .map(ResourceLocation::toString)
             .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.getColoredComponent(ChatFormatting.YELLOW, it) }

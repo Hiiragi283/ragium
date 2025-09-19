@@ -29,7 +29,7 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : RecipeMan
     fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = getFirstHolder(input, level)?.value
 
     /**
-     * 指定された[input], [level]から最初に一致する[net.minecraft.world.item.crafting.RecipeHolder]を返します。
+     * 指定された[input], [level]から最初に一致する[RecipeHolder]を返します。
      * @param input レシピの入力
      * @param level レシピを取得するレベル
      * @return 見つからなかった場合は`null`

@@ -43,9 +43,11 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            if (tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) {
-                tank.insert(stack, false, HTStorageAccess.INTERNAl)
+            val remainStack: FluidStack = tank.insert(stack, false, HTStorageAccess.INTERNAl)
+            if (remainStack.isEmpty) {
                 entity.discard()
+            } else {
+                entity.value = remainStack.amount
             }
         }
         return true

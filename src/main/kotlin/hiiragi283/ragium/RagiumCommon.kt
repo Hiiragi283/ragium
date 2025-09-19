@@ -120,7 +120,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
             RagiumItems.REGISTER
-                .entries
+                .asSequence()
                 .map(ItemLike::asItem)
                 .filter { item: Item -> item is ProjectileItem }
                 .associateWith(::ProjectileDispenseBehavior)
