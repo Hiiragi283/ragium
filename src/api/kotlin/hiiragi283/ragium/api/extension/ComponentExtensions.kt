@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 import java.util.function.Supplier
@@ -31,3 +32,8 @@ fun <T : Any> MutableDataComponentHolder.setOrRemove(type: Supplier<out DataComp
         filter(value) -> set(type, value)
         else -> remove(type)
     }
+
+//    DataComponentPatch    //
+
+inline fun buildComponentPatch(builderAction: DataComponentPatch.Builder.() -> Unit): DataComponentPatch =
+    DataComponentPatch.builder().apply(builderAction).build()

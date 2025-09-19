@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.extension.buildComponentPatch
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -19,7 +20,6 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -84,10 +84,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             HTSmithingModifyRecipe(
                 Ingredient.of(gravityUnit),
                 Ingredient.of(),
-                DataComponentPatch
-                    .builder()
-                    .set(RagiumDataComponents.ANTI_GRAVITY.get(), true)
-                    .build(),
+                buildComponentPatch { set(RagiumDataComponents.ANTI_GRAVITY, true) },
             ),
         )
 
@@ -285,10 +282,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             HTSmithingModifyRecipe(
                 Ingredient.of(eternal),
                 Ingredient.of(),
-                DataComponentPatch
-                    .builder()
-                    .set(DataComponents.UNBREAKABLE, Unbreakable(true))
-                    .build(),
+                buildComponentPatch { set(DataComponents.UNBREAKABLE, Unbreakable(true)) },
             ),
         )
     }

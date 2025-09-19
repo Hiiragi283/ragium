@@ -518,7 +518,7 @@ object RagiumItems {
         // Tools
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             event.modify(item) { builder: DataComponentPatch.Builder ->
-                builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(ench, level))
+                builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
             }
         }
         setEnch(getAzureTool(HTVanillaToolVariant.AXE), Enchantments.SILK_TOUCH)
@@ -532,18 +532,18 @@ object RagiumItems {
         event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(
-                RagiumDataComponents.IMMUNE_DAMAGE_TYPES.get(),
+                RagiumDataComponents.IMMUNE_DAMAGE_TYPES,
                 HTKeyOrTagHelper.INSTANCE.create(RagiumModTags.DamageTypes.IS_SONIC),
             )
         }
 
         event.modify(UNIVERSAL_BUNDLE) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.COLOR.get(), DyeColor.WHITE)
+            builder.set(RagiumDataComponents.COLOR, DyeColor.WHITE)
         }
 
         event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND.get(), HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND.get(), HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
+            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
         }
 
         val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->

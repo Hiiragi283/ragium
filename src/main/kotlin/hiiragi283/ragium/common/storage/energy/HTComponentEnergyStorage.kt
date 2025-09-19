@@ -27,7 +27,7 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
 
     protected open class ComponentStorage(private val parent: MutableDataComponentHolder, private val capacity: Int) :
         HTEnergyBattery {
-        protected val component: DataComponentType<Int> get() = RagiumDataComponents.ENERGY.get()
+        protected val component: DataComponentType<Int> get() = RagiumDataComponents.ENERGY
 
         override fun getAmount(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
 

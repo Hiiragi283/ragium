@@ -79,45 +79,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(ore.get(), factory)
         }
 
-        // Food
-        /*add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
-            val propertyCondition: LootItemBlockStatePropertyCondition.Builder =
-                LootItemBlockStatePropertyCondition
-                    .hasBlockStateProperties(block)
-                    .setProperties(
-                        StatePropertiesPredicate.Builder
-                            .properties()
-                            .hasProperty(HTBlockStateProperties.MEAT_SERVINGS, 8)
-                    )
-
-            LootTable
-                .lootTable()
-                // 一度もかけていない場合はそのままドロップ
-                .withPool(
-                    LootPool
-                        .lootPool()
-                        .setRolls(ConstantValue.exactly(1f))
-                        .`when`(propertyCondition)
-                        .add(LootItem.lootTableItem(block)),
-                )
-                // 一度でもかけていたら骨をドロップ
-                .withPool(
-                    LootPool
-                        .lootPool()
-                        .setRolls(ConstantValue.exactly(1f))
-                        .`when`(propertyCondition.invert())
-                        .add(LootItem.lootTableItem(Items.BONE)),
-                )
-        }*/
-
         // Storages
         for (holder: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
-            add(holder.get()) {
-                copyComponent(
-                    it,
-                    DataComponents.ENCHANTMENTS,
-                    RagiumDataComponents.FLUID_CONTENT.get(),
-                )
+            add(holder.get()) { block: Block ->
+                copyComponent(block, DataComponents.ENCHANTMENTS, RagiumDataComponents.FLUID_CONTENT)
             }
         }
     }

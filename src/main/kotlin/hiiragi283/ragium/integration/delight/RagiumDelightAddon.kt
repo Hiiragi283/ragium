@@ -123,14 +123,14 @@ object RagiumDelightAddon : RagiumAddon {
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         event.modify(RAGI_CRYSTAL_KNIFE) { builder: DataComponentPatch.Builder ->
             builder.set(
-                RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(),
+                RagiumDataComponents.INTRINSIC_ENCHANTMENT,
                 HTIntrinsicEnchantment(Enchantments.MENDING, 1),
             )
         }
 
         event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND.get(), HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND.get(), HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
         }
     }
 

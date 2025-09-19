@@ -56,7 +56,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT.get(), SimpleFluidContent.copyOf(tank.getStack()))
+        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getStack()))
     }
 
     override fun reloadUpgrades() {
