@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.MapBiCodec
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
@@ -17,6 +16,7 @@ import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
+import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -48,7 +48,10 @@ object RagiumRecipeSerializers {
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 
     @JvmField
-    val SAWMILL: RecipeSerializer<HTSawmillRecipe> = register("sawmill", RagiumRecipeBiCodecs.SAWMILL)
+    val SAWMILL: RecipeSerializer<HTSawmillRecipe> = register(
+        "sawmill",
+        RagiumRecipeBiCodecs.itemToItem(::HTSawmillRecipe),
+    )
 
     @JvmField
     val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
@@ -65,13 +68,13 @@ object RagiumRecipeSerializers {
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
         RagiumConst.COMPRESSING,
-        RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTCompressingRecipe),
+        RagiumRecipeBiCodecs.itemToItem(::HTCompressingRecipe),
     )
 
     @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(
         RagiumConst.CRUSHING,
-        RagiumRecipeBiCodecs.itemToChancedItem(::HTCrushingRecipe),
+        RagiumRecipeBiCodecs.CRUSHING,
     )
 
     @JvmField
@@ -83,7 +86,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
         RagiumConst.EXTRACTING,
-        RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTExtractingRecipe),
+        RagiumRecipeBiCodecs.itemToItem(::HTExtractingRecipe),
     )
 
     @JvmField
@@ -95,19 +98,25 @@ object RagiumRecipeSerializers {
     @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
         RagiumConst.MELTING,
-        RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.fluidCodec(), ::HTMeltingRecipe),
+        RagiumRecipeBiCodecs.itemToFluid(::HTMeltingRecipe),
     )
 
     @JvmField
     val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
         "pulverizing",
-        RagiumRecipeBiCodecs.itemToObj(HTResultHelper.INSTANCE.itemCodec(), ::HTPulverizingRecipe),
+        RagiumRecipeBiCodecs.itemToItem(::HTPulverizingRecipe),
     )
 
     @JvmField
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
         RagiumRecipeBiCodecs.itemWithCatalystToItem(::HTSimulatingRecipe),
+    )
+
+    @JvmField
+    val WASHING: RecipeSerializer<HTWashingRecipe> = register(
+        RagiumConst.WASHING,
+        RagiumRecipeBiCodecs.WASHING,
     )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :

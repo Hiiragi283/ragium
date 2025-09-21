@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity<HTItemToFluidRecipe>(
+    HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(
         RagiumRecipeTypes.MELTING.get(),
         HTMachineVariant.MELTER,
         pos,
@@ -61,7 +61,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToFluidRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
         tank.insert(recipe.assembleFluid(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
@@ -69,7 +69,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTItemToFluidRecipe,
+        recipe: HTSingleInputFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
         tank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
@@ -78,7 +78,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
         }
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.ingredient, false)
+        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
     }

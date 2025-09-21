@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
-import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -11,9 +11,10 @@ import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
+import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTItemToObjRecipe<RESULT>>(
+class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTSingleInputRecipe>(
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>,
     val ingredient: HTItemIngredient,
@@ -35,13 +36,17 @@ class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTItemToObjR
         @JvmStatic
         fun melting(ingredient: HTItemIngredient, result: HTFluidResult): HTItemToObjRecipeBuilder<HTFluidResult, HTMeltingRecipe> =
             HTItemToObjRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, ingredient, result)
+
+        @JvmStatic
+        fun sawmill(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult, HTSawmillRecipe> =
+            HTItemToObjRecipeBuilder("sawmill", ::HTSawmillRecipe, ingredient, result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id
 
     override fun createRecipe(): RECIPE = factory.create(ingredient, result)
 
-    fun interface Factory<RESULT : HTRecipeResult<*>, RECIPE : HTItemToObjRecipe<RESULT>> {
+    fun interface Factory<RESULT : HTRecipeResult<*>, RECIPE : HTSingleInputRecipe> {
         fun create(ingredient: HTItemIngredient, result: RESULT): RECIPE
     }
 }

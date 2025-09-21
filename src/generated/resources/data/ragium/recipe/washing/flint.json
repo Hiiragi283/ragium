@@ -1,0 +1,22 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "ingredient": {
+    "count": 1,
+    "tag": "c:gravels"
+  },
+  "results": [
+    {
+      "count": 1,
+      "id": "minecraft:flint"
+    },
+    {
+      "chance": 0.5,
+      "count": 1,
+      "id": "minecraft:flint"
+    }
+  ]
+}

@@ -16,14 +16,17 @@ import hiiragi283.ragium.api.data.HTFluidFuelData
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.holdersSequence
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
-import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTItemToFluidRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -33,7 +36,13 @@ import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.util.HTRegistryHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
+import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
+import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
+import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
+import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
+import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCuttingEmiRecipe
@@ -43,6 +52,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSmithingModifyEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTWashingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -55,7 +65,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.CraftingRecipe
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.level.ItemLike
@@ -64,9 +73,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import org.slf4j.Logger
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
@@ -76,14 +82,14 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private lateinit var registry: EmiRegistry
-    private lateinit var recipeManager: RecipeManager
+    private lateinit var recipeGetter: HTRecipeGetter
 
     override fun register(registry: EmiRegistry) {
         // Category, Workstation
         RagiumEmiCategories.register(registry)
         // Recipe
         this.registry = registry
-        recipeManager = registry.recipeManager
+        recipeGetter = RagiumAPI.INSTANCE.wrapRecipeManager(registry.recipeManager)
 
         addRecipes()
         // Functions
@@ -105,7 +111,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addCustomRecipe() {
         // Crafting
-        RagiumRecipeTypes.CRAFTING.forEach(recipeManager) { _: ResourceLocation, recipe: CraftingRecipe ->
+        RagiumRecipeTypes.CRAFTING.forEach(recipeGetter) { _: ResourceLocation, recipe: CraftingRecipe ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holdersSequence().forEach { holder: Holder<Potion> ->
                     addRecipeSafe(
@@ -127,7 +133,7 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Smithing
-        RagiumRecipeTypes.SMITHING.forEach(recipeManager) { _: ResourceLocation, recipe: SmithingRecipe ->
+        RagiumRecipeTypes.SMITHING.forEach(recipeGetter) { _: ResourceLocation, recipe: SmithingRecipe ->
             if (recipe is HTSmithingModifyRecipe) {
                 registry.addRecipe(
                     HTSmithingModifyEmiRecipe(
@@ -162,7 +168,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addMachineRecipes() {
         // Alloying
-        RagiumRecipeTypes.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCombineItemToItemRecipe ->
+        RagiumRecipeTypes.ALLOYING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTCombineItemToItemRecipe ->
             registry.addRecipe(
                 HTAlloyingEmiRecipe(
                     id,
@@ -172,25 +178,21 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         // Compressing
-        RagiumRecipeTypes.COMPRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToItemRecipe ->
-            registry.addRecipe(
-                HTItemToItemEmiRecipe.compressing(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
+        RagiumRecipeTypes.COMPRESSING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTSingleInputRecipe ->
+            if (recipe is HTCompressingRecipe) {
+                registry.addRecipe(
+                    HTItemToItemEmiRecipe.compressing(
+                        id,
+                        recipe.ingredient.toEmi(),
+                        recipe.result.toEmi(),
+                    ),
+                )
+            }
         }
         // Crushing
-        RagiumRecipeTypes.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToChancedItemRecipe ->
+        RagiumRecipeTypes.CRUSHING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTItemToChancedItemRecipe ->
             val recipe: HTCrushingEmiRecipe = when (recipe) {
-                is HTItemToChancedItemRecipeBase -> HTCrushingEmiRecipe(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.results.map { result: HTItemToChancedItemRecipe.ChancedResult ->
-                        result.toEmi().setChance(result.chance)
-                    },
-                )
+                is HTCrushingRecipe -> HTCrushingEmiRecipe(id, recipe.ingredient.toEmi(), toEmiStacks(recipe))
 
                 is HTPulverizingRecipe -> HTCrushingEmiRecipe(id, recipe.ingredient.toEmi(), listOf(recipe.result.toEmi()))
 
@@ -199,7 +201,18 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addRecipe(recipe)
         }
         // Cutting
-        val cutting: (ResourceLocation, SingleItemRecipe) -> Unit = { id: ResourceLocation, recipe: SingleItemRecipe ->
+        RagiumRecipeTypes.SAWMILL.forEach(recipeGetter) { id: ResourceLocation, recipe: HTSingleInputRecipe ->
+            if (recipe is HTSawmillRecipe) {
+                registry.addRecipe(
+                    HTCuttingEmiRecipe(
+                        id.withPrefix("/"),
+                        recipe.ingredient.toEmi(),
+                        recipe.result.toEmi(),
+                    ),
+                )
+            }
+        }
+        RagiumRecipeTypes.STONECUTTER.forEach(recipeGetter) { id: ResourceLocation, recipe: SingleItemRecipe ->
             registry.addRecipe(
                 HTCuttingEmiRecipe(
                     id.withPrefix("/"),
@@ -213,20 +226,20 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        RagiumRecipeTypes.SAWMILL.forEach(recipeManager, cutting)
-        RagiumRecipeTypes.STONECUTTER.forEach(recipeManager, cutting)
         // Extracting
-        RagiumRecipeTypes.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToItemRecipe ->
-            registry.addRecipe(
-                HTItemToItemEmiRecipe.extracting(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
+        RagiumRecipeTypes.EXTRACTING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTSingleInputRecipe ->
+            if (recipe is HTExtractingRecipe) {
+                registry.addRecipe(
+                    HTItemToItemEmiRecipe.extracting(
+                        id,
+                        recipe.ingredient.toEmi(),
+                        recipe.result.toEmi(),
+                    ),
+                )
+            }
         }
         // Fluid Transforming
-        RagiumRecipeTypes.FLUID_TRANSFORM.forEach(recipeManager) { id: ResourceLocation, recipe: HTFluidTransformRecipe ->
+        RagiumRecipeTypes.FLUID_TRANSFORM.forEach(recipeGetter) { id: ResourceLocation, recipe: HTFluidTransformRecipe ->
             registry.addRecipe(
                 HTFluidTransformingEmiRecipe(
                     id,
@@ -238,17 +251,19 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         // Melting
-        RagiumRecipeTypes.MELTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemToFluidRecipe ->
-            registry.addRecipe(
-                HTMeltingEmiRecipe(
-                    id,
-                    recipe.ingredient.toEmi(),
-                    recipe.result.toEmi(),
-                ),
-            )
+        RagiumRecipeTypes.MELTING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTSingleInputFluidRecipe ->
+            if (recipe is HTMeltingRecipe) {
+                registry.addRecipe(
+                    HTMeltingEmiRecipe(
+                        id,
+                        recipe.ingredient.toEmi(),
+                        recipe.result.toEmi(),
+                    ),
+                )
+            }
         }
         // Simulating
-        RagiumRecipeTypes.SIMULATING.forEach(recipeManager) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
+        RagiumRecipeTypes.SIMULATING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTItemWithCatalystToItemRecipe ->
             registry.addRecipe(
                 HTSimulatingEmiRecipe(
                     id,
@@ -258,7 +273,25 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        // Washing
+        RagiumRecipeTypes.WASHING.forEach(recipeGetter) { id: ResourceLocation, recipe: HTItemWithFluidToChancedItemRecipe ->
+            if (recipe is HTWashingRecipe) {
+                registry.addRecipe(
+                    HTWashingEmiRecipe(
+                        id,
+                        recipe.ingredient.toEmi(),
+                        recipe.fluidIngredient.toEmi(),
+                        toEmiStacks(recipe),
+                    ),
+                )
+            }
+        }
     }
+
+    private fun toEmiStacks(recipe: HTChancedItemRecipeBase<*>): List<EmiStack> =
+        recipe.results.map { result: HTChancedItemRecipe.ChancedResult ->
+            result.toEmi().setChance(result.chance)
+        }
 
     private fun addInteractions() {
         // Water Well

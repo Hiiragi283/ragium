@@ -19,7 +19,6 @@ import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
@@ -238,25 +237,28 @@ sealed class HTRecipeProvider {
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks
-        HTSingleItemRecipeBuilder
-            .sawmill(planks, 6)
-            .addIngredient(type.log)
-            .modCondition(type.getModId())
+        HTItemToObjRecipeBuilder
+            .sawmill(
+                HTIngredientHelper.INSTANCE.item(type.log),
+                HTResultHelper.INSTANCE.item(planks, 6),
+            ).modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
         BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_slab")).ifPresent { slab ->
-            HTSingleItemRecipeBuilder
-                .sawmill(slab, 2)
-                .addIngredient(planks)
-                .modCondition(type.getModId())
+            HTItemToObjRecipeBuilder
+                .sawmill(
+                    HTIngredientHelper.INSTANCE.item(planks),
+                    HTResultHelper.INSTANCE.item(slab, 2),
+                ).modCondition(type.getModId())
                 .save(output)
         }
         // Planks -> Stairs
         BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_stairs")).ifPresent { stairs ->
-            HTSingleItemRecipeBuilder
-                .sawmill(stairs)
-                .addIngredient(planks)
-                .modCondition(type.getModId())
+            HTItemToObjRecipeBuilder
+                .sawmill(
+                    HTIngredientHelper.INSTANCE.item(planks),
+                    HTResultHelper.INSTANCE.item(stairs),
+                ).modCondition(type.getModId())
                 .save(output)
         }
     }

@@ -85,6 +85,7 @@ object RagiumConst {
     const val REFINING = "refining"
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
+    const val WASHING = "washing"
 
     const val CATALYST = "catalyst"
     const val FLUID_INPUT = "fluid_input"

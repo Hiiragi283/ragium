@@ -107,6 +107,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             register(helper, RagiumRecipeTypes.FLUID_TRANSFORM)
             register(helper, RagiumRecipeTypes.MELTING)
             register(helper, RagiumRecipeTypes.SIMULATING)
+            register(helper, RagiumRecipeTypes.WASHING)
         }
     }
 

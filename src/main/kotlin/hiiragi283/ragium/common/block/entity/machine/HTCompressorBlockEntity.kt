@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.ToItem<HTItemToItemRecipe>(
+    HTSingleItemInputBlockEntity.ToItem<HTSingleInputRecipe>(
         RagiumRecipeTypes.COMPRESSING.get(),
         HTMachineVariant.COMPRESSOR,
         pos,
@@ -29,11 +29,11 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTItemToItemRecipe,
+        recipe: HTSingleInputRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.ingredient, false)
+        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.25f, 0.5f)
     }

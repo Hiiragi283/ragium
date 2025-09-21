@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.recipe.HTRecipeGetter
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
@@ -35,6 +36,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import java.util.*
@@ -144,4 +146,6 @@ interface RagiumAPI {
      * @see [asKotlinRandom]
      */
     fun wrapRandom(random: RandomSource): Random
+
+    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeGetter
 }

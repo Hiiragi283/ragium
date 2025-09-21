@@ -11,6 +11,7 @@
   ],
   "type": "ragium:sawmill",
   "ingredient": {
+    "count": 1,
     "tag": "magitech:charcoal_birch_logs"
   },
   "result": {

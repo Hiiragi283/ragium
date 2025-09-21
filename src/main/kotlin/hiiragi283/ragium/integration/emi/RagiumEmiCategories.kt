@@ -50,6 +50,9 @@ object RagiumEmiCategories {
     @JvmField
     val MELTING: HTEmiRecipeCategory = machine(RagiumConst.MELTING, HTMachineVariant.MELTER)
 
+    @JvmField
+    val WASHING: HTEmiRecipeCategory = machine(RagiumConst.WASHING, HTMachineVariant.PULVERIZER)
+
     // Elite
     @JvmField
     val SIMULATING: HTEmiRecipeCategory = machine(RagiumConst.SIMULATING, HTMachineVariant.SIMULATOR)
@@ -65,6 +68,7 @@ object RagiumEmiCategories {
         // Advanced
         FLUID_TRANSFORM,
         MELTING,
+        WASHING,
         // Elite
         SIMULATING,
     )

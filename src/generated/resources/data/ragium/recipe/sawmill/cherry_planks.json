@@ -1,6 +1,7 @@
 {
   "type": "ragium:sawmill",
   "ingredient": {
+    "count": 1,
     "tag": "minecraft:cherry_logs"
   },
   "result": {

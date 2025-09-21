@@ -2,31 +2,36 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.item.crafting.RecipeInput
 
 /**
- * 単一の[ItemStack]から確率付きの[ItemStack]を返すレシピ
- * @see [HTItemToChancedItemRecipeBase]
+ * [INPUT]から確率付きの[ItemStack]を返すレシピ
  */
-interface HTItemToChancedItemRecipe : HTRecipe<SingleRecipeInput> {
+interface HTChancedItemRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
     /**
      * 指定された[input]から材料の個数を返します。
      * @param input レシピの入力
      * @return 必要な材料の個数
      */
-    fun getIngredientCount(input: SingleRecipeInput): Int
+    fun getIngredientCount(input: INPUT): Int
+
+    /**
+     * 指定された[input]から材料の量を返します。
+     * @param input レシピの入力
+     * @return 必要な材料の量
+     */
+    fun getIngredientAmount(input: INPUT): Int
 
     /**
      * 指定された[input]から完成品を返します。
      * @param input レシピの入力
      * @return 完成品の一覧
      */
-    fun getResultItems(input: SingleRecipeInput): List<ChancedResult>
+    fun getResultItems(input: INPUT): List<ChancedResult>
 
     /**
      * 指定された[input], [registries]から完成品のプレビューを返します。
@@ -34,7 +39,7 @@ interface HTItemToChancedItemRecipe : HTRecipe<SingleRecipeInput> {
      * @param registries レジストリのアクセス
      * @return 完成品のプレビューの一覧
      */
-    fun getPreviewItems(input: SingleRecipeInput, registries: HolderLookup.Provider): List<ItemStack> =
+    fun getPreviewItems(input: INPUT, registries: HolderLookup.Provider): List<ItemStack> =
         getResultItems(input).mapNotNull { it.getStackOrNull(registries) }.filterNot(ItemStack::isEmpty)
 
     /**
@@ -50,7 +55,7 @@ interface HTItemToChancedItemRecipe : HTRecipe<SingleRecipeInput> {
                 ChancedResult::base,
                 BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
                 ChancedResult::chance,
-                HTItemToChancedItemRecipe::ChancedResult,
+                ::ChancedResult,
             )
         }
     }

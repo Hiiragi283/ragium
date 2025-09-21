@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.recipe.HTRecipeGetter
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
@@ -21,6 +22,7 @@ import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.collection.HTHolderSetList
 import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
 import hiiragi283.ragium.impl.collection.HTWrappedTable
+import hiiragi283.ragium.impl.recipe.HTRecipeGetterImpl
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
 import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
@@ -38,6 +40,7 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
@@ -169,4 +172,6 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
 
     override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
+
+    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeGetter = HTRecipeGetterImpl(recipeManager)
 }

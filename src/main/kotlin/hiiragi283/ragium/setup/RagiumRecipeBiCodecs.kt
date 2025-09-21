@@ -1,63 +1,73 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
-import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTItemToObjRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
-import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
+import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
+import hiiragi283.ragium.impl.recipe.HTWashingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
     @JvmField
-    val SAWMILL: MapBiCodec<RegistryFriendlyByteBuf, HTSawmillRecipe> = MapBiCodec.composite(
-        BiCodec.STRING.optionalFieldOf("group", ""),
-        HTSawmillRecipe::getGroup,
-        BiCodecs.ingredient(false).fieldOf("ingredient"),
-        HTSawmillRecipe::getIngredient,
-        BiCodecs.itemStack(false).fieldOf("result"),
-        HTSawmillRecipe::getResult,
-        ::HTSawmillRecipe,
-    )
+    val CRUSHING: MapBiCodec<RegistryFriendlyByteBuf, HTCrushingRecipe> = MapBiCodec
+        .composite(
+            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTCrushingRecipe::ingredient,
+            HTChancedItemRecipe.ChancedResult.CODEC
+                .listOrElement(1, 4)
+                .fieldOf("results"),
+            HTCrushingRecipe::results,
+            ::HTCrushingRecipe,
+        )
+
+    @JvmField
+    val WASHING: MapBiCodec<RegistryFriendlyByteBuf, HTWashingRecipe> = MapBiCodec
+        .composite(
+            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTWashingRecipe::ingredient,
+            HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
+            HTWashingRecipe::fluidIngredient,
+            HTChancedItemRecipe.ChancedResult.CODEC
+                .listOrElement(1, 4)
+                .fieldOf("results"),
+            HTWashingRecipe::results,
+            ::HTWashingRecipe,
+        )
 
     @JvmStatic
-    fun <R1 : HTRecipeResult<*>, R2 : HTItemToObjRecipe<R1>> itemToObj(
-        codec: BiCodec<RegistryFriendlyByteBuf, R1>,
-        factory: HTItemToObjRecipeBuilder.Factory<R1, R2>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R2> = MapBiCodec.composite(
+    fun <R : HTItemToItemRecipe> itemToItem(
+        factory: HTItemToObjRecipeBuilder.Factory<HTItemResult, R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf("ingredient"),
-        HTItemToObjRecipe<R1>::ingredient,
-        codec.fieldOf("result"),
-        HTItemToObjRecipe<R1>::result,
+        HTItemToItemRecipe::ingredient,
+        HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
+        HTItemToItemRecipe::result,
         factory::create,
     )
 
     @JvmStatic
-    fun <R : HTItemToChancedItemRecipeBase> itemToChancedItem(
-        factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec
-        .composite(
-            HTItemIngredient.CODEC.fieldOf("ingredient"),
-            HTItemToChancedItemRecipeBase::ingredient,
-            HTItemToChancedItemRecipe.ChancedResult.CODEC
-                .listOrElement(1, 4)
-                .fieldOf("results"),
-            HTItemToChancedItemRecipeBase::results,
-            factory::create,
-        )
+    fun <R : HTItemToFluidRecipe> itemToFluid(
+        factory: HTItemToObjRecipeBuilder.Factory<HTFluidResult, R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("ingredient"),
+        HTItemToFluidRecipe::ingredient,
+        HTResultHelper.INSTANCE.fluidCodec().fieldOf("result"),
+        HTItemToFluidRecipe::result,
+        factory::create,
+    )
 
     @JvmStatic
     fun <R : HTCombineItemToItemRecipe> combineItemToObj(

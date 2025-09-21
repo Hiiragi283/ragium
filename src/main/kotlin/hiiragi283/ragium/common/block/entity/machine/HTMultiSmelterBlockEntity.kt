@@ -1,11 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.base.HTItemToItemRecipe
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -19,6 +15,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -34,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.min
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, HTItemToItemRecipe>(
+    HTProcessorBlockEntity<SingleRecipeInput, HTSingleInputRecipe>(
         HTMachineVariant.MULTI_SMELTER,
         pos,
         state,
@@ -68,7 +65,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
-    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTItemToItemRecipe? {
+    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTSingleInputRecipe? {
         val baseRecipe: AbstractCookingRecipe = baseCache.getFirstRecipe(input, level) ?: return null
         val result: ItemStack = baseRecipe.assemble(input, level.registryAccess())
         if (result.isEmpty) return null
@@ -82,12 +79,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             inputCount = outputCount / maxParallel
         }
         if (inputCount <= 0 || outputCount <= 0) return null
-        result.count = outputCount
-
-        return MultiSmeltingRecipe(
-            HTIngredientHelper.INSTANCE.item(baseRecipe.ingredients[0], inputCount),
-            HTResultHelper.INSTANCE.item(result),
-        )
+        return MultiSmeltingRecipe(baseRecipe, outputCount)
     }
 
     private fun getMaxParallel(): Int = when (upgradeHandler.getTier()) {
@@ -99,7 +91,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         null -> 1
     }
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean =
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
@@ -107,19 +99,31 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTItemToItemRecipe,
+        recipe: HTSingleInputRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.ingredient, false)
+        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }
 
-    private class MultiSmeltingRecipe(override val ingredient: HTItemIngredient, override val result: HTItemResult) : HTItemToItemRecipe {
+    private class MultiSmeltingRecipe(private val recipe: AbstractCookingRecipe, private val count: Int) : HTSingleInputRecipe {
+        override fun getIngredientCount(input: SingleRecipeInput): Int = when {
+            test(input) -> 1
+            else -> 0
+        }
+
+        override fun test(input: SingleRecipeInput): Boolean = recipe.ingredients[0].test(input.item())
+
+        override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
+            recipe.assemble(input, registries).copyWithCount(count)
+
         override fun getSerializer(): RecipeSerializer<*> = error("")
 
         override fun getType(): RecipeType<*> = error("")
+
+        override fun isIncomplete(): Boolean = recipe.ingredients[0].items.isEmpty()
     }
 }

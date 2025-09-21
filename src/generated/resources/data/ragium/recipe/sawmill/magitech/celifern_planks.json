@@ -11,6 +11,7 @@
   ],
   "type": "ragium:sawmill",
   "ingredient": {
+    "count": 1,
     "tag": "magitech:celifern_logs"
   },
   "result": {
