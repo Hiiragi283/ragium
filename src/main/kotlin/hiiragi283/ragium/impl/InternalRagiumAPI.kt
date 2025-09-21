@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
+import hiiragi283.ragium.impl.collection.HTHolderSetList
 import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
 import hiiragi283.ragium.impl.collection.HTWrappedTable
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
@@ -25,7 +26,9 @@ import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -162,6 +165,8 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
+
+    override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
 
     override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 }

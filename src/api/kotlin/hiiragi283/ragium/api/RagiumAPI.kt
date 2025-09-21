@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
+import hiiragi283.ragium.api.extension.asList
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -21,6 +22,7 @@ import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -132,6 +134,11 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
+
+    /**
+     * @see [asList]
+     */
+    fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>>
 
     /**
      * @see [asKotlinRandom]

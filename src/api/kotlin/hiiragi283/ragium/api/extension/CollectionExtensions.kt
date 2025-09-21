@@ -5,6 +5,8 @@ import com.google.common.collect.HashMultimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.NonNullList
 import net.minecraft.util.RandomSource
 import kotlin.random.Random
@@ -66,3 +68,7 @@ fun <T : Any> Collection<T>.toNonNullList(): NonNullList<T> = NonNullList.copyOf
 //    RandomSource    //
 
 fun RandomSource.asKotlinRandom(): Random = RagiumAPI.INSTANCE.wrapRandom(this)
+
+//    HolderSet    //
+
+fun <T : Any> HolderSet<T>.asList(): List<Holder<T>> = RagiumAPI.INSTANCE.wrapHolderSet(this)
