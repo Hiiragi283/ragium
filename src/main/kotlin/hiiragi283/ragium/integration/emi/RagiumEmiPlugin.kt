@@ -22,7 +22,6 @@ import hiiragi283.ragium.api.recipe.HTRecipeGetter
 import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
@@ -43,6 +42,7 @@ import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCuttingEmiRecipe

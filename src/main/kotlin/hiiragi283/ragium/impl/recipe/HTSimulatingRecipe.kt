@@ -9,8 +9,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import java.util.*
 
-class HTSimulatingRecipe(ingredient: Optional<HTItemIngredient>, catalyst: HTItemIngredient, result: HTItemResult) :
-    HTItemWithCatalystToItemRecipe(ingredient, catalyst, result) {
+class HTSimulatingRecipe(
+    override val ingredient: Optional<HTItemIngredient>,
+    override val catalyst: HTItemIngredient,
+    override val result: HTItemResult,
+) : HTItemWithCatalystToItemRecipe {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SIMULATING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.SIMULATING.get()

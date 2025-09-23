@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.storage.HTContentListener
@@ -120,9 +121,9 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
             recipe.assemble(input, registries).copyWithCount(count)
 
-        override fun getSerializer(): RecipeSerializer<*> = error("")
+        override fun getSerializer(): RecipeSerializer<*> = unsupported()
 
-        override fun getType(): RecipeType<*> = error("")
+        override fun getType(): RecipeType<*> = unsupported()
 
         override fun isIncomplete(): Boolean = recipe.ingredients[0].items.isEmpty()
     }

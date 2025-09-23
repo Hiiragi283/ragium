@@ -30,7 +30,7 @@ interface HTFluidRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
      * @param result [FluidStack]の[HTRecipeResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は[FluidStack.EMPTY]
      */
-    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider, result: HTFluidResult?): FluidStack = when {
+    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider?, result: HTFluidResult?): FluidStack = when {
         test(input) -> result?.getStackOrNull(registries)
         else -> null
     } ?: FluidStack.EMPTY
@@ -42,6 +42,6 @@ interface HTFluidRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
      * @param result [Optional]の[HTFluidResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は[FluidStack.EMPTY]
      */
-    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider, result: Optional<HTFluidResult>): FluidStack =
+    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider?, result: Optional<HTFluidResult>): FluidStack =
         getFluidResult(input, registries, result.getOrNull())
 }

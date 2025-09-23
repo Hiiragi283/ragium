@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.item
+package hiiragi283.ragium.api.item.component
 
 import com.google.common.base.Suppliers
 import hiiragi283.ragium.api.extension.wrapOptional

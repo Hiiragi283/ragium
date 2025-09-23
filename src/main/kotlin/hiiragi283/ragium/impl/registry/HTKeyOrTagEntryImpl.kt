@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.lookupOrNull
-import hiiragi283.ragium.api.extension.mapNotNull
 import hiiragi283.ragium.api.extension.wrapDataResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.config.RagiumConfig
@@ -23,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.TagsUpdatedEvent
 import org.slf4j.Logger
+import java.util.Optional
 import java.util.function.Function
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -89,16 +89,16 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
 
     private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): DataResult<out Holder<T>> = lookup
         .get(tagKey)
-        .mapNotNull(::getFirstHolder)
+        .flatMap(::getFirstHolder)
         .wrapDataResult("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}")
 
-    private fun getFirstHolder(holderSet: HolderSet<T>): Holder<T>? {
+    private fun getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
         for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {
-            val foundHolder: Holder<T>? =
-                holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == modId }
-            if (foundHolder != null) return foundHolder
+            val foundHolder: Optional<Holder<T>> =
+                holderSet.stream().filter { holder: Holder<T> -> holder.idOrThrow.namespace == modId }.findFirst()
+            if (foundHolder.isPresent) return foundHolder
         }
-        return holderSet.firstOrNull()
+        return holderSet.stream().findFirst()
     }
 
     @JvmRecord

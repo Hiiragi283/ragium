@@ -2,9 +2,9 @@ package hiiragi283.ragium.impl.recipe
 
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.impl.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType

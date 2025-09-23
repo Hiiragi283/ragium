@@ -100,6 +100,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             register(helper, RagiumRecipeTypes.SAWMILL)
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
+            register(helper, RagiumRecipeTypes.BREWING)
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.ENCHANTING)

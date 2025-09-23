@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTMultiItemToPotionRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -35,6 +36,9 @@ object RagiumRecipeTypes {
     // Machine
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe> = create(RagiumConst.ALLOYING)
+
+    @JvmField
+    val BREWING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTMultiItemToPotionRecipe> = create(RagiumConst.BREWING)
 
     @JvmField
     val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTSingleInputRecipe> = create(RagiumConst.COMPRESSING)

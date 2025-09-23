@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import com.mojang.serialization.DataResult
 import java.util.Optional
-import java.util.function.Function
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
@@ -27,8 +26,13 @@ fun <T : Any> DataResult<T>.filterNot(filter: Predicate<T>, message: String = "N
 
 fun <T : Any> T?.wrapOptional(): Optional<T> = Optional.ofNullable(this)
 
-fun <T : Any, R : Any> Optional<T>.mapNotNull(function: Function<T, R?>): Optional<R> =
-    flatMap { value: T -> Optional.ofNullable(function.apply(value)) }
-
 fun <T : Any> Optional<T>.wrapDataResult(message: String = "Value is null"): DataResult<T> =
     this.map(DataResult<T>::success).orElseGet { DataResult.error { message } }
+
+//    Throwable    //
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun unsupported(): Nothing = throw UnsupportedOperationException()
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun unsupported(message: String): Nothing = throw UnsupportedOperationException(message)

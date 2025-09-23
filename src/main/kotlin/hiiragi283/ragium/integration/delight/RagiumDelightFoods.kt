@@ -1,6 +1,6 @@
 package hiiragi283.ragium.integration.delight
 
-import hiiragi283.ragium.api.item.HTFoodBuilder
+import hiiragi283.ragium.api.item.component.HTFoodBuilder
 import hiiragi283.ragium.setup.RagiumFoods
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.food.FoodConstants

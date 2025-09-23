@@ -6,13 +6,13 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import java.util.*
+import java.util.Optional
 
-abstract class HTItemWithCatalystToItemRecipe(
-    val ingredient: Optional<HTItemIngredient>,
-    val catalyst: HTItemIngredient,
-    val result: HTItemResult,
-) : HTMultiItemToObjRecipe {
+interface HTItemWithCatalystToItemRecipe : HTMultiItemToObjRecipe {
+    val ingredient: Optional<HTItemIngredient>
+    val catalyst: HTItemIngredient
+    val result: HTItemResult
+
     override fun test(input: HTMultiItemRecipeInput): Boolean {
         val stackIn: ItemStack = input.getItem(0)
         val bool1: Boolean = ingredient
@@ -22,10 +22,10 @@ abstract class HTItemWithCatalystToItemRecipe(
         return bool1 && bool2
     }
 
-    final override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
+    override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
         getItemResult(input, registries, result)
 
-    final override fun isIncomplete(): Boolean {
+    override fun isIncomplete(): Boolean {
         val bool1: Boolean = ingredient.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
         val bool2: Boolean = catalyst.hasNoMatchingStacks()
         val bool3: Boolean = result.hasNoMatchingStack()

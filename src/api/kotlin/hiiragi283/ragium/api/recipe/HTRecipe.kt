@@ -44,7 +44,7 @@ interface HTRecipe<INPUT : RecipeInput> :
      * @param result [ItemStack]の[HTRecipeResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は[ItemStack.EMPTY]
      */
-    fun getItemResult(input: INPUT, registries: HolderLookup.Provider, result: HTItemResult?): ItemStack = when {
+    fun getItemResult(input: INPUT, registries: HolderLookup.Provider?, result: HTItemResult?): ItemStack = when {
         test(input) -> result?.getStackOrNull(registries)
         else -> null
     } ?: ItemStack.EMPTY
@@ -56,6 +56,6 @@ interface HTRecipe<INPUT : RecipeInput> :
      * @param result [Optional]で包まれた[HTItemResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は[ItemStack.EMPTY]
      */
-    fun getItemResult(input: INPUT, registries: HolderLookup.Provider, result: Optional<HTItemResult>): ItemStack =
+    fun getItemResult(input: INPUT, registries: HolderLookup.Provider?, result: Optional<HTItemResult>): ItemStack =
         getItemResult(input, registries, result.getOrNull())
 }

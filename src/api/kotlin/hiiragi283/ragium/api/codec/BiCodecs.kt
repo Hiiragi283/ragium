@@ -24,6 +24,7 @@ import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.UUID
@@ -78,6 +79,12 @@ object BiCodecs {
      */
     @JvmField
     val HAND: BiCodec<ByteBuf, InteractionHand> = enum(InteractionHand::values)
+
+    /**
+     * [PotionContents]の[BiCodec]
+     */
+    @JvmField
+    val POTION: BiCodec<RegistryFriendlyByteBuf, PotionContents> = BiCodec.of(PotionContents.CODEC, PotionContents.STREAM_CODEC)
 
     /**
      * [Component]の[BiCodec]

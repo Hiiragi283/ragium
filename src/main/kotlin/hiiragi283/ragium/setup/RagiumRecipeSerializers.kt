@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
@@ -60,10 +61,10 @@ object RagiumRecipeSerializers {
     //    Machine    //
 
     @JvmField
-    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
-        RagiumConst.ALLOYING,
-        RagiumRecipeBiCodecs.combineItemToObj(::HTAlloyingRecipe, 2..3),
-    )
+    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(RagiumConst.ALLOYING, RagiumRecipeBiCodecs.ALLOYING)
+
+    @JvmField
+    val BREWING: RecipeSerializer<HTBrewingRecipe> = register(RagiumConst.BREWING, RagiumRecipeBiCodecs.BREWING)
 
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
@@ -72,16 +73,10 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(
-        RagiumConst.CRUSHING,
-        RagiumRecipeBiCodecs.CRUSHING,
-    )
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(RagiumConst.CRUSHING, RagiumRecipeBiCodecs.CRUSHING)
 
     @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(
-        RagiumConst.ENCHANTING,
-        RagiumRecipeBiCodecs.combineItemToObj(::HTEnchantingRecipe, 1..3),
-    )
+    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(RagiumConst.ENCHANTING, RagiumRecipeBiCodecs.ENCHANTING)
 
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
@@ -114,10 +109,7 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = register(
-        RagiumConst.WASHING,
-        RagiumRecipeBiCodecs.WASHING,
-    )
+    val WASHING: RecipeSerializer<HTWashingRecipe> = register(RagiumConst.WASHING, RagiumRecipeBiCodecs.WASHING)
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :
         RecipeSerializer<RECIPE> {
