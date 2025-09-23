@@ -2,19 +2,12 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.altModelBlock
-import hiiragi283.ragium.api.extension.altTextureBlock
 import hiiragi283.ragium.api.extension.blockId
-import hiiragi283.ragium.api.extension.cubeColumn
-import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.rowValues
-import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
-import hiiragi283.ragium.api.extension.translucentSimpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -32,6 +25,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -39,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
@@ -281,6 +276,60 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     }
 
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
+
+    private fun simpleBlock(holder: HTDeferredBlock<*, *>) {
+        simpleBlock(holder.get())
+    }
+
+    private fun layeredBlock(holder: HTDeferredBlock<*, *>, layer0: ResourceLocation, layer1: ResourceLocation) {
+        simpleBlock(
+            holder.get(),
+            ConfiguredModel(
+                models()
+                    .withExistingParent(holder.getPath(), RagiumAPI.id("block/layered"))
+                    .texture("layer0", layer0)
+                    .texture("layer1", layer1)
+                    .renderType("cutout"),
+            ),
+        )
+    }
+
+    private fun cubeColumn(
+        holder: HTDeferredBlock<*, *>,
+        side: ResourceLocation = holder.blockId.withSuffix("_side"),
+        end: ResourceLocation = holder.blockId.withSuffix("_top"),
+    ) {
+        simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, end))
+    }
+
+    private fun altModelBlock(
+        holder: HTDeferredBlock<*, *>,
+        id: ResourceLocation = holder.blockId,
+        factory: (Block, ModelFile) -> Unit = ::simpleBlock,
+    ) {
+        factory(holder.get(), modelFile(id))
+    }
+
+    private fun altTextureBlock(holder: HTDeferredBlock<*, *>, all: ResourceLocation) {
+        simpleBlock(
+            holder.get(),
+            ConfiguredModel(models().cubeAll(holder.getPath(), all)),
+        )
+    }
+
+    private fun cutoutSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
+        simpleBlock(
+            holder.get(),
+            ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("cutout")),
+        )
+    }
+
+    private fun translucentSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
+        simpleBlock(
+            holder.get(),
+            ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("translucent")),
+        )
+    }
 
     /*private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())

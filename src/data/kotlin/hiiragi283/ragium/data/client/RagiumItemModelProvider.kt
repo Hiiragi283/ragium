@@ -2,16 +2,14 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.basicItem
-import hiiragi283.ragium.api.extension.handheldItem
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
-import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
+import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.common.variant.HTDecorationVariant
@@ -21,7 +19,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
-import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -56,7 +53,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
         }.forEach(::simpleBlockItem)
 
-        for ((variant: HTDecorationVariant, wall: HTBasicDeferredBlock<WallBlock>) in RagiumBlocks.WALLS) {
+        for ((variant: HTDecorationVariant, wall: HTHolderLike) in RagiumBlocks.WALLS) {
             withExistingParent(wall.getPath(), vanillaId("block/wall_inventory"))
                 .texture("wall", variant.textureId)
         }
@@ -114,4 +111,14 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumDelightAddon.KNIFE_MAP.values)
         }.forEach(::handheldItem)
     }
+
+    //    Extensions    //
+
+    private fun simpleBlockItem(block: HTHolderLike): ItemModelBuilder = simpleBlockItem(block.getId())
+
+    private fun basicItem(item: HTHolderLike): ItemModelBuilder = basicItem(item.getId())
+
+    private fun basicItem(block: HTDeferredBlock<*, *>): ItemModelBuilder = basicItem(block.itemHolder)
+
+    private fun handheldItem(item: HTHolderLike): ItemModelBuilder = handheldItem(item.getId())
 }
