@@ -11,9 +11,9 @@ import hiiragi283.ragium.common.material.HTCommonMaterialTypes
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
@@ -24,12 +24,12 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         certusBudding(AEBlocks.CHIPPED_BUDDING_QUARTZ, 2)
         certusBudding(AEBlocks.DAMAGED_BUDDING_QUARTZ, 1)
 
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(AEBlocks.QUARTZ_BLOCK),
                 ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 8000),
-                resultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ),
-            ).save(output)
+            ).addResult(resultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ))
+            .save(output)
         // Fluix Crystal
         combineWithRedstone(
             resultHelper.item(HTItemMaterialVariant.GEM, HTCommonMaterialTypes.getGem("fluix"), 2),

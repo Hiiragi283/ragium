@@ -1,0 +1,15 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "tag": "c:dew_of_the_warp"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "tag": "c:crops/beetroot"
+  },
+  "results": {
+    "count": 1,
+    "id": "ragium:warped_wart"
+  }
+}

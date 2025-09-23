@@ -8,8 +8,8 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -32,12 +32,12 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             250,
         )
         // Rich soil
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
                 ingredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
-                resultHelper.item(ModItems.RICH_SOIL.get()),
-            ).save(output)
+            ).addResult(resultHelper.item(ModItems.RICH_SOIL.get()))
+            .save(output)
 
         // Rice Panicle
         HTItemToChancedItemRecipeBuilder

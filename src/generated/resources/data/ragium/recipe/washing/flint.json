@@ -4,7 +4,7 @@
     "amount": 250,
     "tag": "c:water"
   },
-  "ingredient": {
+  "item_ingredient": {
     "count": 1,
     "tag": "c:gravels"
   },

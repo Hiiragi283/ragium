@@ -152,17 +152,19 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant) {
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
         for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(dataMapType)) {
-            val fluid: Fluid = fluidRegistry.get(key) ?: continue
-            if (!fluid.isSource(fluid.defaultFluidState())) continue
-            registry.addRecipe(
-                HTFluidFuelEmiRecipe(
-                    RagiumEmiCategories.getGenerator(variant),
-                    key.location().withPrefix("/${dataMapType.id().path}/"),
-                    EmiStack.of(fluid),
-                    fuelData.amount,
-                    variant.energyRate,
-                ),
-            )
+            fluidRegistry.getOptional(key).ifPresent { fluid: Fluid ->
+                if (fluid.isSource(fluid.defaultFluidState())) {
+                    registry.addRecipe(
+                        HTFluidFuelEmiRecipe(
+                            RagiumEmiCategories.getGenerator(variant),
+                            key.location().withPrefix("/${dataMapType.id().path}/"),
+                            EmiStack.of(fluid),
+                            fuelData.amount,
+                            variant.energyRate,
+                        ),
+                    )
+                }
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -53,12 +54,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_soul")
 
         // Crude Oil + Clay -> Polymer Resin
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(Items.CLAY_BALL),
                 ingredientHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
-                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
-            ).saveSuffixed(output, "_from_crude_oil")
+            ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
+            .saveSuffixed(output, "_from_crude_oil")
 
         // Crude Oil -> Natural Gas + Naphtha + Tar
         distillation(
@@ -68,12 +69,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 375) to ingredientHelper.item(RagiumModTags.Items.PLASTICS),
         )
         // Natural Gas + Catalyst -> 4x Polymer Resin
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(RagiumItems.POLYMER_CATALYST),
                 ingredientHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125),
-                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
-            ).saveSuffixed(output, "_from_lpg")
+            ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
+            .saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
@@ -92,12 +93,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun sap() {
         // Bio Fuel + Water -> polymer Resin
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(RagiumCommonTags.Items.FUELS_BIO_BLOCK),
                 ingredientHelper.water(250),
-                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN),
-            ).saveSuffixed(output, "_from_bio")
+            ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
+            .saveSuffixed(output, "_from_bio")
 
         // XX Log -> Wood Dust + Sap
         HTItemToObjRecipeBuilder
@@ -157,12 +158,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Poisonous Potato
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(Tags.Items.CROPS_POTATO),
                 ingredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
-                resultHelper.item(Items.POISONOUS_POTATO),
-            ).save(output)
+            ).addResult(resultHelper.item(Items.POISONOUS_POTATO))
+            .save(output)
         // Potato Sprouts
         HTItemToObjRecipeBuilder
             .extracting(

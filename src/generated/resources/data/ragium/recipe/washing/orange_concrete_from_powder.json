@@ -1,0 +1,15 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "tag": "c:water"
+  },
+  "item_ingredient": {
+    "count": 8,
+    "item": "minecraft:orange_concrete_powder"
+  },
+  "results": {
+    "count": 8,
+    "id": "minecraft:orange_concrete"
+  }
+}

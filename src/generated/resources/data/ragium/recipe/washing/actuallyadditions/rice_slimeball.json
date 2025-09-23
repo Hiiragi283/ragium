@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "actuallyadditions:rice_dough"
+  },
+  "results": {
+    "count": 1,
+    "id": "actuallyadditions:rice_slimeball"
+  }
+}

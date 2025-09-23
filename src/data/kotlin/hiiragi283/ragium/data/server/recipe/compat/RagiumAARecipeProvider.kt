@@ -7,17 +7,18 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALLY) {
     override fun buildRecipeInternal() {
         // Rice Slimeball
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(ActuallyItems.RICE_DOUGH),
                 ingredientHelper.water(250),
-                resultHelper.item(ActuallyItems.RICE_SLIMEBALL),
-            ).save(output)
+            ).addResult(resultHelper.item(ActuallyItems.RICE_SLIMEBALL))
+            .save(output)
         // Solidified Exp -> Liquid Exp
         HTItemToObjRecipeBuilder
             .melting(

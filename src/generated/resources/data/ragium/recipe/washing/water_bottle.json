@@ -1,0 +1,20 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:glass_bottle"
+  },
+  "results": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    },
+    "count": 1,
+    "id": "minecraft:potion"
+  }
+}

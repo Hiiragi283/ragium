@@ -1,0 +1,15 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 8000,
+    "tag": "c:experience"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:golden_apple"
+  },
+  "results": {
+    "count": 1,
+    "id": "minecraft:enchanted_golden_apple"
+  }
+}

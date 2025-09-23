@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:organic_mutagen"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "farmersdelight:organic_compost"
+  },
+  "results": {
+    "count": 1,
+    "id": "farmersdelight:rich_soil"
+  }
+}

@@ -36,7 +36,7 @@ object RagiumRecipeBiCodecs {
     @JvmField
     val WASHING: MapBiCodec<RegistryFriendlyByteBuf, HTWashingRecipe> = MapBiCodec
         .composite(
-            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTItemIngredient.CODEC.fieldOf("item_ingredient"),
             HTWashingRecipe::ingredient,
             HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
             HTWashingRecipe::fluidIngredient,

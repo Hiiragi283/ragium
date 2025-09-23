@@ -22,7 +22,6 @@ object RagiumConst {
     const val RAGI_CHERRY = "ragi_cherry"
     const val RAGI_CRYSTAL = "ragi_crystal"
     const val RAGINITE = "raginite"
-    const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
 
     //    Mod ID    //
@@ -58,7 +57,6 @@ object RagiumConst {
 
     const val ACCESS_CONFIG = "access_config"
     const val LAST_RECIPE = "last_recipe"
-    const val UPGRADES = "upgrades"
     const val OWNER = "owner"
 
     const val ITEM = "item"
@@ -79,19 +77,12 @@ object RagiumConst {
     const val ENCHANTING = "enchanting"
     const val EXTRACTING = "extracting"
     const val FLUID_TRANSFORM = "fluid_transform"
-    const val INFUSING = "infusing"
     const val MELTING = "melting"
     const val MIXING = "mixing"
     const val REFINING = "refining"
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
-
-    const val CATALYST = "catalyst"
-    const val FLUID_INPUT = "fluid_input"
-    const val FLUID_OUTPUT = "fluid_output"
-    const val ITEM_INPUT = "item_input"
-    const val ITEM_OUTPUT = "item_output"
 
     //    Tag Prefixes    //
 

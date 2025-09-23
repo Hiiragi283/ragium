@@ -18,14 +18,13 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -43,7 +42,6 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val itemLookup: HolderLookup.RegistryLookup<Item> by lazy { provider.lookupOrThrow(Registries.ITEM) }
     val ingredientHelper: HTIngredientHelper = HTIngredientHelper.INSTANCE
     val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
@@ -174,13 +172,13 @@ sealed class HTRecipeProvider {
                 ingredientHelper.item(filled),
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(filled).getPath()}")
-        // Infusing
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        // Washing
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 empty,
                 ingredientHelper.fluid(fluid, amount),
-                resultHelper.item(filled),
-            ).saveSuffixed(output, "_from_${fluid.getPath()}")
+            ).addResult(resultHelper.item(filled))
+            .saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun distillation(
@@ -244,7 +242,7 @@ sealed class HTRecipeProvider {
             ).modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
-        BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_slab")).ifPresent { slab ->
+        type.getSlab().ifPresent { slab ->
             HTItemToObjRecipeBuilder
                 .sawmill(
                     HTIngredientHelper.INSTANCE.item(planks),
@@ -253,7 +251,7 @@ sealed class HTRecipeProvider {
                 .save(output)
         }
         // Planks -> Stairs
-        BuiltInRegistries.ITEM.getOptional(type.getId("${type.serializedName}_stairs")).ifPresent { stairs ->
+        type.getStairs().ifPresent { stairs ->
             HTItemToObjRecipeBuilder
                 .sawmill(
                     HTIngredientHelper.INSTANCE.item(planks),

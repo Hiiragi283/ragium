@@ -8,7 +8,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumEngineeringRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumExtractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumInfusingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMachineRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
@@ -38,13 +37,12 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFluidRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumInfusingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMachineRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumSimulatingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)

@@ -21,20 +21,6 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
-        fun infusing(
-            itemIngredient: HTItemIngredient,
-            fluidIngredient: HTFluidIngredient,
-            itemResult: HTItemResult,
-        ): HTFluidTransformRecipeBuilder<HTRefiningRecipe> = HTFluidTransformRecipeBuilder(
-            RagiumConst.INFUSING,
-            ::HTRefiningRecipe,
-            fluidIngredient,
-            Optional.of(itemIngredient),
-            Optional.of(itemResult),
-            Optional.empty(),
-        )
-
-        @JvmStatic
         fun mixing(
             itemIngredient: HTItemIngredient,
             fluidIngredient: HTFluidIngredient,

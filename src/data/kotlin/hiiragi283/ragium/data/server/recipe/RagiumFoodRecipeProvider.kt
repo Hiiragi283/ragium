@@ -14,6 +14,7 @@ import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -41,12 +42,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Chocolate
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
                 ingredientHelper.milk(250),
-                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
-            ).saveSuffixed(output, "_from_milk")
+            ).addResult(resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE))
+            .saveSuffixed(output, "_from_milk")
 
         HTFluidTransformRecipeBuilder
             .solidifying(
@@ -63,12 +64,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         // Ice Cream
-        HTFluidTransformRecipeBuilder
-            .infusing(
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
                 ingredientHelper.item(Items.SNOWBALL),
                 ingredientHelper.milk(250),
-                resultHelper.item(RagiumItems.ICE_CREAM),
-            ).save(output)
+            ).addResult(resultHelper.item(RagiumItems.ICE_CREAM))
+            .save(output)
         // Ice Cream Soda
         save(
             RagiumAPI.id("shapeless/ice_cream_soda"),
