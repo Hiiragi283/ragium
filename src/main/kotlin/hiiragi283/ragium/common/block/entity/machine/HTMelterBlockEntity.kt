@@ -48,11 +48,11 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 
-    private lateinit var tank: HTVariableFluidStackTank
+    private lateinit var outputTank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity)
-        return HTSimpleFluidTankHolder.output(this, tank)
+        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity)
+        return HTSimpleFluidTankHolder.output(this, outputTank)
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =
@@ -62,7 +62,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
-        tank.insert(recipe.assembleFluid(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -72,7 +72,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        tank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
             outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
@@ -85,5 +85,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidInteractable    //
 
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
+    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
+        interactWith(player, hand, outputTank)
 }
