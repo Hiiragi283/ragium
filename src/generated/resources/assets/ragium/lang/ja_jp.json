@@ -219,6 +219,7 @@
   "block.ragium.warped_sap": "歪んだ樹液",
   "block.ragium.warped_wart": "歪んだウォート",
   "block.ragium.warped_wart.tooltip": "食べるとランダムにデバフを一つだけ消します。",
+  "block.ragium.washer": "洗浄機",
   "block.ragium.water_collector": "水収集機",
   "block.ragium.water_collector.tooltip": "次の条件のうちいずれかを満たすとき，水を生産します。\n- 海洋または河川系バイオームに設置されている\n- 周囲2ブロック以上が水源で囲われている",
   "block.ragium.white_led_block": "白色のLEDブロック",

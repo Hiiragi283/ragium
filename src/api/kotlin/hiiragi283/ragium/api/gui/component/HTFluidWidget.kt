@@ -14,6 +14,6 @@ interface HTFluidWidget : HTBoundsProvider {
 
     companion object {
         @JvmField
-        val TEXTURE_ID: ResourceLocation = RagiumAPI.id("textures/gui/tank.png")
+        val TANK_ID: ResourceLocation = RagiumAPI.id("textures/gui/tank.png")
     }
 }

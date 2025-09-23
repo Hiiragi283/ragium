@@ -25,6 +25,7 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
     CRUSHER(HTMachineTier.ADVANCED, "Crusher", "破砕機"),
     MELTER(HTMachineTier.ADVANCED, "Melter", "溶融炉"),
     REFINERY(HTMachineTier.ADVANCED, "Refinery", "精製機"),
+    WASHER(HTMachineTier.ADVANCED, "Washer", "洗浄機"),
 
     // Elite
     MULTI_SMELTER(HTMachineTier.ELITE, "Multi Smelter", "並列製錬炉"),

@@ -46,7 +46,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
     override fun init() {
         super.init()
         // fluid
-        fluidWidget = createFluidWidget(0, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(0, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
         // x
         editBoxX = setupNumberBox(0)
         // y

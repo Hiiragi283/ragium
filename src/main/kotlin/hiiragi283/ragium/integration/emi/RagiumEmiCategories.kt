@@ -51,7 +51,7 @@ object RagiumEmiCategories {
     val MELTING: HTEmiRecipeCategory = machine(RagiumConst.MELTING, HTMachineVariant.MELTER)
 
     @JvmField
-    val WASHING: HTEmiRecipeCategory = machine(RagiumConst.WASHING, HTMachineVariant.PULVERIZER)
+    val WASHING: HTEmiRecipeCategory = machine(RagiumConst.WASHING, HTMachineVariant.WASHER)
 
     // Elite
     @JvmField

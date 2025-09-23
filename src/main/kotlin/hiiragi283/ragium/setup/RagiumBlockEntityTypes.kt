@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -73,6 +74,7 @@ object RagiumBlockEntityTypes {
             HTMachineVariant.CRUSHER -> ::HTCrusherBlockEntity
             HTMachineVariant.MELTER -> ::HTMelterBlockEntity
             HTMachineVariant.REFINERY -> ::HTRefineryBlockEntity
+            HTMachineVariant.WASHER -> ::HTWasherBlockEntity
             // Elite
             HTMachineVariant.MULTI_SMELTER -> ::HTMultiSmelterBlockEntity
             HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity

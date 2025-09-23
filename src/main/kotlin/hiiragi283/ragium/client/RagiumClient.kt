@@ -19,9 +19,9 @@ import hiiragi283.ragium.client.gui.screen.HTGenericScreen
 import hiiragi283.ragium.client.gui.screen.HTItemBufferScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
-import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTMobCapturerScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
+import hiiragi283.ragium.client.gui.screen.HTSingleFluidMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -246,11 +246,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
-        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+        event.register(RagiumMenuTypes.MELTER.get(), HTSingleFluidMachineScreen.Companion::melter)
         event.register(RagiumMenuTypes.MOB_CAPTURER.get(), ::HTMobCapturerScreen)
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
+        event.register(RagiumMenuTypes.WASHER.get(), HTSingleFluidMachineScreen.Companion::washer)
 
         LOGGER.info("Registered Screens!")
     }

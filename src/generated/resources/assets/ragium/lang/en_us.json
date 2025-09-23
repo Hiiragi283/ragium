@@ -219,6 +219,7 @@
   "block.ragium.warped_sap": "Warped Sap",
   "block.ragium.warped_wart": "Warped Wart",
   "block.ragium.warped_wart.tooltip": "Clear one bad effect randomly when eaten.",
+  "block.ragium.washer": "Washer",
   "block.ragium.water_collector": "Water Collector",
   "block.ragium.water_collector.tooltip": "Generates Lava when ANY below conditions are met.\n- Placed in Ocean-like or River-like biomes\n- Surrounded by 2 or more Water Sources",
   "block.ragium.white_led_block": "White LED Block",

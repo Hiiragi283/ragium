@@ -187,6 +187,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(HTMachineVariant.CRUSHER, advancedMachine, blackstone, RagiumAPI.id("block/pulverizer_front"))
         machine(HTMachineVariant.MELTER, advancedMachine, blackstone)
         altModelBlock(HTMachineVariant.REFINERY.blockHolder, factory = ::horizontalBlock)
+        machine(HTMachineVariant.WASHER, advancedMachine, blackstone)
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
         val deepslateTiles: ResourceLocation = vanillaId("block/deepslate_tiles")

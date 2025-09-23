@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.fluid.HTEmptyFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.gui.component.HTEnergyNetworkWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
@@ -29,10 +30,13 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
 
     //    Extensions    //
 
-    fun createFluidWidget(index: Int, x: Int, y: Int): HTFluidTankWidget {
-        val tanks: List<HTFluidTank> = blockEntity.getFluidTanks(blockEntity.getFluidSideFor())
-        return HTFluidTankWidget(tanks[index], startX + x, startY + y).apply(::addRenderableWidget)
-    }
+    fun getTank(index: Int): HTFluidTank = blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).getOrNull(index) ?: HTEmptyFluidTank
+
+    fun createFluidTank(index: Int, x: Int, y: Int): HTFluidTankWidget =
+        HTFluidTankWidget.createTank(getTank(index), x, y).apply(::addRenderableWidget)
+
+    fun createFluidSlot(index: Int, x: Int, y: Int): HTFluidTankWidget =
+        HTFluidTankWidget.createSlot(getTank(index), x, y).apply(::addRenderableWidget)
 
     fun createEnergyWidget(
         key: ResourceKey<Level>,
