@@ -12,6 +12,7 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.holdersSequence
@@ -19,6 +20,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -30,7 +32,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.fluid.HTFluidType
-import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.util.HTRegistryHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
@@ -43,16 +44,17 @@ import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTChancedItemRecipeBase
-import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTCuttingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTBrewingEffectEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTFluidTransformingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTItemToItemEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSmithingModifyEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTWashingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTAlloyingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTCrushingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTCuttingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTFluidTransformingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTItemToItemEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTMeltingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTSimulatingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.machine.HTWashingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -61,10 +63,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.level.ItemLike
@@ -105,36 +107,36 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addRecipes() {
         addCustomRecipe()
+        addDataMaps()
         addMachineRecipes()
         addInteractions()
     }
 
     private fun addCustomRecipe() {
         // Crafting
-        RagiumRecipeTypes.CRAFTING.forEach(recipeGetter) { _: ResourceLocation, recipe: CraftingRecipe ->
-            if (recipe is HTIceCreamSodaRecipe) {
-                EmiPort.getPotionRegistry().holdersSequence().forEach { holder: Holder<Potion> ->
-                    addRecipeSafe(
-                        holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
-                    ) { id: ResourceLocation ->
-                        EmiCraftingRecipe(
-                            listOf(
-                                EmiStack.of(RagiumItems.ICE_CREAM),
-                                EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
-                                EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
-                                EmiIngredient.of(Tags.Items.DYES_GREEN),
-                            ),
-                            EmiStack.of(RagiumAPI.INSTANCE.createSoda(holder)),
-                            id,
-                            true,
-                        )
-                    }
-                }
+        EmiPort.getPotionRegistry().holdersSequence().forEach { holder: Holder<Potion> ->
+            addRecipeSafe(
+                holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
+            ) { id: ResourceLocation ->
+                EmiCraftingRecipe(
+                    listOf(
+                        EmiStack.of(RagiumItems.ICE_CREAM),
+                        EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
+                        EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
+                        EmiIngredient.of(Tags.Items.DYES_GREEN),
+                    ),
+                    EmiStack.of(RagiumAPI.INSTANCE.createSoda(holder)),
+                    id,
+                    true,
+                )
             }
         }
         // Smithing
-        RagiumRecipeTypes.SMITHING.forEach(recipeGetter) { _: ResourceLocation, recipe: SmithingRecipe ->
-            if (recipe is HTSmithingModifyRecipe) {
+        RagiumRecipeTypes.SMITHING
+            .getAllRecipes(recipeGetter)
+            .map(HTRecipeHolder<SmithingRecipe>::recipe)
+            .filterIsInstance<HTSmithingModifyRecipe>()
+            .forEach { recipe: HTSmithingModifyRecipe ->
                 registry.addRecipe(
                     HTSmithingModifyEmiRecipe(
                         recipe.template.let(EmiIngredient::of),
@@ -143,10 +145,26 @@ class RagiumEmiPlugin : EmiPlugin {
                     ),
                 )
             }
-        }
+    }
+
+    private fun addDataMaps() {
         // Fluid Fuel
         addFuelRecipes(RagiumDataMaps.INSTANCE.combustionFuelType, HTGeneratorVariant.COMBUSTION)
         addFuelRecipes(RagiumDataMaps.INSTANCE.thermalFuelType, HTGeneratorVariant.THERMAL)
+
+        // Brewing
+        val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
+        for ((key: ResourceKey<Item>, effect: HTBrewingEffect) in itemRegistry.getDataMap(RagiumDataMaps.INSTANCE.brewingEffectType)) {
+            itemRegistry.getOptional(key).ifPresent { item: Item ->
+                registry.addRecipe(
+                    HTBrewingEffectEmiRecipe(
+                        key.location().withPrefix("/brewing/effect/"),
+                        EmiStack.of(item),
+                        EmiStack.of(effect.toPotion()),
+                    ),
+                )
+            }
+        }
     }
 
     private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant) {

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
@@ -14,7 +13,6 @@ import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
@@ -26,21 +24,11 @@ object RagiumRecipeBiCodecs {
     @JvmField
     val ALLOYING: MapBiCodec<RegistryFriendlyByteBuf, HTAlloyingRecipe> = MapBiCodec
         .composite(
-            HTItemIngredient.CODEC.listOf(2, 3).fieldOf("ingredient"),
+            HTItemIngredient.CODEC.listOf(2, 3).fieldOf("ingredients"),
             HTAlloyingRecipe::ingredients,
             HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
             HTAlloyingRecipe::result,
             ::HTAlloyingRecipe,
-        )
-
-    @JvmField
-    val BREWING: MapBiCodec<RegistryFriendlyByteBuf, HTBrewingRecipe> = MapBiCodec
-        .composite(
-            HTItemIngredient.CODEC.listOf(1, 3).fieldOf("ingredient"),
-            HTBrewingRecipe::ingredients,
-            BiCodecs.POTION.fieldOf("potion"),
-            HTBrewingRecipe::potion,
-            ::HTBrewingRecipe,
         )
 
     @JvmField

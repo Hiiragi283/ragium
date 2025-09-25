@@ -191,6 +191,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
         val deepslateTiles: ResourceLocation = vanillaId("block/deepslate_tiles")
+        machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
 

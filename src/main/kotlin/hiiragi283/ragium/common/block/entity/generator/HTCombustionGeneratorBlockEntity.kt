@@ -24,5 +24,5 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getFuelStack(value: Int): FluidStack = RagiumFluidContents.CRUDE_OIL.toStack(value)
 
     override fun getRequiredAmount(access: RegistryAccess, stack: FluidStack): Int =
-        RagiumDataMaps.INSTANCE.getCombustionFuel(access, stack.fluidHolder)?.amount ?: 0
+        RagiumDataMaps.INSTANCE.getCombustionFuel(access, stack.fluidHolder)
 }

@@ -12,14 +12,22 @@ import hiiragi283.ragium.common.variant.HTMachineVariant
 object RagiumEmiCategories {
     //    Generators    //
 
+    @JvmStatic
+    private fun generator(variant: HTGeneratorVariant): HTEmiRecipeCategory =
+        HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant), EmiRecipeSorting.compareInputThenOutput())
+
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTEmiRecipeCategory> =
-        HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            HTEmiRecipeCategory(variant.serializedName, EmiStack.of(variant), EmiRecipeSorting.compareInputThenOutput())
-        }
+    val THERMAL: HTEmiRecipeCategory = generator(HTGeneratorVariant.THERMAL)
+
+    @JvmField
+    val COMBUSTION: HTEmiRecipeCategory = generator(HTGeneratorVariant.COMBUSTION)
 
     @JvmStatic
-    fun getGenerator(variant: HTGeneratorVariant): HTEmiRecipeCategory = GENERATORS[variant]!!
+    fun getGenerator(variant: HTGeneratorVariant): HTEmiRecipeCategory = when (variant) {
+        HTGeneratorVariant.THERMAL -> THERMAL
+        HTGeneratorVariant.COMBUSTION -> COMBUSTION
+        else -> error("Unsupported variant: ${variant.serializedName}")
+    }
 
     //    Machines    //
 
@@ -55,10 +63,19 @@ object RagiumEmiCategories {
 
     // Elite
     @JvmField
+    val BREWING_EFFECT: HTEmiRecipeCategory = machine("brewing/effect", HTMachineVariant.BREWERY)
+
+    @JvmField
+    val BREWING_MODIFIER: HTEmiRecipeCategory = machine("brewing/modifier", HTMachineVariant.BREWERY)
+
+    @JvmField
     val SIMULATING: HTEmiRecipeCategory = machine(RagiumConst.SIMULATING, HTMachineVariant.SIMULATOR)
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
+        // Generator
+        THERMAL,
+        COMBUSTION,
         // Basic
         ALLOYING,
         COMPRESSING,
@@ -70,6 +87,8 @@ object RagiumEmiCategories {
         MELTING,
         WASHING,
         // Elite
+        BREWING_EFFECT,
+        BREWING_MODIFIER,
         SIMULATING,
     )
 
@@ -83,7 +102,6 @@ object RagiumEmiCategories {
     @JvmStatic
     fun register(registry: EmiRegistry) {
         // Category
-        GENERATORS.values.forEach(registry::addCategory)
         CATEGORIES.forEach(registry::addCategory)
 
         // Workstation
@@ -91,7 +109,6 @@ object RagiumEmiCategories {
             registry.addWorkstation(category, category.iconStack)
         }
 
-        GENERATORS.values.forEach(::addWorkstation)
         CATEGORIES.forEach(::addWorkstation)
 
         for (category: EmiRecipeCategory in SMELTING) {

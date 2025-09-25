@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
@@ -62,9 +61,6 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(RagiumConst.ALLOYING, RagiumRecipeBiCodecs.ALLOYING)
-
-    @JvmField
-    val BREWING: RecipeSerializer<HTBrewingRecipe> = register(RagiumConst.BREWING, RagiumRecipeBiCodecs.BREWING)
 
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(

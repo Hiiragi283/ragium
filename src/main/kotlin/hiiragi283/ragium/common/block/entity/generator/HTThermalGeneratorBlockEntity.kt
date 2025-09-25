@@ -20,5 +20,5 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getFuelStack(value: Int): FluidStack = HTFluidContent.LAVA.toStack(value)
 
     override fun getRequiredAmount(access: RegistryAccess, stack: FluidStack): Int =
-        RagiumDataMaps.INSTANCE.getThermalFuel(access, stack.fluidHolder)?.amount ?: 0
+        RagiumDataMaps.INSTANCE.getThermalFuel(access, stack.fluidHolder)
 }

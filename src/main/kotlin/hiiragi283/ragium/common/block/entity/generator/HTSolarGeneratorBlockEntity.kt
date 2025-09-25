@@ -29,9 +29,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {
         // 太陽光を供給できる場合は，その倍率を返す
         val state: BlockState = level.getBlockState(pos.above())
-        val power: Float? = RagiumDataMaps.INSTANCE
-            .getSolarPower(level.registryAccess(), state.blockHolder)
-            ?.multiplier
+        val power: Float? = RagiumDataMaps.INSTANCE.getSolarPower(level.registryAccess(), state.blockHolder)
         if (power != null) return power
         return when {
             // 空のない次元では停止

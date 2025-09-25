@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
@@ -76,6 +77,7 @@ object RagiumBlockEntityTypes {
             HTMachineVariant.REFINERY -> ::HTRefineryBlockEntity
             HTMachineVariant.WASHER -> ::HTWasherBlockEntity
             // Elite
+            HTMachineVariant.BREWERY -> ::HTBreweryBlockEntity
             HTMachineVariant.MULTI_SMELTER -> ::HTMultiSmelterBlockEntity
             HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity
         }

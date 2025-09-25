@@ -100,7 +100,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             register(helper, RagiumRecipeTypes.SAWMILL)
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
-            register(helper, RagiumRecipeTypes.BREWING)
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.ENCHANTING)
@@ -143,8 +142,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.INSTANCE.thermalFuelType)
         event.register(RagiumDataMaps.INSTANCE.combustionFuelType)
-
         event.register(RagiumDataMaps.INSTANCE.solarPowerType)
+
+        event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
 
         LOGGER.info("Registered data map types!")
     }

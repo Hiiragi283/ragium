@@ -1,9 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.item.component.HTPotionBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -12,7 +10,6 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.impl.data.recipe.HTBrewingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
@@ -23,10 +20,7 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 
@@ -94,8 +88,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         honey()
         meat()
         sponge()
-
-        brewing()
     }
 
     @JvmStatic
@@ -212,40 +204,5 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .save(output)
-    }
-
-    @JvmStatic
-    private fun brewing() {
-        // Night Vision
-        HTBrewingRecipeBuilder
-            .create(
-                PotionContents(Potions.LONG_NIGHT_VISION),
-                HTIngredientHelper.INSTANCE.item(Tags.Items.CROPS_NETHER_WART),
-                HTIngredientHelper.INSTANCE.item(Items.GOLDEN_CARROT),
-            ).save(output)
-        // Invisibility
-        HTBrewingRecipeBuilder
-            .create(
-                PotionContents(Potions.LONG_INVISIBILITY),
-                HTIngredientHelper.INSTANCE.item(Tags.Items.CROPS_NETHER_WART),
-                HTIngredientHelper.INSTANCE.item(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL),
-            ).save(output)
-        // Swiftness
-        HTBrewingRecipeBuilder
-            .create(
-                PotionContents(Potions.LONG_SWIFTNESS),
-                HTIngredientHelper.INSTANCE.item(Tags.Items.CROPS_NETHER_WART),
-                HTIngredientHelper.INSTANCE.item(Items.SUGAR),
-            ).save(output)
-
-        // Wither
-        HTBrewingRecipeBuilder
-            .create(
-                HTPotionBuilder.create {
-                    addEffect(MobEffects.WITHER, 20 * 90, 0)
-                },
-                HTIngredientHelper.INSTANCE.item(Tags.Items.CROPS_NETHER_WART),
-                HTIngredientHelper.INSTANCE.item(Items.WITHER_ROSE),
-            ).save(output)
     }
 }

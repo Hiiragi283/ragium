@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTSolarPower
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
@@ -17,11 +18,16 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -49,6 +55,8 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         combustionFuels()
         thermalFuels()
         solarPower()
+
+        brewingEffect()
     }
 
     //    Vanilla    //
@@ -116,6 +124,49 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             // highest
             .add(Blocks.BEACON, HTSolarPower(4f))
             .add(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.GILDIUM, HTSolarPower(4f))
+    }
+
+    //    Brewing    //
+
+    private fun brewingEffect() {
+        // Potions
+        val builder: Builder<HTBrewingEffect, Item> = builder(RagiumDataMaps.INSTANCE.brewingEffectType)
+            .add(Items.GOLDEN_CARROT, HTBrewingEffect(Potions.NIGHT_VISION))
+            .add(Tags.Items.GEMS_AMETHYST, HTBrewingEffect(Potions.INVISIBILITY), false)
+            .add(Items.RABBIT_FOOT, HTBrewingEffect(Potions.LEAPING))
+            .add(Items.MAGMA_CREAM, HTBrewingEffect(Potions.FIRE_RESISTANCE))
+            .add(Items.SUGAR, HTBrewingEffect(Potions.SWIFTNESS))
+            .add(Tags.Items.INGOTS_IRON, HTBrewingEffect(Potions.SLOWNESS), false)
+            .add(Items.TURTLE_SCUTE, HTBrewingEffect(Potions.TURTLE_MASTER))
+            .add(Items.PUFFERFISH, HTBrewingEffect(Potions.WATER_BREATHING))
+            .add(Items.GLISTERING_MELON_SLICE, HTBrewingEffect(Potions.HEALING))
+            .add(Items.FERMENTED_SPIDER_EYE, HTBrewingEffect(Potions.HARMING))
+            .add(Items.SPIDER_EYE, HTBrewingEffect(Potions.POISON))
+            .add(Items.GHAST_TEAR, HTBrewingEffect(Potions.REGENERATION))
+            .add(Items.BLAZE_POWDER, HTBrewingEffect(Potions.STRENGTH))
+            .add(Items.BONE, HTBrewingEffect(Potions.WEAKNESS))
+            .add(Tags.Items.GEMS_EMERALD, HTBrewingEffect(Potions.LUCK), false)
+            .add(Items.PHANTOM_MEMBRANE, HTBrewingEffect(Potions.SLOWNESS))
+            .add(Items.WIND_CHARGE, HTBrewingEffect(Potions.WIND_CHARGED))
+            .add(Items.COBWEB, HTBrewingEffect(Potions.WEAVING))
+            .add(Tags.Items.STORAGE_BLOCKS_SLIME, HTBrewingEffect(Potions.OOZING), false)
+            .add(Items.STONE, HTBrewingEffect(Potions.INFESTED))
+        // Custom - Vanilla
+        builder
+            .add(
+                Items.GOLDEN_PICKAXE,
+                HTBrewingEffect { addEffect(MobEffects.DIG_SPEED, 3 * 60 * 20, 0) },
+            )
+
+        mapOf(
+            Items.POISONOUS_POTATO to MobEffects.CONFUSION,
+            Items.ROTTEN_FLESH to MobEffects.HUNGER,
+            Items.WITHER_ROSE to MobEffects.WITHER,
+            Items.SHULKER_SHELL to MobEffects.LEVITATION,
+        ).forEach { (item: Item, effect: Holder<MobEffect>) ->
+            builder.add(item, HTBrewingEffect { addEffect(effect, 45 * 20, 0) })
+        }
+        // Custom - Ragium
     }
 
     //    Extensions    //

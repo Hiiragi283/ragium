@@ -3,11 +3,8 @@ package hiiragi283.ragium.api.item.component
 import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import java.awt.Color
@@ -19,17 +16,11 @@ class HTPotionBuilder private constructor() {
         fun create(builderAction: HTPotionBuilder.() -> Unit): PotionContents = HTPotionBuilder().apply(builderAction).build()
 
         @JvmStatic
-        fun ofNonPotion(effect: Holder<MobEffect>, ticks: Int, amplifier: Int): PotionContents = create {
-            color = effect.value().color
-            addEffect(effect, ticks, amplifier)
-        }
-
-        @JvmStatic
-        fun ofNonPotionStack(effect: Holder<MobEffect>, ticks: Int, amplifier: Int): ItemStack {
-            val stack = ItemStack(Items.POTION)
-            stack.set(DataComponents.POTION_CONTENTS, ofNonPotion(effect, ticks, amplifier))
-            stack.set(DataComponents.ITEM_NAME, effect.value().displayName)
-            return stack
+        fun copyOf(parent: PotionContents, builderAction: HTPotionBuilder.() -> Unit): PotionContents = create {
+            parent.potion.ifPresent { this.potion = it }
+            parent.customColor.ifPresent { this.color = it }
+            effects.addAll(parent.customEffects)
+            builderAction()
         }
     }
 

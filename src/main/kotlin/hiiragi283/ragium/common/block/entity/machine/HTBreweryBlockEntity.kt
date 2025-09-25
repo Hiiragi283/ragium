@@ -1,74 +1,81 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMultiItemToPotionRecipe
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.extension.unsupported
+import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeHolder
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTMultiItemToPotionRecipe>(
-        RagiumRecipeTypes.BREWING.get(),
-        HTMachineVariant.ALLOY_SMELTER,
+    HTChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
+        BrewingCache,
+        HTMachineVariant.BREWERY,
         pos,
         state,
     ) {
-    private lateinit var inputSlots: List<HTItemStackSlot>
-
-    private lateinit var outputSlot: HTItemStackSlot
-
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        // input
-        inputSlots = listOf(
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
-        )
-        // output
-        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
-        return HTSimpleItemSlotHolder(this, inputSlots, listOf(outputSlot))
+    override fun openGui(player: Player, title: Component): InteractionResult {
+        TODO("Not yet implemented")
     }
 
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.ALLOY_SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput = HTMultiItemRecipeInput.fromSlots(inputSlots)
+    //    Recipe Cache    //
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTMultiItemToPotionRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
-
-    override fun completeRecipe(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        input: HTMultiItemRecipeInput,
-        recipe: HTMultiItemToPotionRecipe,
-    ) {
-        // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
-        // 実際にインプットを減らす
-        val ingredients: List<HTItemIngredient> = recipe.ingredients
-        HTMultiItemToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
-            HTIngredientHelper.shrinkStack(inputSlots[slot], ingredients[index], false)
+    private object BrewingCache : HTRecipeCache<SingleRecipeInput, HTItemToChancedItemRecipe> {
+        override fun getFirstHolder(input: SingleRecipeInput, level: Level): HTRecipeHolder<HTItemToChancedItemRecipe>? = when {
+            BrewingRecipe.matches(input, level) -> HTRecipeHolder(RagiumAPI.id("brewing"), BrewingRecipe)
+            else -> null
         }
-        // SEを鳴らす
-        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 0.5f)
+    }
+
+    //    Recipe    //
+
+    private object BrewingRecipe : HTItemToChancedItemRecipe, HTSingleInputRecipe {
+        override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemRecipe.ChancedResult> {
+            val access: RegistryAccess = RagiumAPI.INSTANCE.getRegistryAccess() ?: return listOf()
+            // ポーションに変換する
+            val stack: ItemStack = RagiumDataMaps.INSTANCE
+                .getBrewingEffect(access, input.item().itemHolder)
+                ?.toPotion()
+                ?: return listOf()
+            return HTResultHelper.INSTANCE
+                .item(stack)
+                .let { HTChancedItemRecipe.ChancedResult(it, 1f) }
+                .let(::listOf)
+        }
+
+        override fun getIngredientCount(input: SingleRecipeInput): Int = 1
+
+        override fun matches(input: SingleRecipeInput, level: Level): Boolean =
+            RagiumDataMaps.INSTANCE.getBrewingEffect(level.registryAccess(), input.item().itemHolder) != null
+
+        override fun test(input: SingleRecipeInput): Boolean = !input.isEmpty
+
+        override fun isIncomplete(): Boolean = false
+
+        override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
+            getResultItems(input).getOrNull(0)?.getStackOrNull(registries) ?: ItemStack.EMPTY
+
+        override fun getSerializer(): RecipeSerializer<*> = unsupported()
+
+        override fun getType(): RecipeType<*> = unsupported()
     }
 }

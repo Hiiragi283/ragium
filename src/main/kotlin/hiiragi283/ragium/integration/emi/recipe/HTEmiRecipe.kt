@@ -21,10 +21,11 @@ interface HTEmiRecipe : EmiRecipe {
         x: Int,
         y: Int,
         large: Boolean = false,
+        drawBack: Boolean = false,
     ): SlotWidget = when {
         large -> addSlot(result ?: EmiStack.EMPTY, x - 4, y - 4).large(true)
         else -> addSlot(result ?: EmiStack.EMPTY, x, y)
-    }.recipeContext(this@HTEmiRecipe).drawBack(false)
+    }.recipeContext(this@HTEmiRecipe).drawBack(drawBack)
 
     fun WidgetHolder.addTank(
         result: EmiIngredient?,

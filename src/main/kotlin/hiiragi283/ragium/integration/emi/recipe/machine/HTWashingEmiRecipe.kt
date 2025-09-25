@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.emi.recipe
+package hiiragi283.ragium.integration.emi.recipe.machine
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.stack.EmiIngredient
