@@ -4,16 +4,26 @@ import com.mojang.serialization.DataResult
 import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
+import dev.emi.emi.api.widget.Bounds
+import dev.emi.emi.api.widget.FillingArrowWidget
+import dev.emi.emi.api.widget.SlotWidget
+import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.api.gui.component.HTWidget
+import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.integration.emi.widget.HTEmiWidget
+import hiiragi283.ragium.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
-import java.util.Optional
+import net.minecraft.world.level.material.Fluid
+import java.util.*
+import java.util.function.LongSupplier
 
 //    EmiIngredient    //
 
@@ -43,5 +53,23 @@ fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get
 
 fun HTFluidContent<*, *, *>.toBucketEmi(): EmiStack = EmiStack.of(getBucket())
 
-fun createErrorStack(error: DataResult.Error<*>): EmiStack =
+val EmiStack.fluid: Fluid? get() = this.key as? Fluid
+
+private fun createErrorStack(error: DataResult.Error<*>): EmiStack =
     createItemStack(Items.BARRIER, DataComponents.ITEM_NAME, Component.literal(error.message())).let(EmiStack::of)
+
+//    Widget    //
+
+fun HTBounds.toEmi(): Bounds = Bounds(this.x, this.y, this.width, this.height)
+
+fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
+
+fun WidgetHolder.addTank(
+    result: EmiIngredient?,
+    x: Int,
+    y: Int,
+    capacity: LongSupplier,
+    drawBack: Boolean = false
+): SlotWidget = add(HTTankWidget(result, x, y, capacity).drawBack(drawBack))
+
+fun WidgetHolder.addWidget(widget: HTWidget): HTEmiWidget = add(HTEmiWidget(widget))

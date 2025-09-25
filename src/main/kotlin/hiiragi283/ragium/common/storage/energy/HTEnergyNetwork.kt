@@ -18,7 +18,7 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) : HTEn
     override fun getAmount(): Int = amount
 
     override fun setAmount(amount: Int) {
-        this.amount = amount
+        this.amount = Mth.clamp(amount, 0, capacity)
     }
 
     override fun getCapacity(): Int = capacity

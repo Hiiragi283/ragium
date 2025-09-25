@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.fluid.HTEmptyFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.client.gui.component.HTEnergyNetworkWidget
+import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -42,9 +42,10 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
         key: ResourceKey<Level>,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
-    ): HTEnergyNetworkWidget = HTEnergyNetworkWidget(
-        key,
-        startX + x,
-        startY + y,
-    ).apply(::addRenderableWidget)
+    ): HTEnergyBatteryWidget = HTEnergyBatteryWidget
+        .createNetwork(
+            key,
+            startX + x,
+            startY + y,
+        ).apply(::addRenderableWidget)
 }

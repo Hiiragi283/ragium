@@ -14,15 +14,19 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int) :
-    HTSpriteWidget(x, y - 1, 16, 18 * 3 - 2, Component.empty()) {
-    fun getBattery(): HTEnergyBattery? = RagiumAPI.INSTANCE.getEnergyNetwork(key)
+class HTEnergyBatteryWidget(private val batteryGetter: () -> HTEnergyBattery?, x: Int, y: Int) :
+    HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()) {
+    companion object {
+        @JvmStatic
+        fun createNetwork(key: ResourceKey<Level>, x: Int, y: Int): HTEnergyBatteryWidget =
+            HTEnergyBatteryWidget({ RagiumAPI.INSTANCE.getEnergyNetwork(key) }, x, y)
+    }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(
             RagiumAPI.id("textures/gui/energy_gauge.png"),
             x - 1,
-            y,
+            y - 1,
             0f,
             0f,
             width + 2,
@@ -33,7 +37,7 @@ class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int)
     }
 
     override fun shouldRender(): Boolean {
-        val battery: HTEnergyBattery = getBattery() ?: return false
+        val battery: HTEnergyBattery = batteryGetter() ?: return false
         return battery.getAmount() > 0
     }
 
@@ -42,11 +46,11 @@ class HTEnergyNetworkWidget(private val key: ResourceKey<Level>, x: Int, y: Int)
     override fun getColor(): Int = -1
 
     override fun getLevel(): Float {
-        val battery: HTEnergyBattery = getBattery() ?: return 0f
+        val battery: HTEnergyBattery = batteryGetter() ?: return 0f
         return battery.getAmount() / battery.getCapacity().toFloat()
     }
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        getBattery()?.let(::energyText)?.let(consumer)
+        batteryGetter()?.let(::energyText)?.let(consumer)
     }
 }

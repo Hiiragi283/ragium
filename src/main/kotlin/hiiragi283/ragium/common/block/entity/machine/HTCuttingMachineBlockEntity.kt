@@ -127,7 +127,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     private class StoneCuttingRecipe(private val recipe: StonecutterRecipe) : HTSingleInputRecipe {
         private val ingredient: Ingredient get() = recipe.ingredients[0]
-        
+
         override fun getRequiredCount(stack: ItemStack): Int = when {
             ingredient.test(stack) -> 1
             else -> 0

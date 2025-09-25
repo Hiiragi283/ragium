@@ -5,13 +5,12 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
+import hiiragi283.ragium.integration.emi.addArrow
 import net.minecraft.resources.ResourceLocation
 
-class HTBrewingEffectEmiRecipe(private val id: ResourceLocation, private val input: EmiIngredient, private val output: EmiStack) :
-    HTEmiRecipe {
+class HTBrewingEffectEmiRecipe(id: ResourceLocation, private val input: EmiIngredient, private val output: EmiStack) :
+    HTEmiRecipe.Impl(id) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.BREWING_EFFECT
-
-    override fun getId(): ResourceLocation = id
 
     override fun getInputs(): List<EmiIngredient> = listOf(input)
 

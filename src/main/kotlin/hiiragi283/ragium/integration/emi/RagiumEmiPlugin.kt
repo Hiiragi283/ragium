@@ -45,8 +45,8 @@ import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.integration.emi.recipe.HTBrewingEffectEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTFluidFuelEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSmithingModifyEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.machine.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.machine.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.machine.HTCuttingEmiRecipe
@@ -173,7 +173,7 @@ class RagiumEmiPlugin : EmiPlugin {
             fluidRegistry.getOptional(key).ifPresent { fluid: Fluid ->
                 if (fluid.isSource(fluid.defaultFluidState())) {
                     registry.addRecipe(
-                        HTFluidFuelEmiRecipe(
+                        HTFuelGeneratorEmiRecipe(
                             RagiumEmiCategories.getGenerator(variant),
                             key.location().withPrefix("/${dataMapType.id().path}/"),
                             EmiStack.of(fluid),

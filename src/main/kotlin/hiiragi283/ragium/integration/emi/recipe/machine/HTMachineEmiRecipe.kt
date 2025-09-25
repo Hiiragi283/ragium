@@ -3,12 +3,11 @@ package hiiragi283.ragium.integration.emi.recipe.machine
 import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.recipe.HTEmiRecipe
 import net.minecraft.resources.ResourceLocation
 
-abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val textureId: ResourceLocation) : HTEmiRecipe {
-    final override fun getId(): ResourceLocation = id
-
+abstract class HTMachineEmiRecipe(id: ResourceLocation, private val textureId: ResourceLocation) : HTEmiRecipe.Impl(id) {
     final override fun getDisplayWidth(): Int = getPosition(7)
 
     final override fun getDisplayHeight(): Int = getPosition(3)

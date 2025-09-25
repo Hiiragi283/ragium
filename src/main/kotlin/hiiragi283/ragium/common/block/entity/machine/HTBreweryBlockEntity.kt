@@ -64,10 +64,10 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun getRequiredCount(stack: ItemStack): Int = 1
 
-        override fun matches(input: SingleRecipeInput, level: Level): Boolean =
-            RagiumDataMaps.INSTANCE.getBrewingEffect(level.registryAccess(), input.item().itemHolder) != null
-
-        override fun test(input: SingleRecipeInput): Boolean = !input.isEmpty
+        override fun test(input: SingleRecipeInput): Boolean {
+            val access: RegistryAccess = RagiumAPI.INSTANCE.getRegistryAccess() ?: return false
+            return RagiumDataMaps.INSTANCE.getBrewingEffect(access, input.item().itemHolder) != null
+        }
 
         override fun isIncomplete(): Boolean = false
 
