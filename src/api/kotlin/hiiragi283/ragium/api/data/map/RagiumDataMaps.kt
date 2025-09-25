@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.map
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.RegistryKey

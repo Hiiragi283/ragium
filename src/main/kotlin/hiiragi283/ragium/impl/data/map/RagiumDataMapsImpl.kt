@@ -1,10 +1,10 @@
-package hiiragi283.ragium.impl.data
+package hiiragi283.ragium.impl.data.map
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.data.HTFluidFuelData
-import hiiragi283.ragium.api.data.HTSolarPower
-import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.HTSolarPower
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.registryOrNull
 import net.minecraft.core.Holder
@@ -25,7 +25,7 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         private val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
 
         @JvmStatic
-        private val SOLAR_POWER: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
+        private val SOLAR_POWER: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.Companion.CODEC)
 
         @JvmStatic
         private fun <T : Any, R : Any> create(
@@ -33,13 +33,13 @@ class RagiumDataMapsImpl : RagiumDataMaps {
             registryKey: ResourceKey<Registry<R>>,
             codec: BiCodec<*, T>,
         ): DataMapType<R, T> = DataMapType
-            .builder(RagiumAPI.id(path), registryKey, codec.codec)
+            .builder(RagiumAPI.Companion.id(path), registryKey, codec.codec)
             .synced(codec.codec, false)
             .build()
 
         @JvmStatic
         private fun createFuel(path: String): DataMapType<Fluid, HTFluidFuelData> =
-            create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
+            create("fuel/$path", Registries.FLUID, HTFluidFuelData.Companion.CODEC)
     }
 
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = THERMAL_FUEL

@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.HTFluidFuelData
-import hiiragi283.ragium.api.data.HTSolarPower
-import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.HTSolarPower
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.createCommonTag
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant

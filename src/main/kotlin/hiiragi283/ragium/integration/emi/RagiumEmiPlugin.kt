@@ -12,8 +12,8 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTFluidFuelData
-import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.holdersSequence
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe

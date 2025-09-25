@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
