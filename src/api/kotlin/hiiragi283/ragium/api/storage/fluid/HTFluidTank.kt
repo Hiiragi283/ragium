@@ -2,16 +2,14 @@ package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.predicate.HTFluidPredicate
+import hiiragi283.ragium.api.storage.predicate.HTFluidPredicates
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import java.util.*
 import java.util.function.Predicate
 import kotlin.math.max
 import kotlin.math.min
@@ -150,24 +148,6 @@ interface HTFluidTank :
     fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
 
     /**
-     * 指定された[ingredient]から，現在の数量を削除します。
-     * @param ingredient 削除する数量を提供する材料
-     * @param simulate `true`の場合のみ実際に削除を行います。
-     * @return 実際に削除された数量
-     */
-    fun shrinkStack(ingredient: HTFluidIngredient, simulate: Boolean): Int = shrinkStack(ingredient.getRequiredAmount(getStack()), simulate)
-
-    /**
-     * 指定された[ingredient]から，現在の数量を削除します。
-     * @param ingredient 削除する数量を提供する材料
-     * @param simulate `true`の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された数量
-     */
-    fun shrinkStack(ingredient: Optional<HTFluidIngredient>, simulate: Boolean): Int = ingredient
-        .map { ingredient1: HTFluidIngredient -> shrinkStack(ingredient1, simulate) }
-        .orElse(0)
-
-    /**
      * このタンクが空かどうか判定します。
      */
     val isEmpty: Boolean get() = getStack().isEmpty
@@ -204,7 +184,7 @@ interface HTFluidTank :
 
     @Deprecated("Use extract(FluidStack, Boolean, HTStorageAccess) instead of this")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        if (!matchFluid(HTFluidPredicate.byFluidAndComponent(resource))) return FluidStack.EMPTY
+        if (!matchFluid(HTFluidPredicates.byFluidAndComponent(resource))) return FluidStack.EMPTY
         return extract(resource.amount, action.simulate(), HTStorageAccess.EXTERNAL)
     }
 }

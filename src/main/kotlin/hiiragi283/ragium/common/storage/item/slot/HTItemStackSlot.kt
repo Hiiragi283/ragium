@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.predicate.HTItemPredicate
+import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
@@ -44,7 +44,7 @@ open class HTItemStackSlot protected constructor(
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             canInsert: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<ItemStack> = HTItemPredicate.TRUE,
+            filter: Predicate<ItemStack> = HTItemPredicates.TRUE,
         ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y)
 
         @JvmStatic
@@ -53,7 +53,7 @@ open class HTItemStackSlot protected constructor(
             x: Int,
             y: Int,
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
-            canInsert: Predicate<ItemStack> = HTItemPredicate.TRUE,
+            canInsert: Predicate<ItemStack> = HTItemPredicates.TRUE,
             filter: Predicate<ItemStack> = canInsert,
         ): HTItemStackSlot = create(
             listener,

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -61,7 +62,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // 実際にインプットを減らす
-        inputSlot.shrinkStack(recipe.ingredient, false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe.ingredient, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.5f, 1f)
     }

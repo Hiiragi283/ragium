@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -86,8 +87,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insertItem(recipe.assemble(input, registries), false, HTStorageAccess.INTERNAl)
         outputTank.insert(recipe.assembleFluid(input, registries), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.itemIngredient, false)
-        inputTank.shrinkStack(recipe.fluidIngredient, false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe.itemIngredient, false)
+        HTIngredientHelper.shrinkStack(inputTank, recipe.fluidIngredient, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

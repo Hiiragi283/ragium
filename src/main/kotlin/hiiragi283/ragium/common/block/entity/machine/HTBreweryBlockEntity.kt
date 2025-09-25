@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTMultiItemToPotionRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
@@ -23,14 +23,15 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
-class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
-        RagiumRecipeTypes.ALLOYING.get(),
+class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTMultiItemToPotionRecipe>(
+        RagiumRecipeTypes.BREWING.get(),
         HTMachineVariant.ALLOY_SMELTER,
         pos,
         state,
     ) {
     private lateinit var inputSlots: List<HTItemStackSlot>
+
     private lateinit var outputSlot: HTItemStackSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -50,7 +51,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput = HTMultiItemRecipeInput.fromSlots(inputSlots)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTMultiItemToPotionRecipe): Boolean =
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
@@ -58,7 +59,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTMultiItemRecipeInput,
-        recipe: HTCombineItemToItemRecipe,
+        recipe: HTMultiItemToPotionRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)

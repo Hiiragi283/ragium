@@ -15,7 +15,7 @@ class HTFrozenImmuneAccessory :
     ShouldFreezeEntity {
     override fun shouldFreeze(stack: ItemStack, reference: SlotReference): TriState {
         val tank: HTFluidTank = HTFluidItem.getFluidTank(stack, 0) ?: return TriState.DEFAULT
-        if (tank.matchFluid(RagiumFluidContents.CRIMSON_BLOOD)) {
+        if (tank.matchFluid(RagiumFluidContents.CRIMSON_BLOOD::isOf)) {
             if (!tank.extract(10, true, HTStorageAccess.INTERNAl).isEmpty) {
                 tank.extract(10, false, HTStorageAccess.INTERNAl)
                 return TriState.FALSE

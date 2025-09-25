@@ -2,14 +2,12 @@ package hiiragi283.ragium.api.storage.item
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
-import java.util.Optional
 import java.util.function.Predicate
 import kotlin.math.min
 
@@ -161,24 +159,6 @@ interface HTItemSlot :
      * @return 実際に削除された個数
      */
     fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
-
-    /**
-     * 指定された[ingredient]から，現在の個数を削除します。
-     * @param ingredient 削除する個数を提供する材料
-     * @param simulate `true`の場合のみ実際に削除を行います。
-     * @return 実際に削除された個数
-     */
-    fun shrinkStack(ingredient: HTItemIngredient, simulate: Boolean): Int = shrinkStack(ingredient.getRequiredAmount(getStack()), simulate)
-
-    /**
-     * 指定された[ingredient]から，現在の個数を削除します。
-     * @param ingredient 削除する個数を提供する材料
-     * @param simulate `true`の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された個数
-     */
-    fun shrinkStack(ingredient: Optional<HTItemIngredient>, simulate: Boolean): Int = ingredient
-        .map { ingredient1: HTItemIngredient -> shrinkStack(ingredient1, simulate) }
-        .orElse(0)
 
     /**
      * このスロットが空かどうか判定します。

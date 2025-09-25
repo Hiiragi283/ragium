@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.predicate.HTItemPredicate
+import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
@@ -29,7 +29,7 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
             @JvmStatic
             fun getComponentTier(stack: ItemStack): HTComponentTier? = RagiumItems.COMPONENTS
                 .toList()
-                .firstOrNull { (_, item: ItemLike) -> HTItemPredicate.byItem(item).test(stack) }
+                .firstOrNull { (_, item: ItemLike) -> HTItemPredicates.byItem(item).test(stack) }
                 ?.first
         }
 
