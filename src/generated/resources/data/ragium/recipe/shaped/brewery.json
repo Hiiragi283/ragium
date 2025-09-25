@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/azure_steel"
     },
     "B": {
-      "tag": "c:gems/diamond"
+      "item": "minecraft:brewing_stand"
     },
     "C": {
-      "tag": "c:circuits/basic"
+      "tag": "c:circuits/elite"
     },
     "D": {
-      "item": "minecraft:bricks"
+      "item": "minecraft:deepslate_tiles"
     }
   },
   "pattern": [
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:block_breaker"
+    "id": "ragium:brewery"
   }
 }

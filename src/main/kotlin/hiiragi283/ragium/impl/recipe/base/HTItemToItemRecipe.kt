@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 
 abstract class HTItemToItemRecipe internal constructor(val ingredient: HTItemIngredient, val result: HTItemResult) :
     HTSingleInputRecipe {
-        override fun getIngredientCount(input: SingleRecipeInput): Int = ingredient.getRequiredAmount(input.item())
+        override fun getRequiredCount(stack: ItemStack): Int = ingredient.getRequiredAmount(stack)
 
         override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 

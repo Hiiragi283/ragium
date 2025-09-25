@@ -33,10 +33,10 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     fun getTank(index: Int): HTFluidTank = blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).getOrNull(index) ?: HTEmptyFluidTank
 
     fun createFluidTank(index: Int, x: Int, y: Int): HTFluidTankWidget =
-        HTFluidTankWidget.createTank(getTank(index), x, y).apply(::addRenderableWidget)
+        HTFluidTankWidget.createTank(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)
 
     fun createFluidSlot(index: Int, x: Int, y: Int): HTFluidTankWidget =
-        HTFluidTankWidget.createSlot(getTank(index), x, y).apply(::addRenderableWidget)
+        HTFluidTankWidget.createSlot(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)
 
     fun createEnergyWidget(
         key: ResourceKey<Level>,

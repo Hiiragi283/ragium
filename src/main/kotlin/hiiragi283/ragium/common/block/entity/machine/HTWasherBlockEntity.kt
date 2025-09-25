@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -34,7 +35,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidInteractable {
     private lateinit var inputTank: HTFluidTank
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         // input
         inputTank = HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.washerInputTankCapacity)
         return HTSimpleFluidTankHolder.input(this, inputTank)
@@ -57,8 +58,8 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
-        inputTank.shrinkStack(recipe.getIngredientAmount(input), false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
+        HTIngredientHelper.shrinkStack(inputTank, recipe::getRequiredAmount, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1f, 0.25f)
     }

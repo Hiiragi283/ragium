@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -35,7 +36,7 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.25f, 1f)
     }

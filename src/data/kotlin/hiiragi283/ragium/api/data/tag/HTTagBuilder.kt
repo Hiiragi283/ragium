@@ -43,12 +43,8 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
     fun build(action: BiConsumer<TagKey<T>, TagEntry>) {
         entryCache.map.forEach { (tagKey: TagKey<T>, entries: Collection<Entry>) ->
             entries
-                .sortedWith(
-                    Comparator
-                        .comparing(Entry::isTag, Comparator.reverseOrder())
-                        .thenComparing(Entry::type)
-                        .thenComparing(Entry::id),
-                ).toSet()
+                .sortedWith(Entry.COMPARATOR)
+                .toSet()
                 .forEach { entry: Entry ->
                     action.accept(tagKey, entry.toTagEntry())
                 }
@@ -62,6 +58,14 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
 
     @JvmRecord
     private data class Entry(val id: ResourceLocation, val isTag: Boolean, val type: DependType) {
+        companion object {
+            @JvmField
+            val COMPARATOR: Comparator<Entry> = Comparator
+                .comparing(Entry::isTag, Comparator.reverseOrder())
+                .thenComparing(Entry::type)
+                .thenComparing(Entry::id)
+        }
+
         fun toTagEntry(): TagEntry = if (isTag) {
             when (type) {
                 DependType.OPTIONAL -> TagEntry.optionalTag(id)

@@ -78,34 +78,16 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun machines() {
         // Basic
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.ALLOY_SMELTER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', Items.FURNACE)
-            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY))
-            .define('D', Items.BRICKS)
-            .save(output)
-
+        basicMachine(
+            HTMachineVariant.ALLOY_SMELTER,
+            Ingredient.of(Items.FURNACE),
+            Ingredient.of(RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY)),
+        )
         basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
         basicMachine(HTMachineVariant.CUTTING_MACHINE, Ingredient.of(Items.STONECUTTER))
         basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
-
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.PULVERIZER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', Items.FLINT)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.BASIC)
-            .define('D', Items.BRICKS)
-            .save(output)
+        basicMachine(HTMachineVariant.PULVERIZER, Ingredient.of(Items.FLINT))
         // Advanced
         HTShapedRecipeBuilder
             .misc(HTMachineVariant.CRUSHER)
@@ -144,7 +126,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         mapOf(
-            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
             HTMachineVariant.CRUSHER to HTMachineVariant.PULVERIZER,
             HTMachineVariant.MELTER to HTMachineVariant.EXTRACTOR,
         ).forEach { (adv: HTMachineVariant, basic: HTMachineVariant) ->
@@ -162,16 +143,41 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ELITE)
             .define('D', Items.DEEPSLATE_TILES)
             .save(output)
+
+        HTShapedRecipeBuilder
+            .misc(HTMachineVariant.BREWERY)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', Items.BREWING_STAND)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ELITE)
+            .define('D', Items.DEEPSLATE_TILES)
+            .save(output)
+
+        mapOf(
+            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
+        ).forEach { (elite: HTMachineVariant, adv: HTMachineVariant) ->
+            createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
+        }
     }
 
     @JvmStatic
-    private fun basicMachine(variant: HTMachineVariant, side: Ingredient) {
+    private fun basicMachine(
+        variant: HTMachineVariant,
+        side: Ingredient,
+        core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.BASIC),
+    ) {
         HTShapedRecipeBuilder
             .misc(variant)
-            .crossLayered()
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.BASIC)
-            .define('C', side)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', side)
+            .define('C', core)
             .define('D', Items.BRICKS)
             .save(output)
     }

@@ -61,7 +61,7 @@ class RagiumItemTagsProvider(
         food(builder)
         categories(builder)
 
-        curios(builder)
+        accessories(builder)
         pneumatic(builder)
     }
 
@@ -201,11 +201,11 @@ class RagiumItemTagsProvider(
         builder.add(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
 
         builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
-        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
 
         builder.add(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
         builder.add(ModTags.MEALS, RagiumDelightAddon.RAGI_CHERRY_TOAST)
-        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
     }
 
     //    Categories    //
@@ -289,20 +289,25 @@ class RagiumItemTagsProvider(
         )
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         // WIP
+        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST)
+        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.GREEN_PELLET)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.SOLAR_PANEL)
     }
 
     //    Integration    //
 
-    private fun curios(builder: HTTagBuilder<Item>) {
-        builder.addCurio(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        builder.addCurio(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
-        builder.addCurio(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
-        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.addCurio(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
-        builder.addCurio(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
+    private fun accessories(builder: HTTagBuilder<Item>) {
+        builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
+        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
+        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
+        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
+        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
+        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
+        builder.addAccessory(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
@@ -324,7 +329,7 @@ class RagiumItemTagsProvider(
         return add(itemCommonTag, tagKey, holder)
     }
 
-    private fun HTTagBuilder<Item>.addCurio(curio: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> = add(curio.slotTag, holder)
+    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> = add(slot.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

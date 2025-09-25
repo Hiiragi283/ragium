@@ -51,7 +51,7 @@ object RagiumDelightAddon : RagiumAddon {
     )
 
     @JvmField
-    val RAGI_CHERRY_TOAST_BLOCk: HTBasicDeferredBlock<FeastBlock> = BLOCK_REGISTER.registerSimple(
+    val RAGI_CHERRY_TOAST_BLOCK: HTBasicDeferredBlock<FeastBlock> = BLOCK_REGISTER.registerSimple(
         "${RagiumConst.RAGI_CHERRY}_toast_block",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> FeastBlock(prop, RAGI_CHERRY_TOAST, true) },
@@ -153,7 +153,7 @@ object RagiumDelightAddon : RagiumAddon {
                 RAGI_CHERRY_PIE_SLICE,
                 // Jam
                 RAGI_CHERRY_JAM,
-                RAGI_CHERRY_TOAST_BLOCk.itemHolder,
+                RAGI_CHERRY_TOAST_BLOCK.itemHolder,
                 RAGI_CHERRY_TOAST,
             )
 

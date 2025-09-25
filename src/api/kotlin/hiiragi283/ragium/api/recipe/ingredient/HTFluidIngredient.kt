@@ -39,4 +39,8 @@ data class HTFluidIngredient private constructor(private val delegate: SizedFlui
     override fun hasNoMatchingStacks(): Boolean = delegate.ingredient().hasNoFluids()
 
     override fun getMatchingStacks(): List<FluidStack> = listOf(*delegate.fluids)
+
+    fun interface CountGetter {
+        fun getRequiredAmount(stack: FluidStack): Int
+    }
 }

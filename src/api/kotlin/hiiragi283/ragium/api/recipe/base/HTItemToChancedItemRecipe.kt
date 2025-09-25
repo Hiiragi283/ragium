@@ -6,9 +6,4 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 /**
  * アイテムのみを受け付ける[HTChancedItemRecipe]の拡張インターフェース
  */
-interface HTItemToChancedItemRecipe : HTChancedItemRecipe<SingleRecipeInput> {
-    /**
-     * 液体を使わないので常に`0`を返す
-     */
-    override fun getIngredientAmount(input: SingleRecipeInput): Int = 0
-}
+interface HTItemToChancedItemRecipe : HTChancedItemRecipe<SingleRecipeInput>

@@ -62,7 +62,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 .let(::listOf)
         }
 
-        override fun getIngredientCount(input: SingleRecipeInput): Int = 1
+        override fun getRequiredCount(stack: ItemStack): Int = 1
 
         override fun matches(input: SingleRecipeInput, level: Level): Boolean =
             RagiumDataMaps.INSTANCE.getBrewingEffect(level.registryAccess(), input.item().itemHolder) != null

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -11,21 +12,9 @@ import net.minecraft.world.item.crafting.RecipeInput
 /**
  * [INPUT]から確率付きの[ItemStack]を返すレシピ
  */
-interface HTChancedItemRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
-    /**
-     * 指定された[input]から材料の個数を返します。
-     * @param input レシピの入力
-     * @return 必要な材料の個数
-     */
-    fun getIngredientCount(input: INPUT): Int
-
-    /**
-     * 指定された[input]から材料の量を返します。
-     * @param input レシピの入力
-     * @return 必要な材料の量
-     */
-    fun getIngredientAmount(input: INPUT): Int
-
+interface HTChancedItemRecipe<INPUT : RecipeInput> :
+    HTRecipe<INPUT>,
+    HTItemIngredient.CountGetter {
     /**
      * 指定された[input]から完成品を返します。
      * @param input レシピの入力

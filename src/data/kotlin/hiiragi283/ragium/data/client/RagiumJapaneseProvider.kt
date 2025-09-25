@@ -488,7 +488,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "らぎチェリーのトーストタワー")
+        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
 
         add(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")

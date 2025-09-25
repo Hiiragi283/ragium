@@ -50,7 +50,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumDelightAddon.BLOCK_REGISTER.firstEntries)
 
             remove(RagiumDelightAddon.RAGI_CHERRY_PIE)
-            remove(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+            remove(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         }.forEach(::simpleBlockItem)
 
         for ((variant: HTDecorationVariant, wall: HTHolderLike) in RagiumBlocks.WALLS) {

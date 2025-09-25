@@ -2,7 +2,14 @@
   "values": [
     "ragium:bottled_bee",
     "ragium:drill",
+    "ragium:green_pellet",
+    "ragium:ragi_cherry_toast",
+    "ragium:ragi_cherry_toast_block",
+    "ragium:slot_cover",
+    "ragium:solar_panel",
     "#c:obsidians/mysterious",
+    "ragium:brewery",
+    "ragium:telepad",
     "ragium:wooden_casing"
   ]
 }

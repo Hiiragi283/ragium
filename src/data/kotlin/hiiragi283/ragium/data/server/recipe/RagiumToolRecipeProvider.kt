@@ -125,6 +125,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Tags.Items.DYES_RED)
             .define('C', Items.PAPER)
             .save(output)
+
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.NIGHT_VISION_GOGGLES)
+            .pattern(
+                "AAA",
+                "ABA",
+            ).define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .save(output)
     }
 
     @JvmStatic

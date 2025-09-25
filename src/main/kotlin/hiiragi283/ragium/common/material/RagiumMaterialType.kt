@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.material
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.variant.HTVariantKey
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 
 enum class RagiumMaterialType(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     // Mineral

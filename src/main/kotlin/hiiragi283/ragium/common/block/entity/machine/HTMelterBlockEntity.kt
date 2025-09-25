@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -78,7 +79,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
         }
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
     }

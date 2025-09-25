@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -25,6 +26,7 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -105,18 +107,20 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        inputSlot.shrinkStack(recipe.getIngredientCount(input), false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }
 
     private class MultiSmeltingRecipe(private val recipe: AbstractCookingRecipe, private val count: Int) : HTSingleInputRecipe {
-        override fun getIngredientCount(input: SingleRecipeInput): Int = when {
-            test(input) -> 1
+        private val ingredient: Ingredient get() = recipe.ingredients[0]
+        
+        override fun getRequiredCount(stack: ItemStack): Int = when {
+            ingredient.test(stack) -> 1
             else -> 0
         }
 
-        override fun test(input: SingleRecipeInput): Boolean = recipe.ingredients[0].test(input.item())
+        override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
         override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
             recipe.assemble(input, registries).copyWithCount(count)
@@ -125,6 +129,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun getType(): RecipeType<*> = unsupported()
 
-        override fun isIncomplete(): Boolean = recipe.ingredients[0].items.isEmpty()
+        override fun isIncomplete(): Boolean = ingredient.items.isEmpty()
     }
 }

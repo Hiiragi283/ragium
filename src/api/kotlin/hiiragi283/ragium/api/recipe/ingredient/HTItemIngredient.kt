@@ -38,4 +38,8 @@ data class HTItemIngredient private constructor(private val delegate: SizedIngre
     override fun hasNoMatchingStacks(): Boolean = delegate.ingredient().hasNoItems()
 
     override fun getMatchingStacks(): List<ItemStack> = listOf(*delegate.items)
+
+    fun interface CountGetter {
+        fun getRequiredCount(stack: ItemStack): Int
+    }
 }

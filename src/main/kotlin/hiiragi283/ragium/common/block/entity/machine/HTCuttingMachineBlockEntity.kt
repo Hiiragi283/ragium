@@ -25,6 +25,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -125,12 +126,14 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private class StoneCuttingRecipe(private val recipe: StonecutterRecipe) : HTSingleInputRecipe {
-        override fun getIngredientCount(input: SingleRecipeInput): Int = when {
-            test(input) -> 1
+        private val ingredient: Ingredient get() = recipe.ingredients[0]
+        
+        override fun getRequiredCount(stack: ItemStack): Int = when {
+            ingredient.test(stack) -> 1
             else -> 0
         }
 
-        override fun test(input: SingleRecipeInput): Boolean = recipe.ingredients[0].test(input.item())
+        override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
         override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = recipe.assemble(input, registries)
 
@@ -138,6 +141,6 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun getType(): RecipeType<*> = unsupported()
 
-        override fun isIncomplete(): Boolean = recipe.ingredients[0].items.isEmpty()
+        override fun isIncomplete(): Boolean = ingredient.items.isEmpty()
     }
 }

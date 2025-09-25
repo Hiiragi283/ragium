@@ -4,10 +4,24 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
+import java.util.function.ToIntFunction
 
 object HTIngredientHelper {
     //    Item    //
+
+    @JvmStatic
+    fun shrinkStack(slot: HTItemSlot, ingredient: ToIntFunction<ItemStack>, simulate: Boolean): Int {
+        val stackIn: ItemStack = slot.getStack()
+        if (stackIn.hasCraftingRemainingItem() && stackIn.count == 1) {
+            slot.setStack(stackIn.craftingRemainingItem)
+            return 0
+        } else {
+            return slot.shrinkStack(ingredient.applyAsInt(slot.getStack()), simulate)
+        }
+    }
 
     /**
      * 指定された[ingredient]から，現在の個数を削除します。
@@ -17,7 +31,7 @@ object HTIngredientHelper {
      */
     @JvmStatic
     fun shrinkStack(slot: HTItemSlot, ingredient: HTItemIngredient, simulate: Boolean): Int =
-        slot.shrinkStack(ingredient.getRequiredAmount(slot.getStack()), simulate)
+        shrinkStack(slot, ingredient::getRequiredAmount, simulate)
 
     /**
      * 指定された[ingredient]から，現在の個数を削除します。
@@ -31,6 +45,10 @@ object HTIngredientHelper {
 
     //    Fluid    //
 
+    @JvmStatic
+    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<FluidStack>, simulate: Boolean): Int =
+        tank.shrinkStack(ingredient.applyAsInt(tank.getStack()), simulate)
+
     /**
      * 指定された[ingredient]から，現在の数量を削除します。
      * @param ingredient 削除する数量を提供する材料
@@ -39,7 +57,7 @@ object HTIngredientHelper {
      */
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: HTFluidIngredient, simulate: Boolean): Int =
-        tank.shrinkStack(ingredient.getRequiredAmount(tank.getStack()), simulate)
+        shrinkStack(tank, ingredient::getRequiredAmount, simulate)
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。

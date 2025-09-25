@@ -486,7 +486,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk, "Ragi-Cherry Toast Tower")
+        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
 
         add(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")

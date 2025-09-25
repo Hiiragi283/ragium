@@ -8,8 +8,10 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.impl.recipe.base.HTChancedItemRecipeBase
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWashingRecipe(
     val ingredient: HTItemIngredient,
@@ -19,9 +21,9 @@ class HTWashingRecipe(
     HTItemWithFluidToChancedItemRecipe {
     override fun isIncompleteIngredient(): Boolean = ingredient.hasNoMatchingStacks() || fluidIngredient.hasNoMatchingStacks()
 
-    override fun getIngredientCount(input: HTItemWithFluidRecipeInput): Int = ingredient.getRequiredAmount(input.item)
+    override fun getRequiredCount(stack: ItemStack): Int = ingredient.getRequiredAmount(stack)
 
-    override fun getIngredientAmount(input: HTItemWithFluidRecipeInput): Int = fluidIngredient.getRequiredAmount(input.fluid)
+    override fun getRequiredAmount(stack: FluidStack): Int = fluidIngredient.getRequiredAmount(stack)
 
     override fun test(input: HTItemWithFluidRecipeInput): Boolean = ingredient.test(input.item) && fluidIngredient.test(input.fluid)
 

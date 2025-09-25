@@ -12,6 +12,8 @@ import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -144,8 +146,10 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
         // WIP
-        builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
+        builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
+        builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.WOODEN_CASING)
+        builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 
     //    Extensions    //

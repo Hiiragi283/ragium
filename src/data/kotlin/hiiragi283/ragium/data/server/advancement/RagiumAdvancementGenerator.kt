@@ -90,11 +90,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         HTAdvancementBuilder
             .child(RagiumAdvancements.RAGI_CHERRY)
             .display {
-                setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+                setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setDescFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setGoal()
-            }.hasAllItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+            }.hasAllItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
             .addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
             .save(output, RagiumAdvancements.RAGI_CHERRY_TOAST)
         // Advanced

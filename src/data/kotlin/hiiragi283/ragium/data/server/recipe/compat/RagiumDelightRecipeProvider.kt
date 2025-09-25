@@ -112,7 +112,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCk)
+            .misc(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
             .pattern(
                 "ABA",
                 "ACA",
