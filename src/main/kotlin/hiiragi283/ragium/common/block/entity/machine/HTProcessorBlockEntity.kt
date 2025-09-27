@@ -76,16 +76,12 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
 
         override fun writeValue(output: HTValueOutput) {
             super.writeValue(output)
-            if (recipeCache is HTValueSerializable) {
-                recipeCache.serialize(output)
-            }
+            HTValueSerializable.trySerialize(recipeCache, output)
         }
 
         override fun readValue(input: HTValueInput) {
             super.readValue(input)
-            if (recipeCache is HTValueSerializable) {
-                recipeCache.deserialize(input)
-            }
+            HTValueSerializable.tryDeserialize(recipeCache, input)
         }
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)

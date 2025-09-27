@@ -22,7 +22,7 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
             }
             // Get stack from tanks
             if (screen is HTFluidScreen) {
-                for (widget: HTFluidWidget in screen.iterator()) {
+                for (widget: HTFluidWidget in screen.getFluidWidgets()) {
                     if (widget.getBounds().contains(x, y)) {
                         return EmiStackInteraction(NeoForgeEmiStack.of(widget.stack), null, false)
                     }

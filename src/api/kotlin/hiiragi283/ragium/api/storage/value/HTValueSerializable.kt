@@ -6,6 +6,22 @@ import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.common.util.INBTSerializable
 
 interface HTValueSerializable : INBTSerializable<CompoundTag> {
+    companion object {
+        @JvmStatic
+        fun trySerialize(obj: Any?, output: HTValueOutput) {
+            if (obj is HTValueSerializable) {
+                obj.serialize(output)
+            }
+        }
+
+        @JvmStatic
+        fun tryDeserialize(obj: Any?, input: HTValueInput) {
+            if (obj is HTValueSerializable) {
+                obj.deserialize(input)
+            }
+        }
+    }
+
     fun serialize(output: HTValueOutput)
 
     fun deserialize(input: HTValueInput)

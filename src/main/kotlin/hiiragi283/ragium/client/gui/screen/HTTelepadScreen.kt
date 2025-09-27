@@ -138,5 +138,5 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         fluidWidget.stack = stack
     }
 
-    override fun iterator(): Iterator<HTFluidWidget> = listOf(fluidWidget).iterator()
+    override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)
 }

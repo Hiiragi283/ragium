@@ -51,5 +51,5 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
         }.stack = stack
     }
 
-    override fun iterator(): Iterator<HTFluidWidget> = listOf(fluidWidget, fluidWidget1).iterator()
+    override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget, fluidWidget1)
 }
