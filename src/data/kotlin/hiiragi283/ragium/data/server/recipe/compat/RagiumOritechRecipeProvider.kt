@@ -3,27 +3,42 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
 import rearth.oritech.api.recipe.CentrifugeRecipeBuilder
 import rearth.oritech.api.recipe.FoundryRecipeBuilder
+import rearth.oritech.api.recipe.LaserRecipeBuilder
 import rearth.oritech.api.recipe.OritechRecipeBuilder
 import rearth.oritech.api.recipe.ParticleCollisionRecipeBuilder
 
 object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.ORITECH) {
     override fun buildRecipeInternal() {
+        atomicForge()
         centrifuge()
         foundry()
-        atomicForge()
+        laser()
         particle()
+    }
+
+    @JvmStatic
+    private fun atomicForge() {
+        AtomicForgeRecipeBuilder
+            .build()
+            .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .result(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
+            .time(20)
+            .export(output, RagiumConst.RAGI_CRYSTAL)
     }
 
     @JvmStatic
@@ -74,15 +89,12 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     }
 
     @JvmStatic
-    private fun atomicForge() {
-        AtomicForgeRecipeBuilder
+    private fun laser() {
+        LaserRecipeBuilder
             .build()
-            .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .result(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
-            .time(20)
-            .export(output, RagiumConst.RAGI_CRYSTAL)
+            .input(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.REDSTONE)
+            .result(RagiumItems.getDust(RagiumMaterialType.RAGINITE))
+            .export(output, "raginite")
     }
 
     @JvmStatic
@@ -98,10 +110,10 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     //    Extension    //
 
-    fun OritechRecipeBuilder.input(variant: HTItemMaterialVariant, material: HTMaterialType): OritechRecipeBuilder =
+    fun OritechRecipeBuilder.input(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): OritechRecipeBuilder =
         input(variant.itemTagKey(material))
 
-    fun OritechRecipeBuilder.result(item: ItemLike, count: Int = 1): OritechRecipeBuilder = result(ItemStack(item, count))
+    fun OritechRecipeBuilder.result(item: HTDeferredItem<*>, count: Int = 1): OritechRecipeBuilder = result(item.toStack(count))
 
     fun OritechRecipeBuilder.fluidInput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidInput(content.commonTag)
 

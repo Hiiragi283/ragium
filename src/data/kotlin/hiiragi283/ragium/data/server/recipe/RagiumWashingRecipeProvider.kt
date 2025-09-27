@@ -4,19 +4,18 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
@@ -86,13 +85,12 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
             .save(output, RagiumAPI.id("water_bottle"))
 
         // Concretes
-        for (color: DyeColor in DyeColor.entries) {
-            val name: String = color.serializedName
+        for (color: HTColorMaterial in HTColorMaterial.entries) {
             HTItemWithFluidToChancedItemRecipeBuilder
                 .washing(
-                    ingredientHelper.item(HTDeferredItem.createSimple(vanillaId("${name}_concrete_powder")), 8),
+                    ingredientHelper.item(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE_POWDER, color), 8),
                     ingredientHelper.water(1000),
-                ).addResult(resultHelper.item(HTDeferredItem.createSimple(vanillaId("${name}_concrete")), 8))
+                ).addResult(resultHelper.item(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE, color), 8))
                 .saveSuffixed(output, "_from_powder")
         }
     }

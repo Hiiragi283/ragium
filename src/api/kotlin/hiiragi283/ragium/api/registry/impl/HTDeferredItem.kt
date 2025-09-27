@@ -19,11 +19,6 @@ class HTDeferredItem<ITEM : Item> :
     ItemLike,
     HTHasTranslationKey,
     HTHasComponent {
-    companion object {
-        @JvmStatic
-        fun createSimple(id: ResourceLocation): HTDeferredItem<Item> = HTDeferredItem(id)
-    }
-
     constructor(key: ResourceKey<Item>) : super(key)
 
     constructor(id: ResourceLocation) : super(Registries.ITEM, id)

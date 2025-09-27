@@ -1,7 +1,13 @@
-package hiiragi283.ragium.common.variant
+package hiiragi283.ragium.common.material
 
+import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.common.variant.HTColoredVariant
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
@@ -24,6 +30,22 @@ enum class HTColorMaterial(val color: DyeColor, private val enName: String, priv
     RED(DyeColor.RED, "Red", "赤色"),
     BLACK(DyeColor.BLACK, "Black", "黒色"),
     ;
+
+    companion object {
+        @JvmField
+        val VANILLA_TABLE: HTTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
+            for (color: HTColorMaterial in HTColorMaterial.entries) {
+                val id: ResourceLocation = vanillaId(color.serializedName)
+                for (variant: HTColoredVariant in HTColoredVariant.entries) {
+                    put(variant, color, HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}")))
+                }
+            }
+        }
+
+        @JvmStatic
+        fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
+            VANILLA_TABLE.get(variant, color) ?: error("Unknown ${color.serializedName} ${variant.serializedName}")
+    }
 
     val dyeTag: TagKey<Item> = color.tag
     val dyedTag: TagKey<Item> = color.dyedTag

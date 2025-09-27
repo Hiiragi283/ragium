@@ -1,12 +1,12 @@
 [versions]
 minecraft = "1.21.1"
-ragium = "0.9.0a"
+ragium = "0.9.0b"
 
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.107"
-neo-version = "21.1.203"
+neo-version = "21.1.208"
 
 kff-version = "5.9.0"
 kff-version-range = "[5.9,)"
@@ -27,7 +27,7 @@ immersive = "1.21.1-12.4.2-pre.20"
 jade = "15.10.3+neoforge"
 magitech = "0.12.1"
 mek = "1.21.1-10.7.15.81"
-oritech = "6FLqYpTF"
+oritech = "0.18.0"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
 pneuma = "8.2.13+mc1.21.1"
 replica = "1.21-1.2.0"
@@ -52,7 +52,7 @@ immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngine
 fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
-oritech = { group = "maven.modrinth", name = "oritech", version.ref = "oritech" }
+oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -68,7 +68,6 @@ mods-impl = [
     "guide",
     "immersive",
     "jade",
-    "oritech",
     "pneuma",
     "replica",
 ]
@@ -76,7 +75,8 @@ mods-impl = [
 mods-transitive = [
     "aa",
     "accessories",
-    "magitech"
+    "magitech",
+    "oritech"
 ]
 
 mods-compile = []

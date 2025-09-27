@@ -5,20 +5,15 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.TankWidget
 import hiiragi283.ragium.integration.emi.RagiumEmiTextures
 import net.minecraft.client.gui.GuiGraphics
-import java.util.function.LongSupplier
 
-class HTTankWidget(
-    stack: EmiIngredient?,
-    x: Int,
-    y: Int,
-    capacity: LongSupplier,
-) : TankWidget(
+class HTTankWidget(stack: EmiIngredient?, x: Int, y: Int) :
+    TankWidget(
         stack ?: EmiStack.EMPTY,
         x,
         y,
         18,
         18 * 3,
-        capacity.asLong,
+        stack?.amount ?: 0,
     ) {
     override fun render(
         draw: GuiGraphics,

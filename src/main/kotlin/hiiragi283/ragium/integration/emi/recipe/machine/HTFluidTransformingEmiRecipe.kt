@@ -5,7 +5,6 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import hiiragi283.ragium.integration.emi.addTank
 import net.minecraft.resources.ResourceLocation
@@ -42,7 +41,6 @@ class HTFluidTransformingEmiRecipe(
                 fluidIngredient,
                 getPosition(1),
                 getPosition(0),
-                RagiumConfig.COMMON.refineryInputTankCapacity,
             )
         widgets.addSlot(itemIngredient, getPosition(2.5), getPosition(0)).drawBack(false)
         // Output
@@ -52,9 +50,7 @@ class HTFluidTransformingEmiRecipe(
                 fluidResult,
                 getPosition(5),
                 getPosition(0),
-                RagiumConfig.COMMON.refineryOutputTankCapacity,
-            )
-            .recipeContext(this)
+            ).recipeContext(this)
     }
 
     override val arrowPosX: Int = getPosition(3)

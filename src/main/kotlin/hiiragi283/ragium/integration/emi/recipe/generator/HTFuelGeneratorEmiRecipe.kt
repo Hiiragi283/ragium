@@ -6,7 +6,6 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.integration.emi.addTank
 import hiiragi283.ragium.integration.emi.addWidget
 import hiiragi283.ragium.integration.emi.fluid
@@ -48,7 +47,6 @@ class HTFuelGeneratorEmiRecipe(
                 input,
                 getPosition(5),
                 getPosition(0),
-                RagiumConfig.COMMON.generatorInputTankCapacity,
             )
     }
 }

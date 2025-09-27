@@ -5,7 +5,6 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import hiiragi283.ragium.integration.emi.addTank
 import net.minecraft.resources.ResourceLocation
@@ -41,7 +40,6 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
                 result,
                 getPosition(4.5),
                 getPosition(0),
-                RagiumConfig.COMMON.melterTankCapacity,
             ).recipeContext(this)
     }
 }

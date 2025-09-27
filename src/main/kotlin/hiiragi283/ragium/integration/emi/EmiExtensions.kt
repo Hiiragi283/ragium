@@ -22,8 +22,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
-import java.util.*
-import java.util.function.LongSupplier
+import java.util.Optional
 
 //    EmiIngredient    //
 
@@ -32,8 +31,6 @@ fun HTItemIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingS
 fun HTFluidIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(NeoForgeEmiStack::of))
 
 fun Optional<HTItemIngredient>.toItemEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
-
-fun Optional<HTFluidIngredient>.toFluidEmi(): EmiIngredient = map(HTFluidIngredient::toEmi).orElse(EmiStack.EMPTY)
 
 //    EmiStack    //
 
@@ -51,8 +48,6 @@ fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(get())
 
 fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get(), amount)
 
-fun HTFluidContent<*, *, *>.toBucketEmi(): EmiStack = EmiStack.of(getBucket())
-
 val EmiStack.fluid: Fluid? get() = this.key as? Fluid
 
 private fun createErrorStack(error: DataResult.Error<*>): EmiStack =
@@ -64,12 +59,6 @@ fun HTBounds.toEmi(): Bounds = Bounds(this.x, this.y, this.width, this.height)
 
 fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
-fun WidgetHolder.addTank(
-    result: EmiIngredient?,
-    x: Int,
-    y: Int,
-    capacity: LongSupplier,
-    drawBack: Boolean = false
-): SlotWidget = add(HTTankWidget(result, x, y, capacity).drawBack(drawBack))
+fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y))
 
 fun WidgetHolder.addWidget(widget: HTWidget): HTEmiWidget = add(HTEmiWidget(widget))
