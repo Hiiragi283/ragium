@@ -39,12 +39,10 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         startY + HTSlotHelper.getSlotPosY(y) - 4,
         Component.empty(),
     ).apply {
-        blockEntity
-            .getAccessConfiguration(side)
-            .getComponent()
-            .let(Tooltip::create)
-            .let(::setTooltip)
+        tooltip = blockEntity.getAccessConfiguration(side).let(::createTooltip)
     }
+    
+    private fun createTooltip(config: HTAccessConfiguration): Tooltip = config.translationKey.let(Component::translatable).let(Tooltip::create)
 
     override fun init() {
         super.init()
@@ -73,7 +71,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         override fun onPress() {
             super.onPress()
             val value: HTAccessConfiguration = blockEntity.getAccessConfiguration(side).nextEntry
-            tooltip = Tooltip.create(value.getComponent())
+            tooltip = createTooltip(value)
             // Client update
             blockEntity.setAccessConfiguration(side, value)
             // Server update

@@ -349,7 +349,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
     private fun alloying() {
         // Netherite
         HTCombineItemToObjRecipeBuilder

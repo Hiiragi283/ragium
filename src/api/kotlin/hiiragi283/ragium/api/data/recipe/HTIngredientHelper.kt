@@ -58,10 +58,8 @@ interface HTIngredientHelper {
 
     fun ingotOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient
 
-    @Deprecated("Use gemOrDust(HTMaterialType, Int) instead of this")
     fun gemOrDust(name: String, count: Int = 1): HTItemIngredient
 
-    @Deprecated("Use ingotOrDust(HTMaterialType, Int) instead of this")
     fun ingotOrDust(name: String, count: Int = 1): HTItemIngredient
 
     //    Fluid    //

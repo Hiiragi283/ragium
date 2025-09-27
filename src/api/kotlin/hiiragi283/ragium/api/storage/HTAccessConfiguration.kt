@@ -4,15 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.toDescriptionKey
-import hiiragi283.ragium.api.text.HTHasComponent
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
 
-enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean, val color: Int) :
-    HTHasTranslationKey,
-    HTHasComponent {
+enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean, val color: Int) : HTHasTranslationKey {
     INPUT_ONLY(true, false, 0xFF0033),
     OUTPUT_ONLY(false, true, 0x3300FF),
     BOTH(true, true, 0x00FF33),
@@ -25,8 +21,6 @@ enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean
     }
 
     override val translationKey: String = RagiumAPI.id(name.lowercase()).toDescriptionKey("access")
-
-    override fun getComponent(): Component = Component.translatable(translationKey)
 
     val nextEntry: HTAccessConfiguration
         get() = when (this) {

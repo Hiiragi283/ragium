@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.Supplier
 
 /**
@@ -41,10 +40,9 @@ abstract class HTDrumUpgradeItem(
         val state: BlockState = level.getBlockState(pos)
         if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
-                var fluid: FluidStack = FluidStack.EMPTY
-                HTMultiCapability.FLUID.getCapability(level, pos, null)?.let { handler: IFluidHandler ->
-                    fluid = handler.getFluidInTank(0).copy()
-                }
+                val fluid: FluidStack = (level.getBlockEntity(pos) as? HTDrumBlockEntity)
+                    ?.getFluidInTank(0)
+                    ?: return InteractionResult.FAIL
                 val newState: BlockState = newDrum.get().defaultBlockState()
                 level.setBlockAndUpdate(pos, newState)
                 val player: Player? = context.player
@@ -53,9 +51,7 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                HTMultiCapability.FLUID
-                    .getCapability(level, pos, null)
-                    ?.fill(fluid, IFluidHandler.FluidAction.EXECUTE)
+                (level.getBlockEntity(pos) as? HTDrumBlockEntity)?.insertFluid(fluid, false)
                 val drop = ItemStack(state.block)
                 player?.let { dropStackAt(it, drop) } ?: dropStackAt(level, pos, drop)
                 context.itemInHand.shrink(1)

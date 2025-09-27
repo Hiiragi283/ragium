@@ -7,10 +7,8 @@ import net.minecraft.network.chat.MutableComponent
 /**
  * @see [mekanism.api.text.ILangEntry]
  */
-interface HTTranslation :
-    HTHasTranslationKey,
-    HTHasComponent {
-    override fun getComponent(): MutableComponent = Component.translatable(translationKey)
+interface HTTranslation : HTHasTranslationKey {
+    fun getComponent(): MutableComponent = Component.translatable(translationKey)
 
     fun getComponent(vararg args: Any): MutableComponent = Component.translatable(translationKey, *args)
 

@@ -25,10 +25,10 @@ interface HTRecipe<INPUT : RecipeInput> :
 
     override fun matches(input: INPUT, level: Level): Boolean = !isIncomplete && test(input)
 
-    @Deprecated("Not used in Ragium")
+    @Deprecated("Not used in Ragium", level = DeprecationLevel.ERROR)
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 
-    @Deprecated("use assemble(INPUT, HolderLookup.Provider) instead of this")
+    @Deprecated("Use `assemble(INPUT, HolderLookup.Provider) `instead", level = DeprecationLevel.ERROR)
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
     override fun isSpecial(): Boolean = true

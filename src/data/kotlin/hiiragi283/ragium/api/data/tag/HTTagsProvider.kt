@@ -31,6 +31,6 @@ abstract class HTTagsProvider<T : Any>(
 
     protected abstract fun addTags(builder: HTTagBuilder<T>)
 
-    @Deprecated("use HTTagBuilder instead of this")
+    @Deprecated("Use `HTTagBuilder` instead")
     override fun tag(tag: TagKey<T>): TagAppender<T> = super.tag(tag)
 }
