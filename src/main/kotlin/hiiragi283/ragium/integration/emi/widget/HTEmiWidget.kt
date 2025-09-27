@@ -18,9 +18,7 @@ open class HTEmiWidget(private val delegate: HTWidget) : Widget() {
         mouseY: Int,
         delta: Float,
     ) {
-        if (delegate is HTBackgroundRenderable) {
-            delegate.renderBackground(draw)
-        }
+        HTBackgroundRenderable.tryRender(delegate, draw)
         delegate.render(draw, mouseX, mouseY, delta)
     }
 }

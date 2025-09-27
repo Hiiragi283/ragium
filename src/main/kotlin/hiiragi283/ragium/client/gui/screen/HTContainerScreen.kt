@@ -37,9 +37,7 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: 
         }
 
         for (renderable: Renderable in renderables) {
-            if (renderable is HTBackgroundRenderable) {
-                renderable.renderBackground(guiGraphics)
-            }
+            HTBackgroundRenderable.tryRender(renderable, guiGraphics)
         }
     }
 

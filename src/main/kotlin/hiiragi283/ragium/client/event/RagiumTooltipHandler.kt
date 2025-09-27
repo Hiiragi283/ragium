@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
-import net.minecraft.client.resources.language.I18n
 import net.minecraft.network.chat.Component
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Item
@@ -29,7 +29,9 @@ object RagiumTooltipHandler {
         val flag: TooltipFlag = event.flags
 
         information(stack, consumer, flag)
-        food(stack, consumer, event.context.tickRate())
+        if (RagiumConfig.COMMON.showFoodEffect.asBoolean) {
+            food(stack, consumer, event.context.tickRate())
+        }
         workInProgress(stack, consumer)
 
         RagiumDataComponents.REGISTER
@@ -42,10 +44,9 @@ object RagiumTooltipHandler {
     @JvmStatic
     private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
         if (stack.itemHolder.idOrThrow.namespace == RagiumAPI.MOD_ID) {
-            val descKey: String = RagiumTranslation.getTooltipKey(stack)
-            if (!I18n.exists(descKey)) return
+            val text: Component = RagiumTranslation.getTooltipText(stack) ?: return
             if (flag.hasShiftDown()) {
-                consumer(Component.translatable(descKey).withStyle(ChatFormatting.GREEN))
+                consumer(text)
             } else {
                 consumer(RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW))
             }

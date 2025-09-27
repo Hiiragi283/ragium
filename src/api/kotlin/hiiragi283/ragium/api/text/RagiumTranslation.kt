@@ -2,7 +2,11 @@ package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.RagiumAPI
 import me.desht.pneumaticcraft.common.item.ICustomTooltipName
+import net.minecraft.ChatFormatting
+import net.minecraft.client.resources.language.I18n
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.common.util.ItemStackMap
 
 /**
  * @see [mekanism.api.text.APILang]
@@ -44,10 +48,21 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     override val translationKey: String = type + "." + path.joinToString(separator = ".")
 
     companion object {
+        @JvmStatic
+        private val tooltipCache: MutableMap<ItemStack, String> = ItemStackMap.createTypeAndTagMap<String>()
+
         /**
          * @see [ICustomTooltipName.getTranslationKey]
          */
         @JvmStatic
-        fun getTooltipKey(stack: ItemStack): String = "${stack.descriptionId}.tooltip"
+        fun getTooltipKey(stack: ItemStack): String =
+            tooltipCache.computeIfAbsent(stack) { stack1: ItemStack -> "${stack1.descriptionId}.tooltip" }
+
+        @JvmStatic
+        fun getTooltipText(stack: ItemStack): Component? {
+            val descKey: String = getTooltipKey(stack)
+            if (!I18n.exists(descKey)) return null
+            return Component.translatable(descKey).withStyle(ChatFormatting.GREEN)
+        }
     }
 }

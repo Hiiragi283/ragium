@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
@@ -18,7 +19,10 @@ class HTCrimsonSoilBlock(properties: Properties) : Block(properties) {
     ) {
         // エンティティがスニークしていない場合はプレイヤー由来のダメージを与える
         if (!entity.isSteppingCarefully && entity is LivingEntity && level is ServerLevel) {
-            entity.hurt(level.damageSources().playerAttack(FakePlayerFactory.getMinecraft(level)), 2f)
+            entity.hurt(
+                level.damageSources().playerAttack(FakePlayerFactory.getMinecraft(level)),
+                RagiumConfig.COMMON.crimsonSoilDamage.getAsFloat(),
+            )
         }
         super.stepOn(level, pos, state, entity)
     }

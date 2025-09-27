@@ -9,5 +9,7 @@ import java.util.function.DoubleSupplier
 class HTDoubleConfigValue(value: ModConfigSpec.DoubleValue) :
     HTConfigValue<Double>(value),
     DoubleSupplier {
+    fun getAsFloat(): Float = asDouble.toFloat()
+
     override fun getAsDouble(): Double = value.get()
 }

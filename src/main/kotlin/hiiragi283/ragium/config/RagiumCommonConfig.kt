@@ -66,6 +66,13 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val hugeDrumCapacity: HTIntConfigValue
 
+    // Block
+    @JvmField
+    val crimsonSoilDamage: HTDoubleConfigValue
+
+    @JvmField
+    val spongeCakeFallDamage: HTDoubleConfigValue
+
     // Item
     @JvmField
     val expBerriesValue: HTIntConfigValue
@@ -76,6 +83,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     // Recipe
     @JvmField
     val tagOutputPriority: HTListConfigValue<String>
+
+    // Tooltip
+    @JvmField
+    val showFoodEffect: HTBoolConfigValue
 
     // World
     @JvmField
@@ -163,6 +174,11 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         hugeDrumCapacity = builder.definePositiveInt("capacity", 256_000)
         builder.pop()
         builder.pop()
+        // Block
+        builder.push("block")
+        crimsonSoilDamage = builder.definePositiveDouble("crimsonSoilDamage", 2.0, 0, Int.MAX_VALUE)
+        spongeCakeFallDamage = builder.definePositiveDouble("spongeCakeFallDamage", 0.0, 0, Int.MAX_VALUE)
+        builder.pop()
         // Item
         builder.push("item")
         expBerriesValue = builder.definePositiveInt("expBerriesValue", 8)
@@ -183,6 +199,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
                     { "" },
                     { obj: Any -> obj is String },
                 ).let(::HTListConfigValue)
+        builder.pop()
+        // Tooltip
+        builder.push("world")
+        showFoodEffect = HTBoolConfigValue(builder.define("showFoodEffect", true))
         builder.pop()
         // World
         builder.push("world")
