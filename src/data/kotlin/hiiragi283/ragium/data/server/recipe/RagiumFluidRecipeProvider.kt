@@ -75,13 +75,20 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 ingredientHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125),
             ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
             .saveSuffixed(output, "_from_lpg")
-        // Naphtha -> Diesel + Sulfur
+
+        // Naphtha -> Fuel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
             resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
-        // Diesel + Crimson Crystal -> Bloo-Diesel
+        // Naphtha + Redstone -> Lubricant
+        distillation(
+            RagiumFluidContents.NAPHTHA to 1000,
+            resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+            resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000) to null,
+        )
+        // Fuel + Crimson Crystal -> Crimson Fuel
         HTFluidTransformRecipeBuilder
             .mixing(
                 ingredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),

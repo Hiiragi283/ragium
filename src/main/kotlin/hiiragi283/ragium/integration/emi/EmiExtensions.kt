@@ -44,9 +44,11 @@ fun Optional<HTItemResult>.toItemEmi(): EmiStack = map(HTItemResult::toEmi).orEl
 
 fun Optional<HTFluidResult>.toFluidEmi(): EmiStack = map(HTFluidResult::toEmi).orElse(EmiStack.EMPTY)
 
-fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(get())
+fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(this.get())
 
-fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get(), amount)
+fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(this.get(), amount)
+
+fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = EmiIngredient.of(this.commonTag)
 
 val EmiStack.fluid: Fluid? get() = this.key as? Fluid
 
@@ -59,6 +61,6 @@ fun HTBounds.toEmi(): Bounds = Bounds(this.x, this.y, this.width, this.height)
 
 fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
-fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y))
+fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y).drawBack(false))
 
 fun WidgetHolder.addWidget(widget: HTWidget): HTEmiWidget = add(HTEmiWidget(widget))

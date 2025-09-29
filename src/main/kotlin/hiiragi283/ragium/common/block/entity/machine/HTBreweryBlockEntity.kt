@@ -9,7 +9,12 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
@@ -31,6 +36,9 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
+    override fun createTank(listener: HTContentListener): HTFluidTank =
+        HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.breweryTankCapacity, canInsert = HTFluidContent.WATER::isOf)
+
     override fun openGui(player: Player, title: Component): InteractionResult {
         TODO("Not yet implemented")
     }

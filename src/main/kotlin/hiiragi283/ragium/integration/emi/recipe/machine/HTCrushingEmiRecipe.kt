@@ -6,6 +6,7 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
+import hiiragi283.ragium.integration.emi.toTagEmi
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 
@@ -22,7 +23,7 @@ class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, v
         // Input
         widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
         widgets
-            .addSlot(EmiIngredient.of(RagiumFluidContents.LUBRICANT.commonTag), getPosition(1), getPosition(2))
+            .addSlot(RagiumFluidContents.LUBRICANT.toTagEmi(), getPosition(1), getPosition(2))
             .catalyst(true)
             .drawBack(false)
         // Output
