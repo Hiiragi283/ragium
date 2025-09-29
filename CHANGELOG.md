@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.0b
+
+- Due to a complete overhaul, this is not compatible with previous versions!
+
 ## v0.8.0
 
 - Added many compat recipes for common materials
