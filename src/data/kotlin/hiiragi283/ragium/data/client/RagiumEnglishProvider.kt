@@ -165,9 +165,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
+
         addFluid(RagiumFluidContents.FUEL, "Fuel")
         addFluid(RagiumFluidContents.CRIMSON_FUEL, "Crimson Fuel")
-        addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
+        addFluid(RagiumFluidContents.GREEN_FUEL, "Green Fuel")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")

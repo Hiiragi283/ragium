@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.multiMapOf
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -20,8 +19,6 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
 
     fun createTag(id: ResourceLocation): TagKey<T> = registryKey.createTagKey(id)
-
-    fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)
 
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)

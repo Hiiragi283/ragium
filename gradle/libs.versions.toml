@@ -16,6 +16,7 @@ aa = "1.3.20+mc1.21.1"
 accessories = "1.1.0-beta.51+1.21.1"
 ae2 = "19.2.17"
 almost = "1.21.1-1.3.0"
+arch = "13.0.8"
 ars = "5.10.5.1219"
 curious = "9.5.1+1.21.1"
 delight = "1.21.1-1.2.9"
@@ -28,6 +29,7 @@ jade = "15.10.3+neoforge"
 magitech = "0.12.1"
 mek = "1.21.1-10.7.16.82"
 oritech = "0.18.0"
+owo = "0.12.15.1-beta.6+1.21"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
 pneuma = "8.2.13+mc1.21.1"
 replica = "1.21-1.2.1"
@@ -41,6 +43,7 @@ aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 accessories = { group = "io.wispforest", name = "accessories-neoforge", version.ref = "accessories" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 almost = { group = "com.almostreliable.mods", name = "almostunified-neoforge", version.ref = "almost" }
+arch = { group = "dev.architectury", name = "architectury-neoforge", version.ref = "arch" }
 ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
 curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curious" }
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
@@ -53,6 +56,7 @@ fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
+owo = { group = "io.wispforest", name = "owo-lib-neoforge", version.ref = "owo" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -65,11 +69,14 @@ mods-impl = [
     "almost",
     "delight",
     "emi",
-    "guide",
     "immersive",
     "jade",
     "pneuma",
     "replica",
+    # non-direct dependencies
+    "arch",
+    "guide",
+    "owo"
 ]
 
 mods-transitive = [

@@ -35,8 +35,8 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
 
     val energyUsage: Int get() = RagiumConfig.COMMON.machineEnergyUsage[this]!!.asInt
 
-    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> get() = RagiumBlocks.MACHINES[this]!!
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> get() = RagiumBlockEntityTypes.MACHINES[this]!!
+    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> by lazy { RagiumBlocks.MACHINES[this]!! }
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> by lazy { RagiumBlockEntityTypes.MACHINES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enPattern

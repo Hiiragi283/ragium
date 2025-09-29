@@ -27,6 +27,9 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         private val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
 
         @JvmStatic
+        private val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
+
+        @JvmStatic
         private val SOLAR_POWER: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
 
         @JvmStatic
@@ -49,6 +52,7 @@ class RagiumDataMapsImpl : RagiumDataMaps {
 
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = THERMAL_FUEL
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = COMBUSTION_FUEL
+    override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = NUCLEAR_FUEL
     override val solarPowerType: DataMapType<Block, HTSolarPower> = SOLAR_POWER
 
     override val brewingEffectType: DataMapType<Item, HTBrewingEffect> = BREWING_EFFECT

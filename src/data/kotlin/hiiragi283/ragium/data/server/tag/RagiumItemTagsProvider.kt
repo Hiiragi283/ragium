@@ -28,6 +28,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
+import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -38,6 +39,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import rearth.oritech.init.ItemContent
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
@@ -261,7 +263,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .forEach { holder: HTHolderLike -> builder.add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, holder) }
 
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
-        builder.addOptional(RagiumModTags.Items.POLYMER_RESIN, RagiumConst.ORITECH, "polymer_resin")
+        builder.add(RagiumModTags.Items.POLYMER_RESIN, HTHolderLike.fromItem(ItemContent.POLYMER_RESIN), HTTagBuilder.DependType.OPTIONAL)
 
         val plastics: TagKey<Item> = builder.createTag(commonId("plastic"))
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
@@ -270,6 +272,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
             PneumaticCraftTags.Items.PLASTIC_SHEETS,
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+        // Fuels
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, RagiumItems.GREEN_PELLET)
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(
+            RagiumModTags.Items.IS_NUCLEAR_FUEL,
+            HTHolderLike.fromItem(ItemContent.SMALL_URANIUM_PELLET),
             HTTagBuilder.DependType.OPTIONAL,
         )
         // Other
@@ -283,7 +293,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
-        builder.add(RagiumModTags.Items.WIP, RagiumItems.GREEN_PELLET)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SOLAR_PANEL)
     }

@@ -200,9 +200,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))
+        liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+
         liquid(RagiumFluidContents.FUEL, Color(0xcc3300))
         liquid(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
-        liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+        liquid(RagiumFluidContents.GREEN_FUEL, Color(0x99cc33))
 
         liquid(RagiumFluidContents.SAP, Color(0x996633))
 

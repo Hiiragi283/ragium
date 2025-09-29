@@ -157,9 +157,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.NATURAL_GAS, "天然ガス")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
+
         addFluid(RagiumFluidContents.FUEL, "燃料")
         addFluid(RagiumFluidContents.CRIMSON_FUEL, "深紅の燃料")
-        addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
+        addFluid(RagiumFluidContents.GREEN_FUEL, "グリーン燃料")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
