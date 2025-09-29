@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
@@ -29,7 +30,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagBuilder
@@ -38,22 +38,12 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
-class RagiumItemTagsProvider(
-    output: PackOutput,
-    provider: CompletableFuture<HolderLookup.Provider>,
-    private val blockTags: CompletableFuture<TagLookup<Block>>,
-    helper: ExistingFileHelper,
-) : HTTagsProvider<Item>(
-        output,
-        Registries.ITEM,
-        provider,
-        helper,
-    ) {
+class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
+    HTTagsProvider<Item>(Registries.ITEM, context) {
     override fun addTags(builder: HTTagBuilder<Item>) {
         copy()
 

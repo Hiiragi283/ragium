@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.wrapOptional
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
@@ -21,9 +22,21 @@ import java.util.concurrent.CompletableFuture
 open class HTAdvancementProvider(
     output: PackOutput,
     private val registries: CompletableFuture<HolderLookup.Provider>,
-    private val helper: ExistingFileHelper,
+    private val fileHelper: ExistingFileHelper,
     private val subProviders: List<HTAdvancementGenerator>,
 ) : DataProvider {
+    companion object {
+        @JvmStatic
+        fun create(vararg subProviders: HTAdvancementGenerator): HTDataGenContext.Factory<HTAdvancementProvider> =
+            create(subProviders.toList())
+
+        @JvmStatic
+        fun create(subProviders: List<HTAdvancementGenerator>): HTDataGenContext.Factory<HTAdvancementProvider> =
+            HTDataGenContext.Factory { context: HTDataGenContext ->
+                HTAdvancementProvider(context.output, context.registries, context.fileHelper, subProviders)
+            }
+    }
+
     private val pathProvider: PackOutput.PathProvider =
         output.createRegistryElementsPathProvider(Registries.ADVANCEMENT)
 
@@ -44,7 +57,7 @@ open class HTAdvancementProvider(
             )
         }
         for (subProvider: HTAdvancementGenerator in subProviders) {
-            subProvider.generate(provider, output, helper)
+            subProvider.generate(provider, output, fileHelper)
         }
 
         CompletableFuture.allOf(*list.toTypedArray())

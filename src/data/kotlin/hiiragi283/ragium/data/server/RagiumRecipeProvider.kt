@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
@@ -22,13 +23,10 @@ import hiiragi283.ragium.data.server.recipe.compat.RagiumMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumOritechRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumReplicationRecipeProvider
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
-import java.util.concurrent.CompletableFuture
 
-class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
-    RecipeProvider(output, registries) {
+class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.output, context.registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)

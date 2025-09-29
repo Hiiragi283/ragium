@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.modelFile
@@ -23,7 +24,6 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
-import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -34,12 +34,10 @@ import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
 
-class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
-    BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
+class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildSet {

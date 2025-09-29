@@ -2,7 +2,10 @@
   "values": [
     "#c:obsidians/mysterious",
     "ragium:brewery",
+    "ragium:combustion_generator",
+    "ragium:solar_generator",
     "ragium:telepad",
+    "ragium:thermal_generator",
     "ragium:wooden_casing"
   ]
 }

@@ -1,26 +1,20 @@
 package hiiragi283.ragium.api.data.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.RegistryKey
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
-import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.concurrent.CompletableFuture
 
-abstract class HTTagsProvider<T : Any>(
-    output: PackOutput,
-    private val registryKey: RegistryKey<T>,
-    provider: CompletableFuture<HolderLookup.Provider>,
-    helper: ExistingFileHelper,
-) : TagsProvider<T>(
-        output,
+abstract class HTTagsProvider<T : Any>(private val registryKey: RegistryKey<T>, context: HTDataGenContext) :
+    TagsProvider<T>(
+        context.output,
         registryKey,
-        provider,
+        context.registries,
         RagiumAPI.MOD_ID,
-        helper,
+        context.fileHelper,
     ) {
     @Suppress("DEPRECATION")
     final override fun addTags(provider: HolderLookup.Provider) {

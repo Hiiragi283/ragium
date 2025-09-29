@@ -1,25 +1,16 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.setup.RagiumFluidContents
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.concurrent.CompletableFuture
 
-class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
-    HTTagsProvider<Fluid>(
-        output,
-        Registries.FLUID,
-        provider,
-        helper,
-    ) {
+class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>(Registries.FLUID, context) {
     override fun addTags(builder: HTTagBuilder<Fluid>) {
         contents(builder)
         category(builder)

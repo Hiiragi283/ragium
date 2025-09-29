@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.forEach
@@ -16,20 +17,15 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.tag.ModTags
-import java.util.concurrent.CompletableFuture
 
-class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
-    HTTagsProvider<Block>(output, Registries.BLOCK, provider, helper) {
+class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>(Registries.BLOCK, context) {
     companion object {
         @Suppress("DEPRECATION")
         @JvmField
@@ -146,6 +142,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
         // WIP
+        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.GENERATORS)
         builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.WOODEN_CASING)

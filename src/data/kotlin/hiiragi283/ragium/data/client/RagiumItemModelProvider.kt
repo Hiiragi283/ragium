@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.textureId
@@ -18,15 +19,12 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 
-class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
-    ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
+class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
     override fun registerModels() {
         registerBlocks()
         registerItems()
