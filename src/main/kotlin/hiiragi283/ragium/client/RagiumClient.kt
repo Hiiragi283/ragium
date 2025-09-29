@@ -11,15 +11,14 @@ import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
-import hiiragi283.ragium.client.gui.screen.HTItemBufferScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
-import hiiragi283.ragium.client.gui.screen.HTMobCapturerScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
@@ -231,7 +230,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         registerMachine(RagiumMenuTypes.ALLOY_SMELTER)
-        registerMachine(RagiumMenuTypes.CRUSHER)
         registerMachine(RagiumMenuTypes.CUTTING_MACHINE)
         registerMachine(RagiumMenuTypes.SIMULATOR)
         registerMachine(RagiumMenuTypes.SINGLE_ITEM)
@@ -242,14 +240,15 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         event.register(RagiumMenuTypes.ACCESS_CONFIG.get(), ::HTAccessConfigurationScreen)
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
+        event.register(RagiumMenuTypes.CRUSHER.get(), HTSingleFluidMachineScreen.Companion::crusher)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen.Companion::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
-        event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
+        event.register(RagiumMenuTypes.ITEM_BUFFER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_buffer"))
         event.register(RagiumMenuTypes.MELTER.get(), HTSingleFluidMachineScreen.Companion::melter)
-        event.register(RagiumMenuTypes.MOB_CAPTURER.get(), ::HTMobCapturerScreen)
+        event.register(RagiumMenuTypes.MOB_CAPTURER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_collector"))
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)

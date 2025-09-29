@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -26,6 +27,20 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
 ) : HTMachineScreen<BE>(texture, menu, inventory, title),
     HTFluidScreen {
     companion object {
+        @JvmStatic
+        fun crusher(
+            menu: HTBlockEntityContainerMenu<HTCrusherBlockEntity>,
+            inventory: Inventory,
+            title: Component,
+        ): HTSingleFluidMachineScreen<HTCrusherBlockEntity> = HTSingleFluidMachineScreen(
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(2),
+            RagiumAPI.id("textures/gui/container/crusher.png"),
+            menu,
+            inventory,
+            title,
+        )
+
         @JvmStatic
         fun melter(
             menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>,
