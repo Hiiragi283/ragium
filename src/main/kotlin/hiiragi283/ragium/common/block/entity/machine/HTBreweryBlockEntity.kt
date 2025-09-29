@@ -18,10 +18,7 @@ import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -38,10 +35,6 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     override fun createTank(listener: HTContentListener): HTFluidTank =
         HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.breweryTankCapacity, canInsert = HTFluidContent.WATER::isOf)
-
-    override fun openGui(player: Player, title: Component): InteractionResult {
-        TODO("Not yet implemented")
-    }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 

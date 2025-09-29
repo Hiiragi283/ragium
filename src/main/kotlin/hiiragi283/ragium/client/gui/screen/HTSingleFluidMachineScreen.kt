@@ -5,9 +5,8 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -28,11 +27,11 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
     HTFluidScreen {
     companion object {
         @JvmStatic
-        fun crusher(
-            menu: HTBlockEntityContainerMenu<HTCrusherBlockEntity>,
+        fun chancedItemOutput(
+            menu: HTBlockEntityContainerMenu<HTChancedItemOutputBlockEntity<*, *>>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidMachineScreen<HTCrusherBlockEntity> = HTSingleFluidMachineScreen(
+        ): HTSingleFluidMachineScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidMachineScreen(
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(2),
             RagiumAPI.id("textures/gui/container/crusher.png"),
@@ -50,20 +49,6 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
             HTSlotHelper.getSlotPosX(5.5),
             HTSlotHelper.getSlotPosY(0),
             RagiumAPI.id("textures/gui/container/melter.png"),
-            menu,
-            inventory,
-            title,
-        )
-
-        @JvmStatic
-        fun washer(
-            menu: HTBlockEntityContainerMenu<HTWasherBlockEntity>,
-            inventory: Inventory,
-            title: Component,
-        ): HTSingleFluidMachineScreen<HTWasherBlockEntity> = HTSingleFluidMachineScreen(
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(2),
-            RagiumAPI.id("textures/gui/container/washer.png"),
             menu,
             inventory,
             title,

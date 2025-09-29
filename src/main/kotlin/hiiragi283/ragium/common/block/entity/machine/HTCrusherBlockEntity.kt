@@ -10,14 +10,10 @@ import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
@@ -33,9 +29,6 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumConfig.COMMON.crusherTankCapacity,
         canInsert = RagiumFluidContents.LUBRICANT::isOf,
     )
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.CRUSHER.openMenu(player, title, this, ::writeExtraContainerData)
 
     //    Ticking    //
 
