@@ -174,15 +174,15 @@ interface HTFluidTank :
 
     override fun getFluidAmount(): Int = getStack().amount
 
-    @Deprecated("Use `insert(FluidStack, Boolean, HTStorageAccess) `instead", level = DeprecationLevel.ERROR)
+    @Deprecated("Use `insert(FluidStack, Boolean, HTStorageAccess) `instead")
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int =
         resource.amount - insert(resource, action.simulate(), HTStorageAccess.EXTERNAL).amount
 
-    @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead", level = DeprecationLevel.ERROR)
+    @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack =
         extract(maxDrain, action.simulate(), HTStorageAccess.EXTERNAL)
 
-    @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead", level = DeprecationLevel.ERROR)
+    @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
         if (!matchFluid(HTFluidPredicates.byFluidAndComponent(resource))) return FluidStack.EMPTY
         return extract(resource.amount, action.simulate(), HTStorageAccess.EXTERNAL)
