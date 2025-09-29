@@ -1,7 +1,10 @@
 {
   "values": [
-    "#c:nuggets/ragi_alloy",
     "#c:nuggets/advanced_ragi_alloy",
-    "#c:nuggets/azure_steel"
+    "#c:nuggets/azure_steel",
+    "#c:nuggets/deep_steel",
+    "#c:nuggets/gildium",
+    "#c:nuggets/iridescentium",
+    "#c:nuggets/ragi_alloy"
   ]
 }

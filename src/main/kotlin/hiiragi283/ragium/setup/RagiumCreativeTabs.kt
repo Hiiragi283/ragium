@@ -1,201 +1,283 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTLootTicketHelper
+import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.registry.HTDeferredRegister
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.util.HTDefaultLootTickets
+import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredRegister
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 
 object RagiumCreativeTabs {
     @JvmField
-    val REGISTER: DeferredRegister<CreativeModeTab> =
-        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
+    val REGISTER: HTDeferredRegister<CreativeModeTab> =
+        HTDeferredRegister(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.register(eventBus)
+
+        eventBus.addListener(::modifyCreativeTabs)
+    }
 
     @JvmField
-    val COMMON: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+    val BLOCKS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
+        REGISTER.register("blocks") { id: ResourceLocation ->
+            CreativeModeTab
+                .builder()
+                .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+                .icon { ItemStack(HTMachineVariant.PULVERIZER.asItem()) }
+                .displayItems(RagiumBlocks.REGISTER.firstEntries)
+                .build()
+        }
+
+    /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+        // Natural Resources
+        output.accept(RagiumBlocks.ASH_LOG)
+        output.accept(RagiumBlocks.SILT)
+        output.accept(RagiumBlocks.CRIMSON_SOIL)
+        output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+
+        RagiumBlocks.ORES.values.forEach(output::accept)
+        output.accept(RagiumBlocks.RESONANT_DEBRIS)
+        // Storage Blocks
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
+        // Machines
+        output.acceptItems<HTGeneratorVariant>()
+
+        output.acceptItems(RagiumBlocks.FRAMES)
+        output.acceptItems<HTMachineVariant>()
+
+        output.acceptItems(RagiumBlocks.CASINGS)
+        output.acceptItems<HTDeviceVariant>()
+
+        output.acceptItems<HTDrumVariant>()
+        output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
+        output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
+        output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
+        // Decorations
+        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+            output.accept(variant.base)
+            output.accept(variant.slab)
+            output.accept(variant.stairs)
+            output.accept(variant.wall)
+        }
+
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
+        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
+        output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
+    }*/
+
+    @JvmField
+    val INGREDIENTS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> = register(
+        "ingredients",
+        "ragi_alloy_ingot",
+    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+        // Fluid Buckets
+        output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
+        // Materials
+        output.acceptItems(RagiumItems.MATERIALS.values)
+        // Ingredients
+        output.accept(RagiumItems.TAR)
+        output.accept(RagiumItems.PLATING_CATALYST)
+
+        output.accept(RagiumItems.POTATO_SPROUTS)
+        output.accept(RagiumItems.GREEN_CAKE)
+        output.accept(RagiumItems.GREEN_CAKE_DUST)
+        output.accept(RagiumItems.GREEN_PELLET)
+
+        output.accept(RagiumItems.ELDER_HEART)
+        output.accept(RagiumItems.GRAVITATIONAL_UNIT)
+        output.accept(RagiumItems.WITHER_DOLl)
+
+        output.accept(RagiumItems.LUMINOUS_PASTE)
+        output.accept(RagiumItems.LED)
+
+        output.accept(RagiumItems.SOLAR_PANEL)
+        output.accept(RagiumItems.REDSTONE_BOARD)
+
+        output.accept(RagiumItems.POLYMER_RESIN)
+        output.accept(RagiumItems.POLYMER_CATALYST)
+        output.accept(RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
+        output.accept(RagiumItems.SYNTHETIC_FIBER)
+        output.accept(RagiumItems.SYNTHETIC_LEATHER)
+
+        output.accept(RagiumItems.CIRCUIT_BOARD)
+        output.accept(RagiumItems.BASALT_MESH)
+        output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
+
+        RagiumItems.COILS.values.forEach(output::accept)
+        RagiumItems.CIRCUITS.values.forEach(output::accept)
+        RagiumItems.COMPONENTS.values.forEach(output::accept)
+    }
+
+    @JvmField
+    val ITEMS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
         register(
-            "common",
-            "Ragium",
-            RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY),
-        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-            // Fluid Buckets
-            output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
-            // Natural Resources
-            output.accept(RagiumBlocks.SILT)
-            // Gems
-            output.acceptItems(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
-            output.accept(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-            output.accept(RagiumItems.RAGI_CRYSTAL)
-            output.accept(RagiumItems.RAGI_MAGNET)
-            output.accept(RagiumItems.RAGI_LANTERN)
-
-            output.accept(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-            output.accept(RagiumItems.CRIMSON_CRYSTAL)
-            output.accept(RagiumBlocks.CRIMSON_SOIL)
-
-            output.accept(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
-            output.accept(RagiumItems.WARPED_CRYSTAL)
-
-            output.accept(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
-            output.accept(RagiumItems.ELDRITCH_ORB)
-            output.accept(RagiumItems.ELDRITCH_PEARL)
-            output.accept(RagiumItems.ENDER_BUNDLE)
-            output.accept(RagiumItems.ELDRITCH_EGG)
-            // Ingots
-            output.accept(RagiumBlocks.RAGI_ALLOY_BLOCK)
-            output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
-            output.accept(RagiumItems.RAGI_ALLOY_INGOT)
-            output.accept(RagiumItems.RAGI_ALLOY_NUGGET)
-
-            output.accept(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
-            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
-            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
-            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
-            output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
-
-            output.accept(RagiumBlocks.AZURE_STEEL_BLOCK)
-            output.accept(RagiumItems.AZURE_STEEL_COMPOUND)
-            output.accept(RagiumItems.AZURE_STEEL_INGOT)
-            output.accept(RagiumItems.AZURE_STEEL_NUGGET)
-            output.accept(RagiumItems.AZURE_SHARD)
-            output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
-            output.acceptItems(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
-
-            output.accept(RagiumBlocks.RESONANT_DEBRIS)
-            output.accept(RagiumBlocks.DEEP_STEEL_BLOCK)
-            output.accept(RagiumItems.DEEP_STEEL_INGOT)
-            output.accept(RagiumItems.DEEP_SCRAP)
-            output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptItems(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
-            output.acceptItems(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
-
-            output.accept(RagiumBlocks.CHOCOLATE_BLOCK)
-            output.accept(RagiumItems.CHOCOLATE_INGOT)
-
-            output.accept(RagiumBlocks.MEAT_BLOCK)
-            output.accept(RagiumItems.MEAT_INGOT)
-            output.accept(RagiumItems.MINCED_MEAT)
-
-            output.accept(RagiumBlocks.COOKED_MEAT_BLOCK)
-            output.accept(RagiumItems.COOKED_MEAT_INGOT)
-            output.accept(RagiumItems.CANNED_COOKED_MEAT)
-            // Dusts
-            output.acceptItems(RagiumBlocks.RAGINITE_ORES.getItems())
-            output.accept(RagiumItems.RAGINITE_DUST)
-            output.accept(RagiumItems.RAGI_COKE)
-
-            output.accept(RagiumBlocks.ASH_LOG)
-            output.accept(RagiumItems.ASH_DUST)
-
-            output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-            output.accept(RagiumItems.OBSIDIAN_DUST)
-
-            output.accept(RagiumItems.CINNABAR_DUST)
-            output.accept(RagiumItems.QUARTZ_DUST)
-            output.accept(RagiumItems.SALTPETER_DUST)
-            output.accept(RagiumItems.SULFUR_DUST)
-
-            output.accept(RagiumItems.SAWDUST)
-            output.accept(RagiumItems.COMPRESSED_SAWDUST)
-
-            output.accept(RagiumItems.TAR)
-            // Decorations
-            for (items: List<Item> in RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems)) {
-                output.acceptItems(items)
-            }
-
-            output.acceptItems(RagiumBlocks.GLASSES)
-            output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
-            // Machines
-            output.acceptItems(RagiumBlocks.CASINGS)
-            output.acceptItems(RagiumBlocks.MACHINES)
-            output.acceptItems(RagiumBlocks.DEVICES)
-            output.acceptItems(RagiumBlocks.DRUMS)
+            "items",
+            "ragi_ticket",
+        ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.acceptItems(RagiumItems.FORGE_HAMMERS.values)
+            // Raginite
+            output.accept(RagiumItems.WRENCH)
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
+            output.accept(RagiumItems.MAGNET)
 
+            output.accept(RagiumItems.ADVANCED_MAGNET)
+
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL))
+            output.accept(RagiumItems.DYNAMIC_LANTERN)
+            output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
+            // Azure
+            output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            RagiumItems.AZURE_ARMORS.values.forEach(output::accept)
+            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.AZURE_STEEL)
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL))
+            // Molten
+            output.accept(RagiumItems.BLAST_CHARGE)
+
+            output.accept(RagiumItems.TELEPORT_KEY)
+
+            output.accept(RagiumItems.ELDRITCH_EGG)
+
+            DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
+            // Deep
+            output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            RagiumItems.DEEP_ARMORS.values.forEach(output::accept)
+            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialType.DEEP_STEEL)
+            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL))
+            // Other
+            output.accept(RagiumItems.DRILL)
+
+            output.accept(RagiumItems.POTION_BUNDLE)
+            output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
-            // Tickets
-            output.accept(RagiumItems.BLANK_TICKET)
-
-            output.accept(RagiumItems.RAGI_TICKET)
-            output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
-
-            output.accept(RagiumItems.AZURE_TICKET)
-            output.accept(RagiumItems.BLOODY_TICKET)
-            output.accept(RagiumItems.TELEPORT_TICKET)
-            output.accept(RagiumItems.ELDRITCH_TICKET)
-
-            output.accept(RagiumItems.DAYBREAK_TICKET)
-            output.accept(RagiumItems.ETERNAL_TICKET)
             // Foods
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.CHOCOLATE))
+
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
-            output.accept(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
+            output.accept(RagiumItems.getDust(RagiumMaterialType.MEAT))
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.MEAT))
+            output.accept(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
+            output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)
 
-            output.accept(RagiumBlocks.SPONGE_CAKE)
-            output.accept(RagiumBlocks.SPONGE_CAKE_SLAB)
             output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
             output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
             output.accept(RagiumItems.RAGI_CHERRY)
-            output.accept(RagiumItems.RAGI_CHERRY_JAM)
             output.accept(RagiumItems.FEVER_CHERRY)
 
             output.accept(RagiumItems.BOTTLED_BEE)
-            output.accept(RagiumItems.EXP_BERRIES)
-            output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
-            // Ingredients
-            output.accept(RagiumItems.ELDER_HEART)
-
-            output.accept(RagiumItems.LUMINOUS_PASTE)
-            output.accept(RagiumItems.LED)
-
-            output.accept(RagiumItems.SOLAR_PANEL)
-            output.accept(RagiumItems.REDSTONE_BOARD)
-
-            output.accept(RagiumItems.POLYMER_RESIN)
-            output.accept(RagiumItems.PLASTIC_PLATE)
-            output.accept(RagiumItems.SYNTHETIC_FIBER)
-            output.accept(RagiumItems.SYNTHETIC_LEATHER)
-
-            output.accept(RagiumItems.CIRCUIT_BOARD)
-            output.accept(RagiumItems.BASIC_CIRCUIT)
-            output.accept(RagiumItems.ADVANCED_CIRCUIT)
-            output.accept(RagiumItems.ELITE_CIRCUIT)
-            output.accept(RagiumItems.ULTIMATE_CIRCUIT)
+            // Tickets
+            output.accept(RagiumItems.LOOT_TICKET)
+            output.acceptAll(HTDefaultLootTickets.getDefaultLootTickets().values)
         }
+
+    //    Extensions    //
 
     @JvmStatic
     private fun register(
         name: String,
-        title: String,
-        icon: ItemLike,
+        icon: String,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { _: ResourceLocation ->
+    ): HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
-            .title(Component.literal(title))
-            .icon(icon::toStack)
+            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+            .icon(HTDeferredItem<Item>(RagiumAPI.id(icon))::toStack)
             .displayItems(action)
             .build()
+    }
+
+    fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
+        table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
+        variants: Iterable<V>,
+        material: HTMaterialType,
+    ) {
+        variants
+            .mapNotNull(table.column(material)::get)
+            .forEach(this::accept)
     }
 
     @JvmStatic
     private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
         items.forEach(this::accept)
+    }
+
+    //    Events    //
+
+    @JvmStatic
+    private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+        fun insertBefore(after: ItemLike, before: ItemLike) {
+            event.insertBefore(
+                ItemStack(after),
+                ItemStack(before),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+        }
+
+        fun insertAfter(before: ItemLike, after: ItemLike) {
+            event.insertAfter(
+                ItemStack(before),
+                ItemStack(after),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
+        }
+
+        val key: ResourceKey<CreativeModeTab> = event.tabKey
+        // 道具タブに鍛造ハンマーを追加する
+        if (key == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            insertAfter(
+                Items.IRON_PICKAXE,
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.IRON),
+            )
+            insertAfter(
+                Items.DIAMOND_PICKAXE,
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.DIAMOND),
+            )
+            insertAfter(
+                Items.NETHERITE_PICKAXE,
+                RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.NETHERITE),
+            )
+        }
+
+        if (INGREDIENTS.`is`(key)) {
+            insertAfter(RagiumItems.getDust(RagiumMaterialType.RAGINITE), RagiumItems.RAGI_COKE)
+            insertBefore(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY), RagiumItems.RAGI_ALLOY_COMPOUND)
+
+            insertAfter(RagiumItems.getDust(HTVanillaMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
+            insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
+
+            insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)
+
+            insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), Items.ECHO_SHARD)
+            insertAfter(Items.ECHO_SHARD, RagiumItems.ECHO_STAR)
+        }
     }
 }

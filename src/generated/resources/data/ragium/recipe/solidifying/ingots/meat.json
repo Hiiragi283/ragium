@@ -1,10 +1,10 @@
 {
-  "type": "ragium:solidifying",
-  "fluid_input": {
+  "type": "ragium:fluid_transform",
+  "fluid_ingredient": {
     "amount": 250,
     "tag": "c:meat"
   },
-  "item_output": {
+  "item_result": {
     "count": 1,
     "id": "#c:ingots/meat"
   }

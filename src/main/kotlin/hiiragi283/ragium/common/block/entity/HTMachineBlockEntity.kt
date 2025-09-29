@@ -1,104 +1,207 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
+import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTAccessConfiguration
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.storage.HTAccessConfigCache
+import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
+import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
+import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
+import hiiragi283.ragium.setup.RagiumAttachmentTypes
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.MenuProvider
+import net.minecraft.util.Mth
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.items.ItemHandlerHelper
+import java.util.*
+import java.util.function.Consumer
 
-/**
- * エンチャント可能な[HTTickAwareBlockEntity]
- */
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(type, pos, state),
-    MenuProvider {
-    //    Storage    //
+    HTBlockEntity(type, pos, state),
+    HTOwnedBlockEntity,
+    HTAccessConfiguration.Holder {
+    constructor(variant: HTVariantKey.WithBE<*>, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    protected abstract val inventory: HTItemHandler
+    val upgradeHandler: HTMachineUpgradeItemHandler get() = getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.INVENTORY, inventory)
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.store(RagiumConst.OWNER, BiCodecs.UUID, ownerId)
+        accessConfigCache.serialize(output)
     }
 
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.INVENTORY, inventory)
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        ownerId = input.read(RagiumConst.OWNER, BiCodecs.UUID)
+        accessConfigCache.deserialize(input)
     }
 
-    override fun onRemove(
+    override fun onRightClickedWithItem(
+        stack: ItemStack,
         state: BlockState,
         level: Level,
         pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
-        inventory.dropStacksAt(level, pos)
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): ItemInteractionResult {
+        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
+            RagiumMenuTypes.ACCESS_CONFIG.openMenu(player, name, this, ::writeExtraContainerData)
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        }
+        return super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
     }
+
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult = openGui(player, name)
+
+    protected abstract fun openGui(player: Player, title: Component): InteractionResult
+
+    override fun setPlacedBy(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+        super.setPlacedBy(level, pos, state, placer, stack)
+        this.ownerId = placer?.uuid
+    }
+
+    override fun dropInventory(consumer: Consumer<ItemStack>) {
+        super.dropInventory(consumer)
+        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+    }
+
+    final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
+        ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
 
     //    Ticking    //
 
-    override val maxTicks: Int = 200
-
     /**
      * このブロックエンティティがtick当たりで消費する電力の値
-     * @see [requiredEnergy]
      */
     protected abstract val energyUsage: Int
 
-    /**
-     * このブロックエンティティが稼働するたびに消費する電力の値
-     */
-    protected val requiredEnergy: Int get() = energyUsage * maxTicks
+    protected var isActive: Boolean = false
+    protected var requiredEnergy: Int = 0
+    protected var usedEnergy: Int = 0
 
-    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 一定間隔で実行する
-        if (!canProcess()) return TriState.DEFAULT
-        // 自動搬出する
-        exportItems(level, pos)
-        exportFluids(level, pos)
-        // 処理を行う
-        val network: IEnergyStorage = this.network ?: return TriState.FALSE
-        return onServerTick(level, pos, state, network)
+    protected fun doProgress(network: HTEnergyBattery): Boolean {
+        if (usedEnergy < requiredEnergy) {
+            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
+        }
+        if (usedEnergy < requiredEnergy) return false
+        usedEnergy -= requiredEnergy
+        return true
     }
 
-    /**
-     * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド
-     */
-    protected abstract fun onServerTick(
+    protected open fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyProcessorRate(base) ?: base
+
+    final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        val network: HTEnergyBattery = getter(level) ?: return false
+        val result: Boolean = onUpdateServer(level, pos, state, network)
+        isActive = result
+        return result
+    }
+
+    protected abstract fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-    ): TriState
+        network: HTEnergyBattery,
+    ): Boolean
 
-    //    HTHandlerBlockEntity    //
+    val progress: Float
+        get() {
+            val totalTick: Int = usedEnergy
+            val maxTicks: Int = requiredEnergy
+            if (maxTicks <= 0) return 0f
+            val fixedTotalTicks: Int = totalTick % maxTicks
+            return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
+        }
 
-    protected var network: IEnergyStorage? = null
-        private set
-    private var externalNetwork: IEnergyStorage? = null
+    //    Energy Storage    //
 
-    override fun afterLevelInit(level: Level) {
-        val network: IEnergyStorage = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getNetwork(level) ?: return
-        this.network = network
-        this.externalNetwork = HTStorageIO.INPUT.wrapEnergyStorage(network)
+    private val getter: (Level?) -> HTEnergyBattery? = RagiumAPI.INSTANCE::getEnergyNetwork
+
+    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = createStorageHolder(
+        HTEnergyBatteryWrapper { getter(level) },
+    )
+
+    protected open fun createStorageHolder(battery: HTEnergyBattery): HTEnergyStorageHolder =
+        HTSimpleEnergyStorageHolder.input(this, battery)
+
+    //    HTOwnedBlockEntity    //
+
+    private var ownerId: UUID? = null
+
+    override fun getOwnerUUID(): UUID {
+        if (ownerId == null) {
+            ownerId = UUID.randomUUID()
+        }
+        return ownerId!!
     }
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
+    //    HTAccessConfiguration    //
 
-    //    MenuProvider    //
+    private val accessConfigCache = HTAccessConfigCache()
 
-    final override fun getDisplayName(): Component = blockState.block.name
+    override fun getAccessConfiguration(side: Direction): HTAccessConfiguration = accessConfigCache.getAccessConfiguration(side)
+
+    override fun setAccessConfiguration(side: Direction, value: HTAccessConfiguration) {
+        accessConfigCache.setAccessConfiguration(side, value)
+    }
+
+    //    Menu    //
+
+    final override fun getDisplayName(): Component = super.getDisplayName()
+
+    //    Slot    //
+
+    val containerData: ContainerData = object : ContainerData {
+        override fun get(index: Int): Int = when (index) {
+            0 -> usedEnergy
+            1 -> requiredEnergy
+            else -> -1
+        }
+
+        override fun set(index: Int, value: Int) {
+            when (index) {
+                0 -> usedEnergy = value
+                1 -> requiredEnergy = value
+            }
+        }
+
+        override fun getCount(): Int = 2
+    }
 }

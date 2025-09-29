@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
@@ -14,6 +15,10 @@ class HTSpongeCakeBlock(properties: Properties) : Block(properties) {
         entity: Entity,
         fallDistance: Float,
     ) {
-        entity.causeFallDamage(fallDistance, 0.2f, level.damageSources().fall())
+        entity.causeFallDamage(
+            fallDistance,
+            RagiumConfig.COMMON.spongeCakeFallDamage.getAsFloat(),
+            level.damageSources().fall(),
+        )
     }
 }

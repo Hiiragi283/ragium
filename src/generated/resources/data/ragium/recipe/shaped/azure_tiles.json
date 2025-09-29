@@ -3,16 +3,21 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:gems/azure"
-    },
-    "B": {
       "item": "minecraft:deepslate_tiles"
-    }
+    },
+    "B": [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ]
   },
   "pattern": [
-    " A ",
+    "AAA",
     "ABA",
-    " A "
+    "AAA"
   ],
   "result": {
     "count": 8,

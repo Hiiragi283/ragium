@@ -1,257 +1,353 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.vanillaId
-import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTColorMaterial
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTCircuitTier
+import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.util.HTDefaultLootTickets
+import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumToolTiers
-import hiiragi283.ragium.util.HTLootTicketHelper
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.storage.loot.BuiltInLootTables
-import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredItem
 
-object RagiumToolRecipeProvider : HTRecipeProvider() {
+object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.DRILL)
             .pattern(
                 " A ",
                 "ABA",
-                "AAA",
-            ).define('A', Tags.Items.LEATHERS)
-            .define('B', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
+                "ACA",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.BASIC)
             .save(output)
 
-        HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.POTION_BUNDLE)
+            .pattern(
+                " A ",
+                "BBB",
+            ).define('A', Tags.Items.STRINGS)
+            .define('B', Items.GLASS_BOTTLE)
+            .save(output)
+
+        HTSingleItemRecipeBuilder
+            .stonecutter(RagiumItems.SLOT_COVER, 3)
+            .addIngredient(Items.SMOOTH_STONE_SLAB)
+            .save(output)
+
+        HTShapelessRecipeBuilder
+            .equipment(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
-            .addIngredient(Tags.Items.GEMS_EMERALD)
+            .addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
-            .hollow4()
-            .define('A', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
-            .define('B', Tags.Items.EGGS)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.ECHO_STAR)
+            .cross8()
+            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.ECHO)
+            .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO)
+            .define('C', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.DEEP_STEEL)
             .save(output)
 
-        ragiAlloy()
-        azureSteel()
-        deepSteel()
+        raginite()
+        azureAndDeepSteel()
+        molten()
 
         forgeHammers()
 
-        tickets()
         lootTickets()
     }
 
-    private fun ragiAlloy() {
+    @JvmStatic
+    private fun raginite() {
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.RAGI_MAGNET)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.WRENCH)
+            .pattern(
+                " A ",
+                " BA",
+                "B  ",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.MAGNET)
             .pattern(
                 "A A",
                 "B B",
                 " C ",
-            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .define('B', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .define('C', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .save(output)
 
         // Advanced
-        addTemplate(
-            RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY,
-        )
-
-        HTSmithingRecipeBuilder(RagiumItems.ADVANCED_RAGI_MAGNET)
-            .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(RagiumItems.RAGI_MAGNET)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .save(output)
+        createComponentUpgrade(
+            HTComponentTier.ADVANCED,
+            RagiumItems.ADVANCED_MAGNET,
+            RagiumItems.MAGNET,
+        ).save(output)
 
         // Elite
-        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.DYNAMIC_LANTERN)
             .hollow4()
-            .define('A', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.LOOT_TICKET)
+            .cross8()
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .define('B', Tags.Items.DYES_RED)
+            .define('C', Items.PAPER)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.NIGHT_VISION_GOGGLES)
+            .pattern(
+                "AAA",
+                "ABA",
+            ).define('A', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .save(output)
     }
 
-    private fun azureSteel() {
-        addTemplate(
+    @JvmStatic
+    private fun azureAndDeepSteel() {
+        addEquipments(
+            RagiumItems.AZURE_ARMORS,
+            RagiumMaterialType.AZURE_STEEL,
+            HTVanillaMaterialType.IRON,
             RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_AZURE_STEEL,
+            ::addAzureSmithing,
         )
 
-        EQUIPMENT_SUFFIXES
-            .associate { suffix: String ->
-                "iron$suffix" to RagiumConstantValues.AZURE_STEEL + suffix
-            }.forEach { (base: String, result: String) ->
-                addAzureSmithing(
-                    DeferredItem.createItem<Item>(RagiumAPI.id(result)),
-                    DeferredItem.createItem<Item>(vanillaId(base)),
-                )
-            }
-    }
-
-    private fun deepSteel() {
-        addTemplate(
+        addEquipments(
+            RagiumItems.DEEP_ARMORS,
+            RagiumMaterialType.DEEP_STEEL,
+            HTVanillaMaterialType.DIAMOND,
             RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            RagiumCommonTags.Items.INGOTS_DEEP_STEEL,
+            ::addDeepSmithing,
         )
-
-        EQUIPMENT_SUFFIXES
-            .associate { suffix: String ->
-                "diamond$suffix" to RagiumConstantValues.DEEP_STEEL + suffix
-            }.forEach { (base: String, result: String) ->
-                addDeepSmithing(
-                    DeferredItem.createItem<Item>(RagiumAPI.id(result)),
-                    DeferredItem.createItem<Item>(vanillaId(base)),
-                )
-            }
     }
 
+    @JvmStatic
+    private fun addEquipments(
+        armors: Map<HTArmorVariant, HTDeferredItem<*>>,
+        material: HTMaterialType,
+        beforeMaterial: HTVanillaMaterialType,
+        upgrade: HTDeferredItem<*>,
+        upgradeFactory: (ItemLike, ItemLike) -> Unit,
+    ) {
+        // Template
+        addTemplate(upgrade, material)
+        // Armor
+        for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
+            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, beforeMaterial) ?: continue
+            upgradeFactory(armor, beforeArmor)
+        }
+        // Tool
+        for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material)) {
+            val beforeTool: ItemLike = when (variant) {
+                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, beforeMaterial)
+                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, beforeMaterial)
+                is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[beforeMaterial]?.get()
+                else -> null
+            } ?: continue
+            upgradeFactory(tool, beforeTool)
+        }
+    }
+
+    @JvmStatic
+    private fun molten() {
+        // Crimson
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.BLAST_CHARGE, 8)
+            .hollow8()
+            .define('A', Tags.Items.GUNPOWDERS)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .save(output)
+        // Warped
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.TELEPORT_KEY)
+            .cross8()
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .define('C', Items.TRIAL_KEY)
+            .save(output)
+
+        resetComponent(RagiumItems.TELEPORT_KEY)
+        // Eldritch
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.ELDRITCH_EGG)
+            .hollow4()
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .define('B', Tags.Items.EGGS)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .equipment(RagiumItems.UNIVERSAL_BUNDLE)
+            .pattern(
+                "ABA",
+                "BCB",
+                "BBB",
+            ).define('A', RagiumItems.SYNTHETIC_FIBER)
+            .define('B', RagiumItems.SYNTHETIC_LEATHER)
+            .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .save(output)
+
+        for (variant: HTColorMaterial in HTColorMaterial.entries) {
+            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color), CraftingBookCategory.EQUIPMENT)
+                .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
+                .addIngredient(variant.dyeTag)
+                .savePrefixed(output, "${variant.serializedName}_")
+        }
+
+        resetComponent(RagiumItems.UNIVERSAL_BUNDLE)
+    }
+
+    @JvmStatic
     private fun forgeHammers() {
-        fun crafting(tier: Tier, input: TagKey<Item>) {
-            HTShapedRecipeBuilder(RagiumItems.getForgeHammer(tier), category = CraftingBookCategory.EQUIPMENT)
+        fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getTool(HTHammerToolVariant, material)
+
+        fun crafting(variant: HTItemMaterialVariant, material: HTMaterialType) {
+            HTShapedRecipeBuilder
+                .equipment(hammer(material))
                 .pattern(
                     " AA",
                     "BBA",
                     " AA",
-                ).define('A', input)
+                ).define('A', variant, material)
                 .define('B', Tags.Items.RODS_WOODEN)
                 .save(output)
         }
 
-        crafting(Tiers.IRON, Tags.Items.INGOTS_IRON)
-        crafting(Tiers.DIAMOND, Tags.Items.GEMS_DIAMOND)
-        crafting(RagiumToolTiers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+        crafting(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+        crafting(HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND)
+        crafting(HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
 
-        fun smithing(
-            tier: Tier,
-            upgrade: ItemLike,
-            oldTier: Tier,
-            input: TagKey<Item>,
-        ) {
-            HTSmithingRecipeBuilder(RagiumItems.getForgeHammer(tier))
-                .addIngredient(upgrade)
-                .addIngredient(RagiumItems.getForgeHammer(oldTier))
-                .addIngredient(input)
-                .save(output)
-        }
-
-        smithing(Tiers.NETHERITE, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, Tiers.DIAMOND, Tags.Items.INGOTS_NETHERITE)
-        addAzureSmithing(
-            RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL),
-            RagiumItems.getForgeHammer(Tiers.IRON),
-        )
-        addDeepSmithing(
-            RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL),
-            RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL),
-        )
-    }
-
-    private fun tickets() {
-        // Blank
-        HTShapedRecipeBuilder(RagiumItems.BLANK_TICKET, 6)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', RagiumCommonTags.Items.PAPER)
-            .define('B', Tags.Items.DYES_BLACK)
-            .define('C', Tags.Items.GEMS_DIAMOND)
+        createNetheriteUpgrade(hammer(HTVanillaMaterialType.NETHERITE), hammer(HTVanillaMaterialType.DIAMOND)).save(output)
+        createComponentUpgrade(
+            HTComponentTier.ELITE,
+            hammer(RagiumMaterialType.RAGI_CRYSTAL),
+            hammer(RagiumMaterialType.RAGI_ALLOY),
+        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .save(output)
-        // Azure from Lapis
-        HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
-            .cross8()
-            .define('A', Tags.Items.STORAGE_BLOCKS_LAPIS)
-            .define('B', Tags.Items.DYES_BLUE)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .saveSuffixed(output, "_from_lapis")
-
-        addTicket(RagiumItems.RAGI_TICKET, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
-        addTicket(RagiumItems.AZURE_TICKET, RagiumCommonTags.Items.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
-        addTicket(RagiumItems.BLOODY_TICKET, RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
-        addTicket(RagiumItems.TELEPORT_TICKET, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
-        addTicket(RagiumItems.ELDRITCH_TICKET, RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
-
-        addTicket(RagiumItems.DAYBREAK_TICKET, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
-        addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
-
-        save(
-            RagiumAPI.id("smithing/eternal_ticket"),
-            HTEternalTicketRecipe,
-        )
     }
 
+    @JvmStatic
     private fun lootTickets() {
         // End City
-        addLootTicket(BuiltInLootTables.END_CITY_TREASURE) {
-            define('A', Items.PURPUR_BLOCK)
-            define('B', Items.SHULKER_SHELL)
+        addLootTicket(HTDefaultLootTickets.END_CITY) {
+            addIngredient(Items.PURPUR_BLOCK)
+            addIngredient(Items.SHULKER_SHELL)
         }
         // Simple Dungeon
-        addLootTicket(BuiltInLootTables.SIMPLE_DUNGEON) {
-            define('A', Tags.Items.COBBLESTONES_MOSSY)
-            define('B', Items.ROTTEN_FLESH)
+        addLootTicket(HTDefaultLootTickets.DUNGEON) {
+            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
+            addIngredient(Items.ROTTEN_FLESH)
         }
         // Mineshaft
-        addLootTicket(BuiltInLootTables.ABANDONED_MINESHAFT) {
-            define('A', ItemTags.PLANKS)
-            define('B', ItemTags.RAILS)
+        addLootTicket(HTDefaultLootTickets.MINESHAFT) {
+            addIngredient(ItemTags.PLANKS)
+            addIngredient(ItemTags.RAILS)
         }
         // Nether Fortress
-        addLootTicket(BuiltInLootTables.NETHER_BRIDGE) {
-            define('A', Items.NETHER_BRICKS)
-            define('B', Tags.Items.CROPS_NETHER_WART)
+        addLootTicket(HTDefaultLootTickets.NETHER_FORTRESS) {
+            addIngredient(Items.NETHER_BRICKS)
+            addIngredient(Tags.Items.CROPS_NETHER_WART)
+        }
+
+        // Desert Pyramid
+        addLootTicket(HTDefaultLootTickets.DESERT_PYRAMID) {
+            addIngredient(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
+            addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
+        }
+        // Jungle Temple
+        addLootTicket(HTDefaultLootTickets.TEMPLE) {
+            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
+            addIngredient(Items.VINE)
+        }
+        // Igloo Chest
+        addLootTicket(HTDefaultLootTickets.IGLOO) {
+            addIngredient(Items.SNOW_BLOCK)
+            addIngredient(ItemTags.BEDS)
+        }
+        // Mansion
+        addLootTicket(HTDefaultLootTickets.MANSION) {
+            addIngredient(Items.DARK_OAK_PLANKS)
+            addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
+        }
+
+        // Buried Treasure
+        addLootTicket(HTDefaultLootTickets.BURIED_TREASURE) {
+            addIngredient(Tags.Items.SANDS_COLORLESS)
+            addIngredient(Items.PUFFERFISH)
+        }
+        // Shipwreck
+        addLootTicket(HTDefaultLootTickets.SHIPWRECK) {
+            addIngredient(Tags.Items.CHESTS_WOODEN)
+            addIngredient(Items.KELP)
+        }
+        // Bastion Remnant
+        addLootTicket(HTDefaultLootTickets.BASTION_REMNANT) {
+            addIngredient(Items.BLACKSTONE)
+            addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.GOLD)
+        }
+        // Ancient City
+        addLootTicket(HTDefaultLootTickets.ANCIENT_CITY) {
+            addIngredient(Items.DEEPSLATE_TILES)
+            addIngredient(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO)
+        }
+        // Ruined Portal
+        addLootTicket(HTDefaultLootTickets.RUINED_PORTAL) {
+            addIngredient(Tags.Items.OBSIDIANS_NORMAL)
+            addIngredient(Tags.Items.CROPS_NETHER_WART)
         }
     }
 
     //    Extension    //
 
-    @JvmField
-    val EQUIPMENT_SUFFIXES: List<String> = listOf(
-        // Armor
-        "_helmet",
-        "_chestplate",
-        "_leggings",
-        "_boots",
-        // Tool
-        "_shovel",
-        "_pickaxe",
-        "_axe",
-        "_hoe",
-        "_sword",
-    )
-
     @JvmStatic
-    private fun addTemplate(template: ItemLike, input: TagKey<Item>) {
-        HTShapedRecipeBuilder(template)
+    private fun addTemplate(template: ItemLike, material: HTMaterialType) {
+        HTShapedRecipeBuilder
+            .equipment(template)
             .pattern(
                 "A A",
                 "A A",
                 " A ",
-            ).define('A', input)
+            ).define('A', HTItemMaterialVariant.INGOT, material)
             .save(output)
 
-        HTShapelessRecipeBuilder(template, 2)
+        HTShapelessRecipeBuilder
+            .equipment(template, 2)
             .addIngredient(template)
-            .addIngredient(input)
-            .addIngredient(input)
+            .addIngredient(HTItemMaterialVariant.INGOT, material)
+            .addIngredient(HTItemMaterialVariant.INGOT, material)
             .saveSuffixed(output, "_duplicate")
     }
 
@@ -260,7 +356,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .save(this.output)
     }
 
@@ -269,26 +365,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
-            .addIngredient(RagiumCommonTags.Items.INGOTS_DEEP_STEEL)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .save(this.output)
     }
 
     @JvmStatic
-    private fun addTicket(ticket: ItemLike, corner: TagKey<Item>, dye: TagKey<Item>) {
-        HTShapedRecipeBuilder(ticket)
-            .cross8()
-            .define('A', corner)
-            .define('B', dye)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-    }
-
-    @JvmStatic
-    private fun addLootTicket(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
-        HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
-            .cross8()
+    private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
+        HTShapelessRecipeBuilder(HTDefaultLootTickets.getLootTicket(lootTicket), CraftingBookCategory.EQUIPMENT)
+            .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
-            .define('C', RagiumItems.RAGI_TICKET)
-            .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
+            .saveSuffixed(output, "/${lootTicket.name.lowercase()}")
     }
 }

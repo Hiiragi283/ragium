@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": [
+      {
+        "tag": "c:ingots/iron"
+      },
+      {
+        "tag": "c:rods/iron"
+      }
+    ]
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:ragi_alloy_coil"
+  }
+}

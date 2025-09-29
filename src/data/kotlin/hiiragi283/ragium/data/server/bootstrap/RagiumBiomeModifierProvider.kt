@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.util.HTWorldGenData
+import hiiragi283.ragium.api.data.HTWorldGenData
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder

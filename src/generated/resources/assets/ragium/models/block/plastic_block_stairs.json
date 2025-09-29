@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "ragium:block/plastic_block",
-    "side": "ragium:block/plastic_block",
-    "top": "ragium:block/plastic_block"
-  }
-}

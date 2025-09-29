@@ -1,0 +1,32 @@
+package hiiragi283.ragium.api.storage.energy
+
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import net.minecraft.core.Direction
+import net.neoforged.neoforge.energy.IEnergyStorage
+
+/**
+ * [IEnergyStorage]に基づいた[HTSidedEnergyStorage]の拡張インターフェース
+ * @see [mekanism.api.energy.IMekanismStrictEnergyHandler]
+ */
+interface HTEnergyHandler :
+    HTSidedEnergyStorage,
+    HTContentListener {
+    fun hasEnergyStorage(): Boolean = true
+
+    fun getEnergyHandler(side: Direction?): HTEnergyBattery?
+
+    override fun receiveEnergy(toReceive: Int, simulate: Boolean, side: Direction?): Int =
+        getEnergyHandler(side)?.insertEnergy(toReceive, simulate, HTStorageAccess.EXTERNAL) ?: 0
+
+    override fun extractEnergy(toExtract: Int, simulate: Boolean, side: Direction?): Int =
+        getEnergyHandler(side)?.extractEnergy(toExtract, simulate, HTStorageAccess.EXTERNAL) ?: 0
+
+    override fun getEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getAmount() ?: 0
+
+    override fun getMaxEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getCapacity() ?: 0
+
+    override fun canExtract(side: Direction?): Boolean = getEnergyHandler(side) != null
+
+    override fun canReceive(side: Direction?): Boolean = getEnergyHandler(side) != null
+}

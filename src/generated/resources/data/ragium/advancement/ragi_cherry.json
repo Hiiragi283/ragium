@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:raginite",
+  "criteria": {
+    "has_c_foods_ragi_cherry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:foods/ragi_cherry"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.ragi_cherry.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_cherry"
+    },
+    "title": {
+      "translate": "advancements.ragium.ragi_cherry.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_c_foods_ragi_cherry"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

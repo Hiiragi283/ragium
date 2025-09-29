@@ -1,16 +1,24 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
-      "count": 1,
-      "tag": "c:gems/diamond"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/diamond"
+        },
+        {
+          "tag": "c:gems/diamond"
+        }
+      ],
+      "count": 1
     },
     {
       "count": 6,
       "tag": "c:dusts/raginite"
     }
   ],
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "#c:gems/ragi_crystal"
   }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:dusts/echo"
+    },
+    "B": {
+      "tag": "c:gems/echo"
+    },
+    "C": {
+      "tag": "c:storage_blocks/deep_steel"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:echo_star"
+  }
+}

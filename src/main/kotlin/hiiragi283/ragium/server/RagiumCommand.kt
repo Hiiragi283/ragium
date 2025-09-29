@@ -3,13 +3,13 @@ package hiiragi283.ragium.server
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 
 @EventBusSubscriber
@@ -54,11 +54,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val network: IEnergyStorage = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
-        val amount: Int = network.energyStored
+        val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
     }
@@ -67,12 +63,7 @@ object RagiumCommand {
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
-
-        val received: Int = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
-            .receiveEnergy(value, false)
+        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, false, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
     }
@@ -80,14 +71,11 @@ object RagiumCommand {
     @JvmStatic
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-
-        val network: IEnergyStorageModifiable = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getNetworkFromServer(source.level)
-            as? IEnergyStorageModifiable ?: return -1
-        network.energyStored = value
+        getEnergyNetwork(source)?.setAmount(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
         return value
     }
+
+    @JvmStatic
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumAPI.INSTANCE.getEnergyNetwork(source.level)
 }

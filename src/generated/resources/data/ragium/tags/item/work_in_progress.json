@@ -1,12 +1,18 @@
 {
   "values": [
     "ragium:bottled_bee",
-    "ragium:exp_berries",
+    "ragium:drill",
+    "ragium:green_pellet",
+    "ragium:ragi_cherry_toast",
+    "ragium:ragi_cherry_toast_block",
+    "ragium:slot_cover",
+    "ragium:solar_panel",
     "#c:obsidians/mysterious",
-    "ragium:ash_log",
-    "ragium:cooked_meat_on_the_bone",
-    "ragium:wooden_casing",
-    "ragium:stone_casing",
-    "ragium:refinery"
+    "ragium:brewery",
+    "ragium:combustion_generator",
+    "ragium:solar_generator",
+    "ragium:telepad",
+    "ragium:thermal_generator",
+    "ragium:wooden_casing"
   ]
 }

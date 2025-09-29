@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "item": "minecraft:mushroom_stew"
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:mushroom_stew"
+  }
+}

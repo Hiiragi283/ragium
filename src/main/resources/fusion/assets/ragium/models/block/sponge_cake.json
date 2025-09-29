@@ -1,0 +1,17 @@
+{
+  "loader": "fusion:model",
+  "type": "connecting",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ragium:block/sponge_cake"
+  },
+  "connections": [
+    {
+      "type": "is_same_block"
+    },
+    {
+      "type": "match_block",
+      "block": "ragium:sponge_cake_slab"
+    }
+  ]
+}

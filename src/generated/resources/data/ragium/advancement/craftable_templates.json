@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_upgrade": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ragium:azure_steel_upgrade_smithing_template",
+              "ragium:deep_steel_upgrade_smithing_template"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.craftable_templates.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:azure_steel_upgrade_smithing_template"
+    },
+    "title": {
+      "translate": "advancements.ragium.craftable_templates.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_upgrade"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

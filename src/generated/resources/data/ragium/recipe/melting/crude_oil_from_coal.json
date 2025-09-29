@@ -1,11 +1,19 @@
 {
   "type": "ragium:melting",
-  "fluid_output": {
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/coal"
+      },
+      {
+        "tag": "c:fuels/coal"
+      }
+    ],
+    "count": 1
+  },
+  "result": {
     "amount": 125,
     "id": "ragium:crude_oil"
-  },
-  "item_input": {
-    "count": 1,
-    "item": "minecraft:coal"
   }
 }

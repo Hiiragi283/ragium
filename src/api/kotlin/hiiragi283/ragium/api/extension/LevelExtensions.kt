@@ -1,21 +1,18 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.BlockPos
-import net.minecraft.resources.ResourceKey
-import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.Position
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -32,25 +29,7 @@ fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble
 //    Level    //
 
 /**
- * 指定した[Level]に対応する[ServerLevel]を返します。
- * @return 指定した[Level]が`null`，または対応する[ServerLevel]がない場合は`null`
- */
-fun Level?.convertToServer(): ServerLevel? {
-    if (this is ServerLevel) return this
-    val dimension: ResourceKey<Level> = this?.dimension() ?: return null
-    return RagiumAPI.getInstance().getCurrentServer()?.getLevel(dimension)
-}
-
-fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
-    removeBlock(pos, false)
-    if (!getFluidState(pos).isEmpty) {
-        setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
-    }
-}
-
-/**
  * 指定した[item]を[entity]の足元にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
     dropStackAt(entity, ItemStack(item, count))
@@ -58,37 +37,24 @@ fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
 
 /**
  * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(entity: Entity, stack: ItemStack) {
     if (entity is Player) {
-        ItemHandlerHelper.giveItemToPlayer(entity, stack)
-    } else {
-        val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
-        val remainStack: ItemStack = when {
-            handler != null -> ItemHandlerHelper.insertItem(handler, stack, false)
-            else -> stack
+        if (entity.isFakePlayer) {
+            dropStackAt(entity.level(), entity.position(), stack)
+        } else {
+            ItemHandlerHelper.giveItemToPlayer(entity, stack)
         }
+    } else {
+        val remainStack: ItemStack = HTMultiCapability.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
+            ItemHandlerHelper.insertItem(handler, stack, false)
+        } ?: stack
         dropStackAt(entity.level(), entity.position(), remainStack)
     }
 }
 
 /**
- * 指定した[item]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
- */
-fun dropStackAt(
-    level: Level,
-    pos: BlockPos,
-    item: ItemLike,
-    count: Int = 1,
-) {
-    dropStackAt(level, pos, ItemStack(item, count))
-}
-
-/**
  * 指定した[stack]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
     dropStackAt(level, pos.toVec3(), stack)
@@ -96,8 +62,9 @@ fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
 
 /**
  * 指定した[stack]を[pos]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(level: Level, pos: Vec3, stack: ItemStack) {
-    Containers.dropItemStack(level, pos.x, pos.y, pos.z, stack)
+fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
+    Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
+
+val Level.recipeGetter: HTRecipeGetter get() = RagiumAPI.INSTANCE.wrapRecipeManager(this.recipeManager)

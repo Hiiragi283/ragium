@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:eldritch_flux",
+  "loader": "neoforge:fluid_container"
+}

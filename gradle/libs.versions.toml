@@ -1,39 +1,44 @@
 [versions]
 minecraft = "1.21.1"
-ragium = "0.8.0"
+ragium = "0.9.0b"
 
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
-neo-moddev = "2.0.96"
-neo-version = "21.1.193"
+neo-moddev = "2.0.107"
+neo-version = "21.1.208"
 
-kff-version = "5.9.0"
-kff-version-range = "[5.9,)"
+kff-version = "5.10.0"
+kff-version-range = "[5.10,)"
 ktlint = "12.3.0"
 
-aa = "1.3.19+mc1.21.1"
-ae2 = "19.2.13"
-almost = "1.21.1-1.2.5"
-ars = "5.10.2.1197"
+aa = "1.3.20+mc1.21.1"
+accessories = "1.1.0-beta.51+1.21.1"
+ae2 = "19.2.17"
+almost = "1.21.1-1.3.0"
+ars = "5.10.5.1219"
 curious = "9.5.1+1.21.1"
-delight = "1.21.1-1.2.8"
+delight = "1.21.1-1.2.9"
 dire = "6369120"
 emi = "1.1.22+1.21.1"
-guide = "21.1.13"
-jade = "15.10.2+neoforge"
-mek = "1.21.1-10.7.14.79"
-oritech = "0.17.1"
+fusion = "1.2.10-neoforge-mc1.21"
+guide = "21.1.14"
+immersive = "1.21.1-12.4.2-pre.20"
+jade = "15.10.3+neoforge"
+magitech = "0.12.1"
+mek = "1.21.1-10.7.16.82"
+oritech = "0.18.0"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
-pneuma = "8.2.12+mc1.21.1"
-replica = "1.21-1.2.0"
-rs2 = "2.0.0-beta.2"
+pneuma = "8.2.13+mc1.21.1"
+replica = "1.21-1.2.1"
+rs2 = "2.0.0-beta.10"
 
 [libraries]
 
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
+accessories = { group = "io.wispforest", name = "accessories-neoforge", version.ref = "accessories" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 almost = { group = "com.almostreliable.mods", name = "almostunified-neoforge", version.ref = "almost" }
 ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
@@ -41,10 +46,13 @@ curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", versio
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
-guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
+immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
+fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
+magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
-oritech = { group = "maven.modrinth", name = "oritech", version.ref = "oritech" }
+oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -53,30 +61,29 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 [bundles]
 
 mods-impl = [
-    "aa",
     "ae2",
     "almost",
-    "curious",
     "delight",
     "emi",
     "guide",
+    "immersive",
     "jade",
-    "mek",
-    "oritech",
-    "patchouli-gen",
     "pneuma",
     "replica",
 ]
 
 mods-transitive = [
-    "ars"
+    "aa",
+    "accessories",
+    "magitech",
+    "oritech"
 ]
 
 mods-compile = []
 
 mods-runtime = [
-    "dire",
-    "rs2",
+    "curious",
+    "fusion",
 ]
 
 [plugins]

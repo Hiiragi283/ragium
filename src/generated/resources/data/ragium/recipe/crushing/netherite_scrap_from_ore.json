@@ -1,10 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:ores/netherite_scrap"
   },
-  "item_output": {
+  "results": {
     "count": 2,
     "id": "minecraft:netherite_scrap"
   }

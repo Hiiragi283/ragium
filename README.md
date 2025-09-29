@@ -1,50 +1,60 @@
-<h1 align="center">Ragium</h1>
-<h1 align="center">
-  <img alt="Modrinth Game Versions" src="https://img.shields.io/modrinth/game-versions/__?style=for-the-badge">
-  <br>
-  <a href="https://www.curseforge.com/minecraft/mc-mods/ragium"><img alt="CurseForge" src="https://cf.way2muchnoise.eu/__.svg?badge_style=for_the_badge"></a>
-  <a href="https://modrinth.com/mod/ragium"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/__?style=for-the-badge&logo=modrinth&logoColor=1c1c1c&label=%20&labelColor=5ca424&color=2d2d2d"></a>
-</h1>
+![title](docs/title.png)
 
-## Supported Versions
+# Ragium
 
-| MC Version | Supported | Support Plan |
-|:----------:|:---------:|:------------:|
-|   1.21.x   |     ❌     |      ⭕       |
-|   1.21.1   |     ⭕     |      ⭕       |
-|  < 1.21.1  |     ❌     |      ❌       |
-
-## Dependencies Mods
-
-### Required
-
-- [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge)
-
-### Optional
-
-|                                        Mod Name                                        | Recipe Integration | Tag Integration |                    Other                    |
-|:--------------------------------------------------------------------------------------:|:------------------:|:---------------:|:-------------------------------------------:|
-|                [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm)                 |         ❌          |        ❌        | Supports connected textures for some blocks |
-|                       [Curios](https://modrinth.com/mod/curios)                        |         ❌          |        ⭕        |                                             |
-|                          [EMI](https://modrinth.com/mod/emi)                           |         ❌          |        ❌        |                                             |
-|     [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions)      |         ❌          |        ❌        |   Adds descriptions for new enchantments    |
-|              [Farmer's Delight](https://modrinth.com/mod/farmers-delight)              |         ⭕          |        ⭕        |       Adds new foods and ingredients        |
-|                        [Jade 🔍](https://modrinth.com/mod/jade)                        |         ❌          |        ❌        |       Adds new information providers        |
-|                     [Mekanism](https://modrinth.com/mod/mekanism)                      |         ⭕          |        ⭕        |         Add new items and chemicals         |
-| [PneumaticCraft: Repressurized](https://modrinth.com/mod/pneumaticcraft-repressurized) |         ❌          |        ⭕        |                                             |
-|                  [Replication](https://modrinth.com/mod/replication)                   |         ⭕          |        ❌        |             Add new matter type             |
+Ragium is a tech mod based on vanilla materials. This mod aims to expand vanilla features and automate many work.
 
 ## Features
+### New Materials
 
-- Basic tech machines (Crusher, Extractor, Refinery, ...) but WIRELESS BY DEFAULT!
-- Some utility Items (Item Magnet, Damage Trap, Teleporter, Spawn Egg converter, ...)
+- **Raginite**
+    - A magenta-colored mineral found in underground
+    - Used to make alloys with copper or gold, called **Ragi-Alloy**
+    - **Ragi-Alloy** is basic materials for machines
+
+- **Azure Shard & Azure Steel**
+    - The shard is made from Amethyst and Lapis Lazuri, and the steel is made from this shard and iron
+    - Used to make better equipment than Iron ones
+
+- **Deep Steel**
+    - A dark gray metal made in Deep Dark
+    - Used to make anti-warden equipment, or Fortune V pickaxe!
+
+- **Crimson and Warped Crystal**
+    - Crystals extracted from each Nether Huge Fungusese
+    - Crimson -> To make fuels or explosives
+    - Warped -> To use teleportation
+
+### Automations
+
+- Machines: Using electricity
+    - Electric & Parallel smelting/smoking/blasting!
+    - Stonecutting & Wood Sawing
+    - Ore processing in multiple ways
+    - Simulating amethyst growth, Beekeeping, Animal Farming, and Generating Ancient Debris?!
+
+- Devices: Not using electricity
+    - Collecting water/lava/milk from environment
+    - Collecting dropped item/exp orb around
+    - Chunk Loading
+    - Capturing mobs into its spawn eggs
+
+## Future Plan
+
+- New material made from Prismarine to manipulate mobs
+- New expansion for Trial Chamber
 
 ## Images
 
-## License
+![Raginite](https://cdn.modrinth.com/data/jBgE71lF/images/60f6bac47479b16ec790ac78cf705429b657dfee.png)
+![Azure Shard & Steel](https://cdn.modrinth.com/data/jBgE71lF/images/d15f0edd287bf79334d292167480248105a3db85.png)
+![Deep Steel](https://cdn.modrinth.com/data/jBgE71lF/images/2198d7192d8015b12e881a4acc6b5a1978cc0092.png)
+![Crimson and Warped Crystal](https://cdn.modrinth.com/data/jBgE71lF/images/1bedeef60af3918f785462709e5f086575b4c273.png)
+![Eldritch Pearl](https://cdn.modrinth.com/data/jBgE71lF/images/b04086440bd9455fde735810918f154c04d083c1.png)
 
-- The code is licensed under the [MPL-2.0](https://github.com/Hiiragi283/ragium/blob/main/LICENSE).
+## Details
 
-## Credit
-
-- Thanks for debuggers in my discord server
+- Required Dependencies
+    - [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge)
+    - [Accessoriese](https://modrinth.com/mod/accessories)
+- Licence: MPL-2.0

@@ -4,11 +4,11 @@ import dev.emi.emi.api.EmiStackProvider
 import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.stack.EmiStackInteraction
-import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.screen.HTContainerScreen
-import hiiragi283.ragium.api.screen.HTDefinitionContainerScreen
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.gui.screen.HTFluidScreen
+import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.client.gui.screen.HTContainerScreen
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.core.Vec3i
 import net.minecraft.world.inventory.Slot
 
 object RagiumEmiStackProvider : EmiStackProvider<Screen> {
@@ -16,19 +16,15 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
         if (screen is HTContainerScreen<*>) {
             // Get stack from slots
             for (slot: Slot in screen.menu.slots) {
-                if (HTSlotHelper.isIn(x, screen.startX + slot.x, 18)) {
-                    if (HTSlotHelper.isIn(y, screen.startY + slot.y, 18)) {
-                        return EmiStackInteraction(EmiStack.of(slot.item), null, false)
-                    }
+                if (HTBounds.createSlot(screen.startX + slot.x, screen.startY + slot.y).contains(x, y)) {
+                    return EmiStackInteraction(EmiStack.of(slot.item), null, false)
                 }
             }
             // Get stack from tanks
-            if (screen is HTDefinitionContainerScreen<*>) {
-                for ((index: Int, vec: Vec3i) in screen.menu.fluidSlots.entries) {
-                    if (HTSlotHelper.isIn(x, screen.startX + vec.x, 18)) {
-                        if (HTSlotHelper.isIn(y, screen.startY + vec.y, 18)) {
-                            return EmiStackInteraction(NeoForgeEmiStack.of(screen.getFluidStack(index)), null, false)
-                        }
+            if (screen is HTFluidScreen) {
+                for (widget: HTFluidWidget in screen.getFluidWidgets()) {
+                    if (widget.getBounds().contains(x, y)) {
+                        return EmiStackInteraction(NeoForgeEmiStack.of(widget.stack), null, false)
                     }
                 }
             }

@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:metallurgic_infusing",
+  "chemical_input": {
+    "amount": 40,
+    "chemical": "ragium:raginite"
+  },
+  "item_input": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/copper"
+      },
+      {
+        "tag": "c:ingots/copper"
+      }
+    ],
+    "count": 1
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_ingot"
+  },
+  "per_tick_usage": false
+}

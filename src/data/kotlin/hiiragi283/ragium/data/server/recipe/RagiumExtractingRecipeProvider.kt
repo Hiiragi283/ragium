@@ -1,97 +1,88 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.idOrNull
-import hiiragi283.ragium.api.tag.RagiumCommonTags
-import net.minecraft.core.Holder
-import net.minecraft.world.item.Item
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumExtractingRecipeProvider : HTRecipeProvider() {
+object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Vanilla
-        createExtracting()
-            .itemOutput(Items.FLINT)
-            .itemInput(Tags.Items.GRAVELS)
-            .saveSuffixed(output, "_from_gravel")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Tags.Items.GRAVELS),
+                resultHelper.item(Items.FLINT),
+            ).saveSuffixed(output, "_from_gravel")
 
-        createExtracting()
-            .itemOutput(Items.REDSTONE)
-            .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS)
-            .saveSuffixed(output, "_from_red_sandstone")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
+                resultHelper.item(Items.REDSTONE),
+            ).saveSuffixed(output, "_from_red_sandstone")
 
-        createExtracting()
-            .itemOutput(Items.BROWN_MUSHROOM, 3)
-            .itemInput(Items.BROWN_MUSHROOM_BLOCK)
-            .saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
+                resultHelper.item(Items.BROWN_MUSHROOM, 3),
+            ).saveSuffixed(output, "_from_block")
 
-        createExtracting()
-            .itemOutput(Items.RED_MUSHROOM, 3)
-            .itemInput(Items.RED_MUSHROOM_BLOCK)
-            .saveSuffixed(output, "_from_block")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Items.RED_MUSHROOM_BLOCK),
+                resultHelper.item(Items.RED_MUSHROOM, 3),
+            ).saveSuffixed(output, "_from_block")
         // Ragium
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_CINNABAR, 3)
-            .itemInput(Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .saveSuffixed(output, "_from_redstone")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
+            ).saveSuffixed(output, "_from_redstone")
 
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 4)
-            .saveSuffixed(output, "_from_sandstone")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
+            ).saveSuffixed(output, "_from_sandstone")
 
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .itemInput(Tags.Items.GUNPOWDERS)
-            .saveSuffixed(output, "_from_gunpowder")
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.item(Tags.Items.GUNPOWDERS),
+                resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+            ).saveSuffixed(output, "_from_gunpowder")
 
-        flower()
+        dyes()
     }
 
-    private fun flower() {
-        val small: Map<Item, Item> = mapOf(
-            Items.DANDELION to Items.YELLOW_DYE,
-            Items.POPPY to Items.RED_DYE,
-            Items.BLUE_ORCHID to Items.LIGHT_BLUE_DYE,
-            Items.ALLIUM to Items.MAGENTA_DYE,
-            Items.AZURE_BLUET to Items.LIGHT_GRAY_DYE,
-            Items.RED_TULIP to Items.RED_DYE,
-            Items.ORANGE_TULIP to Items.ORANGE_DYE,
-            Items.WHITE_TULIP to Items.LIGHT_GRAY_DYE,
-            Items.PINK_TULIP to Items.PINK_DYE,
-            Items.OXEYE_DAISY to Items.LIGHT_GRAY_DYE,
-            Items.CORNFLOWER to Items.BLUE_DYE,
-            Items.LILY_OF_THE_VALLEY to Items.WHITE_DYE,
-            Items.WITHER_ROSE to Items.BLACK_DYE,
-            Items.PINK_PETALS to Items.PINK_DYE,
-            Items.CACTUS to Items.GREEN_DYE,
-        )
-        for ((flower: Item, dye: Item) in small) {
-            val holder: Holder.Reference<Item> = flower.asItemHolder()
-            val flowerName: String = holder.idOrNull?.path ?: continue
-            createExtracting()
-                .itemOutput(dye, 2)
-                .itemInput(flower)
-                .saveSuffixed(output, "_from_$flowerName")
-        }
+    @JvmStatic
+    private fun dyes() {
+        // Charcoal -> Brown
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
+                resultHelper.item(Items.BROWN_DYE),
+            ).saveSuffixed(output, "_from_charcoal")
+        // Coal -> Black
+        HTItemToObjRecipeBuilder
+            .extracting(
+                ingredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
+                resultHelper.item(Items.BLACK_DYE),
+            ).saveSuffixed(output, "_from_coal")
 
-        val large: Map<Item, Item> = mapOf(
-            Items.TORCHFLOWER to Items.ORANGE_DYE,
-            Items.SUNFLOWER to Items.YELLOW_DYE,
-            Items.LILAC to Items.MAGENTA_DYE,
-            Items.ROSE_BUSH to Items.RED_DYE,
-            Items.PEONY to Items.PINK_DYE,
-            Items.PITCHER_PLANT to Items.CYAN_DYE,
-        )
-        for ((flower: Item, dye: Item) in large) {
-            val holder: Holder.Reference<Item> = flower.asItemHolder()
-            val flowerName: String = holder.idOrNull?.path ?: continue
-            createExtracting()
-                .itemOutput(dye, 4)
-                .itemInput(flower)
-                .saveSuffixed(output, "_from_$flowerName")
+        for (color: DyeColor in DyeColor.entries) {
+            val name: String = color.serializedName
+            val dye: DyeItem = DyeItem.byColor(color)
+
+            HTItemToObjRecipeBuilder
+                .extracting(
+                    ingredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
+                    resultHelper.item(dye, 2),
+                ).saveSuffixed(output, "_from_$name")
         }
     }
 }

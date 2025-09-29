@@ -1,16 +1,24 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
-      "count": 1,
-      "tag": "c:ingots/gold"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/gold"
+        },
+        {
+          "tag": "c:ingots/gold"
+        }
+      ],
+      "count": 1
     },
     {
-      "count": 3,
+      "count": 4,
       "tag": "c:dusts/raginite"
     }
   ],
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "#c:ingots/advanced_ragi_alloy"
   }

@@ -1,0 +1,18 @@
+package hiiragi283.ragium.data.server.recipe
+
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.recipe.result.HTItemResult
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.enchantment.Enchantment
+
+object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
+    override fun buildRecipeInternal() {}
+
+    @JvmStatic
+    private fun ench(key: ResourceKey<Enchantment>, level: Int): HTItemResult = HTIntrinsicEnchantment(key, level)
+        .toEnchBook(provider)
+        .map(HTResultHelper.INSTANCE::item)
+        .partialOrThrow
+}

@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
     "A": {
       "tag": "c:cobblestones/normal"
     },
     "B": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "c:dusts/raginite"
     },
     "C": {
       "item": "minecraft:smooth_stone"
@@ -18,7 +18,7 @@
     "CCC"
   ],
   "result": {
-    "count": 4,
+    "count": 1,
     "id": "ragium:stone_casing"
   }
 }

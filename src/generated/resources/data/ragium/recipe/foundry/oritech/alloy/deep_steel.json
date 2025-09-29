@@ -15,9 +15,14 @@
     {
       "item": "ragium:deep_scrap"
     },
-    {
-      "tag": "c:ingots/azure_steel"
-    }
+    [
+      {
+        "tag": "c:dusts/azure_steel"
+      },
+      {
+        "tag": "c:ingots/azure_steel"
+      }
+    ]
   ],
   "results": [
     {
@@ -25,5 +30,5 @@
       "id": "ragium:deep_steel_ingot"
     }
   ],
-  "time": 160
+  "time": 120
 }

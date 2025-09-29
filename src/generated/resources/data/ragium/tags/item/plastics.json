@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#c:plates/plastic",
+    {
+      "id": "#c:plastic",
+      "required": false
+    },
+    {
+      "id": "#pneumaticcraft:plastic_sheets",
+      "required": false
+    }
+  ]
+}

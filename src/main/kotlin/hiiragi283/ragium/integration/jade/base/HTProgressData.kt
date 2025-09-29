@@ -1,9 +1,5 @@
 package hiiragi283.ragium.integration.jade.base
 
-import hiiragi283.ragium.api.extension.listOf
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -14,19 +10,6 @@ class HTProgressData private constructor(
     val fluids: List<FluidStack>,
 ) {
     companion object {
-        @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTProgressData> = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT,
-            HTProgressData::progress,
-            ByteBufCodecs.VAR_INT,
-            HTProgressData::total,
-            ItemStack.OPTIONAL_STREAM_CODEC.listOf(),
-            HTProgressData::items,
-            FluidStack.OPTIONAL_STREAM_CODEC.listOf(),
-            HTProgressData::fluids,
-            ::HTProgressData,
-        )
-
         @JvmStatic
         fun builder(): Builder = Builder()
     }

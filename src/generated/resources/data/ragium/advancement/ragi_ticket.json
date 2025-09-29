@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:ragi_crystal",
+  "criteria": {
+    "use_ragi_ticket": {
+      "conditions": {
+        "item": {
+          "items": "ragium:ragi_ticket"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.ragi_ticket.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_ticket"
+    },
+    "title": {
+      "translate": "advancements.ragium.ragi_ticket.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_ragi_ticket"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

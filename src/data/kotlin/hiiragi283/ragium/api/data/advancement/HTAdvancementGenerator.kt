@@ -1,0 +1,94 @@
+package hiiragi283.ragium.api.data.advancement
+
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.advancements.critereon.ConsumeItemTrigger
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.data.ExistingFileHelper
+
+abstract class HTAdvancementGenerator {
+    protected lateinit var output: HTAdvancementOutput
+
+    fun generate(provider: HolderLookup.Provider, output: HTAdvancementOutput, helper: ExistingFileHelper) {
+        this.output = output
+        generate(provider)
+    }
+
+    protected abstract fun generate(registries: HolderLookup.Provider)
+
+    //    Extension    //
+
+    protected inline fun root(key: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit) {
+        HTAdvancementBuilder.root().apply(builderAction).save(output, key)
+    }
+
+    protected inline fun child(key: HTAdvancementKey, parent: HTAdvancementKey, builderAction: HTAdvancementBuilder.() -> Unit) {
+        HTAdvancementBuilder.child(parent).apply(builderAction).save(output, key)
+    }
+
+    protected inline fun createSimple(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        variant: HTItemMaterialVariant,
+        material: HTMaterialType,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        createSimple(
+            key,
+            parent,
+            RagiumItems.getMaterial(variant, material),
+            variant.itemTagKey(material),
+            builderAction,
+        )
+    }
+
+    protected inline fun createSimple(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        item: ItemLike,
+        tagKey: TagKey<Item>? = null,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            if (tagKey != null) {
+                hasItemsIn("has_${tagKey.location.toDebugFileName()}", tagKey)
+            } else {
+                hasAllItem("has_${HTHolderLike.fromItem(item).getPath()}", item)
+            }
+        }
+    }
+
+    protected fun HTAdvancementBuilder.hasItem(key: String, predicate: ItemPredicate.Builder): HTAdvancementBuilder =
+        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(predicate))
+
+    protected fun HTAdvancementBuilder.hasAnyItem(key: String, items: Collection<ItemLike>): HTAdvancementBuilder =
+        hasAnyItem(key, *items.toTypedArray())
+
+    protected fun <ITEM> HTAdvancementBuilder.hasAnyItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
+        hasAnyItem("has_${item.getPath()}", item)
+
+    protected fun HTAdvancementBuilder.hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
+        hasItem(key, ItemPredicate.Builder.item().of(*items))
+
+    protected fun HTAdvancementBuilder.hasAllItem(key: String, vararg items: ItemLike): HTAdvancementBuilder =
+        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(*items))
+
+    protected fun HTAdvancementBuilder.hasItemsIn(key: String, tagKey: TagKey<Item>): HTAdvancementBuilder =
+        hasItem(key, ItemPredicate.Builder.item().of(tagKey))
+
+    protected fun <ITEM> HTAdvancementBuilder.useItem(item: ITEM): HTAdvancementBuilder where ITEM : HTHolderLike, ITEM : ItemLike =
+        addCriterion("use_${item.getPath()}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
+}

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:rotary",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "ragium:crimson_blood"
+  },
+  "chemical_output": {
+    "amount": 1,
+    "id": "ragium:crimson_blood"
+  },
+  "fluid_input": {
+    "amount": 1,
+    "tag": "c:crimson_blood"
+  },
+  "fluid_output": {
+    "amount": 1,
+    "id": "ragium:crimson_blood"
+  }
+}

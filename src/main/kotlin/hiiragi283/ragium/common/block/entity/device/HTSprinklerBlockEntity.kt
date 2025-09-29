@@ -1,51 +1,22 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.api.extension.asKotlinRandom
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
+import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
-    private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
-
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.TANK, tank)
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.TANK, tank)
-    }
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state) {
+    private val tank: HTFluidStackTank = TODO()
 
     //    Ticking    //
 
-    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 20 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
-        // 高さを0~2の範囲でチェックする
-        for (height: Int in (0..2)) {
-            if (glowCrop(level, pos, height).isTrue) {
-                return TriState.TRUE
-            }
-        }
-        return TriState.DEFAULT
-    }
-
-    override val maxTicks: Int = 100
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     private fun glowCrop(level: ServerLevel, pos: BlockPos, height: Int): TriState {
         // 範囲内のランダムなブロックを対象とする
@@ -54,26 +25,14 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBloc
             .map(pos::offset)
             .filter { posIn: BlockPos -> posIn != pos }
             .toList()
-            .random()
+            .random(level.random.asKotlinRandom())
         // 水を消費できない場合はスキップ
-        val stack: FluidStack = tank.fluid
-        if (!tank.canDrain(50, true)) return TriState.DEFAULT
+        if (tank.extract(50, true, HTStorageAccess.INTERNAl).isEmpty) return TriState.DEFAULT
         // ランダムチックを呼び出す
         if (BoneMealItem.applyBonemeal(ItemStack.EMPTY, level, targetPos, null)) {
-            tank.drain(stack.copyWithAmount(50), IFluidHandler.FluidAction.EXECUTE)
+            tank.extract(50, true, HTStorageAccess.INTERNAl)
             return TriState.TRUE
         }
         return TriState.DEFAULT
     }
-
-    override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(
-        listOf(tank),
-        object : HTFluidFilter {
-            override fun canFill(tanks: List<IFluidTank>, stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
-
-            override fun canDrain(tanks: List<IFluidTank>, stack: FluidStack): Boolean = false
-
-            override fun canDrain(tanks: List<IFluidTank>, maxDrain: Int): Boolean = false
-        },
-    )
 }

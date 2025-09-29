@@ -1,68 +1,79 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
+import com.mojang.authlib.GameProfile
+import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
-class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
-    override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
+class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
+    override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
 
-    /**
-     * @see [com.hollingsworth.arsnouveau.api.util.BlockUtil.breakExtraBlock]
-     */
-    override fun onServerTick(
+    lateinit var toolSlot: HTItemSlot
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        toolSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        return HTSimpleItemSlotHolder(this, listOf(toolSlot), listOf())
+    }
+
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.SINGLE_ITEM.openMenu(player, title, this, ::writeExtraContainerData)
+
+    override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-    ): TriState {
-        // エネルギーを消費できるか判定する
-        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
+        network: HTEnergyBattery,
+    ): Boolean {
         // 採掘用のFake Playerを用意する
-        val player: FakePlayer = RagiumAPI.getInstance().getFakePlayer(level)
+        val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
         val inventory: Inventory = player.inventory
-        val toolStack: ItemStack = this.inventory.getStackInSlot(0)
+        val toolStack: ItemStack = toolSlot.getStack()
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
-        val front: Direction = state.getValue(HTHorizontalEntityBlock.HORIZONTAL)
+        val front: Direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
         val posTo: BlockPos = pos.relative(front)
         val stateTo: BlockState = level.getBlockState(posTo)
         // 採掘速度が0未満の場合はスキップ
         if (stateTo.getDestroySpeed(level, posTo) < 0) {
-            return TriState.DEFAULT
+            return false
         }
         // 採掘できない場合はスキップ
         if (!stateTo.canHarvestBlock(level, posTo, player)) {
-            return TriState.DEFAULT
+            return false
         }
         // イベントがキャンセルされた場合はスキップ
         if (CommonHooks.fireBlockBreak(level, GameType.SURVIVAL, player, posTo, stateTo).isCanceled) {
-            return TriState.DEFAULT
+            return false
         }
+        // エネルギーを消費する
+        usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
+        if (usedEnergy < getModifiedEnergy(energyUsage * 20)) return false
+        usedEnergy = 0
         // ブロックを採掘する
         val blockTo: Block = stateTo.block
         val newStateTo: BlockState = blockTo.playerWillDestroy(level, posTo, stateTo, player)
@@ -80,19 +91,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         if (toolStack.isEmpty && !toolStack1.isEmpty) {
             EventHooks.onPlayerDestroyItem(player, toolStack1, InteractionHand.MAIN_HAND)
         }
-        // エネルギーを減らす
-        network.extractEnergy(requiredEnergy, false)
-        return TriState.DEFAULT
+        return false
     }
-
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
-
-    //    Menu    //
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTBlockBreakerMenu = HTBlockBreakerMenu(
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
 }

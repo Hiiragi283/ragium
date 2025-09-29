@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
-  "item_input": {
+  "type": "ragium:pulverizing",
+  "ingredient": {
     "count": 1,
     "item": "minecraft:prismarine_bricks"
   },
-  "item_output": {
+  "result": {
     "count": 9,
     "id": "minecraft:prismarine_shard"
   }

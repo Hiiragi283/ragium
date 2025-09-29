@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:universal_bundle"
+    },
+    {
+      "tag": "c:dyes/magenta"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "magenta"
+    },
+    "count": 1,
+    "id": "ragium:universal_bundle"
+  }
+}

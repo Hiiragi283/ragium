@@ -1,10 +1,10 @@
 {
   "type": "ragium:extracting",
-  "item_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:storage_blocks/redstone"
   },
-  "item_output": {
+  "result": {
     "count": 3,
     "id": "#c:dusts/cinnabar"
   }

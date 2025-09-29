@@ -3,25 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/advanced_ragi_alloy"
-    },
-    "B": {
       "tag": "c:glass_blocks/quartz"
     },
+    "B": {
+      "item": "ragium:advanced_component"
+    },
     "C": {
-      "item": "ragium:advanced_machine_frame"
+      "tag": "c:ingots/azure_steel"
     },
     "D": {
-      "item": "minecraft:polished_blackstone_bricks"
-    },
-    "E": {
-      "tag": "c:circuits/advanced"
+      "item": "ragium:advanced_ragi_alloy_coil_block"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DED"
+    " A ",
+    "ABA",
+    "CDC"
   ],
   "result": {
     "count": 1,

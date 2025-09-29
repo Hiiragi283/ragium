@@ -1,0 +1,23 @@
+package hiiragi283.ragium.common.inventory.container
+
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import net.minecraft.world.entity.player.Inventory
+
+open class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
+    menuType: HTDeferredMenuType<*>,
+    containerId: Int,
+    inventory: Inventory,
+    context: BE,
+) : HTBlockEntityContainerMenu<BE>(
+        menuType,
+        containerId,
+        inventory,
+        context,
+    ) {
+    init {
+        addSlots(context.upgradeHandler)
+
+        addDataSlots(context.containerData)
+    }
+}

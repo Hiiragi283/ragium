@@ -1,33 +1,46 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.extension.dropStackAt
-import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.entity.Entity
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.util.INBTSerializable
-import net.neoforged.neoforge.items.IItemHandler
 
+/**
+ * [HTItemSlot]に基づいた[HTSidedItemHandler]の拡張インターフェース
+ * @see [mekanism.api.inventory.IMekanismInventory]
+ */
 interface HTItemHandler :
-    IItemHandler,
-    INBTSerializable<CompoundTag> {
-    val isEmpty: Boolean
-    val slotRange: IntRange get() = (0 until slots)
+    HTSidedItemHandler,
+    HTContentListener {
+    fun hasItemHandler(): Boolean = true
 
-    fun dropStacksAt(entity: Entity) {
-        for (stack: ItemStack in getStackView()) {
-            dropStackAt(entity, stack)
-        }
+    fun getItemSlots(side: Direction?): List<HTItemSlot>
+
+    fun getItemSlot(slot: Int, side: Direction?): HTItemSlot? = getItemSlots(side).getOrNull(slot)
+
+    override fun setStackInSlot(slot: Int, stack: ItemStack, side: Direction?) {
+        getItemSlot(slot, side)?.setStack(stack)
     }
 
-    fun dropStacksAt(level: Level, pos: BlockPos) {
-        for (stack: ItemStack in getStackView()) {
-            dropStackAt(level, pos, stack)
-        }
-    }
+    override fun getStackInSlot(slot: Int, side: Direction?): ItemStack = getItemSlot(slot, side)?.getStack() ?: ItemStack.EMPTY
 
-    fun consumeStackInSlot(slot: Int, count: Int)
+    override fun getSlots(side: Direction?): Int = getItemSlots(side).size
 
-    fun getStackView(): Iterable<ItemStack>
+    override fun insertItem(
+        slot: Int,
+        stack: ItemStack,
+        side: Direction?,
+        simulate: Boolean,
+    ): ItemStack = getItemSlot(slot, side)?.insertItem(stack, simulate, HTStorageAccess.forHandler(side)) ?: stack
+
+    override fun extractItem(
+        slot: Int,
+        amount: Int,
+        side: Direction?,
+        simulate: Boolean,
+    ): ItemStack = getItemSlot(slot, side)?.extractItem(amount, simulate, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
+
+    override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getLimit(ItemStack.EMPTY) ?: 0
+
+    override fun isItemValid(slot: Int, stack: ItemStack, side: Direction?): Boolean = getItemSlot(slot, side)?.isItemValid(stack) ?: false
 }

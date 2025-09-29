@@ -1,0 +1,11 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "tag": "c:storage_blocks/amethyst"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:amethyst_shard"
+  }
+}

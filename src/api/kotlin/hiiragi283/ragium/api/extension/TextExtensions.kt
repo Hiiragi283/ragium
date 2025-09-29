@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
-import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
-import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
@@ -13,12 +13,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import net.neoforged.api.distmarker.Dist
-import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.fml.ModList
-import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.client.ClientTooltipFlag
 import net.neoforged.neoforge.common.extensions.ILevelExtension
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
@@ -71,37 +68,36 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     )
 }
 
-fun globalPosText(value: GlobalPos): MutableComponent = bracketText(joinedText(levelText(value.dimension), blockPosText(value.pos)))
+private fun energyText(amount: Int, capacity: Int): MutableComponent =
+    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
+
+fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.energyStored, storage.maxEnergyStored)
+
+fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
 
 /**
  * 指定した[stack]からツールチップを生成します
  * @param consumer 生成したツールチップを受けとるブロック
  */
-fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
-    val fluidHandler: IFluidHandlerItem = stack.getCapability(Capabilities.FluidHandler.ITEM) ?: return
-    for (i: Int in fluidHandler.tankRange) {
-        addFluidTooltip(fluidHandler.getFluidInTank(i), consumer, flag)
-    }
-}
-
-/**
- * 指定した[stack]からツールチップを生成します
- * @param consumer 生成したツールチップを受けとるブロック
- */
-fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: TooltipFlag) {
+fun addFluidTooltip(
+    stack: FluidStack,
+    consumer: Consumer<Component>,
+    flag: TooltipFlag,
+    inGui: Boolean,
+) {
     // Empty name if stack is empty
     if (stack.isEmpty) {
-        consumer.accept(Component.translatable(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY))
+        consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY.getComponent())
         return
     }
     // Fluid Name and Amount
     consumer.accept(
-        Component.translatable(
-            RagiumTranslationKeys.TOOLTIP_FLUID_NAME,
+        RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(
             stack.hoverName,
             intText(stack.amount),
         ),
     )
+    if (!inGui) return
     // Fluid id if advanced
     if (flag.isAdvanced) {
         consumer.accept(Component.literal(stack.fluidHolder.registeredName).withStyle(ChatFormatting.DARK_GRAY))
@@ -115,12 +111,16 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: Tool
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-//    TooltipFlag    //
+fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
+    HTMultiCapability.ENERGY
+        .getCapability(stack)
+        ?.let(::energyText)
+        ?.let(consumer::accept)
+}
 
-@OnlyIn(Dist.CLIENT)
-fun getClientTooltipFlag(): TooltipFlag = ClientTooltipFlag.of(
-    when (Minecraft.getInstance().options.advancedItemTooltips) {
-        true -> TooltipFlag.ADVANCED
-        false -> TooltipFlag.NORMAL
-    },
-)
+fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
+    val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(stack) ?: return
+    for (i: Int in handler.tankRange) {
+        addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
+    }
+}

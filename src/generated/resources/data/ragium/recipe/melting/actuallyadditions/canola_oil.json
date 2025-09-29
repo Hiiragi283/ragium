@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "tag": "c:crops/canola"
+  },
+  "result": {
+    "amount": 80,
+    "id": "actuallyadditions:canola_oil"
+  }
+}

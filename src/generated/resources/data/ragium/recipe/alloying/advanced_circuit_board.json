@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "tag": "ragium:plastics"
+    },
+    {
+      "count": 1,
+      "item": "ragium:basalt_mesh"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_circuit_board"
+  }
+}

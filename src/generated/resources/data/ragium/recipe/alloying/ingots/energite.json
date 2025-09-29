@@ -9,18 +9,34 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
-      "count": 1,
-      "tag": "c:ingots/nickel"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/nickel"
+        },
+        {
+          "tag": "c:ingots/nickel"
+        }
+      ],
+      "count": 1
     },
     {
-      "count": 1,
-      "tag": "c:gems/fluxite"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/fluxite"
+        },
+        {
+          "tag": "c:gems/fluxite"
+        }
+      ],
+      "count": 1
     }
   ],
-  "item_output": {
-    "count": 1,
+  "result": {
+    "count": 2,
     "id": "#c:ingots/energite"
   }
 }

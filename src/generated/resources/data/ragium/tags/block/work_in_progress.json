@@ -1,10 +1,11 @@
 {
   "values": [
     "#c:obsidians/mysterious",
-    "ragium:ash_log",
-    "ragium:cooked_meat_on_the_bone",
-    "ragium:wooden_casing",
-    "ragium:stone_casing",
-    "ragium:refinery"
+    "ragium:brewery",
+    "ragium:combustion_generator",
+    "ragium:solar_generator",
+    "ragium:telepad",
+    "ragium:thermal_generator",
+    "ragium:wooden_casing"
   ]
 }

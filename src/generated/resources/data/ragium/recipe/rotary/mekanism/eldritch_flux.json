@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:rotary",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "ragium:eldritch_flux"
+  },
+  "chemical_output": {
+    "amount": 1,
+    "id": "ragium:eldritch_flux"
+  },
+  "fluid_input": {
+    "amount": 1,
+    "tag": "c:eldritch_flux"
+  },
+  "fluid_output": {
+    "amount": 1,
+    "id": "ragium:eldritch_flux"
+  }
+}

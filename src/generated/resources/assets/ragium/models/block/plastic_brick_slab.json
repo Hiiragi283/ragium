@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "ragium:block/plastic_bricks",
+    "side": "ragium:block/plastic_bricks",
+    "top": "ragium:block/plastic_bricks"
+  }
+}

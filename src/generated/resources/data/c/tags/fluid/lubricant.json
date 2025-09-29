@@ -1,12 +1,6 @@
 {
   "values": [
-    "ragium:lubricant",
     "ragium:flowing_lubricant",
-    "ragium:lubricant",
-    "ragium:flowing_lubricant",
-    {
-      "id": "#c:lubricant",
-      "required": false
-    }
+    "ragium:lubricant"
   ]
 }

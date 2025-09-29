@@ -1,243 +1,450 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTMaterialFamily
-import hiiragi283.ragium.data.server.material.ModMaterialFamilies
+import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.material.HTCommonMaterialTypes
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object RagiumMaterialRecipeProvider : HTRecipeProvider() {
+object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        HTMaterialFamily.instances.values.forEach(::registerFamilies)
+        raginite()
+        azure()
+        eldritch()
+        deepSteel()
+        miscMaterials()
 
+        material()
         oreToRaw()
         alloying()
     }
 
-    // Ore -> Raw/Gem
-    private fun oreToRaw() {
-        // Coal
-        createCrushing()
-            .itemOutput(Items.COAL, 2)
-            .itemOutput(RagiumItems.SULFUR_DUST, chance = 1 / 4f)
-            .itemInput(Tags.Items.ORES_COAL)
-            .saveSuffixed(output, "_from_ore")
-        // Copper
-        createCrushing()
-            .itemOutput(Items.RAW_COPPER, 4)
-            .itemOutput(Items.RAW_GOLD, chance = 1 / 4f)
-            .itemInput(Tags.Items.ORES_COPPER)
-            .saveSuffixed(output, "_from_ore")
-        // Iron
-        createCrushing()
-            .itemOutput(Items.RAW_IRON, 2)
-            .itemOutput(Items.FLINT, chance = 1 / 4f)
-            .itemInput(Tags.Items.ORES_IRON)
-            .saveSuffixed(output, "_from_ore")
-        // Gold
-        createCrushing()
-            .itemOutput(Items.RAW_GOLD, 2)
-            .itemOutput(Items.RAW_COPPER, chance = 1 / 4f)
-            .itemInput(Tags.Items.ORES_GOLD)
-            .saveSuffixed(output, "_from_ore")
-        // Redstone
-        createCrushing()
-            .itemOutput(Items.REDSTONE, 8)
-            .itemOutput(Items.REDSTONE, 4, 1 / 2f)
-            .itemOutput(RagiumCommonTags.Items.DUSTS_CINNABAR, 2, 1 / 2f)
-            .itemInput(Tags.Items.ORES_REDSTONE)
-            .saveSuffixed(output, "_from_ore")
-        // Lapis
-        createCrushing()
-            .itemOutput(Items.LAPIS_LAZULI, 8)
-            .itemInput(Tags.Items.ORES_LAPIS)
-            .saveSuffixed(output, "_from_ore")
-        // Quartz
-        createCrushing()
-            .itemOutput(Items.QUARTZ, 4)
-            .itemInput(Tags.Items.ORES_QUARTZ)
-            .saveSuffixed(output, "_from_ore")
-        // Diamond
-        createCrushing()
-            .itemOutput(Items.DIAMOND, 2)
-            .itemInput(Tags.Items.ORES_DIAMOND)
-            .saveSuffixed(output, "_from_ore")
-        // Emerald
-        createCrushing()
-            .itemOutput(Items.EMERALD, 2)
-            .itemInput(Tags.Items.ORES_EMERALD)
-            .saveSuffixed(output, "_from_ore")
-        // Netherite
-        createCrushing()
-            .itemOutput(Items.NETHERITE_SCRAP, 2)
-            .itemInput(Tags.Items.ORES_NETHERITE_SCRAP)
-            .saveSuffixed(output, "_from_ore")
+    @JvmStatic
+    private fun raginite() {
+        // Ragi-Alloy
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .hollow4()
+            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER)
+            .save(output)
 
-        // Raginite
-        createCrushing()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_RAGINITE, 8)
-            .itemOutput(RagiumCommonTags.Items.DUSTS_RAGINITE, 4, 1 / 2f)
-            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2, 1 / 4f)
-            .itemInput(RagiumCommonTags.Items.ORES_RAGINITE)
-            .saveSuffixed(output, "_from_ore")
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY))
+            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER),
+                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 2),
+            ).save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.RAGI_COKE)
+            .hollow4()
+            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('B', HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL)
+            .save(output)
+        // Advanced Ragi-Alloy
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD),
+                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4),
+            ).save(output)
         // Ragi-Crystal
-        createCrushing()
-            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2)
-            .itemInput(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
-            .saveSuffixed(output, "_from_ore")
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
+            .hollow8()
+            .define('A', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
+            .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND)
+            .save(output)
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL),
+                ingredientHelper.gemOrDust(HTVanillaMaterialType.DIAMOND),
+                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 6),
+            ).save(output)
+    }
+
+    @JvmStatic
+    private fun azure() {
+        // Azure Shard
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
+            .mosaic4()
+            .define('A', Tags.Items.GEMS_AMETHYST)
+            .define('B', Tags.Items.GEMS_LAPIS)
+            .save(output)
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, 2),
+                ingredientHelper.gemOrDust(HTVanillaMaterialType.AMETHYST),
+                ingredientHelper.gemOrDust(HTVanillaMaterialType.LAPIS),
+            ).save(output)
+        // Azure Steel
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
+                ingredientHelper.gemOrDust(RagiumMaterialType.AZURE, 2),
+            ).save(output)
+    }
+
+    @JvmStatic
+    private fun eldritch() {
+        // Eldritch Pearl
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL))
+            .cross4()
+            .define('A', HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .define('B', HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
+            .save(output)
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 9),
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL),
+                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL),
+                ingredientHelper.item(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, 3),
+            ).save(output)
+    }
+
+    @JvmStatic
+    private fun deepSteel() {
         // Deep Steel
-        createCrushing()
-            .itemOutput(RagiumItems.DEEP_SCRAP, 2)
-            .itemInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+            .save(output)
+
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .save(output)
+
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(RagiumCommonTags.Items.ORES_DEEP_SCRAP))
+            .addResult(resultHelper.item(RagiumItems.DEEP_SCRAP, 2))
             .saveSuffixed(output, "_from_ore")
     }
 
+    @JvmStatic
+    private fun miscMaterials() {
+        // Sawdust
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.COMPRESSED_SAWDUST)
+            .hollow8()
+            .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD)
+            .define('B', RagiumItems.getDust(HTVanillaMaterialType.WOOD))
+            .save(output)
+
+        HTCookingRecipeBuilder
+            .blasting(Items.CHARCOAL, onlyBlasting = true)
+            .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
+            .setExp(0.15f)
+            .saveSuffixed(output, "_from_pellet")
+        // Gildium
+        HTItemToObjRecipeBuilder
+            .melting(
+                ingredientHelper.item(Items.GILDED_BLACKSTONE),
+                resultHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+            ).save(output)
+
+        HTFluidTransformRecipeBuilder
+            .refining(
+                ingredientHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+                resultHelper.fluid(HTFluidContent.LAVA, 750),
+                null,
+                resultHelper.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.GILDIUM),
+            ).save(output)
+
+        HTFluidTransformRecipeBuilder
+            .refining(
+                ingredientHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
+                resultHelper.fluid(HTFluidContent.LAVA, 750),
+                ingredientHelper.item(RagiumItems.PLATING_CATALYST),
+                resultHelper.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.GILDIUM, 3),
+            ).saveSuffixed(output, "_alt")
+        // Iridescentium
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.IRIDESCENTIUM),
+                ingredientHelper.gemOrDust(RagiumMaterialType.ELDRITCH_PEARL, 8),
+                ingredientHelper.item(Tags.Items.NETHER_STARS),
+            ).save(output)
+        // Other
+        HTShapelessRecipeBuilder
+            .misc(Items.GUNPOWDER, 3)
+            .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR)
+            .addIngredient(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER)
+            .addIngredient(fuelOrDust(HTVanillaMaterialType.CHARCOAL))
+            .saveSuffixed(output, "_with_hammer")
+
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.getMaterial(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL))
+            .addIngredient(Items.BAMBOO)
+            .setExp(0.15f)
+            .save(output)
+    }
+
+    @JvmStatic
+    private fun material() {
+        for (material: RagiumMaterialType in RagiumMaterialType.entries) {
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
+            val base: ItemLike = RagiumItems.MATERIALS.get(baseVariant, material) ?: continue
+
+            RagiumBlocks.MATERIALS.get(HTBlockMaterialVariant.STORAGE_BLOCK, material)?.let { storage: ItemLike ->
+                // Block -> Base
+                HTShapelessRecipeBuilder
+                    .misc(base, 9)
+                    .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, material)
+                    .saveSuffixed(output, "_from_block")
+                // Base -> Block
+                HTShapedRecipeBuilder
+                    .building(storage)
+                    .hollow8()
+                    .define('A', baseVariant, material)
+                    .define('B', base)
+                    .saveSuffixed(output, "_from_base")
+            }
+
+            RagiumItems.MATERIALS.get(HTItemMaterialVariant.NUGGET, material)?.let { nugget: ItemLike ->
+                // Base -> Nugget
+                HTShapelessRecipeBuilder
+                    .misc(nugget, 9)
+                    .addIngredient(baseVariant, material)
+                    .saveSuffixed(output, "_from_base")
+                // Nugget -> Base
+                HTShapedRecipeBuilder
+                    .misc(base)
+                    .hollow8()
+                    .define('A', HTItemMaterialVariant.NUGGET, material)
+                    .define('B', nugget)
+                    .saveSuffixed(output, "_from_nugget")
+            }
+
+            gemToChip(material)
+        }
+
+        rawToIngot(HTVanillaMaterialType.COPPER)
+        rawToIngot(HTVanillaMaterialType.IRON)
+        rawToIngot(HTVanillaMaterialType.GOLD)
+
+        gemToChip(HTVanillaMaterialType.ECHO)
+
+        HTCommonMaterialTypes.METALS.values.forEach(::rawToIngot)
+    }
+
+    @JvmStatic
+    private fun gemToChip(material: HTMaterialType) {
+        RagiumItems.MATERIALS.get(HTItemMaterialVariant.CHIP, material)?.let { chip: ItemLike ->
+            // 3x Gem -> Chip
+            HTItemToObjRecipeBuilder
+                .compressing(
+                    ingredientHelper.item(HTItemMaterialVariant.GEM, material, 3),
+                    resultHelper.item(chip),
+                ).save(output)
+        }
+    }
+
+    @JvmStatic
+    private fun oreToRaw() {
+        // Coal
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.COAL))
+            .addResult(resultHelper.item(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, 2))
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+        // Copper
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.COPPER))
+            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.COPPER, 4))
+            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.GOLD), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+        // Iron
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.IRON))
+            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.IRON, 2))
+            .addResult(resultHelper.item(Items.FLINT), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+        // Gold
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.GOLD))
+            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.GOLD, 2))
+            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.COPPER), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+
+        // Redstone
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.REDSTONE))
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE, 8))
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE, 4), 1 / 2f)
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 4), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+        // Raginite
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE))
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 8))
+            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4), 1 / 2f)
+            .addResult(resultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL, 1), 1 / 4f)
+            .saveSuffixed(output, "_from_ore")
+
+        // Gems
+        mapOf(
+            // Vanilla
+            HTVanillaMaterialType.LAPIS to 8,
+            HTVanillaMaterialType.QUARTZ to 4,
+            HTVanillaMaterialType.DIAMOND to 2,
+            HTVanillaMaterialType.EMERALD to 2,
+            // Ragium
+            RagiumMaterialType.RAGI_CRYSTAL to 2,
+            RagiumMaterialType.CRIMSON_CRYSTAL to 2,
+            RagiumMaterialType.WARPED_CRYSTAL to 2,
+        ).forEach { (material: HTMaterialType, count: Int) ->
+            HTItemToChancedItemRecipeBuilder
+                .crushing(ingredientHelper.item(HTBlockMaterialVariant.ORE, material))
+                .addResult(resultHelper.item(HTItemMaterialVariant.GEM, material, count))
+                .saveSuffixed(output, "_from_ore")
+        }
+
+        // Netherite
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(Tags.Items.ORES_NETHERITE_SCRAP))
+            .addResult(resultHelper.item(Items.NETHERITE_SCRAP, 2))
+            .saveSuffixed(output, "_from_ore")
+    }
+
+    @JvmStatic
     private fun alloying() {
+        // Netherite
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(Tags.Items.INGOTS_NETHERITE, 2),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD, 4),
+                ingredientHelper.item(Items.NETHERITE_SCRAP, 4),
+            ).save(output)
+        // Deep Steel
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL, 2),
+                ingredientHelper.ingotOrDust(RagiumMaterialType.AZURE_STEEL, 4),
+                ingredientHelper.item(RagiumItems.DEEP_SCRAP, 4),
+            ).save(output)
+
         // Steel
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(Items.COAL, 2)
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel")),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
+                ingredientHelper.fuelOrDust(HTVanillaMaterialType.COAL, 2),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel"))
             .saveSuffixed(output, "_from_coal")
 
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(RagiumCommonTags.Items.COAL_COKE)
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel")),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.IRON),
+                ingredientHelper.fuelOrDust(RagiumMaterialType.COAL_COKE),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("steel"))
             .saveSuffixed(output, "_from_coke")
         // Invar
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON, 2)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("invar"), 3),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.IRON, 2),
+                ingredientHelper.ingotOrDust("nickel"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("invar"))
             .save(output)
         // Electrum
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_GOLD)
-            .itemInput(ModMaterialFamilies.getMetal("silver").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("electrum"), 2),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD),
+                ingredientHelper.ingotOrDust("silver"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("electrum"))
             .save(output)
         // Bronze
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER, 3)
-            .itemInput(ModMaterialFamilies.getMetal("tin").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("bronze"), 4),
+                ingredientHelper.item(Tags.Items.INGOTS_COPPER, 3),
+                ingredientHelper.ingotOrDust("tin"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("bronze"))
             .save(output)
         // Brass
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER, 3)
-            .itemInput(ModMaterialFamilies.getMetal("zinc").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("brass"), 4),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER, 3),
+                ingredientHelper.ingotOrDust("zinc"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("brass"))
             .save(output)
         // Constantan
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("constantan"), 2),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER),
+                ingredientHelper.ingotOrDust("nickel"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("constantan"))
             .save(output)
 
         // Adamant
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
-            .itemInput(Tags.Items.GEMS_DIAMOND)
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("adamant"), 2),
+                ingredientHelper.ingotOrDust("nickel"),
+                ingredientHelper.gemOrDust(HTVanillaMaterialType.DIAMOND),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("adamant"))
             .save(output)
         // Duratium
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("platinum").getBaseTagKey())
-            .itemInput(Tags.Items.INGOTS_NETHERITE)
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("duratium"), 2),
+                ingredientHelper.ingotOrDust("platinum"),
+                ingredientHelper.ingotOrDust(HTVanillaMaterialType.NETHERITE),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("duratium"))
             .save(output)
         // Energite
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
-            .itemInput(ModMaterialFamilies.getGem("fluxite").getBaseTagKey())
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("energite"), 2),
+                ingredientHelper.ingotOrDust("nickel"),
+                ingredientHelper.gemOrDust("fluxite"),
+            ).tagCondition(HTItemMaterialVariant.INGOT, HTCommonMaterialTypes.getAlloy("energite"))
             .save(output)
-    }
-
-    //    Family    //
-
-    private fun registerFamilies(family: HTMaterialFamily) {
-        val tagKey: TagKey<Item> = family.getBaseTagKey()
-        val item: ItemLike? = family.getBaseItem()
-        if (item != null && family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
-            // Block <-> Base
-            blockToBase(family, tagKey, item)
-            // Base <-> Nugget
-            nuggetToBase(family, tagKey, item)
-        }
-
-        // XXX -> Dust
-        toDust(family, tagKey)
-        // Raw -> Ingot
-        rawToIngot(family)
-    }
-
-    private fun blockToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
-        // Block -> Base
-        val blockTag: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.STORAGE_BLOCKS) ?: return
-        HTShapelessRecipeBuilder(item, 9)
-            .addIngredient(blockTag)
-            .saveSuffixed(output, "_from_block")
-        // Base -> Block
-        val block: ItemLike = family.getItem(HTMaterialFamily.Variant.STORAGE_BLOCKS) ?: return
-        HTShapedRecipeBuilder(block)
-            .hollow8()
-            .define('A', tagKey)
-            .define('B', item)
-            .saveSuffixed(output, "_from_base")
-    }
-
-    private fun nuggetToBase(family: HTMaterialFamily, tagKey: TagKey<Item>, item: ItemLike) {
-        // Base -> Nugget
-        val nugget: ItemLike = family.getItem(HTMaterialFamily.Variant.NUGGETS) ?: return
-        HTShapelessRecipeBuilder(nugget, 9)
-            .addIngredient(tagKey)
-            .saveSuffixed(output, "_from_base")
-        // Nugget -> Base
-        val nuggetTag: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.NUGGETS) ?: return
-        HTShapedRecipeBuilder(item)
-            .hollow8()
-            .define('A', nuggetTag)
-            .define('B', nugget)
-            .saveSuffixed(output, "_from_nugget")
-    }
-
-    private fun toDust(family: HTMaterialFamily, tagKey: TagKey<Item>) {
-        val dust: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.DUSTS) ?: return
-        // Base
-        createCrushing()
-            .itemOutput(dust, appendCondition = family.getItem(HTMaterialFamily.Variant.DUSTS) == null)
-            .itemInput(tagKey)
-            .savePrefixed(output, "base/")
-        // Gear
-        // Plate
-        // Rod
-    }
-
-    private fun rawToIngot(family: HTMaterialFamily) {
-        val ingot: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.INGOTS) ?: return
-        val raw: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.RAW_MATERIALS) ?: return
-        // Basic
-        createAlloying()
-            .itemOutput(ingot, 3, appendCondition = family.entryType.isMod)
-            .itemInput(raw, 2)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
-            .saveSuffixed(output, "_with_basic_flux")
-        // Advanced
-        createAlloying()
-            .itemOutput(ingot, 2, appendCondition = family.entryType.isMod)
-            .itemInput(raw)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
-            .saveSuffixed(output, "_with_advanced_flux")
     }
 }

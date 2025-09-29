@@ -3,12 +3,17 @@ package hiiragi283.ragium.api.extension
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.HashMultimap
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.HTMultiMap
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.collection.HTMultiMap
+import hiiragi283.ragium.api.collection.HTTable
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
+import net.minecraft.core.NonNullList
+import net.minecraft.util.RandomSource
+import kotlin.random.Random
 
 //    MultiMap    //
 
-fun <K : Any, V : Any> multiMapOf(): HTMultiMap.Mutable<K, V> = RagiumAPI.getInstance().createMultiMap(HashMultimap.create())
+fun <K : Any, V : Any> multiMapOf(): HTMultiMap.Mutable<K, V> = RagiumAPI.INSTANCE.createMultiMap(HashMultimap.create())
 
 inline fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =
     multiMapOf<K, V>().apply(builderAction)
@@ -21,10 +26,22 @@ inline fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
 
 //    Table    //
 
-fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> = RagiumAPI.getInstance().createTable(HashBasedTable.create())
+fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> = RagiumAPI.INSTANCE.createTable(HashBasedTable.create())
 
 inline fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
     mutableTableOf<R, C, V>().apply(builderAction)
+
+fun <R : Any, C : Any, V : Any> Map<C, V>.toRowTableBy(rowKey: R): HTTable<R, C, V> = buildTable {
+    for ((column: C, value: V) in this@toRowTableBy) {
+        put(rowKey, column, value)
+    }
+}
+
+fun <R : Any, C : Any, V : Any> Map<R, V>.toColumnTableBy(columnKey: C): HTTable<R, C, V> = buildTable {
+    for ((row: R, value: V) in this@toColumnTableBy) {
+        put(row, columnKey, value)
+    }
+}
 
 inline fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
@@ -40,11 +57,18 @@ inline fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(
     return value
 }
 
-fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.asPairMap(): Map<Pair<R, C>, V> =
-    entries.associate { (row: R, column: C, value: V) -> (row to column) to value }
+fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.rowValues(row: R): Collection<V> = row(row).values
 
-fun <R : Any, C : Any, V : Any> Map<Pair<R, C>, V>.toTable(): HTTable<R, C, V> = buildTable {
-    for ((pair: Pair<R, C>, value: V) in this@toTable) {
-        put(pair.first, pair.second, value)
-    }
-}
+fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.columnValues(column: C): Collection<V> = column(column).values
+
+//    NonNullList    //
+
+fun <T : Any> Collection<T>.toNonNullList(): NonNullList<T> = NonNullList.copyOf(this)
+
+//    RandomSource    //
+
+fun RandomSource.asKotlinRandom(): Random = RagiumAPI.INSTANCE.wrapRandom(this)
+
+//    HolderSet    //
+
+fun <T : Any> HolderSet<T>.asList(): List<Holder<T>> = RagiumAPI.INSTANCE.wrapHolderSet(this)

@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
-  "item_input": {
+  "type": "ragium:pulverizing",
+  "ingredient": {
     "count": 1,
     "tag": "c:rods/breeze"
   },
-  "item_output": {
+  "result": {
     "count": 6,
     "id": "minecraft:wind_charge"
   }

@@ -1,0 +1,41 @@
+{
+  "parent": "ragium:deep_steel",
+  "criteria": {
+    "has_azure_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ragium:deep_steel_hammer",
+              "ragium:deep_steel_shovel",
+              "ragium:deep_steel_pickaxe",
+              "ragium:deep_steel_axe",
+              "ragium:deep_steel_hoe",
+              "ragium:deep_steel_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.deep_gears.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:deep_steel_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.ragium.deep_gears.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_tool"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:gems/warped_crystal"
+  },
+  "base": {
+    "item": "ragium:device_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:dimensional_anchor"
+  },
+  "template": {
+    "item": "ragium:elite_component"
+  }
+}

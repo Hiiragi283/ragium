@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/plastic_tile_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/plastic_tiles"
+    },
+    "type=top": {
+      "model": "ragium:block/plastic_tile_slab_top"
+    }
+  }
+}

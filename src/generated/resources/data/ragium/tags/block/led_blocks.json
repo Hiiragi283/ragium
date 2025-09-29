@@ -1,11 +1,20 @@
 {
   "values": [
-    "ragium:red_led_block",
-    "ragium:green_led_block",
+    "ragium:black_led_block",
     "ragium:blue_led_block",
+    "ragium:brown_led_block",
     "ragium:cyan_led_block",
+    "ragium:gray_led_block",
+    "ragium:green_led_block",
+    "ragium:light_blue_led_block",
+    "ragium:light_gray_led_block",
+    "ragium:lime_led_block",
     "ragium:magenta_led_block",
-    "ragium:yellow_led_block",
-    "ragium:white_led_block"
+    "ragium:orange_led_block",
+    "ragium:pink_led_block",
+    "ragium:purple_led_block",
+    "ragium:red_led_block",
+    "ragium:white_led_block",
+    "ragium:yellow_led_block"
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "immersiveengineering:bottling_machine",
+  "fluid": {
+    "amount": 1000,
+    "tag": "c:dew_of_the_warp"
+  },
+  "inputs": [],
+  "results": [
+    {
+      "tag": "c:gems/warped_crystal"
+    }
+  ]
+}

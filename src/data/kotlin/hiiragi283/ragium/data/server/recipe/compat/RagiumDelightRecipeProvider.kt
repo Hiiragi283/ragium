@@ -1,56 +1,106 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
-import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
-object RagiumDelightRecipeProvider : HTRecipeProvider() {
+object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FARMERS_DELIGHT) {
     override fun buildRecipeInternal() {
-        crafting()
-        cookingPot()
-        cutting()
+        // Milk
+        extractAndInfuse(
+            ingredientHelper.item(Items.GLASS_BOTTLE),
+            ModItems.MILK_BOTTLE.get(),
+            HTFluidContent.MILK,
+            250,
+        )
+        // Rich soil
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                ingredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
+                ingredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+            ).addResult(resultHelper.item(ModItems.RICH_SOIL.get()))
+            .save(output)
 
-        // Milk Bottle
-        createSolidifying()
-            .itemOutput(ModItems.MILK_BOTTLE.get())
-            .itemInput(Items.GLASS_BOTTLE)
-            .milkInput(250)
-        // .save(output)
+        // Rice Panicle
+        HTItemToChancedItemRecipeBuilder
+            .crushing(ingredientHelper.item(ModItems.RICE_PANICLE.get()))
+            .addResult(resultHelper.item(ModItems.RICE.get()))
+            .addResult(resultHelper.item(ModItems.STRAW.get()), 0.5f)
+            .save(output)
 
-        createMelting()
-            .fluidOutput(Tags.Fluids.MILK, 250)
-            .itemInput(ModItems.MILK_BOTTLE.get())
-            .saveSuffixed(output, "_from_bottle")
+        knife()
+        cherry()
+        cake()
     }
 
-    private fun crafting() {
-        // Ragi-Cherry Popsicle
-        /*HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
+    @JvmStatic
+    private fun knife() {
+        HTShapedRecipeBuilder
+            .equipment(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+            .pattern("A", "B")
+            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .save(output)
+
+        createComponentUpgrade(
+            HTComponentTier.ELITE,
+            RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
+            RagiumDelightAddon.RAGI_ALLOY_KNIFE,
+        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            .save(output)
+    }
+
+    @JvmStatic
+    private fun cherry() {
+        HTCuttingBoardRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PULP, 2)
+            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(CommonTags.TOOLS_KNIFE)
+            .save(output)
+        // Pie
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .pattern(
-                " AA",
-                "BAA",
-                "CB ",
-            ).define('A', RagiumItemTags.FOODS_RAGI_CHERRY)
-            .define('B', Items.ICE)
-            .define('C', Tags.Items.RODS_WOODEN)
-            .save(output)*/
-    }
+                "AAA",
+                "BBB",
+                "CDC",
+            ).define('A', Tags.Items.CROPS_WHEAT)
+            .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .define('C', Items.SUGAR)
+            .define('D', ModItems.PIE_CRUST.get())
+            .save(output)
 
-    private fun cookingPot() {
-        // Ragi-Cherry Jam
+        HTCuttingBoardRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
+            .addIngredient(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            .addIngredient(CommonTags.TOOLS_KNIFE)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            .storage4()
+            .define('A', RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE)
+            .saveSuffixed(output, "_from_slice")
+        // Jam
         CookingPotRecipeBuilder
             .cookingPotRecipe(
-                RagiumItems.RAGI_CHERRY_JAM,
+                RagiumDelightAddon.RAGI_CHERRY_JAM,
                 1,
                 200,
                 0.35f,
@@ -60,24 +110,25 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
             .addIngredient(Items.SUGAR)
             .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
             .save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+            .pattern(
+                "ABA",
+                "ACA",
+                "CDC",
+            ).define('A', RagiumCommonTags.Items.JAMS_RAGI_CHERRY)
+            .define('B', Tags.Items.DRINKS_HONEY)
+            .define('C', Tags.Items.FOODS_BREAD)
+            .define('D', Items.BOWL)
+            .save(output)
     }
 
-    private fun cutting() {
-        // Ragi-Cherry Pulp
-        CuttingBoardRecipeBuilder
-            .cuttingRecipe(
-                Ingredient.of(RagiumItems.RAGI_CHERRY),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
-                RagiumDelightAddon.RAGI_CHERRY_PULP,
-                2,
-            ).save(output)
-        // Sweet Berries Cake
-        CuttingBoardRecipeBuilder
-            .cuttingRecipe(
-                Ingredient.of(RagiumBlocks.SWEET_BERRIES_CAKE),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
-                RagiumItems.SWEET_BERRIES_CAKE_SLICE,
-                7,
-            ).save(output)
+    @JvmStatic
+    private fun cake() {
+        HTCuttingBoardRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
+            .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .addIngredient(CommonTags.TOOLS_KNIFE)
+            .save(output)
     }
 }

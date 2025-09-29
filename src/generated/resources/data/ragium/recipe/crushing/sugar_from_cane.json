@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
-  "item_input": {
+  "type": "ragium:pulverizing",
+  "ingredient": {
     "count": 1,
     "tag": "c:crops/sugar_cane"
   },
-  "item_output": {
+  "result": {
     "count": 3,
     "id": "minecraft:sugar"
   }

@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "parent": "ragium:ragi_cherry",
+  "criteria": {
+    "has_ragi_cherry_toast_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_cherry_toast_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.ragi_cherry_toast.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_cherry_toast_block"
+    },
+    "title": {
+      "translate": "advancements.ragium.ragi_cherry_toast.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_cherry_toast_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

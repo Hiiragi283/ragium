@@ -1,91 +1,91 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
-import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTMelterMenu
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.storage.fluid.HTFluidTank
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
+import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
-    private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
-    override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
+    HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(
+        RagiumRecipeTypes.MELTING.get(),
+        HTMachineVariant.MELTER,
+        pos,
+        state,
+    ),
+    HTFluidInteractable {
+    private lateinit var outputSlot: HTItemSlot
 
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        super.writeNbt(writer)
-        writer.write(RagiumConstantValues.TANK, tank)
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // input
+        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        // output
+        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        super.readNbt(reader)
-        reader.read(RagiumConstantValues.TANK, tank)
+    private lateinit var outputTank: HTVariableFluidStackTank
+
+    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity)
+        return HTSimpleFluidTankHolder.output(this, outputTank)
     }
+
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.MELTER.openMenu(player, title, this, ::writeExtraContainerData)
 
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTMeltingRecipe> =
-        HTRecipeCache.simple(RagiumRecipeTypes.MELTING.get())
+    // アウトプットに搬出できるか判定する
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
-    override fun onServerTick(
+    override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-    ): TriState {
-        // インプットに一致するレシピを探索する
-        val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
-        val recipe: HTMeltingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
-        // エネルギーを消費できるか判定する
-        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
-        // アウトプットに搬出できるか判定する
-        if (!tank.canFill(recipe.output.get(), true)) {
-            return TriState.FALSE
-        }
+        input: SingleRecipeInput,
+        recipe: HTSingleInputFluidRecipe,
+    ) {
         // 実際にアウトプットに搬出する
-        tank.fill(recipe.output.get(), IFluidHandler.FluidAction.EXECUTE)
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        val stack: ItemStack = input.item()
+        if (stack.hasCraftingRemainingItem()) {
+            outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
+        }
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.ingredient.count())
-        // エネルギーを減らす
-        network.extractEnergy(requiredEnergy, false)
-        // サウンドを流す
-        level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
-        return TriState.TRUE
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
+        // SEを鳴らす
+        level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
     }
 
-    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
+    //    HTFluidInteractable    //
 
-    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
-        HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
-
-    //    Menu    //
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTMelterMenu = HTMelterMenu(
-        containerId,
-        playerInventory,
-        blockPos,
-        createDefinition(inventory),
-    )
+    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
+        interactWith(player, hand, outputTank)
 }

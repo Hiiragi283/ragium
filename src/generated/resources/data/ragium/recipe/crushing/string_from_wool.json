@@ -1,10 +1,10 @@
 {
-  "type": "ragium:crushing",
-  "item_input": {
+  "type": "ragium:pulverizing",
+  "ingredient": {
     "count": 1,
     "tag": "minecraft:wool"
   },
-  "item_output": {
+  "result": {
     "count": 4,
     "id": "minecraft:string"
   }

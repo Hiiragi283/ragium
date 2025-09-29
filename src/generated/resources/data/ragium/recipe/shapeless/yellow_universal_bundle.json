@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:universal_bundle"
+    },
+    {
+      "tag": "c:dyes/yellow"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "yellow"
+    },
+    "count": 1,
+    "id": "ragium:universal_bundle"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "loader": "fusion:model",
+  "type": "connecting",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ragium:block/ragi_alloy_block"
+  },
+  "connections": {
+    "type": "is_same_block"
+  }
+}

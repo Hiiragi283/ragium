@@ -1,0 +1,15 @@
+{
+  "type": "ragium:fluid_transform",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:mushroom_stew"
+  },
+  "item_ingredient": {
+    "count": 2,
+    "tag": "c:mushrooms"
+  }
+}

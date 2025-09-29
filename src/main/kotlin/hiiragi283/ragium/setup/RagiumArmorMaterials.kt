@@ -1,8 +1,9 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -51,10 +52,10 @@ object RagiumArmorMaterials {
 
     @JvmField
     val AZURE_STEEL: Holder<ArmorMaterial> = register(
-        RagiumConstantValues.AZURE_STEEL,
+        RagiumConst.AZURE_STEEL,
         10,
         SoundEvents.ARMOR_EQUIP_IRON,
-        { Ingredient.of(RagiumCommonTags.Items.INGOTS_AZURE_STEEL) },
+        { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.AZURE_STEEL) },
         1.2f,
         0f,
         ArmorItem.Type.BOOTS to 3,
@@ -66,10 +67,10 @@ object RagiumArmorMaterials {
 
     @JvmField
     val DEEP_STEEL: Holder<ArmorMaterial> = register(
-        RagiumConstantValues.DEEP_STEEL,
+        RagiumConst.DEEP_STEEL,
         15,
         SoundEvents.ARMOR_EQUIP_NETHERITE,
-        { Ingredient.of(RagiumCommonTags.Items.INGOTS_DEEP_STEEL) },
+        { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.DEEP_STEEL) },
         3f,
         0.1f,
         ArmorItem.Type.BOOTS to 3,

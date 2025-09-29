@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.slf4j.event.Level
 
 plugins {
     idea
@@ -53,7 +54,7 @@ repositories {
     }
     maven(url = "https://cursemaven.com")
     maven(url = "https://maven.parchmentmc.org")
-    maven(url = "https://modmaven.dev/") // Pneumatic, AU
+    maven(url = "https://modmaven.dev/") // AU, Mekanism, PnC
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch
@@ -62,9 +63,11 @@ repositories {
     maven(url = "https://maven.k-4u.nl/") // TOP
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.saps.dev/releases") // AA
+    maven(url = "https://maven.su5ed.dev/releases") // FFAPI
     maven(url = "https://maven.tamaized.com/releases") // Twilight
     maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
+    maven(url = "https://maven.wispforest.io/releases") // Accessories
     maven(url = "https://mvn.devos.one/snapshots") // Registrate
     maven(url = "https://thedarkcolour.github.io/KotlinForForge/") // KFF
 
@@ -105,7 +108,7 @@ neoForge {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        create("client") {
+        create("client").apply {
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
@@ -114,7 +117,7 @@ neoForge {
             devLogin = true
         }
 
-        create("server") {
+        create("server").apply {
             server()
             programArgument("--nogui")
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
@@ -123,12 +126,12 @@ neoForge {
         // This run config launches GameTestServer and runs all registered gametests, then exits.
         // By default, the server will crash when no gametests are provided.
         // The gametest system is also enabled by default for other run configs under the /test command.
-        create("gameTestServer") {
+        create("gameTestServer").apply {
             type = "gameTestServer"
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
         }
 
-        create("data") {
+        create("data").apply {
             data()
             sourceSet = dataModule
 
@@ -144,6 +147,8 @@ neoForge {
                 file("src/generated/resources/").absolutePath,
                 "--existing",
                 file("src/main/resources").absolutePath,
+                "--existing-mod",
+                "farmersdelight",
             )
         }
 
@@ -159,7 +164,7 @@ neoForge {
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            logLevel = org.slf4j.event.Level.DEBUG
+            logLevel = Level.DEBUG
         }
     }
 
@@ -204,6 +209,11 @@ dependencies {
     implementation(libs.bundles.mods.transitive) { isTransitive = false }
     compileOnly(libs.bundles.mods.compile)
     runtimeOnly(libs.bundles.mods.runtime)
+
+    implementation(libs.immersive.get().toString() + ":datagen")
+    implementation(libs.mek.get().toString() + ":all")
+
+    listOf("net.fabricmc.fabric-api:fabric-api-base:0.4.63+9ec45cd89c").forEach(::compileOnly)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -280,6 +290,8 @@ tasks {
             rename { "${it}_ragium" }
         }
         from(apiModule.output)
+        from(dataModule.output)
+        exclude("**/ragium/data/**")
         exclude("**/unused/**")
     }
 

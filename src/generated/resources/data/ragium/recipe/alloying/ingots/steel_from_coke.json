@@ -9,17 +9,33 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
-      "count": 1,
-      "tag": "c:ingots/iron"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/iron"
+        },
+        {
+          "tag": "c:ingots/iron"
+        }
+      ],
+      "count": 1
     },
     {
-      "count": 1,
-      "tag": "c:coal_coke"
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/coal_coke"
+        },
+        {
+          "tag": "c:fuels/coal_coke"
+        }
+      ],
+      "count": 1
     }
   ],
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "#c:ingots/steel"
   }

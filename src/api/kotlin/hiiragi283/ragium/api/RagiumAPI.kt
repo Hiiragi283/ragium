@@ -2,38 +2,46 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.collection.HTMultiMap
+import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.extension.asKotlinRandom
+import hiiragi283.ragium.api.extension.asList
 import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
-import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
-import hiiragi283.ragium.api.util.HTMultiMap
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.extension.toId
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.value.HTValueInput
+import hiiragi283.ragium.api.storage.value.HTValueOutput
+import io.wispforest.accessories.api.AccessoriesCapability
+import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
-import net.minecraft.tags.TagKey
-import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.item.Item
+import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.fml.LogicalSide
-import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.Level
+import net.neoforged.fml.loading.FMLEnvironment
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
+import kotlin.random.Random
 
 interface RagiumAPI {
     companion object {
@@ -44,73 +52,78 @@ interface RagiumAPI {
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */
         @JvmStatic
-        fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
-
-        private lateinit var instance: RagiumAPI
+        fun id(path: String): ResourceLocation = MOD_ID.toId(path)
 
         @JvmStatic
-        fun getInstance(): RagiumAPI {
-            if (!::instance.isInitialized) {
-                instance = ServiceLoader.load(RagiumAPI::class.java).first()
-            }
-            return instance
+        fun id(prefix: String, suffix: String): ResourceLocation = id("$prefix/$suffix")
+
+        @JvmStatic
+        fun wrapId(other: ResourceLocation): ResourceLocation = when (other.namespace) {
+            MOD_ID -> other
+            else -> id(other.path)
         }
+
+        val INSTANCE: RagiumAPI by lazy(::getService)
+
+        /**
+         * @see [mekanism.api.MekanismAPI.getService]
+         */
+        @Suppress("UnstableApiUsage")
+        @JvmStatic
+        inline fun <reified SERVICE : Any> getService(): SERVICE =
+            ServiceLoader.load(SERVICE::class.java, RagiumAPI::class.java.classLoader).first()
     }
 
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
 
+    fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag>
+
+    fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
+
     //    Item    //
 
-    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(potion.value().effects, count)
+    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
 
-    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack = createSoda(potion.allEffects.toList(), count)
-
-    fun createSoda(instances: List<MobEffectInstance>, count: Int = 1): ItemStack
+    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
 
     //    Server    //
 
-    /**
-     * Ragiumが使用する[FakePlayer]を返します。
-     */
-    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile())
-
-    /**
-     * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
-     */
-    fun getRandomGameProfile(): GameProfile
-
-    /**
-     * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
-     * @return サーバーまたはプレイヤーが存在しない場合は`null`
-     */
-    fun getPlayer(uuid: UUID?): ServerPlayer? {
-        val uuid1: UUID = uuid ?: return null
-        return getCurrentServer()?.playerList?.getPlayer(uuid1)
-    }
-
-    /**
-     * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。
-     * @return 存在しない場合は`null`
-     */
-    fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess()
-
-    /**
-     * 現在のサーバーのインスタンスを返します。
-     * @return 存在しない場合は`null`
-     */
     fun getCurrentServer(): MinecraftServer?
 
-    /**
-     * 現在の物理サイドを返します。
-     */
-    fun getCurrentSide(): LogicalSide
+    fun getLevel(key: ResourceKey<Level>): ServerLevel? = getCurrentServer()?.getLevel(key)
+
+    fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess() ?: when {
+        FMLEnvironment.dist.isClient -> Minecraft.getInstance().level?.registryAccess()
+        else -> null
+    }
+
+    fun <T : Any> getLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? = getRegistryAccess()?.lookupOrNull(registryKey)
+
+    fun <T : Any> getHolder(key: ResourceKey<T>): Holder<T>? = getRegistryAccess()?.holder(key)?.getOrNull()
+
+    fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 
     /**
      * エネルギーネットワークのマネージャを返します。
      */
-    fun getEnergyNetworkManager(): HTEnergyNetworkManager
+    fun getEnergyNetwork(level: Level?): HTEnergyBattery?
+
+    /**
+     * エネルギーネットワークのマネージャを返します。
+     */
+    fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
+
+    //    Storage    //
+
+    fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
+
+    fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
+
+    //    Accessory    //
+
+    fun getAccessoryCap(entity: LivingEntity): AccessoriesCapability? = AccessoriesCapability.get(entity)
 
     //    Platform    //
 
@@ -125,37 +138,14 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTStorageIO.wrapEnergyStorage]
+     * @see [asList]
      */
-    fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
+    fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>>
 
     /**
-     * @see [HTBlockInteractingRecipe.getType]
+     * @see [asKotlinRandom]
      */
-    fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
+    fun wrapRandom(random: RandomSource): Random
 
-    /**
-     * @see [HTInfusingRecipe.getType]
-     */
-    fun getInfusingRecipeType(): RecipeType<HTInfusingRecipe>
-
-    /**
-     * @see [HTTransmuteRecipe.getSerializer]
-     */
-    fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
-
-    /**
-     * @see [HTMenuDefinition.empty]
-     */
-    fun createEmptyMenuDefinition(size: Int): HTMenuDefinition
-
-    /**
-     * @see [HTItemOutput.getFirstHolderFromId]
-     */
-    fun unifyItemFromId(holder: Holder<Item>, id: ResourceLocation): Holder<Item>
-
-    /**
-     * @see [HTItemOutput.getFirstHolderFromTag]
-     */
-    fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item>
+    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeGetter
 }

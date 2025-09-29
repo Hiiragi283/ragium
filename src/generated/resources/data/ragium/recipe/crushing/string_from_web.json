@@ -1,11 +1,11 @@
 {
-  "type": "ragium:crushing",
-  "item_input": {
+  "type": "ragium:pulverizing",
+  "ingredient": {
     "count": 1,
     "item": "minecraft:cobweb"
   },
-  "item_output": {
-    "count": 5,
+  "result": {
+    "count": 4,
     "id": "minecraft:string"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "values": {
+    "#c:blaze_blood": {
+      "amount": 5
+    },
+    "#c:lava": {
+      "amount": 10
+    },
+    "#c:steam": {
+      "amount": 100
+    }
+  }
+}

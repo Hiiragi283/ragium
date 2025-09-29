@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "ragium:block/polished_eldritch_stone_bricks",
+    "side": "ragium:block/polished_eldritch_stone_bricks",
+    "top": "ragium:block/polished_eldritch_stone_bricks"
+  }
+}

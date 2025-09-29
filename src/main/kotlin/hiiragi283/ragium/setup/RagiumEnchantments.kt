@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.createKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.enchantment.Enchantment
@@ -16,5 +17,5 @@ object RagiumEnchantments {
     val SONIC_PROTECTION: ResourceKey<Enchantment> = create("sonic_protection")
 
     @JvmStatic
-    private fun create(path: String): ResourceKey<Enchantment> = ResourceKey.create(Registries.ENCHANTMENT, RagiumAPI.id(path))
+    private fun create(path: String): ResourceKey<Enchantment> = Registries.ENCHANTMENT.createKey(RagiumAPI.id(path))
 }

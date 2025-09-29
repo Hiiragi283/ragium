@@ -1,40 +1,56 @@
 package hiiragi283.ragium.api.extension
 
-import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponents
+import net.minecraft.core.NonNullList
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.MutableDataComponentHolder
-
-//    ItemLike    //
-
-/**
- * この[ItemLike]から[ItemStack]を返します。
- * @param count [ItemStack]の個数
- */
-fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
+import java.util.function.Supplier
+import kotlin.math.max
+import kotlin.streams.asSequence
 
 //    ItemStack    //
 
-inline fun createItemStack(item: ItemLike, count: Int = 1, builderAction: MutableDataComponentHolder.() -> Unit): ItemStack =
-    ItemStack(item, count).apply(builderAction)
-
-fun createPotionStack(potion: Holder<Potion>, count: Int = 1, item: ItemLike = Items.POTION): ItemStack =
-    createPotionStack(PotionContents(potion.delegate), count, item)
-
-fun createPotionStack(content: PotionContents, count: Int = 1, item: ItemLike = Items.POTION): ItemStack = createItemStack(item, count) {
-    set(DataComponents.POTION_CONTENTS, content)
+fun <T : Any> createItemStack(
+    item: ItemLike,
+    type: DataComponentType<T>,
+    value: T,
+    count: Int = 1,
+): ItemStack {
+    val stack = ItemStack(item, count)
+    stack.set(type, value)
+    return stack
 }
 
-/**
- * 残りの耐久値を返します。
- */
-val ItemStack.restDamage: Int get() = maxDamage - damageValue
+fun <T : Any> createItemStack(
+    item: ItemLike,
+    type: Supplier<out DataComponentType<T>>,
+    value: T,
+    count: Int = 1,
+): ItemStack {
+    val stack = ItemStack(item, count)
+    stack.set(type, value)
+    return stack
+}
 
-/**
- * 現在の個数が[isMaxCount]と一致するか判定します。
- */
-val ItemStack.isMaxCount: Boolean get() = count == maxStackSize
+//    ItemContainerContents    //
+
+inline fun ItemContainerContents.copy(builderAction: NonNullList<ItemStack>.() -> Unit): ItemContainerContents =
+    copy(this.slots, builderAction)
+
+inline fun ItemContainerContents.copy(size: Int, builderAction: NonNullList<ItemStack>.() -> Unit): ItemContainerContents = NonNullList
+    .withSize(max(this.slots, size), ItemStack.EMPTY)
+    .apply(this::copyInto)
+    .apply(builderAction)
+    .let(ItemContainerContents::fromItems)
+
+fun ItemContainerContents.getOrNull(index: Int): ItemStack? = when (index) {
+    in (0..<slots) -> getStackInSlot(index)
+    else -> null
+}
+
+fun ItemContainerContents.getOrEmpty(index: Int): ItemStack = getOrNull(index) ?: ItemStack.EMPTY
+
+fun ItemContainerContents.asSequence(): Sequence<ItemStack> = stream().asSequence()
+
+fun ItemContainerContents.asNonEmptySequence(): Sequence<ItemStack> = nonEmptyStream().asSequence()

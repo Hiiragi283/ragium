@@ -1,0 +1,25 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "ragium:plastics"
+    },
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/quartz"
+        },
+        {
+          "tag": "c:gems/quartz"
+        }
+      ],
+      "count": 1
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:circuit_board"
+  }
+}

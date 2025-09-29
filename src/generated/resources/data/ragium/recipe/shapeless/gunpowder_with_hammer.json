@@ -8,12 +8,14 @@
     {
       "tag": "c:dusts/saltpeter"
     },
-    {
-      "item": "minecraft:charcoal"
-    },
-    {
-      "tag": "c:tools/forge_hammer"
-    }
+    [
+      {
+        "tag": "c:dusts/charcoal"
+      },
+      {
+        "tag": "c:fuels/charcoal"
+      }
+    ]
   ],
   "result": {
     "count": 3,

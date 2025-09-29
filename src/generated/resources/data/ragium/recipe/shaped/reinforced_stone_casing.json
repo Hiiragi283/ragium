@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:basalt"
+    },
+    "B": {
+      "tag": "c:dusts/raginite"
+    },
+    "C": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:reinforced_stone_casing"
+  }
+}

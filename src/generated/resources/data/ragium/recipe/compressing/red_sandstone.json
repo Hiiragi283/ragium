@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 4,
+    "tag": "c:sands/red"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:red_sandstone"
+  }
+}

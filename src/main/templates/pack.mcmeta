@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "description": "Ragium resources",
+    "pack_format": 48
+  },
+  "fusion": {
+    "overrides_folder": "fusion"
+  }
+}

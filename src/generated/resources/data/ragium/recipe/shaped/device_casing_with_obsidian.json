@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
     "A": {
       "tag": "c:obsidians/normal"
@@ -9,7 +9,7 @@
       "tag": "c:ingots/azure_steel"
     },
     "C": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "c:dusts/raginite"
     }
   },
   "pattern": [

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "minecraft:vine"
+      },
+      {
+        "item": "minecraft:moss_carpet"
+      }
+    ],
+    "count": 8
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:moss_block"
+  }
+}

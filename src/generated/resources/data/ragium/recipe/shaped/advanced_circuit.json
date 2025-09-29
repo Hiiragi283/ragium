@@ -2,20 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
+    "A": [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ],
+    "B": {
       "tag": "c:ingots/gold"
     },
-    "B": {
-      "tag": "c:dusts/glowstone"
-    },
     "C": {
-      "tag": "c:circuits/basic"
+      "item": "ragium:circuit_board"
     }
   },
   "pattern": [
-    "AAA",
+    "ABA",
     "BCB",
-    "AAA"
+    "ABA"
   ],
   "result": {
     "count": 1,

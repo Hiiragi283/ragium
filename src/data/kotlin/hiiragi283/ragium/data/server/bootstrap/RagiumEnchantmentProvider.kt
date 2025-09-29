@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.advancements.critereon.DamageSourcePredicate
@@ -98,7 +97,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                     DamageSourceCondition.hasDamageSource(
                         DamageSourcePredicate.Builder
                             .damageType()
-                            .tag(TagPredicate.`is`(RagiumCommonTags.DamageTypes.IS_SONIC))
+                            .tag(TagPredicate.`is`(RagiumModTags.DamageTypes.IS_SONIC))
                             .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY)),
                     ),
                 ),

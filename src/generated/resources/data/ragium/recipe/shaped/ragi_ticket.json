@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "equipment",
   "key": {
     "A": {
       "tag": "c:gems/ragi_crystal"
@@ -9,7 +9,7 @@
       "tag": "c:dyes/red"
     },
     "C": {
-      "item": "ragium:blank_ticket"
+      "item": "minecraft:paper"
     }
   },
   "pattern": [

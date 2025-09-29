@@ -3,25 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:flint"
+      "tag": "c:gems/diamond"
     },
     "C": {
-      "item": "ragium:basic_machine_frame"
+      "tag": "c:circuits/advanced"
     },
     "D": {
-      "item": "minecraft:bricks"
-    },
-    "E": {
-      "tag": "c:circuits/basic"
+      "item": "minecraft:nether_bricks"
     }
   },
   "pattern": [
     "AAA",
     "BCB",
-    "DED"
+    "DDD"
   ],
   "result": {
     "count": 1,

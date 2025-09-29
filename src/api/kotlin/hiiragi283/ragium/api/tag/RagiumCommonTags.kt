@@ -1,14 +1,9 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
-import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.extension.createCommonTag
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
-import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -18,298 +13,83 @@ object RagiumCommonTags {
 
     object Blocks {
         @JvmField
-        val GLASS_BLOCKS_OBSIDIAN: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.OBSIDIAN)
+        val OBSIDIANS_MYSTERIOUS: TagKey<Block> = create("obsidians", "mysterious")
 
         @JvmField
-        val GLASS_BLOCKS_QUARTZ: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.QUARTZ)
+        val ORES_DEEP_SCRAP: TagKey<Block> = create(RagiumConst.ORES, "deep_scrap")
 
         @JvmField
-        val GLASS_BLOCKS_SOUL: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.SOUL)
-
-        @JvmField
-        val OBSIDIANS_MYSTERIOUS: TagKey<Block> = commonTag("obsidians", "mysterious")
-
-        @JvmField
-        val ORES_RAGI_CRYSTAL: TagKey<Block> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
-
-        @JvmField
-        val ORES_RAGINITE: TagKey<Block> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE)
-
-        @JvmField
-        val ORES_DEEP_SCRAP: TagKey<Block> = commonTag(RagiumConstantValues.ORES, "deep_scrap")
+        val ORES_IN_GROUND_END_STONE: TagKey<Block> = create("ores_in_ground", "end_stone")
 
         @JvmStatic
-        private fun commonTag(path: String): TagKey<Block> = blockTagKey(commonId(path))
-
-        @JvmStatic
-        private fun commonTag(prefix: String, value: String): TagKey<Block> = blockTagKey(commonId(prefix, value))
-    }
-
-    //    DamageTypes    //
-
-    object DamageTypes {
-        @JvmField
-        val IS_SONIC: TagKey<DamageType> = create("is_sonic")
-
-        @JvmStatic
-        private fun create(path: String): TagKey<DamageType> = TagKey.create(Registries.DAMAGE_TYPE, RagiumAPI.id(path))
+        private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
     }
 
     //    Fluids    //
 
     object Fluids {
         @JvmField
-        val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
+        val CHOCOLATES: TagKey<Fluid> = create("chocolates")
 
         @JvmField
-        val CHOCOLATES: TagKey<Fluid> = fluidTagKey(commonId("chocolates"))
+        val MEAT: TagKey<Fluid> = create("meat")
 
-        @JvmField
-        val MEAT: TagKey<Fluid> = fluidTagKey(commonId("meat"))
+        @JvmStatic
+        private fun create(path: String): TagKey<Fluid> = Registries.FLUID.createCommonTag(path)
     }
 
     //    Items    //
 
     object Items {
         @JvmField
-        val COAL_COKE: TagKey<Item> = commonTag("coal_coke")
+        val FUELS_BIO: TagKey<Item> = create("fuels/bio")
 
         @JvmField
-        val FUELS_BIO: TagKey<Item> = commonTag("fuels/bio")
+        val FUELS_BIO_BLOCK: TagKey<Item> = create("fuels/block/bio")
 
         @JvmField
-        val FUELS_BIO_BLOCK: TagKey<Item> = commonTag("fuels/block/bio")
+        val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
 
         @JvmField
-        val PAPER: TagKey<Item> = commonTag("paper")
-
-        @JvmField
-        val PLASTICS: TagKey<Item> = commonTag("plastics")
-
-        @JvmField
-        val SILICON: TagKey<Item> = commonTag("silicon")
-
-        // Circuits
-        @JvmField
-        val CIRCUITS: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS)
-
-        @JvmField
-        val CIRCUITS_BASIC: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "basic")
-
-        @JvmField
-        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "advanced")
-
-        @JvmField
-        val CIRCUITS_ELITE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "elite")
-
-        @JvmField
-        val CIRCUITS_ULTIMATE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "ultimate")
+        val PELLETS: TagKey<Item> = create("pellets")
 
         // Crops
         @JvmField
-        val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops", "warped_wart")
-
-        // Dusts
-        private const val DUSTS: String = RagiumConstantValues.DUSTS
-
-        @JvmField
-        val DUSTS_ASH: TagKey<Item> = commonTag(DUSTS, "ash")
-
-        @JvmField
-        val DUSTS_OBSIDIAN: TagKey<Item> = commonTag(DUSTS, RagiumConstantValues.OBSIDIAN)
-
-        @JvmField
-        val DUSTS_RAGINITE: TagKey<Item> = commonTag(DUSTS, RagiumConstantValues.RAGINITE)
-
-        @JvmField
-        val DUSTS_CINNABAR: TagKey<Item> = commonTag(DUSTS, "cinnabar")
-
-        @JvmField
-        val DUSTS_QUARTZ: TagKey<Item> = commonTag(DUSTS, "quartz")
-
-        @JvmField
-        val DUSTS_SALTPETER: TagKey<Item> = commonTag(DUSTS, "saltpeter")
-
-        @JvmField
-        val DUSTS_SULFUR: TagKey<Item> = commonTag(DUSTS, "sulfur")
-
-        @JvmField
-        val DUSTS_MEAT: TagKey<Item> = commonTag(DUSTS, "meat")
-
-        @JvmField
-        val DUSTS_WOOD: TagKey<Item> = commonTag(DUSTS, "wood")
+        val CROPS_WARPED_WART: TagKey<Item> = create("crops", "warped_wart")
 
         // Foods
         @JvmField
-        val FOODS_CHOCOLATE: TagKey<Item> = commonTag("foods", RagiumConstantValues.CHOCOLATE)
+        val FOODS_APPLE: TagKey<Item> = create("foods", "apple")
+
+        @JvmField
+        val FOODS_CHOCOLATE: TagKey<Item> = create("foods", RagiumConst.CHOCOLATE)
 
         // Foods - Cherry
         @JvmField
-        val FOODS_CHERRY: TagKey<Item> = commonTag("foods", "cherry")
+        val FOODS_CHERRY: TagKey<Item> = create("foods", "cherry")
 
         @JvmField
-        val FOODS_RAGI_CHERRY: TagKey<Item> = commonTag("foods", "ragi_cherry")
+        val FOODS_RAGI_CHERRY: TagKey<Item> = create("foods", RagiumConst.RAGI_CHERRY)
 
         // Foods - Jam
         @JvmField
-        val FOODS_JAMS: TagKey<Item> = commonTag("foods", "jams")
+        val JAMS: TagKey<Item> = create("jams")
 
         @JvmField
-        val JAMS_RAGI_CHERRY: TagKey<Item> = commonTag("jams", "ragi_cherry")
-
-        // Glasses
-        @JvmField
-        val GLASS_BLOCKS_OBSIDIAN: TagKey<Item> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.OBSIDIAN)
-
-        @JvmField
-        val GLASS_BLOCKS_QUARTZ: TagKey<Item> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.QUARTZ)
-
-        @JvmField
-        val GLASS_BLOCKS_SOUL: TagKey<Item> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.SOUL)
-
-        // Gems
-        private const val GEMS: String = RagiumConstantValues.GEMS
-
-        @JvmField
-        val GEMS_RAGI_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.RAGI_CRYSTAL)
-
-        @JvmField
-        val GEMS_AZURE: TagKey<Item> = commonTag(GEMS, "azure")
-
-        @JvmField
-        val GEMS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.CRIMSON_CRYSTAL)
-
-        @JvmField
-        val GEMS_WARPED_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.WARPED_CRYSTAL)
-
-        @JvmField
-        val GEMS_ELDRITCH_PEARL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.ELDRITCH_PEARL)
-
-        // Ingots
-        private const val INGOTS: String = RagiumConstantValues.INGOTS
-
-        @JvmField
-        val INGOTS_RAGI_ALLOY: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.RAGI_ALLOY)
-
-        @JvmField
-        val INGOTS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
-
-        @JvmField
-        val INGOTS_AZURE_STEEL: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.AZURE_STEEL)
-
-        @JvmField
-        val INGOTS_DEEP_STEEL: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.DEEP_STEEL)
-
-        @JvmField
-        val INGOTS_CHOCOLATE: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.CHOCOLATE)
-
-        @JvmField
-        val INGOTS_MEAT: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.MEAT)
-
-        @JvmField
-        val INGOTS_COOKED_MEAT: TagKey<Item> = commonTag(INGOTS, RagiumConstantValues.COOKED_MEAT)
-
-        @JvmField
-        val BEACON_PAYMENTS: Array<TagKey<Item>> = arrayOf(
-            // gems
-            GEMS_RAGI_CRYSTAL,
-            GEMS_AZURE,
-            GEMS_CRIMSON_CRYSTAL,
-            GEMS_WARPED_CRYSTAL,
-            GEMS_ELDRITCH_PEARL,
-            // ingots
-            INGOTS_RAGI_ALLOY,
-            INGOTS_ADVANCED_RAGI_ALLOY,
-            INGOTS_AZURE_STEEL,
-            INGOTS_DEEP_STEEL,
-        )
-
-        // Nuggets
-        private const val NUGGETS: String = RagiumConstantValues.NUGGETS
-
-        @JvmField
-        val NUGGETS_RAGI_ALLOY: TagKey<Item> = commonTag(NUGGETS, RagiumConstantValues.RAGI_ALLOY)
-
-        @JvmField
-        val NUGGETS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag(NUGGETS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
-
-        @JvmField
-        val NUGGETS_AZURE_STEEL: TagKey<Item> = commonTag(NUGGETS, RagiumConstantValues.AZURE_STEEL)
+        val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", RagiumConst.RAGI_CHERRY)
 
         // Obsidians
         @JvmField
-        val OBSIDIANS_MYSTERIOUS: TagKey<Item> = commonTag("obsidians", "mysterious")
+        val OBSIDIANS_MYSTERIOUS: TagKey<Item> = create("obsidians", "mysterious")
 
         // Ores
-        private const val ORES: String = RagiumConstantValues.ORES
-
         @JvmField
-        val ORES_RAGINITE: TagKey<Item> = commonTag(ORES, RagiumConstantValues.RAGINITE)
-
-        @JvmField
-        val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(ORES, RagiumConstantValues.RAGI_CRYSTAL)
-
-        @JvmField
-        val ORES_DEEP_SCRAP: TagKey<Item> = commonTag(ORES, "deep_scrap")
-
-        // Plates
-        @JvmField
-        val PLATES: TagKey<Item> = commonTag(RagiumConstantValues.PLATES)
-
-        @JvmField
-        val PLATES_PLASTIC: TagKey<Item> = commonTag(RagiumConstantValues.PLATES, "plastic")
-
-        // Storage Blocks
-        private const val STORAGE_BLOCKS: String = RagiumConstantValues.STORAGE_BLOCKS
-
-        @JvmField
-        val STORAGE_BLOCKS_RAGI_CRYSTAL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.RAGI_CRYSTAL)
-
-        @JvmField
-        val STORAGE_BLOCKS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.CRIMSON_CRYSTAL)
-
-        @JvmField
-        val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.WARPED_CRYSTAL)
-
-        @JvmField
-        val STORAGE_BLOCKS_ELDRITCH_PEARL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.ELDRITCH_PEARL)
-
-        @JvmField
-        val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.RAGI_ALLOY)
-
-        @JvmField
-        val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
-
-        @JvmField
-        val STORAGE_BLOCKS_AZURE_STEEL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.AZURE_STEEL)
-
-        @JvmField
-        val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.DEEP_STEEL)
-
-        @JvmField
-        val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
-
-        @JvmField
-        val STORAGE_BLOCKS_MEAT: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.MEAT)
-
-        @JvmField
-        val STORAGE_BLOCKS_COOKED_MEAT: TagKey<Item> = commonTag(STORAGE_BLOCKS, RagiumConstantValues.COOKED_MEAT)
-
-        // Tools
-        @JvmField
-        val TOOLS_FORGE_HAMMER: TagKey<Item> = commonTag("tools", "forge_hammer")
-
-        // Mekanism Integration
-        @JvmField
-        val ENRICHED_RAGINITE: TagKey<Item> = commonTag(RagiumConstantValues.ENRICHED, RagiumConstantValues.RAGINITE)
-
-        @JvmField
-        val ENRICHED_AZURE: TagKey<Item> = commonTag(RagiumConstantValues.ENRICHED, "azure")
+        val ORES_DEEP_SCRAP: TagKey<Item> = create(RagiumConst.ORES, "deep_scrap")
 
         @JvmStatic
-        private fun commonTag(path: String): TagKey<Item> = itemTagKey(commonId(path))
+        private fun create(path: String): TagKey<Item> = Registries.ITEM.createCommonTag(path)
 
         @JvmStatic
-        private fun commonTag(prefix: String, value: String): TagKey<Item> = itemTagKey(commonId(prefix, value))
+        private fun create(prefix: String, value: String): TagKey<Item> = Registries.ITEM.createCommonTag(prefix, value)
     }
 }

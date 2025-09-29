@@ -1,57 +1,64 @@
 package hiiragi283.ragium.integration.emi
 
 import com.mojang.serialization.DataResult
-import dev.emi.emi.api.neoforge.NeoForgeEmiIngredient
 import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
+import dev.emi.emi.api.widget.Bounds
+import dev.emi.emi.api.widget.FillingArrowWidget
+import dev.emi.emi.api.widget.SlotWidget
+import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.extension.createItemStack
-import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import net.minecraft.core.Holder
+import hiiragi283.ragium.api.gui.component.HTWidget
+import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.integration.emi.widget.HTEmiWidget
+import hiiragi283.ragium.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.crafting.SizedIngredient
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.stream.Stream
+import net.minecraft.world.level.material.Fluid
+import java.util.Optional
 
 //    EmiIngredient    //
 
-fun <T : ItemLike> Iterable<T>.toEmi(): EmiIngredient = EmiIngredient.of(map(EmiStack::of))
+fun HTItemIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(EmiStack::of))
 
-@JvmName("toEmiFromHolders")
-fun <T : ItemLike> Iterable<Holder<T>>.toEmi(): EmiIngredient = map(Holder<T>::value).toEmi()
+fun HTFluidIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(NeoForgeEmiStack::of))
 
-fun <T : ItemLike> Stream<out Holder<T>>.toEmi(): EmiIngredient = EmiIngredient.of(map(Holder<T>::value).map(EmiStack::of).toList())
-
-fun SizedIngredient.toEmi(): EmiIngredient = NeoForgeEmiIngredient.of(this)
-
-fun SizedFluidIngredient.toEmi(): EmiIngredient = NeoForgeEmiIngredient.of(this)
+fun Optional<HTItemIngredient>.toItemEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
 
 //    EmiStack    //
 
-fun HTItemOutput.toEmi(): EmiStack = this
-    .getStackResult()
-    .mapOrElse(
-        { stack: ItemStack -> EmiStack.of(stack).setChance(this.chance) },
-        { error: DataResult.Error<ItemStack> ->
-            createItemStack(Items.BARRIER) {
-                set(DataComponents.ITEM_NAME, Component.literal(error.message()))
-            }.let(EmiStack::of)
-        },
-    )
+fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
-fun HTFluidOutput.toEmi(): EmiStack = this
-    .getStackResult()
-    .mapOrElse(
-        { stack: FluidStack? -> NeoForgeEmiStack.of(stack) },
-        { error: DataResult.Error<FluidStack> ->
-            createItemStack(Items.BUCKET) {
-                set(DataComponents.ITEM_NAME, Component.literal(error.message()))
-            }.let(EmiStack::of)
-        },
-    )
+fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStack::of, ::createErrorStack)
+
+fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
+
+fun Optional<HTItemResult>.toItemEmi(): EmiStack = map(HTItemResult::toEmi).orElse(EmiStack.EMPTY)
+
+fun Optional<HTFluidResult>.toFluidEmi(): EmiStack = map(HTFluidResult::toEmi).orElse(EmiStack.EMPTY)
+
+fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(get())
+
+fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(get(), amount)
+
+val EmiStack.fluid: Fluid? get() = this.key as? Fluid
+
+private fun createErrorStack(error: DataResult.Error<*>): EmiStack =
+    createItemStack(Items.BARRIER, DataComponents.ITEM_NAME, Component.literal(error.message())).let(EmiStack::of)
+
+//    Widget    //
+
+fun HTBounds.toEmi(): Bounds = Bounds(this.x, this.y, this.width, this.height)
+
+fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
+
+fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y))
+
+fun WidgetHolder.addWidget(widget: HTWidget): HTEmiWidget = add(HTEmiWidget(widget))

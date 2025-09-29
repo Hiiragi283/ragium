@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "count": 1,
+      "item": "ragium:luminous_paste"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:led"
+  }
+}

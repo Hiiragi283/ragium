@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": [
+    {
+      "item": "ragium:polished_eldritch_stone_bricks"
+    },
+    {
+      "item": "ragium:eldritch_stone"
+    },
+    {
+      "item": "ragium:polished_eldritch_stone"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:polished_eldritch_stone_brick_slab"
+  }
+}

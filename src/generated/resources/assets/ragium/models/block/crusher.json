@@ -1,8 +1,8 @@
 {
   "parent": "ragium:block/machine_base",
   "textures": {
-    "bottom": "minecraft:block/bricks",
-    "front": "ragium:block/crusher_front",
-    "top": "ragium:block/basic_machine_casing"
+    "bottom": "minecraft:block/polished_blackstone_bricks",
+    "front": "ragium:block/pulverizer_front",
+    "top": "ragium:block/advanced_machine_casing"
   }
 }

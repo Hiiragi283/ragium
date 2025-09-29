@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:ingots/ragi_alloy"
+    }
+  },
+  "pattern": [
+    " A ",
+    " BA",
+    "B  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:wrench"
+  }
+}

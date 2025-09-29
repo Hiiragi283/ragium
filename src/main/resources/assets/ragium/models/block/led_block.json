@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/all_tinted",
+  "textures": {
+    "all": "ragium:block/led_block"
+  }
+}

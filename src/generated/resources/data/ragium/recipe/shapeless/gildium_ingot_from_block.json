@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/gildium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:gildium_ingot"
+  }
+}

@@ -1,15 +1,14 @@
 {
   "values": [
+    "#c:foods/apple",
     "#c:foods/chocolate",
-    "#c:foods/jams",
     "#c:ingots/cooked_meat",
     "#c:ingots/meat",
+    "#c:jams",
     "ragium:ambrosia",
     "ragium:canned_cooked_meat",
-    "ragium:fever_cherry",
     "ragium:ice_cream",
     "ragium:ice_cream_soda",
-    "ragium:meat_ingot",
     "ragium:melon_pie",
     "ragium:sweet_berries_cake_slice",
     "ragium:warped_wart"

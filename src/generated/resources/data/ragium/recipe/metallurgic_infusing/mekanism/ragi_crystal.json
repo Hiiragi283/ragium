@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:metallurgic_infusing",
+  "chemical_input": {
+    "amount": 60,
+    "chemical": "ragium:raginite"
+  },
+  "item_input": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "tag": "c:dusts/diamond"
+      },
+      {
+        "tag": "c:gems/diamond"
+      }
+    ],
+    "count": 1
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:ragi_crystal"
+  },
+  "per_tick_usage": false
+}

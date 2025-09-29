@@ -1,0 +1,11 @@
+{
+  "type": "ragium:simulating",
+  "catalyst": {
+    "count": 1,
+    "item": "minecraft:armadillo_spawn_egg"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:armadillo_scute"
+  }
+}

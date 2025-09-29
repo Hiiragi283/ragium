@@ -6,22 +6,19 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:dispenser"
+      "item": "minecraft:hopper"
     },
     "C": {
-      "item": "ragium:basic_machine_frame"
+      "tag": "c:circuits/basic"
     },
     "D": {
       "item": "minecraft:bricks"
-    },
-    "E": {
-      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
     "AAA",
     "BCB",
-    "DED"
+    "DDD"
   ],
   "result": {
     "count": 1,

@@ -1,0 +1,37 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/advanced_ragi_alloy"
+        },
+        {
+          "tag": "c:ingots/advanced_ragi_alloy"
+        }
+      ],
+      "count": 2
+    },
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/ragi_crystal"
+        },
+        {
+          "tag": "c:gems/ragi_crystal"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "count": 1,
+      "item": "ragium:advanced_circuit_board"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:elite_circuit"
+  }
+}

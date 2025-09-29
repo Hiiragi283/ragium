@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:deep_steel",
+  "criteria": {
+    "has_echo_star": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:echo_star"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.echo_star.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:echo_star"
+    },
+    "title": {
+      "translate": "advancements.ragium.echo_star.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_echo_star"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

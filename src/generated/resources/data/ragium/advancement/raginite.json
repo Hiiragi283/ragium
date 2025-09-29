@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_c_dusts_raginite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.raginite.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:raginite_dust"
+    },
+    "title": {
+      "translate": "advancements.ragium.raginite.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_c_dusts_raginite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

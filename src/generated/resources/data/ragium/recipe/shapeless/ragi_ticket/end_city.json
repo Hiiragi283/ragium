@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "item": "minecraft:purpur_block"
+    },
+    {
+      "item": "minecraft:shulker_shell"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_ticket": "minecraft:chests/end_city_treasure"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

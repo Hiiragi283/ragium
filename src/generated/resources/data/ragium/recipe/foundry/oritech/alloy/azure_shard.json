@@ -12,12 +12,22 @@
   },
   "fluidOutputs": [],
   "ingredients": [
-    {
-      "tag": "c:gems/amethyst"
-    },
-    {
-      "tag": "c:gems/lapis"
-    }
+    [
+      {
+        "tag": "c:dusts/amethyst"
+      },
+      {
+        "tag": "c:gems/amethyst"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/lapis"
+      },
+      {
+        "tag": "c:gems/lapis"
+      }
+    ]
   ],
   "results": [
     {
@@ -25,5 +35,5 @@
       "id": "ragium:azure_shard"
     }
   ],
-  "time": 160
+  "time": 120
 }

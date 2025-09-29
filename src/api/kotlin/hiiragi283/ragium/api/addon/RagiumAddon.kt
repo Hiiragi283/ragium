@@ -1,10 +1,13 @@
 package hiiragi283.ragium.api.addon
 
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
+import java.util.function.BiConsumer
 
 /**
  * Ragiumのアドオン向けのインターフェース
@@ -12,12 +15,7 @@ import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
  * これを実装したクラスは[HTAddon]アノテーションをつける必要があります。
  */
 interface RagiumAddon {
-    /**
-     * アドオンの優先度を返します。
-     *
-     * 値が大きいほど優先して読み込まれます。
-     */
-    val priority: Int
+    //    Initialization    //
 
     /**
      * modのコンストラクタで呼び出されます。
@@ -39,4 +37,8 @@ interface RagiumAddon {
      */
 
     fun onClientSetup(event: FMLClientSetupEvent) {}
+
+    //    Extension    //
+
+    fun registerMaterial(consumer: BiConsumer<HTMaterialType, HTMaterialVariant.ItemTag>) {}
 }

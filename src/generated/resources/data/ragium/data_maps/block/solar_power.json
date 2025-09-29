@@ -1,0 +1,25 @@
+{
+  "values": {
+    "#c:obsidians/crying": {
+      "multiplier": 1.5
+    },
+    "#c:pumpkins/jack_o_lanterns": {
+      "multiplier": 0.5
+    },
+    "#c:storage_blocks/gildium": {
+      "multiplier": 4.0
+    },
+    "#c:storage_blocks/glowstone": {
+      "multiplier": 1.0
+    },
+    "minecraft:amethyst_cluster": {
+      "multiplier": 2.0
+    },
+    "minecraft:beacon": {
+      "multiplier": 4.0
+    },
+    "minecraft:shroomlight": {
+      "multiplier": 1.0
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:eldritch_pearl",
+  "criteria": {
+    "use_eldritch_egg": {
+      "conditions": {
+        "item": {
+          "items": "ragium:eldritch_egg"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.eldritch_egg.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:eldritch_egg"
+    },
+    "title": {
+      "translate": "advancements.ragium.eldritch_egg.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_eldritch_egg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

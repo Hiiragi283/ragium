@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "immersiveengineering:arc_furnace",
+  "additives": [
+    {
+      "basePredicate": {
+        "tag": "c:dusts/raginite"
+      },
+      "count": 4
+    }
+  ],
+  "energy": 102400,
+  "input": [
+    {
+      "tag": "c:dusts/gold"
+    },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "results": [
+    {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    }
+  ],
+  "time": 200
+}

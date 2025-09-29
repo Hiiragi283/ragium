@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:ragi_alloy",
+  "criteria": {
+    "has_alloy_smelter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:alloy_smelter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.alloy_smelter.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:alloy_smelter"
+    },
+    "title": {
+      "translate": "advancements.ragium.alloy_smelter.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_alloy_smelter"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

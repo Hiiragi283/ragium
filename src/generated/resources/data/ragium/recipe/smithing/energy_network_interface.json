@@ -11,6 +11,6 @@
     "id": "ragium:energy_network_interface"
   },
   "template": {
-    "tag": "c:circuits/advanced"
+    "item": "ragium:advanced_component"
   }
 }

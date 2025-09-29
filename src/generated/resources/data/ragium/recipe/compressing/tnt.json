@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 4,
+    "item": "minecraft:gunpowder"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:tnt"
+  }
+}

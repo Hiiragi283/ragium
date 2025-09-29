@@ -1,0 +1,37 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/gold"
+        },
+        {
+          "tag": "c:ingots/gold"
+        }
+      ],
+      "count": 2
+    },
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/azure"
+        },
+        {
+          "tag": "c:gems/azure"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "count": 1,
+      "item": "ragium:circuit_board"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:advanced_circuit"
+  }
+}
