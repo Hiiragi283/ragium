@@ -1,13 +1,11 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -114,8 +112,13 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Material    //
 
     private fun material(builder: HTTagBuilder<Item>) {
-        materialTable(builder, RagiumItems.MATERIALS)
-        materialTable(builder, RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
+        fromTriples(builder, RagiumItems.MATERIALS.entries)
+        fromTriples(
+            builder,
+            RagiumItems.CIRCUITS.map { (tier: HTMaterialType, item: HTHolderLike) ->
+                Triple(HTItemMaterialVariant.CIRCUIT, tier, item)
+            },
+        )
 
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
@@ -126,7 +129,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
         // Mekanism Addon
-        materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
+        fromTriples(builder, RagiumMekanismAddon.MATERIAL_ITEMS.entries)
     }
 
     companion object {
@@ -138,11 +141,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         )
     }
 
-    private fun materialTable(
+    private fun fromTriples(
         builder: HTTagBuilder<Item>,
-        table: HTTable<HTMaterialVariant.ItemTag, out HTMaterialType, out HTHolderLike>,
+        triples: Iterable<Triple<HTMaterialVariant.ItemTag, HTMaterialType, HTHolderLike>>,
     ) {
-        table.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
+        triples.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
             builder.addMaterial(variant, material, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[variant] ?: return@forEach
             builder.addTag(customTag, variant.itemTagKey(material))

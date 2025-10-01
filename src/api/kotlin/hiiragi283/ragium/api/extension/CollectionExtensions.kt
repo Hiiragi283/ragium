@@ -31,30 +31,8 @@ fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> = Rag
 inline fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
     mutableTableOf<R, C, V>().apply(builderAction)
 
-fun <R : Any, C : Any, V : Any> Map<C, V>.toRowTableBy(rowKey: R): HTTable<R, C, V> = buildTable {
-    for ((column: C, value: V) in this@toRowTableBy) {
-        put(rowKey, column, value)
-    }
-}
-
-fun <R : Any, C : Any, V : Any> Map<R, V>.toColumnTableBy(columnKey: C): HTTable<R, C, V> = buildTable {
-    for ((row: R, value: V) in this@toColumnTableBy) {
-        put(row, columnKey, value)
-    }
-}
-
 inline fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
-}
-
-inline fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V {
-    val value: V? = get(row, column)
-    if (value == null) {
-        val newValue: V = mapper(row, column)
-        put(row, column, newValue)
-        return newValue
-    }
-    return value
 }
 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.rowValues(row: R): Collection<V> = row(row).values

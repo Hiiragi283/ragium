@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
@@ -235,7 +236,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun forgeHammers() {
         fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getTool(HTHammerToolVariant, material)
 
-        fun crafting(variant: HTItemMaterialVariant, material: HTMaterialType) {
+        fun crafting(variant: HTMaterialVariant.ItemTag, material: HTMaterialType) {
             HTShapedRecipeBuilder
                 .equipment(hammer(material))
                 .pattern(

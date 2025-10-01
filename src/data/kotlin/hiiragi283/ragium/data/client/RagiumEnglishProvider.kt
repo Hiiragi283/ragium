@@ -3,13 +3,10 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -25,6 +22,8 @@ import net.minecraft.data.PackOutput
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
     override fun addTranslations() {
+        addPatterned()
+
         advancement()
         block()
         enchantment()
@@ -119,16 +118,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
         add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            add(variant.slab, variant.translate(type, "Slab"))
-            add(variant.stairs, variant.translate(type, "Stairs"))
-            add(variant.wall, variant.translate(type, "Wall"))
-        }
-
-        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
-            add(block, "${color.getTranslatedName(type)} LED Block")
-        }
-
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Parts
@@ -198,8 +187,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.GREEN_CAKE, "Green Cake")
         add(RagiumItems.GREEN_CAKE_DUST, "Green Cake Dust")
         add(RagiumItems.GREEN_PELLET, "Green Pellet")
-
-        addPatterned()
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool

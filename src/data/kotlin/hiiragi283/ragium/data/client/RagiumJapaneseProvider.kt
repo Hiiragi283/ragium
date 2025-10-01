@@ -3,13 +3,10 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -25,6 +22,8 @@ import net.minecraft.data.PackOutput
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
     override fun addTranslations() {
+        addPatterned()
+
         advancement()
         block()
         enchantment()
@@ -112,16 +111,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
         add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            add(variant.slab, variant.translate(type, "ハーフブロック"))
-            add(variant.stairs, variant.translate(type, "階段"))
-            add(variant.wall, variant.translate(type, "壁"))
-        }
-
-        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
-            add(block, "${color.getTranslatedName(type)}のLEDブロック")
-        }
-
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Parts
         add(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
@@ -190,8 +179,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.GREEN_CAKE, "グリーンケーキ")
         add(RagiumItems.GREEN_CAKE_DUST, "グリーンケーキの粉")
         add(RagiumItems.GREEN_PELLET, "グリーンペレット")
-
-        addPatterned()
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -89,7 +90,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
     }*/
 
     @JvmStatic
-    private fun register(variant: HTItemMaterialVariant, material: HTMaterialType, vararg instances: MatterValue) {
+    private fun register(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, vararg instances: MatterValue) {
         register(variant.itemTagKey(material), *instances)
     }
 

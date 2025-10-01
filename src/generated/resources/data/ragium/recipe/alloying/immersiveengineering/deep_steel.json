@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "immersiveengineering:alloy",
+  "input0": {
+    "basePredicate": [
+      {
+        "tag": "c:dusts/azure_steel"
+      },
+      {
+        "tag": "c:ingots/azure_steel"
+      }
+    ],
+    "count": 4
+  },
+  "input1": {
+    "basePredicate": {
+      "item": "ragium:deep_scrap"
+    },
+    "count": 4
+  },
+  "result": {
+    "tag": "c:ingots/deep_steel"
+  }
+}

@@ -5,16 +5,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.toColumnTableBy
 import hiiragi283.ragium.api.extension.toDescriptionKey
-import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
@@ -44,18 +39,22 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Extension    //
 
     fun addPatterned() {
-        addBlocks(RagiumBlocks.ORES)
-        addBlocks(RagiumBlocks.MATERIALS)
-        addBlocks(RagiumBlocks.COILS.toRowTableBy(MiscVariants.COIL_BLOCK))
+        fromTable(RagiumBlocks.ORES)
+        fromTable(RagiumBlocks.MATERIALS)
+        fromMapWithRow(MiscVariants.COIL_BLOCK, RagiumBlocks.COILS)
+        fromMapWithRow(MiscVariants.LED_BLOCK, RagiumBlocks.LED_BLOCKS)
+        fromMapWithColumn(MiscMaterials.SLAB, RagiumBlocks.SLABS)
+        fromMapWithColumn(MiscMaterials.STAIRS, RagiumBlocks.STAIRS)
+        fromMapWithColumn(MiscMaterials.WALL, RagiumBlocks.WALLS)
 
-        addItems(RagiumItems.MATERIALS)
-        addItems(RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
-        addItems(RagiumItems.COILS.toRowTableBy(MiscVariants.COIL))
-        addItems(RagiumItems.COMPONENTS.toRowTableBy(MiscVariants.COMPONENT))
+        fromTable(RagiumItems.MATERIALS)
+        fromMapWithRow(HTItemMaterialVariant.CIRCUIT, RagiumItems.CIRCUITS)
+        fromMapWithRow(MiscVariants.COIL, RagiumItems.COILS)
+        fromMapWithRow(MiscVariants.COMPONENT, RagiumItems.COMPONENTS)
 
-        addItems(RagiumItems.AZURE_ARMORS.toColumnTableBy(RagiumMaterialType.AZURE_STEEL))
-        addItems(RagiumItems.DEEP_ARMORS.toColumnTableBy(RagiumMaterialType.DEEP_STEEL))
-        addItems(RagiumItems.TOOLS)
+        fromMapWithColumn(RagiumMaterialType.AZURE_STEEL, RagiumItems.AZURE_ARMORS)
+        fromMapWithColumn(RagiumMaterialType.DEEP_STEEL, RagiumItems.DEEP_ARMORS)
+        fromTable(RagiumItems.TOOLS)
 
         addVariants<HTGeneratorVariant>()
         addVariants<HTMachineVariant>()
@@ -63,9 +62,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addVariants<HTDrumVariant>()
 
         // Delight
-        for ((material: RagiumMaterialType, knife) in RagiumDelightAddon.KNIFE_MAP) {
-            add(knife, HTKnifeToolVariant.translate(type, material.getTranslatedName(type)))
-        }
+        fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
         // Mekanism
         for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
             val value: String = data.getTranslatedName(type)
@@ -73,27 +70,31 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             add(RagiumMekanismAddon.getChemical(data.material), value)
         }
 
-        addItems(RagiumMekanismAddon.MATERIAL_ITEMS)
+        fromTable(RagiumMekanismAddon.MATERIAL_ITEMS)
     }
 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
-            addBlock(variant.blockHolder, variant.translate(type, ""))
+            add(variant.blockHolder, variant.translate(type, ""))
         }
     }
 
-    private fun addBlocks(table: HTTable<out HTVariantKey, out HTMaterialType, out HTDeferredBlock<*, *>>) {
-        table.forEach { (variant: HTVariantKey, material: HTMaterialType, block: HTDeferredBlock<*, *>) ->
-            if (material is HTMaterialType.Translatable) {
-                add(block, material.translate(type, variant))
-            }
-        }
+    private fun fromMapWithRow(variant: HTVariantKey, map: Map<out HTMaterialType, HTHasTranslationKey>) {
+        map.entries.map { (material: HTMaterialType, key: HTHasTranslationKey) -> Triple(variant, material, key) }.let(::fromTriples)
     }
 
-    private fun addItems(table: HTTable<out HTVariantKey, out HTMaterialType, out HTDeferredItem<*>>) {
-        table.forEach { (variant: HTVariantKey, material: HTMaterialType, item: HTDeferredItem<*>) ->
+    private fun fromMapWithColumn(material: HTMaterialType, map: Map<out HTVariantKey, HTHasTranslationKey>) {
+        map.entries.map { (variant: HTVariantKey, key: HTHasTranslationKey) -> Triple(variant, material, key) }.let(::fromTriples)
+    }
+
+    private fun fromTable(table: HTTable<out HTVariantKey, out HTMaterialType, out HTHasTranslationKey>) {
+        fromTriples(table.entries)
+    }
+
+    private fun fromTriples(triples: Iterable<Triple<HTVariantKey, HTMaterialType, HTHasTranslationKey>>) {
+        triples.forEach { (variant: HTVariantKey, material: HTMaterialType, key: HTHasTranslationKey) ->
             if (material is HTMaterialType.Translatable) {
-                add(item, material.translate(type, variant))
+                add(key, material.translate(type, variant))
             }
         }
     }
@@ -156,11 +157,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    //    MiscVariants    //
+    //    Misc    //
 
     private enum class MiscVariants(private val enPattern: String, private val jaPattern: String) : HTMaterialVariant {
         // Block
         COIL_BLOCK("%s Coil Block", "%sコイルブロック"),
+        LED_BLOCK("%s LED Block", "%sのLEDブロック"),
 
         // Item
         COIL("%s Coil", "%sコイル"),
@@ -171,6 +173,20 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             HTLanguageType.EN_US -> enPattern
             HTLanguageType.JA_JP -> jaPattern
         }.replace("%s", value)
+
+        override fun getSerializedName(): String = name.lowercase()
+    }
+
+    private enum class MiscMaterials(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
+        SLAB("Slab", "ハーフブロック"),
+        STAIRS("Stairs", "階段"),
+        WALL("Wall", "壁"),
+        ;
+
+        override fun getTranslatedName(type: HTLanguageType): String = when (type) {
+            HTLanguageType.EN_US -> enName
+            HTLanguageType.JA_JP -> jpName
+        }
 
         override fun getSerializedName(): String = name.lowercase()
     }
