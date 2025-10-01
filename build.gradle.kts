@@ -65,6 +65,7 @@ repositories {
     maven(url = "https://maven.saps.dev/releases") // AA
     maven(url = "https://maven.su5ed.dev/releases") // FFAPI
     maven(url = "https://maven.tamaized.com/releases") // Twilight
+    maven(url = "https://maven.teamresourceful.com/repository/maven-public/") // Athena
     maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
     maven(url = "https://maven.wispforest.io/releases") // Accessories
@@ -212,8 +213,14 @@ dependencies {
 
     implementation(libs.immersive.get().toString() + ":datagen")
     implementation(libs.mek.get().toString() + ":all")
+    implementation(libs.oritech) {
+        exclude(group = "curse.maven")
+        exclude(group = "io.wispforest")
+    }
 
-    listOf("net.fabricmc.fabric-api:fabric-api-base:0.4.63+9ec45cd89c").forEach(::compileOnly)
+    implementation(libs.enchdesc) {
+        exclude(group = "mezz.jei") 
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -222,23 +229,24 @@ val generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     val mcVersion: String = libs.versions.minecraft.get()
     val neoVersion: String = libs.versions.neo.version
         .get()
+    val kffVersion: String = libs.versions.kff.version
+        .get()
+
     val replaceProperties: Map<String, String> = mapOf(
         "minecraft_version" to mcVersion,
         "minecraft_version_range" to "[$mcVersion]",
         "neo_version" to neoVersion,
         "neo_version_range" to "[$neoVersion,)",
-        "kff_version" to libs.versions.kff.version
-            .asProvider()
-            .get(),
-        "kff_version_range" to libs.versions.kff.version.range
-            .get(),
+        "kff_version" to kffVersion,
+        "kff_version_range" to "[$kffVersion,)",
         "loader_version_range" to "[1,)",
         "mod_id" to modId,
         "mod_name" to "Ragium",
         "mod_license" to "MPL-2.0",
         "mod_version" to libs.versions.ragium.get(),
         "mod_authors" to "Hiiragi283",
-        "mod_description" to "Official port of Ragium for Fabric",
+        "mod_description" to
+            "Ragium is a tech mod based on vanilla materials. This mod aims to expand vanilla features and automate many work.",
     )
     inputs.properties(replaceProperties)
     expand(replaceProperties)
