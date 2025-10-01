@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.fluid.HTEmptyFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen.Impl
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.screens.MenuScreens

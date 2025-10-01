@@ -11,6 +11,7 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
+import dev.emi.emi.platform.EmiAgnos
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
@@ -63,6 +64,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
@@ -81,6 +83,15 @@ class RagiumEmiPlugin : EmiPlugin {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
+
+        @JvmStatic
+        private val THERMAL_FUELS: EmiIngredient by lazy {
+            EmiAgnos
+                .getFuelMap()
+                .keys
+                .map(EmiStack::of)
+                .let(EmiIngredient::of)
+        }
     }
 
     private lateinit var registry: EmiRegistry
@@ -149,8 +160,8 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addDataMaps() {
         // Fluid Fuel
-        addFuelRecipes(RagiumDataMaps.INSTANCE.combustionFuelType, HTGeneratorVariant.COMBUSTION)
-        addFuelRecipes(RagiumDataMaps.INSTANCE.thermalFuelType, HTGeneratorVariant.THERMAL)
+        addFuelRecipes(RagiumDataMaps.INSTANCE.combustionFuelType, HTGeneratorVariant.COMBUSTION, EmiIngredient.of(ItemTags.COALS))
+        addFuelRecipes(RagiumDataMaps.INSTANCE.thermalFuelType, HTGeneratorVariant.THERMAL, THERMAL_FUELS)
 
         // Brewing
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
@@ -167,7 +178,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant) {
+    private fun addFuelRecipes(dataMapType: DataMapType<Fluid, HTFluidFuelData>, variant: HTGeneratorVariant, itemInput: EmiIngredient) {
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
         for ((key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) in fluidRegistry.getDataMap(dataMapType)) {
             fluidRegistry.getOptional(key).ifPresent { fluid: Fluid ->
@@ -176,8 +187,8 @@ class RagiumEmiPlugin : EmiPlugin {
                         HTFuelGeneratorEmiRecipe(
                             RagiumEmiCategories.getGenerator(variant),
                             key.location().withPrefix("/${dataMapType.id().path}/"),
-                            EmiStack.of(fluid),
-                            fuelData.amount,
+                            itemInput,
+                            EmiStack.of(fluid, fuelData.amount.toLong()),
                             variant.energyRate,
                         ),
                     )
