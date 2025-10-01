@@ -1,7 +1,7 @@
 {
   "parent": "ragium:eldritch_pearl",
   "criteria": {
-    "has_mysterious_obsidian": {
+    "has_c_obsidians_mysterious": {
       "conditions": {
         "items": [
           {
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_mysterious_obsidian"
+      "has_c_obsidians_mysterious"
     ]
   ],
   "sends_telemetry_event": true

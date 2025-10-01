@@ -1,120 +1,100 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.CookingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmokingRecipe
 import net.minecraft.world.level.ItemLike
+import java.util.function.IntUnaryOperator
 import kotlin.math.max
 
-abstract class HTCookingRecipeBuilder(protected val result: ItemStack) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder> {
+class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
+    prefix: String,
+    private val factory: AbstractCookingRecipe.Factory<RECIPE>,
+    private val timeOperator: IntUnaryOperator,
+    item: HTItemHolderLike,
+    count: Int,
+    component: DataComponentPatch,
+) : HTStackRecipeBuilder<HTCookingRecipeBuilder<RECIPE>>(
+        prefix,
+        item,
+        count,
+        component,
+    ),
+    HTIngredientRecipeBuilder<HTCookingRecipeBuilder<RECIPE>> {
     companion object {
         @JvmStatic
-        fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = Smelting(ItemStack(item, count))
+        fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<SmeltingRecipe> = HTCookingRecipeBuilder(
+            "smelting",
+            ::SmeltingRecipe,
+            IntUnaryOperator.identity(),
+            HTItemHolderLike.fromItem(item),
+            count,
+            DataComponentPatch.EMPTY,
+        )
 
         @JvmStatic
-        fun blasting(item: ItemLike, count: Int = 1, onlyBlasting: Boolean = false): HTCookingRecipeBuilder =
-            Blasting(ItemStack(item, count), onlyBlasting)
+        fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<BlastingRecipe> = HTCookingRecipeBuilder(
+            "blasting",
+            ::BlastingRecipe,
+            { it / 2 },
+            HTItemHolderLike.fromItem(item),
+            count,
+            DataComponentPatch.EMPTY,
+        )
 
         @JvmStatic
-        fun smoking(item: ItemLike, count: Int = 1, onlySmoking: Boolean = false): HTCookingRecipeBuilder =
-            Smoking(ItemStack(item, count), onlySmoking)
+        fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<SmokingRecipe> = HTCookingRecipeBuilder(
+            "smoking",
+            ::SmokingRecipe,
+            { it / 2 },
+            HTItemHolderLike.fromItem(item),
+            count,
+            DataComponentPatch.EMPTY,
+        )
+
+        @JvmStatic
+        fun smeltingAndBlasting(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder<*>.() -> Unit) {
+            smelting(item, count).apply(builderAction)
+            blasting(item, count).apply(builderAction)
+        }
+
+        @JvmStatic
+        fun smeltingAndSmoking(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder<*>.() -> Unit) {
+            smelting(item, count).apply(builderAction)
+            smoking(item, count).apply(builderAction)
+        }
     }
 
-    protected var group: String? = null
-    protected lateinit var ingredient: Ingredient
-    protected var time: Int = 200
-    protected var exp: Float = 0f
+    private var group: String? = null
+    private lateinit var ingredient: Ingredient
+    private var time: Int = 200
+    private var exp: Float = 0f
 
-    override fun addIngredient(ingredient: Ingredient): HTCookingRecipeBuilder = apply {
+    override fun addIngredient(ingredient: Ingredient): HTCookingRecipeBuilder<RECIPE> = apply {
         check(!::ingredient.isInitialized) { "Ingredient has already been initialized!" }
         this.ingredient = ingredient
     }
 
-    fun setTime(time: Int): HTCookingRecipeBuilder = apply {
+    fun setTime(time: Int): HTCookingRecipeBuilder<RECIPE> = apply {
         this.time = max(0, time)
     }
 
-    fun setExp(exp: Float): HTCookingRecipeBuilder = apply {
+    fun setExp(exp: Float): HTCookingRecipeBuilder<RECIPE> = apply {
         this.exp = max(0f, exp)
     }
 
-    override fun getPrimalId(): ResourceLocation = result.itemHolder.idOrThrow
-
-    override fun group(groupName: String?): HTCookingRecipeBuilder = apply {
+    override fun group(groupName: String?): HTCookingRecipeBuilder<RECIPE> = apply {
         this.group = groupName
     }
 
-    //    Smelting    //
-
-    private open class Smelting(result: ItemStack) : HTCookingRecipeBuilder(result) {
-        override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-            recipeOutput.accept(
-                id.withPrefix("smelting/"),
-                SmeltingRecipe(
-                    group ?: "",
-                    CookingBookCategory.MISC,
-                    ingredient,
-                    result,
-                    exp,
-                    time,
-                ),
-                null,
-            )
-        }
-    }
-
-    //    Blasting    //
-
-    private class Blasting(result: ItemStack, private val onlyBlasting: Boolean) : Smelting(result) {
-        override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-            val fixedTime: Int = if (onlyBlasting) time else time / 2
-            recipeOutput.accept(
-                id.withPrefix("blasting/"),
-                BlastingRecipe(
-                    group ?: "",
-                    CookingBookCategory.MISC,
-                    ingredient,
-                    result,
-                    exp,
-                    fixedTime,
-                ),
-                null,
-            )
-
-            if (!onlyBlasting) {
-                super.save(recipeOutput, id)
-            }
-        }
-    }
-
-    //    Smoking    //
-
-    private class Smoking(result: ItemStack, private val onlySmoking: Boolean) : Smelting(result) {
-        override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-            val fixedTime: Int = if (onlySmoking) time else time / 2
-            recipeOutput.accept(
-                id.withPrefix("smoking/"),
-                SmokingRecipe(
-                    group ?: "",
-                    CookingBookCategory.MISC,
-                    ingredient,
-                    result,
-                    exp,
-                    fixedTime,
-                ),
-                null,
-            )
-
-            if (!onlySmoking) {
-                super.save(recipeOutput, id)
-            }
-        }
-    }
+    override fun createRecipe(output: ItemStack): RECIPE =
+        factory.create(group ?: "", CookingBookCategory.MISC, ingredient, output, exp, timeOperator.applyAsInt(time))
 }

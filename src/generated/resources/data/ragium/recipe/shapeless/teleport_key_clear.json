@@ -1,0 +1,8 @@
+{
+  "type": "ragium:clear_component",
+  "ingredient": "ragium:teleport_key",
+  "targets": [
+    "ragium:fluid_content",
+    "ragium:teleport_pos"
+  ]
+}

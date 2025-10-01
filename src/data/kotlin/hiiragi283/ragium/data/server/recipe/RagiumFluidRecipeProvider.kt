@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -28,7 +29,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Magma Block <-> Lava
         meltAndFreeze(
             ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.MAGMA_BLOCK,
+            HTItemHolderLike.fromItem(Items.MAGMA_BLOCK),
             HTFluidContent.LAVA,
             125,
         )
@@ -122,13 +123,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
+            .blasting(Items.BLAZE_POWDER)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
-            .blasting(Items.ENDER_PEARL, onlyBlasting = true)
+            .blasting(Items.ENDER_PEARL)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
 

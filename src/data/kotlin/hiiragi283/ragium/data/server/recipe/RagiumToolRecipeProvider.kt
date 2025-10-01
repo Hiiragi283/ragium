@@ -22,6 +22,7 @@ import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -200,7 +201,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Items.TRIAL_KEY)
             .save(output)
 
-        resetComponent(RagiumItems.TELEPORT_KEY)
+        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
             .equipment(RagiumItems.ELDRITCH_EGG)
@@ -227,7 +228,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 .savePrefixed(output, "${variant.serializedName}_")
         }
 
-        resetComponent(RagiumItems.UNIVERSAL_BUNDLE)
+        resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)
     }
 
     @JvmStatic

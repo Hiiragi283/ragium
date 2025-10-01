@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
@@ -42,6 +43,10 @@ object RagiumRecipeSerializers {
         register(name, SimpleSerializer(codec))
 
     //    Custom    //
+
+    @JvmField
+    val CLEAR_COMPONENT: RecipeSerializer<HTClearComponentRecipe> =
+        register("clear_component", HTClearComponentRecipe.CODEC)
 
     @JvmField
     val ICE_CREAM_SODA: RecipeSerializer<HTIceCreamSodaRecipe> =

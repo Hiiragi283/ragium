@@ -50,10 +50,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .blasting(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY))
-            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
+            .smeltingAndBlasting(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY)) {
+                addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
+                setExp(0.7f)
+                saveSuffixed(output, "_from_compound")
+            }
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -140,9 +141,10 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun deepSteel() {
         // Deep Steel
         HTCookingRecipeBuilder
-            .blasting(RagiumItems.DEEP_SCRAP)
-            .addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
-            .save(output)
+            .smeltingAndBlasting(RagiumItems.DEEP_SCRAP) {
+                addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+                save(output)
+            }
 
         HTShapelessRecipeBuilder
             .misc(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
@@ -173,7 +175,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .blasting(Items.CHARCOAL, onlyBlasting = true)
+            .blasting(Items.CHARCOAL)
             .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")

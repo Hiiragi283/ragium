@@ -1,15 +1,27 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 
-class HTSmithingRecipeBuilder(private val output: ItemStack) : HTIngredientRecipeBuilder.Prefixed<HTSmithingRecipeBuilder>("smithing") {
-    constructor(item: ItemLike, count: Int = 1) : this(ItemStack(item, count))
+class HTSmithingRecipeBuilder(item: HTItemHolderLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY) :
+    HTStackRecipeBuilder<HTSmithingRecipeBuilder>(
+        "smithing",
+        item,
+        count,
+        component,
+    ),
+    HTIngredientRecipeBuilder<HTSmithingRecipeBuilder> {
+    constructor(
+        item: ItemLike,
+        count: Int = 1,
+        component: DataComponentPatch = DataComponentPatch.EMPTY,
+    ) : this(HTItemHolderLike.fromItem(item), count, component)
 
     private val ingredients: MutableList<Ingredient> = mutableListOf()
 
@@ -18,11 +30,7 @@ class HTSmithingRecipeBuilder(private val output: ItemStack) : HTIngredientRecip
         ingredients.add(ingredient)
     }
 
-    override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
-
-    override fun group(groupName: String?): HTSmithingRecipeBuilder = this
-
-    override fun createRecipe(): SmithingTransformRecipe = SmithingTransformRecipe(
+    override fun createRecipe(output: ItemStack): SmithingTransformRecipe = SmithingTransformRecipe(
         ingredients[0],
         ingredients[1],
         ingredients.getOrNull(2) ?: Ingredient.of(),

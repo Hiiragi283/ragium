@@ -1,10 +1,10 @@
 package hiiragi283.ragium.impl.data.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -15,24 +15,28 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
-class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
-    HTRecipeBuilder.Prefixed("shaped") {
+class HTShapedRecipeBuilder(
+    private val category: CraftingBookCategory,
+    item: HTItemHolderLike,
+    count: Int,
+    component: DataComponentPatch,
+) : HTStackRecipeBuilder<HTShapedRecipeBuilder>("shaped", item, count, component) {
     companion object {
         @JvmStatic
-        fun building(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.BUILDING)
+        fun building(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.BUILDING, HTItemHolderLike.fromItem(item), count, component)
 
         @JvmStatic
-        fun redstone(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.REDSTONE)
+        fun redstone(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.REDSTONE, HTItemHolderLike.fromItem(item), count, component)
 
         @JvmStatic
-        fun equipment(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.EQUIPMENT)
+        fun equipment(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.EQUIPMENT, HTItemHolderLike.fromItem(item), count, component)
 
         @JvmStatic
-        fun misc(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(ItemStack(item, count), CraftingBookCategory.MISC)
+        fun misc(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.MISC, HTItemHolderLike.fromItem(item), count, component)
     }
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
@@ -81,15 +85,13 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
 
     //    RecipeBuilder    //
 
-    override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
-
     private var groupName: String? = null
 
     override fun group(groupName: String?): HTShapedRecipeBuilder = apply {
         this.groupName = groupName
     }
 
-    override fun createRecipe(): ShapedRecipe = ShapedRecipe(
+    override fun createRecipe(output: ItemStack): ShapedRecipe = ShapedRecipe(
         groupName ?: "",
         category,
         ShapedRecipePattern.of(symbols, patterns),
