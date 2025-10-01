@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.EntityPredicate
@@ -20,38 +21,54 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.item.enchantment.effects.DamageImmunity
+import net.minecraft.world.item.enchantment.effects.MultiplyValue
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
-import net.neoforged.neoforge.common.Tags
 
 /**
  * @see [net.minecraft.world.item.enchantment.Enchantments]
  */
 object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
     override fun run(context: BootstrapContext<Enchantment>) {
-        fun register(key: ResourceKey<Enchantment>, builder: Enchantment.Builder) {
-            context.register(key, builder.build(key.location()))
-        }
-
         val enchLookup: HolderGetter<Enchantment> = context.lookup(Registries.ENCHANTMENT)
         val itemLookup: HolderGetter<Item> = context.lookup(Registries.ITEM)
 
         register(
+            context,
             RagiumEnchantments.CAPACITY,
-            Enchantment.enchantment(
-                Enchantment.definition(
-                    itemLookup.getOrThrow(Tags.Items.ENCHANTABLES),
-                    1,
-                    5,
-                    Enchantment.constantCost(1),
-                    Enchantment.constantCost(41),
-                    1,
-                    EquipmentSlotGroup.ANY,
-                ),
-            ),
+            Enchantment
+                .enchantment(
+                    Enchantment.definition(
+                        itemLookup.getOrThrow(RagiumModTags.Items.CAPACITY_ENCHANTABLE),
+                        2,
+                        3,
+                        Enchantment.dynamicCost(15, 9),
+                        Enchantment.dynamicCost(65, 9),
+                        4,
+                        EquipmentSlotGroup.ANY,
+                    ),
+                ).withSpecialEffect(RagiumEnchantmentComponents.CAPACITY, MultiplyValue(LevelBasedValue.perLevel(2f, 1f))),
         )
         register(
+            context,
+            RagiumEnchantments.RANGE,
+            Enchantment
+                .enchantment(
+                    Enchantment.definition(
+                        itemLookup.getOrThrow(RagiumModTags.Items.RANGE_ENCHANTABLE),
+                        2,
+                        3,
+                        Enchantment.dynamicCost(15, 9),
+                        Enchantment.dynamicCost(65, 9),
+                        4,
+                        EquipmentSlotGroup.ANY,
+                    ),
+                ).withEffect(RagiumEnchantmentComponents.RANGE, MultiplyValue(LevelBasedValue.perLevel(2f, 1f))),
+        )
+
+        register(
+            context,
             RagiumEnchantments.NOISE_CANCELING,
             Enchantment
                 .enchantment(
@@ -78,6 +95,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                 ),
         )
         register(
+            context,
             RagiumEnchantments.SONIC_PROTECTION,
             Enchantment
                 .enchantment(
@@ -102,5 +120,11 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                     ),
                 ),
         )
+    }
+
+    //    Extensions    //
+
+    private fun register(context: BootstrapContext<Enchantment>, key: ResourceKey<Enchantment>, builder: Enchantment.Builder) {
+        context.register(key, builder.build(key.location()))
     }
 }

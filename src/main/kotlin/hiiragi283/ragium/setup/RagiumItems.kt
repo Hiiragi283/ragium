@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
+import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
@@ -504,13 +505,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        val level: Int = RagiumAPI
-            .INSTANCE
-            .getHolder(RagiumEnchantments.CAPACITY)
-            ?.let(stack::getEnchantmentLevel)
-            ?: 0
-        val modifier: Int = level + 1
-        factory(stack, capacity * modifier)
+        factory(stack, RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(null, stack, capacity))
     }
 
     @JvmStatic

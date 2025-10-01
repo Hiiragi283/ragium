@@ -132,7 +132,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun enchantment() {
         addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します。")
+        addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
+
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
+
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "音響耐性", "ソニックブームなどの音響攻撃を無効にします。")
     }
 
@@ -428,6 +431,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
+
+        add(RagiumTranslation.ITEM_POTION, "%sのポーション")
 
         add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")

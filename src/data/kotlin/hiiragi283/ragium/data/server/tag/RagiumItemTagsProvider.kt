@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -213,6 +214,17 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         )
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
+        // Enchantments
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant.blockHolder)
+        }
+        builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.DRILL)
+        builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.TELEPORT_KEY)
+        builder.add(RagiumModTags.Items.RANGE_ENCHANTABLE, RagiumItems.ADVANCED_MAGNET)
+        builder.add(RagiumModTags.Items.RANGE_ENCHANTABLE, RagiumItems.MAGNET)
+
+        builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
+        builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         // Armors
         for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.AZURE_ARMORS) {
             builder.add(variant.tagKey, armor)

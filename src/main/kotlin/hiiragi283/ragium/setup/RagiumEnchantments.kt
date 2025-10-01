@@ -11,7 +11,14 @@ object RagiumEnchantments {
     val CAPACITY: ResourceKey<Enchantment> = create("capacity")
 
     @JvmField
+    val RANGE: ResourceKey<Enchantment> = create("range")
+
+    //    Weapon    //
+
+    @JvmField
     val NOISE_CANCELING: ResourceKey<Enchantment> = create("noise_canceling")
+
+    //    Armor    //
 
     @JvmField
     val SONIC_PROTECTION: ResourceKey<Enchantment> = create("sonic_protection")

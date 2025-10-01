@@ -40,7 +40,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         override fun setStack(stack: ItemStack) {
             val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack) }
-            parent.setOrRemove(component, contents) { it.asNonEmptySequence().none() }
+            parent.setOrRemove(component, contents) { it.asNonEmptySequence().any() }
             onContentsChanged()
         }
 

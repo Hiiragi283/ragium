@@ -136,9 +136,4 @@ interface HTBlockEntityExtension {
         movedByPiston: Boolean,
     ) {
     }
-
-    /**
-     * アップグレードが更新されたときに呼び出されます。
-     */
-    fun reloadUpgrades() {}
 }

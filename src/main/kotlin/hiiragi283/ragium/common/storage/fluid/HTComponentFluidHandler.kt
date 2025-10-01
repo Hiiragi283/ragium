@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.fluid
 
+import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -16,14 +17,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 /**
  * [HTFluidHandler]に基づいたコンポーネント向けの実装
  */
-open class HTComponentFluidHandler(private val stack: ItemStack, capacity: Int) :
+open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int) :
     IFluidHandlerItem,
     HTFluidHandler {
     protected val tank: HTFluidTank = createTank(capacity)
 
     protected open fun createTank(capacity: Int): HTFluidTank = ComponentTank(stack, capacity)
 
-    override fun getContainer(): ItemStack = stack
+    final override fun getContainer(): ItemStack = stack
 
     override fun getFluidTanks(side: Direction?): List<HTFluidTank> = listOf(tank)
 
@@ -35,7 +36,7 @@ open class HTComponentFluidHandler(private val stack: ItemStack, capacity: Int) 
         override fun getStack(): FluidStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).copy()
 
         override fun setStack(stack: FluidStack) {
-            parent.setOrRemove(component, SimpleFluidContent.copyOf(stack), SimpleFluidContent::isEmpty)
+            parent.setOrRemove(component, SimpleFluidContent.copyOf(stack), SimpleFluidContent::isEmpty.negate())
         }
 
         override fun getCapacity(): Int = capacity

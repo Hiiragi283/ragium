@@ -22,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -67,6 +68,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(RagiumChunkLoader::registerController)
 
         RagiumDataComponents.REGISTER.register(eventBus)
+        RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents.REGISTER.init(eventBus)
 
