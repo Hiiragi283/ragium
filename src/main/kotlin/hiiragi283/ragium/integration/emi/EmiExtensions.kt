@@ -46,7 +46,7 @@ fun Optional<HTFluidResult>.toFluidEmi(): EmiStack = map(HTFluidResult::toEmi).o
 
 fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(this.get())
 
-fun HTFluidContent<*, *, *>.toFluidEmi(amount: Long): EmiStack = EmiStack.of(this.get(), amount)
+fun HTFluidContent<*, *, *>.toFluidEmi(amount: Number): EmiStack = EmiStack.of(this.get(), amount.toLong())
 
 fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = EmiIngredient.of(this.commonTag)
 

@@ -20,7 +20,7 @@ class HTFuelGeneratorEmiRecipe(
 ) : HTEmiRecipe.Impl(id) {
     override fun getCategory(): EmiRecipeCategory = category
 
-    override fun getInputs(): List<EmiIngredient> = listOf(fluidInput)
+    override fun getInputs(): List<EmiIngredient> = listOf(itemInput, fluidInput)
 
     override fun getOutputs(): List<EmiStack> = listOf()
 

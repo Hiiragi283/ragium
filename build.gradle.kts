@@ -219,7 +219,7 @@ dependencies {
     }
 
     implementation(libs.enchdesc) {
-        exclude(group = "mezz.jei") 
+        exclude(group = "mezz.jei")
     }
 }
 
