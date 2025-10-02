@@ -1,9 +1,6 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:bee_nest"
-  },
+  "catalyst": "minecraft:bee_nest",
   "result": {
     "count": 1,
     "id": "minecraft:honeycomb"

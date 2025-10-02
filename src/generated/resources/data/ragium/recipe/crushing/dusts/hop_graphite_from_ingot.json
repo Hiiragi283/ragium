@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/hop_graphite"
-  },
+  "ingredient": "#c:ingots/hop_graphite",
   "result": {
     "count": 1,
     "id": "#c:dusts/hop_graphite"

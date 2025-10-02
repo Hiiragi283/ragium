@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/refined_glowstone"
-  },
+  "ingredient": "#c:ingots/refined_glowstone",
   "result": {
     "count": 1,
     "id": "#c:dusts/refined_glowstone"

@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/fiery"
-  },
+  "ingredient": "#c:ingots/fiery",
   "result": {
     "count": 1,
     "id": "#c:dusts/fiery"

@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/iron"
-  },
+  "ingredient": "#c:ingots/iron",
   "result": {
     "count": 1,
     "id": "#c:dusts/iron"

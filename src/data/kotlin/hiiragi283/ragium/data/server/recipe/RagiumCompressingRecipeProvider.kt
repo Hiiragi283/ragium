@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 
 object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
@@ -46,7 +45,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Moss
         HTItemToObjRecipeBuilder
             .compressing(
-                ingredientHelper.item(Ingredient.of(Items.VINE, Items.MOSS_CARPET), 8),
+                ingredientHelper.item(Items.VINE, Items.MOSS_CARPET, count = 8),
                 resultHelper.item(Items.MOSS_BLOCK),
             ).save(output)
         // Sculk

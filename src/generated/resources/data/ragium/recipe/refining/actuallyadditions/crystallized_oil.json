@@ -8,14 +8,11 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 1000,
-    "fluid": "actuallyadditions:refined_canola_oil"
+    "fluids": "actuallyadditions:refined_canola_oil"
   },
   "fluid_result": {
     "amount": 1000,
     "id": "actuallyadditions:crystallized_oil"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "actuallyadditions:crystallized_canola_seed"
-  }
+  "item_ingredient": "actuallyadditions:crystallized_canola_seed"
 }

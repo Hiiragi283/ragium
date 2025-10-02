@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 4,
-    "tag": "c:sands/colorless"
+    "items": "#c:sands/colorless"
   },
   "result": {
     "count": 1,

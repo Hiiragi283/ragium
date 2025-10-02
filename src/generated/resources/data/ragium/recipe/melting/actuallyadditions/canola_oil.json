@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:melting",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:crops/canola"
-  },
+  "ingredient": "#c:crops/canola",
   "result": {
     "amount": 80,
     "id": "actuallyadditions:canola_oil"

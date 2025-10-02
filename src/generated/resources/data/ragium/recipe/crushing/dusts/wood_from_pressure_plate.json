@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:wooden_pressure_plates"
-  },
+  "ingredient": "#minecraft:wooden_pressure_plates",
   "result": {
     "count": 2,
     "id": "#c:dusts/wood"

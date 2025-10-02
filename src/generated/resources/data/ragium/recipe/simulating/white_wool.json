@@ -1,9 +1,6 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:sheep_spawn_egg"
-  },
+  "catalyst": "minecraft:sheep_spawn_egg",
   "result": {
     "count": 1,
     "id": "minecraft:white_wool"

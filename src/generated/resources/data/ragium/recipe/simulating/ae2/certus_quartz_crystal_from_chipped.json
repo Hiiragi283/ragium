@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "ae2:chipped_budding_quartz"
-  },
+  "catalyst": "ae2:chipped_budding_quartz",
   "result": {
     "count": 2,
     "id": "ae2:certus_quartz_crystal"

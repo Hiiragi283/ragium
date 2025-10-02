@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:wool"
-  },
+  "ingredient": "#minecraft:wool",
   "result": {
     "count": 4,
     "id": "minecraft:string"

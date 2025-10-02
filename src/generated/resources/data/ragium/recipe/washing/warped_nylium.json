@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:dew_of_the_warp"
+    "fluids": "#c:dew_of_the_warp"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "c:netherracks"
-  },
+  "item_ingredient": "#c:netherracks",
   "results": {
     "count": 1,
     "id": "minecraft:warped_nylium"

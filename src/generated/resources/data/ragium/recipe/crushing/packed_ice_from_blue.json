@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:blue_ice"
-  },
+  "ingredient": "minecraft:blue_ice",
   "result": {
     "count": 9,
     "id": "minecraft:packed_ice"

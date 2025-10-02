@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/tourmaline"
-  },
+  "ingredient": "#c:gems/tourmaline",
   "result": {
     "count": 1,
     "id": "#c:dusts/tourmaline"

@@ -3,11 +3,11 @@
   "ingredients": [
     {
       "count": 64,
-      "tag": "c:storage_blocks/chocolate"
+      "items": "#c:storage_blocks/chocolate"
     },
     {
       "count": 64,
-      "item": "minecraft:honey_block"
+      "items": "minecraft:honey_block"
     }
   ],
   "result": {

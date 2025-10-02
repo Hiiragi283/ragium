@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:nether_wart_block"
-  },
+  "ingredient": "minecraft:nether_wart_block",
   "result": {
     "count": 3,
     "id": "minecraft:nether_wart"

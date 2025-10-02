@@ -8,32 +8,19 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/certus_quartz"
-        },
-        {
-          "tag": "c:gems/certus_quartz"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/certus_quartz",
+        "#c:gems/certus_quartz"
+      ]
     },
+    "#c:dusts/redstone",
     {
-      "count": 1,
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/quartz"
-        },
-        {
-          "tag": "c:gems/quartz"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/quartz",
+        "#c:gems/quartz"
+      ]
     }
   ],
   "result": {

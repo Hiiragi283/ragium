@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/eclipsealloy"
-  },
+  "ingredient": "#c:ingots/eclipsealloy",
   "result": {
     "count": 1,
     "id": "#c:dusts/eclipsealloy"

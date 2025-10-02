@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 4,
-    "tag": "c:sands/red"
+    "items": "#c:sands/red"
   },
   "result": {
     "count": 1,

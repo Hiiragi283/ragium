@@ -7,18 +7,9 @@
   ],
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "item": "ae2:printed_logic_processor"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "count": 1,
-      "item": "ae2:printed_silicon"
-    }
+    "ae2:printed_logic_processor",
+    "#c:dusts/redstone",
+    "ae2:printed_silicon"
   ],
   "result": {
     "count": 1,

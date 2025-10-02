@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:cobweb"
-  },
+  "ingredient": "minecraft:cobweb",
   "result": {
     "count": 4,
     "id": "minecraft:string"

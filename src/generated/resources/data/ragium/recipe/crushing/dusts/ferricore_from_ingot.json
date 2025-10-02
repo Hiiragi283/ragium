@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/ferricore"
-  },
+  "ingredient": "#c:ingots/ferricore",
   "result": {
     "count": 1,
     "id": "#c:dusts/ferricore"

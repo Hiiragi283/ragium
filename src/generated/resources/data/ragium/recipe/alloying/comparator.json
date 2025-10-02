@@ -1,18 +1,9 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "count": 1,
-      "tag": "c:gems/quartz"
-    },
-    {
-      "count": 1,
-      "item": "minecraft:repeater"
-    }
+    "minecraft:redstone_torch",
+    "#c:gems/quartz",
+    "minecraft:repeater"
   ],
   "result": {
     "count": 2,

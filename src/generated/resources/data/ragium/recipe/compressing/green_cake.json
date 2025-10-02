@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 16,
-    "item": "ragium:potato_sprouts"
+    "items": "ragium:potato_sprouts"
   },
   "result": {
     "count": 1,

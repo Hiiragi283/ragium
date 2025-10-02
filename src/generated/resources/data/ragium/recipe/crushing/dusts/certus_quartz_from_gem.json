@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/certus_quartz"
-  },
+  "ingredient": "#c:gems/certus_quartz",
   "result": {
     "count": 1,
     "id": "#c:dusts/certus_quartz"

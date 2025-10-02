@@ -1,9 +1,6 @@
 {
   "type": "ragium:melting",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:soul_fire_base_blocks"
-  },
+  "ingredient": "#minecraft:soul_fire_base_blocks",
   "result": {
     "amount": 500,
     "id": "ragium:crude_oil"

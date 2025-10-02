@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/fluorite"
-  },
+  "ingredient": "#c:gems/fluorite",
   "result": {
     "count": 1,
     "id": "#c:dusts/fluorite"

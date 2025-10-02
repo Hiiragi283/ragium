@@ -2,28 +2,18 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/amethyst"
-        },
-        {
-          "tag": "c:gems/amethyst"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/amethyst",
+        "#c:gems/amethyst"
+      ]
     },
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/lapis"
-        },
-        {
-          "tag": "c:gems/lapis"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/lapis",
+        "#c:gems/lapis"
+      ]
     }
   ],
   "result": {

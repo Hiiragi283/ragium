@@ -12,19 +12,14 @@
   "ingredients": [
     {
       "count": 3,
-      "tag": "c:ingots/copper"
+      "items": "#c:ingots/copper"
     },
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/tin"
-        },
-        {
-          "tag": "c:ingots/tin"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/tin",
+        "#c:ingots/tin"
+      ]
     }
   ],
   "result": {

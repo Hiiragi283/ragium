@@ -1,13 +1,10 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "tag": "ragium:plastics"
-    },
+    "#ragium:plastics",
     {
       "count": 2,
-      "item": "ragium:luminous_paste"
+      "items": "ragium:luminous_paste"
     }
   ],
   "result": {

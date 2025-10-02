@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ores/coal"
-  },
+  "ingredient": "#c:ores/coal",
   "results": [
     {
       "count": 2,

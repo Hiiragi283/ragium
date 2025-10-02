@@ -1,9 +1,6 @@
 {
   "type": "ragium:melting",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:crimson_stems"
-  },
+  "ingredient": "#minecraft:crimson_stems",
   "result": {
     "amount": 500,
     "id": "ragium:crimson_sap"

@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 8,
-    "tag": "c:dusts/wood"
+    "items": "#c:dusts/wood"
   },
   "result": {
     "count": 1,

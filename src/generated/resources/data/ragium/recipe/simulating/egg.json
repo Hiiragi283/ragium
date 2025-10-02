@@ -1,13 +1,7 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:chicken_spawn_egg"
-  },
-  "ingredient": {
-    "count": 1,
-    "tag": "c:seeds"
-  },
+  "catalyst": "minecraft:chicken_spawn_egg",
+  "ingredient": "#c:seeds",
   "result": {
     "count": 1,
     "id": "minecraft:egg"

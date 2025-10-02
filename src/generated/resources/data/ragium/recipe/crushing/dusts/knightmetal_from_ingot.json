@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/knightmetal"
-  },
+  "ingredient": "#c:ingots/knightmetal",
   "result": {
     "count": 1,
     "id": "#c:dusts/knightmetal"

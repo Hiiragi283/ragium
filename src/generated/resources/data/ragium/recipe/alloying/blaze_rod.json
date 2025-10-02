@@ -3,12 +3,9 @@
   "ingredients": [
     {
       "count": 4,
-      "item": "minecraft:blaze_powder"
+      "items": "minecraft:blaze_powder"
     },
-    {
-      "count": 1,
-      "tag": "c:rods/wooden"
-    }
+    "#c:rods/wooden"
   ],
   "result": {
     "count": 1,

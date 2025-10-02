@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTIngredientHelperImpl
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
@@ -44,7 +45,7 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val ingredientHelper: HTIngredientHelper = HTIngredientHelper.INSTANCE
+    val ingredientHelper: HTIngredientHelper by lazy { HTIngredientHelperImpl(provider) }
     val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {

@@ -1,17 +1,11 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "tag": "c:storage_blocks/crimson_crystal"
-    },
-    {
-      "count": 1,
-      "tag": "c:storage_blocks/warped_crystal"
-    },
+    "#c:storage_blocks/crimson_crystal",
+    "#c:storage_blocks/warped_crystal",
     {
       "count": 3,
-      "tag": "ragium:eldritch_pearl_binder"
+      "items": "#ragium:eldritch_pearl_binder"
     }
   ],
   "result": {

@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/refined_obsidian"
-  },
+  "ingredient": "#c:ingots/refined_obsidian",
   "result": {
     "count": 1,
     "id": "#c:dusts/refined_obsidian"

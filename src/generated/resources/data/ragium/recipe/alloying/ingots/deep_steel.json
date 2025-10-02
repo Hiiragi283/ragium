@@ -2,20 +2,18 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/azure_steel"
-        },
-        {
-          "tag": "c:ingots/azure_steel"
-        }
-      ],
-      "count": 4
+      "count": 4,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/azure_steel",
+          "#c:ingots/azure_steel"
+        ]
+      }
     },
     {
       "count": 4,
-      "tag": "c:scraps/deep_steel"
+      "items": "#c:scraps/deep_steel"
     }
   ],
   "result": {

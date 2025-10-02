@@ -18,19 +18,66 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.integration.emi.widget.HTTankWidget
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
 //    EmiIngredient    //
 
-fun HTItemIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(EmiStack::of))
+fun HTItemIngredient.toEmi(): EmiIngredient = this
+    .unwrap()
+    .map(
+        { (holderSet: HolderSet<Item>, count: Int) ->
+            holderSet.unwrap().map(
+                { tagKey: TagKey<Item> ->
+                    if (holderSet.toList().isEmpty()) {
+                        createErrorStack("Empty Tag: ${tagKey.location}")
+                    } else {
+                        EmiIngredient.of(tagKey, count.toLong())
+                    }
+                },
+                { holders: List<Holder<Item>> ->
+                    holders.map(::ItemStack).map(EmiStack::of).let(::ingredient)
+                },
+            )
+        },
+        { stacks: List<ItemStack> -> stacks.map(EmiStack::of).let(::ingredient) },
+    )
 
-fun HTFluidIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(NeoForgeEmiStack::of))
+fun HTFluidIngredient.toEmi(): EmiIngredient = this
+    .unwrap()
+    .map(
+        { (holderSet: HolderSet<Fluid>, count: Int) ->
+            holderSet.unwrap().map(
+                { tagKey: TagKey<Fluid> ->
+                    if (holderSet.toList().isEmpty()) {
+                        createErrorStack("Empty Tag: ${tagKey.location}")
+                    } else {
+                        EmiIngredient.of(tagKey, count.toLong())
+                    }
+                },
+                { holders: List<Holder<Fluid>> ->
+                    holders.map { holder: Holder<Fluid> -> EmiStack.of(holder.value()) }.let(::ingredient)
+                },
+            )
+        },
+        { stacks: List<FluidStack> -> stacks.map(NeoForgeEmiStack::of).let(::ingredient) },
+    )
 
 fun Optional<HTItemIngredient>.toItemEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
+
+private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {
+    stacks.isEmpty() -> createErrorStack("No matching stacks")
+    else -> EmiIngredient.of(stacks)
+}
 
 //    EmiStack    //
 
@@ -52,8 +99,10 @@ fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = EmiIngredient.of(this.co
 
 val EmiStack.fluid: Fluid? get() = this.key as? Fluid
 
-private fun createErrorStack(error: DataResult.Error<*>): EmiStack =
-    createItemStack(Items.BARRIER, DataComponents.ITEM_NAME, Component.literal(error.message())).let(EmiStack::of)
+private fun createErrorStack(error: DataResult.Error<*>): EmiStack = createErrorStack(error.message())
+
+private fun createErrorStack(error: String): EmiStack =
+    createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, Component.literal(error)).let(EmiStack::of)
 
 //    Widget    //
 

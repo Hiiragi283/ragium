@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:storage_blocks/black_quartz"
-  },
+  "ingredient": "#c:storage_blocks/black_quartz",
   "result": {
     "count": 4,
     "id": "#c:gems/black_quartz"

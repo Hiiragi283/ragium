@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/ruby"
-  },
+  "ingredient": "#c:gems/ruby",
   "result": {
     "count": 1,
     "id": "#c:dusts/ruby"

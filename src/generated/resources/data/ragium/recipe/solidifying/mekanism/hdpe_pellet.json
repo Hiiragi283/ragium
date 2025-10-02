@@ -8,12 +8,9 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 100,
-    "tag": "c:ethene"
+    "fluids": "#c:ethene"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "ragium:polymer_catalyst"
-  },
+  "item_ingredient": "ragium:polymer_catalyst",
   "item_result": {
     "count": 1,
     "id": "mekanism:hdpe_pellet"

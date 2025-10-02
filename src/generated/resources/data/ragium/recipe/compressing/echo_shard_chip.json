@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 3,
-    "tag": "c:gems/echo"
+    "items": "#c:gems/echo"
   },
   "result": {
     "count": 1,

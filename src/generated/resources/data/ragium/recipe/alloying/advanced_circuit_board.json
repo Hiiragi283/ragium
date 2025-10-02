@@ -3,12 +3,9 @@
   "ingredients": [
     {
       "count": 2,
-      "tag": "ragium:plastics"
+      "items": "#ragium:plastics"
     },
-    {
-      "count": 1,
-      "item": "ragium:basalt_mesh"
-    }
+    "ragium:basalt_mesh"
   ],
   "result": {
     "count": 1,

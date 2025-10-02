@@ -1,13 +1,7 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:elder_guardian_spawn_egg"
-  },
-  "ingredient": {
-    "count": 1,
-    "item": "ragium:elder_heart"
-  },
+  "catalyst": "minecraft:elder_guardian_spawn_egg",
+  "ingredient": "ragium:elder_heart",
   "result": {
     "count": 1,
     "id": "minecraft:heart_of_the_sea"

@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/lapis"
-  },
+  "ingredient": "#c:gems/lapis",
   "result": {
     "count": 1,
     "id": "#c:dusts/lapis"

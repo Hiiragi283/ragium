@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 2000,
-    "tag": "c:crimson_blood"
+    "fluids": "#c:crimson_blood"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "minecraft:soul_soil"
-  },
+  "item_ingredient": "minecraft:soul_soil",
   "results": {
     "count": 1,
     "id": "ragium:crimson_soil"

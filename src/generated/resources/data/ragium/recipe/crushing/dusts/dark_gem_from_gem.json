@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/dark_gem"
-  },
+  "ingredient": "#c:gems/dark_gem",
   "result": {
     "count": 1,
     "id": "#c:dusts/dark_gem"

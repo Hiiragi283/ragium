@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/ironwood"
-  },
+  "ingredient": "#c:ingots/ironwood",
   "result": {
     "count": 1,
     "id": "#c:dusts/ironwood"

@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:glow_ink_sac"
-  },
+  "ingredient": "minecraft:glow_ink_sac",
   "results": [
     {
       "count": 1,

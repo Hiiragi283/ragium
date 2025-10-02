@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:crimson_blood"
+    "fluids": "#c:crimson_blood"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "c:crops/beetroot"
-  },
+  "item_ingredient": "#c:crops/beetroot",
   "results": {
     "count": 1,
     "id": "minecraft:nether_wart"

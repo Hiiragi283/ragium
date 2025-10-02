@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/lead"
-  },
+  "ingredient": "#c:ingots/lead",
   "result": {
     "count": 1,
     "id": "#c:dusts/lead"

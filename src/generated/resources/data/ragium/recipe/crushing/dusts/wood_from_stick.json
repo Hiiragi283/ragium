@@ -2,7 +2,7 @@
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 2,
-    "tag": "c:rods/wooden"
+    "items": "#c:rods/wooden"
   },
   "result": {
     "count": 1,

@@ -8,12 +8,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:organic_mutagen"
+    "fluids": "#c:organic_mutagen"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "farmersdelight:organic_compost"
-  },
+  "item_ingredient": "farmersdelight:organic_compost",
   "results": {
     "count": 1,
     "id": "farmersdelight:rich_soil"

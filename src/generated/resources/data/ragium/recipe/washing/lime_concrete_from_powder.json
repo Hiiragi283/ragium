@@ -2,11 +2,11 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 1000,
-    "tag": "c:water"
+    "fluids": "#c:water"
   },
   "item_ingredient": {
     "count": 8,
-    "item": "minecraft:lime_concrete_powder"
+    "items": "minecraft:lime_concrete_powder"
   },
   "results": {
     "count": 8,

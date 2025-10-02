@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:milk"
+    "fluids": "#c:milk"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "c:crops/cocoa_bean"
-  },
+  "item_ingredient": "#c:crops/cocoa_bean",
   "results": {
     "count": 1,
     "id": "#c:ingots/chocolate"

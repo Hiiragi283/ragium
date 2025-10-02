@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:prismarine"
-  },
+  "ingredient": "minecraft:prismarine",
   "result": {
     "count": 4,
     "id": "minecraft:prismarine_shard"

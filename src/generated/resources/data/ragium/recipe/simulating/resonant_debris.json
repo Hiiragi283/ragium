@@ -1,12 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:warden_spawn_egg"
-  },
+  "catalyst": "minecraft:warden_spawn_egg",
   "ingredient": {
     "count": 8,
-    "item": "minecraft:deepslate"
+    "items": "minecraft:deepslate"
   },
   "result": {
     "count": 1,

@@ -243,6 +243,12 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun <S : Any> xmap(to: Function<V, S>, from: Function<S, V>): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
+    fun <S : Any> comapFlatMap(to: Function<V, DataResult<S>>, from: Function<S, V>): BiCodec<B, S> =
+        of(codec.comapFlatMap(to, from), streamCodec.map(to.andThen(DataResult<S>::getOrThrow), from))
+
+    fun <S : Any> flatComapMap(to: Function<V, S>, from: Function<S, DataResult<V>>): BiCodec<B, S> =
+        of(codec.flatComapMap(to, from), streamCodec.map(to, from.andThen(DataResult<V>::getOrThrow)))
+
     /**
      * 指定された[to]と[from]に基づいて，別の[BiCodec]に変換します。
      * @param S 変換後のコーデックの対象となるクラス

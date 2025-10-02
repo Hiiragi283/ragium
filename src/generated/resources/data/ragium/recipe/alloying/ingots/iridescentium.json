@@ -2,21 +2,16 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/eldritch_pearl"
-        },
-        {
-          "tag": "c:gems/eldritch_pearl"
-        }
-      ],
-      "count": 8
+      "count": 8,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/eldritch_pearl",
+          "#c:gems/eldritch_pearl"
+        ]
+      }
     },
-    {
-      "count": 1,
-      "tag": "c:nether_stars"
-    }
+    "#c:nether_stars"
   ],
   "result": {
     "count": 1,

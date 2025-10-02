@@ -2,7 +2,7 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:chocolates"
+    "fluids": "#c:chocolates"
   },
   "item_result": {
     "count": 1,

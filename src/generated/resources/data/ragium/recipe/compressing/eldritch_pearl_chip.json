@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 3,
-    "tag": "c:gems/eldritch_pearl"
+    "items": "#c:gems/eldritch_pearl"
   },
   "result": {
     "count": 1,

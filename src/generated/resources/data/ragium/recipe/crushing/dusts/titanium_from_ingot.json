@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/titanium"
-  },
+  "ingredient": "#c:ingots/titanium",
   "result": {
     "count": 1,
     "id": "#c:dusts/titanium"

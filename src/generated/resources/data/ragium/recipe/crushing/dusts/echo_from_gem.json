@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/echo"
-  },
+  "ingredient": "#c:gems/echo",
   "result": {
     "count": 1,
     "id": "#c:dusts/echo"

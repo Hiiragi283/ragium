@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 4,
-    "item": "minecraft:snow_block"
+    "items": "minecraft:snow_block"
   },
   "result": {
     "count": 1,

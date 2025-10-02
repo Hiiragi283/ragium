@@ -1,16 +1,11 @@
 {
   "type": "ragium:extracting",
   "ingredient": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/charcoal"
-      },
-      {
-        "tag": "c:fuels/charcoal"
-      }
-    ],
-    "count": 1
+    "type": "neoforge:or",
+    "values": [
+      "#c:dusts/charcoal",
+      "#c:fuels/charcoal"
+    ]
   },
   "result": {
     "count": 1,

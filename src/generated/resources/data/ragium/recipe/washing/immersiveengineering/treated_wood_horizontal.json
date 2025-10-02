@@ -8,12 +8,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 125,
-    "tag": "c:creosote"
+    "fluids": "#c:creosote"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "minecraft:planks"
-  },
+  "item_ingredient": "#minecraft:planks",
   "results": {
     "count": 1,
     "id": "immersiveengineering:treated_wood_horizontal"

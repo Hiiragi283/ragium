@@ -1,13 +1,10 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "tag": "c:foods/berry"
-    },
+    "#c:foods/berry",
     {
       "count": 4,
-      "tag": "c:gems/eldritch_pearl"
+      "items": "#c:gems/eldritch_pearl"
     }
   ],
   "result": {

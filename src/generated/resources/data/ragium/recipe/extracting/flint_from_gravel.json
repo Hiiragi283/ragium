@@ -1,9 +1,6 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gravels"
-  },
+  "ingredient": "#c:gravels",
   "result": {
     "count": 1,
     "id": "minecraft:flint"

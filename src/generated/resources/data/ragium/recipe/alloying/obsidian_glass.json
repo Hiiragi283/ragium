@@ -3,12 +3,9 @@
   "ingredients": [
     {
       "count": 4,
-      "tag": "c:dusts/obsidian"
+      "items": "#c:dusts/obsidian"
     },
-    {
-      "count": 1,
-      "tag": "ragium:alloy_smelter_fluxes/advanced"
-    }
+    "#ragium:alloy_smelter_fluxes/advanced"
   ],
   "result": {
     "count": 1,

@@ -2,20 +2,15 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/diamond"
-        },
-        {
-          "tag": "c:gems/diamond"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/diamond",
+        "#c:gems/diamond"
+      ]
     },
     {
       "count": 6,
-      "tag": "c:dusts/raginite"
+      "items": "#c:dusts/raginite"
     }
   ],
   "result": {

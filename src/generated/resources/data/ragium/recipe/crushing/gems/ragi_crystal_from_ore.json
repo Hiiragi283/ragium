@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ores/ragi_crystal"
-  },
+  "ingredient": "#c:ores/ragi_crystal",
   "results": {
     "count": 2,
     "id": "#c:gems/ragi_crystal"
