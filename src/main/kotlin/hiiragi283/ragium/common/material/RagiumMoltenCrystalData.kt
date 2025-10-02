@@ -9,7 +9,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
-enum class HTMoltenCrystalData(
+enum class RagiumMoltenCrystalData(
     val material: HTMaterialType,
     val color: Int,
     private val enName: String,

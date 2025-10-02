@@ -82,7 +82,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
         FoundryRecipeBuilder
             .build()
-            .input(RagiumItems.DEEP_SCRAP)
+            .input(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL)
             .input(ingotOrDust(RagiumMaterialType.AZURE_STEEL))
             .result(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
             .export(output, RagiumConst.DEEP_STEEL)
@@ -103,7 +103,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .build()
             .input(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN)
             .input(Items.DEEPSLATE)
-            .result(RagiumItems.DEEP_SCRAP)
+            .result(RagiumItems.getScrap(RagiumMaterialType.DEEP_STEEL))
             .time(2500)
             .export(output, "deep_scrap")
     }

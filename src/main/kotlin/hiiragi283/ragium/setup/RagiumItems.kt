@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -58,6 +59,7 @@ import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.Tiers
@@ -92,10 +94,6 @@ object RagiumItems {
 
     @JvmField
     val RAGI_COKE: HTDeferredItem<Item> = register("ragi_coke")
-
-    // Deep Steel
-    @JvmField
-    val DEEP_SCRAP: HTDeferredItem<Item> = register("deep_scrap")
 
     // Wood
     @JvmField
@@ -203,6 +201,8 @@ object RagiumItems {
 
         // Fuels
         this[HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL] = register("bamboo_charcoal")
+        // Scraps
+        this[HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL] = register("deep_scrap")
     }
 
     @JvmStatic
@@ -223,6 +223,12 @@ object RagiumItems {
 
     @JvmStatic
     fun getPlate(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.PLATE, material)
+
+    @JvmStatic
+    fun getScrap(material: HTMaterialType): HTItemHolderLike = when (material) {
+        HTVanillaMaterialType.NETHERITE -> HTItemHolderLike.fromItem(Items.NETHERITE_SCRAP)
+        else -> getMaterial(HTItemMaterialVariant.SCRAP, material)
+    }
 
     @JvmField
     val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)

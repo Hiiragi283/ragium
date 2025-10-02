@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumEssenceType
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
@@ -40,11 +40,12 @@ object RagiumMekanismAddon : RagiumAddon {
 
     @JvmField
     val CHEMICAL_MAP: Map<HTMaterialType, DeferredChemical<Chemical>> = buildMap {
-        put(RagiumMaterialType.RAGINITE, CHEMICAL_REGISTER.registerInfuse(RagiumConst.RAGINITE, 0xFF0033))
-        put(RagiumMaterialType.AZURE, CHEMICAL_REGISTER.registerInfuse(RagiumConst.AZURE, 0x9999cc))
+        for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+            this[essenceType] = CHEMICAL_REGISTER.registerInfuse(essenceType.serializedName, essenceType.color.rgb)
+        }
 
-        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
-            put(data.material, CHEMICAL_REGISTER.register(data.molten.getPath(), data.color))
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
+            this[data.material] = CHEMICAL_REGISTER.register(data.molten.getPath(), data.color)
         }
     }
 
@@ -60,8 +61,9 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val MATERIAL_ITEMS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
-        this[HTMekMaterialVariant.ENRICHED, RagiumMaterialType.RAGINITE] = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
-        this[HTMekMaterialVariant.ENRICHED, RagiumMaterialType.AZURE] = ITEM_REGISTER.registerSimpleItem("enriched_azure")
+        for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+            this[HTMekMaterialVariant.ENRICHED, essenceType] = ITEM_REGISTER.registerSimpleItem("enriched_${essenceType.serializedName}")
+        }
     }
 
     @JvmStatic
@@ -96,19 +98,13 @@ object RagiumMekanismAddon : RagiumAddon {
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         if (RagiumCreativeTabs.INGREDIENTS.`is`(event.tabKey)) {
-            // Raginite
-            event.insertAfter(
-                RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(),
-                getEnrichedStack(RagiumMaterialType.RAGINITE),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-            )
-
-            // Azure
-            event.insertAfter(
-                RagiumItems.getGem(RagiumMaterialType.AZURE).toStack(),
-                getEnrichedStack(RagiumMaterialType.AZURE),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-            )
+            for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+                event.insertAfter(
+                    RagiumItems.getMaterial(essenceType.baseVariant, essenceType.parent).toStack(),
+                    getEnrichedStack(essenceType),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+                )
+            }
         }
     }
 }

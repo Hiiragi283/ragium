@@ -5,13 +5,13 @@
       "modid": "mekanism"
     }
   ],
-  "type": "mekanism:enriching",
+  "type": "mekanism:chemical_conversion",
   "input": {
     "count": 1,
-    "tag": "c:dusts/azure"
+    "tag": "c:scraps/deep_steel"
   },
   "output": {
-    "count": 1,
-    "id": "ragium:enriched_azure"
+    "amount": 10,
+    "id": "ragium:deep"
   }
 }

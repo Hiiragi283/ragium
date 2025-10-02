@@ -7,7 +7,7 @@
   ],
   "type": "replication:matter_value",
   "input": {
-    "item": "ragium:deep_scrap"
+    "tag": "c:scraps/deep"
   },
   "matter": [
     {

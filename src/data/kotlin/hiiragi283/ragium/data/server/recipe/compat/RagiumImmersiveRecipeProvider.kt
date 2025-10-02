@@ -13,14 +13,13 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
-import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -102,20 +101,20 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .builder()
             .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .input(ingotOrDust(RagiumMaterialType.AZURE_STEEL), 4)
-            .input(RagiumItems.DEEP_SCRAP, 4)
+            .input(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL, 4)
             .build(output, id(RagiumMaterialType.DEEP_STEEL.serializedName))
     }
 
     @JvmStatic
     private fun molten() {
-        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val molten: HTFluidContent<*, *, *> = data.molten
             val material: HTMaterialType = data.material
             // molten -> gem
             BottlingMachineRecipeBuilder
                 .builder()
                 .output(HTItemMaterialVariant.GEM, material)
-                .fluidInput(molten.commonTag, HTMoltenCrystalData.MOLTEN_TO_GEM)
+                .fluidInput(molten.commonTag, RagiumMoltenCrystalData.MOLTEN_TO_GEM)
                 .build(output, id("bottling/${material.serializedName}"))
 
             val log: TagKey<Item> = data.log ?: continue
@@ -123,7 +122,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             // log -> sap
             SqueezerRecipeBuilder
                 .builder()
-                .output(sap.get(), HTMoltenCrystalData.LOG_TO_SAP)
+                .output(sap.get(), RagiumMoltenCrystalData.LOG_TO_SAP)
                 .input(log)
                 .setEnergy(6400)
                 .build(output, id("squeezer/${sap.getPath()}"))
@@ -131,7 +130,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             RefineryRecipeBuilder
                 .builder()
                 .input(sap.commonTag, 1000)
-                .output(molten.get(), HTMoltenCrystalData.SAP_TO_MOLTEN)
+                .output(molten.get(), RagiumMoltenCrystalData.SAP_TO_MOLTEN)
                 .build(output, id("refinery/${molten.getPath()}"))
         }
 

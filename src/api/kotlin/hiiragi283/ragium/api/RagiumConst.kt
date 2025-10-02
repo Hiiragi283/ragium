@@ -97,5 +97,6 @@ object RagiumConst {
     const val MOLDS = "molds"
     const val NUGGETS = "nuggets"
     const val ORES = "ores"
+    const val SCRAPS = "scraps"
     const val STORAGE_BLOCKS = "storage_blocks"
 }

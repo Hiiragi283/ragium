@@ -274,8 +274,6 @@ object RagiumCreativeTabs {
             insertAfter(RagiumItems.getDust(HTVanillaMaterialType.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
 
-            insertBefore(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL), RagiumItems.DEEP_SCRAP)
-
             insertAfter(RagiumItems.getGem(RagiumMaterialType.ELDRITCH_PEARL), Items.ECHO_SHARD)
             insertAfter(Items.ECHO_SHARD, RagiumItems.ECHO_STAR)
         }

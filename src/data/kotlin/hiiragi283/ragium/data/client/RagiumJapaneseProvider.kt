@@ -6,12 +6,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -38,8 +35,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         delight()
         jade()
-        mekanism()
-        replication()
     }
 
     private fun advancement() {
@@ -166,7 +161,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Material
         add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
-        add(RagiumItems.DEEP_SCRAP, "深層の欠片")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
@@ -494,16 +488,5 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add("config.jade.plugin_ragium.output_side", "搬出面")
 
         add(RagiumTranslation.JADE_OUTPUT_SIDE, "搬出面: %s")
-    }
-
-    private fun mekanism() {
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "ラギナイト")
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "紺碧エッセンス")
-    }
-
-    private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM, "ラギウム")
-        addMatterType(RagiumReplicationAddon.MATTER_AZURE, "紺碧")
-        addMatterType(RagiumReplicationAddon.MATTER_DEEP, "深層")
     }
 }

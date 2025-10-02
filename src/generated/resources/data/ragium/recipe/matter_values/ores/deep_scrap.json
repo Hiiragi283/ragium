@@ -7,7 +7,7 @@
   ],
   "type": "replication:matter_value",
   "input": {
-    "item": "ragium:resonant_debris"
+    "tag": "c:ores/deep_scrap"
   },
   "matter": [
     {

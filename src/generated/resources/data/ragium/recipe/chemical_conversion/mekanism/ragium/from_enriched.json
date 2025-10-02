@@ -5,13 +5,13 @@
       "modid": "mekanism"
     }
   ],
-  "type": "mekanism:enriching",
+  "type": "mekanism:chemical_conversion",
   "input": {
     "count": 1,
-    "tag": "c:dusts/azure"
+    "tag": "ragium:enriched/ragium"
   },
   "output": {
-    "count": 1,
-    "id": "ragium:enriched_azure"
+    "amount": 80,
+    "id": "ragium:ragium"
   }
 }

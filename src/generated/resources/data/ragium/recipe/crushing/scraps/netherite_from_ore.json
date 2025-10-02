@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "tag": "c:ores/deep_scrap"
+    "tag": "c:ores/netherite_scrap"
   },
   "results": {
     "count": 2,
-    "id": "ragium:deep_scrap"
+    "id": "#c:scraps/netherite"
   }
 }

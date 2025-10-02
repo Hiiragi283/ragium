@@ -13,7 +13,7 @@
   "fluidOutputs": [],
   "ingredients": [
     {
-      "item": "ragium:deep_scrap"
+      "tag": "c:scraps/deep_steel"
     },
     [
       {

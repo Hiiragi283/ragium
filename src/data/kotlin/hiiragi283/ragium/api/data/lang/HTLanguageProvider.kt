@@ -14,8 +14,9 @@ import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
-import hiiragi283.ragium.common.material.HTMoltenCrystalData
+import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -23,6 +24,8 @@ import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.integration.replication.HTDeferredMatterType
+import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey
@@ -64,13 +67,21 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
         // Mekanism
-        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+        for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+            add(RagiumMekanismAddon.getChemical(essenceType), essenceType.getTranslatedName(type))
+        }
+
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val value: String = data.getTranslatedName(type)
             addFluid(data.molten, value)
             add(RagiumMekanismAddon.getChemical(data.material), value)
         }
 
         fromTable(RagiumMekanismAddon.MATERIAL_ITEMS)
+        // Replication
+        for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumReplicationAddon.MATTER_MAP) {
+            add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
+        }
     }
 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {
@@ -130,10 +141,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     fun addItemGroup(group: HTHolderLike, value: String) {
         add(group.getId().toDescriptionKey("itemGroup"), value)
-    }
-
-    fun addMatterType(type: IMatterType, value: String) {
-        add("${RagiumConst.REPLICATION}.matter_type.${type.name}", value)
     }
 
     // Mekanism

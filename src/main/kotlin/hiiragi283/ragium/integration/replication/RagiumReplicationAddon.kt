@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.common.material.RagiumEssenceType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
-import java.awt.Color
 
 @HTAddon(RagiumConst.REPLICATION)
 object RagiumReplicationAddon : RagiumAddon {
@@ -17,16 +17,12 @@ object RagiumReplicationAddon : RagiumAddon {
     val MATTER_REGISTER = HTDeferredMatterTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val MATTER_RAGIUM: HTDeferredMatterType<IMatterType> =
-        MATTER_REGISTER.registerType("ragium", Color(0xff0033), 128)
+    val MATTER_MAP: Map<RagiumEssenceType, HTDeferredMatterType<IMatterType>> = RagiumEssenceType.entries.associateWith { type ->
+        MATTER_REGISTER.registerType(type.serializedName, type.color, 128)
+    }
 
-    @JvmField
-    val MATTER_AZURE: HTDeferredMatterType<IMatterType> =
-        MATTER_REGISTER.registerType(RagiumConst.AZURE, Color(0x656da1), 128)
-
-    @JvmField
-    val MATTER_DEEP: HTDeferredMatterType<IMatterType> =
-        MATTER_REGISTER.registerType("deep", Color(0x404d5a), 128)
+    @JvmStatic
+    fun getMatterType(essence: RagiumEssenceType): HTDeferredMatterType<IMatterType> = MATTER_MAP[essence]!!
 
     //    RagiumAddon    //
 

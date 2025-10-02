@@ -5,13 +5,13 @@
       "modid": "mekanism"
     }
   ],
-  "type": "mekanism:chemical_conversion",
+  "type": "mekanism:enriching",
   "input": {
     "count": 1,
     "tag": "c:dusts/raginite"
   },
   "output": {
-    "amount": 10,
-    "id": "ragium:raginite"
+    "count": 1,
+    "id": "ragium:enriched_ragium"
   }
 }

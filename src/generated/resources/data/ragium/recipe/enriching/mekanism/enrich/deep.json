@@ -8,10 +8,10 @@
   "type": "mekanism:enriching",
   "input": {
     "count": 1,
-    "tag": "c:dusts/azure"
+    "tag": "c:scraps/deep_steel"
   },
   "output": {
     "count": 1,
-    "id": "ragium:enriched_azure"
+    "id": "ragium:enriched_deep"
   }
 }

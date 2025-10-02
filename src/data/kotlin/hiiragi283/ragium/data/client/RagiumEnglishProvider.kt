@@ -6,12 +6,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -38,8 +35,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         delight()
         jade()
-        mekanism()
-        replication()
     }
 
     private fun advancement() {
@@ -174,7 +169,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Material
         add(RagiumItems.BASALT_MESH, "Basalt Mesh")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
-        add(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
@@ -492,16 +486,5 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add("config.jade.plugin_ragium.output_side", "Output Side")
 
         add(RagiumTranslation.JADE_OUTPUT_SIDE, "Output Side: %s")
-    }
-
-    private fun mekanism() {
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "Raginite")
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "Azure Essence")
-    }
-
-    private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM, "Ragium")
-        addMatterType(RagiumReplicationAddon.MATTER_AZURE, "Azure")
-        addMatterType(RagiumReplicationAddon.MATTER_DEEP, "Deep")
     }
 }

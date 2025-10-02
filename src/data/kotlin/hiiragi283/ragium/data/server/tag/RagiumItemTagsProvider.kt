@@ -119,7 +119,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
                 Triple(HTItemMaterialVariant.CIRCUIT, tier, item)
             },
         )
-
+        // Fuels
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
 
@@ -128,6 +128,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
 
         builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
+        // Scraps
+        builder.addMaterial(HTItemMaterialVariant.SCRAP, HTVanillaMaterialType.NETHERITE, HTHolderLike.fromItem(Items.NETHERITE_SCRAP))
         // Mekanism Addon
         fromTriples(builder, RagiumMekanismAddon.MATERIAL_ITEMS.entries)
     }

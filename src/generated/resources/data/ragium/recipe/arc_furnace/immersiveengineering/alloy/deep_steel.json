@@ -9,7 +9,7 @@
   "additives": [
     {
       "basePredicate": {
-        "item": "ragium:deep_scrap"
+        "tag": "c:scraps/deep_steel"
       },
       "count": 4
     }
