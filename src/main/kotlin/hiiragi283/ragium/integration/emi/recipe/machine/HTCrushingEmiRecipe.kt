@@ -1,35 +1,33 @@
 package hiiragi283.ragium.integration.emi.recipe.machine
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.integration.emi.RagiumEmiCategories
+import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
+import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.integration.emi.addArrow
+import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.integration.emi.toTagEmi
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 
-class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
-    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/crusher.png")) {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.CRUSHING
+class HTCrushingEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTCrushingRecipe) :
+    HTEmiHolderRecipe<HTCrushingRecipe>(category, id, recipe) {
+    init {
+        addInput(recipe.ingredient)
+        addInput(RagiumFluidContents.LUBRICANT.toTagEmi())
 
-    override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
-
-    override fun getOutputs(): List<EmiStack> = results
+        recipe.results.forEach(::addChancedOutputs)
+    }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
+        widgets.addArrow(getPosition(2.5), getPosition(1))
+
         // Input
-        widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
-        widgets
-            .addSlot(RagiumFluidContents.LUBRICANT.toTagEmi(), getPosition(1), getPosition(2))
-            .catalyst(true)
-            .drawBack(false)
+        widgets.addSlot(input(0), getPosition(1), getPosition(0))
+        widgets.addSlot(input(1), getPosition(1), getPosition(2))
         // Output
-        widgets.addOutput(results.getOrNull(0), getPosition(4), getPosition(0.5))
-        widgets.addOutput(results.getOrNull(1), getPosition(5), getPosition(0.5))
-        widgets.addOutput(results.getOrNull(2), getPosition(4), getPosition(1.5))
-        widgets.addOutput(results.getOrNull(3), getPosition(5), getPosition(1.5))
+        widgets.addOutput(0, getPosition(4), getPosition(0.5))
+        widgets.addOutput(1, getPosition(5), getPosition(0.5))
+        widgets.addOutput(2, getPosition(4), getPosition(1.5))
+        widgets.addOutput(3, getPosition(5), getPosition(1.5))
     }
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.manager
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level
 /**
  * @see [net.minecraft.world.item.crafting.RecipeManager]
  */
-interface HTRecipeGetter {
+interface HTRecipeAccess {
     fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> getRecipeFor(
         type: RecipeType<RECIPE>,
         input: INPUT,

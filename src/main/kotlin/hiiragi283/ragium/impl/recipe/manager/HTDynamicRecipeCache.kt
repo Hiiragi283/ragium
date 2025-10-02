@@ -1,12 +1,13 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.impl.recipe.manager
 
-import hiiragi283.ragium.api.extension.recipeGetter
-import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeHolder
+import hiiragi283.ragium.api.extension.recipeAccess
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import kotlin.collections.iterator
 
 class HTDynamicRecipeCache<I : RecipeInput, R : Recipe<I>>(
     val recipeType: RecipeType<R>,
@@ -30,7 +31,7 @@ class HTDynamicRecipeCache<I : RecipeInput, R : Recipe<I>>(
 
     override fun getFirstHolder(input: I, level: Level): HTRecipeHolder<R>? {
         val holder: HTRecipeHolder<R>? =
-            level.recipeGetter.getRecipeFor(recipeType, input, level, lastRecipe) ?: dynamicFinder(input, level)
+            level.recipeAccess.getRecipeFor(recipeType, input, level, lastRecipe) ?: dynamicFinder(input, level)
         lastRecipe = holder
         return holder
     }

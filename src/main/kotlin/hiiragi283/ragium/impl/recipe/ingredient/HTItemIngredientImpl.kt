@@ -10,6 +10,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -78,8 +79,23 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
             }
         }
 
-        override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ItemStack>> =
-            either.mapLeft { it to amount }.mapRight { ingredient: ICustomIngredient -> ingredient.items.toList() }
+        override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = either.map(
+            { holderSet: HolderSet<Item> ->
+                holderSet.unwrap().map(
+                    { Either.left(it to amount) },
+                    { holders: List<Holder<Item>> ->
+                        Either.right(holders.map { holder: Holder<Item> -> ItemStack(holder, amount) })
+                    },
+                )
+            },
+            { ingredient: ICustomIngredient ->
+                Either.right(
+                    ingredient.items.toList().onEach { stack: ItemStack ->
+                        stack.count = this.amount
+                    },
+                )
+            },
+        )
 
         override fun test(stack: ItemStack): Boolean = testOnlyType(stack) && stack.count >= this.amount
 

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.extension.recipeGetter
+import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -112,7 +112,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         ): HTRecipeHolder<RECIPE>? {
             // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
             var matchedHolder: HTRecipeHolder<RECIPE>? = null
-            for (holder: HTRecipeHolder<RECIPE> in recipeType.getAllRecipes(level.recipeGetter)) {
+            for (holder: HTRecipeHolder<RECIPE> in recipeType.getAllHolders(level.recipeAccess)) {
                 val recipe: RECIPE = holder.recipe
                 if (!recipe.matches(input, level)) continue
                 val result: ItemStack = recipe.assemble(input, level.registryAccess())

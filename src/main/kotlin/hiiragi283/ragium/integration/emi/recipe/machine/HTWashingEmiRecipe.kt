@@ -1,34 +1,31 @@
 package hiiragi283.ragium.integration.emi.recipe.machine
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.integration.emi.RagiumEmiCategories
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
+import hiiragi283.ragium.impl.recipe.HTWashingRecipe
+import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.integration.emi.addArrow
+import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
 
-class HTWashingEmiRecipe(
-    id: ResourceLocation,
-    val ingredient: EmiIngredient,
-    val fluidIngredient: EmiIngredient,
-    val results: List<EmiStack>,
-) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/washer.png")) {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.WASHING
+class HTWashingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTWashingRecipe>) :
+    HTEmiHolderRecipe<HTWashingRecipe>(category, holder) {
+    init {
+        addInput(recipe.ingredient)
+        addInput(recipe.fluidIngredient)
 
-    override fun getInputs(): List<EmiIngredient> = listOf(ingredient, fluidIngredient)
-
-    override fun getOutputs(): List<EmiStack> = results
+        recipe.results.forEach(::addChancedOutputs)
+    }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
+        widgets.addArrow(getPosition(2.5), getPosition(1))
+
         // Input
-        widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
-        widgets.addSlot(fluidIngredient, getPosition(1), getPosition(2)).drawBack(false)
+        widgets.addSlot(input(0), getPosition(1), getPosition(0))
+        widgets.addSlot(input(1), getPosition(1), getPosition(2))
         // Output
-        widgets.addOutput(results.getOrNull(0), getPosition(4), getPosition(0.5))
-        widgets.addOutput(results.getOrNull(1), getPosition(5), getPosition(0.5))
-        widgets.addOutput(results.getOrNull(2), getPosition(4), getPosition(1.5))
-        widgets.addOutput(results.getOrNull(3), getPosition(5), getPosition(1.5))
+        widgets.addOutput(0, getPosition(4), getPosition(0.5))
+        widgets.addOutput(1, getPosition(5), getPosition(0.5))
+        widgets.addOutput(2, getPosition(4), getPosition(1.5))
+        widgets.addOutput(3, getPosition(5), getPosition(1.5))
     }
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.manager
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs

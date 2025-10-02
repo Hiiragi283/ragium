@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -30,6 +31,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         itemGroup()
         keyMapping()
         modTags()
+        recipeType()
         text()
         information()
 
@@ -396,6 +398,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumModTags.Items.TOOLS_DRILL, "Drills")
         add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
+    }
+
+    private fun recipeType() {
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
+        add(RagiumRecipeTypes.CRUSHING, "Crushing")
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        add(RagiumRecipeTypes.EXTRACTING, "Extracting")
+        add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
+        add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.SIMULATING, "Simulating")
+        add(RagiumRecipeTypes.WASHING, "Washing")
     }
 
     private fun text() {

@@ -1,57 +1,42 @@
 package hiiragi283.ragium.integration.emi.recipe.machine
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.integration.emi.RagiumEmiCategories
+import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
+import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.addTank
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
+import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
+import kotlin.jvm.optionals.getOrNull
 
-class HTFluidTransformingEmiRecipe(
-    id: ResourceLocation,
-    val fluidIngredient: EmiIngredient,
-    val itemIngredient: EmiIngredient,
-    val itemResult: EmiStack,
-    val fluidResult: EmiStack,
-) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
+class HTFluidTransformingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTFluidTransformRecipe>) :
+    HTEmiHolderRecipe<HTFluidTransformRecipe>(category, holder) {
     init {
-        for (stack: EmiStack in itemIngredient.emiStacks) {
-            val stackIn: ItemStack = stack.itemStack
-            if (stackIn.hasCraftingRemainingItem()) {
-                stack.remainder = EmiStack.of(stackIn.craftingRemainingItem)
-                break
-            }
-        }
+        addInput(recipe.fluidIngredient)
+        addInput(recipe.itemIngredient.getOrNull())
+
+        addOutputs(recipe.itemResult.getOrNull())
+        addOutputs(recipe.fluidResult.getOrNull())
     }
 
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.FLUID_TRANSFORM
-
-    override fun getInputs(): List<EmiIngredient> = listOf(itemIngredient, fluidIngredient)
-
-    override fun getOutputs(): List<EmiStack> = listOf(itemResult, fluidResult)
-
     override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
+        widgets.addArrow(getPosition(3), getPosition(1))
+
         // Input
         widgets
             .addTank(
-                fluidIngredient,
+                input(0),
                 getPosition(1),
                 getPosition(0),
             )
-        widgets.addSlot(itemIngredient, getPosition(2.5), getPosition(0)).drawBack(false)
+        widgets.addSlot(input(1), getPosition(2.5), getPosition(0))
         // Output
-        widgets.addSlot(itemResult, getPosition(3.5), getPosition(2)).drawBack(false)
+        widgets.addSlot(output(0), getPosition(3.5), getPosition(2))
         widgets
             .addTank(
-                fluidResult,
+                output(1),
                 getPosition(5),
                 getPosition(0),
             ).recipeContext(this)
     }
-
-    override val arrowPosX: Int = getPosition(3)
 }

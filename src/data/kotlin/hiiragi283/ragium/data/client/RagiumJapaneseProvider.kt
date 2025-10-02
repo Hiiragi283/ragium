@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -30,6 +31,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         itemGroup()
         keyMapping()
         modTags()
+        recipeType()
         text()
         information()
 
@@ -398,6 +400,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumModTags.Items.TOOLS_DRILL, "ドリル")
         add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
+    }
+
+    private fun recipeType() {
+        add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
+        add(RagiumRecipeTypes.CRUSHING, "破砕")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        add(RagiumRecipeTypes.EXTRACTING, "抽出")
+        add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
+        add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
     }
 
     private fun text() {

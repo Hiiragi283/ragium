@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
@@ -22,7 +22,7 @@ import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.collection.HTHolderSetList
 import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
 import hiiragi283.ragium.impl.collection.HTWrappedTable
-import hiiragi283.ragium.impl.recipe.HTRecipeGetterImpl
+import hiiragi283.ragium.impl.recipe.manager.HTRecipeAccessImpl
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
 import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
@@ -173,5 +173,5 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 
-    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeGetter = HTRecipeGetterImpl(recipeManager)
+    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess = HTRecipeAccessImpl(recipeManager)
 }

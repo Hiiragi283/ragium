@@ -1,33 +1,28 @@
 package hiiragi283.ragium.integration.emi.recipe.machine
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.integration.emi.RagiumEmiCategories
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
+import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.integration.emi.addArrow
+import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
+import kotlin.jvm.optionals.getOrNull
 
-class HTSimulatingEmiRecipe(
-    id: ResourceLocation,
-    val ingredient: EmiIngredient,
-    val catalyst: EmiIngredient,
-    val result: EmiStack,
-) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/simulator.png")) {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.SIMULATING
-
-    override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
-
-    override fun getCatalysts(): List<EmiIngredient> = listOf(catalyst)
-
-    override fun getOutputs(): List<EmiStack> = listOf(result)
+class HTSimulatingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemWithCatalystToItemRecipe>) :
+    HTEmiHolderRecipe<HTItemWithCatalystToItemRecipe>(category, holder) {
+    init {
+        addInput(recipe.ingredient.getOrNull())
+        addCatalyst(recipe.catalyst)
+        addOutputs(recipe.result)
+    }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
+        widgets.addArrow(getPosition(2.5), getPosition(1))
+
         // Input
-        widgets.addSlot(ingredient, getPosition(1), getPosition(0)).drawBack(false)
-        widgets.addSlot(catalyst, getPosition(1), getPosition(2)).drawBack(false).catalyst(true)
+        widgets.addSlot(input(0), getPosition(1), getPosition(0))
+        widgets.addSlot(catalyst(0), getPosition(1), getPosition(2)).catalyst(true)
         // Output
-        widgets.addOutput(result, getPosition(4.5), getPosition(1), true)
+        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }
 }

@@ -5,10 +5,10 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank

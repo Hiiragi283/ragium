@@ -9,6 +9,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -55,8 +56,23 @@ class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>,
             }
         }
 
-        override fun unwrap(): Either<Pair<HolderSet<Fluid>, Int>, List<FluidStack>> =
-            either.mapLeft { it to amount }.mapRight { ingredient: FluidIngredient -> ingredient.stacks.toList() }
+        override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>> = either.map(
+            { holderSet: HolderSet<Fluid> ->
+                holderSet.unwrap().map(
+                    { Either.left(it to amount) },
+                    { holders: List<Holder<Fluid>> ->
+                        Either.right(holders.map { holder: Holder<Fluid> -> FluidStack(holder, amount) })
+                    },
+                )
+            },
+            { ingredient: FluidIngredient ->
+                Either.right(
+                    ingredient.stacks.toList().onEach { stack: FluidStack ->
+                        stack.amount = this.amount
+                    },
+                )
+            },
+        )
 
         override fun test(stack: FluidStack): Boolean = testOnlyType(stack) && stack.amount >= this.amount
 

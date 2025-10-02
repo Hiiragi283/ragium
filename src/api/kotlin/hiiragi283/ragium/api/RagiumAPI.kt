@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.value.HTValueInput
@@ -147,5 +147,5 @@ interface RagiumAPI {
      */
     fun wrapRandom(random: RandomSource): Random
 
-    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeGetter
+    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess
 }

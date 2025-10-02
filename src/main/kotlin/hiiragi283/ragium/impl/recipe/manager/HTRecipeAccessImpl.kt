@@ -1,7 +1,7 @@
-package hiiragi283.ragium.impl.recipe
+package hiiragi283.ragium.impl.recipe.manager
 
-import hiiragi283.ragium.api.recipe.HTRecipeGetter
-import hiiragi283.ragium.api.recipe.HTRecipeHolder
+import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import kotlin.jvm.optionals.getOrNull
 
-internal class HTRecipeGetterImpl(private val recipeManager: RecipeManager) : HTRecipeGetter {
+internal class HTRecipeAccessImpl(private val recipeManager: RecipeManager) : HTRecipeAccess {
     override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> getRecipeFor(
         type: RecipeType<RECIPE>,
         input: INPUT,

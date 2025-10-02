@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.manager
 
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.resources.ResourceLocation
@@ -17,6 +17,8 @@ data class HTRecipeHolder<R : Recipe<*>>(
     override fun getId(): ResourceLocation = id
 
     fun toVanilla(): RecipeHolder<R> = RecipeHolder(id, recipe)
+
+    inline fun <reified R2 : R> castRecipe(): HTRecipeHolder<R2> = HTRecipeHolder(id, recipe as R2)
 
     inline fun <R2 : Recipe<*>> mapRecipe(action: (R) -> R2): HTRecipeHolder<R2> = HTRecipeHolder(id, action(recipe))
 }
