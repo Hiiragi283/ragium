@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.extension.recipeAccess
-import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -15,9 +15,9 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -25,12 +25,8 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
@@ -103,7 +99,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         override fun getFirstHolder(input: SingleRecipeInput, level: Level): HTRecipeHolder<HTSingleInputRecipe>? =
             getFirstHolder(RagiumRecipeTypes.SAWMILL, input, level)
                 ?: getFirstHolder(RagiumRecipeTypes.STONECUTTER, input, level)
-                    ?.mapRecipe(::StoneCuttingRecipe)
+                    ?.mapRecipe(HTItemToItemRecipe::wrapVanilla.partially1(level.registryAccess()))
 
         private fun <RECIPE : Recipe<SingleRecipeInput>> getFirstHolder(
             recipeType: HTDeferredRecipeType<SingleRecipeInput, RECIPE>,
@@ -123,24 +119,5 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
             }
             return matchedHolder
         }
-    }
-
-    private class StoneCuttingRecipe(private val recipe: StonecutterRecipe) : HTSingleInputRecipe {
-        private val ingredient: Ingredient get() = recipe.ingredients[0]
-
-        override fun getRequiredCount(stack: ItemStack): Int = when {
-            ingredient.test(stack) -> 1
-            else -> 0
-        }
-
-        override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
-
-        override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = recipe.assemble(input, registries)
-
-        override fun getSerializer(): RecipeSerializer<*> = unsupported()
-
-        override fun getType(): RecipeType<*> = unsupported()
-
-        override fun isIncomplete(): Boolean = ingredient.items.isEmpty()
     }
 }

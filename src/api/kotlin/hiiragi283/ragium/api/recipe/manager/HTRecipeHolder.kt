@@ -20,5 +20,9 @@ data class HTRecipeHolder<R : Recipe<*>>(
 
     inline fun <reified R2 : R> castRecipe(): HTRecipeHolder<R2> = HTRecipeHolder(id, recipe as R2)
 
+    fun withPrefix(prefix: String): HTRecipeHolder<R> = HTRecipeHolder(id.withPrefix(prefix), recipe)
+
+    fun withSuffix(suffix: String): HTRecipeHolder<R> = HTRecipeHolder(id.withSuffix(suffix), recipe)
+
     inline fun <R2 : Recipe<*>> mapRecipe(action: (R) -> R2): HTRecipeHolder<R2> = HTRecipeHolder(id, action(recipe))
 }

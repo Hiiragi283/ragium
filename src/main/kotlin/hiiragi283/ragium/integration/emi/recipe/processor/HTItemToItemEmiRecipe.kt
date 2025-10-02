@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.emi.recipe.machine
+package hiiragi283.ragium.integration.emi.recipe.processor
 
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder

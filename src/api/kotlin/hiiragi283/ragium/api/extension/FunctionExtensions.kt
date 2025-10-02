@@ -18,6 +18,8 @@ fun <P1, P2, P3, P4, R> ((P1, P2, P3, P4) -> R).partially1(p1: P1): (P2, P3, P4)
 
 fun <P1, P2, R> ((P1, P2) -> R).partially2(p1: P1, p2: P2): () -> R = { this(p1, p2) }
 
+fun <P1, P2, P3, R> ((P1, P2, P3) -> R).partially2(p1: P1, p2: P2): (P3) -> R = { p3: P3 -> this(p1, p2, p3) }
+
 fun (() -> Boolean).negate(): () -> Boolean = { !this() }
 
 fun <P1> ((P1) -> Boolean).negate(): (P1) -> Boolean = { p1: P1 -> !this(p1) }

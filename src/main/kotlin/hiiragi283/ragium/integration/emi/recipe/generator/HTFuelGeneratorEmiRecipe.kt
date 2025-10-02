@@ -8,10 +8,9 @@ import hiiragi283.ragium.integration.emi.addTank
 import hiiragi283.ragium.integration.emi.addWidget
 import hiiragi283.ragium.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.integration.emi.recipe.HTEmiRecipe
-import net.minecraft.resources.ResourceLocation
 
-class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiFluidFuelData) :
-    HTEmiRecipe<HTEmiFluidFuelData>(category, id, recipe) {
+class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, recipe: HTEmiFluidFuelData) :
+    HTEmiRecipe<HTEmiFluidFuelData>(category, recipe.getId(), recipe) {
     init {
         addInput(recipe.itemInput)
         addInput(recipe.fluidInput)

@@ -5,7 +5,6 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
-import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -57,10 +56,6 @@ typealias RegistryKey<T> = ResourceKey<out Registry<T>>
 fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
 
 fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
-
-fun <T : Any> DefaultedRegistry<T>.holdersNotEmpty(): Sequence<Holder<T>> = holdersSequence()
-    .filter(Holder<T>::isBound)
-    .filterNot { holder: Holder<T> -> holder.`is`(defaultKey) }
 
 //    Holder    //
 

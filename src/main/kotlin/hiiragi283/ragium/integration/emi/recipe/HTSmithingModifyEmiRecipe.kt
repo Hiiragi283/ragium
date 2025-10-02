@@ -10,8 +10,9 @@ import dev.emi.emi.api.widget.WidgetHolder
 import dev.emi.emi.recipe.EmiSmithingRecipe
 import hiiragi283.ragium.api.extension.compose
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.util.HTRegistryHelper
 import hiiragi283.ragium.integration.emi.RagiumEmiPlugin
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SmithingRecipeInput
 import java.util.*
 import kotlin.random.asKotlinRandom
@@ -19,8 +20,10 @@ import kotlin.random.asKotlinRandom
 class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient, private val recipe: HTSmithingModifyRecipe) :
     EmiSmithingRecipe(
         template,
-        HTRegistryHelper
-            .itemStackSequence()
+        BuiltInRegistries
+            .ITEM
+            .asSequence()
+            .map(::ItemStack)
             .filter(recipe::isBaseIngredient)
             .map(EmiStack::of)
             .toList()

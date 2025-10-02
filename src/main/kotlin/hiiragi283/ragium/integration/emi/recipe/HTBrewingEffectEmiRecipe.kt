@@ -5,10 +5,9 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.data.HTEmiBrewingEffect
-import net.minecraft.resources.ResourceLocation
 
-class HTBrewingEffectEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiBrewingEffect) :
-    HTEmiRecipe<HTEmiBrewingEffect>(category, id, recipe) {
+class HTBrewingEffectEmiRecipe(category: HTEmiRecipeCategory, recipe: HTEmiBrewingEffect) :
+    HTEmiRecipe<HTEmiBrewingEffect>(category, recipe.getId(), recipe) {
     init {
         addInput(recipe.input.let(EmiStack::of))
 
