@@ -227,9 +227,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun material() {
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
             val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
-            val base: ItemLike = RagiumItems.MATERIALS.get(baseVariant, material) ?: continue
+            val base: ItemLike = RagiumItems.MATERIALS[baseVariant, material] ?: continue
 
-            RagiumBlocks.MATERIALS.get(HTBlockMaterialVariant.STORAGE_BLOCK, material)?.let { storage: ItemLike ->
+            RagiumBlocks.MATERIALS[HTBlockMaterialVariant.STORAGE_BLOCK, material]?.let { storage: ItemLike ->
                 // Block -> Base
                 HTShapelessRecipeBuilder
                     .misc(base, 9)
@@ -244,7 +244,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_base")
             }
 
-            RagiumItems.MATERIALS.get(HTItemMaterialVariant.NUGGET, material)?.let { nugget: ItemLike ->
+            RagiumItems.MATERIALS[HTItemMaterialVariant.NUGGET, material]?.let { nugget: ItemLike ->
                 // Base -> Nugget
                 HTShapelessRecipeBuilder
                     .misc(nugget, 9)
@@ -273,7 +273,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun gemToChip(material: HTMaterialType) {
-        RagiumItems.MATERIALS.get(HTItemMaterialVariant.CHIP, material)?.let { chip: ItemLike ->
+        RagiumItems.MATERIALS[HTItemMaterialVariant.CHIP, material]?.let { chip: ItemLike ->
             // 3x Gem -> Chip
             HTItemToObjRecipeBuilder
                 .compressing(

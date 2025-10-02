@@ -118,7 +118,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, tint: Int ->
                     when {
                         tint != 0 -> return@register -1
-                        else -> color.color.textureDiffuseColor
+                        else -> color.dyeColor.textureDiffuseColor
                     }
                 },
                 block.get(),
@@ -153,7 +153,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // LED Blocks
         for ((variant: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             event.register(
-                { _: ItemStack, tint: Int -> if (tint != 0) -1 else variant.color.textureDiffuseColor },
+                { _: ItemStack, tint: Int -> if (tint != 0) -1 else variant.dyeColor.textureDiffuseColor },
                 block.get(),
             )
         }

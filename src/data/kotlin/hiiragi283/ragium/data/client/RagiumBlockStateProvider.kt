@@ -5,9 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.rowValues
-import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -34,10 +32,13 @@ import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
 import java.util.function.Supplier
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
+    private val fileHelper: ExistingFileHelper = context.fileHelper
+
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildSet {
@@ -261,7 +262,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             val suffix: String = if (bites > 0) "_slice$bites" else ""
             val pieModel: BlockModelBuilder = models()
                 .getBuilder(block.getPath() + suffix)
-                .parent(modelFile(RagiumConst.FARMERS_DELIGHT.toId("block/pie$suffix")))
+                .parent(ModelFile.ExistingModelFile(RagiumConst.FARMERS_DELIGHT.toId("block/pie$suffix"), fileHelper))
                 .texture("particle", blockId.withSuffix("_top"))
                 .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block/pie_bottom"))
                 .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block/pie_side"))
@@ -308,7 +309,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         id: ResourceLocation = holder.blockId,
         factory: (Block, ModelFile) -> Unit = ::simpleBlock,
     ) {
-        factory(holder.get(), modelFile(id))
+        factory(holder.get(), ModelFile.ExistingModelFile(id, fileHelper))
     }
 
     private fun altTextureBlock(holder: HTDeferredBlock<*, *>, all: ResourceLocation) {

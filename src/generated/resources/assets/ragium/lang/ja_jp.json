@@ -420,6 +420,8 @@
   "key.ragium.category": "Ragium",
   "key.ragium.open_potion_bundle.desc": "ポーションバンドルを開く",
   "key.ragium.open_universal_bundle.desc": "共有バンドルを開く",
+  "replication.matter_type.azure": "紺碧",
+  "replication.matter_type.deep": "深層",
   "replication.matter_type.ragium": "ラギウム",
   "tag.block.ragium.deepslate_ore_replaceables": "共振の残骸で置換可能",
   "tag.block.ragium.led_blocks": "LEDブロック",

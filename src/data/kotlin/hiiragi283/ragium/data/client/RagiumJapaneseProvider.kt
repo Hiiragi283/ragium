@@ -502,6 +502,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "ラギウム")
+        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM, "ラギウム")
+        addMatterType(RagiumReplicationAddon.MATTER_AZURE, "紺碧")
+        addMatterType(RagiumReplicationAddon.MATTER_DEEP, "深層")
     }
 }

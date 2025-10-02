@@ -32,25 +32,25 @@ enum class HTArmorVariant(
         @JvmField
         val ARMOR_TABLE: HTTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {
             // Iron
-            put(HELMET, HTVanillaMaterialType.IRON, Items.IRON_HELMET)
-            put(CHESTPLATE, HTVanillaMaterialType.IRON, Items.IRON_CHESTPLATE)
-            put(LEGGINGS, HTVanillaMaterialType.IRON, Items.IRON_LEGGINGS)
-            put(BOOTS, HTVanillaMaterialType.IRON, Items.IRON_BOOTS)
+            this[HELMET, HTVanillaMaterialType.IRON] = Items.IRON_HELMET
+            this[CHESTPLATE, HTVanillaMaterialType.IRON] = Items.IRON_CHESTPLATE
+            this[LEGGINGS, HTVanillaMaterialType.IRON] = Items.IRON_LEGGINGS
+            this[BOOTS, HTVanillaMaterialType.IRON] = Items.IRON_BOOTS
             // Gold
-            put(HELMET, HTVanillaMaterialType.GOLD, Items.GOLDEN_HELMET)
-            put(CHESTPLATE, HTVanillaMaterialType.GOLD, Items.GOLDEN_CHESTPLATE)
-            put(LEGGINGS, HTVanillaMaterialType.GOLD, Items.GOLDEN_LEGGINGS)
-            put(BOOTS, HTVanillaMaterialType.GOLD, Items.GOLDEN_BOOTS)
+            this[HELMET, HTVanillaMaterialType.GOLD] = Items.GOLDEN_HELMET
+            this[CHESTPLATE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_CHESTPLATE
+            this[LEGGINGS, HTVanillaMaterialType.GOLD] = Items.GOLDEN_LEGGINGS
+            this[BOOTS, HTVanillaMaterialType.GOLD] = Items.GOLDEN_BOOTS
             // Diamond
-            put(HELMET, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_HELMET)
-            put(CHESTPLATE, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_CHESTPLATE)
-            put(LEGGINGS, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_LEGGINGS)
-            put(BOOTS, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_BOOTS)
+            this[HELMET, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_HELMET
+            this[CHESTPLATE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_CHESTPLATE
+            this[LEGGINGS, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_LEGGINGS
+            this[BOOTS, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_BOOTS
             // Netherite
-            put(HELMET, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_HELMET)
-            put(CHESTPLATE, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_CHESTPLATE)
-            put(LEGGINGS, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_LEGGINGS)
-            put(BOOTS, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_BOOTS)
+            this[HELMET, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_HELMET
+            this[CHESTPLATE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_CHESTPLATE
+            this[LEGGINGS, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_LEGGINGS
+            this[BOOTS, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_BOOTS
         }
     }
 

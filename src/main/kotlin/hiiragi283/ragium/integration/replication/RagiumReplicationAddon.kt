@@ -1,31 +1,32 @@
 package hiiragi283.ragium.integration.replication
 
-import com.buuz135.replication.ReplicationRegistry
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.registry.HTDeferredHolder
-import hiiragi283.ragium.api.registry.HTDeferredRegister
-import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
+import java.awt.Color
 
 @HTAddon(RagiumConst.REPLICATION)
 object RagiumReplicationAddon : RagiumAddon {
     //    Matter    //
 
     @JvmField
-    val MATTER_REGISTER: HTDeferredRegister<IMatterType> =
-        HTDeferredRegister(ReplicationRegistry.MATTER_TYPES_KEY, RagiumAPI.MOD_ID)
+    val MATTER_REGISTER = HTDeferredMatterTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val MATTER_RAGIUM: HTDeferredHolder<IMatterType, IMatterType> = matter(RagiumMatterType.RAGIUM)
+    val MATTER_RAGIUM: HTDeferredMatterType<IMatterType> =
+        MATTER_REGISTER.registerType("ragium", Color(0xff0033), 128)
 
-    @JvmStatic
-    private fun matter(type: IMatterType): HTDeferredHolder<IMatterType, IMatterType> =
-        MATTER_REGISTER.register(type.name) { _: ResourceLocation -> type }
+    @JvmField
+    val MATTER_AZURE: HTDeferredMatterType<IMatterType> =
+        MATTER_REGISTER.registerType(RagiumConst.AZURE, Color(0x656da1), 128)
+
+    @JvmField
+    val MATTER_DEEP: HTDeferredMatterType<IMatterType> =
+        MATTER_REGISTER.registerType("deep", Color(0x404d5a), 128)
 
     //    RagiumAddon    //
 

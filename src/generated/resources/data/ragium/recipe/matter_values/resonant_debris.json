@@ -7,20 +7,16 @@
   ],
   "type": "replication:matter_value",
   "input": {
-    "tag": "c:gems/azure"
+    "item": "ragium:resonant_debris"
   },
   "matter": [
     {
-      "type": "replication:organic",
-      "amount": 2.0
-    },
-    {
       "type": "replication:precious",
-      "amount": 5.0
+      "amount": 18.0
     },
     {
-      "type": "replication:earth",
-      "amount": 3.0
+      "type": "ragium:deep",
+      "amount": 18.0
     }
   ]
 }

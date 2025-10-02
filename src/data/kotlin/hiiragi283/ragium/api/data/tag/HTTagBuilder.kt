@@ -27,14 +27,14 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
         add(tagKey, holder.getId(), type)
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache.put(tagKey, Entry(id, false, type))
+        entryCache[tagKey] = Entry(id, false, type)
     }
 
     fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         addTag(tagKey, registryKey.createTagKey(child), type)
 
     fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache.put(tagKey, Entry(child.location, true, type))
+        entryCache[tagKey] = Entry(child.location, true, type)
     }
 
     fun build(action: BiConsumer<TagKey<T>, TagEntry>) {

@@ -500,6 +500,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "Ragium")
+        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM, "Ragium")
+        addMatterType(RagiumReplicationAddon.MATTER_AZURE, "Azure")
+        addMatterType(RagiumReplicationAddon.MATTER_DEEP, "Deep")
     }
 }

@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.itemId
-import hiiragi283.ragium.api.extension.modelFile
-import hiiragi283.ragium.api.extension.textureId
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -23,14 +21,17 @@ import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
+    private val fileHelper: ExistingFileHelper = context.fileHelper
+
     override fun registerModels() {
         registerBlocks()
         registerItems()
     }
 
-    private val generated: ModelFile = modelFile(vanillaId("item/generated"))
+    private val generated: ModelFile = ModelFile.ExistingModelFile(vanillaId("item/generated"), fileHelper)
 
     private fun registerBlocks() {
         // Blocks
@@ -96,7 +97,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.getId().withSuffix("_bucket").path)
-                .parent(modelFile(RagiumConst.NEOFORGE.toId("item/bucket")))
+                .parent(ModelFile.ExistingModelFile(RagiumConst.NEOFORGE.toId("item/bucket"), fileHelper))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }

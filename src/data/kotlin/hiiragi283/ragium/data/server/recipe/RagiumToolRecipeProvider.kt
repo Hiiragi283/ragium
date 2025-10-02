@@ -169,14 +169,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         addTemplate(upgrade, material)
         // Armor
         for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
-            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, beforeMaterial) ?: continue
+            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE[variant, beforeMaterial] ?: continue
             upgradeFactory(armor, beforeArmor)
         }
         // Tool
         for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material)) {
             val beforeTool: ItemLike = when (variant) {
-                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, beforeMaterial)
-                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, beforeMaterial)
+                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE[variant, beforeMaterial]
+                is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeMaterial]
                 is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[beforeMaterial]?.get()
                 else -> null
             } ?: continue
@@ -223,7 +223,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color), CraftingBookCategory.EQUIPMENT)
+            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.dyeColor), CraftingBookCategory.EQUIPMENT)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
                 .savePrefixed(output, "${variant.serializedName}_")

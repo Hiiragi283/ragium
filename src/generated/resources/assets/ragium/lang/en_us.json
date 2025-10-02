@@ -420,6 +420,8 @@
   "key.ragium.category": "Ragium",
   "key.ragium.open_potion_bundle.desc": "Open Potion Bundle",
   "key.ragium.open_universal_bundle.desc": "Open Universal Bundle",
+  "replication.matter_type.azure": "Azure",
+  "replication.matter_type.deep": "Deep",
   "replication.matter_type.ragium": "Ragium",
   "tag.block.ragium.deepslate_ore_replaceables": "Replaceable by Resonant Debris",
   "tag.block.ragium.led_blocks": "LED Blocks",

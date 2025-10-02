@@ -60,12 +60,8 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val MATERIAL_ITEMS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
-        put(
-            HTMekMaterialVariant.ENRICHED,
-            RagiumMaterialType.RAGINITE,
-            ITEM_REGISTER.registerSimpleItem("enriched_raginite"),
-        )
-        put(HTMekMaterialVariant.ENRICHED, RagiumMaterialType.AZURE, ITEM_REGISTER.registerSimpleItem("enriched_azure"))
+        this[HTMekMaterialVariant.ENRICHED, RagiumMaterialType.RAGINITE] = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
+        this[HTMekMaterialVariant.ENRICHED, RagiumMaterialType.AZURE] = ITEM_REGISTER.registerSimpleItem("enriched_azure")
     }
 
     @JvmStatic
@@ -75,7 +71,7 @@ object RagiumMekanismAddon : RagiumAddon {
         HTVanillaMaterialType.DIAMOND -> MekanismItems.ENRICHED_DIAMOND
         HTVanillaMaterialType.OBSIDIAN -> MekanismItems.ENRICHED_OBSIDIAN
         HTVanillaMaterialType.GOLD -> MekanismItems.ENRICHED_GOLD
-        else -> MATERIAL_ITEMS.get(HTMekMaterialVariant.ENRICHED, material)
+        else -> MATERIAL_ITEMS[HTMekMaterialVariant.ENRICHED, material]
             ?: error("Unknown enriched item for ${material.serializedName}")
     }
 
