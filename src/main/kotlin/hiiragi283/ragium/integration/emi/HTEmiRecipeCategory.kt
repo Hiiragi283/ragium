@@ -53,5 +53,5 @@ class HTEmiRecipeCategory private constructor(
         sorter: Comparator<EmiRecipe> = EmiRecipeSorting.none(),
     ) : this(viewerType.getBounds(), viewerType, icon, simplified, sorter)
 
-    override fun getName(): Component = viewerType.getTitle()
+    override fun getName(): Component = viewerType.getText()
 }

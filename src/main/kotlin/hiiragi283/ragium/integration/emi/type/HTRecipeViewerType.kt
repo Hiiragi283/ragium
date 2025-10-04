@@ -2,8 +2,7 @@ package hiiragi283.ragium.integration.emi.type
 
 import hiiragi283.ragium.api.math.HTBoundsProvider
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.text.HTHasTranslationKey
-import net.minecraft.network.chat.Component
+import hiiragi283.ragium.api.text.HTHasText
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -13,11 +12,9 @@ import net.minecraft.world.level.ItemLike
  */
 interface HTRecipeViewerType<RECIPE : Any> :
     HTBoundsProvider,
-    HTHasTranslationKey,
+    HTHasText,
     HTHolderLike {
     val iconStack: ItemStack
     val icon: ResourceLocation?
     val workStations: List<ItemLike>
-
-    fun getTitle(): Component = Component.translatable(translationKey)
 }

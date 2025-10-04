@@ -18,7 +18,7 @@ interface HTCapabilityManager<CONTAINER : Any> {
      * @return 見つからない場合は`null`
      */
     fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, side: Direction?): T?
-    
+
     /**
      * このCapabilityが運用可能か判定します。
      */

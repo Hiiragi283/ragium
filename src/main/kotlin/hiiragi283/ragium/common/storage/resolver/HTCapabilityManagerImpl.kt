@@ -47,7 +47,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any,
         }
         return handler as? T
     }
-    
+
     fun interface ProxyCreator<HANDLER : Any, SIDED_HANDLER : HANDLER> {
         fun create(handler: SIDED_HANDLER, side: Direction?, holder: HTCapabilityHolder?): HANDLER
     }
