@@ -14,7 +14,7 @@ object HTIngredientHelper {
     //    Item    //
 
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: ToIntFunction<ItemStack>, simulate: Boolean): Int {
+    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ItemStack>, simulate: Boolean): Int {
         val stackIn: ItemStack = slot.getStack()
         if (stackIn.hasCraftingRemainingItem() && stackIn.count == 1) {
             slot.setStack(stackIn.craftingRemainingItem)
@@ -31,7 +31,7 @@ object HTIngredientHelper {
      * @return 実際に削除された個数
      */
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: HTItemIngredient, simulate: Boolean): Int =
+    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: HTItemIngredient, simulate: Boolean): Int =
         shrinkStack(slot, ingredient::getRequiredAmount, simulate)
 
     /**
@@ -41,7 +41,7 @@ object HTIngredientHelper {
      * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された個数
      */
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: Optional<HTItemIngredient>, simulate: Boolean): Int =
+    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: Optional<HTItemIngredient>, simulate: Boolean): Int =
         ingredient.map { ingredient1 -> shrinkStack(slot, ingredient1, simulate) }.orElse(0)
 
     //    Fluid    //

@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.inventory.container
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.util.function.Predicate
 
@@ -17,7 +17,7 @@ interface HTGenericContainerRows {
         @JvmStatic
         fun createHandler(
             rows: Int,
-            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: Predicate<ItemStack> = HTItemPredicates.TRUE,
             canInsert: Predicate<ItemStack> = HTItemPredicates.TRUE,
             filter: Predicate<ItemStack> = HTItemPredicates.TRUE,

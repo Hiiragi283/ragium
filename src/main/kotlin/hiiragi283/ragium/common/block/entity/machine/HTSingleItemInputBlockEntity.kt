@@ -30,7 +30,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         state: BlockState,
     ) : super(recipeType, variant, pos, state)
 
-    protected lateinit var inputSlot: HTItemSlot
+    protected lateinit var inputSlot: HTItemSlot.Mutable
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 

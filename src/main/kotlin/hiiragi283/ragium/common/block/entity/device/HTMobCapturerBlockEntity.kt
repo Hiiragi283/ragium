@@ -24,10 +24,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
 class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.MOB_CAPTURER, pos, state) {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlots: List<HTItemSlot>
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         inputSlot = HTItemStackSlot.input(
             listener,
             HTSlotHelper.getSlotPosX(2),

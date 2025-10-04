@@ -36,7 +36,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var catalystSlot: HTItemSlot
     private lateinit var outputSlots: List<HTItemSlot>
 

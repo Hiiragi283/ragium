@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
@@ -25,7 +25,7 @@ open class HTFluidItemStackSlot(
     listener: HTContentListener?,
     x: Int,
     y: Int,
-) : HTItemStackSlot(Item.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y),
+) : HTItemStackSlot(HTItemSlot.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y),
     HTFluidItemSlot {
     companion object {
         @JvmStatic

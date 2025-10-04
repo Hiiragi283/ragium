@@ -2,21 +2,15 @@ package hiiragi283.ragium.api.storage.item
 
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.IItemHandler
 
 /**
- * 向きに応じて制御された[IItemHandlerModifiable]の拡張インターフェース
+ * 向きに応じて制御された[IItemHandler]の拡張インターフェース
  * @see [HTItemHandler]
  * @see [mekanism.api.inventory.ISidedItemHandler]
  */
-interface HTSidedItemHandler : IItemHandlerModifiable {
+interface HTSidedItemHandler : IItemHandler {
     fun getItemSideFor(): Direction? = null
-
-    fun setStackInSlot(slot: Int, stack: ItemStack, side: Direction?)
-
-    override fun setStackInSlot(slot: Int, stack: ItemStack) {
-        setStackInSlot(slot, stack, getItemSideFor())
-    }
 
     fun getSlots(side: Direction?): Int
 

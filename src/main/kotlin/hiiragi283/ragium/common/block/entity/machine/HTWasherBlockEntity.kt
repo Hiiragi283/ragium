@@ -28,7 +28,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
+        HTItemWithFluidRecipeInput(inputSlot, inputTank)
 
     override fun completeRecipe(
         level: ServerLevel,

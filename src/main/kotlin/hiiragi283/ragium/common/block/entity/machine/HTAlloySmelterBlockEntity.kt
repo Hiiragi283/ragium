@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTIngredientHelper
@@ -30,8 +31,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlots: List<HTItemStackSlot>
-    private lateinit var outputSlot: HTItemStackSlot
+    private lateinit var inputSlots: List<HTItemSlot.Mutable>
+    private lateinit var outputSlot: HTItemSlot.Mutable
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input

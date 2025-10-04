@@ -4,10 +4,10 @@ import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import hiiragi283.ragium.api.storage.item.HTSidedItemHandler
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.IItemHandler
 
 /**
- * [IItemHandlerModifiable]向けの[HTProxyHandler]の実装クラス
+ * [IItemHandler]向けの[HTProxyHandler]の実装クラス
  * @param inventory ラップ対象の[HTSidedItemHandler]
  * @param side 現在の向き
  * @param holder 搬入出の制御
@@ -15,13 +15,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
  */
 class HTProxyItemHandler(private val inventory: HTSidedItemHandler, side: Direction?, holder: HTCapabilityHolder?) :
     HTProxyHandler(side, holder),
-    IItemHandlerModifiable {
-    override fun setStackInSlot(slot: Int, stack: ItemStack) {
-        if (!readOnly) {
-            inventory.setStackInSlot(slot, stack, side)
-        }
-    }
-
+    IItemHandler {
     override fun getSlots(): Int = inventory.getSlots(side)
 
     override fun getStackInSlot(slot: Int): ItemStack = inventory.getStackInSlot(slot, side)

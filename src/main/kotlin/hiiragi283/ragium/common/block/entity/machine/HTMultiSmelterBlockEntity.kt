@@ -39,7 +39,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -74,7 +74,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         if (result.isEmpty) return null
         val resultMaxSize: Int = result.maxStackSize
 
-        var inputCount: Int = min(inputSlot.count, getMaxParallel())
+        var inputCount: Int = min(inputSlot.getAmountAsInt(), getMaxParallel())
         val maxParallel: Int = min(inputCount, getMaxParallel())
         var outputCount: Int = result.count * maxParallel
         if (outputCount > resultMaxSize) {

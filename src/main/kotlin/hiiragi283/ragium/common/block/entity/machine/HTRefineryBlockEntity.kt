@@ -39,7 +39,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ),
     HTFluidInteractable {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
