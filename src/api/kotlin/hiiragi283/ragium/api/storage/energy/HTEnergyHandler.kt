@@ -22,9 +22,9 @@ interface HTEnergyHandler :
     override fun extractEnergy(toExtract: Int, simulate: Boolean, side: Direction?): Int =
         getEnergyHandler(side)?.extractEnergy(toExtract, simulate, HTStorageAccess.EXTERNAL) ?: 0
 
-    override fun getEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getAmount() ?: 0
+    override fun getEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getAmountAsInt() ?: 0
 
-    override fun getMaxEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getCapacity() ?: 0
+    override fun getMaxEnergyStored(side: Direction?): Int = getEnergyHandler(side)?.getCapacityAsInt() ?: 0
 
     override fun canExtract(side: Direction?): Boolean = getEnergyHandler(side) != null
 

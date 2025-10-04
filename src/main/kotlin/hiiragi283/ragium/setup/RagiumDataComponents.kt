@@ -36,7 +36,7 @@ object RagiumDataComponents {
     val EAT_SOUND: DataComponentType<HTItemSoundEvent> = REGISTER.registerType("eating_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
-    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
+    val ENERGY: DataComponentType<Long> = REGISTER.registerType("energy", BiCodec.LONG)
 
     @JvmField
     val FLUID_CONTENT: DataComponentType<SimpleFluidContent> = REGISTER.registerType(

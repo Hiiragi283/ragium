@@ -70,7 +70,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean {
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
         for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insertItem(remainder, true, HTStorageAccess.INTERNAl)
+            remainder = slot.insert(remainder, true, HTStorageAccess.INTERNAl)
             if (remainder.isEmpty) break
         }
         return remainder.isEmpty
@@ -86,7 +86,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
         for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+            remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
             if (remainder.isEmpty) break
         }
         // インプットを減らす

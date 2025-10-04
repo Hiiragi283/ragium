@@ -92,5 +92,5 @@ class HTFluidTankWidget(
             tank.setStack(value)
         }
     override val capacity: Int
-        get() = tank.capacity
+        get() = tank.getCapacityAsInt(tank.getStack())
 }

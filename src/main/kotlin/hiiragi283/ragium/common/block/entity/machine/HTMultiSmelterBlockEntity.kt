@@ -95,7 +95,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -105,7 +105,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
         // SEを鳴らす

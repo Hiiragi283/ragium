@@ -15,7 +15,7 @@ import java.util.function.Predicate
  * @see [mekanism.common.capabilities.fluid.BasicFluidTank]
  */
 open class HTFluidStackTank protected constructor(
-    private val capacity: Int,
+    private val capacity: Long,
     private val canExtract: BiPredicate<FluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<FluidStack, HTStorageAccess>,
     private val filter: Predicate<FluidStack>,
@@ -27,19 +27,19 @@ open class HTFluidStackTank protected constructor(
             BiPredicate { _: FluidStack, _: HTStorageAccess -> true }
 
         @JvmStatic
-        private fun validateCapacity(capacity: Int): Int {
+        private fun validateCapacity(capacity: Long): Long {
             check(capacity >= 0) { "Capacity must be non negative" }
             return capacity
         }
 
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank =
+        fun create(listener: HTContentListener?, capacity: Long): HTFluidStackTank =
             HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, HTFluidPredicates.TRUE, listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
-            capacity: Int,
+            capacity: Long,
             canInsert: Predicate<FluidStack> = HTFluidPredicates.TRUE,
             filter: Predicate<FluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
@@ -51,7 +51,7 @@ open class HTFluidStackTank protected constructor(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
+        fun output(listener: HTContentListener?, capacity: Long): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
             ALWAYS_TRUE,
             { _: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
@@ -65,30 +65,9 @@ open class HTFluidStackTank protected constructor(
 
     override fun getStack(): FluidStack = stack
 
-    override fun setStack(stack: FluidStack) {
-        setStackUnchecked(stack, true)
-    }
+    override fun getCapacityAsLong(stack: FluidStack): Long = capacity
 
-    private fun setStackUnchecked(stack: FluidStack, validate: Boolean = false) {
-        if (stack.isEmpty) {
-            if (getStack().isEmpty) return
-            this.stack = FluidStack.EMPTY
-        } else if (!validate || isFluidValid(stack)) {
-            this.stack = stack.copy()
-        } else {
-            error("Invalid stack for tank: $stack ${stack.componentsPatch}")
-        }
-        onContentsChanged()
-    }
-
-    override fun isFluidValidForInsert(stack: FluidStack, access: HTStorageAccess): Boolean =
-        super.isFluidValidForInsert(stack, access) && canInsert.test(stack, access)
-
-    override fun canFluidExtract(stack: FluidStack, access: HTStorageAccess): Boolean = canExtract.test(stack, access)
-
-    override fun getCapacity(): Int = capacity
-
-    override fun isFluidValid(stack: FluidStack): Boolean = filter.test(stack)
+    override fun isValid(stack: FluidStack): Boolean = filter.test(stack)
 
     override fun deserialize(input: HTValueInput) {
         input.read(RagiumConst.FLUID, BiCodecs.fluidStack(true))?.let(::setStackUnchecked)
@@ -96,5 +75,21 @@ open class HTFluidStackTank protected constructor(
 
     final override fun onContentsChanged() {
         listener?.onContentsChanged()
+    }
+
+    override fun setStack(stack: FluidStack) {
+        setStackUnchecked(stack, true)
+    }
+
+    fun setStackUnchecked(stack: FluidStack, validate: Boolean = false) {
+        if (stack.isEmpty) {
+            if (getStack().isEmpty) return
+            this.stack = FluidStack.EMPTY
+        } else if (!validate || isValid(stack)) {
+            this.stack = stack.copy()
+        } else {
+            error("Invalid stack for tank: $stack ${stack.componentsPatch}")
+        }
+        onContentsChanged()
     }
 }

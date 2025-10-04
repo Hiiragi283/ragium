@@ -37,7 +37,7 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             setStack(ItemStack.EMPTY)
         }
 
-        override fun insertItem(stack: ItemStack, simulate: Boolean, access: HTStorageAccess): ItemStack {
+        override fun insert(stack: ItemStack, simulate: Boolean, access: HTStorageAccess): ItemStack {
             if (stack.isEmpty) return ItemStack.EMPTY
 
             val needed: Int = getNeededAsInt(stack)
@@ -59,7 +59,7 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             return stack
         }
 
-        override fun extractItem(amount: Int, simulate: Boolean, access: HTStorageAccess): ItemStack {
+        override fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): ItemStack {
             val stack: ItemStack = getStack()
             if (isEmpty() || amount < 1 || !canItemExtract(getStack(), access)) {
                 return ItemStack.EMPTY

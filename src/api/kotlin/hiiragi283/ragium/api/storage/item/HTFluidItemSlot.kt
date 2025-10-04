@@ -32,7 +32,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
         when {
             tanks == 1 -> {
                 val stackIn: FluidStack = handler.getFluidInTank(0)
-                if (!stackIn.isEmpty && getFluidTank().isFluidValid(stackIn)) {
+                if (!stackIn.isEmpty && getFluidTank().isValid(stackIn)) {
                     drainItemAndMove(slot, stackIn)
                 }
             }
@@ -114,7 +114,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
         val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(getStack()) ?: return false
         if (handler.tanks != 1) return false
         val stackIn: FluidStack = handler.getFluidInTank(0)
-        if (!stackIn.isEmpty && getFluidTank().isFluidValid(stackIn)) {
+        if (!stackIn.isEmpty && getFluidTank().isValid(stackIn)) {
             if (fillHandlerFromOther(getFluidTank(), handler, stackIn)) {
                 setStack(handler.container)
                 return true

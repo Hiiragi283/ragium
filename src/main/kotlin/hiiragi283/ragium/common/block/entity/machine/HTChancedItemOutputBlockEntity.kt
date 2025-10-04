@@ -57,7 +57,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
 
     protected abstract fun createTank(listener: HTContentListener): HTFluidTank
 
-    protected lateinit var inputSlot: HTItemSlot
+    protected lateinit var inputSlot: HTItemSlot.Mutable
         private set
     protected lateinit var outputSlots: List<HTItemSlot>
         private set
@@ -83,7 +83,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
             var remainder: ItemStack = stackIn
             for (slot: HTItemSlot in outputSlots) {
-                remainder = slot.insertItem(stackIn, true, HTStorageAccess.INTERNAl)
+                remainder = slot.insert(stackIn, true, HTStorageAccess.INTERNAl)
                 if (remainder.isEmpty) break
             }
             if (!remainder.isEmpty) return false
@@ -103,7 +103,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
             if (chance > level.random.nextFloat()) {
                 var remainder: ItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
                 for (slot: HTItemSlot in outputSlots) {
-                    remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+                    remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
                     if (remainder.isEmpty) break
                 }
             }

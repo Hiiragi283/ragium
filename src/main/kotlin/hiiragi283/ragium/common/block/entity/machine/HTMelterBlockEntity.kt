@@ -76,7 +76,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
-            outputSlot.insertItem(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
+            outputSlot.insert(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
         }
         // インプットを減らす
         HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)

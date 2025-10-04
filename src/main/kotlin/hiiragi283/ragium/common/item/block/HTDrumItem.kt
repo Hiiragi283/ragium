@@ -17,7 +17,7 @@ class HTDrumItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<HTDru
 
     override fun getBarWidth(stack: ItemStack): Int {
         val tank: HTFluidTank = HTFluidItem.getFluidTank(stack, 0) ?: return 0
-        return (13f / tank.capacity * tank.fluidAmount).roundToInt()
+        return (13f / tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {

@@ -38,7 +38,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         return HTSimpleFluidTankHolder.generic(null, tank)
     }
 
-    protected abstract fun getDefaultTankCapacity(): Int
+    protected abstract fun getDefaultTankCapacity(): Long
 
     override fun onRightClicked(
         state: BlockState,
@@ -72,18 +72,18 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
-        override fun getDefaultTankCapacity(): Int = RagiumConfig.COMMON.smallDrumCapacity.asInt
+        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.smallDrumCapacity.asLong
     }
 
     class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
-        override fun getDefaultTankCapacity(): Int = RagiumConfig.COMMON.mediumDrumCapacity.asInt
+        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.mediumDrumCapacity.asLong
     }
 
     class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
-        override fun getDefaultTankCapacity(): Int = RagiumConfig.COMMON.largeDrumCapacity.asInt
+        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.largeDrumCapacity.asLong
     }
 
     class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
-        override fun getDefaultTankCapacity(): Int = RagiumConfig.COMMON.hugeDrumCapacity.asInt
+        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.hugeDrumCapacity.asLong
     }
 }

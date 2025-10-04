@@ -22,10 +22,12 @@ interface HTFluidHandler :
 
     override fun getTanks(side: Direction?): Int = getFluidTanks(side).size
 
-    override fun getTankCapacity(tank: Int, side: Direction?): Int = getFluidTank(tank, side)?.capacity ?: 0
+    override fun getTankCapacity(tank: Int, side: Direction?): Int {
+        val tank: HTFluidTank = getFluidTank(tank, side) ?: return 0
+        return tank.getCapacityAsInt(tank.getStack())
+    }
 
-    override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean =
-        getFluidTank(tank, side)?.isFluidValid(stack) ?: false
+    override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean = getFluidTank(tank, side)?.isValid(stack) ?: false
 
     override fun insertFluid(stack: FluidStack, simulate: Boolean, side: Direction?): FluidStack {
         val tanks: List<HTFluidTank> = getFluidTanks(side)

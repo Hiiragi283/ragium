@@ -64,7 +64,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
             val previous: ItemStack = entity.item.copy()
             var remainder: ItemStack = previous
             for (slot: HTItemSlot in slots) {
-                remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+                remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
                 if (remainder.isEmpty) {
                     entity.discard()
                     break

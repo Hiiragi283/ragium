@@ -30,20 +30,20 @@ interface RagiumEnchantmentHelper {
         }
     }
 
-    fun processStorageCapacity(random: RandomSource?, blockEntity: BlockEntity, capacity: Int): Int {
+    fun processStorageCapacity(random: RandomSource?, blockEntity: BlockEntity, capacity: Long): Long {
         val float = MutableFloat(capacity)
         runIterationOnComponent(blockEntity.components()) { holder: Holder<Enchantment>, level: Int ->
             modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
         }
-        return max(0, float.toInt())
+        return max(0, float.toLong())
     }
 
-    fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Int): Int {
+    fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Long): Long {
         val float = MutableFloat(capacity)
         EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
             modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
         }
-        return max(0, float.toInt())
+        return max(0, float.toLong())
     }
 
     fun processCollectorRange(serverLevel: ServerLevel, stack: ItemStack, range: Double): Double {

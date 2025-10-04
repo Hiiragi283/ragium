@@ -27,7 +27,7 @@ open class HTContainerItemSlot(
     }
 
     override fun insertItem(stack: ItemStack, simulate: Boolean): ItemStack {
-        val remainder: ItemStack = slot.insertItem(stack, simulate, HTStorageAccess.MANUAL)
+        val remainder: ItemStack = slot.insert(stack, simulate, HTStorageAccess.MANUAL)
         if (!simulate && stack.count != remainder.count) {
             setChanged()
         }
@@ -37,7 +37,7 @@ open class HTContainerItemSlot(
     override fun mayPlace(stack: ItemStack): Boolean {
         if (stack.isEmpty) return false
         if (slot.isEmpty()) return insertItem(stack, true).count < stack.count
-        if (slot.extractItem(1, true, HTStorageAccess.MANUAL).isEmpty) return false
+        if (slot.extract(1, true, HTStorageAccess.MANUAL).isEmpty) return false
         return slot.isItemValidForInsert(stack, HTStorageAccess.MANUAL)
     }
 
@@ -59,9 +59,9 @@ open class HTContainerItemSlot(
 
     override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(stack)
 
-    override fun mayPickup(player: Player): Boolean = !slot.extractItem(1, true, HTStorageAccess.MANUAL).isEmpty
+    override fun mayPickup(player: Player): Boolean = !slot.extract(1, true, HTStorageAccess.MANUAL).isEmpty
 
-    override fun remove(amount: Int): ItemStack = slot.extractItem(amount, false, HTStorageAccess.MANUAL)
+    override fun remove(amount: Int): ItemStack = slot.extract(amount, false, HTStorageAccess.MANUAL)
 
     override fun tryRemove(count: Int, decrement: Int, player: Player): Optional<ItemStack> {
         if (allowPartialRemoval()) {

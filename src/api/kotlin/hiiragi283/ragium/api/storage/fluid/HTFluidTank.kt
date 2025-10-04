@@ -2,86 +2,41 @@ package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.predicate.HTFluidPredicates
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import java.util.function.Predicate
-import kotlin.math.max
 import kotlin.math.min
 
-/**
- * 単一の[FluidStack]を保持するインターフェース
- * @see [mekanism.api.fluid.IExtendedFluidTank]
- */
 interface HTFluidTank :
-    IFluidTank,
-    HTValueSerializable,
-    HTContentListener {
-    /**
-     * 保持している[FluidStack]を返します。
-     */
-    fun getStack(): FluidStack
+    HTStackSlot<FluidStack>,
+    IFluidTank {
+    override fun getAmountAsLong(): Long = getStack().amount.toLong()
 
-    /**
-     * 指定された引数から[FluidStack]を搬入します。
-     * @param stack 搬入される[FluidStack]
-     * @param simulate `true`の場合のみ実際に搬入を行います。
-     * @param access このタンクへのアクセスの種類
-     * @return 搬入されなかった[FluidStack]
-     */
-    fun insert(stack: FluidStack, simulate: Boolean, access: HTStorageAccess): FluidStack
-
-    /**
-     * 指定された引数から[FluidStack]を搬出します。
-     * @param amount 搬出する数量の最大値
-     * @param simulate `true`の場合のみ実際に搬出を行います。
-     * @param access このタンクへのアクセスの種類
-     * @return 搬出された[FluidStack]
-     */
-    fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): FluidStack
-
-    /**
-     * 指定された[stack]をこのタンクに搬入できるか判定します。
-     * @param stack 搬入される[FluidStack]
-     * @param access このタンクへのアクセスの種類
-     * @return 搬入できる場合は`true`
-     */
-    fun isFluidValidForInsert(stack: FluidStack, access: HTStorageAccess): Boolean = isFluidValid(stack)
-
-    /**
-     * 指定された[stack]をこのタンクに搬出できるか判定します。
-     * @param stack 搬出される[FluidStack]
-     * @param access このタンクへのアクセスの種類
-     * @return 搬出できる場合は`true`
-     */
-    fun canFluidExtract(stack: FluidStack, access: HTStorageAccess): Boolean = true
-
-    fun toSingleHandler(): IFluidHandler = HTFluidTankWrapper(this)
-
-    /**
-     * このタンクが空かどうか判定します。
-     */
-    val isEmpty: Boolean get() = getStack().isEmpty
-
-    fun getNeeded(): Int = max(0, capacity - fluidAmount)
-
-    fun matchFluid(filter: Predicate<FluidStack>): Boolean = filter.test(getStack())
+    override fun isEmpty(): Boolean = getStack().isEmpty
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.FLUID, BiCodecs.fluidStack(true), getStack())
     }
+
+    fun toSingleHandler(): IFluidHandler = HTFluidTankWrapper(this)
 
     //    IFluidTank    //
 
     @Deprecated("Use `getStack()` instead", ReplaceWith("this.getStack()"), DeprecationLevel.ERROR)
     override fun getFluid(): FluidStack = getStack()
 
+    @Deprecated("Use `getAmountAsInt()` instead", ReplaceWith("this.getAmountAsInt()"), DeprecationLevel.ERROR)
     override fun getFluidAmount(): Int = getStack().amount
+
+    @Deprecated("Use `getCapacityAsInt(FluidStack)` instead", level = DeprecationLevel.ERROR)
+    override fun getCapacity(): Int = getCapacityAsInt(getStack())
+
+    @Deprecated("Use `isValid(FluidStack)` instead", ReplaceWith("this.isValid(stack)"), DeprecationLevel.ERROR)
+    override fun isFluidValid(stack: FluidStack): Boolean = isValid(stack)
 
     @Deprecated("Use `insert(FluidStack, Boolean, HTStorageAccess) `instead")
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int =
@@ -93,33 +48,27 @@ interface HTFluidTank :
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        if (!matchFluid(HTFluidPredicates.byFluidAndComponent(resource))) return FluidStack.EMPTY
+        if (!HTFluidPredicates.byFluidAndComponent(resource).test(getStack())) return FluidStack.EMPTY
         return extract(resource.amount, action.simulate(), HTStorageAccess.EXTERNAL)
     }
 
     //    Mutable    //
 
-    interface Mutable : HTFluidTank {
-        /**
-         * 指定された[stack]を保持します。
-         */
-        fun setStack(stack: FluidStack)
+    interface Mutable :
+        HTFluidTank,
+        HTStackSlot.Mutable<FluidStack> {
+        override fun setEmpty() {
+            setStack(FluidStack.EMPTY)
+        }
 
-        /**
-         * 指定された引数から[FluidStack]を搬入します。
-         * @param stack 搬入される[FluidStack]
-         * @param simulate `true`の場合のみ実際に搬入を行います。
-         * @param access このタンクへのアクセスの種類
-         * @return 搬入されなかった[FluidStack]
-         */
         override fun insert(stack: FluidStack, simulate: Boolean, access: HTStorageAccess): FluidStack {
-            if (stack.isEmpty || !isFluidValidForInsert(stack, access)) return stack
+            if (stack.isEmpty) return FluidStack.EMPTY
 
-            val needed: Int = getNeeded()
-            if (needed <= 0) return stack
+            val needed: Int = getNeededAsInt(stack)
+            if (needed <= 0 || !isFluidValidForInsert(stack, access)) return stack
 
             val sameType: Boolean = FluidStack.isSameFluidSameComponents(getStack(), stack)
-            if (isEmpty || sameType) {
+            if (isEmpty() || sameType) {
                 val toAdd: Int = min(stack.amount, needed)
                 if (!simulate) {
                     if (sameType) {
@@ -134,40 +83,52 @@ interface HTFluidTank :
             return stack
         }
 
-        /**
-         * 指定された引数から[FluidStack]を搬出します。
-         * @param amount 搬出する数量の最大値
-         * @param simulate `true`の場合のみ実際に搬出を行います。
-         * @param access このタンクへのアクセスの種類
-         * @return 搬出された[FluidStack]
-         */
         override fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): FluidStack {
             val stack: FluidStack = getStack()
-            if (isEmpty || amount < 1 || !canFluidExtract(getStack(), access)) {
+            if (isEmpty() || amount < 1 || !canFluidExtract(getStack(), access)) {
                 return FluidStack.EMPTY
             }
-            val result: FluidStack = stack.copyWithAmount(min(fluidAmount, amount))
+            val current: Int = min(stack.amount, getCapacityAsInt(getStack()))
+            val fixedAmount: Int = min(amount, current)
+            val result: FluidStack = stack.copyWithAmount(fixedAmount)
             if (!simulate) {
-                shrinkStack(result.amount, false)
+                shrinkStack(fixedAmount, false)
                 onContentsChanged()
             }
             return result
         }
 
         /**
-         * 指定された[amount]から，現在の数量を置換します。
-         * @param amount 置換する数量の最大値
+         * 指定された[stack]をこのスロットに搬入できるか判定します。
+         * @param stack 搬入される[FluidStack]
+         * @param access このスロットへのアクセスの種類
+         * @return 搬入できる場合は`true`
+         */
+        fun isFluidValidForInsert(stack: FluidStack, access: HTStorageAccess): Boolean = isValid(stack)
+
+        /**
+         * 指定された[stack]をこのスロットに搬出できるか判定します。
+         * @param stack 搬出される[FluidStack]
+         * @param access このスロットへのアクセスの種類
+         * @return 搬出できる場合は`true`
+         */
+        fun canFluidExtract(stack: FluidStack, access: HTStorageAccess): Boolean = true
+
+        /**
+         * 指定された[amount]から，現在の個数を置換します。
+         * @param amount 置換する個数の最大値
          * @param simulate `true`の場合のみ実際に置換を行います。
-         * @return 実際に置換された数量
+         * @return 実際に置換された個数
          */
         fun setStackSize(amount: Int, simulate: Boolean): Int {
-            if (isEmpty) return 0
+            if (isEmpty()) return 0
             if (amount <= 0) {
                 if (!simulate) setEmpty()
                 return 0
             }
             val stack: FluidStack = getStack()
-            val fixedAmount: Int = min(amount, capacity)
+            val maxStackSize: Int = getCapacityAsInt(stack)
+            val fixedAmount: Int = min(amount, maxStackSize)
             if (stack.amount == fixedAmount || simulate) {
                 return fixedAmount
             }
@@ -177,16 +138,16 @@ interface HTFluidTank :
         }
 
         /**
-         * 指定された[amount]から，現在の数量に追加します。
-         * @param amount 追加する数量の最大値
+         * 指定された[amount]から，現在の個数に追加します。
+         * @param amount 追加する個数の最大値
          * @param simulate `true`の場合のみ実際に追加を行います。
-         * @return 実際に追加された数量
+         * @return 実際に追加された個数
          */
         fun growStack(amount: Int, simulate: Boolean): Int {
-            val current: Int = this.fluidAmount
+            val current: Int = getAmountAsInt()
             if (current == 0) return 0
             val fixedAmount: Int = if (amount > 0) {
-                min(amount, getNeeded())
+                min(amount, getCapacityAsInt(getStack()))
             } else {
                 amount
             }
@@ -195,18 +156,11 @@ interface HTFluidTank :
         }
 
         /**
-         * 指定された[amount]から，現在の数量を削除します。
-         * @param amount 削除する数量の最大値
+         * 指定された[amount]から，現在の個数を削除します。
+         * @param amount 削除する個数の最大値
          * @param simulate `true`の場合のみ実際に削除を行います。
-         * @return 実際に削除された数量
+         * @return 実際に削除された個数
          */
         fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
-
-        /**
-         * このタンクを空にします。
-         */
-        fun setEmpty() {
-            setStack(FluidStack.EMPTY)
-        }
     }
 }

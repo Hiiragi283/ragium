@@ -28,7 +28,7 @@ interface HTStackSlot<STACK : Any> :
      * @param access このスロットへのアクセスの種類
      * @return 搬入されなかった[STACK]
      */
-    fun insertItem(stack: STACK, simulate: Boolean, access: HTStorageAccess): STACK
+    fun insert(stack: STACK, simulate: Boolean, access: HTStorageAccess): STACK
 
     /**
      * 指定された引数から[STACK]を搬出します。
@@ -37,13 +37,17 @@ interface HTStackSlot<STACK : Any> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extractItem(amount: Int, simulate: Boolean, access: HTStorageAccess): STACK
+    fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): STACK
 
     fun isEmpty(): Boolean
 
     fun getNeededAsLong(stack: STACK): Long = getCapacityAsLong(stack) - getAmountAsLong()
 
     fun getNeededAsInt(stack: STACK): Int = getCapacityAsInt(stack) - getAmountAsInt()
+
+    fun getStoredLevelAsDouble(stack: STACK): Double = getAmountAsLong() / getCapacityAsLong(stack).toDouble()
+
+    fun getStoredLevelAsFloat(stack: STACK): Float = getAmountAsLong() / getCapacityAsLong(stack).toFloat()
 
     //    Mutable    //
 

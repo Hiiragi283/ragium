@@ -50,7 +50,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -60,7 +60,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // 実際にインプットを減らす
         HTIngredientHelper.shrinkStack(inputSlot, recipe.ingredient, false)
         // SEを鳴らす

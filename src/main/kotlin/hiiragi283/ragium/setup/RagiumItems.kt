@@ -480,12 +480,12 @@ object RagiumItems {
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val capacity: Int = when (variant) {
+            val capacity: Long = when (variant) {
                 HTDrumVariant.SMALL -> RagiumCommonConfig::smallDrumCapacity
                 HTDrumVariant.MEDIUM -> RagiumCommonConfig::mediumDrumCapacity
                 HTDrumVariant.LARGE -> RagiumCommonConfig::largeDrumCapacity
                 HTDrumVariant.HUGE -> RagiumCommonConfig::hugeDrumCapacity
-            }(RagiumConfig.COMMON).asInt
+            }(RagiumConfig.COMMON).asLong
             HTCapabilityCodec.registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
         }
         HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
@@ -497,12 +497,12 @@ object RagiumItems {
     }
 
     @JvmStatic
-    private fun <T : Any> provider(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+    private fun <T : Any> provider(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, capacity)
     }
 
     @JvmStatic
-    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+    private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(null, stack, capacity))
     }
 

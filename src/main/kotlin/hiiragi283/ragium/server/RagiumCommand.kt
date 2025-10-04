@@ -54,7 +54,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
+        val amount: Int = getEnergyNetwork(source)?.getAmountAsInt() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
     }
@@ -71,7 +71,7 @@ object RagiumCommand {
     @JvmStatic
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-        getEnergyNetwork(source)?.setAmount(value)
+        (getEnergyNetwork(source) as? HTEnergyBattery.Mutable)?.setAmountAsInt(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
         return value
     }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item
 
+import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.extension.asNonEmptySequence
 import hiiragi283.ragium.api.extension.copy
 import hiiragi283.ragium.api.extension.getOrEmpty
@@ -19,6 +20,8 @@ import net.neoforged.neoforge.common.MutableDataComponentHolder
  * [HTItemHandler]に基づいたコンポーネント向けの実装
  */
 open class HTComponentItemHandler(protected val parent: MutableDataComponentHolder, protected val size: Int) : HTItemHandler {
+    constructor(parent: MutableDataComponentHolder, size: Long) : this(parent, Ints.saturatedCast(size))
+
     protected val slots: List<HTItemSlot> = (0..<size).map(::createSlot)
 
     protected open fun createSlot(slot: Int): HTItemSlot = ComponentSlot(parent, size, slot)

@@ -36,7 +36,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
 
     override fun getBarWidth(stack: ItemStack): Int {
         val tank: HTFluidTank = getFluidTank(stack, 0) ?: return 0
-        return (13f / tank.capacity * tank.fluidAmount).roundToInt()
+        return (13f / tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {

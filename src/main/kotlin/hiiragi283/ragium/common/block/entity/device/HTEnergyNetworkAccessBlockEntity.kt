@@ -131,11 +131,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery = object : HTEnergyBattery {
-            override fun getAmount(): Int = 0
+            override fun getAmountAsLong(): Long = 0
 
-            override fun setAmount(amount: Int) {}
-
-            override fun getCapacity(): Int = Int.MAX_VALUE
+            override fun getCapacityAsLong(): Long = Long.MAX_VALUE
 
             override fun insertEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int = amount
 

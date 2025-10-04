@@ -71,9 +71,12 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 private fun energyText(amount: Int, capacity: Int): MutableComponent =
     RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
 
+private fun energyText(amount: Long, capacity: Long): MutableComponent =
+    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(longText(amount), longText(capacity))
+
 fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.energyStored, storage.maxEnergyStored)
 
-fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
+fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmountAsLong(), battery.getCapacityAsLong())
 
 /**
  * 指定した[stack]からツールチップを生成します

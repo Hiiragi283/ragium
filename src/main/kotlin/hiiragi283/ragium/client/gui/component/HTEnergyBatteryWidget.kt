@@ -38,17 +38,14 @@ class HTEnergyBatteryWidget(private val batteryGetter: () -> HTEnergyBattery?, x
 
     override fun shouldRender(): Boolean {
         val battery: HTEnergyBattery = batteryGetter() ?: return false
-        return battery.getAmount() > 0
+        return battery.getAmountAsInt() > 0
     }
 
     override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
 
     override fun getColor(): Int = -1
 
-    override fun getLevel(): Float {
-        val battery: HTEnergyBattery = batteryGetter() ?: return 0f
-        return battery.getAmount() / battery.getCapacity().toFloat()
-    }
+    override fun getLevel(): Float = batteryGetter()?.getStoredLevelAsFloat() ?: 0f
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
         batteryGetter()?.let(::energyText)?.let(consumer)
