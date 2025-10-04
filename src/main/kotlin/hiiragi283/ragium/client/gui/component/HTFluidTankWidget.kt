@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTFluidTankWidget(
     private val levelGetter: (HTFluidWidget) -> Float,
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val tank: HTFluidTank,
+    private val tank: HTFluidTank.Mutable,
     x: Int,
     y: Int,
     width: Int,
@@ -27,7 +27,7 @@ class HTFluidTankWidget(
     HTFluidWidget {
     companion object {
         @JvmStatic
-        fun createSlot(tank: HTFluidTank, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createSlot(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { 1f },
             { _, _ -> },
             tank,
@@ -38,7 +38,7 @@ class HTFluidTankWidget(
         )
 
         @JvmStatic
-        fun createTank(tank: HTFluidTank, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createTank(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { widget: HTFluidWidget ->
                 val capacity: Int = widget.capacity
                 when {

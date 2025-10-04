@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.world.item.ItemStack
@@ -47,7 +48,7 @@ object HTIngredientHelper {
 
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<FluidStack>, simulate: Boolean): Int =
-        tank.shrinkStack(ingredient.applyAsInt(tank.getStack()), simulate)
+        tank.extract(ingredient.applyAsInt(tank.getStack()), simulate, HTStorageAccess.INTERNAl).amount
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。

@@ -4,17 +4,11 @@ import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
- * 向きに応じて制御された[IFluidHandlerModifiable]の拡張インターフェース
+ * 向きに応じて制御された[HTExtendedFluidHandler]の拡張インターフェース
  * @see [mekanism.api.fluid.ISidedFluidHandler]
  */
-interface HTSidedFluidHandler : IFluidHandlerModifiable {
+interface HTSidedFluidHandler : HTExtendedFluidHandler {
     fun getFluidSideFor(): Direction? = null
-
-    fun setFluidInTank(tank: Int, stack: FluidStack, side: Direction?)
-
-    override fun setFluidInTank(tank: Int, stack: FluidStack) {
-        setFluidInTank(tank, stack, getFluidSideFor())
-    }
 
     fun getTanks(side: Direction?): Int
 
@@ -39,26 +33,6 @@ interface HTSidedFluidHandler : IFluidHandlerModifiable {
     fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean
 
     override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = isFluidValid(tank, stack, getFluidSideFor())
-
-    fun insertFluid(
-        tank: Int,
-        stack: FluidStack,
-        simulate: Boolean,
-        side: Direction?,
-    ): FluidStack
-
-    override fun insertFluid(tank: Int, stack: FluidStack, simulate: Boolean): FluidStack =
-        insertFluid(tank, stack, simulate, getFluidSideFor())
-
-    fun extractFluid(
-        tank: Int,
-        amount: Int,
-        simulate: Boolean,
-        side: Direction?,
-    ): FluidStack
-
-    override fun extractFluid(tank: Int, amount: Int, simulate: Boolean): FluidStack =
-        extractFluid(tank, amount, simulate, getFluidSideFor())
 
     fun extractFluid(amount: Int, simulate: Boolean, side: Direction?): FluidStack
 

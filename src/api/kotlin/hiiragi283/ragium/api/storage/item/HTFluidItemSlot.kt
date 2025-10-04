@@ -57,7 +57,7 @@ interface HTFluidItemSlot : HTItemSlot {
             if (handler1.fill(stackIn.copy(), IFluidHandler.FluidAction.SIMULATE) > 0) {
                 setStack(handler.container)
                 isDraining = true
-                getFluidTank().shrinkStack(toDrain, false)
+                getFluidTank().extract(toDrain, false, HTStorageAccess.INTERNAl)
                 return
             }
         }

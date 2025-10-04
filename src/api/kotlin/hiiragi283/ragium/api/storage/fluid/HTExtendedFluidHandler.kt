@@ -6,13 +6,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 /**
  * @see [mekanism.api.fluid.IExtendedFluidHandler]
  */
-interface IFluidHandlerModifiable : IFluidHandler {
-    fun setFluidInTank(tank: Int, stack: FluidStack)
-
-    fun insertFluid(tank: Int, stack: FluidStack, simulate: Boolean): FluidStack
-
-    fun extractFluid(tank: Int, amount: Int, simulate: Boolean): FluidStack
-
+interface HTExtendedFluidHandler : IFluidHandler {
     fun insertFluid(stack: FluidStack, simulate: Boolean): FluidStack
 
     fun extractFluid(stack: FluidStack, simulate: Boolean): FluidStack

@@ -30,7 +30,7 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int
 
     override fun onContentsChanged() {}
 
-    protected open class ComponentTank(private val parent: MutableDataComponentHolder, private val capacity: Int) : HTFluidTank {
+    protected open class ComponentTank(private val parent: MutableDataComponentHolder, private val capacity: Int) : HTFluidTank.Mutable {
         protected val component: DataComponentType<SimpleFluidContent> get() = RagiumDataComponents.FLUID_CONTENT
 
         override fun getStack(): FluidStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).copy()

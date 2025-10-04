@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.fluid.HTEmptyFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
@@ -49,7 +48,9 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
 
     //    Extensions    //
 
-    fun getTank(index: Int): HTFluidTank = blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).getOrNull(index) ?: HTEmptyFluidTank
+    private fun getTank(index: Int): HTFluidTank.Mutable =
+        blockEntity.getFluidTanks(blockEntity.getFluidSideFor())[index] as? HTFluidTank.Mutable
+            ?: error("Fluid tank at $index is not mutable.")
 
     fun createFluidTank(index: Int, x: Int, y: Int): HTFluidTankWidget =
         HTFluidTankWidget.createTank(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)

@@ -29,7 +29,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     HTFluidInteractable {
     constructor(variant: HTDrumVariant, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 
-    private lateinit var tank: HTFluidTank
+    private lateinit var tank: HTFluidTank.Mutable
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTVariableFluidStackTank.create(listener) {

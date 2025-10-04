@@ -23,10 +23,4 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     override val translationKey: String = id.toLanguageKey("recipe_type")
 
     override fun getAllHolders(access: HTRecipeAccess): Sequence<HTRecipeHolder<RECIPE>> = access.getAllRecipesFor(get())
-
-    inline fun forEach(access: HTRecipeAccess, action: (ResourceLocation, RECIPE) -> Unit) {
-        for (holder: HTRecipeHolder<RECIPE> in getAllHolders(access)) {
-            action(holder.id, holder.recipe)
-        }
-    }
 }

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [HTFluidTank]に基づいた[HTSidedFluidHandler]の拡張インターフェース
@@ -13,22 +12,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 interface HTFluidHandler :
     HTSidedFluidHandler,
     HTContentListener {
-    companion object {
-        fun toAction(simulate: Boolean): IFluidHandler.FluidAction = when (simulate) {
-            true -> IFluidHandler.FluidAction.SIMULATE
-            false -> IFluidHandler.FluidAction.EXECUTE
-        }
-    }
-
     fun hasFluidHandler(): Boolean = true
 
     fun getFluidTanks(side: Direction?): List<HTFluidTank>
 
     fun getFluidTank(tank: Int, side: Direction?): HTFluidTank? = getFluidTanks(side).getOrNull(tank)
-
-    override fun setFluidInTank(tank: Int, stack: FluidStack, side: Direction?) {
-        getFluidTank(tank, side)?.setStack(stack)
-    }
 
     override fun getFluidInTank(tank: Int, side: Direction?): FluidStack = getFluidTank(tank, side)?.getStack() ?: FluidStack.EMPTY
 
@@ -38,20 +26,6 @@ interface HTFluidHandler :
 
     override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean =
         getFluidTank(tank, side)?.isFluidValid(stack) ?: false
-
-    override fun insertFluid(
-        tank: Int,
-        stack: FluidStack,
-        simulate: Boolean,
-        side: Direction?,
-    ): FluidStack = getFluidTank(tank, side)?.insert(stack, simulate, HTStorageAccess.forHandler(side)) ?: stack
-
-    override fun extractFluid(
-        tank: Int,
-        amount: Int,
-        simulate: Boolean,
-        side: Direction?,
-    ): FluidStack = getFluidTank(tank, side)?.extract(amount, simulate, HTStorageAccess.forHandler(side)) ?: FluidStack.EMPTY
 
     override fun insertFluid(stack: FluidStack, simulate: Boolean, side: Direction?): FluidStack {
         val tanks: List<HTFluidTank> = getFluidTanks(side)
