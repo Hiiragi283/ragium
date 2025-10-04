@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.storage.resolver
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTSidedEnergyStorage
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
-import hiiragi283.ragium.api.storage.proxy.HTProxyEnergyStorage
+import hiiragi283.ragium.common.storage.proxy.HTProxyEnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**

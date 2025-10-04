@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.proxy
+package hiiragi283.ragium.common.storage.proxy
 
 import hiiragi283.ragium.api.storage.energy.HTSidedEnergyStorage
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder

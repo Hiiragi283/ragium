@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.storage.resolver
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTSidedFluidHandler
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.proxy.HTProxyFluidHandler
+import hiiragi283.ragium.common.storage.proxy.HTProxyFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
