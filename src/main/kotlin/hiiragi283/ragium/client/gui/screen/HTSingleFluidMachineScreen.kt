@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
@@ -17,8 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
-    private val x: Int,
-    private val y: Int,
+    private val factory: HTSingleFluidMachineScreen<BE>.(Int) -> HTFluidTankWidget,
     texture: ResourceLocation,
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
@@ -32,8 +32,7 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
             inventory: Inventory,
             title: Component,
         ): HTSingleFluidMachineScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidMachineScreen(
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(2),
+            { index: Int -> createFluidSlot(index, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             RagiumAPI.id("textures/gui/container/crusher.png"),
             menu,
             inventory,
@@ -46,8 +45,7 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
             inventory: Inventory,
             title: Component,
         ): HTSingleFluidMachineScreen<HTMelterBlockEntity> = HTSingleFluidMachineScreen(
-            HTSlotHelper.getSlotPosX(5.5),
-            HTSlotHelper.getSlotPosY(0),
+            { index: Int -> createFluidTank(index, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             RagiumAPI.id("textures/gui/container/melter.png"),
             menu,
             inventory,
@@ -59,7 +57,7 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
 
     override fun init() {
         super.init()
-        fluidWidget = createFluidSlot(0, x, y)
+        fluidWidget = this.factory(0)
     }
 
     //    HTFluidScreen    //

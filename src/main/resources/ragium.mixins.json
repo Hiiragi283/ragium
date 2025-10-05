@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [],
   "mixins": [
+    "ItemMixin",
     "ItemStackMixin"
   ],
   "minVersion": "0.8"

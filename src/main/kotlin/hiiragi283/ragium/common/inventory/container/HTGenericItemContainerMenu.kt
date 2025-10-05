@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.item.base.HTContainerItem
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
+@Suppress("DEPRECATION")
 abstract class HTGenericItemContainerMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,

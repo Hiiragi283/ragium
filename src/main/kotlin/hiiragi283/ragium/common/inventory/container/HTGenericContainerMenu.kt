@@ -11,6 +11,7 @@ import net.neoforged.neoforge.items.IItemHandler
 /**
  * @see [net.minecraft.world.inventory.ChestMenu]
  */
+@Suppress("DEPRECATION")
 class HTGenericContainerMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,

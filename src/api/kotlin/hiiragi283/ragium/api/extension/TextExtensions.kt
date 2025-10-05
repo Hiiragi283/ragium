@@ -118,6 +118,6 @@ fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
 
 fun addFluidTooltip(handler: HTFluidHandler, consumer: Consumer<Component>, flag: TooltipFlag) {
     for (i: Int in handler.tankRange) {
-        addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
+        addFluidTooltip(handler.getFluidInTank(i, handler.getFluidSideFor()), consumer, flag, false)
     }
 }
