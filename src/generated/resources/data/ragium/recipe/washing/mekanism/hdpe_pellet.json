@@ -5,13 +5,13 @@
       "modid": "mekanism"
     }
   ],
-  "type": "ragium:fluid_transform",
+  "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 100,
     "fluids": "#c:ethene"
   },
   "item_ingredient": "ragium:polymer_catalyst",
-  "item_result": {
+  "results": {
     "count": 1,
     "id": "mekanism:hdpe_pellet"
   }
