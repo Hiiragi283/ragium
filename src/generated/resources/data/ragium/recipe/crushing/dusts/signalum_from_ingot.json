@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/signalum"
-  },
+  "ingredient": "#c:ingots/signalum",
   "result": {
     "count": 1,
     "id": "#c:dusts/signalum"

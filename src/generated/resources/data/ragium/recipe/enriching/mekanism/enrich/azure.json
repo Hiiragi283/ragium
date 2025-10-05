@@ -7,16 +7,8 @@
   ],
   "type": "mekanism:enriching",
   "input": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/azure"
-      },
-      {
-        "tag": "c:gems/azure"
-      }
-    ],
-    "count": 1
+    "count": 1,
+    "tag": "c:dusts/azure"
   },
   "output": {
     "count": 1,

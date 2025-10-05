@@ -1,20 +1,30 @@
 {
-  "anvil_cost": 1,
+  "anvil_cost": 4,
   "description": {
     "translate": "enchantment.ragium.capacity"
   },
-  "max_cost": {
-    "base": 41,
-    "per_level_above_first": 0
+  "effects": {
+    "ragium:capacity": {
+      "type": "minecraft:multiply",
+      "factor": {
+        "type": "minecraft:linear",
+        "base": 2.0,
+        "per_level_above_first": 1.0
+      }
+    }
   },
-  "max_level": 5,
+  "max_cost": {
+    "base": 65,
+    "per_level_above_first": 9
+  },
+  "max_level": 3,
   "min_cost": {
-    "base": 1,
-    "per_level_above_first": 0
+    "base": 15,
+    "per_level_above_first": 9
   },
   "slots": [
     "any"
   ],
-  "supported_items": "#c:enchantables",
-  "weight": 1
+  "supported_items": "#ragium:enchantable/capacity",
+  "weight": 2
 }

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -244,7 +244,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     private fun material() {
         // Builtin
         for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumPlatform.INSTANCE.getBaseVariant(material) ?: continue
             if (baseVariant == HTItemMaterialVariant.DUST) continue
             HTItemToObjRecipeBuilder
                 .pulverizing(

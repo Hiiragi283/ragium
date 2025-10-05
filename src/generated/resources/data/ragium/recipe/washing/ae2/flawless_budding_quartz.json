@@ -8,12 +8,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 8000,
-    "tag": "c:eldritch_flux"
+    "fluids": "#c:eldritch_flux"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "ae2:quartz_block"
-  },
+  "item_ingredient": "ae2:quartz_block",
   "results": {
     "count": 1,
     "id": "ae2:flawless_budding_quartz"

@@ -1,0 +1,13 @@
+{
+  "values": [
+    "ragium:green_pellet",
+    {
+      "id": "mekanism:reprocessed_fissile_fragment",
+      "required": false
+    },
+    {
+      "id": "oritech:small_uranium_pellet",
+      "required": false
+    }
+  ]
+}

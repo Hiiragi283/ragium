@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTIngredientHelper
@@ -30,8 +31,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlots: List<HTItemStackSlot>
-    private lateinit var outputSlot: HTItemStackSlot
+    private lateinit var inputSlots: List<HTItemSlot.Mutable>
+    private lateinit var outputSlot: HTItemSlot.Mutable
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         // input
@@ -51,7 +52,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput = HTMultiItemRecipeInput.fromSlots(inputSlots)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTCombineItemToItemRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -61,7 +62,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTCombineItemToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTMultiItemToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->

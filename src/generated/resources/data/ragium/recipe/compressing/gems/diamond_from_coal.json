@@ -1,16 +1,14 @@
 {
   "type": "ragium:compressing",
   "ingredient": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/coal"
-      },
-      {
-        "tag": "c:fuels/coal"
-      }
-    ],
-    "count": 64
+    "count": 64,
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/coal",
+        "#c:fuels/coal"
+      ]
+    }
   },
   "result": {
     "count": 1,

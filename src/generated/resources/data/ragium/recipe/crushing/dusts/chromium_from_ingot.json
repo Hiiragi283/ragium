@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/chromium"
-  },
+  "ingredient": "#c:ingots/chromium",
   "result": {
     "count": 1,
     "id": "#c:dusts/chromium"

@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "item": "farmersdelight:rice_panicle"
-  },
+  "ingredient": "farmersdelight:rice_panicle",
   "results": [
     {
       "count": 1,

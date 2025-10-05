@@ -1,9 +1,6 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:sandstone/red_blocks"
-  },
+  "ingredient": "#c:sandstone/red_blocks",
   "result": {
     "count": 1,
     "id": "minecraft:redstone"

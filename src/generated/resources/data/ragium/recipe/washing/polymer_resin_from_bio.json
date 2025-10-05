@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:water"
+    "fluids": "#c:water"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "c:fuels/block/bio"
-  },
+  "item_ingredient": "#c:fuels/block/bio",
   "results": {
     "count": 1,
     "id": "#ragium:polymer_resin"

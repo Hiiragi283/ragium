@@ -2,6 +2,7 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
@@ -24,7 +25,7 @@ class HTResultHelperImpl : HTResultHelper {
                 Registries.ITEM,
                 BiCodec.intRange(1, 99).optionalOrElseField("count", 1),
                 ::HTItemResultImpl,
-            ).let(BiCodec.Companion::downCast)
+            ).downCast()
 
         @JvmStatic
         private val FLUID_CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidResult> = HTRecipeResultBase
@@ -32,7 +33,7 @@ class HTResultHelperImpl : HTResultHelper {
                 Registries.FLUID,
                 BiCodec.INT.fieldOf("amount"),
                 ::HTFluidResultImpl,
-            ).let(BiCodec.Companion::downCast)
+            ).downCast()
     }
 
     override fun itemCodec(): BiCodec<RegistryFriendlyByteBuf, HTItemResult> = ITEM_CODEC

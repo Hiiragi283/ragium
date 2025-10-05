@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/corrupted_arcane_crystal"
-  },
+  "ingredient": "#c:gems/corrupted_arcane_crystal",
   "result": {
     "count": 1,
     "id": "#c:dusts/corrupted_arcane_crystal"

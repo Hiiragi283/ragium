@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:wool_carpets"
-  },
+  "ingredient": "#minecraft:wool_carpets",
   "results": [
     {
       "count": 2,

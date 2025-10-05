@@ -1,10 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
@@ -56,10 +55,10 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Gravel -> Flint
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                HTIngredientHelper.INSTANCE.item(Tags.Items.GRAVELS),
-                HTIngredientHelper.INSTANCE.water(250),
-            ).addResult(HTResultHelper.INSTANCE.item(Items.FLINT))
-            .addResult(HTResultHelper.INSTANCE.item(Items.FLINT), 1 / 2f)
+                ingredientHelper.item(Tags.Items.GRAVELS),
+                ingredientHelper.water(250),
+            ).addResult(resultHelper.item(Items.FLINT))
+            .addResult(resultHelper.item(Items.FLINT), 1 / 2f)
             .save(output)
         // Silt -> Clay
         HTItemWithFluidToChancedItemRecipeBuilder
@@ -72,7 +71,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Ice <-> Water
         meltAndFreeze(
             ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.ICE,
+            HTItemHolderLike.fromItem(Items.ICE),
             HTFluidContent.WATER,
             1000,
         )
@@ -100,7 +99,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Bottle
         extractAndInfuse(
             ingredientHelper.item(Items.GLASS_BOTTLE),
-            Items.EXPERIENCE_BOTTLE,
+            HTItemHolderLike.fromItem(Items.EXPERIENCE_BOTTLE),
             RagiumFluidContents.EXPERIENCE,
             250,
         )

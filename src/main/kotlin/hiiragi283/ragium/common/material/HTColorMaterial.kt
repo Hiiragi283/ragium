@@ -11,8 +11,11 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import java.awt.Color
 
-enum class HTColorMaterial(val color: DyeColor, private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
+enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, private val jpName: String) :
+    HTMaterialType.Colored,
+    HTMaterialType.Translatable {
     WHITE(DyeColor.WHITE, "White", "白色"),
     ORANGE(DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(DyeColor.MAGENTA, "Magenta", "赤紫色"),
@@ -37,23 +40,25 @@ enum class HTColorMaterial(val color: DyeColor, private val enName: String, priv
             for (color: HTColorMaterial in HTColorMaterial.entries) {
                 val id: ResourceLocation = vanillaId(color.serializedName)
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {
-                    put(variant, color, HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}")))
+                    this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}"))
                 }
             }
         }
 
         @JvmStatic
         fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
-            VANILLA_TABLE.get(variant, color) ?: error("Unknown ${color.serializedName} ${variant.serializedName}")
+            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.serializedName} ${variant.serializedName}")
     }
 
-    val dyeTag: TagKey<Item> = color.tag
-    val dyedTag: TagKey<Item> = color.dyedTag
+    val dyeTag: TagKey<Item> = dyeColor.tag
+    val dyedTag: TagKey<Item> = dyeColor.dyedTag
+
+    override val color: Color = Color(dyeColor.textureDiffuseColor)
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = color.serializedName
+    override fun getSerializedName(): String = dyeColor.serializedName
 }

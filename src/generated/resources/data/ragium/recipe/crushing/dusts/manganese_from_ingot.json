@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/manganese"
-  },
+  "ingredient": "#c:ingots/manganese",
   "result": {
     "count": 1,
     "id": "#c:dusts/manganese"

@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ores/gold"
-  },
+  "ingredient": "#c:ores/gold",
   "results": [
     {
       "count": 2,

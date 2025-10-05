@@ -1,9 +1,6 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:spruce_planks"
-  },
+  "ingredient": "minecraft:spruce_planks",
   "result": {
     "count": 2,
     "id": "minecraft:spruce_slab"

@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -82,7 +82,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
         FoundryRecipeBuilder
             .build()
-            .input(RagiumItems.DEEP_SCRAP)
+            .input(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL)
             .input(ingotOrDust(RagiumMaterialType.AZURE_STEEL))
             .result(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
             .export(output, RagiumConst.DEEP_STEEL)
@@ -103,7 +103,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .build()
             .input(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN)
             .input(Items.DEEPSLATE)
-            .result(RagiumItems.DEEP_SCRAP)
+            .result(RagiumItems.getScrap(RagiumMaterialType.DEEP_STEEL))
             .time(2500)
             .export(output, "deep_scrap")
     }
@@ -113,7 +113,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     fun OritechRecipeBuilder.input(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): OritechRecipeBuilder =
         input(variant.itemTagKey(material))
 
-    fun OritechRecipeBuilder.result(item: HTDeferredItem<*>, count: Int = 1): OritechRecipeBuilder = result(item.toStack(count))
+    fun OritechRecipeBuilder.result(item: HTItemHolderLike, count: Int = 1): OritechRecipeBuilder = result(item.toStack(count))
 
     fun OritechRecipeBuilder.fluidInput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidInput(content.commonTag)
 

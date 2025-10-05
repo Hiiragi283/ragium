@@ -144,11 +144,7 @@ object RagiumBlocks {
             } ?: return@forEach
 
             fun register(material: HTMaterialType) {
-                put(
-                    variant,
-                    material,
-                    REGISTER.registerSimple(pattern.replace("%s", material.serializedName), copyOf(stone)),
-                )
+                this[variant, material] = REGISTER.registerSimple(pattern.replace("%s", material.serializedName), copyOf(stone))
             }
             register(RagiumMaterialType.RAGINITE)
             register(RagiumMaterialType.RAGI_CRYSTAL)
@@ -180,7 +176,8 @@ object RagiumBlocks {
             // Misc
             RagiumMaterialType.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (material: RagiumMaterialType, properties: BlockBehaviour.Properties) ->
-            put(HTBlockMaterialVariant.STORAGE_BLOCK, material, REGISTER.registerSimple("${material.serializedName}_block", properties))
+            this[HTBlockMaterialVariant.STORAGE_BLOCK, material] =
+                REGISTER.registerSimple("${material.serializedName}_block", properties)
         }
 
         // Glasses
@@ -190,14 +187,10 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            put(
-                HTBlockMaterialVariant.GLASS_BLOCK,
-                material,
-                REGISTER.registerSimple(
-                    "${material.serializedName}_glass",
-                    properties.apply { if (blastProof) strength(5f, 1200f) },
-                    ::HTGlassBlock.partially1(canPlayerThrough),
-                ),
+            this[HTBlockMaterialVariant.GLASS_BLOCK, material] = REGISTER.registerSimple(
+                "${material.serializedName}_glass",
+                properties.apply { if (blastProof) strength(5f, 1200f) },
+                ::HTGlassBlock.partially1(canPlayerThrough),
             )
         }
 
@@ -212,14 +205,10 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            put(
-                HTBlockMaterialVariant.TINTED_GLASS_BLOCK,
-                material,
-                REGISTER.registerSimple(
-                    "tinted_${material.serializedName}_glass",
-                    properties.apply { if (blastProof) strength(5f, 1200f) },
-                    ::HTTintedGlassBlock.partially1(canPlayerThrough),
-                ),
+            this[HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material] = REGISTER.registerSimple(
+                "tinted_${material.serializedName}_glass",
+                properties.apply { if (blastProof) strength(5f, 1200f) },
+                ::HTTintedGlassBlock.partially1(canPlayerThrough),
             )
         }
 
@@ -229,7 +218,7 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS[variant, material]
         ?: error("Unknown ${variant.serializedName} block for ${material.serializedName}")
 
     @JvmStatic
@@ -338,7 +327,7 @@ object RagiumBlocks {
     @JvmField
     val LED_BLOCKS: Map<HTColorMaterial, HTSimpleDeferredBlock> =
         HTColorMaterial.entries.associateWith { color: HTColorMaterial ->
-            REGISTER.registerSimple("${color.serializedName}_led_block", glass().mapColor(color.color).lightLevel { 15 })
+            REGISTER.registerSimple("${color.serializedName}_led_block", glass().mapColor(color.dyeColor).lightLevel { 15 })
         }
 
     @JvmStatic
@@ -354,7 +343,17 @@ object RagiumBlocks {
 
     @JvmField
     val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createMap<HTGeneratorVariant>(machineProperty(), ::HTHorizontalEntityBlock)
+        createVariantMap<HTGeneratorVariant>(machineProperty()) { variant: HTGeneratorVariant ->
+            when (variant) {
+                // Basic
+                HTGeneratorVariant.THERMAL -> ::HTHorizontalEntityBlock
+                // Advanced
+                HTGeneratorVariant.COMBUSTION -> ::HTHorizontalEntityBlock
+                HTGeneratorVariant.SOLAR -> HTEntityBlock::Simple
+                // Elite
+                HTGeneratorVariant.NUCLEAR_REACTOR -> HTEntityBlock::Simple
+            }
+        }
 
     //    Machines    //
 
@@ -400,6 +399,16 @@ object RagiumBlocks {
         enumEntries<V>().associateWith { variant: V ->
             val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
             registerEntity(type, properties, factory)
+        }
+
+    @JvmStatic
+    private inline fun <reified V> createVariantMap(
+        properties: BlockBehaviour.Properties,
+        noinline factory: (V) -> (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> HTEntityBlock,
+    ): Map<V, HTBasicDeferredBlock<HTEntityBlock>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
+        enumEntries<V>().associateWith { variant: V ->
+            val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
+            registerEntity(type, properties, factory(variant))
         }
 
     //    Storages    //

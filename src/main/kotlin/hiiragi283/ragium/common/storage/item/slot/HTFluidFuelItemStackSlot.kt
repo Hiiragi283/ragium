@@ -41,7 +41,7 @@ class HTFluidFuelItemStackSlot private constructor(
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
                 HTMultiCapability.FLUID.getCapability(stack)?.let { handler: IFluidHandlerItem ->
                     for (i: Int in handler.tankRange) {
-                        if (tank.isFluidValid(handler.getFluidInTank(i))) return@HTFluidFuelItemStackSlot false
+                        if (tank.isValid(handler.getFluidInTank(i))) return@HTFluidFuelItemStackSlot false
                     }
                 }
                 // stackを燃料に変換できない場合はtrue
@@ -55,8 +55,8 @@ class HTFluidFuelItemStackSlot private constructor(
     }
 
     fun fillOrBurn() {
-        if (isEmpty) return
-        val needed: Int = tank.getNeeded()
+        if (isEmpty()) return
+        val needed: Int = tank.getNeededAsInt(tank.getStack())
         if (needed > 0 && !fillTank()) {
             val amount: Int = stackToAmount(getStack())
             if (amount in 1..needed) {

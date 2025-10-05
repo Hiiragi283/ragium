@@ -1,20 +1,15 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -25,6 +20,8 @@ import net.minecraft.data.PackOutput
 
 class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(output) {
     override fun addTranslations() {
+        addPatterned()
+
         advancement()
         block()
         enchantment()
@@ -34,13 +31,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         itemGroup()
         keyMapping()
         modTags()
+        recipeType()
         text()
         information()
 
         delight()
         jade()
-        mekanism()
-        replication()
     }
 
     private fun advancement() {
@@ -76,10 +72,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Crimson
-        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅の結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
         // Warped
-        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだ結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだクリスタリルを手に入れる")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "リモートワーク", "次元アンカーを置いて，そのチャンクを常に読み込ませる")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "ロックオープン！", "転位の鍵を使い，紐づけた座標に飛ぶ")
         // Eldritch
@@ -112,16 +108,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
         add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            add(variant.slab, variant.translate(type, "ハーフブロック"))
-            add(variant.stairs, variant.translate(type, "階段"))
-            add(variant.wall, variant.translate(type, "壁"))
-        }
-
-        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
-            add(block, "${color.getTranslatedName(type)}のLEDブロック")
-        }
-
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Parts
         add(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
@@ -132,7 +118,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun enchantment() {
         addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します。")
+        addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
+
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
+
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "音響耐性", "ソニックブームなどの音響攻撃を無効にします。")
     }
 
@@ -157,9 +146,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.NATURAL_GAS, "天然ガス")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
+
         addFluid(RagiumFluidContents.FUEL, "燃料")
         addFluid(RagiumFluidContents.CRIMSON_FUEL, "深紅の燃料")
-        addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
+        addFluid(RagiumFluidContents.GREEN_FUEL, "グリーン燃料")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
@@ -172,7 +163,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Material
         add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
-        add(RagiumItems.DEEP_SCRAP, "深層の欠片")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
@@ -185,8 +175,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.GREEN_CAKE, "グリーンケーキ")
         add(RagiumItems.GREEN_CAKE_DUST, "グリーンケーキの粉")
         add(RagiumItems.GREEN_PELLET, "グリーンペレット")
-
-        addPatterned()
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool
@@ -349,7 +337,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addMaterialKey(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
         addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")
         addMaterialKey(RagiumMaterials.RAGINITE, "ラギナイト")
-        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだ結晶")
+        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだクリスタリル")
         // Vanilla
         addMaterialKey(VanillaMaterials.AMETHYST, "アメシスト")
         addMaterialKey(VanillaMaterials.CALCITE, "方解石")
@@ -414,6 +402,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
     }
 
+    private fun recipeType() {
+        add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
+        add(RagiumRecipeTypes.CRUSHING, "破砕")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        add(RagiumRecipeTypes.EXTRACTING, "抽出")
+        add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
+        add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
+    }
+
     private fun text() {
         add(RagiumTranslation.AZURE_STEEL_UPGRADE, "紺鉄強化")
         add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
@@ -426,6 +426,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
+
+        add(RagiumTranslation.ITEM_POTION, "%sのポーション")
 
         add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
@@ -500,14 +502,5 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add("config.jade.plugin_ragium.output_side", "搬出面")
 
         add(RagiumTranslation.JADE_OUTPUT_SIDE, "搬出面: %s")
-    }
-
-    private fun mekanism() {
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "ラギナイト")
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "紺碧エッセンス")
-    }
-
-    private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "ラギウム")
     }
 }

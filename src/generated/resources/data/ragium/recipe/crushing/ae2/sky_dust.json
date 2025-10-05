@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "ae2:sky_stone_block"
-  },
+  "ingredient": "ae2:sky_stone_block",
   "result": {
     "count": 1,
     "id": "ae2:sky_dust"

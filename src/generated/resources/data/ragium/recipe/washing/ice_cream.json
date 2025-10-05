@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:milk"
+    "fluids": "#c:milk"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "minecraft:snowball"
-  },
+  "item_ingredient": "minecraft:snowball",
   "results": {
     "count": 1,
     "id": "ragium:ice_cream"

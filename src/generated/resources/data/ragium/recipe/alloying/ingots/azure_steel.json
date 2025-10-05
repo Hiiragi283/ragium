@@ -2,28 +2,21 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/iron"
-        },
-        {
-          "tag": "c:ingots/iron"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
     },
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/azure"
-        },
-        {
-          "tag": "c:gems/azure"
-        }
-      ],
-      "count": 2
+      "count": 2,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/azure",
+          "#c:gems/azure"
+        ]
+      }
     }
   ],
   "result": {

@@ -6,15 +6,11 @@ import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 
 class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyBattery?) : HTEnergyBattery {
-    val delegate: HTEnergyBattery? get() = getter()
+    private val delegate: HTEnergyBattery? get() = getter()
 
-    override fun getAmount(): Int = delegate?.getAmount() ?: 0
+    override fun getAmountAsLong(): Long = delegate?.getAmountAsLong() ?: 0
 
-    override fun setAmount(amount: Int) {
-        delegate?.setAmount(amount)
-    }
-
-    override fun getCapacity(): Int = delegate?.getCapacity() ?: 0
+    override fun getCapacityAsLong(): Long = delegate?.getCapacityAsLong() ?: 0
 
     override fun insertEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int =
         delegate?.insertEnergy(amount, simulate, access) ?: 0

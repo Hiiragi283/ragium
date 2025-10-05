@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/meat"
-  },
+  "ingredient": "#c:ingots/meat",
   "result": {
     "count": 1,
     "id": "#c:dusts/meat"

@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:muddy_mangrove_roots"
-  },
+  "ingredient": "minecraft:muddy_mangrove_roots",
   "results": [
     {
       "count": 1,

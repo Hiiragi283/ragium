@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.energyText
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.client.Minecraft
@@ -19,7 +20,7 @@ class HTEnergyBatteryWidget(private val batteryGetter: () -> HTEnergyBattery?, x
     companion object {
         @JvmStatic
         fun createNetwork(key: ResourceKey<Level>, x: Int, y: Int): HTEnergyBatteryWidget =
-            HTEnergyBatteryWidget({ RagiumAPI.INSTANCE.getEnergyNetwork(key) }, x, y)
+            HTEnergyBatteryWidget({ RagiumPlatform.INSTANCE.getEnergyNetwork(key) }, x, y)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
@@ -38,17 +39,14 @@ class HTEnergyBatteryWidget(private val batteryGetter: () -> HTEnergyBattery?, x
 
     override fun shouldRender(): Boolean {
         val battery: HTEnergyBattery = batteryGetter() ?: return false
-        return battery.getAmount() > 0
+        return battery.getAmountAsInt() > 0
     }
 
     override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
 
     override fun getColor(): Int = -1
 
-    override fun getLevel(): Float {
-        val battery: HTEnergyBattery = batteryGetter() ?: return 0f
-        return battery.getAmount() / battery.getCapacity().toFloat()
-    }
+    override fun getLevel(): Float = batteryGetter()?.getStoredLevelAsFloat() ?: 0f
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
         batteryGetter()?.let(::energyText)?.let(consumer)

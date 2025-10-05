@@ -50,8 +50,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         compostables()
         furnaceFuels()
 
-        combustionFuels()
         thermalFuels()
+        combustionFuels()
+        nuclearFuels()
         solarPower()
 
         brewingEffect()
@@ -76,6 +77,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Ragium    //
+
+    private fun thermalFuels() {
+        builder(RagiumDataMaps.INSTANCE.thermalFuelType)
+            .add("steam", 100)
+            .add(HTFluidContent.LAVA, 10)
+            .add("blaze_blood", 5)
+    }
 
     private fun combustionFuels() {
         builder(RagiumDataMaps.INSTANCE.combustionFuelType)
@@ -102,11 +110,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(InitFluids.EMPOWERED_OIL, HTFluidFuelData(5))
     }
 
-    private fun thermalFuels() {
-        builder(RagiumDataMaps.INSTANCE.thermalFuelType)
-            .add("steam", 100)
-            .add(HTFluidContent.LAVA, 10)
-            .add("blaze_blood", 5)
+    private fun nuclearFuels() {
+        builder(RagiumDataMaps.INSTANCE.nuclearFuelType)
+            .add(RagiumFluidContents.GREEN_FUEL, 5)
     }
 
     private fun solarPower() {

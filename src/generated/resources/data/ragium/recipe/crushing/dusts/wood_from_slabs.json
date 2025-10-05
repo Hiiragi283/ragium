@@ -2,7 +2,7 @@
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 2,
-    "tag": "minecraft:wooden_slabs"
+    "items": "#minecraft:wooden_slabs"
   },
   "result": {
     "count": 1,

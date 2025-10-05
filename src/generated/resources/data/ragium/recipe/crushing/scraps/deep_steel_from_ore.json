@@ -1,0 +1,8 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": "#c:ores/deep_scrap",
+  "results": {
+    "count": 2,
+    "id": "#c:scraps/deep_steel"
+  }
+}

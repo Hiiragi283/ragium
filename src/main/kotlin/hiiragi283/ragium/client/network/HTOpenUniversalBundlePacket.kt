@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.setup.RagiumItems
@@ -22,7 +23,7 @@ data object HTOpenUniversalBundlePacket : HTCustomPayload.C2S {
     override fun type(): CustomPacketPayload.Type<HTOpenUniversalBundlePacket> = TYPE
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val capability: AccessoriesCapability = RagiumAPI.INSTANCE.getAccessoryCap(player) ?: return
+        val capability: AccessoriesCapability = RagiumPlatform.INSTANCE.getAccessoryCap(player) ?: return
         val slot: SlotEntryReference = capability.getFirstEquipped(RagiumItems.UNIVERSAL_BUNDLE.get()) ?: return
         HTUniversalBundleItem.openBundle(player.level(), player, slot.stack)
     }

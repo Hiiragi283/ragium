@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:honey"
+    "fluids": "#c:honey"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "minecraft:glass_bottle"
-  },
+  "item_ingredient": "minecraft:glass_bottle",
   "results": {
     "count": 1,
     "id": "minecraft:honey_bottle"

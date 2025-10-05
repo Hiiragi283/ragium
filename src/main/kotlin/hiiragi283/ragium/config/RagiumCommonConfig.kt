@@ -26,6 +26,12 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val machineEnergyUsage: Map<HTMachineVariant, HTIntConfigValue>
 
     @JvmField
+    val breweryTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val crusherTankCapacity: HTIntConfigValue
+
+    @JvmField
     val melterTankCapacity: HTIntConfigValue
 
     @JvmField
@@ -35,7 +41,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val refineryOutputTankCapacity: HTIntConfigValue
 
     @JvmField
-    val washerInputTankCapacity: HTIntConfigValue
+    val washerTankCapacity: HTIntConfigValue
 
     // Device
     @JvmField
@@ -116,6 +122,14 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
             value
         }
 
+        builder.push("brewery")
+        breweryTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
+
+        builder.push("crusher")
+        crusherTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
+
         builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
@@ -129,7 +143,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop(2)
 
         builder.push("washer")
-        washerInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        washerTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
         builder.pop()

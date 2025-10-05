@@ -1,18 +1,9 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "count": 1,
-      "item": "ragium:redstone_board"
-    }
+    "minecraft:redstone_torch",
+    "#c:dusts/redstone",
+    "ragium:redstone_board"
   ],
   "result": {
     "count": 2,

@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/draconium"
-  },
+  "ingredient": "#c:ingots/draconium",
   "result": {
     "count": 1,
     "id": "#c:dusts/draconium"

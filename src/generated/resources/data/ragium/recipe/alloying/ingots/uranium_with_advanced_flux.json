@@ -10,14 +10,8 @@
   ],
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "tag": "c:raw_materials/uranium"
-    },
-    {
-      "count": 1,
-      "tag": "ragium:alloy_smelter_fluxes/advanced"
-    }
+    "#c:raw_materials/uranium",
+    "#ragium:alloy_smelter_fluxes/advanced"
   ],
   "result": {
     "count": 2,

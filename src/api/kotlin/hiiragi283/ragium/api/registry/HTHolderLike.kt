@@ -20,7 +20,10 @@ fun interface HTHolderLike {
 
     @Suppress("DEPRECATION")
     companion object {
-        private fun <T : Any> fromHolder(f: () -> Holder<T>): HTHolderLike = f.andThen(Holder<T>::idOrThrow).let(::HTHolderLike)
+        private fun fromHolder(f: () -> Holder<*>): HTHolderLike = f.andThen(Holder<*>::idOrThrow).let(::HTHolderLike)
+
+        @JvmStatic
+        fun fromHolder(holder: Holder<*>): HTHolderLike = HTHolderLike(holder::idOrThrow)
 
         @JvmStatic
         fun fromBlock(block: Block): HTHolderLike = block::builtInRegistryHolder.let(::fromHolder)

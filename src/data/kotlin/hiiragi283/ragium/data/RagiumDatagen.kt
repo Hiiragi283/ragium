@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
@@ -31,13 +30,9 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries
-import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumDatagen {
-    @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
-
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
         val context: HTDataGenContext = HTDataGenContext.withDataPack(event) {
@@ -72,7 +67,7 @@ object RagiumDatagen {
 
         context.addProvider(event.includeServer(), ::RagiumDataMapProvider)
 
-        LOGGER.info("Gathered server resources!")
+        RagiumAPI.LOGGER.info("Gathered server resources!")
         // client
         context.addProvider(event.includeClient(), ::RagiumEnglishProvider)
         context.addProvider(event.includeClient(), ::RagiumJapaneseProvider)
@@ -80,6 +75,6 @@ object RagiumDatagen {
         context.addProvider(event.includeClient(), ::RagiumBlockStateProvider)
         context.addProvider(event.includeClient(), ::RagiumItemModelProvider)
 
-        LOGGER.info("Gathered client resources!")
+        RagiumAPI.LOGGER.info("Gathered client resources!")
     }
 }

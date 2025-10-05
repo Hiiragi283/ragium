@@ -2,6 +2,7 @@ package hiiragi283.ragium.integration.mekanism
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
+import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.filterNot
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -20,7 +21,7 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
         val CODEC: BiCodec<ByteBuf, HTChemicalResult> = BiCodec.composite(
             HTKeyOrTagHelper.INSTANCE.codec(MekanismAPI.CHEMICAL_REGISTRY_NAME).fieldOf("id"),
             HTChemicalResult::entry,
-            BiCodec.LONG.fieldOf("amount"),
+            BiCodecs.POSITIVE_LONG.fieldOf("amount"),
             HTChemicalResult::amount,
             ::HTChemicalResult,
         )

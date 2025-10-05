@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ores/redstone"
-  },
+  "ingredient": "#c:ores/redstone",
   "results": [
     {
       "count": 8,

@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "replication"
+    }
+  ],
+  "type": "replication:matter_value",
+  "input": {
+    "tag": "c:scraps/deep"
+  },
+  "matter": [
+    {
+      "type": "replication:precious",
+      "amount": 18.0
+    },
+    {
+      "type": "ragium:deep",
+      "amount": 18.0
+    }
+  ]
+}

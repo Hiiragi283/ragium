@@ -24,15 +24,13 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                 listOf(
                     OreConfiguration.target(
                         TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        RagiumBlocks.ORES
-                            .get(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE)!!
+                        RagiumBlocks.ORES[HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE]!!
                             .get()
                             .defaultBlockState(),
                     ),
                     OreConfiguration.target(
                         TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        RagiumBlocks.ORES
-                            .get(HTBlockMaterialVariant.DEEP_ORE, RagiumMaterialType.RAGINITE)!!
+                        RagiumBlocks.ORES[HTBlockMaterialVariant.DEEP_ORE, RagiumMaterialType.RAGINITE]!!
                             .get()
                             .defaultBlockState(),
                     ),

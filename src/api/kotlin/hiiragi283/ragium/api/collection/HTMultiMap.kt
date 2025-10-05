@@ -10,6 +10,8 @@ interface HTMultiMap<K : Any, V : Any> {
 
     fun containsKey(key: K): Boolean
 
+    operator fun contains(key: K): Boolean = containsKey(key)
+
     fun containsValue(value: V): Boolean
 
     operator fun get(key: K): Collection<V>
@@ -24,6 +26,10 @@ interface HTMultiMap<K : Any, V : Any> {
 
     interface Mutable<K : Any, V : Any> : HTMultiMap<K, V> {
         fun put(key: K, value: V): Boolean
+
+        operator fun set(key: K, value: V) {
+            put(key, value)
+        }
 
         fun putAll(key: K, values: Iterable<V>): Boolean
 

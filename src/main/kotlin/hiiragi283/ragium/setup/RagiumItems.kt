@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
@@ -9,8 +8,10 @@ import hiiragi283.ragium.api.extension.columnValues
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
+import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -57,6 +58,7 @@ import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.Tiers
@@ -66,12 +68,8 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import org.slf4j.Logger
 
 object RagiumItems {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmField
     val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
@@ -91,10 +89,6 @@ object RagiumItems {
 
     @JvmField
     val RAGI_COKE: HTDeferredItem<Item> = register("ragi_coke")
-
-    // Deep Steel
-    @JvmField
-    val DEEP_SCRAP: HTDeferredItem<Item> = register("deep_scrap")
 
     // Wood
     @JvmField
@@ -156,24 +150,24 @@ object RagiumItems {
             RagiumMaterialType.AZURE,
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { put(HTItemMaterialVariant.DUST, it, register("${it.serializedName}_dust")) }
-        put(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, register("sawdust"))
-        put(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT, register("minced_meat"))
+        ).forEach { this[HTItemMaterialVariant.DUST, it] = register("${it.serializedName}_dust") }
+        this[HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD] = register("sawdust")
+        this[HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT] = register("minced_meat")
         // Gems
-        put(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, register("azure_shard"))
+        this[HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE] = register("azure_shard")
         listOf(
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.CRIMSON_CRYSTAL,
             RagiumMaterialType.WARPED_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { put(HTItemMaterialVariant.GEM, it, register(it.serializedName)) }
+        ).forEach { this[HTItemMaterialVariant.GEM, it] = register(it.serializedName) }
         // Chips
         mapOf(
             RagiumMaterialType.RAGI_CRYSTAL to RagiumConst.RAGI_CRYSTAL + "_chip",
             RagiumMaterialType.AZURE to "azure_shard_chip",
             RagiumMaterialType.ELDRITCH_PEARL to RagiumConst.ELDRITCH_PEARL + "_chip",
             HTVanillaMaterialType.ECHO to "echo_shard_chip",
-        ).forEach { put(HTItemMaterialVariant.CHIP, it.key, register(it.value)) }
+        ).forEach { this[HTItemMaterialVariant.CHIP, it.key] = register(it.value) }
         // Ingots
         listOf(
             // Metals
@@ -187,7 +181,7 @@ object RagiumItems {
             RagiumMaterialType.CHOCOLATE,
             RagiumMaterialType.MEAT,
             RagiumMaterialType.COOKED_MEAT,
-        ).forEach { put(HTItemMaterialVariant.INGOT, it, register("${it.serializedName}_ingot")) }
+        ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.serializedName}_ingot") }
         // Nuggets
         listOf(
             RagiumMaterialType.RAGI_ALLOY,
@@ -196,16 +190,18 @@ object RagiumItems {
             RagiumMaterialType.DEEP_STEEL,
             RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
-        ).forEach { put(HTItemMaterialVariant.NUGGET, it, register("${it.serializedName}_nugget")) }
+        ).forEach { this[HTItemMaterialVariant.NUGGET, it] = register("${it.serializedName}_nugget") }
         // Plates
-        put(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC, register("plastic_plate"))
+        this[HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC] = register("plastic_plate")
 
         // Fuels
-        put(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL, register("bamboo_charcoal"))
+        this[HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL] = register("bamboo_charcoal")
+        // Scraps
+        this[HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL] = register("deep_scrap")
     }
 
     @JvmStatic
-    fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS.get(variant, material)
+    fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS[variant, material]
         ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
@@ -222,6 +218,12 @@ object RagiumItems {
 
     @JvmStatic
     fun getPlate(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.PLATE, material)
+
+    @JvmStatic
+    fun getScrap(material: HTMaterialType): HTItemHolderLike = when (material) {
+        HTVanillaMaterialType.NETHERITE -> HTItemHolderLike.fromItem(Items.NETHERITE_SCRAP)
+        else -> getMaterial(HTItemMaterialVariant.SCRAP, material)
+    }
 
     @JvmField
     val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
@@ -335,11 +337,7 @@ object RagiumItems {
     @JvmField
     val TOOLS: HTTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
         val consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit = { variant: HTToolVariant, material: HTMaterialType, tier: Tier ->
-            put(
-                variant,
-                material,
-                variant.registerItem(REGISTER, material, tier),
-            )
+            this[variant, material] = variant.registerItem(REGISTER, material, tier)
         }
 
         // Hammer
@@ -351,11 +349,7 @@ object RagiumItems {
         consumer(HTHammerToolVariant, RagiumMaterialType.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
         consumer(HTHammerToolVariant, RagiumMaterialType.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
 
-        put(
-            HTHammerToolVariant,
-            RagiumMaterialType.RAGI_CRYSTAL,
-            register("ragi_crystal_hammer", ::HTDestructionHammerItem),
-        )
+        this[HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL] = register("ragi_crystal_hammer", ::HTDestructionHammerItem)
         // Tools
         for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
             // Azure
@@ -366,7 +360,7 @@ object RagiumItems {
     }
 
     @JvmStatic
-    fun getTool(variant: HTToolVariant, material: HTMaterialType): HTDeferredItem<*> = TOOLS.get(variant, material)
+    fun getTool(variant: HTToolVariant, material: HTMaterialType): HTDeferredItem<*> = TOOLS[variant, material]
         ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
 
     @JvmStatic
@@ -481,12 +475,12 @@ object RagiumItems {
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val capacity: Int = when (variant) {
+            val capacity: Long = when (variant) {
                 HTDrumVariant.SMALL -> RagiumCommonConfig::smallDrumCapacity
                 HTDrumVariant.MEDIUM -> RagiumCommonConfig::mediumDrumCapacity
                 HTDrumVariant.LARGE -> RagiumCommonConfig::largeDrumCapacity
                 HTDrumVariant.HUGE -> RagiumCommonConfig::hugeDrumCapacity
-            }(RagiumConfig.COMMON).asInt
+            }(RagiumConfig.COMMON).asLong
             HTCapabilityCodec.registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
         }
         HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
@@ -494,23 +488,17 @@ object RagiumItems {
         // Energy
         HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
-        LOGGER.info("Registered item capabilities!")
+        RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
 
     @JvmStatic
-    private fun <T : Any> provider(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+    private fun <T : Any> provider(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, capacity)
     }
 
     @JvmStatic
-    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        val level: Int = RagiumAPI
-            .INSTANCE
-            .getHolder(RagiumEnchantments.CAPACITY)
-            ?.let(stack::getEnchantmentLevel)
-            ?: 0
-        val modifier: Int = level + 1
-        factory(stack, capacity * modifier)
+    private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+        factory(stack, RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(null, stack, capacity))
     }
 
     @JvmStatic
@@ -571,6 +559,6 @@ object RagiumItems {
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
-        LOGGER.info("Modified default item components!")
+        RagiumAPI.LOGGER.info("Modified default item components!")
     }
 }

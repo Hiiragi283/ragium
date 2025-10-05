@@ -12,12 +12,9 @@
   "ingredients": [
     {
       "count": 2,
-      "tag": "c:raw_materials/tin"
+      "items": "#c:raw_materials/tin"
     },
-    {
-      "count": 1,
-      "tag": "ragium:alloy_smelter_fluxes/basic"
-    }
+    "#ragium:alloy_smelter_fluxes/basic"
   ],
   "result": {
     "count": 3,

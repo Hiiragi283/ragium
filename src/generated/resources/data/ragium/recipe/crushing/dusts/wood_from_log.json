@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "minecraft:logs_that_burn"
-  },
+  "ingredient": "#minecraft:logs_that_burn",
   "result": {
     "count": 6,
     "id": "#c:dusts/wood"

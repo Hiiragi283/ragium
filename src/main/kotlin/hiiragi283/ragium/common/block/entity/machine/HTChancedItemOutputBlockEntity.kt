@@ -2,24 +2,36 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedItemRecipe<INPUT>> :
-    HTProcessorBlockEntity.Cached<INPUT, RECIPE> {
+    HTProcessorBlockEntity.Cached<INPUT, RECIPE>,
+    HTFluidInteractable {
     constructor(
         recipeCache: HTRecipeCache<INPUT, RECIPE>,
         variant: HTMachineVariant,
@@ -34,7 +46,18 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         state: BlockState,
     ) : super(recipeType, variant, pos, state)
 
-    protected lateinit var inputSlot: HTItemSlot
+    protected lateinit var inputTank: HTFluidTank
+        private set
+
+    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        // input
+        inputTank = createTank(listener)
+        return HTSimpleFluidTankHolder.input(this, inputTank)
+    }
+
+    protected abstract fun createTank(listener: HTContentListener): HTFluidTank
+
+    protected lateinit var inputSlot: HTItemSlot.Mutable
         private set
     protected lateinit var outputSlots: List<HTItemSlot>
         private set
@@ -52,12 +75,15 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), outputSlots)
     }
 
+    override fun openGui(player: Player, title: Component): InteractionResult =
+        RagiumMenuTypes.CHANCED_ITEM_OUTPUT.openMenu(player, title, this, ::writeExtraContainerData)
+
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
             var remainder: ItemStack = stackIn
             for (slot: HTItemSlot in outputSlots) {
-                remainder = slot.insertItem(stackIn, true, HTStorageAccess.INTERNAl)
+                remainder = slot.insert(stackIn, true, HTStorageAccess.INTERNAl)
                 if (remainder.isEmpty) break
             }
             if (!remainder.isEmpty) return false
@@ -77,10 +103,15 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
             if (chance > level.random.nextFloat()) {
                 var remainder: ItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
                 for (slot: HTItemSlot in outputSlots) {
-                    remainder = slot.insertItem(remainder, false, HTStorageAccess.INTERNAl)
+                    remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
                     if (remainder.isEmpty) break
                 }
             }
         }
     }
+
+    //    HTFluidInteractable    //
+
+    final override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
+        interactWith(player, hand, inputTank)
 }

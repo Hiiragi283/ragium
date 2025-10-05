@@ -1,7 +1,7 @@
 package hiiragi283.ragium
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.network.HTPayloadRegister
@@ -22,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -47,15 +48,9 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
-import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
 class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     init {
         NeoForgeMod.enableMilkFluid()
 
@@ -67,6 +62,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(RagiumChunkLoader::registerController)
 
         RagiumDataComponents.REGISTER.register(eventBus)
+        RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents.REGISTER.init(eventBus)
 
@@ -81,18 +77,18 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
-        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.CLIENT, RagiumConfig.CLIENT_SPEC)
 
-        LOGGER.info("Ragium loaded!")
+        RagiumAPI.LOGGER.info("Ragium loaded!")
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
-        LOGGER.info("Registered new registries!")
+        RagiumAPI.LOGGER.info("Registered new registries!")
     }
 
     private fun onRegister(event: RegisterEvent) {
@@ -128,25 +124,26 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
                 .forEach(DispenserBlock::registerBehavior)
 
             RagiumFluidContents.registerInteractions()
-            LOGGER.info("Registered dispenser behaviors!")
+            RagiumAPI.LOGGER.info("Registered dispenser behaviors!")
         }
         event.enqueueWork(RagiumAccessoryRegister::register)
         event.enqueueWork(RagiumFluidContents::registerInteractions)
 
-        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.onCommonSetup(event)
         }
-        LOGGER.info("Loaded common setup!")
+        RagiumAPI.LOGGER.info("Loaded common setup!")
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.INSTANCE.thermalFuelType)
         event.register(RagiumDataMaps.INSTANCE.combustionFuelType)
+        event.register(RagiumDataMaps.INSTANCE.nuclearFuelType)
         event.register(RagiumDataMaps.INSTANCE.solarPowerType)
 
         event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
 
-        LOGGER.info("Registered data map types!")
+        RagiumAPI.LOGGER.info("Registered data map types!")
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
@@ -161,6 +158,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
         }
 
-        LOGGER.info("Registered packets!")
+        RagiumAPI.LOGGER.info("Registered packets!")
     }
 }

@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 4,
-    "item": "minecraft:gunpowder"
+    "items": "minecraft:gunpowder"
   },
   "result": {
     "count": 1,

@@ -1,20 +1,15 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -25,6 +20,8 @@ import net.minecraft.data.PackOutput
 
 class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(output) {
     override fun addTranslations() {
+        addPatterned()
+
         advancement()
         block()
         enchantment()
@@ -34,13 +31,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         itemGroup()
         keyMapping()
         modTags()
+        recipeType()
         text()
         information()
 
         delight()
         jade()
-        mekanism()
-        replication()
     }
 
     private fun advancement() {
@@ -119,16 +115,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
         add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            add(variant.slab, variant.translate(type, "Slab"))
-            add(variant.stairs, variant.translate(type, "Stairs"))
-            add(variant.wall, variant.translate(type, "Wall"))
-        }
-
-        for ((color: HTColorMaterial, block: HTHasTranslationKey) in RagiumBlocks.LED_BLOCKS) {
-            add(block, "${color.getTranslatedName(type)} LED Block")
-        }
-
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         // Parts
@@ -140,7 +126,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun enchantment() {
         addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages.")
+        addEnchantment(RagiumEnchantments.RANGE, "Extra Range", "Increase the range of collecting.")
+
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "Noise Canceling", "Increases damage against sculk mobs such as Warden.")
+
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "Sonic Protection", "Immune damage from sonic boom.")
     }
 
@@ -165,9 +154,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
+
         addFluid(RagiumFluidContents.FUEL, "Fuel")
         addFluid(RagiumFluidContents.CRIMSON_FUEL, "Crimson Fuel")
-        addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
+        addFluid(RagiumFluidContents.GREEN_FUEL, "Green Fuel")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
@@ -180,7 +171,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Material
         add(RagiumItems.BASALT_MESH, "Basalt Mesh")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
-        add(RagiumItems.DEEP_SCRAP, "Deep Scrap")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
@@ -193,8 +183,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.GREEN_CAKE, "Green Cake")
         add(RagiumItems.GREEN_CAKE_DUST, "Green Cake Dust")
         add(RagiumItems.GREEN_PELLET, "Green Pellet")
-
-        addPatterned()
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
@@ -412,6 +400,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
     }
 
+    private fun recipeType() {
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
+        add(RagiumRecipeTypes.CRUSHING, "Crushing")
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        add(RagiumRecipeTypes.EXTRACTING, "Extracting")
+        add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
+        add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.SIMULATING, "Simulating")
+        add(RagiumRecipeTypes.WASHING, "Washing")
+    }
+
     private fun text() {
         add(RagiumTranslation.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")
         add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "Azure Steel Equipment")
@@ -424,6 +424,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
+
+        add(RagiumTranslation.ITEM_POTION, "Potion of %s")
 
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
@@ -498,14 +500,5 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add("config.jade.plugin_ragium.output_side", "Output Side")
 
         add(RagiumTranslation.JADE_OUTPUT_SIDE, "Output Side: %s")
-    }
-
-    private fun mekanism() {
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.RAGINITE), "Raginite")
-        add(RagiumMekanismAddon.getChemical(RagiumMaterialType.AZURE), "Azure Essence")
-    }
-
-    private fun replication() {
-        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "Ragium")
     }
 }

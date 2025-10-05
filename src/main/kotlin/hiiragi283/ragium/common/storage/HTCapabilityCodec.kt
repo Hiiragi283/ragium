@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storage
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -16,7 +15,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
-import org.slf4j.Logger
 
 /**
  * @see [mekanism.common.attachments.containers.ContainerType]
@@ -28,9 +26,6 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
     private val canHandle: (HTBlockEntity) -> Boolean,
 ) {
     companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
-
         @JvmField
         val ITEM: HTCapabilityCodec<HTItemSlot> = HTCapabilityCodec(
             RagiumConst.ITEMS,

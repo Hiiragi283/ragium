@@ -2,7 +2,7 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 1000,
-    "tag": "c:crude_oil"
+    "fluids": "#c:crude_oil"
   },
   "fluid_result": {
     "amount": 375,

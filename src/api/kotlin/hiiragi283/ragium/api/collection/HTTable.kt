@@ -12,7 +12,7 @@ interface HTTable<R : Any, C : Any, V : Any> {
 
     fun containsValue(value: V): Boolean
 
-    fun get(row: R, column: C): V?
+    operator fun get(row: R, column: C): V?
 
     fun isEmpty(): Boolean
 
@@ -38,6 +38,10 @@ interface HTTable<R : Any, C : Any, V : Any> {
         fun clear()
 
         fun put(row: R, column: C, value: V): V?
+
+        operator fun set(row: R, column: C, value: V) {
+            put(row, column, value)
+        }
 
         fun putAll(other: HTTable<out R, out C, out V>)
 

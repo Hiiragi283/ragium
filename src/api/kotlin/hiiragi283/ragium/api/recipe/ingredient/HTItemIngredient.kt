@@ -1,43 +1,35 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
-import hiiragi283.ragium.api.codec.BiCodec
-import net.minecraft.network.RegistryFriendlyByteBuf
+import com.mojang.datafixers.util.Either
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.minecraft.world.item.crafting.Ingredient
 
 /**
- * [ItemStack]向けの[HTIngredient]の実装
- * @see [mekanism.api.recipes.ingredients.ItemStackIngredient]
+ * [ItemStack]向けの[HTIngredient]の拡張インターフェース
  */
-@ConsistentCopyVisibility
-@JvmRecord
-data class HTItemIngredient private constructor(private val delegate: SizedIngredient) : HTIngredient<ItemStack> {
+interface HTItemIngredient : HTIngredient<ItemStack> {
     companion object {
-        @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodec
-            .of(
-                SizedIngredient.FLAT_CODEC,
-                SizedIngredient.STREAM_CODEC,
-            ).xmap(::HTItemIngredient, HTItemIngredient::delegate)
-
         @JvmStatic
-        fun of(ingredient: SizedIngredient): HTItemIngredient {
-            check(!ingredient.ingredient().isEmpty)
-            return HTItemIngredient(ingredient)
+        fun wrapVanilla(ingredient: Ingredient): HTItemIngredient = object : HTItemIngredient {
+            override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = Either.right(getMatchingStacks())
+
+            override fun test(stack: ItemStack): Boolean = ingredient.test(stack)
+
+            override fun testOnlyType(stack: ItemStack): Boolean = ingredient.test(stack)
+
+            override fun getMatchingStack(stack: ItemStack): ItemStack = if (test(stack)) stack.copyWithCount(1) else ItemStack.EMPTY
+
+            override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) 1 else 0
+
+            override fun hasNoMatchingStacks(): Boolean = ingredient.hasNoItems()
+
+            override fun getMatchingStacks(): List<ItemStack> = ingredient.items.toList()
         }
     }
 
-    override fun test(stack: ItemStack): Boolean = delegate.test(stack)
-
-    override fun testOnlyType(stack: ItemStack): Boolean = delegate.ingredient().test(stack)
-
-    override fun getMatchingStack(stack: ItemStack): ItemStack = if (test(stack)) stack.copyWithCount(delegate.count()) else ItemStack.EMPTY
-
-    override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) delegate.count() else 0
-
-    override fun hasNoMatchingStacks(): Boolean = delegate.ingredient().hasNoItems()
-
-    override fun getMatchingStacks(): List<ItemStack> = listOf(*delegate.items)
+    fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>>
 
     fun interface CountGetter {
         fun getRequiredCount(stack: ItemStack): Int

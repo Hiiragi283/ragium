@@ -2,25 +2,17 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/copper"
-        },
-        {
-          "tag": "c:ingots/copper"
-        }
-      ],
-      "count": 2
+      "count": 2,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/copper",
+          "#c:ingots/copper"
+        ]
+      }
     },
-    {
-      "count": 1,
-      "tag": "c:dusts/raginite"
-    },
-    {
-      "count": 1,
-      "item": "ragium:circuit_board"
-    }
+    "#c:dusts/raginite",
+    "ragium:circuit_board"
   ],
   "result": {
     "count": 4,

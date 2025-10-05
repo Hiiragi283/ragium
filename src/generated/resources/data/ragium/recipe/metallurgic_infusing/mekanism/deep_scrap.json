@@ -12,7 +12,7 @@
   },
   "item_input": {
     "count": 1,
-    "item": "minecraft:netherite_scrap"
+    "tag": "c:scraps/netherite"
   },
   "output": {
     "count": 1,

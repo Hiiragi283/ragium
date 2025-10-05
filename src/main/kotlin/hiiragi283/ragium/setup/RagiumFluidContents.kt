@@ -104,6 +104,12 @@ object RagiumFluidContents {
     )
 
     @JvmField
+    val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("lubricant", liquid())
+
+    //    Fuel    //
+
+    @JvmField
     val FUEL: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "fuel",
         liquid(),
@@ -119,8 +125,8 @@ object RagiumFluidContents {
         )
 
     @JvmField
-    val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("lubricant", liquid())
+    val GREEN_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("green_fuel", liquid())
 
     //    Sap    //
 

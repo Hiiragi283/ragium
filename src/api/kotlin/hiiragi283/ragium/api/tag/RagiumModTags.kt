@@ -73,6 +73,9 @@ object RagiumModTags {
         val IGNORED_IN_RECIPES: TagKey<Item> = create("ignored_in_recipes")
 
         @JvmField
+        val IS_NUCLEAR_FUEL: TagKey<Item> = create("is_nuclear_fuel")
+
+        @JvmField
         val LED_BLOCKS: TagKey<Item> = create("led_blocks")
 
         @JvmField
@@ -86,6 +89,13 @@ object RagiumModTags {
 
         @JvmField
         val WIP: TagKey<Item> = create("work_in_progress")
+
+        // Enchantments
+        @JvmField
+        val CAPACITY_ENCHANTABLE: TagKey<Item> = create("enchantable/capacity")
+
+        @JvmField
+        val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable/range")
 
         // Flux
         @JvmField

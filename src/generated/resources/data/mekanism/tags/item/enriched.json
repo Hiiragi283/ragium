@@ -1,6 +1,7 @@
 {
   "values": [
     "#ragium:enriched/azure",
-    "#ragium:enriched/raginite"
+    "#ragium:enriched/deep",
+    "#ragium:enriched/ragium"
   ]
 }

@@ -8,14 +8,11 @@
   "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 1000,
-    "tag": "c:water"
+    "fluids": "#c:water"
   },
   "fluid_result": {
     "amount": 1000,
     "id": "#c:redstone_acid"
   },
-  "item_ingredient": {
-    "count": 1,
-    "tag": "c:dusts/redstone"
-  }
+  "item_ingredient": "#c:dusts/redstone"
 }

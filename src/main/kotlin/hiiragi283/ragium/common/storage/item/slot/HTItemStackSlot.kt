@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.world.inventory.Slot
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -19,14 +18,14 @@ import kotlin.math.min
  * @see [mekanism.common.inventory.slot.BasicInventorySlot]
  */
 open class HTItemStackSlot protected constructor(
-    private val limit: Int,
+    private val limit: Long,
     private val canExtract: BiPredicate<ItemStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ItemStack, HTStorageAccess>,
     private val filter: Predicate<ItemStack>,
     private val listener: HTContentListener?,
     private val x: Int,
     private val y: Int,
-) : HTItemSlot {
+) : HTItemSlot.Mutable {
     companion object {
         @JvmField
         val ALWAYS_TRUE: BiPredicate<ItemStack, HTStorageAccess> =
@@ -41,7 +40,7 @@ open class HTItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             canInsert: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             filter: Predicate<ItemStack> = HTItemPredicates.TRUE,
@@ -52,7 +51,7 @@ open class HTItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
             canInsert: Predicate<ItemStack> = HTItemPredicates.TRUE,
             filter: Predicate<ItemStack> = canInsert,
         ): HTItemStackSlot = create(
@@ -70,7 +69,7 @@ open class HTItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
         ): HTItemStackSlot = create(
             listener,
             x,
@@ -82,7 +81,7 @@ open class HTItemStackSlot protected constructor(
     }
 
     protected constructor(
-        limit: Int,
+        limit: Long,
         canExtract: Predicate<ItemStack>,
         canInsert: Predicate<ItemStack>,
         filter: Predicate<ItemStack>,
@@ -103,25 +102,9 @@ open class HTItemStackSlot protected constructor(
 
     override fun getStack(): ItemStack = stack
 
-    override fun setStack(stack: ItemStack) {
-        setStackUnchecked(stack, true)
-    }
+    override fun getCapacityAsLong(stack: ItemStack): Long = if (stack.isEmpty) limit else min(limit, stack.maxStackSize.toLong())
 
-    fun setStackUnchecked(stack: ItemStack, validate: Boolean = false) {
-        if (stack.isEmpty) {
-            if (getStack().isEmpty) return
-            this.stack = ItemStack.EMPTY
-        } else if (!validate || isItemValid(stack)) {
-            this.stack = stack.copy()
-        } else {
-            error("Invalid stack for slot: $stack ${stack.componentsPatch}")
-        }
-        onContentsChanged()
-    }
-
-    override fun getLimit(stack: ItemStack): Int = if (stack.isEmpty) limit else min(limit, stack.maxStackSize)
-
-    override fun isItemValid(stack: ItemStack): Boolean = filter.test(stack)
+    override fun isValid(stack: ItemStack): Boolean = filter.test(stack)
 
     override fun isItemValidForInsert(stack: ItemStack, access: HTStorageAccess): Boolean =
         super.isItemValidForInsert(stack, access) && canInsert.test(stack, access)
@@ -136,5 +119,21 @@ open class HTItemStackSlot protected constructor(
 
     final override fun onContentsChanged() {
         listener?.onContentsChanged()
+    }
+
+    override fun setStack(stack: ItemStack) {
+        setStackUnchecked(stack, true)
+    }
+
+    fun setStackUnchecked(stack: ItemStack, validate: Boolean = false) {
+        if (stack.isEmpty) {
+            if (getStack().isEmpty) return
+            this.stack = ItemStack.EMPTY
+        } else if (!validate || isValid(stack)) {
+            this.stack = stack.copy()
+        } else {
+            error("Invalid stack for slot: $stack ${stack.componentsPatch}")
+        }
+        onContentsChanged()
     }
 }

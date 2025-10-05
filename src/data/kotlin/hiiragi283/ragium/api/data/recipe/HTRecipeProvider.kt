@@ -10,26 +10,29 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTIngredientHelperImpl
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
@@ -42,7 +45,7 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val ingredientHelper: HTIngredientHelper = HTIngredientHelper.INSTANCE
+    val ingredientHelper: HTIngredientHelper by lazy { HTIngredientHelperImpl(provider) }
     val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -120,7 +123,7 @@ sealed class HTRecipeProvider {
     // recipe builders
     protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,
-        solid: ItemLike,
+        solid: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
         amount: Int,
     ) {
@@ -129,7 +132,7 @@ sealed class HTRecipeProvider {
             .melting(
                 ingredientHelper.item(solid),
                 resultHelper.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(solid).getPath()}")
+            ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
@@ -162,7 +165,7 @@ sealed class HTRecipeProvider {
 
     protected fun extractAndInfuse(
         empty: HTItemIngredient,
-        filled: ItemLike,
+        filled: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
         amount: Int,
     ) {
@@ -171,7 +174,7 @@ sealed class HTRecipeProvider {
             .melting(
                 ingredientHelper.item(filled),
                 resultHelper.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${HTHolderLike.fromItem(filled).getPath()}")
+            ).saveSuffixed(output, "_from_${filled.getPath()}")
         // Washing
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
@@ -217,13 +220,20 @@ sealed class HTRecipeProvider {
             .saveSuffixed(output, "_with_advanced_flux")
     }
 
-    protected fun resetComponent(item: ItemLike) {
-        HTShapelessRecipeBuilder.misc(item).addIngredient(item).saveSuffixed(output, "_to_reset")
+    protected fun resetComponent(item: HTItemHolderLike, vararg targetTypes: DataComponentType<*>) {
+        save(
+            item.getId().withPath { "shapeless/${it}_clear" },
+            HTClearComponentRecipe(
+                "",
+                CraftingBookCategory.MISC,
+                item,
+                listOf(*targetTypes),
+            ),
+        )
     }
 
-    protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(
-        output,
-    ).addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+    protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
+        .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
@@ -237,16 +247,16 @@ sealed class HTRecipeProvider {
         // Log -> 6x Planks
         HTItemToObjRecipeBuilder
             .sawmill(
-                HTIngredientHelper.INSTANCE.item(type.log),
-                HTResultHelper.INSTANCE.item(planks, 6),
+                ingredientHelper.item(type.log),
+                resultHelper.item(planks, 6),
             ).modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
         type.getSlab().ifPresent { slab ->
             HTItemToObjRecipeBuilder
                 .sawmill(
-                    HTIngredientHelper.INSTANCE.item(planks),
-                    HTResultHelper.INSTANCE.item(slab, 2),
+                    ingredientHelper.item(planks),
+                    resultHelper.item(slab, 2),
                 ).modCondition(type.getModId())
                 .save(output)
         }
@@ -254,8 +264,8 @@ sealed class HTRecipeProvider {
         type.getStairs().ifPresent { stairs ->
             HTItemToObjRecipeBuilder
                 .sawmill(
-                    HTIngredientHelper.INSTANCE.item(planks),
-                    HTResultHelper.INSTANCE.item(stairs),
+                    ingredientHelper.item(planks),
+                    resultHelper.item(stairs),
                 ).modCondition(type.getModId())
                 .save(output)
         }

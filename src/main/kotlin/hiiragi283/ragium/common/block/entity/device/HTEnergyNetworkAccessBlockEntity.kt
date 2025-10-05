@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
@@ -131,11 +131,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery = object : HTEnergyBattery {
-            override fun getAmount(): Int = 0
+            override fun getAmountAsLong(): Long = 0
 
-            override fun setAmount(amount: Int) {}
-
-            override fun getCapacity(): Int = Int.MAX_VALUE
+            override fun getCapacityAsLong(): Long = Long.MAX_VALUE
 
             override fun insertEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int = amount
 
@@ -155,7 +153,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
-            HTEnergyBatteryWrapper { RagiumAPI.INSTANCE.getEnergyNetwork(level) }
+            HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
 
         override val transferRate: Int = 1000
     }

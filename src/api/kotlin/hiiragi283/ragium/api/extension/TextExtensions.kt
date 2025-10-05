@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -10,14 +10,12 @@ import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
 import java.text.NumberFormat
 import java.util.function.Consumer
@@ -71,9 +69,12 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 private fun energyText(amount: Int, capacity: Int): MutableComponent =
     RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
 
+private fun energyText(amount: Long, capacity: Long): MutableComponent =
+    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(longText(amount), longText(capacity))
+
 fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.energyStored, storage.maxEnergyStored)
 
-fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
+fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmountAsLong(), battery.getCapacityAsLong())
 
 /**
  * 指定した[stack]からツールチップを生成します
@@ -111,16 +112,12 @@ fun addFluidTooltip(
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
-    HTMultiCapability.ENERGY
-        .getCapability(stack)
-        ?.let(::energyText)
-        ?.let(consumer::accept)
+fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
+    battery.let(::energyText).let(consumer::accept)
 }
 
-fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
-    val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(stack) ?: return
+fun addFluidTooltip(handler: HTFluidHandler, consumer: Consumer<Component>, flag: TooltipFlag) {
     for (i: Int in handler.tankRange) {
-        addFluidTooltip(handler.getFluidInTank(i), consumer, flag, false)
+        addFluidTooltip(handler.getFluidInTank(i, handler.getFluidSideFor()), consumer, flag, false)
     }
 }

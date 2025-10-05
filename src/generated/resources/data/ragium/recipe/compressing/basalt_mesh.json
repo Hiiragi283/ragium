@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 8,
-    "item": "minecraft:basalt"
+    "items": "minecraft:basalt"
   },
   "result": {
     "count": 1,

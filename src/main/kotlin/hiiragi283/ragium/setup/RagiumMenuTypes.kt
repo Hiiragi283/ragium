@@ -14,8 +14,8 @@ import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
@@ -76,10 +75,10 @@ object RagiumMenuTypes {
     val ALLOY_SMELTER: DeferredMachineMenu<HTAlloySmelterBlockEntity> = registerMachine("alloy_smelter")
 
     @JvmField
-    val COMPRESSOR: DeferredMachineMenu<HTCompressorBlockEntity> = registerMachine("compressor")
+    val CHANCED_ITEM_OUTPUT: DeferredMachineMenu<HTChancedItemOutputBlockEntity<*, *>> = registerMachine("chanced_item_output")
 
     @JvmField
-    val CRUSHER: DeferredMachineMenu<HTCrusherBlockEntity> = registerMachine("crusher")
+    val COMPRESSOR: DeferredMachineMenu<HTCompressorBlockEntity> = registerMachine("compressor")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")
@@ -119,9 +118,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")
-
-    @JvmField
-    val WASHER: DeferredMachineMenu<HTWasherBlockEntity> = registerMachine("washer")
 
     //    Extensions    //
 

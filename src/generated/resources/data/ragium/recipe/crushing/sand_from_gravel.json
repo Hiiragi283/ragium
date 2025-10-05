@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gravels"
-  },
+  "ingredient": "#c:gravels",
   "results": [
     {
       "count": 1,

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
@@ -29,11 +28,6 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         title,
     ),
     HTFluidScreen {
-    companion object {
-        @JvmField
-        val LOGGER = LogUtils.getLogger()
-    }
-
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/telepad.png")
 
     private lateinit var fluidWidget: HTFluidWidget

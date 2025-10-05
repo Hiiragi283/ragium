@@ -34,6 +34,7 @@ abstract class HTDrumUpgradeItem(
         properties: Properties,
     ) : this(filter.map(HTDrumVariant::blockHolder), newDrum.blockHolder, properties)
 
+    @Suppress("DEPRECATION")
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
@@ -22,6 +23,7 @@ import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -167,14 +169,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         addTemplate(upgrade, material)
         // Armor
         for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
-            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE.get(variant, beforeMaterial) ?: continue
+            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE[variant, beforeMaterial] ?: continue
             upgradeFactory(armor, beforeArmor)
         }
         // Tool
         for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material)) {
             val beforeTool: ItemLike = when (variant) {
-                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE.get(variant, beforeMaterial)
-                is HTHammerToolVariant -> RagiumItems.TOOLS.get(variant, beforeMaterial)
+                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE[variant, beforeMaterial]
+                is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeMaterial]
                 is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[beforeMaterial]?.get()
                 else -> null
             } ?: continue
@@ -200,7 +202,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Items.TRIAL_KEY)
             .save(output)
 
-        resetComponent(RagiumItems.TELEPORT_KEY)
+        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
             .equipment(RagiumItems.ELDRITCH_EGG)
@@ -221,20 +223,20 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.color), CraftingBookCategory.EQUIPMENT)
+            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.dyeColor), CraftingBookCategory.EQUIPMENT)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
                 .savePrefixed(output, "${variant.serializedName}_")
         }
 
-        resetComponent(RagiumItems.UNIVERSAL_BUNDLE)
+        resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)
     }
 
     @JvmStatic
     private fun forgeHammers() {
         fun hammer(material: HTMaterialType): ItemLike = RagiumItems.getTool(HTHammerToolVariant, material)
 
-        fun crafting(variant: HTItemMaterialVariant, material: HTMaterialType) {
+        fun crafting(variant: HTMaterialVariant.ItemTag, material: HTMaterialType) {
             HTShapedRecipeBuilder
                 .equipment(hammer(material))
                 .pattern(

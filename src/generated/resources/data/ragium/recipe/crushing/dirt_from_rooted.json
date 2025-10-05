@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:rooted_dirt"
-  },
+  "ingredient": "minecraft:rooted_dirt",
   "results": [
     {
       "count": 1,

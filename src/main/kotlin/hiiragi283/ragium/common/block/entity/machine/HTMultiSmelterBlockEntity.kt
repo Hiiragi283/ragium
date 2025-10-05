@@ -9,12 +9,12 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.common.recipe.HTMultiRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTIngredientHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.impl.recipe.manager.HTMultiRecipeCache
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -39,7 +39,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -74,7 +74,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         if (result.isEmpty) return null
         val resultMaxSize: Int = result.maxStackSize
 
-        var inputCount: Int = min(inputSlot.count, getMaxParallel())
+        var inputCount: Int = min(inputSlot.getAmountAsInt(), getMaxParallel())
         val maxParallel: Int = min(inputCount, getMaxParallel())
         var outputCount: Int = result.count * maxParallel
         if (outputCount > resultMaxSize) {
@@ -95,7 +95,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -105,7 +105,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
         // インプットを減らす
         HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
         // SEを鳴らす

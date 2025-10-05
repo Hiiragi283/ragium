@@ -2,12 +2,9 @@
   "type": "ragium:washing",
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:dew_of_the_warp"
+    "fluids": "#c:dew_of_the_warp"
   },
-  "item_ingredient": {
-    "count": 1,
-    "item": "minecraft:red_mushroom"
-  },
+  "item_ingredient": "minecraft:red_mushroom",
   "results": {
     "count": 1,
     "id": "minecraft:warped_fungus"

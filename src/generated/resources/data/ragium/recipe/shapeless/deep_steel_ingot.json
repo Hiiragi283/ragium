@@ -3,16 +3,16 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "ragium:deep_scrap"
+      "tag": "c:scraps/deep_steel"
     },
     {
-      "item": "ragium:deep_scrap"
+      "tag": "c:scraps/deep_steel"
     },
     {
-      "item": "ragium:deep_scrap"
+      "tag": "c:scraps/deep_steel"
     },
     {
-      "item": "ragium:deep_scrap"
+      "tag": "c:scraps/deep_steel"
     },
     {
       "tag": "c:ingots/azure_steel"

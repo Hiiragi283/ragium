@@ -24,6 +24,7 @@ enum class HTItemMaterialVariant(private val enPattern: String, private val jaPa
     CIRCUIT("%s Circuit", "%s回路", RagiumConst.CIRCUITS),
     FUEL("%s", "%s", RagiumConst.FUELS),
     CHIP("%s Chip", "%sチップ", RagiumConst.CHIPS),
+    SCRAP("%s Scrap", "%sの欠片", RagiumConst.SCRAPS),
     ;
 
     override val itemCommonTag: TagKey<Item> = Registries.ITEM.createCommonTag(tagPrefix)

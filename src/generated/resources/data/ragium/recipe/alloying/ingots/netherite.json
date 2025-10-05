@@ -2,20 +2,18 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/gold"
-        },
-        {
-          "tag": "c:ingots/gold"
-        }
-      ],
-      "count": 4
+      "count": 4,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/gold",
+          "#c:ingots/gold"
+        ]
+      }
     },
     {
       "count": 4,
-      "item": "minecraft:netherite_scrap"
+      "items": "#c:scraps/netherite"
     }
   ],
   "result": {

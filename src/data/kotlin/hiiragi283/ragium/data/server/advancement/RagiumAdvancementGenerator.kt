@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
@@ -94,7 +93,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setDescFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setGoal()
-            }.hasAllItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+            }.hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
             .addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
             .save(output, RagiumAdvancements.RAGI_CHERRY_TOAST)
         // Advanced
@@ -129,7 +128,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.RAGI_TICKET)
                 setGoal()
             }
-            addCriterion("use_ragi_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.LOOT_TICKET))
+            useItem(RagiumItems.LOOT_TICKET)
         }
     }
 
@@ -207,7 +206,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.CRIMSON_SOIL)
                 setGoal()
             }
-            hasAllItem("has_crimson_soil", RagiumBlocks.CRIMSON_SOIL)
+            hasAnyItem("has_crimson_soil", RagiumBlocks.CRIMSON_SOIL)
         }
     }
 
@@ -237,7 +236,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.TELEPORT_KEY)
                 setGoal()
             }
-            addCriterion("use_teleport_key", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.TELEPORT_KEY))
+            useItem(RagiumItems.TELEPORT_KEY)
         }
     }
 
@@ -255,7 +254,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.ELDRITCH_EGG)
                 setGoal()
             }
-            addCriterion("use_eldritch_egg", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.ELDRITCH_EGG))
+            useItem(RagiumItems.ELDRITCH_EGG)
         }
         child(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, RagiumAdvancements.ELDRITCH_PEARL) {
             display {
@@ -264,7 +263,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)
                 setGoal()
             }
-            hasItemsIn("has_mysterious_obsidian", RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+            hasAnyItem(RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
     }
 

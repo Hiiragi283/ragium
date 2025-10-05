@@ -6,10 +6,7 @@
     }
   ],
   "type": "ragium:melting",
-  "ingredient": {
-    "count": 1,
-    "item": "actuallyadditions:solidified_experience"
-  },
+  "ingredient": "actuallyadditions:solidified_experience",
   "result": {
     "amount": 160,
     "id": "ragium:experience"

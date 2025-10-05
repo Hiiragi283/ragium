@@ -1,13 +1,7 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "count": 1,
-    "item": "minecraft:iron_golem_spawn_egg"
-  },
-  "ingredient": {
-    "count": 1,
-    "tag": "c:fertilizers"
-  },
+  "catalyst": "minecraft:iron_golem_spawn_egg",
+  "ingredient": "#c:fertilizers",
   "result": {
     "count": 1,
     "id": "minecraft:poppy"

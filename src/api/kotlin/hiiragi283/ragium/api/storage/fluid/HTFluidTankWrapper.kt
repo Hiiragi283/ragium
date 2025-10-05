@@ -9,9 +9,9 @@ class HTFluidTankWrapper(private val tank: HTFluidTank) : IFluidHandler {
 
     override fun getFluidInTank(tank: Int): FluidStack = this.tank.getStack()
 
-    override fun getTankCapacity(tank: Int): Int = this.tank.capacity
+    override fun getTankCapacity(tank: Int): Int = this.tank.getCapacityAsInt(getFluidInTank(0))
 
-    override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = this.tank.isFluidValid(stack)
+    override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = this.tank.isValid(stack)
 
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int = this.tank.fill(resource, action)
 

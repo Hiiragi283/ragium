@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/antimony"
-  },
+  "ingredient": "#c:ingots/antimony",
   "result": {
     "count": 1,
     "id": "#c:dusts/antimony"

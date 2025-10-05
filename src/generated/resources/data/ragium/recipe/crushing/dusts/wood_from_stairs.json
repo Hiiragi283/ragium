@@ -2,7 +2,7 @@
   "type": "ragium:pulverizing",
   "ingredient": {
     "count": 4,
-    "tag": "minecraft:wooden_stairs"
+    "items": "#minecraft:wooden_stairs"
   },
   "result": {
     "count": 3,

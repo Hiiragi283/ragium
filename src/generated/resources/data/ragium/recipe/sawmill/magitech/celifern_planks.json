@@ -10,10 +10,7 @@
     }
   ],
   "type": "ragium:sawmill",
-  "ingredient": {
-    "count": 1,
-    "tag": "magitech:celifern_logs"
-  },
+  "ingredient": "#magitech:celifern_logs",
   "result": {
     "count": 6,
     "id": "magitech:celifern_planks"

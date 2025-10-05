@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/copper"
-  },
+  "ingredient": "#c:ingots/copper",
   "result": {
     "count": 1,
     "id": "#c:dusts/copper"

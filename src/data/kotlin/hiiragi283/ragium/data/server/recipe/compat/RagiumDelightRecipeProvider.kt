@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -27,7 +28,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         // Milk
         extractAndInfuse(
             ingredientHelper.item(Items.GLASS_BOTTLE),
-            ModItems.MILK_BOTTLE.get(),
+            HTItemHolderLike.fromItem(ModItems.MILK_BOTTLE.get()),
             HTFluidContent.MILK,
             250,
         )

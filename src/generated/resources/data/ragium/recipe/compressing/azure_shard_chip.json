@@ -2,7 +2,7 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 3,
-    "tag": "c:gems/azure"
+    "items": "#c:gems/azure"
   },
   "result": {
     "count": 1,

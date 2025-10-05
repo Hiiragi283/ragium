@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:gems/dark_power"
-  },
+  "ingredient": "#c:gems/dark_power",
   "result": {
     "count": 1,
     "id": "#c:dusts/dark_power"

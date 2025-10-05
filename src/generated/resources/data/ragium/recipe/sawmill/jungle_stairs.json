@@ -1,9 +1,6 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:jungle_planks"
-  },
+  "ingredient": "minecraft:jungle_planks",
   "result": {
     "count": 1,
     "id": "minecraft:jungle_stairs"

@@ -1,14 +1,8 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 1,
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "count": 1,
-      "item": "minecraft:smooth_stone_slab"
-    }
+    "#c:dusts/redstone",
+    "minecraft:smooth_stone_slab"
   ],
   "result": {
     "count": 4,

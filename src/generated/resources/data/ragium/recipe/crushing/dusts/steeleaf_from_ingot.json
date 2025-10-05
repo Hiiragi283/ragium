@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/steeleaf"
-  },
+  "ingredient": "#c:ingots/steeleaf",
   "result": {
     "count": 1,
     "id": "#c:dusts/steeleaf"

@@ -1,5 +1,55 @@
 # Changelog
 
+## v0.9.1b
+
+### API
+
+- Core: Split abstract methods in `RagiumAPI` into `RagiumPlatform`
+
+- Item: Backported new component `HTDamageResistant` and `HTRepairable` from newer minecraft
+
+- Registry: Added `HTItemHolderLike` which combines `ItemLike` and `HTHolderLike`
+- Registry: Added `HTDeferredDataComponentRegister`
+
+- Recipe: Redesign of ingredient format
+- Recipe: Moved implementations of recipe builders into `hiiragi283.ragium.impl.data.recipe`
+
+- Storage: Added `HTStackSlot` to unify `HTItemSlot` and `HTFluidTank`
+- Storage: Split interfaces for capabilities into immutable and mutable
+- Storage: Renamed `IFluidHandlerModifiable` into `HTExtendedFluidHandler`
+
+### Common
+
+- Block: Fixed drums cannot hold fluids
+
+- Enchantment: Redesign of enchantment effect
+- Enchantment: Added Extra Range
+
+- Fluid: Added Green Fuel
+
+- Machine
+  - Generator: Implemented Thermal Generator 
+  - Processor: Pulverizer and Crusher can work lower energy if its tank is filled with Lubricant
+
+- Recipe: Nerf Ancient Debris recipe in Simulation Chamber
+
+- World Gen: Reduced Raginite Ore generation by half
+
+### Client
+
+- Screen: Fixed incorrect fluid widget in Melter
+
+### Integration
+
+- EMI
+  - Category: Redesign of recipe registration and category layout
+- Mekanism
+  - Chemical: Rename Raginite into Ragium
+  - Chemical: Added Deep Essence
+  - Item: Added Enriched Deep
+- Replication
+  - Added new matter type Azure and Deep
+
 ## v0.9.0b
 
 - Due to a complete overhaul, this is not compatible with previous versions!

@@ -6,59 +6,41 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
-import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.BlockPos
-import net.minecraft.world.level.block.state.BlockState
 import java.util.function.IntSupplier
 
 enum class HTDeviceVariant(
-    factory: (BlockPos, BlockState) -> HTBlockEntity,
     val tier: HTMachineTier,
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
 ) : HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
-    ITEM_BUFFER(::HTItemBufferBlockEntity, HTMachineTier.BASIC, "Item Buffer", "アイテムバッファ"),
-    MILK_COLLECTOR(::HTMilkCollectorBlockEntity, HTMachineTier.BASIC, "Milk Collector", "搾乳機"),
-    WATER_COLLECTOR(::HTWaterCollectorBlockEntity, HTMachineTier.BASIC, "Water Collector", "水収集機"),
+    ITEM_BUFFER(HTMachineTier.BASIC, "Item Buffer", "アイテムバッファ"),
+    MILK_COLLECTOR(HTMachineTier.BASIC, "Milk Collector", "搾乳機"),
+    WATER_COLLECTOR(HTMachineTier.BASIC, "Water Collector", "水収集機"),
 
     // Advanced
-    ENI(HTEnergyNetworkAccessBlockEntity::Simple, HTMachineTier.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
-    EXP_COLLECTOR(::HTExpCollectorBlockEntity, HTMachineTier.ADVANCED, "Exp Collector", "経験値収集機"),
-    LAVA_COLLECTOR(::HTLavaCollectorBlockEntity, HTMachineTier.ADVANCED, "Lava Collector", "溶岩収集機"),
+    ENI(HTMachineTier.ADVANCED, "E.N.I.", "E.N.I.", "energy_network_interface"),
+    EXP_COLLECTOR(HTMachineTier.ADVANCED, "Exp Collector", "経験値収集機"),
+    LAVA_COLLECTOR(HTMachineTier.ADVANCED, "Lava Collector", "溶岩収集機"),
 
     // Elite
-    DIM_ANCHOR(::HTDimensionalAnchorBlockEntity, HTMachineTier.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
-    TELEPAD(::HTTelepadBlockentity, HTMachineTier.ELITE, "Telepad", "テレパッド"),
-    MOB_CAPTURER(::HTMobCapturerBlockEntity, HTMachineTier.ELITE, "Mob Capturer", "モブ捕獲機"),
+    DIM_ANCHOR(HTMachineTier.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
+    TELEPAD(HTMachineTier.ELITE, "Telepad", "テレパッド"),
+    MOB_CAPTURER(HTMachineTier.ELITE, "Mob Capturer", "モブ捕獲機"),
 
     // Creative
-    CEU(HTEnergyNetworkAccessBlockEntity::Creative, HTMachineTier.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
+    CEU(HTMachineTier.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),
     ;
 
     val tickRate: IntSupplier get() = RagiumConfig.COMMON.deviceTickRate[this]!!
 
-    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> get() = RagiumBlocks.DEVICES[this]!!
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> =
-        RagiumBlockEntityTypes.REGISTER.registerType(
-            serializedName,
-            factory,
-            HTBlockEntity::tickClient,
-            HTBlockEntity::tickServer,
-        )
+    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> by lazy { RagiumBlocks.DEVICES[this]!! }
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> by lazy { RagiumBlockEntityTypes.DEVICES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

@@ -17,11 +17,11 @@ import net.minecraft.world.level.Level
 class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.stacksTo(1)) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         for (slot: HTItemSlot in getItemSlots(stack)) {
-            if (slot.isEmpty) continue
+            if (slot.isEmpty()) continue
             val stackIn: ItemStack = slot.getStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
-                slot.extractItem(1, false, HTStorageAccess.INTERNAl)
+                slot.extract(1, false, HTStorageAccess.INTERNAl)
             }
             if (result != stackIn) {
                 dropStackAt(livingEntity, result)

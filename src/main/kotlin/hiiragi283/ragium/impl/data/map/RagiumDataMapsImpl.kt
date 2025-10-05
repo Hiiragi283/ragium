@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTSolarPower
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.registryOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
@@ -17,6 +16,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+import kotlin.jvm.optionals.getOrNull
 
 class RagiumDataMapsImpl : RagiumDataMaps {
     companion object {
@@ -25,6 +25,9 @@ class RagiumDataMapsImpl : RagiumDataMaps {
 
         @JvmStatic
         private val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
+
+        @JvmStatic
+        private val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
 
         @JvmStatic
         private val SOLAR_POWER: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
@@ -49,6 +52,7 @@ class RagiumDataMapsImpl : RagiumDataMaps {
 
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = THERMAL_FUEL
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = COMBUSTION_FUEL
+    override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = NUCLEAR_FUEL
     override val solarPowerType: DataMapType<Block, HTSolarPower> = SOLAR_POWER
 
     override val brewingEffectType: DataMapType<Item, HTBrewingEffect> = BREWING_EFFECT
@@ -60,6 +64,11 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         type: DataMapType<TYPE, DATA>,
     ): DATA? = when (Holder.Kind.REFERENCE) {
         holder.kind() -> holder.getData(type)
-        else -> access.registryOrNull(registryKey)?.wrapAsHolder(holder.value())?.getData(type)
+        else ->
+            access
+                .registry(registryKey)
+                .getOrNull()
+                ?.wrapAsHolder(holder.value())
+                ?.getData(type)
     }
 }

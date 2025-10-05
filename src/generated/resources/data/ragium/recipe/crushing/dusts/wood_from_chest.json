@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:chests/wooden"
-  },
+  "ingredient": "#c:chests/wooden",
   "result": {
     "count": 8,
     "id": "#c:dusts/wood"

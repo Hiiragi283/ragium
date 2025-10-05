@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/draconium_awakened"
-  },
+  "ingredient": "#c:ingots/draconium_awakened",
   "result": {
     "count": 1,
     "id": "#c:dusts/draconium_awakened"

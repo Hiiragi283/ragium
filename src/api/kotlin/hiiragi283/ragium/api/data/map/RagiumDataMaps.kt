@@ -21,6 +21,7 @@ interface RagiumDataMaps {
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
+    val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
     val solarPowerType: DataMapType<Block, HTSolarPower>
 
     val brewingEffectType: DataMapType<Item, HTBrewingEffect>
@@ -37,6 +38,9 @@ interface RagiumDataMaps {
 
     fun getCombustionFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, combustionFuelType)?.amount ?: 0
+
+    fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
+        getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
 
     fun getSolarPower(access: RegistryAccess, holder: Holder<Block>): Float? =
         getData(access, Registries.BLOCK, holder, solarPowerType)?.multiplier

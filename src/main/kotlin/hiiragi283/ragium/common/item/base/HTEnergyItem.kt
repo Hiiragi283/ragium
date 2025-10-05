@@ -2,12 +2,14 @@ package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.extension.addEnergyTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.roundToInt
 
 /**
@@ -16,32 +18,35 @@ import kotlin.math.roundToInt
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getStorage(stack: ItemStack): IEnergyStorage? = HTMultiCapability.ENERGY.getCapability(stack)
+        fun getHandler(stack: ItemStack): HTEnergyHandler? = HTMultiCapability.ENERGY.getCapability(stack) as? HTEnergyHandler
 
         @JvmStatic
-        fun hasStorage(stack: ItemStack): Boolean = getStorage(stack) != null
+        fun hasHandler(stack: ItemStack): Boolean = getHandler(stack) != null
 
         @JvmStatic
-        fun extractEnergy(stack: ItemStack, maxExtract: Int, simulate: Boolean): Int =
-            getStorage(stack)?.extractEnergy(maxExtract, simulate) ?: 0
+        fun getBattery(stack: ItemStack): HTEnergyBattery? {
+            val handler: HTEnergyHandler = getHandler(stack) ?: return null
+            return handler.getEnergyHandler(handler.getEnergySideFor())
+        }
 
         @JvmStatic
-        fun getEnergyStored(stack: ItemStack): Int = getStorage(stack)?.energyStored ?: 0
+        fun extractEnergy(stack: ItemStack, amount: Int, simulate: Boolean): Int =
+            getBattery(stack)?.extractEnergy(amount, simulate, HTStorageAccess.INTERNAl) ?: 0
 
         @JvmStatic
-        fun getMaxEnergyStored(stack: ItemStack): Int = getStorage(stack)?.maxEnergyStored ?: 0
-
-        @JvmStatic
-        fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean = getEnergyStored(stack) >= HTItemHelper.getFixedUsage(stack, amount)
+        fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean {
+            val battery: HTEnergyBattery = getBattery(stack) ?: return false
+            return battery.getAmountAsInt() >= HTItemHelper.getFixedUsage(stack, amount)
+        }
     }
 
     //    Item    //
 
-    override fun isBarVisible(stack: ItemStack): Boolean = hasStorage(stack)
+    override fun isBarVisible(stack: ItemStack): Boolean = hasHandler(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val storage: IEnergyStorage = getStorage(stack) ?: return 0
-        return (13f / storage.maxEnergyStored * storage.energyStored).roundToInt()
+        val battery: HTEnergyBattery = getBattery(stack) ?: return 0
+        return (13f * battery.getStoredLevelAsFloat()).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int = 0xff003f
@@ -52,15 +57,14 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        addEnergyTooltip(stack, tooltipComponents::add)
+        val battery: HTEnergyBattery = getBattery(stack) ?: return
+        addEnergyTooltip(battery, tooltipComponents::add)
     }
 
     //    User    //
 
     abstract class User(properties: Properties) : HTEnergyItem(properties) {
         protected abstract val energyUsage: Int
-
-        protected fun getEnergyUsage(stack: ItemStack): Int = HTItemHelper.getFixedUsage(stack, energyUsage)
 
         protected fun canConsumeEnergy(stack: ItemStack): Boolean = canConsumeEnergy(stack, energyUsage)
     }

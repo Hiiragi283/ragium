@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:rods/blaze"
-  },
+  "ingredient": "#c:rods/blaze",
   "result": {
     "count": 4,
     "id": "minecraft:blaze_powder"

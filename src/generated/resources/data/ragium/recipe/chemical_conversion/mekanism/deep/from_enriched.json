@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:chemical_conversion",
+  "input": {
+    "count": 1,
+    "tag": "ragium:enriched/deep"
+  },
+  "output": {
+    "amount": 80,
+    "id": "ragium:deep"
+  }
+}

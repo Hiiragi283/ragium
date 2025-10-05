@@ -1,0 +1,5 @@
+{
+  "type": "ragium:clear_component",
+  "ingredient": "ragium:universal_bundle",
+  "targets": "ragium:color"
+}

@@ -1,9 +1,6 @@
 {
   "type": "ragium:crushing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:sandstone/uncolored_blocks"
-  },
+  "ingredient": "#c:sandstone/uncolored_blocks",
   "results": [
     {
       "count": 4,

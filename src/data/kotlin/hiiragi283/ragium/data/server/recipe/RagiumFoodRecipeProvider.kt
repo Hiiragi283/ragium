@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -36,7 +37,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         extractAndInfuse(
             ingredientHelper.item(Items.BOWL),
-            Items.MUSHROOM_STEW,
+            HTItemHolderLike.fromItem(Items.MUSHROOM_STEW),
             RagiumFluidContents.MUSHROOM_STEW,
             250,
         )
@@ -113,14 +114,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Honey Block <-> Honey
         meltAndFreeze(
             ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.HONEY_BLOCK,
+            HTItemHolderLike.fromItem(Items.HONEY_BLOCK),
             RagiumFluidContents.HONEY,
             1000,
         )
         // Honey Bottle <-> Honey
         extractAndInfuse(
             ingredientHelper.item(Items.GLASS_BOTTLE),
-            Items.HONEY_BOTTLE,
+            HTItemHolderLike.fromItem(Items.HONEY_BOTTLE),
             RagiumFluidContents.HONEY,
             250,
         )
@@ -149,10 +150,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         HTCookingRecipeBuilder
-            .smoking(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT))
-            .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT)
-            .setExp(0.35f)
-            .save(output)
+            .smeltingAndSmoking(RagiumItems.getIngot(RagiumMaterialType.COOKED_MEAT)) {
+                addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT)
+                setExp(0.35f)
+                save(output)
+            }
         // Canned Cooked Meat
         HTShapedRecipeBuilder
             .misc(RagiumItems.CANNED_COOKED_MEAT, 8)

@@ -3,9 +3,11 @@
     "#c:obsidians/mysterious",
     "ragium:brewery",
     "ragium:combustion_generator",
+    "ragium:nuclear_reactor",
+    "ragium:reinforced_stone_casing",
     "ragium:solar_generator",
+    "ragium:stone_casing",
     "ragium:telepad",
-    "ragium:thermal_generator",
     "ragium:wooden_casing"
   ]
 }

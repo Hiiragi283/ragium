@@ -11,14 +11,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 /**
  * @see [mekanism.common.inventory.slot.IFluidHandlerSlot]
  */
-interface HTFluidItemSlot : HTItemSlot {
+interface HTFluidItemSlot : HTItemSlot.Mutable {
     fun getFluidTank(): HTFluidTank
 
     var isDraining: Boolean
     var isFilling: Boolean
 
-    fun handleTank(slot: HTItemSlot, mode: Boolean) {
-        if (!isEmpty) {
+    fun handleTank(slot: HTItemSlot.Mutable, mode: Boolean) {
+        if (!isEmpty()) {
             when (mode) {
                 true -> fillTank(slot)
                 false -> drainTank(slot)
@@ -26,13 +26,13 @@ interface HTFluidItemSlot : HTItemSlot {
         }
     }
 
-    fun fillTank(slot: HTItemSlot) {
+    fun fillTank(slot: HTItemSlot.Mutable) {
         val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(getStack()) ?: return
         val tanks: Int = handler.tanks
         when {
             tanks == 1 -> {
                 val stackIn: FluidStack = handler.getFluidInTank(0)
-                if (!stackIn.isEmpty && getFluidTank().isFluidValid(stackIn)) {
+                if (!stackIn.isEmpty && getFluidTank().isValid(stackIn)) {
                     drainItemAndMove(slot, stackIn)
                 }
             }
@@ -41,7 +41,7 @@ interface HTFluidItemSlot : HTItemSlot {
         }
     }
 
-    fun drainTank(slot: HTItemSlot) {
+    fun drainTank(slot: HTItemSlot.Mutable) {
         if (!HTMultiCapability.FLUID.hasCapability(getStack())) return
         val stackIn: FluidStack = getFluidTank().getStack()
         if (!stackIn.isEmpty) {
@@ -52,18 +52,18 @@ interface HTFluidItemSlot : HTItemSlot {
         val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(itemCopied) ?: return
         val toDrain: Int = handler.fill(stackIn.copy(), IFluidHandler.FluidAction.EXECUTE)
         if (toDrain == 0) return
-        if (count == 1) {
+        if (this.getAmountAsInt() == 1) {
             val handler1: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(handler.container) ?: return
             if (handler1.fill(stackIn.copy(), IFluidHandler.FluidAction.SIMULATE) > 0) {
                 setStack(handler.container)
                 isDraining = true
-                getFluidTank().shrinkStack(toDrain, false)
+                getFluidTank().extract(toDrain, false, HTStorageAccess.INTERNAl)
                 return
             }
         }
     }
 
-    private fun drainItemAndMove(slot: HTItemSlot, fluidStack: FluidStack): Boolean {
+    private fun drainItemAndMove(slot: HTItemSlot.Mutable, fluidStack: FluidStack): Boolean {
         val remainder: FluidStack = getFluidTank().insert(fluidStack, true, HTStorageAccess.INTERNAl)
         val remainderAmount: Int = remainder.amount
         val toTransfer: Int = fluidStack.amount
@@ -78,7 +78,7 @@ interface HTFluidItemSlot : HTItemSlot {
             handler.drain(fluidStack.copyWithAmount(toTransfer - remainderAmount), IFluidHandler.FluidAction.EXECUTE)
         if (drained.isEmpty) return false
 
-        if (count == 1) {
+        if (this.getAmountAsInt() == 1) {
             HTMultiCapability.FLUID.getCapability(handler.container)?.let { handler1: IFluidHandlerItem ->
                 if (!handler1.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE).isEmpty) {
                     setStack(handler1.container)
@@ -96,13 +96,13 @@ interface HTFluidItemSlot : HTItemSlot {
         return false
     }
 
-    private fun moveItem(slot: HTItemSlot, itemStack: ItemStack): Boolean {
-        if (slot.isEmpty) {
+    private fun moveItem(slot: HTItemSlot.Mutable, itemStack: ItemStack): Boolean {
+        if (slot.isEmpty()) {
             slot.setStack(itemStack)
         } else {
             val stackIn: ItemStack = slot.getStack()
             if (!ItemStack.isSameItemSameComponents(stackIn, itemStack)) return false
-            if (stackIn.count >= slot.getLimit(stackIn)) return false
+            if (stackIn.count >= slot.getCapacityAsInt(stackIn)) return false
             slot.growStack(1, false)
         }
         shrinkStack(1, false)
@@ -110,11 +110,11 @@ interface HTFluidItemSlot : HTItemSlot {
     }
 
     fun fillTank(): Boolean {
-        if (count != 1) return false
+        if (this.getAmountAsInt() != 1) return false
         val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(getStack()) ?: return false
         if (handler.tanks != 1) return false
         val stackIn: FluidStack = handler.getFluidInTank(0)
-        if (!stackIn.isEmpty && getFluidTank().isFluidValid(stackIn)) {
+        if (!stackIn.isEmpty && getFluidTank().isValid(stackIn)) {
             if (fillHandlerFromOther(getFluidTank(), handler, stackIn)) {
                 setStack(handler.container)
                 return true

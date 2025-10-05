@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.recipe.HTSimpleRecipeCache
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe

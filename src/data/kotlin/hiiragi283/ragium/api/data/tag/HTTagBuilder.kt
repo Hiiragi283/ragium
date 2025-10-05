@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.multiMapOf
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -21,8 +20,6 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
 
     fun createTag(id: ResourceLocation): TagKey<T> = registryKey.createTagKey(id)
 
-    fun addOptional(tagKey: TagKey<T>, modId: String, path: String): HTTagBuilder<T> = add(tagKey, modId.toId(path), DependType.OPTIONAL)
-
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
 
@@ -30,14 +27,14 @@ class HTTagBuilder<T : Any>(private val registryKey: RegistryKey<T>) {
         add(tagKey, holder.getId(), type)
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache.put(tagKey, Entry(id, false, type))
+        entryCache[tagKey] = Entry(id, false, type)
     }
 
     fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         addTag(tagKey, registryKey.createTagKey(child), type)
 
     fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache.put(tagKey, Entry(child.location, true, type))
+        entryCache[tagKey] = Entry(child.location, true, type)
     }
 
     fun build(action: BiConsumer<TagKey<T>, TagEntry>) {

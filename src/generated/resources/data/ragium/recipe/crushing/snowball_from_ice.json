@@ -1,9 +1,6 @@
 {
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "item": "minecraft:ice"
-  },
+  "ingredient": "minecraft:ice",
   "result": {
     "count": 4,
     "id": "minecraft:snowball"

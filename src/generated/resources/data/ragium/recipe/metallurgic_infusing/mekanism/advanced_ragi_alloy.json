@@ -8,7 +8,7 @@
   "type": "mekanism:metallurgic_infusing",
   "chemical_input": {
     "amount": 80,
-    "chemical": "ragium:raginite"
+    "chemical": "ragium:ragium"
   },
   "item_input": {
     "type": "neoforge:compound",

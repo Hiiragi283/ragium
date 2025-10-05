@@ -11,28 +11,18 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/platinum"
-        },
-        {
-          "tag": "c:ingots/platinum"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/platinum",
+        "#c:ingots/platinum"
+      ]
     },
     {
-      "type": "neoforge:compound",
-      "children": [
-        {
-          "tag": "c:dusts/netherite"
-        },
-        {
-          "tag": "c:ingots/netherite"
-        }
-      ],
-      "count": 1
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/netherite",
+        "#c:ingots/netherite"
+      ]
     }
   ],
   "result": {

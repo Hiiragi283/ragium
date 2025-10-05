@@ -9,10 +9,7 @@
     }
   ],
   "type": "ragium:pulverizing",
-  "ingredient": {
-    "count": 1,
-    "tag": "c:ingots/palladium"
-  },
+  "ingredient": "#c:ingots/palladium",
   "result": {
     "count": 1,
     "id": "#c:dusts/palladium"

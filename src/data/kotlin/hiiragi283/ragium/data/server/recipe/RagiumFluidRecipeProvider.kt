@@ -3,13 +3,14 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
-import hiiragi283.ragium.common.material.HTMoltenCrystalData
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -28,7 +29,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Magma Block <-> Lava
         meltAndFreeze(
             ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
-            Items.MAGMA_BLOCK,
+            HTItemHolderLike.fromItem(Items.MAGMA_BLOCK),
             HTFluidContent.LAVA,
             125,
         )
@@ -75,13 +76,20 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 ingredientHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125),
             ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
             .saveSuffixed(output, "_from_lpg")
-        // Naphtha -> Diesel + Sulfur
+
+        // Naphtha -> Fuel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
             resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
-        // Diesel + Crimson Crystal -> Bloo-Diesel
+        // Naphtha + Redstone -> Lubricant
+        distillation(
+            RagiumFluidContents.NAPHTHA to 1000,
+            resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+            resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000) to null,
+        )
+        // Fuel + Crimson Crystal -> Crimson Fuel
         HTFluidTransformRecipeBuilder
             .mixing(
                 ingredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
@@ -115,17 +123,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
+            .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
-            .blasting(Items.ENDER_PEARL, onlyBlasting = true)
+            .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
 
-        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val molten: HTFluidContent<*, *, *> = data.molten
             val material: HTMaterialType = data.material
             // molten <-> gem
@@ -133,17 +141,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 HTItemMaterialVariant.GEM.itemTagKey(material),
                 molten,
-                HTMoltenCrystalData.MOLTEN_TO_GEM,
+                RagiumMoltenCrystalData.MOLTEN_TO_GEM,
             )
 
             val log: TagKey<Item> = data.log ?: continue
             val sap: HTFluidContent<*, *, *> = data.sap ?: continue
             // log -> sap
             HTItemToObjRecipeBuilder
-                .melting(ingredientHelper.item(log), resultHelper.fluid(sap, HTMoltenCrystalData.LOG_TO_SAP))
+                .melting(ingredientHelper.item(log), resultHelper.fluid(sap, RagiumMoltenCrystalData.LOG_TO_SAP))
                 .saveSuffixed(output, "_from_stems")
             // sap -> molten
-            distillation(sap to 1000, null, resultHelper.fluid(molten, HTMoltenCrystalData.SAP_TO_MOLTEN) to null)
+            distillation(sap to 1000, null, resultHelper.fluid(molten, RagiumMoltenCrystalData.SAP_TO_MOLTEN) to null)
         }
     }
 

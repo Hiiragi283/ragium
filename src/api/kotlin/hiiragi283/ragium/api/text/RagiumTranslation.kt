@@ -26,6 +26,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION("upgrade", "deep_steel_upgrade", "base_slot_description"),
     DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION("upgrade", "deep_steel_upgrade", "additions_slot_description"),
 
+    // Item Name
+    ITEM_POTION("item", RagiumAPI.MOD_ID, "potion", "effect"),
+
     // Item Description
     TOOLTIP_EFFECT_RANGE("tooltip", RagiumAPI.MOD_ID, "effect_range"),
     TOOLTIP_ENERGY_PERCENTAGE("tooltip", RagiumAPI.MOD_ID, "energy_percentage"),

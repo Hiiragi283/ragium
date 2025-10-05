@@ -69,36 +69,36 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
         @JvmField
         val TOOL_TABLE: HTTable<HTVanillaToolVariant, HTVanillaMaterialType, Item> = buildTable {
             // Wooden
-            put(SHOVEL, HTVanillaMaterialType.WOOD, Items.WOODEN_SHOVEL)
-            put(PICKAXE, HTVanillaMaterialType.WOOD, Items.WOODEN_PICKAXE)
-            put(AXE, HTVanillaMaterialType.WOOD, Items.WOODEN_AXE)
-            put(HOE, HTVanillaMaterialType.WOOD, Items.WOODEN_HOE)
-            put(SWORD, HTVanillaMaterialType.WOOD, Items.WOODEN_SWORD)
+            this[SHOVEL, HTVanillaMaterialType.WOOD] = Items.WOODEN_SHOVEL
+            this[PICKAXE, HTVanillaMaterialType.WOOD] = Items.WOODEN_PICKAXE
+            this[AXE, HTVanillaMaterialType.WOOD] = Items.WOODEN_AXE
+            this[HOE, HTVanillaMaterialType.WOOD] = Items.WOODEN_HOE
+            this[SWORD, HTVanillaMaterialType.WOOD] = Items.WOODEN_SWORD
             // Stone
             // Iron
-            put(SHOVEL, HTVanillaMaterialType.IRON, Items.IRON_SHOVEL)
-            put(PICKAXE, HTVanillaMaterialType.IRON, Items.IRON_PICKAXE)
-            put(AXE, HTVanillaMaterialType.IRON, Items.IRON_AXE)
-            put(HOE, HTVanillaMaterialType.IRON, Items.IRON_HOE)
-            put(SWORD, HTVanillaMaterialType.IRON, Items.IRON_SWORD)
+            this[SHOVEL, HTVanillaMaterialType.IRON] = Items.IRON_SHOVEL
+            this[PICKAXE, HTVanillaMaterialType.IRON] = Items.IRON_PICKAXE
+            this[AXE, HTVanillaMaterialType.IRON] = Items.IRON_AXE
+            this[HOE, HTVanillaMaterialType.IRON] = Items.IRON_HOE
+            this[SWORD, HTVanillaMaterialType.IRON] = Items.IRON_SWORD
             // Golden
-            put(SHOVEL, HTVanillaMaterialType.GOLD, Items.GOLDEN_SHOVEL)
-            put(PICKAXE, HTVanillaMaterialType.GOLD, Items.GOLDEN_PICKAXE)
-            put(AXE, HTVanillaMaterialType.GOLD, Items.GOLDEN_AXE)
-            put(HOE, HTVanillaMaterialType.GOLD, Items.GOLDEN_HOE)
-            put(SWORD, HTVanillaMaterialType.GOLD, Items.GOLDEN_SWORD)
+            this[SHOVEL, HTVanillaMaterialType.GOLD] = Items.GOLDEN_SHOVEL
+            this[PICKAXE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_PICKAXE
+            this[AXE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_AXE
+            this[HOE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_HOE
+            this[SWORD, HTVanillaMaterialType.GOLD] = Items.GOLDEN_SWORD
             // Diamond
-            put(SHOVEL, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_SHOVEL)
-            put(PICKAXE, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_PICKAXE)
-            put(AXE, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_AXE)
-            put(HOE, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_HOE)
-            put(SWORD, HTVanillaMaterialType.DIAMOND, Items.DIAMOND_SWORD)
+            this[SHOVEL, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_SHOVEL
+            this[PICKAXE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_PICKAXE
+            this[AXE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_AXE
+            this[HOE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_HOE
+            this[SWORD, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_SWORD
             // Netherite
-            put(SHOVEL, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_SHOVEL)
-            put(PICKAXE, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_PICKAXE)
-            put(AXE, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_AXE)
-            put(HOE, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_HOE)
-            put(SWORD, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_SWORD)
+            this[SHOVEL, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_SHOVEL
+            this[PICKAXE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_PICKAXE
+            this[AXE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_AXE
+            this[HOE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_HOE
+            this[SWORD, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_SWORD
         }
     }
 

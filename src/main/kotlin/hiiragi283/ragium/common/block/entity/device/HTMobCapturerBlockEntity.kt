@@ -24,10 +24,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
 class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.MOB_CAPTURER, pos, state) {
-    private lateinit var inputSlot: HTItemSlot
+    private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlots: List<HTItemSlot>
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         inputSlot = HTItemStackSlot.input(
             listener,
             HTSlotHelper.getSlotPosX(2),
@@ -65,9 +65,9 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         for (entity: LivingEntity in entities) {
             val eggStack: ItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
             for (slot: HTItemSlot in outputSlots) {
-                if (slot.insertItem(eggStack, true, HTStorageAccess.INTERNAl).isEmpty) {
+                if (slot.insert(eggStack, true, HTStorageAccess.INTERNAl).isEmpty) {
                     // スポーンエッグをスロットに入れる
-                    slot.insertItem(eggStack, false, HTStorageAccess.INTERNAl)
+                    slot.insert(eggStack, false, HTStorageAccess.INTERNAl)
                     // 対象を消す
                     entity.discard()
                     // Capture Eggを減らす

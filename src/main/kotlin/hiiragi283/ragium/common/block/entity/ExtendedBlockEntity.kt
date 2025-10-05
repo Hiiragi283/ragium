@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -17,7 +16,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
-import org.slf4j.Logger
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -26,11 +24,6 @@ import org.slf4j.Logger
 abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
     HTBlockEntityExtension {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     override val isClientSide: TriState get() {
         val level: Level = this.level ?: return TriState.DEFAULT
         return when (level.isClientSide) {

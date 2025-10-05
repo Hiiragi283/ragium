@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -11,22 +10,21 @@ import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
-import hiiragi283.ragium.client.gui.screen.HTItemBufferScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTMachineScreen
-import hiiragi283.ragium.client.gui.screen.HTMobCapturerScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
-import hiiragi283.ragium.common.material.HTMoltenCrystalData
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -58,17 +56,11 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import org.slf4j.Logger
 import java.awt.Color
 
 @OnlyIn(Dist.CLIENT)
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 class RagiumClient(eventBus: IEventBus, container: ModContainer) {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     init {
         eventBus.addListener(::clientSetup)
 
@@ -86,7 +78,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::registerAccessories)
 
-        LOGGER.info("Loaded Client Setup!")
+        RagiumAPI.LOGGER.info("Loaded Client Setup!")
     }
 
     private fun registerAccessories() {
@@ -94,7 +86,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLES, ::HTGogglesAccessoryRenderer)
         accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
         accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
-        LOGGER.info("Registered Accessory Renderer!")
+        RagiumAPI.LOGGER.info("Registered Accessory Renderer!")
     }
 
     private fun accessoryRenderer(item: ItemLike, supplier: () -> AccessoryRenderer) {
@@ -119,7 +111,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, tint: Int ->
                     when {
                         tint != 0 -> return@register -1
-                        else -> color.color.textureDiffuseColor
+                        else -> color.dyeColor.textureDiffuseColor
                     }
                 },
                 block.get(),
@@ -145,7 +137,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             )
         }*/
 
-        LOGGER.info("Registered BlockColor!")
+        RagiumAPI.LOGGER.info("Registered BlockColor!")
     }
 
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
@@ -154,7 +146,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // LED Blocks
         for ((variant: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             event.register(
-                { _: ItemStack, tint: Int -> if (tint != 0) -1 else variant.color.textureDiffuseColor },
+                { _: ItemStack, tint: Int -> if (tint != 0) -1 else variant.dyeColor.textureDiffuseColor },
                 block.get(),
             )
         }
@@ -174,7 +166,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumItems.UNIVERSAL_BUNDLE,
         )
 
-        LOGGER.info("Registered ItemColor!")
+        RagiumAPI.LOGGER.info("Registered ItemColor!")
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -200,15 +192,17 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))
+        liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+
         liquid(RagiumFluidContents.FUEL, Color(0xcc3300))
         liquid(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
-        liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+        liquid(RagiumFluidContents.GREEN_FUEL, Color(0x99cc33))
 
         liquid(RagiumFluidContents.SAP, Color(0x996633))
 
         molten(RagiumFluidContents.GILDED_LAVA, Color(0xffcc00))
 
-        for (data: HTMoltenCrystalData in HTMoltenCrystalData.entries) {
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color = Color(data.color)
             // molten
             molten(data.molten, color)
@@ -217,7 +211,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             liquid(sap, color)
         }
 
-        LOGGER.info("Registered client extensions!")
+        RagiumAPI.LOGGER.info("Registered client extensions!")
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
@@ -229,7 +223,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         registerMachine(RagiumMenuTypes.ALLOY_SMELTER)
-        registerMachine(RagiumMenuTypes.CRUSHER)
         registerMachine(RagiumMenuTypes.CUTTING_MACHINE)
         registerMachine(RagiumMenuTypes.SIMULATOR)
         registerMachine(RagiumMenuTypes.SINGLE_ITEM)
@@ -239,37 +232,37 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.ACCESS_CONFIG.get(), ::HTAccessConfigurationScreen)
+        event.register(RagiumMenuTypes.CHANCED_ITEM_OUTPUT.get(), HTSingleFluidMachineScreen.Companion::chancedItemOutput)
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen.Companion::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
-        event.register(RagiumMenuTypes.ITEM_BUFFER.get(), ::HTItemBufferScreen)
+        event.register(RagiumMenuTypes.ITEM_BUFFER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_buffer"))
         event.register(RagiumMenuTypes.MELTER.get(), HTSingleFluidMachineScreen.Companion::melter)
-        event.register(RagiumMenuTypes.MOB_CAPTURER.get(), ::HTMobCapturerScreen)
+        event.register(RagiumMenuTypes.MOB_CAPTURER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_collector"))
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
-        event.register(RagiumMenuTypes.WASHER.get(), HTSingleFluidMachineScreen.Companion::washer)
 
-        LOGGER.info("Registered Screens!")
+        RagiumAPI.LOGGER.info("Registered Screens!")
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
 
-        LOGGER.info("Registered BlockEntityRenderers!")
+        RagiumAPI.LOGGER.info("Registered BlockEntityRenderers!")
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
-        LOGGER.info("Registered ClientTooltipComponents!")
+        RagiumAPI.LOGGER.info("Registered ClientTooltipComponents!")
     }
 
     private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
         RagiumKeyMappings.KEYS.forEach(event::register)
 
-        LOGGER.info("Registered Key Mappings!")
+        RagiumAPI.LOGGER.info("Registered Key Mappings!")
     }
 }

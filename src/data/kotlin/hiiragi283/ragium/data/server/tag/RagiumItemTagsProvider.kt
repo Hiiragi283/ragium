@@ -1,13 +1,11 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.toRowTableBy
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -22,12 +20,14 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
+import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -38,6 +38,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import rearth.oritech.init.ItemContent
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
@@ -111,9 +112,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Material    //
 
     private fun material(builder: HTTagBuilder<Item>) {
-        materialTable(builder, RagiumItems.MATERIALS)
-        materialTable(builder, RagiumItems.CIRCUITS.toRowTableBy(HTItemMaterialVariant.CIRCUIT))
-
+        fromTriples(builder, RagiumItems.MATERIALS.entries)
+        fromTriples(
+            builder,
+            RagiumItems.CIRCUITS.map { (tier: HTMaterialType, item: HTHolderLike) ->
+                Triple(HTItemMaterialVariant.CIRCUIT, tier, item)
+            },
+        )
+        // Fuels
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
         builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
 
@@ -122,8 +128,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
 
         builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
+        // Scraps
+        builder.addMaterial(HTItemMaterialVariant.SCRAP, HTVanillaMaterialType.NETHERITE, HTHolderLike.fromItem(Items.NETHERITE_SCRAP))
         // Mekanism Addon
-        materialTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
+        fromTriples(builder, RagiumMekanismAddon.MATERIAL_ITEMS.entries)
     }
 
     companion object {
@@ -135,11 +143,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         )
     }
 
-    private fun materialTable(
+    private fun fromTriples(
         builder: HTTagBuilder<Item>,
-        table: HTTable<HTMaterialVariant.ItemTag, out HTMaterialType, out HTHolderLike>,
+        triples: Iterable<Triple<HTMaterialVariant.ItemTag, HTMaterialType, HTHolderLike>>,
     ) {
-        table.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
+        triples.forEach { (variant: HTMaterialVariant.ItemTag, material: HTMaterialType, item: HTHolderLike) ->
             builder.addMaterial(variant, material, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[variant] ?: return@forEach
             builder.addTag(customTag, variant.itemTagKey(material))
@@ -211,6 +219,17 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         )
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
+        // Enchantments
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant.blockHolder)
+        }
+        builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.DRILL)
+        builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.TELEPORT_KEY)
+        builder.add(RagiumModTags.Items.RANGE_ENCHANTABLE, RagiumItems.ADVANCED_MAGNET)
+        builder.add(RagiumModTags.Items.RANGE_ENCHANTABLE, RagiumItems.MAGNET)
+
+        builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
+        builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         // Armors
         for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.AZURE_ARMORS) {
             builder.add(variant.tagKey, armor)
@@ -261,7 +280,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .forEach { holder: HTHolderLike -> builder.add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, holder) }
 
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
-        builder.addOptional(RagiumModTags.Items.POLYMER_RESIN, RagiumConst.ORITECH, "polymer_resin")
+        builder.add(RagiumModTags.Items.POLYMER_RESIN, HTHolderLike.fromItem(ItemContent.POLYMER_RESIN), HTTagBuilder.DependType.OPTIONAL)
 
         val plastics: TagKey<Item> = builder.createTag(commonId("plastic"))
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
@@ -270,6 +289,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
             PneumaticCraftTags.Items.PLASTIC_SHEETS,
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+        // Fuels
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, RagiumItems.GREEN_PELLET)
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(
+            RagiumModTags.Items.IS_NUCLEAR_FUEL,
+            HTHolderLike.fromItem(ItemContent.SMALL_URANIUM_PELLET),
             HTTagBuilder.DependType.OPTIONAL,
         )
         // Other
@@ -283,7 +310,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
-        builder.add(RagiumModTags.Items.WIP, RagiumItems.GREEN_PELLET)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SOLAR_PANEL)
     }
