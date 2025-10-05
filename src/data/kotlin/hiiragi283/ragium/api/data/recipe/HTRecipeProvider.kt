@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTRawStorageMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -210,6 +211,14 @@ sealed class HTRecipeProvider {
                 ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(ingot, 27),
+                ingredientHelper.item(HTRawStorageMaterialVariant, material, 2),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, 6),
+            ).tagCondition(ingot)
+            .saveSuffixed(output, "_from_block_with_basic_flux")
         // Advanced
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -218,6 +227,14 @@ sealed class HTRecipeProvider {
                 ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(ingot, 18),
+                ingredientHelper.item(HTRawStorageMaterialVariant, material),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, 6),
+            ).tagCondition(ingot)
+            .saveSuffixed(output, "_from_block_with_advanced_flux")
     }
 
     protected fun resetComponent(item: HTItemHolderLike, vararg targetTypes: DataComponentType<*>) {

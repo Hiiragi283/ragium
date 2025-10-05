@@ -111,6 +111,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         null -> 1
     }
 
+    override fun getRecipeTime(recipe: MultiSmeltingRecipe): Int = recipe.recipe.cookingTime
+
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: MultiSmeltingRecipe): Boolean =
         outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
 
@@ -134,7 +136,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             recipe.assemble(input, registries).copyWithCount(count)
 
         override fun getRequiredCount(stack: ItemStack): Int = when {
-            recipe.ingredients[0].test(stack) -> 1
+            recipe.ingredients[0].test(stack) -> count
             else -> 0
         }
     }

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -115,15 +114,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected var isActive: Boolean = false
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
-
-    protected fun doProgress(network: HTEnergyBattery): Boolean {
-        if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
-        }
-        if (usedEnergy < requiredEnergy) return false
-        usedEnergy -= requiredEnergy
-        return true
-    }
 
     protected open fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyProcessorRate(base) ?: base
 

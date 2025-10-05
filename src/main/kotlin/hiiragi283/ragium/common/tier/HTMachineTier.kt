@@ -4,14 +4,12 @@ import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.tier.HTTierProvider
 
 enum class HTMachineTier(private val base: HTBaseTier, val generatorRate: Int, val processorRate: Int) : HTTierProvider {
-    BASIC(HTBaseTier.BASIC, 32),
-    ADVANCED(HTBaseTier.ADVANCED, 32 * 4),
-    ELITE(HTBaseTier.ELITE, 32 * 8),
-    ULTIMATE(HTBaseTier.ULTIMATE, 32 * 16),
-    CREATIVE(HTBaseTier.CREATIVE, Int.MAX_VALUE),
+    BASIC(HTBaseTier.BASIC, 32, 16),
+    ADVANCED(HTBaseTier.ADVANCED, 128, 32),
+    ELITE(HTBaseTier.ELITE, 512, 64),
+    ULTIMATE(HTBaseTier.ULTIMATE, 2048, 128),
+    CREATIVE(HTBaseTier.CREATIVE, Int.MAX_VALUE, Int.MAX_VALUE),
     ;
-
-    constructor(base: HTBaseTier, generatorRate: Int) : this(base, generatorRate, generatorRate / 2)
 
     override fun getBaseTier(): HTBaseTier = base
 }

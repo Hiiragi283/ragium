@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
@@ -37,19 +38,30 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
             this.requiredEnergy = recipeEnergy
         }
         // エネルギーを消費する
-        if (!doProgress(network)) return false
-        // レシピを正常に扱えるか判定する
-        if (!canProgressRecipe(level, input, recipe)) return false
-        // レシピを実行する
-        completeRecipe(level, pos, state, input, recipe)
-        return true
+        if (usedEnergy < requiredEnergy) {
+            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
+        }
+        return when {
+            usedEnergy < requiredEnergy -> false
+            // レシピを正常に扱えるか判定する
+            canProgressRecipe(level, input, recipe) -> {
+                usedEnergy -= requiredEnergy
+                // レシピを実行する
+                completeRecipe(level, pos, state, input, recipe)
+                true
+            }
+
+            else -> false
+        }
     }
 
     protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): INPUT
 
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
-    protected open fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * 20 * 10)
+    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * getRecipeTime(recipe))
+
+    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 
     protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 

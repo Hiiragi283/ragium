@@ -34,13 +34,11 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
-    override fun getRequiredEnergy(recipe: HTItemToChancedItemRecipe): Int {
-        val multiplier: Double = when (inputTank.extract(10, true, HTStorageAccess.INTERNAl).amount) {
-            10 -> 0.8
-            else -> 1.0
+    override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
+        when (inputTank.extract(10, true, HTStorageAccess.INTERNAl).amount) {
+            10 -> 18 * 10
+            else -> super.getRecipeTime(recipe)
         }
-        return (super.getRequiredEnergy(recipe) * multiplier).toInt()
-    }
 
     override fun completeRecipe(
         level: ServerLevel,
