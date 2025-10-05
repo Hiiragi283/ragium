@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -152,7 +152,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Energy Storage    //
 
-    private val getter: (Level?) -> HTEnergyBattery? = RagiumAPI.INSTANCE::getEnergyNetwork
+    private val getter: (Level?) -> HTEnergyBattery? = RagiumPlatform.INSTANCE::getEnergyNetwork
 
     override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = createStorageHolder(
         HTEnergyBatteryWrapper { getter(level) },

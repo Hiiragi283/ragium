@@ -3,11 +3,11 @@ package hiiragi283.ragium.impl.registry
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.lookupOrNull
 import hiiragi283.ragium.api.extension.wrapDataResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.config.RagiumConfig
@@ -68,8 +68,7 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
     private var holderCache: Holder<T>? = null
 
     override fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val getter: HolderGetter<T> = provider?.lookupOrNull(registryKey)
-            ?: RagiumAPI.INSTANCE.getLookup(registryKey)
+        val getter: HolderGetter<T> = RagiumPlatform.INSTANCE.getLookup(provider, registryKey)
             ?: return DataResult.error { "Failed to find lookup for $registryKey" }
         return getFirstHolder(getter)
     }

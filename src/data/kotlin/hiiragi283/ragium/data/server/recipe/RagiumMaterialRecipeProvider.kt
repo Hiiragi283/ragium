@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -226,7 +226,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun material() {
         for (material: RagiumMaterialType in RagiumMaterialType.entries) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumAPI.INSTANCE.getBaseVariant(material) ?: continue
+            val baseVariant: HTMaterialVariant.ItemTag = RagiumPlatform.INSTANCE.getBaseVariant(material) ?: continue
             val base: ItemLike = RagiumItems.MATERIALS[baseVariant, material] ?: continue
 
             RagiumBlocks.MATERIALS[HTBlockMaterialVariant.STORAGE_BLOCK, material]?.let { storage: ItemLike ->

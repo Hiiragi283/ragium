@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
@@ -153,7 +153,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
-            HTEnergyBatteryWrapper { RagiumAPI.INSTANCE.getEnergyNetwork(level) }
+            HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
 
         override val transferRate: Int = 1000
     }

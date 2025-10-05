@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
@@ -55,7 +55,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         private set
 
     fun updateDestination(teleportPos: HTTeleportPos) {
-        if (RagiumAPI.INSTANCE.getLevel(teleportPos.dimension) != null) {
+        if (RagiumPlatform.INSTANCE.getLevel(teleportPos.dimension) != null) {
             this.teleportPos = teleportPos
             setOnlySave()
         }

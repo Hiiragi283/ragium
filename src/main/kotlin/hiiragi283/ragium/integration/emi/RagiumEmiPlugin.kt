@@ -13,6 +13,7 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
@@ -93,7 +94,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     override fun register(registry: EmiRegistry) {
         // Recipe
-        recipeAccess = RagiumAPI.INSTANCE.wrapRecipeManager(registry.recipeManager)
+        recipeAccess = RagiumPlatform.INSTANCE.wrapRecipeManager(registry.recipeManager)
 
         addCustomRecipe(registry)
         addGenerators(registry)
@@ -123,7 +124,7 @@ class RagiumEmiPlugin : EmiPlugin {
                         EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
                         EmiIngredient.of(Tags.Items.DYES_GREEN),
                     ),
-                    EmiStack.of(RagiumAPI.INSTANCE.createSoda(holder)),
+                    EmiStack.of(RagiumPlatform.INSTANCE.createSoda(holder)),
                     id,
                     true,
                 )

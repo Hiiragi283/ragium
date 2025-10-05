@@ -11,7 +11,6 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import java.util.function.Supplier
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * 指定した値から[FoodProperties]を返します。
@@ -34,7 +33,7 @@ class HTFoodBuilder private constructor() {
             saturation = parent.saturation / nutrition / 2f
             alwaysEat = parent.canAlwaysEat
             eatSeconds = parent.eatSeconds
-            convertTo = parent.usingConvertsTo().getOrNull()
+            parent.usingConvertsTo().ifPresent { convertTo = it }
             effects.addAll(parent.effects)
             builderAction()
         }

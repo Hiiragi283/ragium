@@ -1,6 +1,7 @@
 package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -177,7 +178,7 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun beforeEntityDamaged(event: LivingDamageEvent.Pre) {
-        val accessoryCap: AccessoriesCapability = RagiumAPI.INSTANCE.getAccessoryCap(event.entity) ?: return
+        val accessoryCap: AccessoriesCapability = RagiumPlatform.INSTANCE.getAccessoryCap(event.entity) ?: return
         val reference: SlotEntryReference = accessoryCap.getFirstEquipped { stack: ItemStack ->
             stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)
         } ?: return

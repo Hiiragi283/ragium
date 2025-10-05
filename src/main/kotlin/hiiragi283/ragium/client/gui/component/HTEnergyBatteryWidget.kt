@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.energyText
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.client.Minecraft
@@ -19,7 +20,7 @@ class HTEnergyBatteryWidget(private val batteryGetter: () -> HTEnergyBattery?, x
     companion object {
         @JvmStatic
         fun createNetwork(key: ResourceKey<Level>, x: Int, y: Int): HTEnergyBatteryWidget =
-            HTEnergyBatteryWidget({ RagiumAPI.INSTANCE.getEnergyNetwork(key) }, x, y)
+            HTEnergyBatteryWidget({ RagiumPlatform.INSTANCE.getEnergyNetwork(key) }, x, y)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {

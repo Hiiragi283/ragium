@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.unsupported
@@ -51,7 +52,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     private object BrewingRecipe : HTItemToChancedItemRecipe, HTSingleInputRecipe {
         override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemRecipe.ChancedResult> {
-            val access: RegistryAccess = RagiumAPI.INSTANCE.getRegistryAccess() ?: return listOf()
+            val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return listOf()
             // ポーションに変換する
             val stack: ItemStack = RagiumDataMaps.INSTANCE
                 .getBrewingEffect(access, input.item().itemHolder)
@@ -66,7 +67,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         override fun getRequiredCount(stack: ItemStack): Int = 1
 
         override fun test(input: SingleRecipeInput): Boolean {
-            val access: RegistryAccess = RagiumAPI.INSTANCE.getRegistryAccess() ?: return false
+            val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return false
             return RagiumDataMaps.INSTANCE.getBrewingEffect(access, input.item().itemHolder) != null
         }
 

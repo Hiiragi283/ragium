@@ -3,7 +3,7 @@ package hiiragi283.ragium.impl
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
 import hiiragi283.ragium.api.collection.HTTable
@@ -46,7 +46,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 import kotlin.random.Random
 
-class InternalRagiumAPI : RagiumAPI {
+class RagiumPlatformImpl : RagiumPlatform {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
@@ -134,10 +134,24 @@ class InternalRagiumAPI : RagiumAPI {
         consumer(RagiumMaterialType.PLASTIC, HTItemMaterialVariant.PLATE)
     }
 
+    //    Collection    //
+
+    override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
+
+    override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
+
+    override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
+
+    override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
+
     //    Item    //
 
     override fun createSoda(potion: PotionContents, count: Int): ItemStack =
         createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.POTION_CONTENTS, potion, count)
+
+    //    Recipe    //
+
+    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess = HTRecipeAccessImpl(recipeManager)
 
     //    Server    //
 
@@ -151,7 +165,7 @@ class InternalRagiumAPI : RagiumAPI {
         else -> level?.dimension()?.let(::getEnergyNetwork)
     }
 
-    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumAPI.INSTANCE
+    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumPlatform.INSTANCE
         .getLevel(key)
         ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
@@ -162,16 +176,4 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
         HTTagValueOutput(lookup, compoundTag)
-
-    //    Platform    //
-
-    override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
-
-    override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
-
-    override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
-
-    override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
-
-    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess = HTRecipeAccessImpl(recipeManager)
 }

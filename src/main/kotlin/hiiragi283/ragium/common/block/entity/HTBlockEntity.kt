@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -104,7 +104,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        RagiumAPI.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
+        RagiumPlatform.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
     }
 
     protected open fun writeValue(output: HTValueOutput) {
@@ -120,7 +120,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        RagiumAPI.INSTANCE.createValueInput(registries, tag).let(::readValue)
+        RagiumPlatform.INSTANCE.createValueInput(registries, tag).let(::readValue)
     }
 
     protected open fun readValue(input: HTValueInput) {

@@ -2,6 +2,7 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.network.HTPayloadRegister
@@ -83,7 +84,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
-        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }
 
@@ -135,7 +136,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.enqueueWork(RagiumAccessoryRegister::register)
         event.enqueueWork(RagiumFluidContents::registerInteractions)
 
-        for (addon: RagiumAddon in RagiumAPI.INSTANCE.getAddons()) {
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.onCommonSetup(event)
         }
         LOGGER.info("Loaded common setup!")

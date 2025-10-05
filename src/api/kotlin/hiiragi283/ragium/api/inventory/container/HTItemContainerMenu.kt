@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.inventory.container
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -31,7 +31,7 @@ abstract class HTItemContainerMenu(
             .map { interactionHand: InteractionHand ->
                 player.getItemInHand(interactionHand).`is`(stack.item)
             }.orElseGet {
-                RagiumAPI.INSTANCE.getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
+                RagiumPlatform.INSTANCE.getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
             }
     }
 }

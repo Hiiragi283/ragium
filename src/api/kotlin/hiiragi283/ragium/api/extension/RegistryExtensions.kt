@@ -1,15 +1,11 @@
-@file:Suppress("DEPRECATION")
-
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTHolderLike
 import net.minecraft.Util
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
-import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
@@ -19,7 +15,6 @@ import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Function
-import kotlin.jvm.optionals.getOrNull
 import kotlin.streams.asSequence
 
 //    ResourceLocation    //
@@ -89,15 +84,6 @@ val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
 fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component>): MutableComponent = unwrap()
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
-
-//    HolderLookup    //
-
-fun <T : Any> HolderLookup.Provider.lookupOrNull(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
-    lookup(registryKey).getOrNull()
-
-//    RegistryAccess    //
-
-fun <T : Any> RegistryAccess.registryOrNull(registryKey: RegistryKey<T>): Registry<T>? = registry(registryKey).getOrNull()
 
 //    TagKey    //
 

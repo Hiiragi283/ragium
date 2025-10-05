@@ -3,6 +3,7 @@ package hiiragi283.ragium.server
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.commands.CommandSourceStack
@@ -77,5 +78,5 @@ object RagiumCommand {
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumAPI.INSTANCE.getEnergyNetwork(source.level)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
 }

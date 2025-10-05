@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.BlockPos
@@ -67,4 +67,4 @@ fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
     Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
 
-val Level.recipeAccess: HTRecipeAccess get() = RagiumAPI.INSTANCE.wrapRecipeManager(this.recipeManager)
+val Level.recipeAccess: HTRecipeAccess get() = RagiumPlatform.INSTANCE.wrapRecipeManager(this.recipeManager)
