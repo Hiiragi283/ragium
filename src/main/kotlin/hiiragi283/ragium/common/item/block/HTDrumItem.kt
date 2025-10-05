@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.item.base.HTFluidItem
@@ -17,7 +18,7 @@ class HTDrumItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<HTDru
 
     override fun getBarWidth(stack: ItemStack): Int {
         val tank: HTFluidTank = HTFluidItem.getFluidTank(stack, 0) ?: return 0
-        return (13f / tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
+        return (13f * tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {
@@ -32,6 +33,7 @@ class HTDrumItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<HTDru
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        addFluidTooltip(stack, tooltips::add, flag)
+        val handler: HTFluidHandler = HTFluidItem.getHandler(stack) ?: return
+        addFluidTooltip(handler, tooltips::add, flag)
     }
 }

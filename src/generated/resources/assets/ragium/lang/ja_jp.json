@@ -157,7 +157,7 @@
   "block.ragium.nether_ragi_crystal_ore": "ネザーラギクリスタリル鉱石",
   "block.ragium.nether_raginite_ore": "ネザーラギナイト鉱石",
   "block.ragium.nether_warped_crystal_ore": "ネザー歪んだクリスタリル鉱石",
-  "block.ragium.nuclear_generator": "原子力発電機",
+  "block.ragium.nuclear_reactor": "原子炉",
   "block.ragium.obsidian_glass": "黒曜石ガラス",
   "block.ragium.obsidian_glass.tooltip": "黒曜石とおなじ爆破耐性をもちます。\nまた，シルクタッチなしで回収することが可能です。",
   "block.ragium.orange_led_block": "橙色のLEDブロック",

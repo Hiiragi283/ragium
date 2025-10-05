@@ -17,7 +17,7 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
         register(
             context,
             RagiumWorldGenData.ORE_RAGINITE,
-            CountPlacement.of(8),
+            CountPlacement.of(4),
             HeightRangePlacement.uniform(
                 VerticalAnchor.bottom(),
                 VerticalAnchor.absolute(15),

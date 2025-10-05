@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
+import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.LivingEntity
@@ -55,7 +56,7 @@ class HTDrillItem(properties: Properties) :
         if (level.isClientSide) return false
         if (state.getDestroySpeed(level, pos) == 0f) return false
         if (!canConsumeEnergy(stack)) return false
-        val usage: Int = getEnergyUsage(stack)
+        val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
         extractEnergy(stack, usage, false)
         return true
     }

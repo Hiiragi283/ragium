@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,6 +26,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         casings()
 
+        generators()
         machines()
         devices()
 
@@ -73,6 +75,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
             .saveSuffixed(output, "_with_obsidian")
+    }
+
+    //    Generators    //
+
+    @JvmStatic
+    private fun generators() {
+        // Basic
+        HTShapedRecipeBuilder
+            .misc(HTGeneratorVariant.THERMAL)
+            .pattern(
+                "AAA",
+                "ABA",
+                "CCC",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('B', Items.FURNACE)
+            .define('C', Items.BRICKS)
+            .save(output)
     }
 
     //    Machines    //

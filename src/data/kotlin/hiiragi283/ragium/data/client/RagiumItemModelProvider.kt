@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -43,6 +44,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumBlocks.WARPED_WART)
 
             removeAll(RagiumBlocks.GENERATORS.values)
+            add(HTGeneratorVariant.THERMAL.blockHolder)
             removeAll(RagiumBlocks.LED_BLOCKS.values)
             removeAll(RagiumBlocks.WALLS.values)
             // Delight

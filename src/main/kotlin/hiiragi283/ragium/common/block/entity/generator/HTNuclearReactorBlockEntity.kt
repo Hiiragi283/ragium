@@ -10,9 +10,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTNuclearGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
+class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFuelGeneratorBlockEntity(
-        HTGeneratorVariant.NUCLEAR,
+        HTGeneratorVariant.NUCLEAR_REACTOR,
         pos,
         state,
     ) {

@@ -86,6 +86,8 @@ object RagiumMekanismAddon : RagiumAddon {
         eventBus.addListener(::buildCreativeTabs)
         eventBus.addListener(::modifyComponent)
 
+        CHEMICAL_REGISTER.addAlias(RagiumAPI.id("raginite"), RagiumAPI.id("ragium"))
+
         CHEMICAL_REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
     }

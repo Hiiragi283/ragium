@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:nuclear_generator"
+          "name": "ragium:nuclear_reactor"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/nuclear_generator"
+  "random_sequence": "ragium:blocks/nuclear_reactor"
 }

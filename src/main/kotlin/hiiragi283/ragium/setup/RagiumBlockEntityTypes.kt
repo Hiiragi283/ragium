@@ -19,7 +19,7 @@ import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTNuclearGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
@@ -81,9 +81,9 @@ object RagiumBlockEntityTypes {
                 HTGeneratorVariant.COMBUSTION -> ::HTCombustionGeneratorBlockEntity
                 HTGeneratorVariant.SOLAR -> ::HTSolarGeneratorBlockEntity
                 // Elite
-                HTGeneratorVariant.NUCLEAR -> ::HTNuclearGeneratorBlockEntity
+                HTGeneratorVariant.NUCLEAR_REACTOR -> ::HTNuclearReactorBlockEntity
             }
-            registerTick("${variant.serializedName}_generator", factory)
+            registerTick(variant.serializedName, factory)
         }
 
     //    Machine    //

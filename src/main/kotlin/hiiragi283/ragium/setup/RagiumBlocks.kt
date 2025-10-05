@@ -343,7 +343,17 @@ object RagiumBlocks {
 
     @JvmField
     val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createMap<HTGeneratorVariant>(machineProperty(), ::HTHorizontalEntityBlock)
+        createVariantMap<HTGeneratorVariant>(machineProperty()) { variant: HTGeneratorVariant ->
+            when (variant) {
+                // Basic
+                HTGeneratorVariant.THERMAL -> ::HTHorizontalEntityBlock
+                // Advanced
+                HTGeneratorVariant.COMBUSTION -> ::HTHorizontalEntityBlock
+                HTGeneratorVariant.SOLAR -> HTEntityBlock::Simple
+                // Elite
+                HTGeneratorVariant.NUCLEAR_REACTOR -> HTEntityBlock::Simple
+            }
+        }
 
     //    Machines    //
 
@@ -389,6 +399,16 @@ object RagiumBlocks {
         enumEntries<V>().associateWith { variant: V ->
             val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
             registerEntity(type, properties, factory)
+        }
+
+    @JvmStatic
+    private inline fun <reified V> createVariantMap(
+        properties: BlockBehaviour.Properties,
+        noinline factory: (V) -> (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> HTEntityBlock,
+    ): Map<V, HTBasicDeferredBlock<HTEntityBlock>> where V : HTVariantKey.WithBE<*>, V : Enum<V> =
+        enumEntries<V>().associateWith { variant: V ->
+            val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
+            registerEntity(type, properties, factory(variant))
         }
 
     //    Storages    //

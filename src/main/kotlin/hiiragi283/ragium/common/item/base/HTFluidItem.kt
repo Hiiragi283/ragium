@@ -15,7 +15,7 @@ import kotlin.math.roundToInt
 abstract class HTFluidItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        private fun getHandler(stack: ItemStack): HTFluidHandler? = HTMultiCapability.FLUID.getCapability(stack) as? HTFluidHandler
+        fun getHandler(stack: ItemStack): HTFluidHandler? = HTMultiCapability.FLUID.getCapability(stack) as? HTFluidHandler
 
         @JvmStatic
         fun getFluidTank(stack: ItemStack, tank: Int): HTFluidTank? {
@@ -36,7 +36,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
 
     override fun getBarWidth(stack: ItemStack): Int {
         val tank: HTFluidTank = getFluidTank(stack, 0) ?: return 0
-        return (13f / tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
+        return (13f * tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {
@@ -51,6 +51,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        addFluidTooltip(stack, tooltips::add, flag)
+        val handler: HTFluidHandler = getHandler(stack) ?: return
+        addFluidTooltip(handler, tooltips::add, flag)
     }
 }
