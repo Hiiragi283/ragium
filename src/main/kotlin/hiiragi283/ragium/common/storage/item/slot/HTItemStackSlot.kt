@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.inventory.slot.HTContainerItemSlot
+import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -25,6 +25,7 @@ open class HTItemStackSlot protected constructor(
     private val listener: HTContentListener?,
     private val x: Int,
     private val y: Int,
+    private val slotType: HTContainerItemSlot.Type,
 ) : HTItemSlot.Mutable {
     companion object {
         @JvmField
@@ -44,7 +45,19 @@ open class HTItemStackSlot protected constructor(
             canExtract: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             canInsert: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
             filter: Predicate<ItemStack> = HTItemPredicates.TRUE,
-        ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y)
+        ): HTItemStackSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
+
+        @JvmStatic
+        private fun create(
+            listener: HTContentListener?,
+            x: Int,
+            y: Int,
+            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
+            canExtract: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
+            canInsert: BiPredicate<ItemStack, HTStorageAccess> = ALWAYS_TRUE,
+            filter: Predicate<ItemStack> = HTItemPredicates.TRUE,
+            slotType: HTContainerItemSlot.Type,
+        ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y, slotType)
 
         @JvmStatic
         fun input(
@@ -62,6 +75,7 @@ open class HTItemStackSlot protected constructor(
             { _: ItemStack, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
             { stack: ItemStack, _: HTStorageAccess -> canInsert.test(stack) },
             filter,
+            HTContainerItemSlot.Type.INPUT,
         )
 
         @JvmStatic
@@ -77,6 +91,7 @@ open class HTItemStackSlot protected constructor(
             limit,
             ALWAYS_TRUE,
             { _: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            slotType = HTContainerItemSlot.Type.OUTPUT,
         )
     }
 
@@ -88,6 +103,7 @@ open class HTItemStackSlot protected constructor(
         listener: HTContentListener?,
         x: Int,
         y: Int,
+        slotType: HTContainerItemSlot.Type,
     ) : this(
         limit,
         { stack: ItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL || canExtract.test(stack) },
@@ -96,6 +112,7 @@ open class HTItemStackSlot protected constructor(
         listener,
         x,
         y,
+        slotType,
     )
 
     private var stack: ItemStack = ItemStack.EMPTY
@@ -111,7 +128,7 @@ open class HTItemStackSlot protected constructor(
 
     override fun canItemExtract(stack: ItemStack, access: HTStorageAccess): Boolean = canExtract.test(stack, access)
 
-    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked)
+    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
 
     override fun deserialize(input: HTValueInput) {
         input.read(RagiumConst.ITEM, BiCodecs.itemStack(true))?.let(::setStackUnchecked)

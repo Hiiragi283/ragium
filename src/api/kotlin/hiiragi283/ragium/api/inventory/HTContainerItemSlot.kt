@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.inventory.slot
+package hiiragi283.ragium.api.inventory
 
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -19,24 +19,16 @@ open class HTContainerItemSlot(
     x: Int,
     y: Int,
     private val uncheckedSetter: Consumer<ItemStack>,
-) : Slot(emptyContainer, 0, x, y),
-    HTSlot {
+    val slotType: Type,
+) : Slot(emptyContainer, 0, x, y) {
     companion object {
         @JvmStatic
         private val emptyContainer = SimpleContainer(0)
     }
 
-    override fun insertItem(stack: ItemStack, simulate: Boolean): ItemStack {
-        val remainder: ItemStack = slot.insert(stack, simulate, HTStorageAccess.MANUAL)
-        if (!simulate && stack.count != remainder.count) {
-            setChanged()
-        }
-        return remainder
-    }
-
     override fun mayPlace(stack: ItemStack): Boolean {
         if (stack.isEmpty) return false
-        if (slot.isEmpty()) return insertItem(stack, true).count < stack.count
+        if (slot.isEmpty()) return slot.insert(stack, true, HTStorageAccess.MANUAL).count < stack.count
         if (slot.extract(1, true, HTStorageAccess.MANUAL).isEmpty) return false
         return slot.isItemValidForInsert(stack, HTStorageAccess.MANUAL)
     }
@@ -82,4 +74,10 @@ open class HTContainerItemSlot(
     }
 
     protected open fun allowPartialRemoval(): Boolean = true
+
+    enum class Type {
+        INPUT,
+        OUTPUT,
+        BOTH,
+    }
 }

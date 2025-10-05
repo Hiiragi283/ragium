@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.extension.tankRange
+import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -25,7 +26,8 @@ open class HTFluidItemStackSlot(
     listener: HTContentListener?,
     x: Int,
     y: Int,
-) : HTItemStackSlot(HTItemSlot.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y),
+    slotType: HTContainerItemSlot.Type,
+) : HTItemStackSlot(HTItemSlot.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y, slotType),
     HTFluidItemSlot {
     companion object {
         @JvmStatic
