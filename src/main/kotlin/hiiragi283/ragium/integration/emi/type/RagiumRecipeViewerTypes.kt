@@ -20,6 +20,7 @@ import hiiragi283.ragium.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.integration.emi.data.HTEmiFluidFuelData
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.ItemLike
 
 object RagiumRecipeViewerTypes {
     @JvmField
@@ -49,7 +50,14 @@ object RagiumRecipeViewerTypes {
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> machine(
         recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
-        variant: HTMachineVariant,
+        vararg variants: HTMachineVariant
+    ): HTRegistryRecipeViewerType<INPUT, RECIPE> =
+        HTRegistryRecipeViewerType(recipeType, variants[0].toStack(), null, MACHINE_BOUNDS, *variants)
+
+    @JvmStatic
+    private fun <INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> machine(
+        recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
+        variant: HTMachineVariant
     ): HTRegistryRecipeViewerType<INPUT, RECIPE> = HTRegistryRecipeViewerType(recipeType, variant.toStack(), null, MACHINE_BOUNDS, variant)
 
     // Basic
@@ -63,7 +71,7 @@ object RagiumRecipeViewerTypes {
 
     @JvmField
     val CRUSHING: HTRegistryRecipeViewerType<SingleRecipeInput, HTItemToChancedItemRecipe> =
-        machine(RagiumRecipeTypes.CRUSHING, HTMachineVariant.PULVERIZER)
+        machine(RagiumRecipeTypes.CRUSHING, HTMachineVariant.PULVERIZER, HTMachineVariant.CRUSHER)
 
     @JvmField
     val EXTRACTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =

@@ -193,11 +193,10 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemToItemEmiRecipe)
         // Cutting
-        val cuttingCategory: HTEmiRecipeCategory =
-            addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SAWMILL, ::HTCuttingEmiRecipe)
+        val cutting: HTEmiRecipeCategory = addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SAWMILL, ::HTCuttingEmiRecipe)
         addRecipes(
             registry,
-            cuttingCategory,
+            cutting,
             RagiumRecipeTypes.STONECUTTER.getAllHolders(recipeAccess).map { holder: HTRecipeHolder<StonecutterRecipe> ->
                 holder
                     .withPrefix("/")

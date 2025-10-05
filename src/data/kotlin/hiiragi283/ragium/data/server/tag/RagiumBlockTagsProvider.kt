@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -142,10 +143,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
 
         // WIP
-        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.GENERATORS)
+        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS.toMutableList().apply { remove(RagiumBlocks.DEVICE_CASING) })
+        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.GENERATORS.toMutableMap().apply { remove(HTGeneratorVariant.THERMAL) })
         builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.WOODEN_CASING)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 
