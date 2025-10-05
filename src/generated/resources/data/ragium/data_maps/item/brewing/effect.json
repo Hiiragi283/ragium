@@ -62,8 +62,8 @@
             "duration": 3600,
             "id": "minecraft:haste",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }
@@ -87,8 +87,8 @@
             "duration": 900,
             "id": "minecraft:nausea",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }
@@ -112,8 +112,8 @@
             "duration": 900,
             "id": "minecraft:hunger",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }
@@ -127,8 +127,8 @@
             "duration": 900,
             "id": "minecraft:levitation",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }
@@ -167,8 +167,8 @@
             "duration": 900,
             "id": "minecraft:wither",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }

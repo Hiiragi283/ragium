@@ -72,10 +72,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Crimson
-        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅の結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
         // Warped
-        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだ結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだクリスタリルを手に入れる")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "リモートワーク", "次元アンカーを置いて，そのチャンクを常に読み込ませる")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "ロックオープン！", "転位の鍵を使い，紐づけた座標に飛ぶ")
         // Eldritch
@@ -337,7 +337,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addMaterialKey(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
         addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")
         addMaterialKey(RagiumMaterials.RAGINITE, "ラギナイト")
-        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだ結晶")
+        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだクリスタリル")
         // Vanilla
         addMaterialKey(VanillaMaterials.AMETHYST, "アメシスト")
         addMaterialKey(VanillaMaterials.CALCITE, "方解石")
