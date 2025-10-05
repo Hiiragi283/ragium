@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    "B": {
+      "item": "minecraft:iron_trapdoor"
+    },
+    "C": {
+      "tag": "c:circuits/advanced"
+    },
+    "D": {
+      "item": "minecraft:nether_bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:washer"
+  }
+}

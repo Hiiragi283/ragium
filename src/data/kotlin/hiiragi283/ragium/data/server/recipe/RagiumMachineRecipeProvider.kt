@@ -27,7 +27,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         casings()
 
         generators()
-        machines()
+        processors()
         devices()
 
         drums()
@@ -94,10 +94,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
     }
 
-    //    Machines    //
+    //    Processors    //
 
     @JvmStatic
-    private fun machines() {
+    private fun processors() {
         // Basic
         basicMachine(
             HTMachineVariant.ALLOY_SMELTER,
@@ -110,29 +110,13 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
         basicMachine(HTMachineVariant.PULVERIZER, Ingredient.of(Items.FLINT))
         // Advanced
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.CRUSHER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', Tags.Items.GEMS_DIAMOND)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ADVANCED)
-            .define('D', Items.NETHER_BRICKS)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.MELTER)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
-            .define('C', Items.BLAST_FURNACE)
-            .define('D', Items.NETHER_BRICKS)
-            .save(output)
+        advMachine(HTMachineVariant.CRUSHER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        advMachine(
+            HTMachineVariant.MELTER,
+            Ingredient.of(RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY)),
+            Ingredient.of(Items.BLAST_FURNACE),
+        )
+        advMachine(HTMachineVariant.WASHER, Ingredient.of(Items.IRON_TRAPDOOR))
 
         HTShapedRecipeBuilder
             .misc(HTMachineVariant.REFINERY)
@@ -200,6 +184,25 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', side)
             .define('C', core)
             .define('D', Items.BRICKS)
+            .save(output)
+    }
+
+    @JvmStatic
+    private fun advMachine(
+        variant: HTMachineVariant,
+        side: Ingredient,
+        core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.ADVANCED),
+    ) {
+        HTShapedRecipeBuilder
+            .misc(variant)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', side)
+            .define('C', core)
+            .define('D', Items.NETHER_BRICKS)
             .save(output)
     }
 

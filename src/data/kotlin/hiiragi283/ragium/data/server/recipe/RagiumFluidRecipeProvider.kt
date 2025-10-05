@@ -123,13 +123,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.BLAZE_POWDER)
+            .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
-            .blasting(Items.ENDER_PEARL)
+            .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
 

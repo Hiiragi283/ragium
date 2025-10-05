@@ -2,8 +2,8 @@
   "type": "ragium:simulating",
   "catalyst": "minecraft:piglin_brute_spawn_egg",
   "ingredient": {
-    "count": 16,
-    "items": "#c:netherracks"
+    "count": 64,
+    "items": "minecraft:nether_bricks"
   },
   "result": {
     "count": 1,

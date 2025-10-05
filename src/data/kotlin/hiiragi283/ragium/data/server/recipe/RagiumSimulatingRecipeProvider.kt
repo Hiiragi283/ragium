@@ -93,7 +93,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         // Ancient Debris
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                ingredientHelper.item(Tags.Items.NETHERRACKS, 16),
+                ingredientHelper.item(Items.NETHER_BRICKS, 64),
                 ingredientHelper.item(Items.PIGLIN_BRUTE_SPAWN_EGG),
                 resultHelper.item(Items.ANCIENT_DEBRIS),
             ).save(output)
