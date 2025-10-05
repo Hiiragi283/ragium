@@ -23,4 +23,6 @@ class HTCrushingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<
         }
         addInput(RagiumFluidContents.LUBRICANT.toTagEmi())
     }
+
+    override fun shouldCatalyst(): Boolean = true
 }

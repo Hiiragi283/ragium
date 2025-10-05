@@ -19,8 +19,8 @@ class HTEmiRecipeCategory private constructor(
     val bounds: HTBounds,
     val viewerType: HTRecipeViewerType<*>,
     icon: EmiRenderable,
-    simplified: EmiRenderable = icon,
-    sorter: Comparator<EmiRecipe> = EmiRecipeSorting.none(),
+    simplified: EmiRenderable,
+    sorter: Comparator<EmiRecipe>,
 ) : EmiRecipeCategory(viewerType.getId(), icon, simplified, sorter) {
     companion object {
         fun create(viewerType: HTRecipeViewerType<*>): HTEmiRecipeCategory {
@@ -50,8 +50,7 @@ class HTEmiRecipeCategory private constructor(
         viewerType: HTRecipeViewerType<*>,
         icon: EmiRenderable,
         simplified: EmiRenderable = icon,
-        sorter: Comparator<EmiRecipe> = EmiRecipeSorting.none(),
-    ) : this(viewerType.getBounds(), viewerType, icon, simplified, sorter)
+    ) : this(viewerType.getBounds(), viewerType, icon, simplified, EmiRecipeSorting.compareOutputThenInput())
 
     override fun getName(): Component = viewerType.getText()
 }
