@@ -13,12 +13,13 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
 import hiiragi283.ragium.impl.recipe.ingredient.HTFluidIngredientImpl
 import hiiragi283.ragium.impl.recipe.ingredient.HTItemIngredientImpl
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -62,20 +63,6 @@ object RagiumRecipeBiCodecs {
             ::HTEnchantingRecipe,
         )
 
-    @JvmField
-    val WASHING: MapBiCodec<RegistryFriendlyByteBuf, HTWashingRecipe> = MapBiCodec
-        .composite(
-            ITEM_CODEC.fieldOf("item_ingredient"),
-            HTWashingRecipe::ingredient,
-            FLUID_CODEC.fieldOf("fluid_ingredient"),
-            HTWashingRecipe::fluidIngredient,
-            HTChancedItemRecipe.ChancedResult.CODEC
-                .listOrElement(1, 4)
-                .fieldOf("results"),
-            HTWashingRecipe::results,
-            ::HTWashingRecipe,
-        )
-
     @JvmStatic
     fun <R : HTItemToItemRecipe> itemToItem(
         factory: HTItemToObjRecipeBuilder.Factory<HTItemResult, R>,
@@ -108,6 +95,21 @@ object RagiumRecipeBiCodecs {
         HTItemWithCatalystToItemRecipe::catalyst,
         HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
         HTItemWithCatalystToItemRecipe::result,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R : HTItemWithFluidToChancedItemRecipeBase> itemWithFluidToChanced(
+        factory: HTItemWithFluidToChancedItemRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        ITEM_CODEC.fieldOf("item_ingredient"),
+        HTItemWithFluidToChancedItemRecipeBase::ingredient,
+        FLUID_CODEC.fieldOf("fluid_ingredient"),
+        HTItemWithFluidToChancedItemRecipeBase::fluidIngredient,
+        HTChancedItemRecipe.ChancedResult.CODEC
+            .listOrElement(1, 4)
+            .fieldOf("results"),
+        HTItemWithFluidToChancedItemRecipeBase::results,
         factory::create,
     )
 

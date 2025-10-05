@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.generator
 
+import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -15,6 +17,7 @@ import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -25,6 +28,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
@@ -34,6 +38,21 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         state,
     ),
     HTFluidInteractable {
+    companion object {
+        @JvmStatic
+        fun createSimple(
+            itemValueGetter: (ItemStack) -> Int,
+            fuelContent: HTFluidContent<*, *, *>,
+            fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
+            variant: HTGeneratorVariant,
+        ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory {
+            pos: BlockPos,
+            state: BlockState,
+            ->
+            Simple(itemValueGetter, fuelContent, fluidAmountGetter, variant, pos, state)
+        }
+    }
+
     protected lateinit var slot: HTFluidFuelItemStackSlot
         private set
 
@@ -102,4 +121,21 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
 
     final override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
         interactWith(player, hand, tank)
+
+    //    Simple    //
+
+    private class Simple(
+        private val itemValueGetter: (ItemStack) -> Int,
+        private val fuelContent: HTFluidContent<*, *, *>,
+        private val fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
+        variant: HTGeneratorVariant,
+        pos: BlockPos,
+        state: BlockState,
+    ) : HTFuelGeneratorBlockEntity(variant, pos, state) {
+        override fun getFuelValue(stack: ItemStack): Int = itemValueGetter(stack)
+
+        override fun getFuelStack(value: Int): FluidStack = fuelContent.toStack(value)
+
+        override fun getRequiredAmount(access: RegistryAccess, stack: FluidStack): Int = fluidAmountGetter(access, stack.fluidHolder)
+    }
 }

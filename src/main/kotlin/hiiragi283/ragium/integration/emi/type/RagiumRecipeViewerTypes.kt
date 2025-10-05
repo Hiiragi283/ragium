@@ -98,6 +98,10 @@ object RagiumRecipeViewerTypes {
     val BREWING = HTFakeRecipeViewerType<HTEmiBrewingEffect>(HTMachineVariant.BREWERY, HTBounds(0, 0, 4 * 18, 1 * 18))
 
     @JvmField
+    val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
+        machine(RagiumRecipeTypes.PLANTING, HTMachineVariant.PLANTER)
+
+    @JvmField
     val SIMULATING: HTRegistryRecipeViewerType<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, HTMachineVariant.SIMULATOR)
 }

@@ -202,6 +202,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Elite
         machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
+        machine(HTMachineVariant.PLANTER, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device

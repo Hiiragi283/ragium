@@ -42,9 +42,9 @@ import hiiragi283.ragium.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.processor.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.processor.HTItemToItemEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.processor.HTItemWithFluidToChancedItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.processor.HTSimulatingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.processor.HTWashingEmiRecipe
 import hiiragi283.ragium.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.integration.emi.type.RagiumRecipeViewerTypes
@@ -207,7 +207,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Advanced
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.FLUID_TRANSFORM, ::HTFluidTransformingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTItemWithFluidToChancedItemEmiRecipe)
         // Elite
         addCategoryAndRecipes(
             registry,
@@ -219,7 +219,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 .asSequence(),
             ::HTBrewingEffectEmiRecipe,
         )
-
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTItemWithFluidToChancedItemEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTSimulatingEmiRecipe)
     }
 

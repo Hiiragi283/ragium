@@ -13,6 +13,7 @@ import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
+import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
@@ -98,6 +99,12 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> = register(
+        RagiumConst.PLANTING,
+        RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTPlantingRecipe),
+    )
+
+    @JvmField
     val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
         "pulverizing",
         RagiumRecipeBiCodecs.itemToItem(::HTPulverizingRecipe),
@@ -110,7 +117,10 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = register(RagiumConst.WASHING, RagiumRecipeBiCodecs.WASHING)
+    val WASHING: RecipeSerializer<HTWashingRecipe> = register(
+        RagiumConst.WASHING,
+        RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTWashingRecipe),
+    )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :
         RecipeSerializer<RECIPE> {

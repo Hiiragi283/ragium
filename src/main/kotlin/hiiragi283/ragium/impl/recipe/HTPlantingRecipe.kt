@@ -9,9 +9,9 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTWashingRecipe(ingredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, results: List<HTChancedItemRecipe.ChancedResult>) :
+class HTPlantingRecipe(ingredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, results: List<HTChancedItemRecipe.ChancedResult>) :
     HTItemWithFluidToChancedItemRecipeBase(ingredient, fluidIngredient, results) {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WASHING
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PLANTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.WASHING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING.get()
 }

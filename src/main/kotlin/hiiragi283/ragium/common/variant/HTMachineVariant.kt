@@ -30,6 +30,7 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
     // Elite
     BREWERY(HTMachineTier.ELITE, "Brewery", "醸造機"),
     MULTI_SMELTER(HTMachineTier.ELITE, "Multi Smelter", "並列製錬炉"),
+    PLANTER(HTMachineTier.ELITE, "Planting Chamber", "栽培室"),
     SIMULATOR(HTMachineTier.ELITE, "Simulation Chamber", "シミュレーション室"),
     ;
 

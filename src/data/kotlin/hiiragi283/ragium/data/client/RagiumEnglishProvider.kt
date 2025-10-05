@@ -408,6 +408,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.WASHING, "Washing")
     }

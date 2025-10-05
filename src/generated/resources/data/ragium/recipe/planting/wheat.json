@@ -1,0 +1,18 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:seeds/wheat",
+  "results": [
+    {
+      "count": 2,
+      "id": "minecraft:wheat"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:wheat_seeds"
+    }
+  ]
+}

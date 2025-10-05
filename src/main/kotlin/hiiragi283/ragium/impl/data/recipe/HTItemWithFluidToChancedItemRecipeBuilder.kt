@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 
 class HTItemWithFluidToChancedItemRecipeBuilder<RECIPE : HTItemWithFluidToChancedItemRecipe>(
@@ -14,6 +15,13 @@ class HTItemWithFluidToChancedItemRecipeBuilder<RECIPE : HTItemWithFluidToChance
     val fluidIngredient: HTFluidIngredient,
 ) : HTChancedItemRecipeBuilder<RECIPE>(prefix) {
     companion object {
+        @JvmStatic
+        fun planting(
+            ingredient: HTItemIngredient,
+            fluidIngredient: HTFluidIngredient,
+        ): HTItemWithFluidToChancedItemRecipeBuilder<HTPlantingRecipe> =
+            HTItemWithFluidToChancedItemRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe, ingredient, fluidIngredient)
+
         @JvmStatic
         fun washing(
             ingredient: HTItemIngredient,

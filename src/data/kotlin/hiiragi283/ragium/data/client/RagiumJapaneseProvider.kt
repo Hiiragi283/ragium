@@ -410,6 +410,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
         add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.WASHING, "洗浄")
     }
