@@ -3,6 +3,7 @@ package hiiragi283.ragium.impl.recipe.ingredient
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -34,7 +35,7 @@ class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>,
                     BiCodecs.POSITIVE_INT.fieldOf("amount"),
                     HTFluidIngredientImpl::amount,
                     ::HTFluidIngredientImpl,
-                ).let(BiCodec.Companion::downCast)
+                ).downCast()
 
             @JvmStatic
             fun of(vararg fluids: Fluid, amount: Int = 1): HTFluidIngredientImpl {

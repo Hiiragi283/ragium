@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createTagKey
+import hiiragi283.ragium.api.extension.ranged
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -21,7 +22,6 @@ import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
@@ -38,19 +38,33 @@ object BiCodecs {
      * `0`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.NON_NEGATIVE_INT, ByteBufCodecs.INT)
+    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(0, Int.MAX_VALUE)
+
+    /**
+     * `0`以上の値を対象とする[Long]の[BiCodec]
+     * @see [mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC]
+     */
+    @JvmField
+    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0, Long.MAX_VALUE)
 
     /**
      * `1`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.of(ExtraCodecs.POSITIVE_INT, ByteBufCodecs.INT)
+    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(1, Int.MAX_VALUE)
+
+    /**
+     * `1`以上の値を対象とする[Long]の[BiCodec]
+     * @see [mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC]
+     */
+    @JvmField
+    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1, Long.MAX_VALUE)
 
     /**
      * `0f`以上の値を対象とする[Float]の[BiCodec]
      */
     @JvmField
-    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.of(ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT)
+    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f, Float.MAX_VALUE)
 
     /**
      * [ResourceLocation]の[BiCodec]

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.andThen
+import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -57,7 +58,7 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
                         1 -> Either.right(itemIngredient)
                         else -> Either.left(itemIngredient)
                     }
-                }.let(BiCodec.Companion::downCast)
+                }.downCast()
 
             @JvmStatic
             fun of(vararg items: ItemLike, count: Int = 1): HTItemIngredientImpl {

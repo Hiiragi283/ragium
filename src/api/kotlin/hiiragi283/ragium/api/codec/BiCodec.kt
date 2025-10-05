@@ -8,7 +8,6 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.wrapDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -207,18 +206,6 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
          */
         @JvmStatic
         fun <B : ByteBuf, V : Any> unit(instance: V): BiCodec<B, V> = of(Codec.unit(instance), StreamCodec.unit(instance))
-
-        /**
-         * 指定された[codec]を，別の[BiCodec]に変換します。
-         * @param X 変換後のコーデックの対象となるクラス
-         * @param V [X]を継承したクラス
-         * @return [X]を対象とした[BiCodec]
-         */
-        @JvmStatic
-        inline fun <B : ByteBuf, reified X : Any, reified V : X> downCast(codec: BiCodec<B, V>): BiCodec<B, X> =
-            codec.flatXmap(DataResult<X>::success) { value: X ->
-                (value as? V).wrapDataResult("Value $value cannot cast to ${X::class.java.canonicalName}")
-            }
     }
 
     // Encode & Decode
