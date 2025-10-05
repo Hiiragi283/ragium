@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -57,17 +56,11 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import org.slf4j.Logger
 import java.awt.Color
 
 @OnlyIn(Dist.CLIENT)
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 class RagiumClient(eventBus: IEventBus, container: ModContainer) {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     init {
         eventBus.addListener(::clientSetup)
 
@@ -85,7 +78,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::registerAccessories)
 
-        LOGGER.info("Loaded Client Setup!")
+        RagiumAPI.LOGGER.info("Loaded Client Setup!")
     }
 
     private fun registerAccessories() {
@@ -93,7 +86,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLES, ::HTGogglesAccessoryRenderer)
         accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
         accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
-        LOGGER.info("Registered Accessory Renderer!")
+        RagiumAPI.LOGGER.info("Registered Accessory Renderer!")
     }
 
     private fun accessoryRenderer(item: ItemLike, supplier: () -> AccessoryRenderer) {
@@ -144,7 +137,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             )
         }*/
 
-        LOGGER.info("Registered BlockColor!")
+        RagiumAPI.LOGGER.info("Registered BlockColor!")
     }
 
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
@@ -173,7 +166,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumItems.UNIVERSAL_BUNDLE,
         )
 
-        LOGGER.info("Registered ItemColor!")
+        RagiumAPI.LOGGER.info("Registered ItemColor!")
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -218,7 +211,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             liquid(sap, color)
         }
 
-        LOGGER.info("Registered client extensions!")
+        RagiumAPI.LOGGER.info("Registered client extensions!")
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
@@ -253,23 +246,23 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
 
-        LOGGER.info("Registered Screens!")
+        RagiumAPI.LOGGER.info("Registered Screens!")
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
 
-        LOGGER.info("Registered BlockEntityRenderers!")
+        RagiumAPI.LOGGER.info("Registered BlockEntityRenderers!")
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
-        LOGGER.info("Registered ClientTooltipComponents!")
+        RagiumAPI.LOGGER.info("Registered ClientTooltipComponents!")
     }
 
     private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
         RagiumKeyMappings.KEYS.forEach(event::register)
 
-        LOGGER.info("Registered Key Mappings!")
+        RagiumAPI.LOGGER.info("Registered Key Mappings!")
     }
 }

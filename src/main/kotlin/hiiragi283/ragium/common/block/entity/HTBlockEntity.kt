@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.codec.BiCodecs
@@ -37,7 +36,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import org.slf4j.Logger
 import java.util.function.Consumer
 
 /**
@@ -57,9 +55,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     //    Ticking    //
 
     companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-
         /**
          * @see [mekanism.common.tile.base.TileEntityMekanism.tickClient]
          */

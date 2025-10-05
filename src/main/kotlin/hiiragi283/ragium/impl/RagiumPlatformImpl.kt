@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTMultiMap
@@ -43,26 +43,20 @@ import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.server.ServerLifecycleHooks
-import org.slf4j.Logger
 import kotlin.random.Random
 
 class RagiumPlatformImpl : RagiumPlatform {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     //    Addon    //
 
     private lateinit var addonCache: List<RagiumAddon>
 
     override fun getAddons(): List<RagiumAddon> {
         if (!::addonCache.isInitialized) {
-            LOGGER.info("Collecting addons for Ragium...")
+            RagiumAPI.LOGGER.info("Collecting addons for Ragium...")
             addonCache = HTAddonHelper
                 .collectInstances<RagiumAddon>()
                 .onEach { addon: RagiumAddon ->
-                    LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
+                    RagiumAPI.LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
                 }
         }
         return addonCache

@@ -1,17 +1,13 @@
 package hiiragi283.ragium.common.util
 
-import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import net.neoforged.fml.ModList
 import net.neoforged.neoforgespi.language.ModFileScanData
 import org.objectweb.asm.Type
-import org.slf4j.Logger
 import java.lang.reflect.Constructor
 
 internal object HTAddonHelper {
-    @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmStatic
     inline fun <reified T : Any> collectInstances(): List<T> {
         val annotationType: Type = Type.getType(HTAddon::class.java)
@@ -43,7 +39,7 @@ internal object HTAddonHelper {
                     val instance: T = constructor.newInstance()
                     instance
                 }.onFailure { throwable: Throwable ->
-                    LOGGER.error("Failed to construct {}", className, throwable)
+                    RagiumAPI.LOGGER.error("Failed to construct {}", className, throwable)
                 }.getOrNull()
             }
     }

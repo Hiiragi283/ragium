@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.HTTable
@@ -69,12 +68,8 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import org.slf4j.Logger
 
 object RagiumItems {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmField
     val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
@@ -493,7 +488,7 @@ object RagiumItems {
         // Energy
         HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
-        LOGGER.info("Registered item capabilities!")
+        RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
 
     @JvmStatic
@@ -564,6 +559,6 @@ object RagiumItems {
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
-        LOGGER.info("Modified default item components!")
+        RagiumAPI.LOGGER.info("Modified default item components!")
     }
 }

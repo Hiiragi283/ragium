@@ -1,6 +1,5 @@
 package hiiragi283.ragium.impl.registry
 
-import com.mojang.logging.LogUtils
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
@@ -21,7 +20,6 @@ import net.minecraft.tags.TagKey
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.TagsUpdatedEvent
-import org.slf4j.Logger
 import java.util.Optional
 import java.util.function.Function
 
@@ -32,9 +30,6 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
     private val isTag: Boolean,
 ) : HTKeyOrTagEntry<T> {
     companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
-
         @JvmStatic
         private val instances: MutableMap<EitherKey, HTKeyOrTagEntryImpl<*>> = hashMapOf()
 
@@ -54,7 +49,7 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
                     entry.holderCache = null
                 }
             }
-            LOGGER.info("Reload Holder Cache!")
+            RagiumAPI.LOGGER.info("Reload Holder Cache!")
         }
     }
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.storage
 
-import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
@@ -10,15 +10,11 @@ import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
-import org.slf4j.Logger
 
 class HTAccessConfigCache :
     HTAccessConfiguration.Holder,
     HTValueSerializable {
     companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
-
         @JvmField
         val CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfiguration>> =
             BiCodecs.mapOf(BiCodecs.DIRECTION, HTAccessConfiguration.CODEC)
@@ -31,7 +27,7 @@ class HTAccessConfigCache :
 
     override fun setAccessConfiguration(side: Direction, value: HTAccessConfiguration) {
         val old: HTAccessConfiguration? = cache.put(side, value)
-        LOGGER.debug("Updated access config: {} -> {}", old, value)
+        RagiumAPI.LOGGER.debug("Updated access config: {} -> {}", old, value)
     }
 
     //    HTNbtSerializable    //

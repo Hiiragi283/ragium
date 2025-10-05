@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -46,14 +45,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
 object RagiumBlockEntityTypes {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmField
     val REGISTER = HTDeferredBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
@@ -163,7 +158,7 @@ object RagiumBlockEntityTypes {
         addAll<HTDeviceVariant>(event)
         addAll<HTDrumVariant>(event)
 
-        LOGGER.info("Added supported blocks to BlockEntityType!")
+        RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @JvmStatic
@@ -186,7 +181,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(event, DEVICES)
         registerHandlers(event, DRUMS)
 
-        LOGGER.info("Registered Block Capabilities!")
+        RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic

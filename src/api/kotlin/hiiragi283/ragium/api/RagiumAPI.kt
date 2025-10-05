@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.extension.toId
 import net.minecraft.resources.ResourceLocation
+import org.slf4j.Logger
 import java.util.ServiceLoader
 
 /**
@@ -10,6 +12,9 @@ import java.util.ServiceLoader
 object RagiumAPI {
     const val MOD_ID = "ragium"
     const val MOD_NAME = "Ragium"
+
+    @JvmField
+    val LOGGER: Logger = LogUtils.getLogger()
 
     /**
      * 名前空間が`ragium`となる[ResourceLocation]を返します。

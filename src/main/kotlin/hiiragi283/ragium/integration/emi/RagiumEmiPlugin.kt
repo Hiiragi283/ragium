@@ -1,6 +1,5 @@
 package hiiragi283.ragium.integration.emi
 
-import com.mojang.logging.LogUtils
 import dev.emi.emi.EmiPort
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
@@ -73,14 +72,10 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import org.slf4j.Logger
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
     companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-
         @JvmStatic
         internal lateinit var recipeAccess: HTRecipeAccess
             private set
@@ -275,7 +270,7 @@ class RagiumEmiPlugin : EmiPlugin {
         runCatching {
             addRecipe(factory(id))
         }.onFailure { throwable: Throwable ->
-            LOGGER.warn("Exception thrown when parsing vanilla recipe: $id", throwable)
+            RagiumAPI.LOGGER.warn("Exception thrown when parsing vanilla recipe: $id", throwable)
         }
     }
 
