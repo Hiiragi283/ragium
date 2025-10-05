@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
