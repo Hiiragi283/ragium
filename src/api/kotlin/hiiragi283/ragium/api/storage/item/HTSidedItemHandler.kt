@@ -14,35 +14,41 @@ interface HTSidedItemHandler : IItemHandler {
 
     fun getSlots(side: Direction?): Int
 
+    @Deprecated("Use `getSlots(Direction?)` instead", level = DeprecationLevel.ERROR)
     override fun getSlots(): Int = getSlots(getItemSideFor())
 
     fun getStackInSlot(slot: Int, side: Direction?): ItemStack
 
+    @Deprecated("Use `getStackInSlot(Int, Direction?)` instead", level = DeprecationLevel.ERROR)
     override fun getStackInSlot(slot: Int): ItemStack = getStackInSlot(slot, getItemSideFor())
 
     fun insertItem(
         slot: Int,
         stack: ItemStack,
-        side: Direction?,
         simulate: Boolean,
+        side: Direction?,
     ): ItemStack
 
-    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = insertItem(slot, stack, getItemSideFor(), simulate)
+    @Deprecated("Use `insertItem(Int, ItemStack, Boolean, Direction?)` instead", level = DeprecationLevel.ERROR)
+    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = insertItem(slot, stack, simulate, getItemSideFor())
 
     fun extractItem(
         slot: Int,
         amount: Int,
-        side: Direction?,
         simulate: Boolean,
+        side: Direction?,
     ): ItemStack
 
-    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = extractItem(slot, amount, getItemSideFor(), simulate)
+    @Deprecated("Use `insertItem(Int, Int, Boolean, Direction?)` instead", level = DeprecationLevel.ERROR)
+    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = extractItem(slot, amount, simulate, getItemSideFor())
 
     fun getSlotLimit(slot: Int, side: Direction?): Int
 
+    @Deprecated("Use `getSlotLimit(Int, Direction?)` instead", level = DeprecationLevel.ERROR)
     override fun getSlotLimit(slot: Int): Int = getSlotLimit(slot, getItemSideFor())
 
     fun isItemValid(slot: Int, stack: ItemStack, side: Direction?): Boolean
 
+    @Deprecated("Use `isItemValid(Int, ItemStack, Direction?)` instead", level = DeprecationLevel.ERROR)
     override fun isItemValid(slot: Int, stack: ItemStack): Boolean = isItemValid(slot, stack, getItemSideFor())
 }

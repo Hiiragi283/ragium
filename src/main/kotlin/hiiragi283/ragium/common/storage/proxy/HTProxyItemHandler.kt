@@ -22,12 +22,12 @@ class HTProxyItemHandler(private val inventory: HTSidedItemHandler, side: Direct
 
     override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = when (readOnlyInsert) {
         true -> stack
-        false -> inventory.insertItem(slot, stack, side, simulate)
+        false -> inventory.insertItem(slot, stack, simulate, side)
     }
 
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = when (readOnlyExtract) {
         true -> ItemStack.EMPTY
-        false -> inventory.extractItem(slot, amount, side, simulate)
+        false -> inventory.extractItem(slot, amount, simulate, side)
     }
 
     override fun getSlotLimit(slot: Int): Int = inventory.getSlotLimit(slot, side)

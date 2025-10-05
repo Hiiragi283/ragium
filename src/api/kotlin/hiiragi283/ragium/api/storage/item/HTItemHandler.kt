@@ -25,15 +25,15 @@ interface HTItemHandler :
     override fun insertItem(
         slot: Int,
         stack: ItemStack,
-        side: Direction?,
         simulate: Boolean,
+        side: Direction?,
     ): ItemStack = getItemSlot(slot, side)?.insert(stack, simulate, HTStorageAccess.forHandler(side)) ?: stack
 
     override fun extractItem(
         slot: Int,
         amount: Int,
-        side: Direction?,
         simulate: Boolean,
+        side: Direction?,
     ): ItemStack = getItemSlot(slot, side)?.extract(amount, simulate, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
 
     override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacityAsInt(ItemStack.EMPTY) ?: 0
