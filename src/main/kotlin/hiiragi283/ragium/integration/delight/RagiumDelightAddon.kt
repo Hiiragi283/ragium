@@ -2,7 +2,6 @@ package hiiragi283.ragium.integration.delight
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
@@ -36,7 +35,6 @@ import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
 import java.util.function.Supplier
 
-@HTAddon(RagiumConst.FARMERS_DELIGHT)
 object RagiumDelightAddon : RagiumAddon {
     //    Block    //
 

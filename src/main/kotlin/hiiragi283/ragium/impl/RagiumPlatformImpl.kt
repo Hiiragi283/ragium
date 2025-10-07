@@ -42,6 +42,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
+import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import kotlin.random.Random
 
@@ -54,7 +55,9 @@ class RagiumPlatformImpl : RagiumPlatform {
         if (!::addonCache.isInitialized) {
             RagiumAPI.LOGGER.info("Collecting addons for Ragium...")
             addonCache = HTAddonHelper
-                .collectInstances<RagiumAddon>()
+                .collectInstances<RagiumAddon.Provider>()
+                .flatMap { it.getAddons(ModList.get()) }
+                .sortedBy(RagiumAddon::priority)
                 .onEach { addon: RagiumAddon ->
                     RagiumAPI.LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
                 }

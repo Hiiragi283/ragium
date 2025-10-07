@@ -1,8 +1,6 @@
 package hiiragi283.ragium.integration.mekanism
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.buildTable
@@ -31,7 +29,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 
-@HTAddon(RagiumConst.MEKANISM)
 object RagiumMekanismAddon : RagiumAddon {
     //    Chemical    //
 
