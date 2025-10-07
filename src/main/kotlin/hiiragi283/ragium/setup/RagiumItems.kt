@@ -202,7 +202,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.materialName()}")
+        ?: error("Unknown ${variant.variantName()} item for ${material.materialName()}")
 
     @JvmStatic
     fun getDust(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.DUST, material)
@@ -361,7 +361,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getTool(variant: HTToolVariant, material: HTMaterialType): HTDeferredItem<*> = TOOLS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.materialName()}")
+        ?: error("Unknown ${variant.variantName()} item for ${material.materialName()}")
 
     @JvmStatic
     private fun getAzureTool(variant: HTVanillaToolVariant): HTDeferredItem<*> = getTool(variant, RagiumMaterialType.AZURE_STEEL)

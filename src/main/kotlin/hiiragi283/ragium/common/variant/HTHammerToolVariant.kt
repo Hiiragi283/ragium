@@ -31,5 +31,5 @@ object HTHammerToolVariant : HTToolVariant {
         HTLanguageType.JA_JP -> "%sのハンマー"
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = "hammer"
+    override fun variantName(): String = "hammer"
 }

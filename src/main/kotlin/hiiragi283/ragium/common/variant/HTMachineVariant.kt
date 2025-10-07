@@ -44,5 +44,5 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
         HTLanguageType.JA_JP -> jaPattern
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

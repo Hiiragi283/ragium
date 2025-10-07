@@ -40,14 +40,14 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
             for (color: HTColorMaterial in HTColorMaterial.entries) {
                 val id: ResourceLocation = vanillaId(color.materialName())
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {
-                    this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}"))
+                    this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.variantName()}"))
                 }
             }
         }
 
         @JvmStatic
         fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
-            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.materialName()} ${variant.serializedName}")
+            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.materialName()} ${variant.variantName()}")
     }
 
     val dyeTag: TagKey<Item> = dyeColor.tag

@@ -33,5 +33,5 @@ object HTKnifeToolVariant : HTToolVariant {
         HTLanguageType.JA_JP -> "%sのナイフ"
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = "knife"
+    override fun variantName(): String = "knife"
 }

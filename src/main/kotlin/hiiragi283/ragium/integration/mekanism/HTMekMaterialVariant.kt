@@ -46,5 +46,5 @@ enum class HTMekMaterialVariant(private val enPattern: String, private val jaPat
         HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

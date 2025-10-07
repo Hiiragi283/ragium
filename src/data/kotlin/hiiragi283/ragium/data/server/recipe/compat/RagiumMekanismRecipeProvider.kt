@@ -52,7 +52,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                 factory(
                     itemHelper.from(variant, essenceType.parent),
                     essenceType.asStack(10),
-                ).build(output, id("$prefix/$name/from_${variant.serializedName}"))
+                ).build(output, id("$prefix/$name/from_${variant.variantName()}"))
                 // Enriched -> Chemical
                 factory(
                     itemHelper.from(HTMekMaterialVariant.ENRICHED, essenceType),

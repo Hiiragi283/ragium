@@ -219,7 +219,7 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant.BlockTag, material: HTMaterialType): HTSimpleDeferredBlock = MATERIALS[variant, material]
-        ?: error("Unknown ${variant.serializedName} block for ${material.materialName()}")
+        ?: error("Unknown ${variant.variantName()} block for ${material.materialName()}")
 
     @JvmStatic
     fun getStorageBlock(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material)
@@ -297,7 +297,7 @@ object RagiumBlocks {
     val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
-                "${variant.serializedName}_slab",
+                "${variant.variantName()}_slab",
                 variant.base::get.andThen(::copyOf).andThen(::SlabBlock),
             )
         }
@@ -307,7 +307,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             val base: HTDeferredBlock<*, *> = variant.base
             REGISTER.registerSimple(
-                "${variant.serializedName}_stairs",
+                "${variant.variantName()}_stairs",
                 {
                     val block: Block = base.get()
                     StairBlock(block.defaultBlockState(), copyOf(block))
@@ -319,7 +319,7 @@ object RagiumBlocks {
     val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlock<WallBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
-                "${variant.serializedName}_wall",
+                "${variant.variantName()}_wall",
                 variant.base::get.andThen(::copyOf).andThen(::WallBlock),
             )
         }

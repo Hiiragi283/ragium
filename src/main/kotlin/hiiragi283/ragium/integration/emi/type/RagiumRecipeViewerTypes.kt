@@ -41,7 +41,7 @@ object RagiumRecipeViewerTypes {
     fun getGenerator(variant: HTGeneratorVariant): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
         HTGeneratorVariant.THERMAL -> THERMAL
         HTGeneratorVariant.COMBUSTION -> COMBUSTION
-        else -> error("Unsupported variant: ${variant.serializedName}")
+        else -> error("Unsupported variant: ${variant.variantName()}")
     }
 
     //    Machines    //

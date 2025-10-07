@@ -60,7 +60,7 @@ enum class HTArmorVariant(
         armorMaterial1: Holder<ArmorMaterial>,
         multiplier: Int,
     ): HTDeferredItem<ArmorItem> = register.registerItem(
-        "${material.materialName()}_$serializedName",
+        "${material.materialName()}_${variantName()}",
         { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
         Item.Properties().durability(armorType.getDurability(multiplier)),
     )
@@ -70,5 +70,5 @@ enum class HTArmorVariant(
         HTLanguageType.JA_JP -> jaJpPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

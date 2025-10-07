@@ -181,7 +181,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             HTLanguageType.JA_JP -> jaPattern
         }.replace("%s", value)
 
-        override fun getSerializedName(): String = name.lowercase()
+        override fun variantName(): String = name.lowercase()
     }
 
     private enum class MiscMaterials(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {

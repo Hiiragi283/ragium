@@ -96,7 +96,7 @@ object RagiumBlockEntityTypes {
                 // Elite
                 HTGeneratorVariant.NUCLEAR_REACTOR -> ::HTNuclearReactorBlockEntity
             }
-            registerTick(variant.serializedName, factory)
+            registerTick(variant.variantName(), factory)
         }
 
     //    Machine    //
@@ -150,7 +150,7 @@ object RagiumBlockEntityTypes {
                 )
                 HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity
             }
-            registerTick(variant.serializedName, factory)
+            registerTick(variant.variantName(), factory)
         }
 
     //    Device    //
@@ -177,7 +177,7 @@ object RagiumBlockEntityTypes {
                 // Creative
                 HTDeviceVariant.CEU -> HTEnergyNetworkAccessBlockEntity::Creative
             }
-            registerTick(variant.serializedName, factory)
+            registerTick(variant.variantName(), factory)
         }
 
     //    Storage    //
@@ -191,7 +191,7 @@ object RagiumBlockEntityTypes {
                 HTDrumVariant.LARGE -> HTDrumBlockEntity::Large
                 HTDrumVariant.HUGE -> HTDrumBlockEntity::Huge
             }
-            registerTick("${variant.serializedName}_drum", factory)
+            registerTick("${variant.variantName()}_drum", factory)
         }
 
     //    Event    //

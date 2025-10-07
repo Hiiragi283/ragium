@@ -250,7 +250,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 .pulverizing(
                     ingredientHelper.item(baseVariant, material),
                     resultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).saveSuffixed(output, "_from_${baseVariant.serializedName}")
+                ).saveSuffixed(output, "_from_${baseVariant.variantName()}")
         }
 
         // Common

@@ -26,7 +26,7 @@ enum class HTBlockMaterialVariant(private val enPattern: String, private val jaP
 
     override fun canGenerateTag(): Boolean = tagPrefix != null
 
-    private fun checkTagPrefix(): String = checkNotNull(tagPrefix) { "Tag creation is not allowed for $serializedName!" }
+    private fun checkTagPrefix(): String = checkNotNull(tagPrefix) { "Tag creation is not allowed for ${variantName()}!" }
 
     override fun blockTagKey(path: String): TagKey<Block> = Registries.BLOCK.createCommonTag(checkTagPrefix(), path)
 
@@ -37,5 +37,5 @@ enum class HTBlockMaterialVariant(private val enPattern: String, private val jaP
         HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

@@ -26,5 +26,5 @@ object HTRawStorageMaterialVariant : HTMaterialVariant.BlockTag {
         HTLanguageType.JA_JP -> "%sの原石ブロック"
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = "raw_storage_block"
+    override fun variantName(): String = "raw_storage_block"
 }
