@@ -38,7 +38,7 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
         @JvmField
         val VANILLA_TABLE: HTTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
             for (color: HTColorMaterial in HTColorMaterial.entries) {
-                val id: ResourceLocation = vanillaId(color.serializedName)
+                val id: ResourceLocation = vanillaId(color.materialName())
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {
                     this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}"))
                 }
@@ -47,7 +47,7 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
 
         @JvmStatic
         fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
-            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.serializedName} ${variant.serializedName}")
+            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.materialName()} ${variant.serializedName}")
     }
 
     val dyeTag: TagKey<Item> = dyeColor.tag
@@ -60,5 +60,5 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = dyeColor.serializedName
+    override fun materialName(): String = dyeColor.serializedName
 }

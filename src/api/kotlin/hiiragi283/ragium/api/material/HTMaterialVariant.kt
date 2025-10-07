@@ -12,7 +12,7 @@ interface HTMaterialVariant : HTVariantKey {
 
         fun canGenerateTag(): Boolean
 
-        fun itemTagKey(material: HTMaterialType): TagKey<Item> = itemTagKey(material.serializedName)
+        fun itemTagKey(material: HTMaterialType): TagKey<Item> = itemTagKey(material.materialName())
 
         fun itemTagKey(path: String): TagKey<Item>
 
@@ -24,7 +24,7 @@ interface HTMaterialVariant : HTVariantKey {
     interface BlockTag : ItemTag {
         val blockCommonTag: TagKey<Block>?
 
-        fun blockTagKey(material: HTMaterialType): TagKey<Block> = blockTagKey(material.serializedName)
+        fun blockTagKey(material: HTMaterialType): TagKey<Block> = blockTagKey(material.materialName())
 
         fun blockTagKey(path: String): TagKey<Block>
     }

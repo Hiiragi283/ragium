@@ -60,7 +60,7 @@ enum class HTArmorVariant(
         armorMaterial1: Holder<ArmorMaterial>,
         multiplier: Int,
     ): HTDeferredItem<ArmorItem> = register.registerItem(
-        "${material.serializedName}_$serializedName",
+        "${material.materialName()}_$serializedName",
         { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
         Item.Properties().durability(armorType.getDurability(multiplier)),
     )

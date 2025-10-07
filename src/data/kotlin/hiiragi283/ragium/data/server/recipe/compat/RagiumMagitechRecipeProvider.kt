@@ -23,6 +23,6 @@ object RagiumMagitechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
         override val log: TagKey<Item> = Registries.ITEM.createTagKey(RagiumConst.MAGITECH.toId(path))
 
-        override fun getSerializedName(): String = name.lowercase()
+        override fun materialName(): String = name.lowercase()
     }
 }

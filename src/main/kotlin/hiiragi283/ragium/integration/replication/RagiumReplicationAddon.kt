@@ -15,7 +15,7 @@ object RagiumReplicationAddon : RagiumAddon {
 
     @JvmField
     val MATTER_MAP: Map<RagiumEssenceType, HTDeferredMatterType<IMatterType>> = RagiumEssenceType.entries.associateWith { type ->
-        MATTER_REGISTER.registerType(type.serializedName, type.color, 128)
+        MATTER_REGISTER.registerType(type.materialName(), type.color, 128)
     }
 
     @JvmStatic

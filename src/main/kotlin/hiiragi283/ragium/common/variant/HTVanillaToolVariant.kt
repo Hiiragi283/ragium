@@ -27,7 +27,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItem(
-                "${material.serializedName}_shovel",
+                "${material.materialName()}_shovel",
                 { prop: Item.Properties -> ShovelItem(tier, prop) },
                 Item.Properties().attributes(DiggerItem.createAttributes(tier, 1.5f, -3f)),
             )
@@ -35,7 +35,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     PICKAXE("%s Pickaxe", "%sのツルハシ", ItemTags.PICKAXES) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItem(
-                "${material.serializedName}_pickaxe",
+                "${material.materialName()}_pickaxe",
                 { prop: Item.Properties -> PickaxeItem(tier, prop) },
                 Item.Properties().attributes(DiggerItem.createAttributes(tier, 1f, -2.8f)),
             )
@@ -43,7 +43,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     AXE("%s Axe", "%sの斧", ItemTags.AXES) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItem(
-                "${material.serializedName}_axe",
+                "${material.materialName()}_axe",
                 { prop: Item.Properties -> AxeItem(tier, prop) },
                 Item.Properties().attributes(DiggerItem.createAttributes(tier, 6f, -3.1f)),
             )
@@ -51,7 +51,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     HOE("%s Hoe", "%sのクワ", ItemTags.HOES) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItem(
-                "${material.serializedName}_hoe",
+                "${material.materialName()}_hoe",
                 { prop: Item.Properties -> HoeItem(tier, prop) },
                 Item.Properties().attributes(DiggerItem.createAttributes(tier, -2f, -1f)),
             )
@@ -59,7 +59,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     SWORD("%s Sword", "%sの剣", ItemTags.SWORDS) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItem(
-                "${material.serializedName}_sword",
+                "${material.materialName()}_sword",
                 { prop: Item.Properties -> SwordItem(tier, prop) },
                 Item.Properties().attributes(SwordItem.createAttributes(tier, 3f, -2.4f)),
             )

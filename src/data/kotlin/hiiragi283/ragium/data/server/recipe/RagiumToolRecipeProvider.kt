@@ -226,7 +226,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.dyeColor), CraftingBookCategory.EQUIPMENT)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
-                .savePrefixed(output, "${variant.serializedName}_")
+                .savePrefixed(output, "${variant.materialName()}_")
         }
 
         resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)

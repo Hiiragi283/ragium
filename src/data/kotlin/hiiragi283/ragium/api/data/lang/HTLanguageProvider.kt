@@ -195,6 +195,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             HTLanguageType.JA_JP -> jpName
         }
 
-        override fun getSerializedName(): String = name.lowercase()
+        override fun materialName(): String = name.lowercase()
     }
 }

@@ -43,5 +43,5 @@ enum class HTVanillaMaterialType(private val enName: String, private val jpName:
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

@@ -15,5 +15,5 @@ enum class HTCircuitTier(private val base: HTBaseTier) : HTMaterialTier {
 
     override fun getTranslatedName(type: HTLanguageType): String = base.getTranslatedName(type)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

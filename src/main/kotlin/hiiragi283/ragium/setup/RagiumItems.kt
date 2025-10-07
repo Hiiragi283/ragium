@@ -150,7 +150,7 @@ object RagiumItems {
             RagiumMaterialType.AZURE,
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { this[HTItemMaterialVariant.DUST, it] = register("${it.serializedName}_dust") }
+        ).forEach { this[HTItemMaterialVariant.DUST, it] = register("${it.materialName()}_dust") }
         this[HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD] = register("sawdust")
         this[HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT] = register("minced_meat")
         // Gems
@@ -160,7 +160,7 @@ object RagiumItems {
             RagiumMaterialType.CRIMSON_CRYSTAL,
             RagiumMaterialType.WARPED_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { this[HTItemMaterialVariant.GEM, it] = register(it.serializedName) }
+        ).forEach { this[HTItemMaterialVariant.GEM, it] = register(it.materialName()) }
         // Chips
         mapOf(
             RagiumMaterialType.RAGI_CRYSTAL to RagiumConst.RAGI_CRYSTAL + "_chip",
@@ -181,7 +181,7 @@ object RagiumItems {
             RagiumMaterialType.CHOCOLATE,
             RagiumMaterialType.MEAT,
             RagiumMaterialType.COOKED_MEAT,
-        ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.serializedName}_ingot") }
+        ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.materialName()}_ingot") }
         // Nuggets
         listOf(
             RagiumMaterialType.RAGI_ALLOY,
@@ -190,7 +190,7 @@ object RagiumItems {
             RagiumMaterialType.DEEP_STEEL,
             RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
-        ).forEach { this[HTItemMaterialVariant.NUGGET, it] = register("${it.serializedName}_nugget") }
+        ).forEach { this[HTItemMaterialVariant.NUGGET, it] = register("${it.materialName()}_nugget") }
         // Plates
         this[HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC] = register("plastic_plate")
 
@@ -202,7 +202,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.serializedName} item for ${material.materialName()}")
 
     @JvmStatic
     fun getDust(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.DUST, material)
@@ -227,16 +227,16 @@ object RagiumItems {
 
     @JvmField
     val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-        .associateWith { material: HTMaterialType -> register("${material.serializedName}_coil") }
+        .associateWith { material: HTMaterialType -> register("${material.materialName()}_coil") }
 
     @JvmField
     val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
-        register("${tier.serializedName}_circuit", ::HTTierBasedItem.partially1(tier))
+        register("${tier.materialName()}_circuit", ::HTTierBasedItem.partially1(tier))
     }
 
     @JvmField
     val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        register("${tier.serializedName}_component", ::HTTierBasedItem.partially1(tier))
+        register("${tier.materialName()}_component", ::HTTierBasedItem.partially1(tier))
     }
 
     @JvmStatic
@@ -361,7 +361,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getTool(variant: HTToolVariant, material: HTMaterialType): HTDeferredItem<*> = TOOLS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.serializedName} item for ${material.materialName()}")
 
     @JvmStatic
     private fun getAzureTool(variant: HTVanillaToolVariant): HTDeferredItem<*> = getTool(variant, RagiumMaterialType.AZURE_STEEL)

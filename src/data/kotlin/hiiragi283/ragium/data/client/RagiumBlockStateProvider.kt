@@ -82,7 +82,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
-            val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
+            val textureId: String = RagiumAPI.id("block/${material.materialName()}").toString()
             val stoneTex: String = when (variant) {
                 HTBlockMaterialVariant.ORE -> "block/stone"
                 HTBlockMaterialVariant.DEEP_ORE -> "block/deepslate"

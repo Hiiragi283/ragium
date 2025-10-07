@@ -72,7 +72,7 @@ class RagiumPlatformImpl : RagiumPlatform {
             mapCache = buildMap {
                 val consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit =
                     { type: HTMaterialType, variant: HTMaterialVariant.ItemTag ->
-                        check(put(type, variant) == null) { "Duplicate base variant for ${type.serializedName}" }
+                        check(put(type, variant) == null) { "Duplicate base variant for ${type.materialName()}" }
                     }
 
                 setupMaterials(consumer)

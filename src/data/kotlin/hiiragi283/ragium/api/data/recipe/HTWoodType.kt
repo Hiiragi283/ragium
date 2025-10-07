@@ -17,7 +17,7 @@ interface HTWoodType : HTMaterialType {
 
     fun getId(path: String): ResourceLocation = getModId().toId(path)
 
-    fun getSlab(): Optional<Item> = BuiltInRegistries.ITEM.getOptional(getId("${serializedName}_slab"))
+    fun getSlab(): Optional<Item> = BuiltInRegistries.ITEM.getOptional(getId("${materialName()}_slab"))
 
-    fun getStairs(): Optional<Item> = BuiltInRegistries.ITEM.getOptional(getId("${serializedName}_stairs"))
+    fun getStairs(): Optional<Item> = BuiltInRegistries.ITEM.getOptional(getId("${materialName()}_stairs"))
 }
