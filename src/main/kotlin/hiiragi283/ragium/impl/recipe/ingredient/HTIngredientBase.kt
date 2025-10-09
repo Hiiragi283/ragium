@@ -18,6 +18,6 @@ abstract class HTIngredientBase<ENTRY : Any, STACK : Any, CUSTOM : Any>(
             registryKey: RegistryKey<ENTRY>,
             ingredientCodec: BiCodec<in RegistryFriendlyByteBuf, CUSTOM>,
         ): BiCodec<RegistryFriendlyByteBuf, Either<HolderSet<ENTRY>, CUSTOM>> =
-            BiCodecs.either(BiCodecs.holderSet(registryKey), ingredientCodec)
+            BiCodecs.xor(BiCodecs.holderSet(registryKey), ingredientCodec)
     }
 }

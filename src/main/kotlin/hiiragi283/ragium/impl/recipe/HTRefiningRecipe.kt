@@ -28,7 +28,7 @@ class HTRefiningRecipe(
     override fun getRequiredAmount(stack: FluidStack): Int = fluidIngredient.getRequiredAmount(stack)
 
     override fun getResultItems(input: HTItemWithFluidRecipeInput): List<HTChancedItemRecipe.ChancedResult> =
-        itemResult.map { HTChancedItemRecipe.ChancedResult(it, 1f) }.map(::listOf).orElse(listOf())
+        itemResult.map(HTChancedItemRecipe<*>::ChancedResult).map(::listOf).orElse(listOf())
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FLUID_TRANSFORM
 

@@ -1,13 +1,13 @@
 package hiiragi283.ragium.impl.registry
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.extension.createTagKey
+import hiiragi283.ragium.api.extension.flatMap
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.wrapDataResult
+import hiiragi283.ragium.api.extension.toResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
@@ -62,29 +62,27 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
 
     private var holderCache: Holder<T>? = null
 
-    override fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>> {
-        val getter: HolderGetter<T> = RagiumPlatform.INSTANCE.getLookup(provider, registryKey)
-            ?: return DataResult.error { "Failed to find lookup for $registryKey" }
-        return getFirstHolder(getter)
-    }
+    override fun getFirstHolder(provider: HolderLookup.Provider?): Result<Holder<T>> = runCatching {
+        RagiumPlatform.INSTANCE.getLookup(provider, registryKey) ?: error("Failed to find lookup for $registryKey")
+    }.flatMap { getFirstHolder(it) }
 
-    override fun getFirstHolder(getter: HolderGetter<T>): DataResult<out Holder<T>> {
+    override fun getFirstHolder(getter: HolderGetter<T>): Result<Holder<T>> {
         if (holderCache != null) {
-            return DataResult.success(holderCache!!)
+            return Result.success(holderCache!!)
         }
         return map(
             { key: ResourceKey<T> -> getFirstHolderFromId(getter, key) },
             { tagKey: TagKey<T> -> getFirstHolderFromTag(getter, tagKey) },
-        ).ifSuccess { holderCache = it }
+        ).onSuccess { holderCache = it }
     }
 
-    private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): DataResult<out Holder<T>> =
-        lookup.get(key).wrapDataResult("Missing key in ${key.registry()}: $key")
+    private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): Result<Holder<T>> =
+        lookup.get(key).toResult { error("Missing key in ${key.registry()}: $key") }
 
-    private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): DataResult<out Holder<T>> = lookup
+    private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): Result<Holder<T>> = lookup
         .get(tagKey)
         .flatMap(::getFirstHolder)
-        .wrapDataResult("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}")
+        .toResult { error("Missing tag in ${tagKey.registry().location()}: ${tagKey.location}") }
 
     private fun getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
         for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {

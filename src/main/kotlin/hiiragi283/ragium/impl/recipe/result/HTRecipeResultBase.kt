@@ -1,6 +1,5 @@
 package hiiragi283.ragium.impl.recipe.result
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.codec.MapBiCodec
@@ -37,12 +36,12 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
         )
     }
 
-    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): DataResult<STACK>
+    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): STACK
 
     //    HTRecipeResult    //
 
     final override val id: ResourceLocation = entry.getId()
 
-    final override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
-        entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }
+    final override fun getStackResult(provider: HolderLookup.Provider?): Result<STACK> =
+        entry.getFirstHolder(provider).mapCatching { holder: Holder<TYPE> -> createStack(holder, amount, components) }
 }

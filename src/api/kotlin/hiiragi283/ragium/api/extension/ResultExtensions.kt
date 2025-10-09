@@ -1,33 +1,12 @@
 package hiiragi283.ragium.api.extension
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.data.DataResultException
 import java.util.Optional
-import java.util.function.Predicate
-import kotlin.jvm.optionals.getOrNull
-
-//    DataResult    //
-
-fun <T : Any> T?.wrapDataResult(message: String = "Value is null"): DataResult<T> =
-    this?.let(DataResult<T>::success) ?: DataResult.error { message }
-
-fun <T : Any> DataResult<T>.resultOrNull(): T? = result().getOrNull()
-
-fun <T : Any> DataResult<T>.filter(filter: Predicate<T>, message: String = "Not matching filter"): DataResult<T> = flatMap { value: T ->
-    when (filter.test(value)) {
-        true -> DataResult.success(value)
-        false -> DataResult.error { message }
-    }
-}
-
-fun <T : Any> DataResult<T>.filterNot(filter: Predicate<T>, message: String = "Not matching filter"): DataResult<T> =
-    filter(filter.negate(), message)
 
 //    Optional    //
 
 fun <T : Any> T?.wrapOptional(): Optional<T> = Optional.ofNullable(this)
-
-fun <T : Any> Optional<T>.wrapDataResult(message: String = "Value is null"): DataResult<T> =
-    this.map(DataResult<T>::success).orElseGet { DataResult.error { message } }
 
 //    Throwable    //
 
@@ -36,3 +15,20 @@ inline fun unsupported(): Nothing = throw UnsupportedOperationException()
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun unsupported(message: String): Nothing = throw UnsupportedOperationException(message)
+
+//    Result    //
+
+fun <T : Any> Optional<T>.toResult(): Result<T> = runCatching { orElseThrow() }
+
+fun <T : Any> Optional<T>.toResult(exceptionSupplier: () -> Exception): Result<T> = runCatching { orElseThrow(exceptionSupplier) }
+
+fun <T : Any> DataResult<T>.toResult(exceptionSupplier: (String) -> Exception = ::DataResultException): Result<T> =
+    mapOrElse(Result.Companion::success, DataResult.Error<T>::message.andThen(exceptionSupplier).andThen(Result.Companion::failure))
+
+fun <T : Any> Result<T>.toData(): DataResult<T> = fold(DataResult<T>::success) { throwable: Throwable ->
+    DataResult.error { throwable.message ?: "Thrown exception" }
+}
+
+internal fun <T : Any> resultToData(): (Result<T>) -> DataResult<T> = Result<T>::toData
+
+fun <T : Any, R : Any> Result<T>.flatMap(transform: (T) -> Result<R>): Result<R> = mapCatching { transform(it).getOrThrow() }

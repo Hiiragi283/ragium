@@ -1,13 +1,18 @@
 package hiiragi283.ragium.api.codec
 
-import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.comapFlatMap
+import hiiragi283.ragium.api.extension.flatComapMap
+import hiiragi283.ragium.api.extension.flatMap
+import hiiragi283.ragium.api.extension.listOrElement
+import hiiragi283.ragium.api.extension.resultToData
+import hiiragi283.ragium.api.extension.toResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -209,15 +214,19 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     }
 
     // Encode & Decode
-    fun <T : Any> encode(ops: DynamicOps<T>, input: V): DataResult<T> = codec.encodeStart(ops, input)
+    fun <T : Any> encode(ops: DynamicOps<T>, input: V): Result<T> = codec.encodeStart(ops, input).toResult()
 
-    fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<V> = codec.parse(ops, input)
+    fun <T : Any> decode(ops: DynamicOps<T>, input: T): Result<V> = codec.parse(ops, input).toResult()
 
     fun encode(buf: B, input: V) {
-        streamCodec.encode(buf, input)
+        runCatching {
+            streamCodec.encode(buf, input)
+        }.onFailure { throwable: Throwable ->
+            RagiumAPI.LOGGER.error("Failed to encode packet", throwable)
+        }
     }
 
-    fun decode(buf: B): V = streamCodec.decode(buf)
+    fun decode(buf: B): Result<V> = runCatching { streamCodec.decode(buf) }
 
     // Convert
 
@@ -230,25 +239,25 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun <S : Any> xmap(to: Function<V, S>, from: Function<S, V>): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
-    fun <S : Any> comapFlatMap(to: Function<V, DataResult<S>>, from: Function<S, V>): BiCodec<B, S> =
-        of(codec.comapFlatMap(to, from), streamCodec.map(to.andThen(DataResult<S>::getOrThrow), from))
+    fun <S : Any> comapFlatMap(to: Function<V, Result<S>>, from: Function<S, V>): BiCodec<B, S> =
+        of(codec.comapFlatMap(to.andThen(resultToData()), from), streamCodec.comapFlatMap(to, from))
 
-    fun <S : Any> flatComapMap(to: Function<V, S>, from: Function<S, DataResult<V>>): BiCodec<B, S> =
-        of(codec.flatComapMap(to, from), streamCodec.map(to, from.andThen(DataResult<V>::getOrThrow)))
+    fun <S : Any> flatComapMap(to: Function<V, S>, from: Function<S, Result<V>>): BiCodec<B, S> =
+        of(codec.flatComapMap(to, from.andThen(resultToData())), streamCodec.flatComapMap(to, from))
 
     /**
      * 指定された[to]と[from]に基づいて，別の[BiCodec]に変換します。
      * @param S 変換後のコーデックの対象となるクラス
-     * @param to [V]から[S]の[DataResult]に変換するブロック
-     * @param from [S]から[V]の[DataResult]にに変換するブロック
+     * @param to [V]から[S]の[Result]に変換するブロック
+     * @param from [S]から[V]の[Result]にに変換するブロック
      * @return [S]を対象とする[BiCodec]
      */
-    fun <S : Any> flatXmap(to: Function<V, DataResult<S>>, from: Function<S, DataResult<V>>): BiCodec<B, S> = of(
-        codec.flatXmap(to, from),
-        streamCodec.map(to.andThen(DataResult<S>::getOrThrow), from.andThen(DataResult<V>::getOrThrow)),
+    fun <S : Any> flatXmap(to: Function<V, Result<S>>, from: Function<S, Result<V>>): BiCodec<B, S> = of(
+        codec.flatXmap(to.andThen(resultToData()), from.andThen(resultToData())),
+        streamCodec.flatMap(to, from),
     )
 
-    fun validate(validator: Function<V, DataResult<V>>): BiCodec<B, V> = flatXmap(validator, validator)
+    fun validate(validator: Function<V, Result<V>>): BiCodec<B, V> = flatXmap(validator, validator)
 
     fun <E : Any> dispatch(
         typeKey: String,
@@ -336,16 +345,6 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun toOptional(): BiCodec<B, Optional<V>> = of(ExtraCodecs.optionalEmptyMap(codec), streamCodec.toOptional())
 }
-
-private fun <A : Any> Codec<A>.listOrElement(): Codec<List<A>> = Codec.either(this.listOf(), this).xmap(
-    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
-    { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
-)
-
-private fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = Codec.either(this.listOf(min, max), this).xmap(
-    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
-    { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
-)
 
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
 

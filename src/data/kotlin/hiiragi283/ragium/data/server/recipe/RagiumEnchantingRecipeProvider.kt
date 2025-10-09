@@ -10,8 +10,7 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {}
 
     @JvmStatic
-    private fun ench(key: ResourceKey<Enchantment>, level: Int): HTItemResult = HTIntrinsicEnchantment(key, level)
+    private fun ench(key: ResourceKey<Enchantment>, level: Int): Result<HTItemResult> = HTIntrinsicEnchantment(key, level)
         .toEnchBook(provider)
         .map(resultHelper::item)
-        .partialOrThrow
 }

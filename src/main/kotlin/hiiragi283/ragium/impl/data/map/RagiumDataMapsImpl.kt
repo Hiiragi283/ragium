@@ -1,7 +1,7 @@
 package hiiragi283.ragium.impl.data.map
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTSolarPower
@@ -36,14 +36,11 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         private val BREWING_EFFECT: DataMapType<Item, HTBrewingEffect> = create("brewing/effect", Registries.ITEM, HTBrewingEffect.CODEC)
 
         @JvmStatic
-        private fun <T : Any, R : Any> create(
-            path: String,
-            registryKey: ResourceKey<Registry<R>>,
-            codec: BiCodec<*, T>,
-        ): DataMapType<R, T> = DataMapType
-            .builder(RagiumAPI.id(path), registryKey, codec.codec)
-            .synced(codec.codec, false)
-            .build()
+        private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =
+            DataMapType
+                .builder(RagiumAPI.id(path), registryKey, codec)
+                .synced(codec, false)
+                .build()
 
         @JvmStatic
         private fun createFuel(path: String): DataMapType<Fluid, HTFluidFuelData> =

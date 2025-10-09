@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.registry
 
 import com.mojang.datafixers.util.Either
-import com.mojang.serialization.DataResult
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -15,7 +14,7 @@ interface HTKeyOrTagEntry<T : Any> : HTHolderLike {
     fun toEither(): Either<ResourceKey<T>, TagKey<T>> =
         map(Either<ResourceKey<T>, TagKey<T>>::left, Either<ResourceKey<T>, TagKey<T>>::right)
 
-    fun getFirstHolder(provider: HolderLookup.Provider?): DataResult<out Holder<T>>
+    fun getFirstHolder(provider: HolderLookup.Provider?): Result<Holder<T>>
 
-    fun getFirstHolder(getter: HolderGetter<T>): DataResult<out Holder<T>>
+    fun getFirstHolder(getter: HolderGetter<T>): Result<Holder<T>>
 }

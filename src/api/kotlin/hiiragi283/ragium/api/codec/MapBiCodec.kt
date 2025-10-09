@@ -2,9 +2,10 @@ package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.flatMap
+import hiiragi283.ragium.api.extension.resultToData
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.StreamCodec
 import java.util.function.BiFunction
@@ -133,14 +134,14 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
     /**
      * 指定された[to]と[from]に基づいて，別の[MapBiCodec]に変換します。
      * @param S 変換後のコーデックの対象となるクラス
-     * @param to [V]から[S]の[DataResult]に変換するブロック
-     * @param from [S]から[V]の[DataResult]にに変換するブロック
+     * @param to [V]から[S]の[Result]に変換するブロック
+     * @param from [S]から[V]の[Result]にに変換するブロック
      * @return [S]を対象とする[MapBiCodec]
      */
-    fun <S : Any> flatXmap(to: Function<V, DataResult<S>>, from: Function<S, DataResult<V>>): MapBiCodec<B, S> = of(
-        codec.flatXmap(to, from),
-        streamCodec.map(to.andThen(DataResult<S>::getOrThrow), from.andThen(DataResult<V>::getOrThrow)),
+    fun <S : Any> flatXmap(to: Function<V, Result<S>>, from: Function<S, Result<V>>): MapBiCodec<B, S> = of(
+        codec.flatXmap(to.andThen(resultToData()), from.andThen(resultToData())),
+        streamCodec.flatMap(to, from),
     )
 
-    fun validate(validator: Function<V, DataResult<V>>): MapBiCodec<B, V> = flatXmap(validator, validator)
+    fun validate(validator: Function<V, Result<V>>): MapBiCodec<B, V> = flatXmap(validator, validator)
 }

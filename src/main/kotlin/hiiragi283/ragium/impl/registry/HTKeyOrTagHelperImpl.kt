@@ -22,7 +22,7 @@ class HTKeyOrTagHelperImpl : HTKeyOrTagHelper {
         HTKeyOrTagEntryImpl.create(tagKey.registry(), tagKey.location(), true)
 
     override fun <T : Any> codec(registryKey: RegistryKey<T>): BiCodec<ByteBuf, HTKeyOrTagEntry<T>> = BiCodecs
-        .either(BiCodecs.resourceKey(registryKey), BiCodecs.tagKey(registryKey))
+        .xor(BiCodecs.resourceKey(registryKey), BiCodecs.tagKey(registryKey))
         .xmap(
             { either: Either<ResourceKey<T>, TagKey<T>> ->
                 either.map(HTKeyOrTagHelper.INSTANCE::create, HTKeyOrTagHelper.INSTANCE::create)

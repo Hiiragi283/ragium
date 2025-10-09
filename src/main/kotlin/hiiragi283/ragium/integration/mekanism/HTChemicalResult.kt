@@ -1,9 +1,7 @@
 package hiiragi283.ragium.integration.mekanism
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.extension.filterNot
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
@@ -29,8 +27,11 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
 
     override val id: ResourceLocation = entry.getId()
 
-    override fun getStackResult(provider: HolderLookup.Provider?): DataResult<ChemicalStack> = entry
+    override fun getStackResult(provider: HolderLookup.Provider?): Result<ChemicalStack> = entry
         .getFirstHolder(provider)
-        .map { holder: Holder<Chemical> -> ChemicalStack(holder, amount) }
-        .filterNot(ChemicalStack::isEmpty, "Empty chemical stack is not valid for recipe result")
+        .mapCatching { holder: Holder<Chemical> ->
+            val stack = ChemicalStack(holder, amount)
+            check(!stack.isEmpty) { "Empty chemical stack is not valid for recipe result" }
+            stack
+        }
 }

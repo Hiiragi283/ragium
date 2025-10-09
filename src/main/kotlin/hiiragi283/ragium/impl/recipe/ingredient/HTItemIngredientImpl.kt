@@ -52,7 +52,7 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
 
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodecs
-                .either(CODEC_WITH_COUNT, FLAT_CODEC)
+                .xor(CODEC_WITH_COUNT, FLAT_CODEC)
                 .xmap(Either<HTItemIngredientImpl, HTItemIngredientImpl>::unwrap) { itemIngredient: HTItemIngredientImpl ->
                     when (itemIngredient.amount) {
                         1 -> Either.right(itemIngredient)

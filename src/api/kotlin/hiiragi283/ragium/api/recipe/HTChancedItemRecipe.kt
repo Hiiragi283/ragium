@@ -47,5 +47,9 @@ interface HTChancedItemRecipe<INPUT : RecipeInput> :
                 ::ChancedResult,
             )
         }
+
+        constructor(base: HTItemResult) : this(base, 1f)
+
+        override fun copyWithCount(count: Int): ChancedResult = ChancedResult(base.copyWithCount(count), chance)
     }
 }

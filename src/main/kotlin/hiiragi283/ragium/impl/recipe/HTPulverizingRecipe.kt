@@ -15,7 +15,7 @@ class HTPulverizingRecipe(ingredient: HTItemIngredient, result: HTItemResult) :
     HTItemToItemRecipe(ingredient, result),
     HTItemToChancedItemRecipe {
     override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemRecipe.ChancedResult> =
-        listOf(HTChancedItemRecipe.ChancedResult(result, 1f))
+        listOf(HTChancedItemRecipe.ChancedResult(result))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PULVERIZING
 

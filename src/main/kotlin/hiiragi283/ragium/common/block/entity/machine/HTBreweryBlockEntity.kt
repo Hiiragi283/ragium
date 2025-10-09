@@ -60,7 +60,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 ?: return listOf()
             return HTResultHelper.INSTANCE
                 .item(stack)
-                .let { HTChancedItemRecipe.ChancedResult(it, 1f) }
+                .let(HTChancedItemRecipe<*>::ChancedResult)
                 .let(::listOf)
         }
 

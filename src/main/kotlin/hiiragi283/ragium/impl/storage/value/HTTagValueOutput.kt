@@ -18,7 +18,7 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
         if (value == null) return
         codec
             .encode(registryOps, value)
-            .ifSuccess { compoundTag.put(key, it) }
+            .onSuccess { compoundTag.put(key, it) }
     }
 
     override fun putBoolean(key: String, value: Boolean) {
@@ -100,7 +100,7 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
         override fun add(element: T) {
             codec
                 .encode(registryOps, element)
-                .ifSuccess(list::add)
+                .onSuccess(list::add)
         }
     }
 }

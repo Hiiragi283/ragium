@@ -26,7 +26,6 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
@@ -38,33 +37,33 @@ object BiCodecs {
      * `0`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(0, Int.MAX_VALUE)
+    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(0..Int.MAX_VALUE)
 
     /**
      * `0`以上の値を対象とする[Long]の[BiCodec]
      * @see [mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC]
      */
     @JvmField
-    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0, Long.MAX_VALUE)
+    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0..Long.MAX_VALUE)
 
     /**
      * `1`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(1, Int.MAX_VALUE)
+    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(1..Int.MAX_VALUE)
 
     /**
      * `1`以上の値を対象とする[Long]の[BiCodec]
      * @see [mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC]
      */
     @JvmField
-    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1, Long.MAX_VALUE)
+    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1..Long.MAX_VALUE)
 
     /**
      * `0f`以上の値を対象とする[Float]の[BiCodec]
      */
     @JvmField
-    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f, Float.MAX_VALUE)
+    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f..Float.MAX_VALUE)
 
     /**
      * [ResourceLocation]の[BiCodec]
@@ -96,12 +95,6 @@ object BiCodecs {
      */
     @JvmField
     val HAND: BiCodec<ByteBuf, InteractionHand> = enum(InteractionHand::values)
-
-    /**
-     * [PotionContents]の[BiCodec]
-     */
-    @JvmField
-    val POTION: BiCodec<RegistryFriendlyByteBuf, PotionContents> = BiCodec.of(PotionContents.CODEC, PotionContents.STREAM_CODEC)
 
     /**
      * [Component]の[BiCodec]
@@ -139,6 +132,18 @@ object BiCodecs {
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> either(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
         Codec.either(first.codec, second.codec),
+        ByteBufCodecs.either(first.streamCodec, second.streamCodec),
+    )
+
+    /**
+     * 指定された[first], [second]に基づいて，[Either]の[BiCodec]を返します。
+     * @param first [F]を対象とする[BiCodec]
+     * @param second [S]を対象とする[BiCodec]
+     * @return [Either]の[BiCodec]
+     */
+    @JvmStatic
+    fun <B : ByteBuf, F : Any, S : Any> xor(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
+        Codec.xor(first.codec, second.codec),
         ByteBufCodecs.either(first.streamCodec, second.streamCodec),
     )
 
