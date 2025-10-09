@@ -6,7 +6,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 
 @JvmInline
 value class HTRepairable(val items: HolderSet<Item>) {
@@ -16,6 +15,4 @@ value class HTRepairable(val items: HolderSet<Item>) {
             .holderSet(Registries.ITEM)
             .xmap(::HTRepairable, HTRepairable::items)
     }
-
-    fun isValidRepairItem(stack: ItemStack): Boolean = stack.`is`(items)
 }
