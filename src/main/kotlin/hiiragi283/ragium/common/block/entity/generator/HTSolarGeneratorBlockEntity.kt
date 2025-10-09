@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
@@ -23,7 +24,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
     ): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false
-        return network.insertEnergy((energyUsage * multiplier).roundToInt(), false, HTStorageAccess.INTERNAl) > 0
+        return network.insertEnergy((energyUsage * multiplier).roundToInt(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl) > 0
     }
 
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {

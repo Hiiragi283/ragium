@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
@@ -39,7 +40,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
+            usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         }
         return when {
             usedEnergy < requiredEnergy -> false

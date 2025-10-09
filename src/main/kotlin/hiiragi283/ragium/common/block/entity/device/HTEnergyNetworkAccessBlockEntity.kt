@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -91,11 +92,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, true)
         if (toExtract > 0) {
-            var mayReceive: Int = battery.insertEnergy(toExtract, true, HTStorageAccess.INTERNAl)
+            var mayReceive: Int = battery.insertEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
             mayReceive = min(toExtract, mayReceive)
             if (mayReceive > 0) {
                 energyIn.extractEnergy(mayReceive, false)
-                battery.insertEnergy(mayReceive, false, HTStorageAccess.INTERNAl)
+                battery.insertEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -111,11 +112,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toReceive: Int = transferRate
         toReceive = energyIn.receiveEnergy(toReceive, true)
         if (toReceive > 0) {
-            var mayExtract: Int = battery.extractEnergy(toReceive, true, HTStorageAccess.INTERNAl)
+            var mayExtract: Int = battery.extractEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
             mayExtract = min(toReceive, mayExtract)
             if (mayExtract > 0) {
                 energyIn.receiveEnergy(mayExtract, false)
-                battery.extractEnergy(mayExtract, false, HTStorageAccess.INTERNAl)
+                battery.extractEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -135,9 +136,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
             override fun getCapacityAsLong(): Long = Long.MAX_VALUE
 
-            override fun insertEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int = amount
+            override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
 
-            override fun extractEnergy(amount: Int, simulate: Boolean, access: HTStorageAccess): Int = amount
+            override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
 
             override fun serialize(output: HTValueOutput) {}
 

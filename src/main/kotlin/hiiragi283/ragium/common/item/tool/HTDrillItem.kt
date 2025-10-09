@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item.tool
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -57,7 +58,7 @@ class HTDrillItem(properties: Properties) :
         if (state.getDestroySpeed(level, pos) == 0f) return false
         if (!canConsumeEnergy(stack)) return false
         val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
-        extractEnergy(stack, usage, false)
+        extractEnergy(stack, usage, HTStorageAction.EXECUTE)
         return true
     }
 

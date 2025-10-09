@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.item.base
 import hiiragi283.ragium.api.extension.addEnergyTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -30,8 +31,8 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         }
 
         @JvmStatic
-        fun extractEnergy(stack: ItemStack, amount: Int, simulate: Boolean): Int =
-            getBattery(stack)?.extractEnergy(amount, simulate, HTStorageAccess.INTERNAl) ?: 0
+        fun extractEnergy(stack: ItemStack, amount: Int, action: HTStorageAction): Int =
+            getBattery(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAl) ?: 0
 
         @JvmStatic
         fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean {

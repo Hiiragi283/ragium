@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
@@ -64,7 +65,7 @@ object RagiumCommand {
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
-        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, false, HTStorageAccess.MANUAL) ?: 0
+        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
     }

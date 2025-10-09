@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -102,9 +103,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         if (required <= 0) return false
         if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
         val usage: Int = getModifiedEnergy(energyUsage)
-        return if (network.insertEnergy(usage, true, HTStorageAccess.INTERNAl) > 0) {
+        return if (network.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl) > 0) {
             tank.extract(required, false, HTStorageAccess.INTERNAl)
-            network.insertEnergy(usage, false, HTStorageAccess.INTERNAl)
+            network.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             true
         } else {
             false

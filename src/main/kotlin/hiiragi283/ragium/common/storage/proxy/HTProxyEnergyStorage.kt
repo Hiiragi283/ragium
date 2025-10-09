@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.proxy
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTSidedEnergyStorage
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
@@ -17,12 +18,12 @@ class HTProxyEnergyStorage(private val storage: HTSidedEnergyStorage, side: Dire
     IEnergyStorage {
     override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = when (readOnlyInsert) {
         true -> 0
-        false -> storage.receiveEnergy(toReceive, simulate, side)
+        false -> storage.receiveEnergy(toReceive, HTStorageAction.of(simulate), side)
     }
 
     override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = when (readOnlyExtract) {
         true -> 0
-        false -> storage.extractEnergy(toExtract, simulate, side)
+        false -> storage.extractEnergy(toExtract, HTStorageAction.of(simulate), side)
     }
 
     override fun getEnergyStored(): Int = storage.getEnergyStored(side)
