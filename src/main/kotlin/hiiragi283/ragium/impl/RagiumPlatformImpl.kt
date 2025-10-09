@@ -1,12 +1,8 @@
 package hiiragi283.ragium.impl
 
-import com.google.common.collect.Multimap
-import com.google.common.collect.Table
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTMultiMap
-import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -20,8 +16,6 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.collection.HTHolderSetList
-import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
-import hiiragi283.ragium.impl.collection.HTWrappedTable
 import hiiragi283.ragium.impl.recipe.manager.HTRecipeAccessImpl
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
 import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
@@ -132,10 +126,6 @@ class RagiumPlatformImpl : RagiumPlatform {
     }
 
     //    Collection    //
-
-    override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
-
-    override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
     override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
 

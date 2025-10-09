@@ -1,11 +1,8 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -125,7 +122,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         val coalCoke: TagKey<Item> = HTItemMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
         builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag, coalCoke)
-        builder.addTag(coalCoke, commonId(RagiumConst.COAL_COKE), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
 
         builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
         // Scraps
@@ -282,7 +279,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
         builder.add(RagiumModTags.Items.POLYMER_RESIN, HTHolderLike.fromItem(ItemContent.POLYMER_RESIN), HTTagBuilder.DependType.OPTIONAL)
 
-        val plastics: TagKey<Item> = builder.createTag(commonId("plastic"))
+        val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, HTItemMaterialVariant.PLATE.itemTagKey(RagiumMaterialType.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)

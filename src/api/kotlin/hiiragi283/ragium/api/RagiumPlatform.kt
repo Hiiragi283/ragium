@@ -1,15 +1,9 @@
 package hiiragi283.ragium.api
 
-import com.google.common.collect.Multimap
-import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTMultiMap
-import hiiragi283.ragium.api.collection.HTTable
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.extension.asList
-import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -53,18 +47,6 @@ interface RagiumPlatform {
     fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag>
 
     fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
-
-    //    Collection    //
-
-    /**
-     * @see [buildMultiMap]
-     */
-    fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V>
-
-    /**
-     * @see [mutableTableOf]
-     */
-    fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
      * @see [asList]

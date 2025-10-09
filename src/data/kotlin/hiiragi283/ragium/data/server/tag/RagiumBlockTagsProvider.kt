@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTHolderLike

@@ -42,6 +42,9 @@ object RagiumCommonTags {
 
     object Items {
         @JvmField
+        val COAL_COKE: TagKey<Item> = create(RagiumConst.COAL_COKE)
+
+        @JvmField
         val FUELS_BIO: TagKey<Item> = create("fuels/bio")
 
         @JvmField
@@ -52,6 +55,9 @@ object RagiumCommonTags {
 
         @JvmField
         val PELLETS: TagKey<Item> = create("pellets")
+
+        @JvmField
+        val PLASTIC: TagKey<Item> = create("plastic")
 
         // Crops
         @JvmField

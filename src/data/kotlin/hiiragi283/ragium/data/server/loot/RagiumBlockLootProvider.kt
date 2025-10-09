@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.loot
 
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.common.block.HTCropBlock

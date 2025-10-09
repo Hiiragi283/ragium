@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -66,8 +66,7 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
     }, ;
 
     companion object {
-        @JvmField
-        val TOOL_TABLE: HTTable<HTVanillaToolVariant, HTVanillaMaterialType, Item> = buildTable {
+        val TOOL_TABLE: ImmutableTable<HTVanillaToolVariant, HTVanillaMaterialType, Item> = buildTable {
             // Wooden
             this[SHOVEL, HTVanillaMaterialType.WOOD] = Items.WOODEN_SHOVEL
             this[PICKAXE, HTVanillaMaterialType.WOOD] = Items.WOODEN_PICKAXE

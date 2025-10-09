@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.material
 
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -35,8 +35,7 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
     ;
 
     companion object {
-        @JvmField
-        val VANILLA_TABLE: HTTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
+        val VANILLA_TABLE: ImmutableTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
             for (color: HTColorMaterial in HTColorMaterial.entries) {
                 val id: ResourceLocation = vanillaId(color.materialName())
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {

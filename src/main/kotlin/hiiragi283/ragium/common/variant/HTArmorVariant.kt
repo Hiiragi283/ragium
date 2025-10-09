@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -29,8 +29,7 @@ enum class HTArmorVariant(
     ;
 
     companion object {
-        @JvmField
-        val ARMOR_TABLE: HTTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {
+        val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {
             // Iron
             this[HELMET, HTVanillaMaterialType.IRON] = Items.IRON_HELMET
             this[CHESTPLATE, HTVanillaMaterialType.IRON] = Items.IRON_CHESTPLATE

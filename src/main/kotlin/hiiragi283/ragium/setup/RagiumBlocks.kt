@@ -3,9 +3,9 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.extension.andThen
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -120,8 +120,7 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    @JvmField
-    val ORES: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
+    val ORES: ImmutableTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         listOf(
             HTBlockMaterialVariant.ORE,
             HTBlockMaterialVariant.DEEP_ORE,
@@ -153,8 +152,7 @@ object RagiumBlocks {
         }
     }
 
-    @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
+    val MATERIALS: ImmutableTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems

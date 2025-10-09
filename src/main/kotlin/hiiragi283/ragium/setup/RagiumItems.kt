@@ -2,9 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.extension.columnValues
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
@@ -127,8 +126,7 @@ object RagiumItems {
     @JvmField
     val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll")
 
-    @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIALS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Dusts
         listOf(
             // Vanilla - Metal
@@ -334,8 +332,7 @@ object RagiumItems {
     @JvmField
     val HUGE_DRUM_UPGRADE: HTDeferredItem<Item> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
-    @JvmField
-    val TOOLS: HTTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val TOOLS: ImmutableTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
         val consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit = { variant: HTToolVariant, material: HTMaterialType, tier: Tier ->
             this[variant, material] = variant.registerItem(REGISTER, material, tier)
         }

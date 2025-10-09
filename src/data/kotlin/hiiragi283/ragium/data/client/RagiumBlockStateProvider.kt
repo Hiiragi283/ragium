@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.extension.blockId
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.rowValues
 import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType

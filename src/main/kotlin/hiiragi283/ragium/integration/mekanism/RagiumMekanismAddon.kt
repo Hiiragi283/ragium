@@ -2,8 +2,8 @@ package hiiragi283.ragium.integration.mekanism
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -55,8 +55,7 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
-    @JvmField
-    val MATERIAL_ITEMS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIAL_ITEMS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
             this[HTMekMaterialVariant.ENRICHED, essenceType] = ITEM_REGISTER.registerSimpleItem("enriched_${essenceType.materialName()}")

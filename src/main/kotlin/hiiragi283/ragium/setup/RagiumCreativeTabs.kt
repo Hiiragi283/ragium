@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
@@ -216,7 +216,7 @@ object RagiumCreativeTabs {
     }
 
     fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
-        table: HTTable<V, HTMaterialType, HTDeferredItem<*>>,
+        table: ImmutableTable<V, HTMaterialType, HTDeferredItem<*>>,
         variants: Iterable<V>,
         material: HTMaterialType,
     ) {

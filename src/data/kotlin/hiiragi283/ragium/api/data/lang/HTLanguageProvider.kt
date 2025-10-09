@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data.lang
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.extension.toDescriptionKey
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -98,7 +98,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         map.entries.map { (variant: HTVariantKey, key: HTHasTranslationKey) -> Triple(variant, material, key) }.let(::fromTriples)
     }
 
-    private fun fromTable(table: HTTable<out HTVariantKey, out HTMaterialType, out HTHasTranslationKey>) {
+    private fun fromTable(table: ImmutableTable<out HTVariantKey, out HTMaterialType, out HTHasTranslationKey>) {
         fromTriples(table.entries)
     }
 
