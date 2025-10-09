@@ -7,8 +7,8 @@ import net.minecraft.world.item.crafting.RecipeInput
 /**
  * 複数の[ItemStack]を受け取る[RecipeInput]の実装
  */
-@JvmRecord
-data class HTMultiItemRecipeInput(val items: List<ItemStack>) : RecipeInput {
+@JvmInline
+value class HTMultiItemRecipeInput(val items: List<ItemStack>) : RecipeInput {
     companion object {
         @JvmStatic
         fun fromSlots(slots: List<HTItemSlot>): HTMultiItemRecipeInput = HTMultiItemRecipeInput(slots.map(HTItemSlot::getStack))

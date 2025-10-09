@@ -14,8 +14,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 
-@JvmRecord
-data class HTBrewingEffect(val content: PotionContents) {
+@JvmInline
+value class HTBrewingEffect(val content: PotionContents) {
     companion object {
         @JvmField
         val CODEC: Codec<HTBrewingEffect> = RecordCodecBuilder.create { instance ->

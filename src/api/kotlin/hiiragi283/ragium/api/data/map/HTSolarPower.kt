@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.ExtraCodecs
 
-@JvmRecord
-data class HTSolarPower(val multiplier: Float) {
+@JvmInline
+value class HTSolarPower(val multiplier: Float) {
     companion object {
         @JvmField
         val CODEC: Codec<HTSolarPower> = RecordCodecBuilder.create { instance ->

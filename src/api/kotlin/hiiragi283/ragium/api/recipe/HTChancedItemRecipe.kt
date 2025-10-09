@@ -36,6 +36,7 @@ interface HTChancedItemRecipe<INPUT : RecipeInput> :
      * @param base 元となる完成品
      * @param chance 完成品を生成する確率
      */
+    @JvmRecord
     data class ChancedResult(val base: HTItemResult, val chance: Float) : HTItemResult by base {
         companion object {
             @JvmField

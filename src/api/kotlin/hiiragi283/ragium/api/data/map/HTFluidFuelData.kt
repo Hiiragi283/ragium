@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.ExtraCodecs
 
-@JvmRecord
-data class HTFluidFuelData(val amount: Int) {
+@JvmInline
+value class HTFluidFuelData(val amount: Int) {
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidFuelData> = RecordCodecBuilder.create { instance ->

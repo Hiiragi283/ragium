@@ -8,7 +8,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
-data class HTRepairable(val items: HolderSet<Item>) {
+@JvmInline
+value class HTRepairable(val items: HolderSet<Item>) {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTRepairable> = BiCodecs

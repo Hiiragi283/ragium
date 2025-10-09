@@ -11,6 +11,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import java.util.concurrent.CompletableFuture
 
+@JvmRecord
 data class HTDataGenContext(
     private val generator: DataGenerator,
     val output: PackOutput,

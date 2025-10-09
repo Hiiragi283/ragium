@@ -114,8 +114,8 @@ object HTCommonMaterialTypes {
 
     //    MaterialImpl    //
 
-    @JvmRecord
-    private data class MaterialImpl(private val name: String) : HTMaterialType {
+    @JvmInline
+    private value class MaterialImpl(private val name: String) : HTMaterialType {
         override fun materialName(): String = name
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 /**
  * @see [RecipeHolder]
  */
+@JvmRecord
 data class HTRecipeHolder<R : Recipe<*>>(
     @JvmField val id: ResourceLocation,
     @JvmField val recipe: R,

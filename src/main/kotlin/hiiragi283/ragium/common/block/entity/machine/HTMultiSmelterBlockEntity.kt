@@ -132,6 +132,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }
 
+    @JvmRecord
     data class MultiSmeltingRecipe(val recipe: AbstractCookingRecipe, val count: Int) : HTItemIngredient.CountGetter {
         fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
             recipe.assemble(input, registries).copyWithCount(count)

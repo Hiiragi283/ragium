@@ -8,7 +8,8 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.damagesource.DamageType
 
-data class HTDamageResistant(val types: TagKey<DamageType>) {
+@JvmInline
+value class HTDamageResistant(val types: TagKey<DamageType>) {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTDamageResistant> = BiCodecs

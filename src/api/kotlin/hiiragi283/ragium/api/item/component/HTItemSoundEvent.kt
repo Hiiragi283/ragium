@@ -8,8 +8,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.sounds.SoundEvent
 
-@ConsistentCopyVisibility
-data class HTItemSoundEvent private constructor(val holder: Holder<SoundEvent>) {
+@JvmInline
+value class HTItemSoundEvent private constructor(val holder: Holder<SoundEvent>) {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemSoundEvent> =
