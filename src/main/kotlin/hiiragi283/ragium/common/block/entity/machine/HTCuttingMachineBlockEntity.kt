@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -70,7 +71,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean {
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
         for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insert(remainder, true, HTStorageAccess.INTERNAl)
+            remainder = slot.insert(remainder, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
             if (remainder.isEmpty) break
         }
         return remainder.isEmpty
@@ -86,11 +87,11 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
         for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
+            remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             if (remainder.isEmpty) break
         }
         // インプットを減らす
-        inputSlot.shrinkStack(1, false)
+        inputSlot.shrinkStack(1, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1f, 1f)
     }

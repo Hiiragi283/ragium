@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.proxy
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import hiiragi283.ragium.api.storage.item.HTSidedItemHandler
 import net.minecraft.core.Direction
@@ -22,12 +23,12 @@ class HTProxyItemHandler(private val inventory: HTSidedItemHandler, side: Direct
 
     override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = when (readOnlyInsert) {
         true -> stack
-        false -> inventory.insertItem(slot, stack, simulate, side)
+        false -> inventory.insertItem(slot, stack, HTStorageAction.of(simulate), side)
     }
 
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = when (readOnlyExtract) {
         true -> ItemStack.EMPTY
-        false -> inventory.extractItem(slot, amount, simulate, side)
+        false -> inventory.extractItem(slot, amount, HTStorageAction.of(simulate), side)
     }
 
     override fun getSlotLimit(slot: Int): Int = inventory.getSlotLimit(slot, side)

@@ -24,20 +24,20 @@ interface HTStackSlot<STACK : Any> :
     /**
      * 指定された引数から[STACK]を搬入します。
      * @param stack 搬入される[STACK]
-     * @param simulate `true`の場合のみ実際に搬入を行います。
+     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬入を行います。
      * @param access このスロットへのアクセスの種類
      * @return 搬入されなかった[STACK]
      */
-    fun insert(stack: STACK, simulate: Boolean, access: HTStorageAccess): STACK
+    fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK
 
     /**
      * 指定された引数から[STACK]を搬出します。
      * @param amount 搬出する個数の最大値
-     * @param simulate `true`の場合のみ実際に搬出を行います。
+     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬出を行います。
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): STACK
+    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
 
     fun isEmpty(): Boolean
 

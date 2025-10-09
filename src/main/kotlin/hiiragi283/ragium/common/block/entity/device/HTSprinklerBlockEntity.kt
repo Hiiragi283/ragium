@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.storage.fluid.HTFluidStackTank
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -27,10 +28,10 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
             .toList()
             .random(level.random.asKotlinRandom())
         // 水を消費できない場合はスキップ
-        if (tank.extract(50, true, HTStorageAccess.INTERNAl).isEmpty) return TriState.DEFAULT
+        if (tank.extract(50, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) return TriState.DEFAULT
         // ランダムチックを呼び出す
         if (BoneMealItem.applyBonemeal(ItemStack.EMPTY, level, targetPos, null)) {
-            tank.extract(50, true, HTStorageAccess.INTERNAl)
+            tank.extract(50, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             return TriState.TRUE
         }
         return TriState.DEFAULT

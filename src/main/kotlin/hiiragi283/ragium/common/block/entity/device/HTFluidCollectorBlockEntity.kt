@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
@@ -45,8 +46,8 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
         val stack: FluidStack = getGeneratedFluid(level, pos)
         if (stack.isEmpty) return false
         // 液体を搬入できるかチェック
-        if (!tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) return false
-        tank.insert(stack, false, HTStorageAccess.INTERNAl)
+        if (!tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) return false
+        tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         playSound(level, pos)
         return true
     }

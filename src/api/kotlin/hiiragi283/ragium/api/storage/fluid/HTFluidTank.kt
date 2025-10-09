@@ -4,8 +4,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.predicate.HTFluidPredicates
 import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.wrapAction
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -40,16 +42,16 @@ interface HTFluidTank :
 
     @Deprecated("Use `insert(FluidStack, Boolean, HTStorageAccess) `instead")
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int =
-        resource.amount - insert(resource, action.simulate(), HTStorageAccess.EXTERNAL).amount
+        resource.amount - insert(resource, action.wrapAction(), HTStorageAccess.EXTERNAL).amount
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack =
-        extract(maxDrain, action.simulate(), HTStorageAccess.EXTERNAL)
+        extract(maxDrain, action.wrapAction(), HTStorageAccess.EXTERNAL)
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
         if (!HTFluidPredicates.byFluidAndComponent(resource).test(getStack())) return FluidStack.EMPTY
-        return extract(resource.amount, action.simulate(), HTStorageAccess.EXTERNAL)
+        return extract(resource.amount, action.wrapAction(), HTStorageAccess.EXTERNAL)
     }
 
     //    Mutable    //
@@ -61,7 +63,7 @@ interface HTFluidTank :
             setStack(FluidStack.EMPTY)
         }
 
-        override fun insert(stack: FluidStack, simulate: Boolean, access: HTStorageAccess): FluidStack {
+        override fun insert(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack {
             if (stack.isEmpty) return FluidStack.EMPTY
 
             val needed: Int = getNeededAsInt(stack)
@@ -70,7 +72,7 @@ interface HTFluidTank :
             val sameType: Boolean = FluidStack.isSameFluidSameComponents(getStack(), stack)
             if (isEmpty() || sameType) {
                 val toAdd: Int = min(stack.amount, needed)
-                if (!simulate) {
+                if (action.execute) {
                     if (sameType) {
                         growStack(toAdd, false)
                         onContentsChanged()
@@ -83,7 +85,7 @@ interface HTFluidTank :
             return stack
         }
 
-        override fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): FluidStack {
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): FluidStack {
             val stack: FluidStack = getStack()
             if (isEmpty() || amount < 1 || !canFluidExtract(getStack(), access)) {
                 return FluidStack.EMPTY
@@ -91,7 +93,7 @@ interface HTFluidTank :
             val current: Int = min(stack.amount, getCapacityAsInt(getStack()))
             val fixedAmount: Int = min(amount, current)
             val result: FluidStack = stack.copyWithAmount(fixedAmount)
-            if (!simulate) {
+            if (action.execute) {
                 shrinkStack(fixedAmount, false)
                 onContentsChanged()
             }

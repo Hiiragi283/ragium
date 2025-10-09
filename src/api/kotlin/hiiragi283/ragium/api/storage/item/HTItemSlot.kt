@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
@@ -37,7 +38,7 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             setStack(ItemStack.EMPTY)
         }
 
-        override fun insert(stack: ItemStack, simulate: Boolean, access: HTStorageAccess): ItemStack {
+        override fun insert(stack: ItemStack, action: HTStorageAction, access: HTStorageAccess): ItemStack {
             if (stack.isEmpty) return ItemStack.EMPTY
 
             val needed: Int = getNeededAsInt(stack)
@@ -46,9 +47,9 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             val sameType: Boolean = ItemStack.isSameItemSameComponents(getStack(), stack)
             if (isEmpty() || sameType) {
                 val toAdd: Int = min(stack.count, needed)
-                if (!simulate) {
+                if (action.execute) {
                     if (sameType) {
-                        growStack(toAdd, false)
+                        growStack(toAdd, action)
                         onContentsChanged()
                     } else {
                         setStack(stack.copyWithCount(toAdd))
@@ -59,7 +60,7 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             return stack
         }
 
-        override fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): ItemStack {
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ItemStack {
             val stack: ItemStack = getStack()
             if (isEmpty() || amount < 1 || !canItemExtract(getStack(), access)) {
                 return ItemStack.EMPTY
@@ -67,8 +68,8 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             val current: Int = min(stack.count, stack.maxStackSize)
             val fixedAmount: Int = min(amount, current)
             val result: ItemStack = stack.copyWithCount(fixedAmount)
-            if (!simulate) {
-                shrinkStack(fixedAmount, false)
+            if (action.execute) {
+                shrinkStack(fixedAmount, action)
                 onContentsChanged()
             }
             return result
@@ -93,19 +94,19 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
         /**
          * 指定された[amount]から，現在の個数を置換します。
          * @param amount 置換する個数の最大値
-         * @param simulate `true`の場合のみ実際に置換を行います。
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
          * @return 実際に置換された個数
          */
-        fun setStackSize(amount: Int, simulate: Boolean): Int {
+        fun setStackSize(amount: Int, action: HTStorageAction): Int {
             if (isEmpty()) return 0
             if (amount <= 0) {
-                if (!simulate) setEmpty()
+                if (action.execute) setEmpty()
                 return 0
             }
             val stack: ItemStack = getStack()
             val maxStackSize: Int = getCapacityAsInt(stack)
             val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.count == fixedAmount || simulate) {
+            if (stack.count == fixedAmount || !action.execute) {
                 return fixedAmount
             }
             setStack(stack.copyWithCount(fixedAmount))
@@ -116,10 +117,10 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
         /**
          * 指定された[amount]から，現在の個数に追加します。
          * @param amount 追加する個数の最大値
-         * @param simulate `true`の場合のみ実際に追加を行います。
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に追加を行います。
          * @return 実際に追加された個数
          */
-        fun growStack(amount: Int, simulate: Boolean): Int {
+        fun growStack(amount: Int, action: HTStorageAction): Int {
             val current: Int = getAmountAsInt()
             if (current == 0) return 0
             val fixedAmount: Int = if (amount > 0) {
@@ -127,16 +128,16 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
             } else {
                 amount
             }
-            val newSize: Int = setStackSize(current + fixedAmount, simulate)
+            val newSize: Int = setStackSize(current + fixedAmount, action)
             return newSize - current
         }
 
         /**
          * 指定された[amount]から，現在の個数を削除します。
          * @param amount 削除する個数の最大値
-         * @param simulate `true`の場合のみ実際に削除を行います。
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
          * @return 実際に削除された個数
          */
-        fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
+        fun shrinkStack(amount: Int, action: HTStorageAction): Int = -growStack(-amount, action)
     }
 }

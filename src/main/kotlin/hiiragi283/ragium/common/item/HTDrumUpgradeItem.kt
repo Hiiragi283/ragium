@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
@@ -52,7 +53,7 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                (level.getBlockEntity(pos) as? HTDrumBlockEntity)?.insertFluid(fluid, false)
+                (level.getBlockEntity(pos) as? HTDrumBlockEntity)?.insertFluid(fluid, HTStorageAction.EXECUTE)
                 val drop = ItemStack(state.block)
                 player?.let { dropStackAt(it, drop) } ?: dropStackAt(level, pos, drop)
                 context.itemInHand.shrink(1)

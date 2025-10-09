@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
@@ -43,7 +44,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            val remainStack: FluidStack = tank.insert(stack, false, HTStorageAccess.INTERNAl)
+            val remainStack: FluidStack = tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             if (remainStack.isEmpty) {
                 entity.discard()
             } else {

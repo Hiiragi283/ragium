@@ -1,11 +1,15 @@
 package hiiragi283.ragium.api.storage
 
-@JvmInline
-value class HTStorageAction private constructor(val simulate: Boolean) {
-    companion object {
-        val SIMULATE = HTStorageAction(true)
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-        val EXECUTE = HTStorageAction(false)
+fun IFluidHandler.FluidAction.wrapAction(): HTStorageAction = HTStorageAction.of(this.simulate())
+
+@JvmInline
+value class HTStorageAction private constructor(val execute: Boolean) {
+    companion object {
+        val SIMULATE = HTStorageAction(false)
+
+        val EXECUTE = HTStorageAction(true)
 
         @JvmStatic
         fun of(simulate: Boolean): HTStorageAction = when (simulate) {
@@ -13,6 +17,4 @@ value class HTStorageAction private constructor(val simulate: Boolean) {
             false -> EXECUTE
         }
     }
-
-    val execute: Boolean get() = !simulate
 }

@@ -101,10 +101,10 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
-        if (tank.extract(required, true, HTStorageAccess.INTERNAl).isEmpty) return false
+        if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) return false
         val usage: Int = getModifiedEnergy(energyUsage)
         return if (network.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl) > 0) {
-            tank.extract(required, false, HTStorageAccess.INTERNAl)
+            tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             network.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             true
         } else {

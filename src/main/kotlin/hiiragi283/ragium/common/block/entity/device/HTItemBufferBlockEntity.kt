@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -64,7 +65,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
             val previous: ItemStack = entity.item.copy()
             var remainder: ItemStack = previous
             for (slot: HTItemSlot in slots) {
-                remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
+                remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                 if (remainder.isEmpty) {
                     entity.discard()
                     break

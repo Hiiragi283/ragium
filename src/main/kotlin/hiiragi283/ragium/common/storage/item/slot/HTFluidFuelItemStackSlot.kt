@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
 import net.minecraft.world.item.ItemStack
@@ -66,11 +67,11 @@ class HTFluidFuelItemStackSlot private constructor(
             if (amount in 1..needed) {
                 val hasContainer: Boolean = getStack().hasCraftingRemainingItem()
                 if (hasContainer && getStack().count > 1) return
-                tank.insert(amountToFuel(amount), false, HTStorageAccess.INTERNAl)
+                tank.insert(amountToFuel(amount), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                 if (hasContainer) {
                     setStack(getStack().craftingRemainingItem)
                 } else {
-                    shrinkStack(1, false)
+                    shrinkStack(1, HTStorageAction.EXECUTE)
                 }
             }
         }

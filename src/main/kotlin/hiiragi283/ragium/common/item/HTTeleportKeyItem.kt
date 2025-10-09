@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.item.base.HTFluidItem
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -81,7 +82,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         val tank: HTFluidTank = getFluidTank(stack, 0) ?: return false
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
         val toDrain: Int = HTItemHelper.getFixedUsage(stack, usage)
-        if (tank.extract(toDrain, true, HTStorageAccess.INTERNAl).amount < toDrain) {
+        if (tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).amount < toDrain) {
             player.displayClientMessage(
                 Component.translatable("Required fuel: $toDrain mb").withStyle(ChatFormatting.RED),
                 true,
@@ -90,7 +91,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         }
         // 実際にテレポートを行う
         if (player.connection.isAcceptingMessages) {
-            tank.extract(toDrain, false, HTStorageAccess.INTERNAl)
+            tank.extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
 
             val transition = DimensionTransition(
                 level,

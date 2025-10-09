@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -83,7 +84,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
             var remainder: ItemStack = stackIn
             for (slot: HTItemSlot in outputSlots) {
-                remainder = slot.insert(stackIn, true, HTStorageAccess.INTERNAl)
+                remainder = slot.insert(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
                 if (remainder.isEmpty) break
             }
             if (!remainder.isEmpty) return false
@@ -103,7 +104,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
             if (chance > level.random.nextFloat()) {
                 var remainder: ItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
                 for (slot: HTItemSlot in outputSlots) {
-                    remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
+                    remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                     if (remainder.isEmpty) break
                 }
             }

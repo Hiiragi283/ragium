@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -63,7 +64,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
-        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -73,13 +74,13 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
-            outputSlot.insert(stack.craftingRemainingItem, false, HTStorageAccess.INTERNAl)
+            outputSlot.insert(stack.craftingRemainingItem, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         }
         // インプットを減らす
-        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
+        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
     }

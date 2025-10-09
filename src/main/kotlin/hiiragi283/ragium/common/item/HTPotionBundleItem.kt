@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.item.base.HTContainerItem
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -21,7 +22,7 @@ class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.st
             val stackIn: ItemStack = slot.getStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
-                slot.extract(1, false, HTStorageAccess.INTERNAl)
+                slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             }
             if (result != stackIn) {
                 dropStackAt(livingEntity, result)

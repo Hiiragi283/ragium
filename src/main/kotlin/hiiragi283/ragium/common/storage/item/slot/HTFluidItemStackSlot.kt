@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -35,7 +36,7 @@ open class HTFluidItemStackSlot(
             val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(stack) ?: return@Predicate false
             for (i: Int in handler.tankRange) {
                 val stackIn: FluidStack = handler.getFluidInTank(i)
-                if (!stack.isEmpty && tank.insert(stackIn, true, HTStorageAccess.INTERNAl).amount < stackIn.amount) {
+                if (!stack.isEmpty && tank.insert(stackIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl).amount < stackIn.amount) {
                     return@Predicate true
                 }
             }
