@@ -9,7 +9,6 @@ import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
@@ -29,28 +28,35 @@ fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble
 //    Level    //
 
 /**
- * 指定した[item]を[entity]の足元にドロップします。
- */
-fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
-    dropStackAt(entity, ItemStack(item, count))
-}
-
-/**
  * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
  */
-fun dropStackAt(entity: Entity, stack: ItemStack) {
+fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
     if (entity is Player) {
-        if (entity.isFakePlayer) {
-            dropStackAt(entity.level(), entity.position(), stack)
-        } else {
-            ItemHandlerHelper.giveItemToPlayer(entity, stack)
-        }
+        giveStackTo(entity, stack)
     } else {
         val remainStack: ItemStack = HTMultiCapability.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
             ItemHandlerHelper.insertItem(handler, stack, false)
         } ?: stack
-        dropStackAt(entity.level(), entity.position(), remainStack)
+        dropStackAt(entity, remainStack, offset)
     }
+}
+
+/**
+ * 指定した[stack]を[player]のインベントリに入れます。
+ */
+fun giveStackTo(player: Player, stack: ItemStack) {
+    if (player.isFakePlayer) {
+        dropStackAt(player, stack)
+    } else {
+        ItemHandlerHelper.giveItemToPlayer(player, stack)
+    }
+}
+
+/**
+ * 指定した[stack]を[entity]の足元にドロップします。
+ */
+fun dropStackAt(entity: Entity, stack: ItemStack, offset: Float = 0f) {
+    entity.spawnAtLocation(stack, offset)
 }
 
 /**

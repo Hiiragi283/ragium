@@ -66,7 +66,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                     ),
                 ).withEffect(RagiumEnchantmentComponents.RANGE, MultiplyValue(LevelBasedValue.perLevel(2f, 1f))),
         )
-
+        // Weapon
         register(
             context,
             RagiumEnchantments.NOISE_CANCELING,
@@ -96,10 +96,30 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
         )
         register(
             context,
+            RagiumEnchantments.STRIKE,
+            Enchantment
+                .enchantment(
+                    Enchantment.definition(
+                        itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        itemLookup.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                        5,
+                        5,
+                        Enchantment.dynamicCost(5, 8),
+                        Enchantment.dynamicCost(25, 8),
+                        2,
+                        EquipmentSlotGroup.MAINHAND,
+                    ),
+                ).exclusiveWith(enchLookup.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
+                .withEffect(RagiumEnchantmentComponents.STRIKE),
+        )
+        // Armor
+        register(
+            context,
             RagiumEnchantments.SONIC_PROTECTION,
             Enchantment
                 .enchantment(
                     Enchantment.definition(
+                        itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                         itemLookup.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
                         2,
                         1,

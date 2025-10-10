@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveOrDropStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
@@ -57,7 +57,7 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
             // 対象を消す
             target.discard()
             // スポーンエッグをプレイヤーに渡す
-            dropStackAt(owner ?: this, spawnEgg)
+            giveOrDropStack(owner ?: this, spawnEgg)
             // 自身を消す
             discard()
         }
@@ -67,7 +67,7 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
         super.onHitBlock(result)
         if (!level().isClientSide) {
             // アイテムに戻る
-            dropStackAt(owner ?: this, item)
+            giveOrDropStack(owner ?: this, item)
             // 自身を消す
             discard()
         }

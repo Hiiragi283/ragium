@@ -121,6 +121,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
+        addEnchantment(RagiumEnchantments.STRIKE, "雷撃", "モブが頭をドロップします。")
 
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "音響耐性", "ソニックブームなどの音響攻撃を無効にします。")
     }

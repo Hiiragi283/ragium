@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.fluid
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.BlockPos
@@ -59,7 +60,7 @@ class HTFluidType(private val builder: Builder, properties: Properties) : FluidT
         builder.interactLevel?.invoke(level, pos)
         dropItem?.getStackOrNull(level.registryAccess())?.let { stack: ItemStack ->
             if (player != null) {
-                dropStackAt(player, stack)
+                giveStackTo(player, stack)
             } else {
                 dropStackAt(level, pos, stack)
             }

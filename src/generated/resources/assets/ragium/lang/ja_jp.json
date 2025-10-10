@@ -244,6 +244,8 @@
   "enchantment.ragium.range.desc": "収集の範囲を拡張します。",
   "enchantment.ragium.sonic_protection": "音響耐性",
   "enchantment.ragium.sonic_protection.desc": "ソニックブームなどの音響攻撃を無効にします。",
+  "enchantment.ragium.strike": "雷撃",
+  "enchantment.ragium.strike.desc": "モブが頭をドロップします。",
   "entity.ragium.blast_charge": "ブラストチャージ",
   "entity.ragium.eldritch_egg": "異質な卵",
   "item.ragium.advanced_circuit": "発展回路",

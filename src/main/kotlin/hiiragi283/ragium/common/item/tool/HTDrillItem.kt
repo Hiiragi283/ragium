@@ -64,4 +64,6 @@ class HTDrillItem(properties: Properties) :
 
     override fun isCorrectToolForDrops(stack: ItemStack, state: BlockState): Boolean =
         canConsumeEnergy(stack) && super.isCorrectToolForDrops(stack, state)
+
+    override fun getEnchantmentValue(stack: ItemStack): Int = 15
 }

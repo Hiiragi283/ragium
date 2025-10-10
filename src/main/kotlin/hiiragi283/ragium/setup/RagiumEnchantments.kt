@@ -18,6 +18,9 @@ object RagiumEnchantments {
     @JvmField
     val NOISE_CANCELING: ResourceKey<Enchantment> = create("noise_canceling")
 
+    @JvmField
+    val STRIKE: ResourceKey<Enchantment> = create("strike")
+
     //    Armor    //
 
     @JvmField

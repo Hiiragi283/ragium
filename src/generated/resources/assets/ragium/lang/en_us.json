@@ -244,6 +244,8 @@
   "enchantment.ragium.range.desc": "Increase the range of collecting.",
   "enchantment.ragium.sonic_protection": "Sonic Protection",
   "enchantment.ragium.sonic_protection.desc": "Immune damage from sonic boom.",
+  "enchantment.ragium.strike": "Strike",
+  "enchantment.ragium.strike.desc": "Drop mob head.",
   "entity.ragium.blast_charge": "Blast Charge",
   "entity.ragium.eldritch_egg": "Thrown Eldritch Egg",
   "item.ragium.advanced_circuit": "Advanced Circuit",

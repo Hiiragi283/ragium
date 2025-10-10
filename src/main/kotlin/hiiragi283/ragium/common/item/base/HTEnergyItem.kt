@@ -62,6 +62,8 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         addEnergyTooltip(battery, tooltipComponents::add)
     }
 
+    override fun isEnchantable(stack: ItemStack): Boolean = stack.maxStackSize == 1 && hasHandler(stack)
+
     //    User    //
 
     abstract class User(properties: Properties) : HTEnergyItem(properties) {

@@ -140,6 +140,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
 
+        event.register(RagiumDataMaps.INSTANCE.mobHeadType)
+
         RagiumAPI.LOGGER.info("Registered data map types!")
     }
 

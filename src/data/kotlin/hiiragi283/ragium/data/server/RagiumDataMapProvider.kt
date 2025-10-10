@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSolarPower
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.createCommonTag
@@ -25,6 +26,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
@@ -56,6 +58,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         solarPower()
 
         brewingEffect()
+
+        mobHead()
     }
 
     //    Vanilla    //
@@ -173,6 +177,18 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         // Custom - Ragium
     }
 
+    //    Mob Head    //
+
+    private fun mobHead() {
+        builder(RagiumDataMaps.INSTANCE.mobHeadType)
+            .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
+            .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
+            .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))
+            .add(EntityType.CREEPER, HTMobHead(Items.CREEPER_HEAD))
+            .add(EntityType.ENDER_DRAGON, HTMobHead(Items.DRAGON_HEAD))
+            .add(EntityType.PIGLIN, HTMobHead(Items.PIGLIN_HEAD))
+    }
+
     //    Extensions    //
 
     private fun <T : Any, R : Any> Builder<T, R>.add(holder: HTHolderLike, value: T): Builder<T, R> {
@@ -200,7 +216,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun <T : Any> Builder<T, Item>.add(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, value: T): Builder<T, Item> =
         add(variant.itemTagKey(material), value, false)
 
-    // fluid
+    // Fluid
     private fun <T : Any> Builder<T, Fluid>.add(fluid: Supplier<out Fluid>, value: T): Builder<T, Fluid> =
         add(HTHolderLike.fromFluid(fluid.get()), value)
 
@@ -209,4 +225,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun Builder<HTFluidFuelData, Fluid>.add(path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
         add(Registries.FLUID.createCommonTag(path), HTFluidFuelData(amount), false)
+
+    // Entity Type
+    private fun <T : Any> Builder<T, EntityType<*>>.add(type: EntityType<*>, value: T): Builder<T, EntityType<*>> =
+        add(HTHolderLike.fromEntity(type), value)
 }

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSolarPower
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.RegistryKey
@@ -12,6 +13,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -36,6 +38,9 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         private val BREWING_EFFECT: DataMapType<Item, HTBrewingEffect> = create("brewing/effect", Registries.ITEM, HTBrewingEffect.CODEC)
 
         @JvmStatic
+        private val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
+
+        @JvmStatic
         private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =
             DataMapType
                 .builder(RagiumAPI.id(path), registryKey, codec)
@@ -53,6 +58,8 @@ class RagiumDataMapsImpl : RagiumDataMaps {
     override val solarPowerType: DataMapType<Block, HTSolarPower> = SOLAR_POWER
 
     override val brewingEffectType: DataMapType<Item, HTBrewingEffect> = BREWING_EFFECT
+
+    override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = MOB_HEAD
 
     override fun <TYPE : Any, DATA : Any> getData(
         access: RegistryAccess,

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -25,8 +25,8 @@ class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.st
             if (!livingEntity.hasInfiniteMaterials()) {
                 slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             }
-            if (result != stackIn) {
-                dropStackAt(livingEntity, result)
+            if (result != stackIn && livingEntity is Player) {
+                giveStackTo(livingEntity, result)
             }
             return stack
         }

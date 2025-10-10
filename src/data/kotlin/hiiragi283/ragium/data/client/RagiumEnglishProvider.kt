@@ -129,6 +129,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addEnchantment(RagiumEnchantments.RANGE, "Extra Range", "Increase the range of collecting.")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "Noise Canceling", "Increases damage against sculk mobs such as Warden.")
+        addEnchantment(RagiumEnchantments.STRIKE, "Strike", "Drop mob head.")
 
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "Sonic Protection", "Immune damage from sonic boom.")
     }
