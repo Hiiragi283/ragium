@@ -18,7 +18,9 @@ object HTIngredientHelper {
     fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ItemStack>, action: HTStorageAction): Int {
         val stackIn: ItemStack = slot.getStack()
         if (stackIn.hasCraftingRemainingItem() && stackIn.count == 1) {
-            slot.setStack(stackIn.craftingRemainingItem)
+            if (action.execute) {
+                slot.setStack(stackIn.craftingRemainingItem)
+            }
             return 0
         } else {
             return slot.shrinkStack(ingredient.applyAsInt(slot.getStack()), action)

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.predicate.HTFluidPredicates
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
@@ -49,12 +50,12 @@ class HTVariableFluidStackTank(
 
     override fun getCapacityAsLong(stack: FluidStack): Long = capacitySupplier.asLong
 
-    override fun setStackSize(amount: Int, simulate: Boolean): Int {
+    override fun setStackSize(amount: Int, action: HTStorageAction): Int {
         if (isEmpty()) {
             return 0
         } else if (amount <= 0) {
-            if (!simulate) {
-                setEmpty()
+            if (action.execute) {
+                setStack(FluidStack.EMPTY)
             }
             return 0
         }
@@ -64,7 +65,7 @@ class HTVariableFluidStackTank(
         } else {
             amount
         }
-        if (getAmountAsInt() == fixedAmount || simulate) {
+        if (getAmountAsInt() == fixedAmount || !action.execute) {
             return fixedAmount
         }
         this.stack.amount = fixedAmount

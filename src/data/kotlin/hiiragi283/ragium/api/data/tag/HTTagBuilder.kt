@@ -10,8 +10,8 @@ import net.minecraft.tags.TagKey
 /**
  * 登録した[TagKey]をソートして生成するビルダー
  */
-@JvmInline
-value class HTTagBuilder<T : Any>(private val entryCache: ImmutableMultiMap.Builder<TagKey<T>, Entry>) {
+@JvmRecord
+data class HTTagBuilder<T : Any>(private val entryCache: ImmutableMultiMap.Builder<TagKey<T>, Entry>) {
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
 

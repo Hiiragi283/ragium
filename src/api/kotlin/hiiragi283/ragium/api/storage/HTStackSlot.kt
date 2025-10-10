@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
+import kotlin.math.min
 
 interface HTStackSlot<STACK : Any> :
     HTValueSerializable,
@@ -58,8 +59,37 @@ interface HTStackSlot<STACK : Any> :
         fun setStack(stack: STACK)
 
         /**
-         * このスロットを空にします。
+         * 指定された[amount]から，現在の個数を置換します。
+         * @param amount 置換する個数の最大値
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
+         * @return 実際に置換された個数
          */
-        fun setEmpty()
+        fun setStackSize(amount: Int, action: HTStorageAction): Int
+
+        /**
+         * 指定された[amount]から，現在の個数に追加します。
+         * @param amount 追加する個数の最大値
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に追加を行います。
+         * @return 実際に追加された個数
+         */
+        fun growStack(amount: Int, action: HTStorageAction): Int {
+            val current: Int = getAmountAsInt()
+            if (current == 0) return 0
+            val fixedAmount: Int = if (amount > 0) {
+                min(amount, getCapacityAsInt(getStack()))
+            } else {
+                amount
+            }
+            val newSize: Int = setStackSize(current + fixedAmount, action)
+            return newSize - current
+        }
+
+        /**
+         * 指定された[amount]から，現在の個数を削除します。
+         * @param amount 削除する個数の最大値
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
+         * @return 実際に削除された個数
+         */
+        fun shrinkStack(amount: Int, action: HTStorageAction): Int = -growStack(-amount, action)
     }
 }

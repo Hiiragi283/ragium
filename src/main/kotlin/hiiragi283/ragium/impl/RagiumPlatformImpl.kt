@@ -15,16 +15,13 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
-import hiiragi283.ragium.impl.collection.HTHolderSetList
 import hiiragi283.ragium.impl.recipe.manager.HTRecipeAccessImpl
 import hiiragi283.ragium.impl.storage.value.HTTagValueInput
 import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -126,8 +123,6 @@ class RagiumPlatformImpl : RagiumPlatform {
     }
 
     //    Collection    //
-
-    override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
 
     override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 

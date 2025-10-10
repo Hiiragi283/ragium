@@ -3,7 +3,6 @@ package hiiragi283.ragium.api
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
-import hiiragi283.ragium.api.extension.asList
 import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -16,7 +15,6 @@ import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -47,11 +45,6 @@ interface RagiumPlatform {
     fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag>
 
     fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
-
-    /**
-     * @see [asList]
-     */
-    fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>>
 
     /**
      * @see [asKotlinRandom]

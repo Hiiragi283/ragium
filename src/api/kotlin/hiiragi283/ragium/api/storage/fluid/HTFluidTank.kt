@@ -59,10 +59,6 @@ interface HTFluidTank :
     interface Mutable :
         HTFluidTank,
         HTStackSlot.Mutable<FluidStack> {
-        override fun setEmpty() {
-            setStack(FluidStack.EMPTY)
-        }
-
         override fun insert(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack {
             if (stack.isEmpty) return FluidStack.EMPTY
 
@@ -74,7 +70,7 @@ interface HTFluidTank :
                 val toAdd: Int = min(stack.amount, needed)
                 if (action.execute) {
                     if (sameType) {
-                        growStack(toAdd, false)
+                        growStack(toAdd, action)
                         onContentsChanged()
                     } else {
                         setStack(stack.copyWithAmount(toAdd))
@@ -94,7 +90,7 @@ interface HTFluidTank :
             val fixedAmount: Int = min(amount, current)
             val result: FluidStack = stack.copyWithAmount(fixedAmount)
             if (action.execute) {
-                shrinkStack(fixedAmount, false)
+                shrinkStack(fixedAmount, action)
                 onContentsChanged()
             }
             return result
@@ -119,50 +115,24 @@ interface HTFluidTank :
         /**
          * 指定された[amount]から，現在の個数を置換します。
          * @param amount 置換する個数の最大値
-         * @param simulate `true`の場合のみ実際に置換を行います。
+         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
          * @return 実際に置換された個数
          */
-        fun setStackSize(amount: Int, simulate: Boolean): Int {
+        override fun setStackSize(amount: Int, action: HTStorageAction): Int {
             if (isEmpty()) return 0
             if (amount <= 0) {
-                if (!simulate) setEmpty()
+                if (action.execute) setStack(FluidStack.EMPTY)
                 return 0
             }
             val stack: FluidStack = getStack()
             val maxStackSize: Int = getCapacityAsInt(stack)
             val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.amount == fixedAmount || simulate) {
+            if (stack.amount == fixedAmount || !action.execute) {
                 return fixedAmount
             }
             setStack(stack.copyWithAmount(fixedAmount))
             onContentsChanged()
             return fixedAmount
         }
-
-        /**
-         * 指定された[amount]から，現在の個数に追加します。
-         * @param amount 追加する個数の最大値
-         * @param simulate `true`の場合のみ実際に追加を行います。
-         * @return 実際に追加された個数
-         */
-        fun growStack(amount: Int, simulate: Boolean): Int {
-            val current: Int = getAmountAsInt()
-            if (current == 0) return 0
-            val fixedAmount: Int = if (amount > 0) {
-                min(amount, getCapacityAsInt(getStack()))
-            } else {
-                amount
-            }
-            val newSize: Int = setStackSize(current + fixedAmount, simulate)
-            return newSize - current
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数を削除します。
-         * @param amount 削除する個数の最大値
-         * @param simulate `true`の場合のみ実際に削除を行います。
-         * @return 実際に削除された個数
-         */
-        fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
     }
 }
