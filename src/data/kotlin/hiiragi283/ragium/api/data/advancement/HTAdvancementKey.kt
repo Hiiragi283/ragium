@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.registry.toDescriptionKey
 import net.minecraft.resources.ResourceLocation
 
 @JvmInline

@@ -2,12 +2,12 @@ package hiiragi283.ragium.impl.registry
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.createKey
-import hiiragi283.ragium.api.extension.createTagKey
-import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.toResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.registry.createKey
+import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.tag.createTagKey
+import hiiragi283.ragium.api.util.toResult
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter

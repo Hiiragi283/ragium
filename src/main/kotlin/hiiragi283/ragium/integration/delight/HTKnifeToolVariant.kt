@@ -2,10 +2,10 @@ package hiiragi283.ragium.integration.delight
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.variant.HTToolVariant
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.vanillaId
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn

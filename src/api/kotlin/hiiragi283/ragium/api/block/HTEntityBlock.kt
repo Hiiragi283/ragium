@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
-import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -39,7 +38,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
 
     //    Block    //
 
-    override fun codec(): MapCodec<out BaseEntityBlock> = unsupported()
+    override fun codec(): MapCodec<out BaseEntityBlock> = throw UnsupportedOperationException()
 
     override fun getRenderShape(state: BlockState): RenderShape = RenderShape.MODEL
 

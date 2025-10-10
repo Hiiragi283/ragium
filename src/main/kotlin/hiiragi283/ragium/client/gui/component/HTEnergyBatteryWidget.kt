@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.extension.energyText
+import hiiragi283.ragium.api.network.energyText
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

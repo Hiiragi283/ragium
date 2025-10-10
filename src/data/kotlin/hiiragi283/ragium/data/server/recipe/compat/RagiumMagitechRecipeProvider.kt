@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTWoodType
-import hiiragi283.ragium.api.extension.createTagKey
-import hiiragi283.ragium.api.extension.toId
+import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.tag.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item

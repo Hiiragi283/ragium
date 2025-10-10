@@ -1,7 +1,7 @@
 package hiiragi283.ragium.config
 
 import hiiragi283.ragium.api.config.HTDoubleConfigValue
-import hiiragi283.ragium.api.extension.definePositiveDouble
+import hiiragi283.ragium.api.config.definePositiveDouble
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumClientConfig(builder: ModConfigSpec.Builder) {

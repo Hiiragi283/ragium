@@ -2,9 +2,9 @@ package hiiragi283.ragium.integration.replication
 
 import com.buuz135.replication.ReplicationRegistry
 import com.buuz135.replication.api.IMatterType
-import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.registry.HTDeferredRegister
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.registry.createKey
 import net.minecraft.resources.ResourceLocation
 import java.awt.Color
 import java.util.function.Function

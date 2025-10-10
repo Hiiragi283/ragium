@@ -1,5 +1,7 @@
-package hiiragi283.ragium.api.extension
+package hiiragi283.ragium.api.network
 
+import hiiragi283.ragium.api.extension.tankRange
+import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.text.RagiumTranslation

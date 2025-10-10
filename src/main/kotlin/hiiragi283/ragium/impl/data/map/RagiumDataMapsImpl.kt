@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSolarPower
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess

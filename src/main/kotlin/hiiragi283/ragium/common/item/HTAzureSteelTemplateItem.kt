@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.world.item.SmithingTemplateItem

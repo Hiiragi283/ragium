@@ -7,8 +7,8 @@ import dev.emi.emi.api.widget.Bounds
 import dev.emi.emi.api.widget.FillingArrowWidget
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.gui.component.HTWidget
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult

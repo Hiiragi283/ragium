@@ -2,10 +2,10 @@ package hiiragi283.ragium.integration.mekanism
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.createCommonTag
-import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.api.tag.createTagKey
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey

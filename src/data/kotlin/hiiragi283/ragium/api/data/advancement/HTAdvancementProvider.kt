@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.extension.wrapOptional
+import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries

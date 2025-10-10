@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.gui.component
 
-import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.network.addFluidTooltip
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.api.storage.fluid.setFluidStack

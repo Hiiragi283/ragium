@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder.Entry
-import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagKey

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
+import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.network.chat.Component

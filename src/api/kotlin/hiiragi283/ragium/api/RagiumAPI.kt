@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.extension.toId
+import hiiragi283.ragium.api.registry.toId
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import java.util.ServiceLoader

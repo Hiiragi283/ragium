@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.andThen
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.bus.api.IEventBus

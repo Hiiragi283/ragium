@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.toId
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

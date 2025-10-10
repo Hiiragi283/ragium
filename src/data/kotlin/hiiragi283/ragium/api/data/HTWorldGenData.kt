@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.createKey
+import hiiragi283.ragium.api.registry.createKey
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey

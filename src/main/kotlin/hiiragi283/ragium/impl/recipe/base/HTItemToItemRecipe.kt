@@ -1,7 +1,6 @@
 package hiiragi283.ragium.impl.recipe.base
 
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -20,9 +19,9 @@ abstract class HTItemToItemRecipe(val ingredient: HTItemIngredient, val result: 
                 HTItemIngredient.wrapVanilla(recipe.ingredients[0]),
                 HTResultHelper.INSTANCE.item(recipe.getResultItem(registries)),
             ) {
-                override fun getSerializer(): RecipeSerializer<*> = unsupported()
+                override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
 
-                override fun getType(): RecipeType<*> = unsupported()
+                override fun getType(): RecipeType<*> = throw UnsupportedOperationException()
             }
     }
 

@@ -3,11 +3,13 @@ package hiiragi283.ragium.api.serialization.codec
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.toResult
+import hiiragi283.ragium.api.data.DataResultException
+import hiiragi283.ragium.api.extension.andThen
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -344,3 +346,6 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
 
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toOptional(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
+
+private fun <T : Any> DataResult<T>.toResult(exceptionSupplier: (String) -> Exception = ::DataResultException): Result<T> =
+    mapOrElse(Result.Companion::success, DataResult.Error<T>::message.andThen(exceptionSupplier).andThen(Result.Companion::failure))

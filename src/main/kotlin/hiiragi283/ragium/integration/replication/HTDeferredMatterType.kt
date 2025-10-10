@@ -4,8 +4,8 @@ import com.buuz135.replication.ReplicationRegistry
 import com.buuz135.replication.api.IMatterType
 import com.buuz135.replication.calculation.MatterValue
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.registry.toId
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import java.util.function.Supplier

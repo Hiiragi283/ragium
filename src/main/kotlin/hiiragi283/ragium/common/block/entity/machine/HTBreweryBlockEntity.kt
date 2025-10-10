@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
@@ -77,8 +76,8 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
             getResultItems(input).getOrNull(0)?.getStackOrNull(registries) ?: ItemStack.EMPTY
 
-        override fun getSerializer(): RecipeSerializer<*> = unsupported()
+        override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
 
-        override fun getType(): RecipeType<*> = unsupported()
+        override fun getType(): RecipeType<*> = throw UnsupportedOperationException()
     }
 }

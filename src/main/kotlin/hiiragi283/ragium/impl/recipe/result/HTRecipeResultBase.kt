@@ -1,9 +1,9 @@
 package hiiragi283.ragium.impl.recipe.result
 
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs

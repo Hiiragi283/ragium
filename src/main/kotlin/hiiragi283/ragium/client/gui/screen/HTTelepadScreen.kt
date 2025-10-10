@@ -1,11 +1,11 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
+import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity

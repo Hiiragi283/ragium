@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.isOf
 import net.minecraft.resources.ResourceLocation

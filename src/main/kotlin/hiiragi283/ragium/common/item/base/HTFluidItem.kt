@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.base
 
-import hiiragi283.ragium.api.extension.addFluidTooltip
+import hiiragi283.ragium.api.network.addFluidTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank

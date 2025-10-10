@@ -1,9 +1,9 @@
 package hiiragi283.ragium.impl.registry
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs

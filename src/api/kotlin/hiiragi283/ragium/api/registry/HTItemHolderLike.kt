@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.item.isOf
 import net.minecraft.core.Holder

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems

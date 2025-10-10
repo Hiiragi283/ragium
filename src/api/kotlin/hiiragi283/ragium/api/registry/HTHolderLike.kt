@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.extension.andThen
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.registry.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType

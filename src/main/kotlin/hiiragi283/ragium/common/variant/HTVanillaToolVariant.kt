@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.variant
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import net.minecraft.resources.ResourceLocation

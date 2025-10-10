@@ -1,7 +1,5 @@
-package hiiragi283.ragium.api.extension
+package hiiragi283.ragium.api.config
 
-import hiiragi283.ragium.api.config.HTDoubleConfigValue
-import hiiragi283.ragium.api.config.HTIntConfigValue
 import net.neoforged.neoforge.common.ModConfigSpec
 
 fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min: Int = 1): HTIntConfigValue =

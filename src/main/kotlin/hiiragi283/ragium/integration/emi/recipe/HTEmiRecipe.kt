@@ -7,7 +7,7 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient

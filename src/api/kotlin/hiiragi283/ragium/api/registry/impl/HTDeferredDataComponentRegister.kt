@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry.impl
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.registry.HTDeferredRegister
+import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.RegistryFriendlyByteBuf

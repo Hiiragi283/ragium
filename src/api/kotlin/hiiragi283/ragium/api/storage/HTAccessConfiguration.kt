@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.text.HTHasText

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType

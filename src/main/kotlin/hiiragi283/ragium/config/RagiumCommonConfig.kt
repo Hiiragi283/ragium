@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.config.HTBoolConfigValue
 import hiiragi283.ragium.api.config.HTDoubleConfigValue
 import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
-import hiiragi283.ragium.api.extension.definePositiveDouble
-import hiiragi283.ragium.api.extension.definePositiveInt
+import hiiragi283.ragium.api.config.definePositiveDouble
+import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant

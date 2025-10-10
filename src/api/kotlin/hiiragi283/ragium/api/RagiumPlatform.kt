@@ -2,12 +2,12 @@ package hiiragi283.ragium.api
 
 import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery

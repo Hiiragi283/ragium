@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.serialization.codec
 
-import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.createTagKey
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.tag.createTagKey
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder

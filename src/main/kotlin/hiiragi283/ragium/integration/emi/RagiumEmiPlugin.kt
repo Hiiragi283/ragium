@@ -16,8 +16,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.extension.holdersSequence
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -26,6 +24,8 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.holdersSequence
+import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe

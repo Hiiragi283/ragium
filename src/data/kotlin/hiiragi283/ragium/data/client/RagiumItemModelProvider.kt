@@ -3,14 +3,14 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.extension.itemId
-import hiiragi283.ragium.api.extension.toId
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.itemId
+import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon

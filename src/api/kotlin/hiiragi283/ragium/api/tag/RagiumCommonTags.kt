@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.createCommonTag
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item

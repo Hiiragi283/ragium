@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.material
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

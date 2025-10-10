@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.network.addFluidTooltip
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.getFluidStack

@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.data.map
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.item.component.HTPotionBuilder
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents

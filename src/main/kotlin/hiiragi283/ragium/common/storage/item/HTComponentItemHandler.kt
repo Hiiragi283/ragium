@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.item
 
 import com.google.common.primitives.Ints
-import hiiragi283.ragium.api.extension.asNonEmptySequence
-import hiiragi283.ragium.api.extension.copy
-import hiiragi283.ragium.api.extension.getOrEmpty
 import hiiragi283.ragium.api.extension.setOrRemove
+import hiiragi283.ragium.api.item.asNonEmptySequence
+import hiiragi283.ragium.api.item.copy
+import hiiragi283.ragium.api.item.getOrEmpty
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.createKey
+import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.EnchantmentPredicate
 import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate
