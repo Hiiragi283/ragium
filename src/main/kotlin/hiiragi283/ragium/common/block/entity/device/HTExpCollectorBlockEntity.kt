@@ -48,7 +48,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             if (remainStack.isEmpty()) {
                 entity.discard()
             } else {
-                entity.value = remainStack.amountAsInt()
+                entity.value = remainStack.amountAsInt() / RagiumConfig.COMMON.expCollectorMultiplier.asInt
             }
         }
         return true

@@ -27,7 +27,7 @@ interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
 
     interface Mutable :
         HTItemSlot,
-        HTStackSlot.Mutable<HTItemStorageStack> { 
+        HTStackSlot.Mutable<HTItemStorageStack> {
         override fun insert(stack: HTItemStorageStack, action: HTStorageAction, access: HTStorageAccess): HTItemStorageStack {
             if (stack.isEmpty()) return HTItemStorageStack.EMPTY
 
