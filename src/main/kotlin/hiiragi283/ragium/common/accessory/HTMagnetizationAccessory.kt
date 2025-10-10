@@ -9,12 +9,12 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import java.util.function.BiConsumer
+import java.util.function.BiPredicate
 
-class HTMagnetizationAccessory<T : Entity>(val entityClass: Class<T>, val interaction: BiConsumer<T, Player>) : Accessory {
+class HTMagnetizationAccessory<T : Entity>(val entityClass: Class<T>, val interaction: BiPredicate<T, Player>) : Accessory {
     companion object {
         @JvmStatic
-        inline fun <reified T : Entity> create(interaction: BiConsumer<T, Player>): HTMagnetizationAccessory<T> =
+        inline fun <reified T : Entity> create(interaction: BiPredicate<T, Player>): HTMagnetizationAccessory<T> =
             HTMagnetizationAccessory(T::class.java, interaction)
     }
 
@@ -32,7 +32,9 @@ class HTMagnetizationAccessory<T : Entity>(val entityClass: Class<T>, val intera
             player.position().getRangedAABB(range),
         )
         for (entity: T in entitiesInRange) {
-            interaction.accept(entity, player)
+            if (interaction.test(entity, player)) {
+                entity.playerTouch(player)
+            }
         }
     }
 }
