@@ -16,7 +16,7 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
      * @param level レシピを取得するレベル
      * @return 見つからなかった場合は`null`
      */
-    fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = getFirstHolder(input, level)?.recipe
+    fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = getFirstHolder(input, level)?.recipe()
 
     /**
      * 指定された[input], [level]から最初に一致する[HTRecipeHolder]を返します。

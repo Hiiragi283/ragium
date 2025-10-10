@@ -20,7 +20,7 @@ class HTSimpleRecipeCache<I : RecipeInput, R : Recipe<I>>(val recipeType: Recipe
     private var lastRecipe: ResourceLocation? = null
 
     private fun <R : Recipe<*>> updateCache(holder: HTRecipeHolder<R>?): HTRecipeHolder<R>? = holder.apply {
-        lastRecipe = this?.id
+        lastRecipe = this?.getId()
     }
 
     override fun getFirstHolder(input: I, level: Level): HTRecipeHolder<R>? = level.recipeAccess

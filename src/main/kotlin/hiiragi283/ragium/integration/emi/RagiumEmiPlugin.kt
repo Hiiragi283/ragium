@@ -77,8 +77,10 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 class RagiumEmiPlugin : EmiPlugin {
     companion object {
         @JvmStatic
-        internal lateinit var recipeAccess: HTRecipeAccess
-            private set
+        internal var recipeAccess: HTRecipeAccess? = null
+
+        @JvmStatic
+        fun recipeAccess(): HTRecipeAccess = this.recipeAccess ?: error("Recipe Access not initialized")
 
         @JvmStatic
         internal val registryAccess: RegistryAccess by lazy {
@@ -89,7 +91,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     override fun register(registry: EmiRegistry) {
         // Recipe
-        recipeAccess = RagiumPlatform.INSTANCE.wrapRecipeManager(registry.recipeManager)
+        recipeAccess = HTRecipeAccess(registry.recipeManager)
 
         addCustomRecipe(registry)
         addGenerators(registry)
@@ -127,7 +129,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Smithing
         RagiumRecipeTypes.SMITHING
-            .getAllRecipes(recipeAccess)
+            .getAllRecipes(recipeAccess())
             .filterIsInstance<HTSmithingModifyRecipe>()
             .forEach { recipe: HTSmithingModifyRecipe ->
                 registry.addRecipe(
@@ -197,7 +199,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipes(
             registry,
             cutting,
-            RagiumRecipeTypes.STONECUTTER.getAllHolders(recipeAccess).map { holder: HTRecipeHolder<StonecutterRecipe> ->
+            RagiumRecipeTypes.STONECUTTER.getAllHolders(recipeAccess()).map { holder: HTRecipeHolder<StonecutterRecipe> ->
                 holder
                     .withPrefix("/")
                     .mapRecipe(HTItemToItemRecipe::wrapVanilla.partially1(registryAccess))
@@ -283,7 +285,7 @@ class RagiumEmiPlugin : EmiPlugin {
     ): HTEmiRecipeCategory {
         val category: HTEmiRecipeCategory = registerCategory(registry, viewerType)
         viewerType
-            .getAllHolders(recipeAccess)
+            .getAllHolders(recipeAccess())
             .map { it.castRecipe<RECIPE>() }
             .mapNotNull(factory.partially1(category))
             .forEach(registry::addRecipe)

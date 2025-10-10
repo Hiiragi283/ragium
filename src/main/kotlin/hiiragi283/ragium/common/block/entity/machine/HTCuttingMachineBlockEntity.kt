@@ -111,7 +111,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
             // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
             var matchedHolder: HTRecipeHolder<RECIPE>? = null
             for (holder: HTRecipeHolder<RECIPE> in recipeType.getAllHolders(level.recipeAccess)) {
-                val recipe: RECIPE = holder.recipe
+                val recipe: RECIPE = holder.recipe()
                 if (!recipe.matches(input, level)) continue
                 val result: ItemStack = recipe.assemble(input, level.registryAccess())
                 if (ItemStack.isSameItemSameComponents(catalystSlot.getItemStack(), result)) {

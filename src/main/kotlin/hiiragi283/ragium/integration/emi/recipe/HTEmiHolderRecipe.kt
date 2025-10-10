@@ -34,7 +34,7 @@ abstract class HTEmiHolderRecipe<RECIPE : Recipe<*>> : HTEmiRecipe<RECIPE> {
     constructor(
         category: HTEmiRecipeCategory,
         holder: HTRecipeHolder<RECIPE>,
-    ) : this(category, holder.toVanilla(), category.bounds)
+    ) : this(category, holder.holder, category.bounds)
 
     override fun getBackingRecipe(): RecipeHolder<*> = holder
 }

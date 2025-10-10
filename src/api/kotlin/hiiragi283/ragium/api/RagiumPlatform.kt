@@ -3,10 +3,8 @@ package hiiragi283.ragium.api
 import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.asKotlinRandom
-import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -27,7 +25,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import kotlin.jvm.optionals.getOrNull
@@ -57,13 +54,6 @@ interface RagiumPlatform {
     fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
 
     fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
-
-    //    Recipe    //
-
-    /**
-     * @see [recipeAccess]
-     */
-    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess
 
     //    Server    //
 
