@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.isOf
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
@@ -59,4 +61,6 @@ interface HTItemHolderLike :
     }
 
     fun isOf(stack: ItemStack): Boolean = stack.`is`(asItem())
+
+    fun isOf(stack: HTItemStorageStack): Boolean = stack.isOf(asItem())
 }

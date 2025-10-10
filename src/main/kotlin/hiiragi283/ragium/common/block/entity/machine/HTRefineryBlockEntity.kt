@@ -8,14 +8,16 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -72,13 +74,13 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
         val registries: HolderLookup.Provider = level.registryAccess()
         val bool1: Boolean = outputSlot
-            .insert(
+            .insertItem(
                 recipe.assemble(input, registries),
                 HTStorageAction.SIMULATE,
                 HTStorageAccess.INTERNAl,
             ).isEmpty
         val bool2: Boolean = outputTank
-            .insert(
+            .insertFluid(
                 recipe.assembleFluid(input, registries),
                 HTStorageAction.SIMULATE,
                 HTStorageAccess.INTERNAl,
@@ -95,11 +97,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         // 実際にアウトプットに搬出する
         val registries: HolderLookup.Provider = level.registryAccess()
-        outputSlot.insert(recipe.assemble(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-        outputTank.insert(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        outputSlot.insertItem(recipe.assemble(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        outputTank.insertFluid(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        HTIngredientHelper.shrinkStack(inputSlot, recipe.itemIngredient, HTStorageAction.EXECUTE)
-        HTIngredientHelper.shrinkStack(inputTank, recipe.fluidIngredient, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe.itemIngredient, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputTank, recipe.fluidIngredient, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

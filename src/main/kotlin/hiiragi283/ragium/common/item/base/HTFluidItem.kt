@@ -4,12 +4,11 @@ import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getTintColor
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
-import net.neoforged.neoforge.fluids.FluidStack
 import kotlin.math.roundToInt
 
 abstract class HTFluidItem(properties: Properties) : Item(properties) {
@@ -39,11 +38,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
         return (13f * tank.getStoredLevelAsFloat(tank.getStack())).roundToInt()
     }
 
-    override fun getBarColor(stack: ItemStack): Int {
-        val tank: HTFluidTank = getFluidTank(stack, 0) ?: return 0
-        val fluid: FluidStack = tank.getStack()
-        return fluid.fluid.let(IClientFluidTypeExtensions::of).getTintColor(fluid)
-    }
+    override fun getBarColor(stack: ItemStack): Int = getFluidTank(stack, 0)?.getStack()?.getTintColor() ?: 0
 
     override fun appendHoverText(
         stack: ItemStack,

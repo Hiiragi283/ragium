@@ -3,6 +3,10 @@ package hiiragi283.ragium.api.inventory
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.getCapacityAsInt
+import hiiragi283.ragium.api.storage.item.getItemStack
+import hiiragi283.ragium.api.storage.item.insertItem
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -29,12 +33,12 @@ open class HTContainerItemSlot(
 
     override fun mayPlace(stack: ItemStack): Boolean {
         if (stack.isEmpty) return false
-        if (slot.isEmpty()) return slot.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
-        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty) return false
-        return slot.isItemValidForInsert(stack, HTStorageAccess.MANUAL)
+        if (slot.isEmpty()) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
+        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()) return false
+        return slot.isItemValidForInsert(HTItemStorageStack.of(stack), HTStorageAccess.MANUAL)
     }
 
-    override fun getItem(): ItemStack = slot.getStack()
+    override fun getItem(): ItemStack = slot.getItemStack()
 
     override fun hasItem(): Boolean = !slot.isEmpty()
 
@@ -50,11 +54,11 @@ open class HTContainerItemSlot(
 
     override fun getMaxStackSize(): Int = slot.getCapacityAsInt(ItemStack.EMPTY)
 
-    override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(stack)
+    override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(HTItemStorageStack.of(stack))
 
-    override fun mayPickup(player: Player): Boolean = !slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty
+    override fun mayPickup(player: Player): Boolean = !slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()
 
-    override fun remove(amount: Int): ItemStack = slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
+    override fun remove(amount: Int): ItemStack = slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL).stack
 
     override fun tryRemove(count: Int, decrement: Int, player: Player): Optional<ItemStack> {
         if (allowPartialRemoval()) {

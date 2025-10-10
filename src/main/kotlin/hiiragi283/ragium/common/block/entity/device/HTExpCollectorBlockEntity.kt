@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -19,7 +20,6 @@ import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
@@ -43,12 +43,12 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
-            val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            val remainStack: FluidStack = tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-            if (remainStack.isEmpty) {
+            val stack: HTFluidStorageStack = RagiumFluidContents.EXPERIENCE.toStorageStack(fluidAmount)
+            val remainStack: HTFluidStorageStack = tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+            if (remainStack.isEmpty()) {
                 entity.discard()
             } else {
-                entity.value = remainStack.amount
+                entity.value = remainStack.amountAsInt()
             }
         }
         return true

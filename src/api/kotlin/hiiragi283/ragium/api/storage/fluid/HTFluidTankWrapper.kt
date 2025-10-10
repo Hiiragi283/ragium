@@ -7,7 +7,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 class HTFluidTankWrapper(private val tank: HTFluidTank) : IFluidHandler {
     override fun getTanks(): Int = 1
 
-    override fun getFluidInTank(tank: Int): FluidStack = this.tank.getStack()
+    override fun getFluidInTank(tank: Int): FluidStack = this.tank.getFluidStack()
 
     override fun getTankCapacity(tank: Int): Int = this.tank.getCapacityAsInt(getFluidInTank(0))
 

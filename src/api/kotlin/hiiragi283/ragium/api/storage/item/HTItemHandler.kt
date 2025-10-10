@@ -19,7 +19,7 @@ interface HTItemHandler :
 
     fun getItemSlot(slot: Int, side: Direction?): HTItemSlot? = getItemSlots(side).getOrNull(slot)
 
-    override fun getStackInSlot(slot: Int, side: Direction?): ItemStack = getItemSlot(slot, side)?.getStack() ?: ItemStack.EMPTY
+    override fun getStackInSlot(slot: Int, side: Direction?): ItemStack = getItemSlot(slot, side)?.getItemStack() ?: ItemStack.EMPTY
 
     override fun getSlots(side: Direction?): Int = getItemSlots(side).size
 
@@ -28,14 +28,14 @@ interface HTItemHandler :
         stack: ItemStack,
         action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.insert(stack, action, HTStorageAccess.forHandler(side)) ?: stack
+    ): ItemStack = getItemSlot(slot, side)?.insertItem(stack, action, HTStorageAccess.forHandler(side)) ?: stack
 
     override fun extractItem(
         slot: Int,
         amount: Int,
         action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.extract(amount, action, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
+    ): ItemStack = getItemSlot(slot, side)?.extractItem(amount, action, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
 
     override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacityAsInt(ItemStack.EMPTY) ?: 0
 

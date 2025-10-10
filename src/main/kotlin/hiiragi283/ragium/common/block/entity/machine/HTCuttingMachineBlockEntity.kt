@@ -9,12 +9,15 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.getItemStack
+import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -63,19 +66,17 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val recipeCache = SingleItemCache()
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTSingleInputRecipe? =
         recipeCache.getFirstRecipe(input, level)
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean {
-        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
-        for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insert(remainder, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
-            if (remainder.isEmpty) break
-        }
-        return remainder.isEmpty
-    }
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean = HTStackSlotHelper
+        .insertStacks(
+            outputSlots,
+            HTItemStorageStack.of(recipe.assemble(input, level.registryAccess())),
+            HTStorageAction.SIMULATE,
+        ).isEmpty()
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -85,11 +86,11 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        var remainder: ItemStack = recipe.assemble(input, level.registryAccess())
-        for (slot: HTItemSlot in outputSlots) {
-            remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-            if (remainder.isEmpty) break
-        }
+        HTStackSlotHelper.insertStacks(
+            outputSlots,
+            HTItemStorageStack.of(recipe.assemble(input, level.registryAccess())),
+            HTStorageAction.EXECUTE,
+        )
         // インプットを減らす
         inputSlot.shrinkStack(1, HTStorageAction.EXECUTE)
         // SEを鳴らす
@@ -113,7 +114,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
                 val recipe: RECIPE = holder.recipe
                 if (!recipe.matches(input, level)) continue
                 val result: ItemStack = recipe.assemble(input, level.registryAccess())
-                if (ItemStack.isSameItemSameComponents(catalystSlot.getStack(), result)) {
+                if (ItemStack.isSameItemSameComponents(catalystSlot.getItemStack(), result)) {
                     matchedHolder = holder
                     break
                 }

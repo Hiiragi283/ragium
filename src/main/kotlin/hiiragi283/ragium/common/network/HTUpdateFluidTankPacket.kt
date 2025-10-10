@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
@@ -36,7 +37,7 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
         @JvmStatic
         fun create(blockEntity: HTBlockEntity, index: Int): HTUpdateFluidTankPacket? {
             val tank: HTFluidTank = blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).getOrNull(index) ?: return null
-            return HTUpdateFluidTankPacket(blockEntity.blockPos, index, tank.getStack())
+            return HTUpdateFluidTankPacket(blockEntity.blockPos, index, tank.getFluidStack())
         }
     }
 

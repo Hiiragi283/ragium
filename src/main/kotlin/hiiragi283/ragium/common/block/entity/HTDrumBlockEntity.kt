@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
+import hiiragi283.ragium.api.storage.fluid.setFluidStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -55,12 +57,12 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         componentInput
             .getOrDefault(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY)
             .copy()
-            .let(tank::setStack)
+            .let(tank::setFluidStack)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getStack()))
+        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getFluidStack()))
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = true

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
@@ -22,7 +23,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -50,7 +50,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = { stack: ItemStack ->
+            filter = { stack: HTItemStorageStack ->
                 val energyStorage: IEnergyStorage =
                     HTMultiCapability.ENERGY.getCapability(stack) ?: return@create false
                 energyStorage.energyStored > 0 && energyStorage.canExtract()
@@ -61,7 +61,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = { stack: ItemStack ->
+            filter = { stack: HTItemStorageStack ->
                 val energyStorage: IEnergyStorage =
                     HTMultiCapability.ENERGY.getCapability(stack) ?: return@create false
                 energyStorage.energyStored < energyStorage.maxEnergyStored && energyStorage.canReceive()
@@ -87,7 +87,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun extractFromItem(): TriState {
-        val stackIn: ItemStack = extractSlot.getStack()
+        val stackIn: HTItemStorageStack = extractSlot.getStack()
         val energyIn: IEnergyStorage = HTMultiCapability.ENERGY.getCapability(stackIn) ?: return TriState.FALSE
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, true)
@@ -107,7 +107,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun receiveToItem(): TriState {
-        val stackIn: ItemStack = insertSlot.getStack()
+        val stackIn: HTItemStorageStack = insertSlot.getStack()
         val energyIn: IEnergyStorage = HTMultiCapability.ENERGY.getCapability(stackIn) ?: return TriState.FALSE
         var toReceive: Int = transferRate
         toReceive = energyIn.receiveEnergy(toReceive, true)

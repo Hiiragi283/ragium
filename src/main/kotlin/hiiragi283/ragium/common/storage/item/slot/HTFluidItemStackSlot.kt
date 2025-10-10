@@ -7,11 +7,12 @@ import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
-import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.function.Predicate
@@ -21,9 +22,9 @@ import java.util.function.Predicate
  */
 open class HTFluidItemStackSlot(
     protected val tank: HTFluidTank,
-    canExtract: Predicate<ItemStack>,
-    canInsert: Predicate<ItemStack>,
-    filter: Predicate<ItemStack>,
+    canExtract: Predicate<HTItemStorageStack>,
+    canInsert: Predicate<HTItemStorageStack>,
+    filter: Predicate<HTItemStorageStack>,
     listener: HTContentListener?,
     x: Int,
     y: Int,
@@ -32,11 +33,13 @@ open class HTFluidItemStackSlot(
     HTFluidItemSlot {
     companion object {
         @JvmStatic
-        fun fillPredicate(tank: HTFluidTank): Predicate<ItemStack> = Predicate { stack: ItemStack ->
+        fun fillPredicate(tank: HTFluidTank): Predicate<HTItemStorageStack> = Predicate { stack: HTItemStorageStack ->
             val handler: IFluidHandlerItem = HTMultiCapability.FLUID.getCapability(stack) ?: return@Predicate false
             for (i: Int in handler.tankRange) {
                 val stackIn: FluidStack = handler.getFluidInTank(i)
-                if (!stack.isEmpty && tank.insert(stackIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl).amount < stackIn.amount) {
+                if (!stack.isEmpty() &&
+                    tank.insertFluid(stackIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl).amount < stackIn.amount
+                ) {
                     return@Predicate true
                 }
             }
@@ -49,7 +52,7 @@ open class HTFluidItemStackSlot(
     override var isDraining: Boolean = false
     override var isFilling: Boolean = false
 
-    override fun setStack(stack: ItemStack) {
+    override fun setStack(stack: HTItemStorageStack) {
         super.setStack(stack)
         isDraining = false
         isFilling = false

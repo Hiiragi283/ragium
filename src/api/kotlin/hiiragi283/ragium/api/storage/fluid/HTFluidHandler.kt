@@ -19,7 +19,7 @@ interface HTFluidHandler :
 
     fun getFluidTank(tank: Int, side: Direction?): HTFluidTank? = getFluidTanks(side).getOrNull(tank)
 
-    override fun getFluidInTank(tank: Int, side: Direction?): FluidStack = getFluidTank(tank, side)?.getStack() ?: FluidStack.EMPTY
+    override fun getFluidInTank(tank: Int, side: Direction?): FluidStack = getFluidTank(tank, side)?.getFluidStack() ?: FluidStack.EMPTY
 
     override fun getTanks(side: Direction?): Int = getFluidTanks(side).size
 
@@ -34,10 +34,10 @@ interface HTFluidHandler :
         val tanks: List<HTFluidTank> = getFluidTanks(side)
         val access: HTStorageAccess = HTStorageAccess.forHandler(side)
         return when (tanks.size) {
-            1 -> tanks[0].insert(stack, action, access)
+            1 -> tanks[0].insertFluid(stack, action, access)
             2 -> {
-                val first: FluidStack = tanks[0].insert(stack, action, access)
-                tanks[1].insert(first, action, access)
+                val first: FluidStack = tanks[0].insertFluid(stack, action, access)
+                tanks[1].insertFluid(first, action, access)
             }
             else -> stack
         }
@@ -47,12 +47,12 @@ interface HTFluidHandler :
         val tanks: List<HTFluidTank> = getFluidTanks(side)
         val access: HTStorageAccess = HTStorageAccess.forHandler(side)
         return when (tanks.size) {
-            1 -> tanks[0].extract(amount, action, access)
+            1 -> tanks[0].extractFluid(amount, action, access)
             2 -> {
-                val first: FluidStack = tanks[0].extract(amount, action, access)
+                val first: FluidStack = tanks[0].extractFluid(amount, action, access)
                 val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getStack())) return first
-                tank1.extract(first.amount, action, access)
+                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
+                tank1.extractFluid(first.amount, action, access)
             }
             else -> FluidStack.EMPTY
         }
@@ -64,17 +64,17 @@ interface HTFluidHandler :
         return when (tanks.size) {
             1 -> {
                 val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getStack())) return FluidStack.EMPTY
-                tank.extract(stack.amount, action, access)
+                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
+                tank.extractFluid(stack.amount, action, access)
             }
             2 -> {
                 val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getStack())) return FluidStack.EMPTY
-                val first: FluidStack = tank.extract(stack.amount, action, access)
+                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
+                val first: FluidStack = tank.extractFluid(stack.amount, action, access)
 
                 val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getStack())) return first
-                tank1.extract(first.amount, action, access)
+                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
+                tank1.extractFluid(first.amount, action, access)
             }
             else -> FluidStack.EMPTY
         }

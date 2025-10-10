@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage
 
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
@@ -65,5 +66,9 @@ open class HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER>(
 
     open fun getCapability(stack: ItemStack): ITEM_HANDLER? = stack.getCapability(itemCapability)
 
+    fun getCapability(stack: HTItemStorageStack): ITEM_HANDLER? = getCapability(stack.stack)
+
     fun hasCapability(stack: ItemStack): Boolean = getCapability(stack) != null
+
+    fun hasCapability(stack: HTItemStorageStack): Boolean = hasCapability(stack.stack)
 }

@@ -7,12 +7,12 @@ import hiiragi283.ragium.api.extension.getOrEmpty
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.inventory.Slot
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
@@ -38,18 +38,18 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         override fun createContainerSlot(): Slot? = null
 
-        override fun getStack(): ItemStack = getContents().getOrEmpty(slot)
+        override fun getStack(): HTItemStorageStack = getContents().getOrEmpty(slot).let(HTItemStorageStack::of)
 
-        override fun getCapacityAsLong(stack: ItemStack): Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE
+        override fun getCapacityAsLong(stack: HTItemStorageStack): Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE
 
-        override fun isValid(stack: ItemStack): Boolean = true
+        override fun isValid(stack: HTItemStorageStack): Boolean = true
 
         override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
 
-        override fun setStack(stack: ItemStack) {
-            val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack) }
+        override fun setStack(stack: HTItemStorageStack) {
+            val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack.stack) }
             parent.setOrRemove(component, contents) { it.asNonEmptySequence().any() }
             onContentsChanged()
         }

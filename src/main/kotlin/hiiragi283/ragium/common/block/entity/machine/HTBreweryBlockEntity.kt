@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -37,7 +38,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createTank(listener: HTContentListener): HTFluidTank =
         HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.breweryTankCapacity, canInsert = HTFluidContent.WATER::isOf)
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     //    Recipe Cache    //
 

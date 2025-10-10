@@ -4,26 +4,28 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.getCraftingRemainingItem
+import hiiragi283.ragium.api.storage.item.hasCraftingRemainingItem
 import java.util.Optional
 import java.util.function.ToIntFunction
 
-object HTIngredientHelper {
+object HTStackSlotHelper {
     //    Item    //
 
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ItemStack>, action: HTStorageAction): Int {
-        val stackIn: ItemStack = slot.getStack()
-        if (stackIn.hasCraftingRemainingItem() && stackIn.count == 1) {
+    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<HTItemStorageStack>, action: HTStorageAction): Int {
+        val stackIn: HTItemStorageStack = slot.getStack()
+        if (stackIn.hasCraftingRemainingItem() && stackIn.amountAsInt() == 1) {
             if (action.execute) {
-                slot.setStack(stackIn.craftingRemainingItem)
+                slot.setStack(stackIn.getCraftingRemainingItem())
             }
             return 0
         } else {
-            return slot.shrinkStack(ingredient.applyAsInt(slot.getStack()), action)
+            return slot.shrinkStack(ingredient.applyAsInt(stackIn), action)
         }
     }
 
@@ -47,11 +49,31 @@ object HTIngredientHelper {
     fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: Optional<HTItemIngredient>, action: HTStorageAction): Int =
         ingredient.map { ingredient1 -> shrinkStack(slot, ingredient1, action) }.orElse(0)
 
+    @JvmStatic
+    fun insertStacks(
+        slots: Iterable<HTItemSlot>,
+        stack: HTItemStorageStack,
+        action: HTStorageAction,
+        filter: (HTItemSlot, HTItemStorageStack) -> Boolean = HTItemSlot::isValid,
+        onBreak: () -> Unit = {},
+    ): HTItemStorageStack {
+        var remainder: HTItemStorageStack = stack
+        for (slot: HTItemSlot in slots) {
+            if (!filter(slot, remainder)) continue
+            remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAl)
+            if (remainder.isEmpty()) {
+                onBreak()
+                break
+            }
+        }
+        return remainder
+    }
+
     //    Fluid    //
 
     @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<FluidStack>, action: HTStorageAction): Int =
-        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAl).amount
+    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<HTFluidStorageStack>, action: HTStorageAction): Int =
+        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAl).amountAsInt()
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。

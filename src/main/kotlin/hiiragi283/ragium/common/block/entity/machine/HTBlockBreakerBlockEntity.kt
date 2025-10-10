@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -53,7 +54,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
         val inventory: Inventory = player.inventory
-        val toolStack: ItemStack = toolSlot.getStack()
+        val toolStack: ItemStack = toolSlot.getItemStack()
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
         val front: Direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING)

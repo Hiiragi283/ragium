@@ -10,9 +10,11 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.insertItem
+import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -56,7 +58,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
 
     protected lateinit var inputSlot: HTItemSlot.Mutable
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     //    Simple    //
 
@@ -87,8 +89,12 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         override fun openGui(player: Player, title: Component): InteractionResult =
             menuType.openMenu(player, title, this, this::writeExtraContainerData)
 
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
-            outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty
+        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean = outputSlot
+            .insertItem(
+                recipe.assemble(input, level.registryAccess()),
+                HTStorageAction.SIMULATE,
+                HTStorageAccess.INTERNAl,
+            ).isEmpty
 
         override fun completeRecipe(
             level: ServerLevel,
@@ -98,9 +104,9 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             recipe: RECIPE,
         ) {
             // 実際にアウトプットに搬出する
-            outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+            outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
             // インプットを減らす
-            HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+            HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
             // SEを鳴らす
             level.playSound(null, pos, sound, SoundSource.BLOCKS, soundValues.first, soundValues.second)
         }

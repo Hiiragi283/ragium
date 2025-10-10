@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.storage.fluid
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.predicate.HTFluidPredicates
-import net.neoforged.neoforge.fluids.FluidStack
+import hiiragi283.ragium.api.storage.HTStorageStack
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import java.util.function.BiPredicate
 import java.util.function.LongSupplier
 import java.util.function.Predicate
@@ -14,26 +14,26 @@ import java.util.function.Predicate
  */
 class HTVariableFluidStackTank(
     private val capacitySupplier: LongSupplier,
-    canExtract: BiPredicate<FluidStack, HTStorageAccess>,
-    canInsert: BiPredicate<FluidStack, HTStorageAccess>,
-    filter: Predicate<FluidStack>,
+    canExtract: BiPredicate<HTFluidStorageStack, HTStorageAccess>,
+    canInsert: BiPredicate<HTFluidStorageStack, HTStorageAccess>,
+    filter: Predicate<HTFluidStorageStack>,
     listener: HTContentListener?,
 ) : HTFluidStackTank(capacitySupplier.asLong, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
         fun create(listener: HTContentListener?, capacity: LongSupplier): HTVariableFluidStackTank =
-            HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, HTFluidPredicates.TRUE, listener)
+            HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, HTStorageStack.alwaysTrue(), listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: LongSupplier,
-            canInsert: Predicate<FluidStack> = HTFluidPredicates.TRUE,
-            filter: Predicate<FluidStack> = canInsert,
+            canInsert: Predicate<HTFluidStorageStack> = HTStorageStack.alwaysTrue(),
+            filter: Predicate<HTFluidStorageStack> = canInsert,
         ): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
-            { _: FluidStack, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
-            { stack: FluidStack, _: HTStorageAccess -> canInsert.test(stack) },
+            { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
+            { stack: HTFluidStorageStack, _ -> canInsert.test(stack) },
             filter,
             listener,
         )
@@ -42,20 +42,20 @@ class HTVariableFluidStackTank(
         fun output(listener: HTContentListener?, capacity: LongSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
             ALWAYS_TRUE,
-            { _: FluidStack, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
-            HTFluidPredicates.TRUE,
+            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            HTStorageStack.alwaysTrue(),
             listener,
         )
     }
 
-    override fun getCapacityAsLong(stack: FluidStack): Long = capacitySupplier.asLong
+    override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = capacitySupplier.asLong
 
     override fun setStackSize(amount: Int, action: HTStorageAction): Int {
         if (isEmpty()) {
             return 0
         } else if (amount <= 0) {
             if (action.execute) {
-                setStack(FluidStack.EMPTY)
+                setStack(HTFluidStorageStack.EMPTY)
             }
             return 0
         }

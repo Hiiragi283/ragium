@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
@@ -213,7 +214,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
-        getItemSlots(getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+        getItemSlots(getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)

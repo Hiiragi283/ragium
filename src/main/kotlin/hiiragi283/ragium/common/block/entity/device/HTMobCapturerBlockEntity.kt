@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -66,9 +67,9 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         for (entity: LivingEntity in entities) {
             val eggStack: ItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
             for (slot: HTItemSlot in outputSlots) {
-                if (slot.insert(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) {
+                if (slot.insertItem(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) {
                     // スポーンエッグをスロットに入れる
-                    slot.insert(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                    slot.insertItem(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
                     // 対象を消す
                     entity.discard()
                     // Capture Eggを減らす

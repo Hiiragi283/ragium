@@ -3,12 +3,13 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -17,7 +18,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -62,17 +62,15 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
             // 回収までのディレイが残っている場合はスキップ
             if (entity.hasPickUpDelay()) continue
             // 各スロットに対して搬入操作を行う
-            val previous: ItemStack = entity.item.copy()
-            var remainder: ItemStack = previous
-            for (slot: HTItemSlot in slots) {
-                remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-                if (remainder.isEmpty) {
-                    entity.discard()
-                    break
-                }
-            }
+            val previous: HTItemStorageStack = HTItemStorageStack.of(entity.item.copy())
+            val remainder: HTItemStorageStack = HTStackSlotHelper.insertStacks(
+                slots,
+                previous,
+                HTStorageAction.EXECUTE,
+                onBreak = { entity.discard() },
+            )
             if (remainder != previous) {
-                entity.item = remainder
+                entity.item = remainder.stack
             }
         }
         return true

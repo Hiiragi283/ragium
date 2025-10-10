@@ -28,7 +28,7 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
             .toList()
             .random(level.random.asKotlinRandom())
         // 水を消費できない場合はスキップ
-        if (tank.extract(50, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) return TriState.DEFAULT
+        if (tank.extract(50, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty()) return TriState.DEFAULT
         // ランダムチックを呼び出す
         if (BoneMealItem.applyBonemeal(ItemStack.EMPTY, level, targetPos, null)) {
             tank.extract(50, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)

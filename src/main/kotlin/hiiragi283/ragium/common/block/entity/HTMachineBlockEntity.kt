@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.api.variant.HTVariantKey
@@ -98,7 +99,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
-        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =

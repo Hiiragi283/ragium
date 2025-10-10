@@ -5,16 +5,17 @@ import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -82,12 +83,15 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
-            var remainder: ItemStack = stackIn
-            for (slot: HTItemSlot in outputSlots) {
-                remainder = slot.insert(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
-                if (remainder.isEmpty) break
+            if (!HTStackSlotHelper
+                    .insertStacks(
+                        outputSlots,
+                        HTItemStorageStack.of(stackIn),
+                        HTStorageAction.SIMULATE,
+                    ).isEmpty()
+            ) {
+                return false
             }
-            if (!remainder.isEmpty) return false
         }
         return true
     }
@@ -102,11 +106,8 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                var remainder: ItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
-                for (slot: HTItemSlot in outputSlots) {
-                    remainder = slot.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-                    if (remainder.isEmpty) break
-                }
+                val stackIn: HTItemStorageStack = result.getStackOrNull(level.registryAccess())?.let(HTItemStorageStack::of) ?: continue
+                HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
             }
         }
     }

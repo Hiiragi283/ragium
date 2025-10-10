@@ -7,12 +7,15 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.insertItem
+import hiiragi283.ragium.api.storage.item.maxStackSize
+import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.storage.value.HTValueInput
 import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -79,10 +82,10 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     private val smokingCache: HTSimpleRecipeCache<SingleRecipeInput, SmokingRecipe> =
         HTSimpleRecipeCache(RecipeType.SMOKING)
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): MultiSmeltingRecipe? {
-        val cache: HTSimpleRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack().item) {
+        val cache: HTSimpleRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack().value()) {
             Items.BLAST_FURNACE -> blastingCache
             Items.SMOKER -> smokingCache
             else -> smeltingCache
@@ -108,14 +111,14 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTComponentTier.ADVANCED -> 4
         HTComponentTier.ELITE -> 8
         HTComponentTier.ULTIMATE -> 16
-        HTComponentTier.ETERNAL -> inputSlot.getStack().maxStackSize
+        HTComponentTier.ETERNAL -> inputSlot.getStack().maxStackSize()
         null -> 1
     }
 
     override fun getRecipeTime(recipe: MultiSmeltingRecipe): Int = recipe.recipe.cookingTime
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: MultiSmeltingRecipe): Boolean =
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -125,9 +128,9 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: MultiSmeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }

@@ -4,7 +4,7 @@ import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import kotlin.math.min
 
-interface HTStackSlot<STACK : Any> :
+interface HTStackSlot<STACK : HTStorageStack<*>> :
     HTValueSerializable,
     HTContentListener {
     /**
@@ -12,9 +12,11 @@ interface HTStackSlot<STACK : Any> :
      */
     fun getStack(): STACK
 
-    fun getAmountAsLong(): Long
+    fun isEmpty(): Boolean = getStack().isEmpty()
 
-    fun getAmountAsInt(): Int = Ints.saturatedCast(getAmountAsLong())
+    fun getAmountAsLong(): Long = getStack().amountAsLong()
+
+    fun getAmountAsInt(): Int = getStack().amountAsInt()
 
     fun getCapacityAsLong(stack: STACK): Long
 
@@ -40,8 +42,6 @@ interface HTStackSlot<STACK : Any> :
      */
     fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
 
-    fun isEmpty(): Boolean
-
     fun getNeededAsLong(stack: STACK): Long = getCapacityAsLong(stack) - getAmountAsLong()
 
     fun getNeededAsInt(stack: STACK): Int = getCapacityAsInt(stack) - getAmountAsInt()
@@ -52,7 +52,7 @@ interface HTStackSlot<STACK : Any> :
 
     //    Mutable    //
 
-    interface Mutable<STACK : Any> : HTStackSlot<STACK> {
+    interface Mutable<STACK : HTStorageStack<*>> : HTStackSlot<STACK> {
         /**
          * 指定された[stack]を保持します。
          */

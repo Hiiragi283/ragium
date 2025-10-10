@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api.recipe.input
 
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
@@ -11,7 +13,7 @@ import net.neoforged.neoforge.fluids.FluidStack
  */
 @JvmRecord
 data class HTItemWithFluidRecipeInput(val item: ItemStack, val fluid: FluidStack) : RecipeInput {
-    constructor(slot: HTItemSlot, tank: HTFluidTank) : this(slot.getStack(), tank.getStack())
+    constructor(slot: HTItemSlot, tank: HTFluidTank) : this(slot.getItemStack(), tank.getFluidStack())
 
     override fun getItem(index: Int): ItemStack = item
 

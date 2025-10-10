@@ -9,6 +9,9 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.getBurnTime
+import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
@@ -41,7 +44,6 @@ import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -74,16 +76,16 @@ object RagiumBlockEntityTypes {
             val factory = when (variant) {
                 // Basic
                 HTGeneratorVariant.THERMAL -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: ItemStack -> stack.getBurnTime(null) / 10 },
+                    { stack: HTItemStorageStack -> stack.getBurnTime(null) / 10 },
                     HTFluidContent.LAVA,
                     RagiumDataMaps.INSTANCE::getThermalFuel,
                     variant,
                 )
                 // Advanced
                 HTGeneratorVariant.COMBUSTION -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: ItemStack ->
+                    { stack: HTItemStorageStack ->
                         when {
-                            stack.`is`(ItemTags.COALS) -> 100
+                            stack.isOf(ItemTags.COALS) -> 100
                             else -> 0
                         }
                     },

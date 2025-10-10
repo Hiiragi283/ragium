@@ -82,7 +82,7 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
             when (slot.slotType) {
                 HTContainerItemSlot.Type.INPUT -> inputSlot.add(slotCount)
                 HTContainerItemSlot.Type.OUTPUT -> outputSlot.add(slotCount)
-                HTContainerItemSlot.Type.BOTH -> {}
+                HTContainerItemSlot.Type.BOTH -> inputSlot.add(slotCount)
             }
         }
         slotCount++

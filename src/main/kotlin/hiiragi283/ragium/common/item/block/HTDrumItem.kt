@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.item.base.HTFluidItem
 import net.minecraft.network.chat.Component
@@ -23,7 +24,7 @@ class HTDrumItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<HTDru
 
     override fun getBarColor(stack: ItemStack): Int {
         val tank: HTFluidTank = HTFluidItem.getFluidTank(stack, 0) ?: return 0
-        val fluid: FluidStack = tank.getStack()
+        val fluid: FluidStack = tank.getFluidStack()
         return fluid.fluid.let(IClientFluidTypeExtensions::of).getTintColor(fluid)
     }
 

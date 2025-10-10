@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
+import hiiragi283.ragium.api.storage.fluid.setFluidStack
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
@@ -87,9 +89,9 @@ class HTFluidTankWidget(
     //    HTFluidWidget    //
 
     override var stack: FluidStack
-        get() = tank.getStack()
+        get() = tank.getFluidStack()
         set(value) {
-            tank.setStack(value)
+            tank.setFluidStack(value)
         }
     override val capacity: Int
         get() = tank.getCapacityAsInt(tank.getStack())
