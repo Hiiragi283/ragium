@@ -31,6 +31,14 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
+    override fun onRemove(state: BlockState, level: Level, pos: BlockPos) {
+        super.onRemove(state, level, pos)
+        ExperienceOrb(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), fluidAmountToExpValue(tank.getAmountAsInt()))
+            .let(level::addFreshEntity)
+    }
+
+    private fun fluidAmountToExpValue(amount: Int): Int = amount / RagiumConfig.COMMON.expCollectorMultiplier.asInt
+
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -48,7 +56,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             if (remainStack.isEmpty()) {
                 entity.discard()
             } else {
-                entity.value = remainStack.amountAsInt() / RagiumConfig.COMMON.expCollectorMultiplier.asInt
+                entity.value = fluidAmountToExpValue(remainStack.amountAsInt())
             }
         }
         return true

@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
-import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.unsupported
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
@@ -97,9 +96,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.dropInventory { stack: ItemStack ->
-                dropStackAt(level, pos, stack)
-            }
+            level.getHTBlockEntity(pos)?.onRemove(state, level, pos)
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
