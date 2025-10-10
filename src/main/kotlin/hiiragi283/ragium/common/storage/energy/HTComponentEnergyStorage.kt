@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.extension.setOrRemove
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType

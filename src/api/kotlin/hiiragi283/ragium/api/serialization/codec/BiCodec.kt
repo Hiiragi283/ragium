@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.codec
+package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
@@ -7,11 +7,6 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.comapFlatMap
-import hiiragi283.ragium.api.extension.flatComapMap
-import hiiragi283.ragium.api.extension.flatMap
-import hiiragi283.ragium.api.extension.listOrElement
-import hiiragi283.ragium.api.extension.resultToData
 import hiiragi283.ragium.api.extension.toResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs

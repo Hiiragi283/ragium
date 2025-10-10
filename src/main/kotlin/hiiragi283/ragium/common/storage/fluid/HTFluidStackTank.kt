@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate

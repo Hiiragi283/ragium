@@ -24,11 +24,3 @@ fun <T : Any> Optional<T>.toResult(exceptionSupplier: () -> Exception): Result<T
 
 fun <T : Any> DataResult<T>.toResult(exceptionSupplier: (String) -> Exception = ::DataResultException): Result<T> =
     mapOrElse(Result.Companion::success, DataResult.Error<T>::message.andThen(exceptionSupplier).andThen(Result.Companion::failure))
-
-fun <T : Any> Result<T>.toData(): DataResult<T> = fold(DataResult<T>::success) { throwable: Throwable ->
-    DataResult.error { throwable.message ?: "Thrown exception" }
-}
-
-internal fun <T : Any> resultToData(): (Result<T>) -> DataResult<T> = Result<T>::toData
-
-fun <T : Any, R : Any> Result<T>.flatMap(transform: (T) -> Result<R>): Result<R> = mapCatching { transform(it).getOrThrow() }

@@ -1,10 +1,11 @@
 package hiiragi283.ragium.impl.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.codec.downCast
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
@@ -22,7 +23,7 @@ class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>,
     HTFluidIngredient {
         companion object {
             @JvmField
-            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodecs
+            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = VanillaBiCodecs
                 .registryBased(
                     NeoForgeRegistries.FLUID_INGREDIENT_TYPES,
                 ).dispatch(FluidIngredient::getType, FluidIngredientType<*>::codec, FluidIngredientType<*>::streamCodec)

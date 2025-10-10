@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.extension.createTagKey
-import hiiragi283.ragium.api.extension.flatMap
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.toResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -64,7 +63,7 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
 
     override fun getFirstHolder(provider: HolderLookup.Provider?): Result<Holder<T>> = runCatching {
         RagiumPlatform.INSTANCE.getLookup(provider, registryKey) ?: error("Failed to find lookup for $registryKey")
-    }.flatMap { getFirstHolder(it) }
+    }.mapCatching { getFirstHolder(it).getOrThrow() }
 
     override fun getFirstHolder(getter: HolderGetter<T>): Result<Holder<T>> {
         if (holderCache != null) {

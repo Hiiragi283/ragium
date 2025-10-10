@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl
 
+import com.google.gson.JsonObject
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
@@ -7,18 +8,20 @@ import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.recipe.manager.HTRecipeAccessImpl
-import hiiragi283.ragium.impl.storage.value.HTTagValueInput
-import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
+import hiiragi283.ragium.impl.value.HTJsonValueInput
+import hiiragi283.ragium.impl.value.HTJsonValueOutput
+import hiiragi283.ragium.impl.value.HTTagValueInput
+import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -152,6 +155,12 @@ class RagiumPlatformImpl : RagiumPlatform {
         ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //
+
+    override fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput =
+        HTJsonValueInput.create(lookup, jsonObject)
+
+    override fun createValueOutput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput =
+        HTJsonValueOutput(lookup, jsonObject)
 
     override fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput =
         HTTagValueInput.create(lookup, compoundTag)

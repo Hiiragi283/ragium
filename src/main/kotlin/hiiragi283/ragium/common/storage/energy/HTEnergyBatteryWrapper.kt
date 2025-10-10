@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.energy
 
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 
 class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyBattery?) : HTEnergyBattery {
     private val delegate: HTEnergyBattery? get() = getter()

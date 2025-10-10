@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api
 
+import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
@@ -7,10 +8,10 @@ import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
@@ -94,6 +95,10 @@ interface RagiumPlatform {
     fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
 
     //    Storage    //
+
+    fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput
+
+    fun createValueOutput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput
 
     fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
 

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.impl.recipe.result
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -30,7 +30,7 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
             HTRecipeResultBase<T, *>::entry,
             amountCodec,
             HTRecipeResultBase<T, *>::amount,
-            BiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
+            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
             HTRecipeResultBase<T, *>::components,
             factory,
         )

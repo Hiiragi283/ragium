@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.storage.item
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 import kotlin.math.min

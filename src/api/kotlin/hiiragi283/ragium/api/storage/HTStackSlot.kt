@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import com.google.common.primitives.Ints
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import kotlin.math.min
 
 interface HTStackSlot<STACK : HTStorageStack<*>> :

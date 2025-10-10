@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
+import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.item.maxStackSize
-import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate

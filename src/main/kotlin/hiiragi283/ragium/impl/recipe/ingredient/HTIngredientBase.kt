@@ -1,10 +1,11 @@
 package hiiragi283.ragium.impl.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.ingredient.HTIngredient
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.HolderSet
 import net.minecraft.network.RegistryFriendlyByteBuf
 
@@ -18,6 +19,6 @@ abstract class HTIngredientBase<ENTRY : Any, STACK : Any, CUSTOM : Any>(
             registryKey: RegistryKey<ENTRY>,
             ingredientCodec: BiCodec<in RegistryFriendlyByteBuf, CUSTOM>,
         ): BiCodec<RegistryFriendlyByteBuf, Either<HolderSet<ENTRY>, CUSTOM>> =
-            BiCodecs.xor(BiCodecs.holderSet(registryKey), ingredientCodec)
+            BiCodecs.xor(VanillaBiCodecs.holderSet(registryKey), ingredientCodec)
     }
 }

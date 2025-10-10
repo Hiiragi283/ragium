@@ -1,11 +1,11 @@
 package hiiragi283.ragium.impl.data.recipe
 
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.downCast
 import hiiragi283.ragium.impl.recipe.result.HTFluidResultImpl
 import hiiragi283.ragium.impl.recipe.result.HTItemResultImpl
 import hiiragi283.ragium.impl.recipe.result.HTRecipeResultBase

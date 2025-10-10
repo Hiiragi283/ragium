@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -11,8 +13,6 @@ import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder

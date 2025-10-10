@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
@@ -35,9 +35,9 @@ class HTClearComponentRecipe(
                     CraftingBookCategory.STREAM_CODEC,
                 ).optionalFieldOf("category", CraftingBookCategory.MISC),
             HTClearComponentRecipe::category,
-            BiCodecs.registryBased(BuiltInRegistries.ITEM).fieldOf("ingredient"),
+            VanillaBiCodecs.registryBased(BuiltInRegistries.ITEM).fieldOf("ingredient"),
             HTClearComponentRecipe::item,
-            BiCodecs.registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE).listOrElement().fieldOf("targets"),
+            VanillaBiCodecs.registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE).listOrElement().fieldOf("targets"),
             HTClearComponentRecipe::targetTypes,
             ::HTClearComponentRecipe,
         )

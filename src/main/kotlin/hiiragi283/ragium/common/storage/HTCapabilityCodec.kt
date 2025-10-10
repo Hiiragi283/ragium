@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack

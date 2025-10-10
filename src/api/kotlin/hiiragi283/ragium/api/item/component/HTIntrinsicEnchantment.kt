@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache

@@ -1,7 +1,7 @@
-package hiiragi283.ragium.impl.storage.value
+package hiiragi283.ragium.impl.value
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag

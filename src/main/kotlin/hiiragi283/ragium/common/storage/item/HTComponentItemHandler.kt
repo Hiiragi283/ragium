@@ -5,10 +5,10 @@ import hiiragi283.ragium.api.extension.asNonEmptySequence
 import hiiragi283.ragium.api.extension.copy
 import hiiragi283.ragium.api.extension.getOrEmpty
 import hiiragi283.ragium.api.extension.setOrRemove
+import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.value.HTValueInput
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents

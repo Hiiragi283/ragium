@@ -1,13 +1,13 @@
 package hiiragi283.ragium.impl.recipe.manager
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -28,10 +28,10 @@ class HTSimpleRecipeCache<I : RecipeInput, R : Recipe<I>>(val recipeType: Recipe
         ?.let(::updateCache)
 
     override fun deserialize(input: HTValueInput) {
-        lastRecipe = input.read(RagiumConst.LAST_RECIPE, BiCodecs.RL)
+        lastRecipe = input.read(RagiumConst.LAST_RECIPE, VanillaBiCodecs.RL)
     }
 
     override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.LAST_RECIPE, BiCodecs.RL, lastRecipe)
+        output.store(RagiumConst.LAST_RECIPE, VanillaBiCodecs.RL, lastRecipe)
     }
 }

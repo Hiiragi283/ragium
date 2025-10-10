@@ -1,10 +1,7 @@
-package hiiragi283.ragium.api.codec
+package hiiragi283.ragium.api.serialization.codec
 
-import com.mojang.datafixers.util.Either
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.createTagKey
-import hiiragi283.ragium.api.extension.ranged
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -32,39 +29,7 @@ import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
 import java.util.function.Supplier
 
-object BiCodecs {
-    /**
-     * `0`以上の値を対象とする[Int]の[BiCodec]
-     */
-    @JvmField
-    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(0..Int.MAX_VALUE)
-
-    /**
-     * `0`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC]
-     */
-    @JvmField
-    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0..Long.MAX_VALUE)
-
-    /**
-     * `1`以上の値を対象とする[Int]の[BiCodec]
-     */
-    @JvmField
-    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(1..Int.MAX_VALUE)
-
-    /**
-     * `1`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC]
-     */
-    @JvmField
-    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1..Long.MAX_VALUE)
-
-    /**
-     * `0f`以上の値を対象とする[Float]の[BiCodec]
-     */
-    @JvmField
-    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f..Float.MAX_VALUE)
-
+object VanillaBiCodecs {
     /**
      * [ResourceLocation]の[BiCodec]
      */
@@ -94,7 +59,7 @@ object BiCodecs {
      * [InteractionHand]の[BiCodec]
      */
     @JvmField
-    val HAND: BiCodec<ByteBuf, InteractionHand> = enum(InteractionHand::values)
+    val HAND: BiCodec<ByteBuf, InteractionHand> = BiCodecs.enum(InteractionHand::values)
 
     /**
      * [Component]の[BiCodec]
@@ -104,56 +69,10 @@ object BiCodecs {
         BiCodec.of(ComponentSerialization.CODEC, ComponentSerialization.STREAM_CODEC)
 
     /**
-     * [java.util.UUID]の[BiCodec]
+     * [UUID]の[BiCodec]
      */
     @JvmField
     val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
-
-    /**
-     * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。
-     * @param K [Map]のキーとなるクラス
-     * @param V [Map]の値となるクラス
-     * @param keyCodec [K]を対象とする[BiCodec]
-     * @param valueCodec [V]を対象とする[BiCodec]
-     * @return [Map]の[BiCodec]
-     */
-    @JvmStatic
-    fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: BiCodec<in B, K>, valueCodec: BiCodec<in B, V>): BiCodec<B, Map<K, V>> = BiCodec.of(
-        Codec.unboundedMap(keyCodec.codec, valueCodec.codec),
-        ByteBufCodecs.map(::HashMap, keyCodec.streamCodec, valueCodec.streamCodec),
-    )
-
-    /**
-     * 指定された[first], [second]に基づいて，[Either]の[BiCodec]を返します。
-     * @param first [F]を対象とする[BiCodec]
-     * @param second [S]を対象とする[BiCodec]
-     * @return [Either]の[BiCodec]
-     */
-    @JvmStatic
-    fun <B : ByteBuf, F : Any, S : Any> either(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
-        Codec.either(first.codec, second.codec),
-        ByteBufCodecs.either(first.streamCodec, second.streamCodec),
-    )
-
-    /**
-     * 指定された[first], [second]に基づいて，[Either]の[BiCodec]を返します。
-     * @param first [F]を対象とする[BiCodec]
-     * @param second [S]を対象とする[BiCodec]
-     * @return [Either]の[BiCodec]
-     */
-    @JvmStatic
-    fun <B : ByteBuf, F : Any, S : Any> xor(first: BiCodec<in B, F>, second: BiCodec<in B, S>): BiCodec<B, Either<F, S>> = BiCodec.of(
-        Codec.xor(first.codec, second.codec),
-        ByteBufCodecs.either(first.streamCodec, second.streamCodec),
-    )
-
-    @JvmStatic
-    inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
-        NON_NEGATIVE_INT.xmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
-
-    @JvmStatic
-    inline fun <reified V> stringEnum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : Enum<V>, V : StringRepresentable =
-        BiCodec.of(StringRepresentable.fromEnum(values), NeoForgeStreamCodecs.enumCodec(V::class.java))
 
     @JvmStatic
     private val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
@@ -201,6 +120,10 @@ object BiCodecs {
         },
         Ingredient.CONTENTS_STREAM_CODEC,
     )
+
+    @JvmStatic
+    inline fun <reified V> stringEnum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : Enum<V>, V : StringRepresentable =
+        BiCodec.of(StringRepresentable.fromEnum(values), NeoForgeStreamCodecs.enumCodec(V::class.java))
 
     // Registry
 

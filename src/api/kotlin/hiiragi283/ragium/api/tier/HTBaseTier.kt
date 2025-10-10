@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.tier
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.ChatFormatting
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.util.StringRepresentable
@@ -23,7 +23,7 @@ enum class HTBaseTier(val color: ChatFormatting, private val enName: String, pri
 
     companion object {
         @JvmField
-        val CODEC: BiCodec<FriendlyByteBuf, HTBaseTier> = BiCodecs.stringEnum(HTBaseTier::values)
+        val CODEC: BiCodec<FriendlyByteBuf, HTBaseTier> = VanillaBiCodecs.stringEnum(HTBaseTier::values)
     }
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

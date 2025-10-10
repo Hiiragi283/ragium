@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.extension.RegistryKey
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import io.netty.buffer.ByteBuf
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation

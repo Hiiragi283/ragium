@@ -1,10 +1,10 @@
 package hiiragi283.ragium.integration.mekanism
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import io.netty.buffer.ByteBuf
 import mekanism.api.MekanismAPI
 import mekanism.api.chemical.Chemical

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.storage.HTStorageStack
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
@@ -15,7 +15,7 @@ value class HTItemStorageStack private constructor(val stack: ItemStack) : HTSto
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemStorageStack> =
-            BiCodecs.itemStack(true).xmap(::of, HTItemStorageStack::stack)
+            VanillaBiCodecs.itemStack(true).xmap(::of, HTItemStorageStack::stack)
 
         val EMPTY = HTItemStorageStack(ItemStack.EMPTY)
 

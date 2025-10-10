@@ -3,7 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe

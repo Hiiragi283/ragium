@@ -1,7 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
@@ -10,6 +8,8 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder

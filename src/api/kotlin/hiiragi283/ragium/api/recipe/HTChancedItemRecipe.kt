@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack

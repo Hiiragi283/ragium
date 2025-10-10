@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.api.extension.wrapAction
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.wrapAction
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 

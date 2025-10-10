@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -16,8 +18,6 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
@@ -111,7 +111,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        output.store("custom_name", BiCodecs.TEXT, customName)
+        output.store("custom_name", VanillaBiCodecs.TEXT, customName)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -127,7 +127,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        customName = input.read("custom_name", BiCodecs.TEXT)
+        customName = input.read("custom_name", VanillaBiCodecs.TEXT)
     }
 
     override fun sendPassivePacket(level: ServerLevel) {

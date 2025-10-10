@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.value
+package hiiragi283.ragium.api.serialization.value
 
 import hiiragi283.ragium.api.RagiumPlatform
 import net.minecraft.core.HolderLookup

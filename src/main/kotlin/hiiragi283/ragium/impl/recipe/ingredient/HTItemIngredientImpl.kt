@@ -1,11 +1,12 @@
 package hiiragi283.ragium.impl.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.andThen
-import hiiragi283.ragium.api.extension.downCast
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.codec.downCast
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
@@ -24,7 +25,7 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
     HTItemIngredient {
         companion object {
             @JvmField
-            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, ICustomIngredient> = BiCodecs
+            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, ICustomIngredient> = VanillaBiCodecs
                 .registryBased(
                     NeoForgeRegistries.INGREDIENT_TYPES,
                 ).dispatch(ICustomIngredient::getType, IngredientType<*>::codec, IngredientType<*>::streamCodec)
