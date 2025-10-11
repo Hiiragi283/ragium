@@ -1,6 +1,9 @@
 {
   "type": "neoforge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "ragium:ore_raginite",
+  "features": [
+    "ragium:ore_raginite",
+    "ragium:ore_raginite_lower"
+  ],
   "step": "underground_ores"
 }

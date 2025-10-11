@@ -10,7 +10,7 @@ import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.levelgen.GenerationStep
-import net.neoforged.neoforge.common.Tags
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.common.world.BiomeModifiers
 
@@ -25,6 +25,7 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
             RagiumWorldGenData.ORE_RAGINITE,
             biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD),
             GenerationStep.Decoration.UNDERGROUND_ORES,
+            RagiumWorldGenData.ORE_RAGINITE_LOWER,
         )
 
         registerFeature(
@@ -33,7 +34,6 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
             HolderSet.direct(biomeGetter::getOrThrow, Biomes.DEEP_DARK),
             GenerationStep.Decoration.UNDERGROUND_ORES,
         )
-        Tags.Biomes.IS_DEAD
     }
 
     private fun registerFeature(
@@ -41,12 +41,15 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
         data: HTWorldGenData,
         biomes: HolderSet<Biome>,
         step: GenerationStep.Decoration,
+        vararg subData: HTWorldGenData,
     ) {
+        val allData: Set<HTWorldGenData> = setOf(data, *subData)
+        val lookup: HolderGetter<PlacedFeature> = context.lookup(Registries.PLACED_FEATURE)
         context.register(
             data.modifierKey,
             BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes,
-                HolderSet.direct(data.placedHolder),
+                HolderSet.direct(lookup::getOrThrow, allData.map(HTWorldGenData::placedKey)),
                 step,
             ),
         )

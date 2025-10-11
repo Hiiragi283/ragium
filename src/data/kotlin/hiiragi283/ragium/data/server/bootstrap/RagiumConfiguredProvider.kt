@@ -35,7 +35,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                             .defaultBlockState(),
                     ),
                 ),
-                9,
+                8,
             ),
         )
 
@@ -90,6 +90,6 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
         feature: Feature<FC>,
         config: FC,
     ) {
-        data.configuredHolder = context.register(data.configuredKey, ConfiguredFeature(feature, config))
+        context.register(data.configuredKey, ConfiguredFeature(feature, config))
     }
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.data.HTWorldGenData
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.BiomeFilter
@@ -23,6 +24,15 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
                 VerticalAnchor.absolute(15),
             ),
         )
+        register(
+            context,
+            RagiumWorldGenData.ORE_RAGINITE_LOWER,
+            CountPlacement.of(8),
+            HeightRangePlacement.triangle(
+                VerticalAnchor.aboveBottom(-32),
+                VerticalAnchor.aboveBottom(32),
+            ),
+        )
 
         register(
             context,
@@ -35,10 +45,10 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
     }
 
     private fun register(context: BootstrapContext<PlacedFeature>, data: HTWorldGenData, vararg modifiers: PlacementModifier) {
-        data.placedHolder = context.register(
+        context.register(
             data.placedKey,
             PlacedFeature(
-                data.configuredHolder,
+                context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(data.configuredKey),
                 listOf(
                     BiomeFilter.biome(),
                     InSquarePlacement.spread(),
