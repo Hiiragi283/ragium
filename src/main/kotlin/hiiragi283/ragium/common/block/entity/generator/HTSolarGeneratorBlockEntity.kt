@@ -24,7 +24,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGenerato
     ): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false
-        return network.insertEnergy((energyUsage * multiplier).roundToInt(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl) > 0
+        return network.insertEnergy((energyUsage * multiplier).roundToInt(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) > 0
     }
 
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {

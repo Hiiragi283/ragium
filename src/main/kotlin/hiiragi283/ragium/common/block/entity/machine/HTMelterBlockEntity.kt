@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -69,7 +69,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         .insertFluid(
             recipe.assembleFluid(input, level.registryAccess()),
             HTStorageAction.SIMULATE,
-            HTStorageAccess.INTERNAl,
+            HTStorageAccess.INTERNAL,
         ).isEmpty
 
     override fun completeRecipe(
@@ -80,10 +80,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputTank.insertFluid(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        outputTank.insertFluid(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
-            outputSlot.insertItem(stack.craftingRemainingItem, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+            outputSlot.insertItem(stack.craftingRemainingItem, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)

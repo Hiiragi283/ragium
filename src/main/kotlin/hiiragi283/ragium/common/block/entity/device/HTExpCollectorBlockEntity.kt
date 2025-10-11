@@ -2,16 +2,14 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.api.storage.moveStack
+import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -49,16 +47,11 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         )
         if (expOrbs.isEmpty()) return false
         // それぞれのExp Orbに対して回収を行う
-        for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
-            val stack: HTFluidStorageStack = RagiumFluidContents.EXPERIENCE.toStorageStack(fluidAmount)
-            val remainStack: HTFluidStorageStack = tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-            if (remainStack.isEmpty()) {
-                entity.discard()
-            } else {
-                entity.value = fluidAmountToExpValue(remainStack.amountAsInt())
-            }
-        }
+        expOrbs
+            .asSequence()
+            .filter(ExperienceOrb::isAlive)
+            .map(::HTExpOrbTank)
+            .forEach { orbFluidTank: HTExpOrbTank -> moveStack(orbFluidTank, tank) }
         return true
     }
 

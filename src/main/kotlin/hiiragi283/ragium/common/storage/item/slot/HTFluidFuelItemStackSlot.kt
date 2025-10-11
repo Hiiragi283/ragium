@@ -70,7 +70,7 @@ class HTFluidFuelItemStackSlot private constructor(
             if (amount in 1..needed) {
                 val hasContainer: Boolean = getStack().hasCraftingRemainingItem()
                 if (hasContainer && getStack().amountAsInt() > 1) return
-                tank.insert(amountToFuel(amount), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                tank.insert(amountToFuel(amount), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 if (hasContainer) {
                     setStack(getStack().getCraftingRemainingItem())
                 } else {

@@ -24,7 +24,11 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
             else -> outputSlot.min()..outputSlot.max()
         }
 
-    val playerStartIndex: Int get() = outputSlots.last + 1
+    val playerStartIndex: Int get() = when {
+        !outputSlots.isEmpty() -> outputSlots.last + 1
+        !inputSlots.isEmpty() -> inputSlots.last + 1
+        else -> 0
+    }
 
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
@@ -34,13 +38,13 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
             result = stackIn.copy()
             when (index) {
                 in inputSlots -> {
-                    if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
+                    if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, false)) {
                         return ItemStack.EMPTY
                     }
                 }
 
                 in outputSlots -> {
-                    if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
+                    if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, false)) {
                         return ItemStack.EMPTY
                     }
                 }

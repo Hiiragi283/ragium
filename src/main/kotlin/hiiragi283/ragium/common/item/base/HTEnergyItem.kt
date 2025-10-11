@@ -32,7 +32,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
 
         @JvmStatic
         fun extractEnergy(stack: ItemStack, amount: Int, action: HTStorageAction): Int =
-            getBattery(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAl) ?: 0
+            getBattery(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAL) ?: 0
 
         @JvmStatic
         fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean {

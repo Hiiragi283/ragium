@@ -15,7 +15,7 @@ enum class HTStorageAccess {
     /**
      * 内部でのアクセス
      */
-    INTERNAl,
+    INTERNAL,
 
     /**
      * GUIを介したアクセス
@@ -26,11 +26,11 @@ enum class HTStorageAccess {
     companion object {
         /**
          * 指定された[side]から[HTStorageAccess]を返します。
-         * @return [side]が`null`の場合は[INTERNAl]，それ以外は[EXTERNAL]
+         * @return [side]が`null`の場合は[INTERNAL]，それ以外は[EXTERNAL]
          */
         @JvmStatic
         fun forHandler(side: Direction?): HTStorageAccess = when (side) {
-            null -> INTERNAl
+            null -> INTERNAL
             else -> EXTERNAL
         }
     }

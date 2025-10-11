@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -77,13 +77,13 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
             .insertItem(
                 recipe.assemble(input, registries),
                 HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAl,
+                HTStorageAccess.INTERNAL,
             ).isEmpty
         val bool2: Boolean = outputTank
             .insertFluid(
                 recipe.assembleFluid(input, registries),
                 HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAl,
+                HTStorageAccess.INTERNAL,
             ).isEmpty
         return bool1 && bool2
     }
@@ -97,8 +97,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         // 実際にアウトプットに搬出する
         val registries: HolderLookup.Provider = level.registryAccess()
-        outputSlot.insertItem(recipe.assemble(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
-        outputTank.insertFluid(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        outputSlot.insertItem(recipe.assemble(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insertFluid(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)

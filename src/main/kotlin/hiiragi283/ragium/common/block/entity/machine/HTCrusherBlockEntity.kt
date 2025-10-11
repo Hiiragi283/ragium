@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.toRecipeInput
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -37,7 +37,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
-        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).amountAsInt()) {
+        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amountAsInt()) {
             10 -> 18 * 10
             else -> super.getRecipeTime(recipe)
         }
@@ -53,7 +53,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // 潤滑油があれば減らす
-        inputTank.extract(10, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        inputTank.extract(10, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1f, 0.25f)
     }

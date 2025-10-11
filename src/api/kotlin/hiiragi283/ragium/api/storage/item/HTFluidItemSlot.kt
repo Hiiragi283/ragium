@@ -53,7 +53,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
             val simulatedDrain: HTFluidStorageStack = getFluidTank().extract(
                 stackIn.amount,
                 HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAl,
+                HTStorageAccess.INTERNAL,
             )
             if (simulatedDrain.isEmpty()) return
         }
@@ -66,14 +66,14 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
             if (handler1.fill(stackIn.copy(), IFluidHandler.FluidAction.SIMULATE) > 0) {
                 setItemStack(handler.container)
                 isDraining = true
-                getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 return
             }
         }
     }
 
     private fun drainItemAndMove(slot: HTItemSlot.Mutable, fluidStack: FluidStack): Boolean {
-        val remainder: FluidStack = getFluidTank().insertFluid(fluidStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
+        val remainder: FluidStack = getFluidTank().insertFluid(fluidStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         val remainderAmount: Int = remainder.amount
         val toTransfer: Int = fluidStack.amount
         if (remainderAmount == toTransfer) return false
@@ -91,7 +91,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
             HTMultiCapability.FLUID.getCapability(handler.container)?.let { handler1: IFluidHandlerItem ->
                 if (!handler1.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE).isEmpty) {
                     setItemStack(handler1.container)
-                    getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                    getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     isFilling = true
                     return true
                 }
@@ -99,7 +99,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
         }
 
         if (moveItem(slot, handler.container)) {
-            getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+            getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             return true
         }
         return false
@@ -135,7 +135,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
     private fun fillHandlerFromOther(toFill: HTFluidTank, toDrain: IFluidHandler, stack: FluidStack): Boolean {
         val simulatedDrain: FluidStack = toDrain.drain(stack.copy(), IFluidHandler.FluidAction.SIMULATE)
         if (simulatedDrain.isEmpty) return false
-        val remainder: FluidStack = getFluidTank().insertFluid(simulatedDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
+        val remainder: FluidStack = getFluidTank().insertFluid(simulatedDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         val remainderAmount: Int = remainder.amount
         val drained: Int = simulatedDrain.amount
         if (remainderAmount < drained) {
@@ -145,7 +145,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                     IFluidHandler.FluidAction.EXECUTE,
                 ),
                 HTStorageAction.EXECUTE,
-                HTStorageAccess.INTERNAl,
+                HTStorageAccess.INTERNAL,
             )
             return true
         }

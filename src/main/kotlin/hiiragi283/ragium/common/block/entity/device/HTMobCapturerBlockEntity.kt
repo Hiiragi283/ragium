@@ -67,9 +67,9 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         for (entity: LivingEntity in entities) {
             val eggStack: ItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
             for (slot: HTItemSlot in outputSlots) {
-                if (slot.insertItem(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl).isEmpty) {
+                if (slot.insertItem(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty) {
                     // スポーンエッグをスロットに入れる
-                    slot.insertItem(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                    slot.insertItem(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     // 対象を消す
                     entity.discard()
                     // Capture Eggを減らす

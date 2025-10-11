@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.fluid
+package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -54,7 +54,7 @@ open class HTFluidStackTank protected constructor(
         fun output(listener: HTContentListener?, capacity: Long): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
             ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
             HTStorageStack.alwaysTrue(),
             listener,
         )

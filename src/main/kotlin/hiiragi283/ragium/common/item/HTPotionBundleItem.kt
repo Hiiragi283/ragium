@@ -23,7 +23,7 @@ class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.st
             val stackIn: ItemStack = slot.getItemStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
-                slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             }
             if (result != stackIn && livingEntity is Player) {
                 giveStackTo(livingEntity, result)

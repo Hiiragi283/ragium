@@ -93,7 +93,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             .insertItem(
                 recipe.assemble(input, level.registryAccess()),
                 HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAl,
+                HTStorageAccess.INTERNAL,
             ).isEmpty
 
         override fun completeRecipe(
@@ -104,7 +104,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             recipe: RECIPE,
         ) {
             // 実際にアウトプットに搬出する
-            outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+            outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             // インプットを減らす
             HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
             // SEを鳴らす

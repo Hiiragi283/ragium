@@ -91,7 +91,7 @@ open class HTItemStackSlot protected constructor(
             y,
             limit,
             ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
             slotType = HTContainerItemSlot.Type.OUTPUT,
         )
     }

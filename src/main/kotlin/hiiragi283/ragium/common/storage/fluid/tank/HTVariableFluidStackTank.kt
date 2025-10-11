@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.fluid
+package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -42,7 +42,7 @@ class HTVariableFluidStackTank(
         fun output(listener: HTContentListener?, capacity: LongSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
             ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAl },
+            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
             HTStorageStack.alwaysTrue(),
             listener,
         )

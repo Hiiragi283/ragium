@@ -92,11 +92,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, true)
         if (toExtract > 0) {
-            var mayReceive: Int = battery.insertEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
+            var mayReceive: Int = battery.insertEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
             mayReceive = min(toExtract, mayReceive)
             if (mayReceive > 0) {
                 energyIn.extractEnergy(mayReceive, false)
-                battery.insertEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                battery.insertEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -112,11 +112,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
         var toReceive: Int = transferRate
         toReceive = energyIn.receiveEnergy(toReceive, true)
         if (toReceive > 0) {
-            var mayExtract: Int = battery.extractEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAl)
+            var mayExtract: Int = battery.extractEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
             mayExtract = min(toReceive, mayExtract)
             if (mayExtract > 0) {
                 energyIn.receiveEnergy(mayExtract, false)
-                battery.extractEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+                battery.extractEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT

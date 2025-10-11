@@ -73,7 +73,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
             return false
         }
         // エネルギーを消費する
-        usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
+        usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         if (usedEnergy < getModifiedEnergy(energyUsage * 20)) return false
         usedEnergy = 0
         // ブロックを採掘する

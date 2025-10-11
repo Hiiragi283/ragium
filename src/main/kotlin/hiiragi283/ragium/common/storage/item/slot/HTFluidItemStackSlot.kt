@@ -38,7 +38,7 @@ open class HTFluidItemStackSlot(
             for (i: Int in handler.tankRange) {
                 val stackIn: FluidStack = handler.getFluidInTank(i)
                 if (!stack.isEmpty() &&
-                    tank.insertFluid(stackIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl).amount < stackIn.amount
+                    tank.insertFluid(stackIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL).amount < stackIn.amount
                 ) {
                     return@Predicate true
                 }

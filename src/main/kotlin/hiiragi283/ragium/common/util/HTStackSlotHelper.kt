@@ -60,7 +60,7 @@ object HTStackSlotHelper {
         var remainder: HTItemStorageStack = stack
         for (slot: HTItemSlot in slots) {
             if (!filter(slot, remainder)) continue
-            remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAl)
+            remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAL)
             if (remainder.isEmpty()) {
                 onBreak()
                 break
@@ -73,7 +73,7 @@ object HTStackSlotHelper {
 
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<HTFluidStorageStack>, action: HTStorageAction): Int =
-        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAl).amountAsInt()
+        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAL).amountAsInt()
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。
