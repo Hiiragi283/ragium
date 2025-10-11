@@ -99,7 +99,7 @@ fun addFluidTooltip(
     // Fluid Name and Amount
     consumer.accept(
         RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(
-            stack.hoverName(),
+            stack.getText(),
             longText(stack.amountAsLong()),
         ),
     )

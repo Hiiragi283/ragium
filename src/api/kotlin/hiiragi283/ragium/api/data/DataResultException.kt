@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.data
 
-class DataResultException : Exception {
+class DataResultException : RuntimeException {
     constructor() : super()
 
     constructor(message: String) : super(message)

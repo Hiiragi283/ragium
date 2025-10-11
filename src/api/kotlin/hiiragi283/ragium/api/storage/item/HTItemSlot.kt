@@ -5,6 +5,9 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
+/**
+ * [HTItemStorageStack]向けの[HTStackSlot]の拡張インターフェース
+ */
 interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
     companion object {
         const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
@@ -17,6 +20,9 @@ interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
 
     //    Mutable    //
 
+    /**
+     * [HTItemStorageStack]向けの[HTStackSlot.Mutable]の拡張インターフェース
+     */
     abstract class Mutable :
         HTStackSlot.Mutable<HTItemStorageStack>(),
         HTItemSlot {

@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.toFluid
 import net.minecraft.core.Direction
 import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -133,10 +132,10 @@ object RagiumCapabilities {
             override fun getCapacityAsLong(): Long = storage.maxEnergyStored.toLong()
 
             override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
-                storage.receiveEnergy(amount, !action.execute)
+                storage.receiveEnergy(amount, action.simulate)
 
             override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
-                storage.extractEnergy(amount, !action.execute)
+                storage.extractEnergy(amount, action.simulate)
 
             override fun onContentsChanged() {}
         }

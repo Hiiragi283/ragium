@@ -11,6 +11,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
+/**
+ * [FluidStack]向けの[HTStorageStack]の実装
+ */
 @JvmInline
 value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTStorageStack<Fluid, HTFluidStorageStack> {
     companion object {
@@ -18,8 +21,15 @@ value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTS
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidStorageStack> =
             VanillaBiCodecs.fluidStack(true).xmap(::of, HTFluidStorageStack::stack)
 
+        /**
+         * 空の[HTFluidStorageStack]
+         */
         val EMPTY = HTFluidStorageStack(FluidStack.EMPTY)
 
+        /**
+         * [FluidStack]を[HTFluidStorageStack]に変換します。
+         * @return [FluidStack.isEmpty]が`true`の場合は[EMPTY]を返します。
+         */
         @JvmStatic
         fun of(stack: FluidStack): HTFluidStorageStack = when (stack.isEmpty) {
             true -> EMPTY
@@ -41,7 +51,7 @@ value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTS
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 
-    override fun hoverName(): Component = stack.hoverName
-
     override fun getComponents(): DataComponentMap = stack.components
+
+    override fun getText(): Component = stack.hoverName
 }

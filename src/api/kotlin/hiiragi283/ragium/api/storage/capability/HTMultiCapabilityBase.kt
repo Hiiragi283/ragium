@@ -7,6 +7,10 @@ import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 
+/**
+ * [HTMultiCapability]の実装クラス
+ * @see [RagiumCapabilities]
+ */
 open class HTMultiCapabilityBase<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDLER : HANDLER, SLOT : Any>(
     protected val blockCapability: BlockCapability<HANDLER, Direction?>,
     protected val itemCapability: ItemCapability<ITEM_HANDLER, Void?>,

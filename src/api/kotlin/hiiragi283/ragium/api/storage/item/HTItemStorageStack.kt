@@ -11,6 +11,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
+/**
+ * [ItemStack]向けの[HTStorageStack]の実装
+ */
 @JvmInline
 value class HTItemStorageStack private constructor(val stack: ItemStack) : HTStorageStack<Item, HTItemStorageStack> {
     companion object {
@@ -18,8 +21,15 @@ value class HTItemStorageStack private constructor(val stack: ItemStack) : HTSto
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemStorageStack> =
             VanillaBiCodecs.itemStack(true).xmap(::of, HTItemStorageStack::stack)
 
+        /**
+         * 空の[HTItemStorageStack]
+         */
         val EMPTY = HTItemStorageStack(ItemStack.EMPTY)
 
+        /**
+         * [ItemStack]を[HTItemStorageStack]に変換します。
+         * @return [ItemStack.isEmpty]が`true`の場合は[EMPTY]を返します。
+         */
         @JvmStatic
         fun of(stack: ItemStack): HTItemStorageStack = when (stack.isEmpty) {
             true -> EMPTY
@@ -41,7 +51,7 @@ value class HTItemStorageStack private constructor(val stack: ItemStack) : HTSto
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 
-    override fun hoverName(): Component = stack.hoverName
-
     override fun getComponents(): DataComponentMap = stack.components
+
+    override fun getText(): Component = stack.hoverName
 }

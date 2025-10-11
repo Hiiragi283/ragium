@@ -4,7 +4,7 @@ import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 
 /**
- * @see [Table]
+ * [Table]のイミュータブルなラッパー
  */
 @JvmInline
 value class ImmutableTable<R : Any, C : Any, V : Any>(private val table: Table<R, C, V>) {

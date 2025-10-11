@@ -4,7 +4,7 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 
 /**
- * @see [Multimap]
+ * [Multimap]のイミュータブルなラッパー
  */
 @JvmInline
 value class ImmutableMultiMap<K : Any, V : Any>(private val multimap: Multimap<K, V>) {

@@ -59,9 +59,5 @@ interface HTEnergyBattery :
             }
             return extracted
         }
-
-        fun setEmpty() {
-            setAmountAsInt(0)
-        }
     }
 }

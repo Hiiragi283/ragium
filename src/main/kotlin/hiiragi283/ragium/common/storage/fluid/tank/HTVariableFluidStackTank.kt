@@ -65,7 +65,7 @@ class HTVariableFluidStackTank(
         } else {
             amount
         }
-        if (getAmountAsInt() == fixedAmount || !action.execute) {
+        if (getAmountAsInt() == fixedAmount || action.simulate) {
             return fixedAmount
         }
         this.stack.amount = fixedAmount
