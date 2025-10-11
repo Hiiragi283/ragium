@@ -1,17 +1,17 @@
 package hiiragi283.ragium.impl.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTItemWithFluidToChancedItemRecipeBase(
     val ingredient: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
-    final override val results: List<HTChancedItemRecipe.ChancedResult>,
+    final override val results: List<HTChancedItemResult>,
 ) : HTChancedItemRecipeBase<HTItemWithFluidRecipeInput>(),
     HTItemWithFluidToChancedItemRecipe {
     final override fun isIncompleteIngredient(): Boolean = ingredient.hasNoMatchingStacks() || fluidIngredient.hasNoMatchingStacks()

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.impl.recipe
 
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -27,8 +27,8 @@ class HTRefiningRecipe(
 
     override fun getRequiredAmount(stack: FluidStack): Int = fluidIngredient.getRequiredAmount(stack)
 
-    override fun getResultItems(input: HTItemWithFluidRecipeInput): List<HTChancedItemRecipe.ChancedResult> =
-        itemResult.map(HTChancedItemRecipe<*>::ChancedResult).map(::listOf).orElse(listOf())
+    override fun getResultItems(input: HTItemWithFluidRecipeInput): List<HTChancedItemResult> =
+        itemResult.map(::HTChancedItemResult).stream().toList()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FLUID_TRANSFORM
 

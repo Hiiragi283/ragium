@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import org.apache.commons.lang3.mutable.MutableFloat
 
 internal class RagiumEnchantmentHelperImpl : RagiumEnchantmentHelper {
@@ -38,4 +39,6 @@ internal class RagiumEnchantmentHelperImpl : RagiumEnchantmentHelper {
             collectorRange,
         )
     }
+
+    override fun hasStrike(stack: ItemStack): Boolean = EnchantmentHelper.has(stack, RagiumEnchantmentComponents.STRIKE)
 }

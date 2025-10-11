@@ -5,12 +5,12 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.giveStackTo
+import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesCapability
 import io.wispforest.accessories.api.slot.SlotEntryReference
@@ -29,7 +29,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Equipable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.SubscribeEvent
@@ -225,7 +224,7 @@ object RagiumRuntimeEvents {
     private fun lootMobHead(entity: LivingEntity, level: Level, source: DamageSource) {
         // 武器にStrike効果が付いているか判定
         val weapon: ItemStack = source.weaponItem ?: return
-        if (EnchantmentHelper.has(weapon, RagiumEnchantmentComponents.STRIKE)) {
+        if (RagiumEnchantmentHelper.INSTANCE.hasStrike(weapon)) {
             // 対象のモブに対応する頭をドロップする
             val head: ItemStack = RagiumDataMaps.INSTANCE.getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
             if (head.isEmpty) return

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.recipe.base
 
 import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
@@ -12,15 +13,15 @@ abstract class HTChancedItemRecipeBase<INPUT : RecipeInput> : HTChancedItemRecip
     /**
      * 完成品の一覧
      */
-    abstract val results: List<HTChancedItemRecipe.ChancedResult>
+    abstract val results: List<HTChancedItemResult>
 
-    final override fun getResultItems(input: INPUT): List<HTChancedItemRecipe.ChancedResult> = results
+    final override fun getResultItems(input: INPUT): List<HTChancedItemResult> = results
 
     final override fun assemble(input: INPUT, registries: HolderLookup.Provider): ItemStack =
         getItemResult(input, registries, results.getOrNull(0))
 
     final override fun isIncomplete(): Boolean =
-        isIncompleteIngredient() || results.isEmpty() || results.all(HTChancedItemRecipe.ChancedResult::hasNoMatchingStack)
+        isIncompleteIngredient() || results.isEmpty() || results.all(HTChancedItemResult::hasNoMatchingStack)
 
     /**
      * 材料が有効かどうか判定します

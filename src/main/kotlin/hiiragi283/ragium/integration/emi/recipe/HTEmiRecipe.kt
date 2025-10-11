@@ -9,9 +9,9 @@ import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
@@ -76,7 +76,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         addOutputs(result?.let(::result))
     }
 
-    protected fun addChancedOutputs(result: HTChancedItemRecipe.ChancedResult?) {
+    protected fun addChancedOutputs(result: HTChancedItemResult?) {
         addOutputs(result?.let(::result)?.let { stack: EmiStack -> stack.setChance(result.chance) })
     }
 

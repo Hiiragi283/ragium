@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -51,7 +51,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Recipe    //
 
     private object BrewingRecipe : HTItemToChancedItemRecipe, HTSingleInputRecipe {
-        override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemRecipe.ChancedResult> {
+        override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemResult> {
             val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return listOf()
             // ポーションに変換する
             val stack: ItemStack = RagiumDataMaps.INSTANCE
@@ -60,7 +60,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 ?: return listOf()
             return HTResultHelper.INSTANCE
                 .item(stack)
-                .let(HTChancedItemRecipe<*>::ChancedResult)
+                .let(::HTChancedItemResult)
                 .let(::listOf)
         }
 

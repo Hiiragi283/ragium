@@ -1,11 +1,11 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
@@ -46,9 +46,7 @@ object RagiumRecipeBiCodecs {
         .composite(
             ITEM_CODEC.fieldOf("ingredient"),
             HTCrushingRecipe::ingredient,
-            HTChancedItemRecipe.ChancedResult.CODEC
-                .listOrElement(1, 4)
-                .fieldOf("results"),
+            HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
             HTCrushingRecipe::results,
             ::HTCrushingRecipe,
         )
@@ -106,9 +104,7 @@ object RagiumRecipeBiCodecs {
         HTItemWithFluidToChancedItemRecipeBase::ingredient,
         FLUID_CODEC.fieldOf("fluid_ingredient"),
         HTItemWithFluidToChancedItemRecipeBase::fluidIngredient,
-        HTChancedItemRecipe.ChancedResult.CODEC
-            .listOrElement(1, 4)
-            .fieldOf("results"),
+        HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
         HTItemWithFluidToChancedItemRecipeBase::results,
         factory::create,
     )

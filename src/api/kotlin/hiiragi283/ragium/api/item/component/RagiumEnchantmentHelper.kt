@@ -68,4 +68,6 @@ interface RagiumEnchantmentHelper {
         stack: ItemStack,
         collectorRange: MutableFloat,
     )
+
+    fun hasStrike(stack: ItemStack): Boolean
 }
