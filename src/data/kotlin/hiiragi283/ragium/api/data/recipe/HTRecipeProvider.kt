@@ -40,13 +40,25 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
+/**
+ * Ragiumがレシピ生成で使用するクラス
+ * @see [Direct]
+ * @see [Integration]
+ */
 sealed class HTRecipeProvider {
     protected lateinit var provider: HolderLookup.Provider
         private set
     protected lateinit var output: RecipeOutput
         private set
 
+    /**
+     * [HTIngredientHelper]のインスタンス
+     */
     val ingredientHelper: HTIngredientHelper by lazy { HTIngredientHelperImpl(provider) }
+
+    /**
+     * [HTResultHelper]のインスタンス
+     */
     val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -66,14 +78,26 @@ sealed class HTRecipeProvider {
         buildRecipeInternal()
     }
 
+    /**
+     * 指定された[ResourceLocation]を改変します。
+     */
     protected abstract fun modifyId(id: ResourceLocation): ResourceLocation
 
+    /**
+     * 指定された[RecipeOutput]を改変します。
+     */
     protected abstract fun modifyOutput(output: RecipeOutput): RecipeOutput
 
+    /**
+     * レシピを生成します。
+     */
     protected abstract fun buildRecipeInternal()
 
     //    Direct    //
 
+    /**
+     * Ragium単体で使用するレシピ向けの拡張クラス
+     */
     abstract class Direct : HTRecipeProvider() {
         override fun modifyId(id: ResourceLocation): ResourceLocation = RagiumAPI.id(id.path)
 
@@ -82,6 +106,9 @@ sealed class HTRecipeProvider {
 
     //    Integration    //
 
+    /**
+     * 他Modとの連携レシピ向けの拡張クラス
+     */
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
@@ -201,6 +228,10 @@ sealed class HTRecipeProvider {
         }
     }
 
+    /**
+     * 原石または原石ブロックをインゴットに製錬する合金レシピを登録します。
+     * @param material 単体金属系の素材
+     */
     protected fun rawToIngot(material: HTMaterialType) {
         val ingot: TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
         // Basic
@@ -237,6 +268,11 @@ sealed class HTRecipeProvider {
             .saveSuffixed(output, "_from_block_with_advanced_flux")
     }
 
+    /**
+     * 指定された引数から作業台でのリセットレシピを登録します。
+     * @param item リセットを行うアイテム
+     * @param targetTypes リセット対象のコンポーネントのキーの一覧
+     */
     protected fun resetComponent(item: HTItemHolderLike, vararg targetTypes: DataComponentType<*>) {
         save(
             item.getId().withPath { "shapeless/${it}_clear" },
@@ -249,16 +285,30 @@ sealed class HTRecipeProvider {
         )
     }
 
+    /**
+     * 指定された引数から鍛冶台でのネザライト強化レシピのビルダーを返します。
+     * @param output 強化後のアイテム
+     * @param input 強化前のアイテム
+     */
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
-    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
+    /**
+     * 指定された引数から鍛冶台での強化レシピのビルダーを返します。
+     * @param tier アップグレードにつかう構造体のティア
+     * @param output 強化後のアイテム
+     * @param input 強化前のアイテム
+     */
+    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.getComponent(tier))
-            .addIngredient(ingredient)
+            .addIngredient(input)
 
+    /**
+     * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
+     */
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks

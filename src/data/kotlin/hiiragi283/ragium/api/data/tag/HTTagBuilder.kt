@@ -12,25 +12,46 @@ import net.minecraft.tags.TagKey
  */
 @JvmRecord
 data class HTTagBuilder<T : Any>(private val entryCache: ImmutableMultiMap.Builder<TagKey<T>, Entry>) {
+    /**
+     * 指定した[ResourceKey]を[TagKey]に登録します。
+     */
     fun add(tagKey: TagKey<T>, key: ResourceKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, key.location(), type)
 
+    /**
+     * 指定した[HTHolderLike]を[TagKey]に登録します。
+     */
     fun add(tagKey: TagKey<T>, holder: HTHolderLike, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
         add(tagKey, holder.getId(), type)
 
+    /**
+     * 指定した[ResourceLocation]を[TagKey]に登録します。
+     */
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache[tagKey] = Entry(id, false, type)
     }
 
+    /**
+     * 指定した[child]を[TagKey]に登録します。
+     */
     fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED): HTTagBuilder<T> = apply {
         entryCache[tagKey] = Entry(child.location, true, type)
     }
 
+    /**
+     * 依存関係を管理するクラス
+     */
     enum class DependType {
         REQUIRED,
         OPTIONAL,
     }
 
+    /**
+     * ビルダーのエントリを管理するクラス
+     * @param id このエントリのID
+     * @param isTag このエントリがタグ向けかどうかのフラグ
+     * @param type 依存関係の種類
+     */
     @JvmRecord
     data class Entry(val id: ResourceLocation, val isTag: Boolean, val type: DependType) {
         companion object {
@@ -41,6 +62,9 @@ data class HTTagBuilder<T : Any>(private val entryCache: ImmutableMultiMap.Build
                 .thenComparing(Entry::id)
         }
 
+        /**
+         * バニラの[TagEntry]に変換します。
+         */
         fun toTagEntry(): TagEntry = if (isTag) {
             when (type) {
                 DependType.OPTIONAL -> TagEntry.optionalTag(id)

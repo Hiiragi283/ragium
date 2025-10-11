@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item.slot
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
@@ -16,7 +17,7 @@ class HTItemEntitySlot(private val entity: ItemEntity) :
     override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(entity.item)
 
     override fun getCapacityAsLong(stack: HTItemStorageStack): Long {
-        val limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE
+        val limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
         return if (stack.isEmpty()) limit else min(limit, stack.maxStackSize().toLong())
     }
 

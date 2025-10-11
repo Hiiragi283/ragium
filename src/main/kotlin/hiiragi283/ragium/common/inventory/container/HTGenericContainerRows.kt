@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.inventory.container
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -17,7 +17,7 @@ interface HTGenericContainerRows {
         @JvmStatic
         fun createHandler(
             rows: Int,
-            limit: Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),
             canInsert: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),
             filter: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),

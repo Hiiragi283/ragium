@@ -20,12 +20,6 @@ enum class RagiumMoltenCrystalData(
     ELDRITCH(RagiumMaterialType.ELDRITCH_PEARL, 0x660066, "Eldritch Flux", "異質な流動体"),
     ;
 
-    companion object {
-        const val LOG_TO_SAP = 500
-        const val SAP_TO_MOLTEN = 250
-        const val MOLTEN_TO_GEM = 1000
-    }
-
     val log: TagKey<Item>?
         get() = when (this) {
             CRIMSON -> ItemTags.CRIMSON_STEMS

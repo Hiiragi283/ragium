@@ -8,10 +8,19 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.Tags
 
+/**
+ * [RegistryKey]に基づいて[ResourceLocation]を[TagKey]に変換します。
+ */
 fun <T : Any> RegistryKey<T>.createTagKey(id: ResourceLocation): TagKey<T> = TagKey.create(this, id)
 
+/**
+ * [RegistryKey]に基づいて名前空間が`c`となる[TagKey]に変換します。
+ */
 fun <T : Any> RegistryKey<T>.createCommonTag(path: String): TagKey<T> = createTagKey(commonId(path))
 
+/**
+ * [RegistryKey]に基づいて名前空間が`c`となる[TagKey]に変換します。
+ */
 fun <T : Any> RegistryKey<T>.createCommonTag(prefix: String, value: String): TagKey<T> = createTagKey(commonId(prefix, value))
 
 /**

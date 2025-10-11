@@ -6,10 +6,8 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
@@ -100,8 +98,6 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
             this[SWORD, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_SWORD
         }
     }
-
-    override fun getParentId(path: String): ResourceLocation = vanillaId(path)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enPattern

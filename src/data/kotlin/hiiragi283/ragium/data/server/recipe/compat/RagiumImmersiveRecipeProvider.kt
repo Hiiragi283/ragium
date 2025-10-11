@@ -114,7 +114,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             BottlingMachineRecipeBuilder
                 .builder()
                 .output(HTItemMaterialVariant.GEM, material)
-                .fluidInput(molten.commonTag, RagiumMoltenCrystalData.MOLTEN_TO_GEM)
+                .fluidInput(molten.commonTag, RagiumConst.MOLTEN_TO_GEM)
                 .build(output, id("bottling/${material.materialName()}"))
 
             val log: TagKey<Item> = data.log ?: continue
@@ -122,7 +122,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             // log -> sap
             SqueezerRecipeBuilder
                 .builder()
-                .output(sap.get(), RagiumMoltenCrystalData.LOG_TO_SAP)
+                .output(sap.get(), RagiumConst.LOG_TO_SAP)
                 .input(log)
                 .setEnergy(6400)
                 .build(output, id("squeezer/${sap.getPath()}"))
@@ -130,7 +130,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             RefineryRecipeBuilder
                 .builder()
                 .input(sap.commonTag, 1000)
-                .output(molten.get(), RagiumMoltenCrystalData.SAP_TO_MOLTEN)
+                .output(molten.get(), RagiumConst.SAP_TO_MOLTEN)
                 .build(output, id("refinery/${molten.getPath()}"))
         }
 

@@ -10,6 +10,9 @@ import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagKey
 import kotlin.collections.forEach
 
+/**
+ * [HTTagBuilder]に基づいた[TagsProvider]の拡張クラス
+ */
 abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTDataGenContext) :
     TagsProvider<T>(
         context.output,
@@ -32,6 +35,9 @@ abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTD
             }
     }
 
+    /**
+     * 指定された[builder]にタグを登録します。
+     */
     protected abstract fun addTags(builder: HTTagBuilder<T>)
 
     @Deprecated("Use `HTTagBuilder` instead")

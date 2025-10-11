@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item.slot
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.item.setItemStack
 import net.minecraft.world.item.ItemStack
@@ -29,7 +29,7 @@ open class HTFluidItemStackSlot(
     x: Int,
     y: Int,
     slotType: HTContainerItemSlot.Type,
-) : HTItemStackSlot(HTItemSlot.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y, slotType),
+) : HTItemStackSlot(RagiumConst.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener, x, y, slotType),
     HTFluidItemSlot {
     companion object {
         @JvmStatic

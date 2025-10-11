@@ -9,6 +9,7 @@ import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.util.StringRepresentable
 
 /**
+ * Ragiumで使用する基本のティア
  * @see [mekanism.api.tier.BaseTier]
  */
 enum class HTBaseTier(val color: ChatFormatting, private val enName: String, private val jpName: String) :

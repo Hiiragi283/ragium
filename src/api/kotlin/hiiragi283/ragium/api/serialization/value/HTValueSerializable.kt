@@ -5,6 +5,9 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.common.util.INBTSerializable
 
+/**
+ * [HTValueInput], [HTValueOutput]に対応した[INBTSerializable]の拡張インターフェース
+ */
 interface HTValueSerializable : INBTSerializable<CompoundTag> {
     companion object {
         @JvmStatic
@@ -22,8 +25,14 @@ interface HTValueSerializable : INBTSerializable<CompoundTag> {
         }
     }
 
+    /**
+     * [output]に値を書き込みます。
+     */
     fun serialize(output: HTValueOutput)
 
+    /**
+     * [input]から値を読み取ります。
+     */
     fun deserialize(input: HTValueInput)
 
     @Deprecated("Use `serialize(HTValueOutput)` instead", level = DeprecationLevel.ERROR)

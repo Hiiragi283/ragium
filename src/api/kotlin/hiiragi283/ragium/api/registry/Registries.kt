@@ -14,8 +14,14 @@ import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Function
 import kotlin.streams.asSequence
 
+/**
+ * [Registry]で使われる[ResourceKey]のエイリアス
+ */
 typealias RegistryKey<T> = ResourceKey<out Registry<T>>
 
+/**
+ * [RegistryKey]に基づいて[ResourceLocation]を[ResourceKey]に変換します。
+ */
 fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
 
 fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
