@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.toFluid
 import net.minecraft.core.Direction
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -26,26 +25,16 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 object RagiumCapabilities {
     @JvmField
-    val ITEM: HTMultiCapability<IItemHandler, IItemHandler, HTItemHandler, HTItemSlot> = object : HTMultiCapabilityBase<IItemHandler, IItemHandler, HTItemHandler, HTItemSlot>(
+    val ITEM: HTMultiCapability<IItemHandler, IItemHandler, HTItemHandler, HTItemSlot> = HTMultiCapabilityBase(
         Capabilities.ItemHandler.BLOCK,
-        Capabilities.ItemHandler.ENTITY_AUTOMATION,
         Capabilities.ItemHandler.ITEM,
         ::wrapHandler,
         HTItemHandler::getItemSlots,
-    ) {
-        override fun getCapability(entity: Entity, side: Direction?): IItemHandler? {
-            if (side == null) {
-                val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
-                if (handler != null) return handler
-            }
-            return super.getCapability(entity, side)
-        }
-    }
+    )
 
     @JvmField
     val FLUID: HTMultiCapability<IFluidHandler, IFluidHandlerItem, HTFluidHandler, HTFluidTank> = HTMultiCapabilityBase(
         Capabilities.FluidHandler.BLOCK,
-        Capabilities.FluidHandler.ENTITY,
         Capabilities.FluidHandler.ITEM,
         ::wrapHandler,
         HTFluidHandler::getFluidTanks,
@@ -54,7 +43,6 @@ object RagiumCapabilities {
     @JvmField
     val ENERGY: HTMultiCapability<IEnergyStorage, IEnergyStorage, HTEnergyHandler, HTEnergyBattery> = HTMultiCapabilityBase(
         Capabilities.EnergyStorage.BLOCK,
-        Capabilities.EnergyStorage.ENTITY,
         Capabilities.EnergyStorage.ITEM,
         ::wrapStorage,
     ) { handler, side -> handler.getEnergyBattery(side).let(::listOfNotNull) }
@@ -75,10 +63,10 @@ object RagiumCapabilities {
     private fun createSlot(handler: IItemHandler, index: Int): HTItemSlot? = if (handler is HTItemHandler) {
         handler.getItemSlot(index, handler.getItemSideFor())
     } else {
-        object : HTItemSlot.Mutable, HTValueSerializable.Empty {
+        object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
             override fun createContainerSlot(): Slot? = null
 
-            override fun getStack(): HTItemStorageStack = HTItemStorageStack.Companion.of(handler.getStackInSlot(index))
+            override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(handler.getStackInSlot(index))
 
             override fun getCapacityAsLong(stack: HTItemStorageStack): Long = handler.getSlotLimit(index).toLong()
 
@@ -107,7 +95,7 @@ object RagiumCapabilities {
         handler.getFluidTank(index, handler.getFluidSideFor())
     } else {
         object : HTFluidTank, HTValueSerializable.Empty {
-            override fun getStack(): HTFluidStorageStack = HTFluidStorageStack.Companion.of(handler.getFluidInTank(index))
+            override fun getStack(): HTFluidStorageStack = HTFluidStorageStack.of(handler.getFluidInTank(index))
 
             override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = handler.getTankCapacity(index).toLong()
 
@@ -115,12 +103,12 @@ object RagiumCapabilities {
 
             override fun insert(stack: HTFluidStorageStack, action: HTStorageAction, access: HTStorageAccess): HTFluidStorageStack =
                 when (val filled: Int = handler.fill(stack.stack, action.toFluid())) {
-                    0 -> HTFluidStorageStack.Companion.EMPTY
+                    0 -> HTFluidStorageStack.EMPTY
                     else -> stack.copyWithAmount(filled)
                 }
 
             override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): HTFluidStorageStack =
-                HTFluidStorageStack.Companion.of(handler.drain(amount, action.toFluid()))
+                HTFluidStorageStack.of(handler.drain(amount, action.toFluid()))
 
             override fun onContentsChanged() {}
         }

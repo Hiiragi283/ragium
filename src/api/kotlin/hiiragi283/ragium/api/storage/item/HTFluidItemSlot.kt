@@ -6,12 +6,13 @@ import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
 /**
  * @see [mekanism.common.inventory.slot.IFluidHandlerSlot]
  */
-interface HTFluidItemSlot : HTItemSlot.Mutable {
+interface HTFluidItemSlot : HTItemSlot {
     fun getFluidTank(): HTFluidTank
 
     var isDraining: Boolean
@@ -27,12 +28,14 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
         val stackIn: HTFluidStorageStack = tank.getStack()
         if (!stackIn.isEmpty() && getFluidTank().isValid(stackIn)) {
             if (fillHandlerFromOther(getFluidTank(), tank, stackIn)) {
-                setItemStack(handlerItem.container)
+                replaceContainer(handlerItem.container)
                 return true
             }
         }
         return false
     }
+
+    fun replaceContainer(container: ItemStack)
 
     private fun fillHandlerFromOther(toFill: HTFluidTank, toDrain: HTFluidTank, stack: HTFluidStorageStack): Boolean {
         val simulatedDrain: HTFluidStorageStack = toDrain.extract(stack.amountAsInt(), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)

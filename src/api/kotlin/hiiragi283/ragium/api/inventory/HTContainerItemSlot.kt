@@ -35,7 +35,7 @@ open class HTContainerItemSlot(
         if (stack.isEmpty) return false
         if (slot.isEmpty()) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
         if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()) return false
-        return slot.isItemValidForInsert(HTItemStorageStack.of(stack), HTStorageAccess.MANUAL)
+        return slot.isStackValidForInsert(HTItemStorageStack.of(stack), HTStorageAccess.MANUAL)
     }
 
     override fun getItem(): ItemStack = slot.getItemStack()

@@ -10,12 +10,12 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import java.util.function.Predicate
 
-interface HTStorageStack<T : Any> :
+interface HTStorageStack<T : Any, STACK : HTStorageStack<T, STACK>> :
     DataComponentHolder,
     HTHolderLike {
     companion object {
         @JvmStatic
-        fun <STACK : HTStorageStack<*>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
+        fun <STACK : HTStorageStack<*, *>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
     }
 
     fun isEmpty(): Boolean
@@ -28,9 +28,9 @@ interface HTStorageStack<T : Any> :
 
     fun amountAsInt(): Int
 
-    fun copy(): HTStorageStack<T>
+    fun copy(): STACK
 
-    fun copyWithAmount(amount: Int): HTStorageStack<T>
+    fun copyWithAmount(amount: Int): STACK
 
     fun componentsPatch(): DataComponentPatch
 

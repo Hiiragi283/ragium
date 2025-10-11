@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmInline
-value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTStorageStack<Fluid> {
+value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTStorageStack<Fluid, HTFluidStorageStack> {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidStorageStack> =
@@ -25,10 +25,6 @@ value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTS
             true -> EMPTY
             false -> HTFluidStorageStack(stack)
         }
-
-        @JvmStatic
-        fun isSameFluidSameComponents(first: HTFluidStorageStack, second: HTFluidStorageStack): Boolean =
-            FluidStack.isSameFluidSameComponents(first.stack, second.stack)
     }
 
     override fun isEmpty(): Boolean = stack.isEmpty

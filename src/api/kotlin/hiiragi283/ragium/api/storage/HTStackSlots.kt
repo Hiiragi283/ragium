@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.RagiumAPI
 
-fun <STACK : HTStorageStack<*>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?, amount: Int): STACK? {
+fun <STACK : HTStorageStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?, amount: Int): STACK? {
     if (from == null || to == null || amount <= 0) return null
     val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
     val simulatedRemain: STACK = to.insert(simulatedExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
@@ -20,5 +20,5 @@ fun <STACK : HTStorageStack<*>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?
     return remainder
 }
 
-fun <STACK : HTStorageStack<*>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?): STACK? =
+fun <STACK : HTStorageStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?): STACK? =
     moveStack(from, to, from?.getAmountAsInt() ?: 0)

@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.item.asNonEmptySequence
 import hiiragi283.ragium.api.item.copy
 import hiiragi283.ragium.api.item.getOrEmpty
-import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
@@ -31,7 +31,8 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
     override fun onContentsChanged() {}
 
     protected open class ComponentSlot(protected val parent: MutableDataComponentHolder, protected val size: Int, protected val slot: Int) :
-        HTItemSlot.Mutable {
+        HTItemSlot.Mutable(),
+        HTValueSerializable.Empty {
         protected val component: DataComponentType<ItemContainerContents> get() = DataComponents.CONTAINER
 
         protected fun getContents(): ItemContainerContents = parent.getOrDefault(component, ItemContainerContents.EMPTY)
@@ -43,8 +44,6 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
         override fun getCapacityAsLong(stack: HTItemStorageStack): Long = HTItemSlot.ABSOLUTE_MAX_STACK_SIZE
 
         override fun isValid(stack: HTItemStorageStack): Boolean = true
-
-        override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
 

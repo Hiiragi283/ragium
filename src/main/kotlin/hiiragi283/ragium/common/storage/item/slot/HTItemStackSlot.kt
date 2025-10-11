@@ -28,7 +28,7 @@ open class HTItemStackSlot protected constructor(
     private val x: Int,
     private val y: Int,
     private val slotType: HTContainerItemSlot.Type,
-) : HTItemSlot.Mutable {
+) : HTItemSlot.Mutable() {
     companion object {
         @JvmField
         val ALWAYS_TRUE: BiPredicate<HTItemStorageStack, HTStorageAccess> =
@@ -126,10 +126,11 @@ open class HTItemStackSlot protected constructor(
 
     override fun isValid(stack: HTItemStorageStack): Boolean = filter.test(stack)
 
-    override fun isItemValidForInsert(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
-        super.isItemValidForInsert(stack, access) && canInsert.test(stack, access)
+    override fun isStackValidForInsert(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
+        super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
-    override fun canItemExtract(stack: HTItemStorageStack, access: HTStorageAccess): Boolean = canExtract.test(stack, access)
+    override fun canStackExtract(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
+        super.canStackExtract(stack, access) && canInsert.test(stack, access)
 
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
 

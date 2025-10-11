@@ -21,7 +21,7 @@ open class HTFluidStackTank protected constructor(
     private val canInsert: BiPredicate<HTFluidStorageStack, HTStorageAccess>,
     private val filter: Predicate<HTFluidStorageStack>,
     private val listener: HTContentListener?,
-) : HTFluidTank.Mutable {
+) : HTFluidTank.Mutable() {
     companion object {
         @JvmField
         val ALWAYS_TRUE: BiPredicate<HTFluidStorageStack, HTStorageAccess> =
@@ -70,11 +70,11 @@ open class HTFluidStackTank protected constructor(
 
     override fun isValid(stack: HTFluidStorageStack): Boolean = filter.test(stack)
 
-    override fun isFluidValidForInsert(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
-        super.isFluidValidForInsert(stack, access) && canInsert.test(stack, access)
+    override fun isStackValidForInsert(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
+        super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
-    override fun canFluidExtract(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
-        super.canFluidExtract(stack, access) && canExtract.test(stack, access)
+    override fun canStackExtract(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
+        super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.FLUID, HTFluidStorageStack.CODEC, getStack())

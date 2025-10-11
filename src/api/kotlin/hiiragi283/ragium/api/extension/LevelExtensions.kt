@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Position
 import net.minecraft.world.Containers
@@ -10,6 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -32,7 +32,7 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
     if (entity is Player) {
         giveStackTo(entity, stack)
     } else {
-        val remainStack: ItemStack = RagiumCapabilities.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
+        val remainStack: ItemStack = entity.getCapability(Capabilities.ItemHandler.ENTITY)?.let { handler: IItemHandler ->
             ItemHandlerHelper.insertItem(handler, stack, false)
         } ?: stack
         dropStackAt(entity, remainStack, offset)

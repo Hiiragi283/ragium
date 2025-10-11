@@ -3,21 +3,17 @@ package hiiragi283.ragium.api.storage.capability
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability
-import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 
 open class HTMultiCapabilityBase<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDLER : HANDLER, SLOT : Any>(
     protected val blockCapability: BlockCapability<HANDLER, Direction?>,
-    protected val entityCapability: EntityCapability<HANDLER, Direction?>,
     protected val itemCapability: ItemCapability<ITEM_HANDLER, Void?>,
     protected val slottedWrapper: (HANDLER) -> SLOTTED_HANDLER,
     protected val slotProvider: (SLOTTED_HANDLER, Direction?) -> List<SLOT>,
 ) : HTMultiCapability<HANDLER, ITEM_HANDLER, SLOTTED_HANDLER, SLOT> {
     final override fun blockCapability(): BlockCapability<HANDLER, Direction?> = blockCapability
-
-    final override fun entityCapability(): EntityCapability<HANDLER, Direction?> = entityCapability
 
     final override fun itemCapability(): ItemCapability<ITEM_HANDLER, Void?> = itemCapability
 

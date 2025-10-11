@@ -3,9 +3,7 @@ package hiiragi283.ragium.api.storage.capability
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.capabilities.BlockCapability
-import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
@@ -15,8 +13,6 @@ import net.neoforged.neoforge.common.extensions.ILevelExtension
  */
 interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDLER : HANDLER, SLOT : Any> {
     fun blockCapability(): BlockCapability<HANDLER, Direction?>
-
-    fun entityCapability(): EntityCapability<HANDLER, Direction?>
 
     fun itemCapability(): ItemCapability<ITEM_HANDLER, Void?>
 
@@ -35,11 +31,6 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDL
         side: Direction?,
         index: Int,
     ): SLOT? = getCapabilitySlots(level, pos, side).getOrNull(index)
-
-    //    Entity    //
-
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    fun getCapability(entity: Entity, side: Direction?): HANDLER? = entity.getCapability(entityCapability(), side)
 
     //    Item    //
 

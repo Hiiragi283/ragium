@@ -55,7 +55,7 @@ class HTVariableFluidStackTank(
             return 0
         } else if (amount <= 0) {
             if (action.execute) {
-                setStack(HTFluidStorageStack.EMPTY)
+                setEmpty()
             }
             return 0
         }

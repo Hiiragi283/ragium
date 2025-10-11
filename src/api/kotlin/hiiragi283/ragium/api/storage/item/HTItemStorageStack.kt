@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
 @JvmInline
-value class HTItemStorageStack private constructor(val stack: ItemStack) : HTStorageStack<Item> {
+value class HTItemStorageStack private constructor(val stack: ItemStack) : HTStorageStack<Item, HTItemStorageStack> {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemStorageStack> =
@@ -25,10 +25,6 @@ value class HTItemStorageStack private constructor(val stack: ItemStack) : HTSto
             true -> EMPTY
             false -> HTItemStorageStack(stack)
         }
-
-        @JvmStatic
-        fun isSameItemSameComponents(first: HTItemStorageStack, second: HTItemStorageStack): Boolean =
-            ItemStack.isSameItemSameComponents(first.stack, second.stack)
     }
 
     override fun isEmpty(): Boolean = stack.isEmpty

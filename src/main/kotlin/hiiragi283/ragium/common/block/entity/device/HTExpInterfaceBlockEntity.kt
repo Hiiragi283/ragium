@@ -76,7 +76,7 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExpTank    //
 
     private class ExpTank :
-        HTFluidTank.Mutable,
+        HTFluidTank.Mutable(),
         HTValueSerializable.Empty {
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
         var player: Player? = null

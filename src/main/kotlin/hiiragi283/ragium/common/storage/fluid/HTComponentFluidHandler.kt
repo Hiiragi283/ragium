@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.setOrRemove
-import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -32,7 +32,9 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Lon
 
     override fun onContentsChanged() {}
 
-    protected open class ComponentTank(private val parent: MutableDataComponentHolder, private val capacity: Long) : HTFluidTank.Mutable {
+    protected open class ComponentTank(private val parent: MutableDataComponentHolder, private val capacity: Long) :
+        HTFluidTank.Mutable(),
+        HTValueSerializable.Empty {
         protected val component: DataComponentType<SimpleFluidContent> get() = RagiumDataComponents.FLUID_CONTENT
 
         override fun getStack(): HTFluidStorageStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).storageCopy()
@@ -40,8 +42,6 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Lon
         override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = capacity
 
         override fun isValid(stack: HTFluidStorageStack): Boolean = true
-
-        override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
 

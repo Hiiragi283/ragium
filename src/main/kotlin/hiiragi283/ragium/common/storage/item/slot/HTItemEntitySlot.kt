@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.Slot
 import kotlin.math.min
 
 class HTItemEntitySlot(private val entity: ItemEntity) :
-    HTItemSlot.Mutable,
+    HTItemSlot.Mutable(),
     HTValueSerializable.Empty {
     override fun createContainerSlot(): Slot? = null
 

@@ -13,6 +13,8 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.setItemStack
+import net.minecraft.world.item.ItemStack
 import java.util.function.Predicate
 
 /**
@@ -47,6 +49,10 @@ open class HTFluidItemStackSlot(
 
     override var isDraining: Boolean = false
     override var isFilling: Boolean = false
+
+    override fun replaceContainer(container: ItemStack) {
+        setItemStack(container)
+    }
 
     override fun setStack(stack: HTItemStorageStack) {
         super.setStack(stack)
