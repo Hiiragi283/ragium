@@ -1,15 +1,15 @@
 package hiiragi283.ragium.integration.emi.recipe.processor
 
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.recipe.base.HTMultiOutputEmiRecipe
 import hiiragi283.ragium.integration.emi.toTagEmi
 import hiiragi283.ragium.setup.RagiumFluidContents
+import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCrushingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemToChancedItemRecipe>) :
+class HTCrushingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToChancedItemRecipe>) :
     HTMultiOutputEmiRecipe<HTItemToChancedItemRecipe>(category, holder) {
     init {
         if (recipe is HTCrushingRecipe) {

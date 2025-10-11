@@ -2,7 +2,6 @@ package hiiragi283.ragium.integration.emi.recipe
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -33,8 +32,8 @@ abstract class HTEmiHolderRecipe<RECIPE : Recipe<*>> : HTEmiRecipe<RECIPE> {
 
     constructor(
         category: HTEmiRecipeCategory,
-        holder: HTRecipeHolder<RECIPE>,
-    ) : this(category, holder.holder, category.bounds)
+        holder: RecipeHolder<RECIPE>,
+    ) : this(category, holder, category.bounds)
 
     override fun getBackingRecipe(): RecipeHolder<*> = holder
 }

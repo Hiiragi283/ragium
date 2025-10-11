@@ -2,13 +2,13 @@ package hiiragi283.ragium.integration.emi.recipe.base
 
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTMultiOutputEmiRecipe<RECIPE : Recipe<*>>(category: HTEmiRecipeCategory, holder: HTRecipeHolder<RECIPE>) :
+abstract class HTMultiOutputEmiRecipe<RECIPE : Recipe<*>>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
     HTEmiHolderRecipe<RECIPE>(category, holder) {
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))

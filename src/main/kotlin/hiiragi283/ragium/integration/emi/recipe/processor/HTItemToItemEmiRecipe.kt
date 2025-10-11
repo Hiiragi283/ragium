@@ -2,12 +2,12 @@ package hiiragi283.ragium.integration.emi.recipe.processor
 
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.RecipeHolder
 
 /**
  * @see [mekanism.client.recipe_viewer.emi.recipe.ItemStackToItemStackEmiRecipe]
@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation
 class HTItemToItemEmiRecipe : HTEmiHolderRecipe<HTItemToItemRecipe> {
     constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTItemToItemRecipe) : super(category, id, recipe)
 
-    constructor(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemToItemRecipe>) : super(category, holder)
+    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToItemRecipe>) : super(category, holder)
 
     init {
         addInput(recipe.ingredient)

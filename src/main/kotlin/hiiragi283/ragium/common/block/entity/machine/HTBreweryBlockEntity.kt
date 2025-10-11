@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.storage.HTContentListener
@@ -21,6 +20,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -42,8 +42,8 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Recipe Cache    //
 
     private object BrewingCache : HTRecipeCache<SingleRecipeInput, HTItemToChancedItemRecipe> {
-        override fun getFirstHolder(input: SingleRecipeInput, level: Level): HTRecipeHolder<HTItemToChancedItemRecipe>? = when {
-            BrewingRecipe.matches(input, level) -> HTRecipeHolder(RagiumAPI.id("brewing"), BrewingRecipe)
+        override fun getFirstHolder(input: SingleRecipeInput, level: Level): RecipeHolder<HTItemToChancedItemRecipe>? = when {
+            BrewingRecipe.matches(input, level) -> RecipeHolder(RagiumAPI.id("brewing"), BrewingRecipe)
             else -> null
         }
     }

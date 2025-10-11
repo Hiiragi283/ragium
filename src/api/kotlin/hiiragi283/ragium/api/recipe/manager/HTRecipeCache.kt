@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.manager
 
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
 
@@ -16,13 +17,13 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
      * @param level レシピを取得するレベル
      * @return 見つからなかった場合は`null`
      */
-    fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = getFirstHolder(input, level)?.recipe()
+    fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = getFirstHolder(input, level)?.value
 
     /**
-     * 指定された[input], [level]から最初に一致する[HTRecipeHolder]を返します。
+     * 指定された[input], [level]から最初に一致する[RecipeHolder]を返します。
      * @param input レシピの入力
      * @param level レシピを取得するレベル
      * @return 見つからなかった場合は`null`
      */
-    fun getFirstHolder(input: INPUT, level: Level): HTRecipeHolder<RECIPE>?
+    fun getFirstHolder(input: INPUT, level: Level): RecipeHolder<RECIPE>?
 }

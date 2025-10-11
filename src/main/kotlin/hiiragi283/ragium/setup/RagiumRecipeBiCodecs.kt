@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -17,6 +16,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuil
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
@@ -110,17 +110,17 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmStatic
-    fun <R : HTFluidTransformRecipe> fluidTransform(
+    fun <R : HTFluidTransformRecipeBase> fluidTransform(
         factory: HTFluidTransformRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         FLUID_CODEC.fieldOf("fluid_ingredient"),
-        HTFluidTransformRecipe::fluidIngredient,
+        HTFluidTransformRecipeBase::fluidIngredient,
         ITEM_CODEC.optionalFieldOf("item_ingredient"),
-        HTFluidTransformRecipe::itemIngredient,
+        HTFluidTransformRecipeBase::itemIngredient,
         HTResultHelper.INSTANCE.itemCodec().optionalFieldOf("item_result"),
-        HTFluidTransformRecipe::itemResult,
+        HTFluidTransformRecipeBase::itemResult,
         HTResultHelper.INSTANCE.fluidCodec().optionalFieldOf("fluid_result"),
-        HTFluidTransformRecipe::fluidResult,
+        HTFluidTransformRecipeBase::fluidResult,
         factory::create,
     )
 }

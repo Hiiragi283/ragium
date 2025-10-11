@@ -100,8 +100,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insertItem(recipe.assemble(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         outputTank.insertFluid(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAl)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe.itemIngredient, HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(inputTank, recipe.fluidIngredient, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.extension.partially1
-import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
+import hiiragi283.ragium.api.recipe.manager.mapRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -30,6 +29,7 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -98,7 +98,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private inner class SingleItemCache : HTRecipeCache<SingleRecipeInput, HTSingleInputRecipe> {
-        override fun getFirstHolder(input: SingleRecipeInput, level: Level): HTRecipeHolder<HTSingleInputRecipe>? =
+        override fun getFirstHolder(input: SingleRecipeInput, level: Level): RecipeHolder<HTSingleInputRecipe>? =
             getFirstHolder(RagiumRecipeTypes.SAWMILL, input, level)
                 ?: getFirstHolder(RagiumRecipeTypes.STONECUTTER, input, level)
                     ?.mapRecipe(HTItemToItemRecipe::wrapVanilla.partially1(level.registryAccess()))
@@ -107,11 +107,11 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
             recipeType: HTDeferredRecipeType<SingleRecipeInput, RECIPE>,
             input: SingleRecipeInput,
             level: Level,
-        ): HTRecipeHolder<RECIPE>? {
+        ): RecipeHolder<RECIPE>? {
             // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
-            var matchedHolder: HTRecipeHolder<RECIPE>? = null
-            for (holder: HTRecipeHolder<RECIPE> in recipeType.getAllHolders(level.recipeAccess)) {
-                val recipe: RECIPE = holder.recipe()
+            var matchedHolder: RecipeHolder<RECIPE>? = null
+            for (holder: RecipeHolder<RECIPE> in recipeType.getAllHolders(level.recipeManager)) {
+                val recipe: RECIPE = holder.value
                 if (!recipe.matches(input, level)) continue
                 val result: ItemStack = recipe.assemble(input, level.registryAccess())
                 if (ItemStack.isSameItemSameComponents(catalystSlot.getItemStack(), result)) {
