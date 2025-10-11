@@ -7,6 +7,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -43,6 +44,8 @@ value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTS
     override fun copyWithAmount(amount: Int): HTFluidStorageStack = of(stack.copyWithAmount(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
+
+    override fun hoverName(): Component = stack.hoverName
 
     override fun getComponents(): DataComponentMap = stack.components
 }

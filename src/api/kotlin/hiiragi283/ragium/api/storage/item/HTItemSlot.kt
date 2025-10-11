@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -12,10 +10,6 @@ import kotlin.math.min
 interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
     companion object {
         const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
-    }
-
-    override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.ITEM, HTItemStorageStack.CODEC, getStack())
     }
 
     /**

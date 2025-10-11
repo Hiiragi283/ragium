@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.network
 
-import hiiragi283.ragium.api.extension.tankRange
-import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
 import java.text.NumberFormat
 import java.util.function.Consumer
@@ -78,48 +77,48 @@ fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.e
 
 fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmountAsLong(), battery.getCapacityAsLong())
 
+fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
+    battery.let(::energyText).let(consumer::accept)
+}
+
 /**
  * 指定した[stack]からツールチップを生成します
  * @param consumer 生成したツールチップを受けとるブロック
  */
 fun addFluidTooltip(
-    stack: FluidStack,
+    stack: HTFluidStorageStack,
     consumer: Consumer<Component>,
     flag: TooltipFlag,
     inGui: Boolean,
 ) {
     // Empty name if stack is empty
-    if (stack.isEmpty) {
+    if (stack.isEmpty()) {
         consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY.getComponent())
         return
     }
     // Fluid Name and Amount
     consumer.accept(
         RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(
-            stack.hoverName,
-            intText(stack.amount),
+            stack.hoverName(),
+            longText(stack.amountAsLong()),
         ),
     )
     if (!inGui) return
     // Fluid id if advanced
     if (flag.isAdvanced) {
-        consumer.accept(Component.literal(stack.fluidHolder.registeredName).withStyle(ChatFormatting.DARK_GRAY))
+        consumer.accept(Component.literal(stack.holder().registeredName).withStyle(ChatFormatting.DARK_GRAY))
     }
     // Mod Name
     val firstMod: IModInfo = ModList
         .get()
-        .getModFileById(stack.fluidHolder.idOrThrow.namespace)
+        .getModFileById(stack.getId().namespace)
         .mods
         .firstOrNull() ?: return
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
-    battery.let(::energyText).let(consumer::accept)
-}
-
 fun addFluidTooltip(handler: HTFluidHandler, consumer: Consumer<Component>, flag: TooltipFlag) {
-    for (i: Int in handler.tankRange) {
-        addFluidTooltip(handler.getFluidInTank(i, handler.getFluidSideFor()), consumer, flag, false)
+    for (tank: HTFluidTank in handler.getFluidTanks(handler.getFluidSideFor())) {
+        addFluidTooltip(tank.getStack(), consumer, flag, false)
     }
 }

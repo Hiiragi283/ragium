@@ -1,11 +1,10 @@
 package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.network.addEnergyTooltip
-import hiiragi283.ragium.api.storage.HTMultiCapability
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
@@ -19,16 +18,10 @@ import kotlin.math.roundToInt
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getHandler(stack: ItemStack): HTEnergyHandler? = HTMultiCapability.ENERGY.getCapability(stack) as? HTEnergyHandler
+        fun getBattery(stack: ItemStack): HTEnergyBattery? = RagiumCapabilities.ENERGY.getCapabilitySlot(stack, 0)
 
         @JvmStatic
-        fun hasHandler(stack: ItemStack): Boolean = getHandler(stack) != null
-
-        @JvmStatic
-        fun getBattery(stack: ItemStack): HTEnergyBattery? {
-            val handler: HTEnergyHandler = getHandler(stack) ?: return null
-            return handler.getEnergyHandler(handler.getEnergySideFor())
-        }
+        fun hasBattery(stack: ItemStack): Boolean = getBattery(stack) != null
 
         @JvmStatic
         fun extractEnergy(stack: ItemStack, amount: Int, action: HTStorageAction): Int =
@@ -43,7 +36,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
 
     //    Item    //
 
-    override fun isBarVisible(stack: ItemStack): Boolean = hasHandler(stack)
+    override fun isBarVisible(stack: ItemStack): Boolean = hasBattery(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
         val battery: HTEnergyBattery = getBattery(stack) ?: return 0
@@ -62,7 +55,7 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         addEnergyTooltip(battery, tooltipComponents::add)
     }
 
-    override fun isEnchantable(stack: ItemStack): Boolean = stack.maxStackSize == 1 && hasHandler(stack)
+    override fun isEnchantable(stack: ItemStack): Boolean = stack.maxStackSize == 1 && hasBattery(stack)
 
     //    User    //
 

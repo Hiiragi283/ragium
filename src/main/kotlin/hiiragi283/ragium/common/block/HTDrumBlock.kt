@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.extension.tankRange
 import hiiragi283.ragium.api.network.addFluidTooltip
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
@@ -14,7 +14,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.HitResult
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTDrumBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTEntityBlock(type, properties) {
     override fun initDefaultState(): BlockState = stateDefinition.any()
@@ -38,9 +37,7 @@ class HTDrumBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : 
         tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag)
-        val handler: IFluidHandler = HTMultiCapability.FLUID.getCapability(stack) ?: return
-        for (i: Int in handler.tankRange) {
-            addFluidTooltip(handler.getFluidInTank(i), tooltipComponents::add, tooltipFlag, false)
-        }
+        val handler: HTFluidHandler = RagiumCapabilities.FLUID.getSlottedCapability(stack) ?: return
+        addFluidTooltip(handler, tooltipComponents::add, tooltipFlag)
     }
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageStack
@@ -74,6 +75,10 @@ open class HTFluidStackTank protected constructor(
 
     override fun canFluidExtract(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
         super.canFluidExtract(stack, access) && canExtract.test(stack, access)
+
+    override fun serialize(output: HTValueOutput) {
+        output.store(RagiumConst.FLUID, HTFluidStorageStack.CODEC, getStack())
+    }
 
     override fun deserialize(input: HTValueInput) {
         input.read(RagiumConst.FLUID, HTFluidStorageStack.CODEC)?.let(::setStackUnchecked)

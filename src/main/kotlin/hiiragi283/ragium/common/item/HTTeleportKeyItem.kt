@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.item.base.HTFluidItem
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -79,7 +80,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         val (dim: ResourceKey<Level>, pos: BlockPos) = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
         val level: ServerLevel = player.server.getLevel(dim) ?: return false
         // 燃料を消費できなければスキップ
-        val tank: HTFluidTank = getFluidTank(stack, 0) ?: return false
+        val tank: HTFluidTank = RagiumCapabilities.FLUID.getCapabilitySlot(stack, 0) ?: return false
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
         val toDrain: Int = HTItemHelper.getFixedUsage(stack, usage)
         if (tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amountAsInt() < toDrain) {

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
@@ -74,7 +75,9 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    ExpTank    //
 
-    private class ExpTank : HTFluidTank.Mutable {
+    private class ExpTank :
+        HTFluidTank.Mutable,
+        HTValueSerializable.Empty {
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
         var player: Player? = null
 
@@ -89,10 +92,6 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun isValid(stack: HTFluidStorageStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
-
-        override fun serialize(output: HTValueOutput) {}
-
-        override fun deserialize(input: HTValueInput) {}
 
         override fun onContentsChanged() {}
 

@@ -79,7 +79,7 @@ class HTFluidTankWidget(
     override fun getLevel(): Float = levelGetter(this)
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addFluidTooltip(stack, consumer, flag, true)
+        addFluidTooltip(tank.getStack(), consumer, flag, true)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {

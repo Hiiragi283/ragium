@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
@@ -179,7 +179,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
-        fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
+        fluidHandlerManager?.resolve(RagiumCapabilities.FLUID, direction)
 
     // Energy
 
@@ -193,10 +193,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      */
     override fun hasEnergyStorage(): Boolean = energyStorageManager?.canHandle() ?: false
 
-    final override fun getEnergyHandler(side: Direction?): HTEnergyBattery? = energyStorageManager?.getContainers(side)?.firstOrNull()
+    final override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = energyStorageManager?.getContainers(side)?.firstOrNull()
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        energyStorageManager?.resolve(HTMultiCapability.ENERGY, direction)
+        energyStorageManager?.resolve(RagiumCapabilities.ENERGY, direction)
 
     // Item
 
@@ -217,5 +217,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         getItemSlots(getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? =
+        itemHandlerManager?.resolve(RagiumCapabilities.ITEM, direction)
 }

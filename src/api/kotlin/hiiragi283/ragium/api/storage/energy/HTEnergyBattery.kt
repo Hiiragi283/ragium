@@ -31,7 +31,7 @@ interface HTEnergyBattery :
 
     fun getStoredLevelAsFloat(): Float = getAmountAsLong() / getCapacityAsLong().toFloat()
 
-    val isEmpty: Boolean get() = getAmountAsInt() <= 0
+    fun isEmpty(): Boolean = getAmountAsInt() <= 0
 
     //    Mutable    //
 

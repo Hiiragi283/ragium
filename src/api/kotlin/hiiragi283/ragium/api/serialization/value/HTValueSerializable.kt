@@ -39,4 +39,10 @@ interface HTValueSerializable : INBTSerializable<CompoundTag> {
         val input: HTValueInput = RagiumPlatform.INSTANCE.createValueInput(provider, nbt)
         deserialize(input)
     }
+
+    interface Empty : HTValueSerializable {
+        override fun serialize(output: HTValueOutput) {}
+
+        override fun deserialize(input: HTValueInput) {}
+    }
 }

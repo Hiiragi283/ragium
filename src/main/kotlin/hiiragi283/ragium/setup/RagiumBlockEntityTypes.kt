@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.item.getBurnTime
 import hiiragi283.ragium.api.storage.item.isOf
@@ -237,17 +237,17 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<out HTBlockEntity> in types.values) {
             val type1: BlockEntityType<out HTBlockEntity> = type.get()
             event.registerBlockEntity(
-                HTMultiCapability.ITEM.blockCapability,
+                RagiumCapabilities.ITEM.blockCapability(),
                 type1,
                 HTHandlerBlockEntity::getItemHandler,
             )
             event.registerBlockEntity(
-                HTMultiCapability.FLUID.blockCapability,
+                RagiumCapabilities.FLUID.blockCapability(),
                 type1,
                 HTHandlerBlockEntity::getFluidHandler,
             )
             event.registerBlockEntity(
-                HTMultiCapability.ENERGY.blockCapability,
+                RagiumCapabilities.ENERGY.blockCapability(),
                 type1,
                 HTHandlerBlockEntity::getEnergyStorage,
             )

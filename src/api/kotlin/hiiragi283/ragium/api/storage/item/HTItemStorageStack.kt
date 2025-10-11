@@ -7,6 +7,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
@@ -43,6 +44,8 @@ value class HTItemStorageStack private constructor(val stack: ItemStack) : HTSto
     override fun copyWithAmount(amount: Int): HTItemStorageStack = of(stack.copyWithCount(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
+
+    override fun hoverName(): Component = stack.hoverName
 
     override fun getComponents(): DataComponentMap = stack.components
 }

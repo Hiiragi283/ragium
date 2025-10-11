@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.wrapAction
+import hiiragi283.ragium.api.storage.toAction
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -17,11 +17,11 @@ interface HTExtendedFluidHandler : IFluidHandler {
 
     @Deprecated("Use `insertFluid(Int, FluidStack, Boolean)` instead", level = DeprecationLevel.ERROR)
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int =
-        resource.amount - insertFluid(resource, action.wrapAction()).amount
+        resource.amount - insertFluid(resource, action.toAction()).amount
 
     @Deprecated("Use `extractFluid(Int, FluidStack, Boolean)` instead", level = DeprecationLevel.ERROR)
-    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack = extractFluid(resource, action.wrapAction())
+    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack = extractFluid(resource, action.toAction())
 
     @Deprecated("Use `extractFluid(Int, FluidStack, Boolean)` instead", level = DeprecationLevel.ERROR)
-    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack = extractFluid(maxDrain, action.wrapAction())
+    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack = extractFluid(maxDrain, action.toAction())
 }

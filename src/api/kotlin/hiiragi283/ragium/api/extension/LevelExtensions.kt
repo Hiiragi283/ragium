@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Position
 import net.minecraft.world.Containers
@@ -32,7 +32,7 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
     if (entity is Player) {
         giveStackTo(entity, stack)
     } else {
-        val remainStack: ItemStack = HTMultiCapability.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
+        val remainStack: ItemStack = RagiumCapabilities.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
             ItemHandlerHelper.insertItem(handler, stack, false)
         } ?: stack
         dropStackAt(entity, remainStack, offset)

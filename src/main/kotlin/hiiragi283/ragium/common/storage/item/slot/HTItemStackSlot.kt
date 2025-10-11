@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.storage.item.slot
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageStack
@@ -131,6 +132,10 @@ open class HTItemStackSlot protected constructor(
     override fun canItemExtract(stack: HTItemStorageStack, access: HTStorageAccess): Boolean = canExtract.test(stack, access)
 
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
+
+    override fun serialize(output: HTValueOutput) {
+        output.store(RagiumConst.ITEM, HTItemStorageStack.CODEC, getStack())
+    }
 
     override fun deserialize(input: HTValueInput) {
         input.read(RagiumConst.ITEM, HTItemStorageStack.CODEC)?.let(::setStackUnchecked)

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.storage.item.slot
 
-import hiiragi283.ragium.api.serialization.value.HTValueInput
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
 import hiiragi283.ragium.api.storage.item.maxStackSize
@@ -9,7 +8,9 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.inventory.Slot
 import kotlin.math.min
 
-class HTItemEntitySlot(private val entity: ItemEntity) : HTItemSlot.Mutable {
+class HTItemEntitySlot(private val entity: ItemEntity) :
+    HTItemSlot.Mutable,
+    HTValueSerializable.Empty {
     override fun createContainerSlot(): Slot? = null
 
     override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(entity.item)
@@ -20,10 +21,6 @@ class HTItemEntitySlot(private val entity: ItemEntity) : HTItemSlot.Mutable {
     }
 
     override fun isValid(stack: HTItemStorageStack): Boolean = true
-
-    override fun serialize(output: HTValueOutput) {}
-
-    override fun deserialize(input: HTValueInput) {}
 
     override fun onContentsChanged() {
         if (this.isEmpty()) {
