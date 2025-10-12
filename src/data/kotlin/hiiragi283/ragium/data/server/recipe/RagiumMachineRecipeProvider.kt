@@ -92,6 +92,17 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Items.FURNACE)
             .define('C', Items.BRICKS)
             .save(output)
+        // Advanced
+        HTShapedRecipeBuilder
+            .misc(HTGeneratorVariant.COMBUSTION)
+            .pattern(
+                "AAA",
+                "ABA",
+                "ACA",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', Items.PISTON)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ADVANCED)
+            .save(output)
     }
 
     //    Processors    //

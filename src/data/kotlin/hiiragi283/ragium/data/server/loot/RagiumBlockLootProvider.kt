@@ -50,7 +50,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                         }
                     } else {
                         createSingleItemTable(block)
-                    }
+                    },
                 )
             }
 

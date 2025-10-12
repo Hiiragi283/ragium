@@ -341,7 +341,7 @@ object RagiumBlocks {
 
     @JvmField
     val GENERATORS: Map<HTGeneratorVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createVariantMap<HTGeneratorVariant>(machineProperty()) { variant: HTGeneratorVariant ->
+        createVariantMap<HTGeneratorVariant>(machineProperty().noOcclusion()) { variant: HTGeneratorVariant ->
             when (variant) {
                 // Basic
                 HTGeneratorVariant.THERMAL -> ::HTHorizontalEntityBlock

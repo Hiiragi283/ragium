@@ -143,9 +143,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
         // WIP
         builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS.toMutableList().apply { remove(RagiumBlocks.DEVICE_CASING) })
-        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.GENERATORS.toMutableMap().apply { remove(HTGeneratorVariant.THERMAL) })
-        builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
-        builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
+        builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD)
+        builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.NUCLEAR_REACTOR)
+        builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.SOLAR)
+        builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 

@@ -218,7 +218,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         // Enchantments
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant.blockHolder)
+            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant)
         }
         builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.DRILL)
         builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.TELEPORT_KEY)

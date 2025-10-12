@@ -43,8 +43,9 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumBlocks.EXP_BERRIES)
             remove(RagiumBlocks.WARPED_WART)
 
-            removeAll(RagiumBlocks.GENERATORS.values)
-            add(HTGeneratorVariant.THERMAL.blockHolder)
+            remove(HTGeneratorVariant.SOLAR.blockHolder)
+            remove(HTGeneratorVariant.NUCLEAR_REACTOR.blockHolder)
+
             removeAll(RagiumBlocks.LED_BLOCKS.values)
             removeAll(RagiumBlocks.WALLS.values)
             // Delight

@@ -182,6 +182,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Generator
         machine(HTGeneratorVariant.THERMAL, basicMachine, bricks)
+        altModelBlock(HTGeneratorVariant.COMBUSTION.blockHolder, factory = ::horizontalBlock)
 
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")
