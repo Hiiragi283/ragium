@@ -66,12 +66,12 @@ class HTDrillItem(properties: Properties) :
         return false
     }
 
-    override fun isCorrectToolForDrops(stack: ItemStack, state: BlockState): Boolean {
+    /*override fun isCorrectToolForDrops(stack: ItemStack, state: BlockState): Boolean {
         if (!super.isCorrectToolForDrops(stack, state)) return false
         val battery: HTEnergyBattery = getBattery(stack) ?: return false
         val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
         return battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage
-    }
+    }*/
 
     override fun getEnchantmentValue(stack: ItemStack): Int = 15
 }
