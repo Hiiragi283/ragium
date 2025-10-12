@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.storage.capability
 
-import hiiragi283.ragium.api.extension.slotRange
-import hiiragi283.ragium.api.extension.tankRange
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -53,7 +51,7 @@ object RagiumCapabilities {
     private fun wrapHandler(handler: IItemHandler): HTItemHandler = handler as? HTItemHandler
         ?: object : HTItemHandler {
             override fun getItemSlots(side: Direction?): List<HTItemSlot> =
-                handler.slotRange.mapNotNull { index: Int -> createSlot(handler, index) }
+                (0..<handler.slots).mapNotNull { index: Int -> createSlot(handler, index) }
 
             override fun onContentsChanged() {}
         }
@@ -84,7 +82,7 @@ object RagiumCapabilities {
     private fun wrapHandler(handler: IFluidHandler): HTFluidHandler = handler as? HTFluidHandler
         ?: object : HTFluidHandler {
             override fun getFluidTanks(side: Direction?): List<HTFluidTank> =
-                handler.tankRange.mapNotNull { index -> createTank(handler, index) }
+                (0..<handler.tanks).mapNotNull { index -> createTank(handler, index) }
 
             override fun onContentsChanged() {}
         }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.giveStackTo
+import hiiragi283.ragium.api.extension.randomKt
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.resources.ResourceKey
@@ -25,7 +26,7 @@ class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.R
         val stack: ItemStack = player.getItemInHand(usedHand)
         val lootTableKey: ResourceKey<LootTable> = stack
             .get(RagiumDataComponents.LOOT_TICKET)
-            ?.getRandomLoot(player.random)
+            ?.getRandomLoot(player.randomKt)
             ?: return InteractionResultHolder.fail(stack)
         if (level is ServerLevel) {
             val lootTable: LootTable = level.server

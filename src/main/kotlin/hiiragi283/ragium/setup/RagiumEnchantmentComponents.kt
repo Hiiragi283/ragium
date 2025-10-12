@@ -10,6 +10,9 @@ import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 
+/**
+ * @see [net.minecraft.world.item.enchantment.EnchantmentEffectComponents]
+ */
 object RagiumEnchantmentComponents {
     @JvmField
     val REGISTER = HTDeferredDataComponentRegister(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, RagiumAPI.MOD_ID)

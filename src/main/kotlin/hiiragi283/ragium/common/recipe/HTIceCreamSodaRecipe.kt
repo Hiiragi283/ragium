@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.extension.indices
+import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -22,16 +24,15 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
         var isCherry = false
         var isPotion = false
         var isDye = false
-        for (index: Int in input.indices) {
-            val stackIn: ItemStack = input.getItem(index)
-            if (stackIn.isEmpty) continue
-            if (stackIn.`is`(RagiumItems.ICE_CREAM) && !isIceCream) {
+        for (stack: HTItemStorageStack in ImmutableRecipeInput(input)) {
+            if (stack.isEmpty()) continue
+            if (stack.isOf(RagiumItems.ICE_CREAM) && !isIceCream) {
                 isIceCream = true
-            } else if (stackIn.`is`(RagiumCommonTags.Items.FOODS_CHERRY) && !isCherry) {
+            } else if (stack.isOf(RagiumCommonTags.Items.FOODS_CHERRY) && !isCherry) {
                 isCherry = true
-            } else if (stackIn.has(DataComponents.POTION_CONTENTS) && !isPotion) {
+            } else if (stack.has(DataComponents.POTION_CONTENTS) && !isPotion) {
                 isPotion = true
-            } else if (stackIn.`is`(Tags.Items.DYES_GREEN) && !isDye) {
+            } else if (stack.isOf(Tags.Items.DYES_GREEN) && !isDye) {
                 isDye = true
             }
         }
@@ -40,11 +41,10 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (index: Int in input.indices) {
-            val stackIn: ItemStack = input.getItem(index)
-            if (stackIn.isEmpty) continue
-            if (stackIn.has(DataComponents.POTION_CONTENTS)) {
-                potion = stackIn.get(DataComponents.POTION_CONTENTS)!!
+        for (stack: HTItemStorageStack in ImmutableRecipeInput(input)) {
+            if (stack.isEmpty()) continue
+            if (stack.has(DataComponents.POTION_CONTENTS)) {
+                potion = stack.get(DataComponents.POTION_CONTENTS)!!
             }
         }
         return RagiumPlatform.INSTANCE.createSoda(potion)

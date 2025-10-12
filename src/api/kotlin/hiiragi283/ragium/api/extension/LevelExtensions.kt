@@ -1,7 +1,8 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumPlatform
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Position
+import net.minecraft.util.RandomSource
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -12,6 +13,7 @@ import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import kotlin.random.Random
 
 //    Position    //
 
@@ -35,7 +37,7 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
         val remainStack: ItemStack = entity.getCapability(Capabilities.ItemHandler.ENTITY)?.let { handler: IItemHandler ->
             ItemHandlerHelper.insertItem(handler, stack, false)
         } ?: stack
-        dropStackAt(entity, remainStack, offset)
+        entity.spawnAtLocation(remainStack, offset)
     }
 }
 
@@ -44,29 +46,23 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
  */
 fun giveStackTo(player: Player, stack: ItemStack) {
     if (player.isFakePlayer) {
-        dropStackAt(player, stack)
+        player.spawnAtLocation(stack)
     } else {
         ItemHandlerHelper.giveItemToPlayer(player, stack)
     }
 }
 
 /**
- * 指定した[stack]を[entity]の足元にドロップします。
- */
-fun dropStackAt(entity: Entity, stack: ItemStack, offset: Float = 0f) {
-    entity.spawnAtLocation(stack, offset)
-}
-
-/**
  * 指定した[stack]を[pos]にドロップします。
  */
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
-    dropStackAt(level, pos.toVec3(), stack)
+    Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
 }
 
-/**
- * 指定した[stack]を[pos]にドロップします。
- */
-fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
-    Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
-}
+//    RandomSource    //
+
+fun RandomSource.asKotlinRandom(): Random = RagiumPlatform.INSTANCE.wrapRandom(this)
+
+val Level.randomKt: Random get() = this.random.asKotlinRandom()
+
+val Entity.randomKt: Random get() = this.random.asKotlinRandom()

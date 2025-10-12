@@ -29,7 +29,7 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
             @JvmStatic
             fun getComponentTier(stack: HTItemStorageStack): HTComponentTier? = RagiumItems.COMPONENTS
                 .toList()
-                .firstOrNull { (_, item: ItemLike) -> stack.isOf(item) }
+                .firstOrNull { (_, item: ItemLike) -> stack.isOf(item.asItem()) }
                 ?.first
         }
 
