@@ -1,6 +1,7 @@
 {
   "values": [
     "#ragium:enchantable/capacity",
-    "#ragium:enchantable/range"
+    "#ragium:enchantable/range",
+    "#ragium:enchantable/strike"
   ]
 }

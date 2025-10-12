@@ -396,6 +396,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.RAW_MEAT, "生肉")
         add(RagiumModTags.Items.WIP, "開発中")
 
+        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "容量増加をエンチャント可能")
+        add(RagiumModTags.Items.RANGE_ENCHANTABLE, "範囲増加をエンチャント可能")
+        add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "雷撃をエンチャント可能")
+
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "合金炉で使う基本融剤")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "合金炉で使う発展融剤")
 

@@ -96,6 +96,9 @@ object RagiumModTags {
         @JvmField
         val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable/range")
 
+        @JvmField
+        val STRIKE_ENCHANTABLE: TagKey<Item> = create("enchantable/strike")
+
         // Flux
         @JvmField
         val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = create("alloy_smelter_fluxes", "basic")

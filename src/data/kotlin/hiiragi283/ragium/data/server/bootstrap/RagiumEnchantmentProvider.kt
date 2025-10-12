@@ -101,7 +101,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                 .enchantment(
                     Enchantment.definition(
                         itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        itemLookup.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                        itemLookup.getOrThrow(RagiumModTags.Items.STRIKE_ENCHANTABLE),
                         5,
                         5,
                         Enchantment.dynamicCost(5, 8),

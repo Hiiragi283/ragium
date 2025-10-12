@@ -16,7 +16,7 @@ interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
     //    Mutable    //
 
     /**
-     * [HTItemStorageStack]向けの[HTStackSlot.Mutable]の拡張インターフェース
+     * [HTItemStorageStack]向けの[HTStackSlot.Mutable]の拡張クラス
      */
     abstract class Mutable :
         HTStackSlot.Mutable<HTItemStorageStack>(),

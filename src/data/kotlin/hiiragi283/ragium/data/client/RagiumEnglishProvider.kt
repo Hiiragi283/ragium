@@ -394,6 +394,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
         add(RagiumModTags.Items.WIP, "Work In Progress")
 
+        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "Capacity Enchantable")
+        add(RagiumModTags.Items.RANGE_ENCHANTABLE, "Range Enchantable")
+        add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "Strike Enchantable")
+
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "Basic Fluxes for Alloy Smelter")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "Advanced Fluxes for Alloy Smelter")
 

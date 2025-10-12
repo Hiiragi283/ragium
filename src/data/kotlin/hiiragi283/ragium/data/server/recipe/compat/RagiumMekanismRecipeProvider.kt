@@ -104,7 +104,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
                 itemHelper.gemOrDust(HTVanillaMaterialType.DIAMOND, 1),
-                chemicalHelper.from(RagiumEssenceType.RAGIUM, 60),
+                chemicalHelper.from(RagiumEssenceType.RAGIUM, 80),
                 RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/ragi_crystal"))
@@ -203,10 +203,19 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
                 itemHelper.ingotOrDust(HTVanillaMaterialType.NETHERITE, 1),
-                chemicalHelper.from(RagiumEssenceType.AZURE, 160),
+                chemicalHelper.from(RagiumEssenceType.AZURE, 320),
                 RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/deep_steel"))
+
+        // Deep + Azure Steel Ingot -> Deep Ingot
+        ItemStackChemicalToItemStackRecipeBuilder
+            .metallurgicInfusing(
+                itemHelper.ingotOrDust(RagiumMaterialType.AZURE_STEEL, 1),
+                chemicalHelper.from(RagiumEssenceType.DEEP, 160),
+                RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL).toStack(),
+                false,
+            ).build(output, id("metallurgic_infusing/deep_steel_alt"))
     }
 
     //    Extensions    //

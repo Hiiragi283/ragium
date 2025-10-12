@@ -97,7 +97,7 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
     //    Mutable    //
 
     /**
-     * 中身が可変な[HTStackSlot]の拡張インターフェース
+     * 中身が可変な[HTStackSlot]の拡張クラス
      */
     abstract class Mutable<STACK : HTStorageStack<*, STACK>> : HTStackSlot<STACK> {
         /**
