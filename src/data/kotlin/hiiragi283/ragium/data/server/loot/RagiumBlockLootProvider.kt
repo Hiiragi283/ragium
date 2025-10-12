@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.server.loot
 
+import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -10,7 +12,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
@@ -27,14 +28,31 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(), FeatureFlags.REGISTRY.allFlags(), provider) {
     private val fortune: Holder<Enchantment> = registries.holderOrThrow(Enchantments.FORTUNE)
 
     override fun generate() {
-        RagiumBlocks.REGISTER.firstEntries.forEach(::dropSelf)
+        RagiumBlocks.REGISTER
+            .firstEntries
+            .asSequence()
+            .map(HTDeferredHolder<Block, out Block>::get)
+            .forEach { block: Block ->
+                add(
+                    block,
+                    if (block is HTEntityBlock) {
+                        copyComponent(block) {
+                            include(DataComponents.CUSTOM_NAME)
+                            include(DataComponents.ENCHANTMENTS)
+                            include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
+                            include(RagiumDataComponents.FLUID_CONTENT)
+                        }
+                    } else {
+                        createSingleItemTable(block)
+                    }
+                )
+            }
 
         add(RagiumBlocks.SWEET_BERRIES_CAKE.get()) { block: Block ->
             createSilkTouchDispatchTable(
@@ -77,13 +95,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             }
             add(ore.get(), factory)
         }
-
-        // Storages
-        for (holder: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
-            add(holder.get()) { block: Block ->
-                copyComponent(block, DataComponents.ENCHANTMENTS, RagiumDataComponents.FLUID_CONTENT)
-            }
-        }
     }
 
     private val blocks: MutableList<Block> = mutableListOf()
@@ -97,11 +108,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     //    Extensions    //
 
-    private fun dropSelf(holder: Supplier<out Block>) {
-        dropSelf(holder.get())
-    }
-
-    private fun addCrop(holder: Supplier<out Block>, crop: ItemLike) {
+    private fun addCrop(holder: HTDeferredBlock<*, *>, crop: ItemLike) {
         add(holder.get()) { block: Block ->
             applyExplosionDecay(
                 block,
@@ -136,7 +143,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
     }
 
-    private fun copyComponent(block: Block, vararg types: DataComponentType<*>): LootTable.Builder = LootTable
+    private fun copyComponent(block: Block, builderAction: CopyComponentsFunction.Builder.() -> Unit): LootTable.Builder = LootTable
         .lootTable()
         .withPool(
             applyExplosionCondition(
@@ -150,7 +157,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             .apply(
                                 CopyComponentsFunction
                                     .copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                    .apply { types.forEach(this::include) },
+                                    .apply(builderAction),
                             ),
                     ),
             ),

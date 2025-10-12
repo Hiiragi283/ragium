@@ -27,6 +27,8 @@ import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -111,7 +113,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        output.store("custom_name", VanillaBiCodecs.TEXT, customName)
+        output.store("custom_name", VanillaBiCodecs.TEXT, this.customName)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -127,7 +129,17 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        customName = input.read("custom_name", VanillaBiCodecs.TEXT)
+        this.customName = input.read("custom_name", VanillaBiCodecs.TEXT)
+    }
+
+    override fun applyImplicitComponents(componentInput: DataComponentInput) {
+        super.applyImplicitComponents(componentInput)
+        this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
+    }
+
+    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+        super.collectImplicitComponents(components)
+        components.set(DataComponents.CUSTOM_NAME, this.customName)
     }
 
     override fun sendPassivePacket(level: ServerLevel) {

@@ -15,7 +15,9 @@
             {
               "function": "minecraft:copy_components",
               "include": [
+                "minecraft:custom_name",
                 "minecraft:enchantments",
+                "minecraft:hide_additional_tooltip",
                 "ragium:fluid_content"
               ],
               "source": "block_entity"
