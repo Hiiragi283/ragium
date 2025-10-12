@@ -190,10 +190,10 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
 
         final override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
             val stack: STACK = getStack()
-            if (isEmpty() || amount < 1 || !canStackExtract(getStack(), access)) {
+            if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) {
                 return getEmptyStack()
             }
-            val current: Int = min(stack.amountAsInt(), getCapacityAsInt(getStack()))
+            val current: Int = min(stack.amountAsInt(), getCapacityAsInt(stack))
             val fixedAmount: Int = min(amount, current)
             val result: STACK = stack.copyWithAmount(fixedAmount)
             if (action.execute) {

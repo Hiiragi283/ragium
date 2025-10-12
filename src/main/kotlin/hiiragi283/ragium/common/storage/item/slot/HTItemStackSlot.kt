@@ -130,7 +130,7 @@ open class HTItemStackSlot protected constructor(
         super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
     override fun canStackExtract(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
-        super.canStackExtract(stack, access) && canInsert.test(stack, access)
+        super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
 

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.item.getCapacityAsInt
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.insertItem
 import net.minecraft.world.SimpleContainer
@@ -52,7 +51,7 @@ open class HTContainerItemSlot(
         slot.onContentsChanged()
     }
 
-    override fun getMaxStackSize(): Int = slot.getCapacityAsInt(ItemStack.EMPTY)
+    override fun getMaxStackSize(): Int = slot.getCapacityAsInt(HTItemStorageStack.EMPTY)
 
     override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(HTItemStorageStack.of(stack))
 
