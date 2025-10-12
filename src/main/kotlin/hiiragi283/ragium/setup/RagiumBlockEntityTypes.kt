@@ -32,12 +32,13 @@ import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTItemWithFluidToChancedItemBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -137,19 +138,11 @@ object RagiumBlockEntityTypes {
                 HTMachineVariant.CRUSHER -> ::HTCrusherBlockEntity
                 HTMachineVariant.MELTER -> ::HTMelterBlockEntity
                 HTMachineVariant.REFINERY -> ::HTRefineryBlockEntity
-                HTMachineVariant.WASHER -> HTItemWithFluidToChancedItemBlockEntity.create(
-                    SoundEvents.GENERIC_SPLASH,
-                    RagiumRecipeTypes.WASHING,
-                    variant,
-                )
+                HTMachineVariant.WASHER -> ::HTWasherBlockEntity
                 // Elite
                 HTMachineVariant.BREWERY -> ::HTBreweryBlockEntity
                 HTMachineVariant.MULTI_SMELTER -> ::HTMultiSmelterBlockEntity
-                HTMachineVariant.PLANTER -> HTItemWithFluidToChancedItemBlockEntity.create(
-                    SoundEvents.GROWING_PLANT_CROP,
-                    RagiumRecipeTypes.PLANTING,
-                    variant,
-                )
+                HTMachineVariant.PLANTER -> ::HTPlanterBlockEntity
                 HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity
             }
             registerTick(variant.variantName(), factory)

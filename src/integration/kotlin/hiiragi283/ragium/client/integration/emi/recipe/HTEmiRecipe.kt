@@ -69,7 +69,11 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     }
 
     protected fun addCatalyst(ingredient: HTItemIngredient) {
-        catalysts.add(ingredient(ingredient))
+        addCatalyst(ingredient(ingredient))
+    }
+
+    protected fun addCatalyst(ingredient: EmiIngredient) {
+        catalysts.add(ingredient)
     }
 
     protected fun addOutputs(result: HTItemResult?) {

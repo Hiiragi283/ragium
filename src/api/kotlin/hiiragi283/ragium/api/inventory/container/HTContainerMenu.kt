@@ -134,13 +134,14 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
                         stackIn.count = sumCount
                         slot.setChanged()
                         flag = true
-                    }
-                    // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
-                    else if (stackIn.count < maxCount) {
-                        stack.shrink(maxCount - stackIn.count)
-                        stackIn.count = maxCount
-                        slot.setChanged()
-                        flag = true
+                    } else {
+                        // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
+                        if (stackIn.count < maxCount) {
+                            stack.shrink(maxCount - stackIn.count)
+                            stackIn.count = maxCount
+                            slot.setChanged()
+                            flag = true
+                        }
                     }
                 }
                 // 現在のスタックが空になったら即座に抜ける

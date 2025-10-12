@@ -3,19 +3,20 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputEmiRecipe
-import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToItemRecipe>) :
-    HTMultiOutputEmiRecipe<HTItemToItemRecipe>(category, holder) {
+class HTWashingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemWithFluidToChancedItemRecipeBase>) :
+    HTMultiOutputEmiRecipe<HTItemWithFluidToChancedItemRecipeBase>(category, holder) {
     init {
         addInput(recipe.ingredient)
+        addInput(recipe.fluidIngredient)
 
-        addOutputs(recipe.result)
+        recipe.results.forEach(::addChancedOutputs)
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(output(0).copy().setAmount(1), getPosition(1), getPosition(2)).catalyst(true)
+        widgets.addSlot(input(1), getPosition(1), getPosition(2))
     }
 }
