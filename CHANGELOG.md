@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.9.3b
+
+### Common
+
+- Item: Fix crushed when checking harvesting level with Drill on client side
+
+- Menu: Fix duplicated item when moving with shift-click
+
+### Integration
+
+- All: moved from main module to integration module
+
 ## v0.9.2b
 
 ### API
