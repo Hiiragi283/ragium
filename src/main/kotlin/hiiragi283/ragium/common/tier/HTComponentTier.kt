@@ -45,5 +45,5 @@ enum class HTComponentTier(private val base: HTBaseTier) : HTMaterialTier {
         else -> base.getTranslatedName(type)
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

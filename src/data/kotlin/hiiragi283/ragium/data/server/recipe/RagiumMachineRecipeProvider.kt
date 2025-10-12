@@ -92,6 +92,17 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', Items.FURNACE)
             .define('C', Items.BRICKS)
             .save(output)
+        // Advanced
+        HTShapedRecipeBuilder
+            .misc(HTGeneratorVariant.COMBUSTION)
+            .pattern(
+                "AAA",
+                "ABA",
+                "ACA",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+            .define('B', Items.PISTON)
+            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ADVANCED)
+            .save(output)
     }
 
     //    Processors    //
@@ -137,29 +148,9 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             createComponentUpgrade(HTComponentTier.ADVANCED, adv, basic).save(output)
         }
         // Elite
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.SIMULATOR)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ELITE)
-            .define('D', Items.DEEPSLATE_TILES)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .misc(HTMachineVariant.BREWERY)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('B', Items.BREWING_STAND)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ELITE)
-            .define('D', Items.DEEPSLATE_TILES)
-            .save(output)
+        eliteMachine(HTMachineVariant.BREWERY, Ingredient.of(Items.BREWING_STAND))
+        eliteMachine(HTMachineVariant.PLANTER, Ingredient.of(Items.FLOWER_POT))
+        eliteMachine(HTMachineVariant.SIMULATOR, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.OBSIDIAN))
 
         mapOf(
             HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
@@ -203,6 +194,25 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', side)
             .define('C', core)
             .define('D', Items.NETHER_BRICKS)
+            .save(output)
+    }
+
+    @JvmStatic
+    private fun eliteMachine(
+        variant: HTMachineVariant,
+        side: Ingredient,
+        core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.ELITE),
+    ) {
+        HTShapedRecipeBuilder
+            .misc(variant)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
+            .define('B', side)
+            .define('C', core)
+            .define('D', Items.DEEPSLATE_TILES)
             .save(output)
     }
 

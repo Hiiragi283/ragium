@@ -2,12 +2,13 @@ package hiiragi283.ragium.common.storage
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
 
@@ -17,7 +18,7 @@ class HTAccessConfigCache :
     companion object {
         @JvmField
         val CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfiguration>> =
-            BiCodecs.mapOf(BiCodecs.DIRECTION, HTAccessConfiguration.CODEC)
+            BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfiguration.CODEC)
     }
 
     private val cache: MutableMap<Direction, HTAccessConfiguration> = mutableMapOf()

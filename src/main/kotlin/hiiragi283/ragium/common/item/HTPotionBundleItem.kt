@@ -1,8 +1,10 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.item.base.HTContainerItem
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.InteractionHand
@@ -18,13 +20,13 @@ class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.st
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         for (slot: HTItemSlot in getItemSlots(stack)) {
             if (slot.isEmpty()) continue
-            val stackIn: ItemStack = slot.getStack()
+            val stackIn: ItemStack = slot.getItemStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
-                slot.extract(1, false, HTStorageAccess.INTERNAl)
+                slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             }
-            if (result != stackIn) {
-                dropStackAt(livingEntity, result)
+            if (result != stackIn && livingEntity is Player) {
+                giveStackTo(livingEntity, result)
             }
             return stack
         }

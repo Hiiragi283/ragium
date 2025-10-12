@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -118,6 +119,10 @@ interface HTBlockEntityExtension {
      * ブロックが破壊されたときにインベントリの中身をドロップします。
      */
     fun dropInventory(consumer: Consumer<ItemStack>) {}
+
+    fun onRemove(state: BlockState, level: Level, pos: BlockPos) {
+        dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
+    }
 
     /**
      * ブロックのコンパレータ出力を返します。

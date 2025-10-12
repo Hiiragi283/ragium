@@ -2,7 +2,7 @@ package hiiragi283.ragium.client
 
 import com.mojang.blaze3d.platform.InputConstants
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.toDescriptionKey
+import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.client.KeyMapping

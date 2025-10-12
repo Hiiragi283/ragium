@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.storage.resolver
 
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.HTMultiCapability
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability
@@ -18,7 +18,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any,
     private val handlers: MutableMap<Direction, HANDLER> = mutableMapOf()
     private var readOnlyHandler: HANDLER? = null
 
-    fun <T : Any, U : T> resolve(type: HTMultiCapability<T, U>, context: Direction?): T? = resolve(type.blockCapability, context)
+    fun <T : Any, U : T> resolve(type: HTMultiCapability<T, U, *, *>, context: Direction?): T? = resolve(type.blockCapability(), context)
 
     override fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, side: Direction?): T? = when {
         getContainers(side).isEmpty() -> null

@@ -33,7 +33,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
@@ -92,7 +91,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun onRegister(event: RegisterEvent) {
-        event.register(Registries.RECIPE_TYPE) { helper: RegisterEvent.RegisterHelper<RecipeType<*>> ->
+        event.register(Registries.RECIPE_TYPE) { helper ->
             register(helper, RagiumRecipeTypes.SAWMILL)
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
@@ -102,15 +101,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             register(helper, RagiumRecipeTypes.EXTRACTING)
             register(helper, RagiumRecipeTypes.FLUID_TRANSFORM)
             register(helper, RagiumRecipeTypes.MELTING)
+            register(helper, RagiumRecipeTypes.PLANTING)
             register(helper, RagiumRecipeTypes.SIMULATING)
             register(helper, RagiumRecipeTypes.WASHING)
         }
     }
 
-    private fun <I : RecipeInput, R : Recipe<I>> register(
-        helper: RegisterEvent.RegisterHelper<RecipeType<*>>,
-        holder: HTDeferredRecipeType<I, R>,
-    ) {
+    private fun <R : Recipe<*>> register(helper: RegisterEvent.RegisterHelper<RecipeType<*>>, holder: HTDeferredRecipeType<*, R>) {
         helper.register(holder.id, RecipeType.simple<R>(holder.id))
     }
 
@@ -142,6 +139,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMaps.INSTANCE.solarPowerType)
 
         event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
+
+        event.register(RagiumDataMaps.INSTANCE.mobHeadType)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

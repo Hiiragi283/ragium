@@ -1,28 +1,13 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTStackSlot
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import net.minecraft.world.inventory.Slot
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import kotlin.math.min
 
-interface HTItemSlot : HTStackSlot<ItemStack> {
-    companion object {
-        const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
-    }
-
-    override fun getAmountAsLong(): Long = getStack().count.toLong()
-
-    override fun isEmpty(): Boolean = getStack().isEmpty
-
-    override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.ITEM, BiCodecs.itemStack(true), getStack())
-    }
-
+/**
+ * [HTItemStorageStack]向けの[HTStackSlot]の拡張インターフェース
+ */
+interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
     /**
      * GUIにおける[Slot]を返します。
      */
@@ -30,113 +15,15 @@ interface HTItemSlot : HTStackSlot<ItemStack> {
 
     //    Mutable    //
 
-    interface Mutable :
-        HTItemSlot,
-        HTStackSlot.Mutable<ItemStack> {
-        override fun setEmpty() {
-            setStack(ItemStack.EMPTY)
-        }
+    /**
+     * [HTItemStorageStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     */
+    abstract class Mutable :
+        HTStackSlot.Mutable<HTItemStorageStack>(),
+        HTItemSlot {
+        final override fun getEmptyStack(): HTItemStorageStack = HTItemStorageStack.EMPTY
 
-        override fun insert(stack: ItemStack, simulate: Boolean, access: HTStorageAccess): ItemStack {
-            if (stack.isEmpty) return ItemStack.EMPTY
-
-            val needed: Int = getNeededAsInt(stack)
-            if (needed <= 0 || !isItemValidForInsert(stack, access)) return stack
-
-            val sameType: Boolean = ItemStack.isSameItemSameComponents(getStack(), stack)
-            if (isEmpty() || sameType) {
-                val toAdd: Int = min(stack.count, needed)
-                if (!simulate) {
-                    if (sameType) {
-                        growStack(toAdd, false)
-                        onContentsChanged()
-                    } else {
-                        setStack(stack.copyWithCount(toAdd))
-                    }
-                }
-                return stack.copyWithCount(stack.count - toAdd)
-            }
-            return stack
-        }
-
-        override fun extract(amount: Int, simulate: Boolean, access: HTStorageAccess): ItemStack {
-            val stack: ItemStack = getStack()
-            if (isEmpty() || amount < 1 || !canItemExtract(getStack(), access)) {
-                return ItemStack.EMPTY
-            }
-            val current: Int = min(stack.count, stack.maxStackSize)
-            val fixedAmount: Int = min(amount, current)
-            val result: ItemStack = stack.copyWithCount(fixedAmount)
-            if (!simulate) {
-                shrinkStack(fixedAmount, false)
-                onContentsChanged()
-            }
-            return result
-        }
-
-        /**
-         * 指定された[stack]をこのスロットに搬入できるか判定します。
-         * @param stack 搬入される[ItemStack]
-         * @param access このスロットへのアクセスの種類
-         * @return 搬入できる場合は`true`
-         */
-        fun isItemValidForInsert(stack: ItemStack, access: HTStorageAccess): Boolean = isValid(stack)
-
-        /**
-         * 指定された[stack]をこのスロットに搬出できるか判定します。
-         * @param stack 搬出される[ItemStack]
-         * @param access このスロットへのアクセスの種類
-         * @return 搬出できる場合は`true`
-         */
-        fun canItemExtract(stack: ItemStack, access: HTStorageAccess): Boolean = true
-
-        /**
-         * 指定された[amount]から，現在の個数を置換します。
-         * @param amount 置換する個数の最大値
-         * @param simulate `true`の場合のみ実際に置換を行います。
-         * @return 実際に置換された個数
-         */
-        fun setStackSize(amount: Int, simulate: Boolean): Int {
-            if (isEmpty()) return 0
-            if (amount <= 0) {
-                if (!simulate) setEmpty()
-                return 0
-            }
-            val stack: ItemStack = getStack()
-            val maxStackSize: Int = getCapacityAsInt(stack)
-            val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.count == fixedAmount || simulate) {
-                return fixedAmount
-            }
-            setStack(stack.copyWithCount(fixedAmount))
-            onContentsChanged()
-            return fixedAmount
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数に追加します。
-         * @param amount 追加する個数の最大値
-         * @param simulate `true`の場合のみ実際に追加を行います。
-         * @return 実際に追加された個数
-         */
-        fun growStack(amount: Int, simulate: Boolean): Int {
-            val current: Int = getAmountAsInt()
-            if (current == 0) return 0
-            val fixedAmount: Int = if (amount > 0) {
-                min(amount, getCapacityAsInt(getStack()))
-            } else {
-                amount
-            }
-            val newSize: Int = setStackSize(current + fixedAmount, simulate)
-            return newSize - current
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数を削除します。
-         * @param amount 削除する個数の最大値
-         * @param simulate `true`の場合のみ実際に削除を行います。
-         * @return 実際に削除された個数
-         */
-        fun shrinkStack(amount: Int, simulate: Boolean): Int = -growStack(-amount, simulate)
+        final override fun isSameStack(first: HTItemStorageStack, second: HTItemStorageStack): Boolean =
+            ItemStack.isSameItemSameComponents(first.stack, second.stack)
     }
 }

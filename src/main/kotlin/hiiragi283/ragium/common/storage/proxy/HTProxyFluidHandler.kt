@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.proxy
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTExtendedFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTSidedFluidHandler
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
@@ -16,19 +17,19 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTProxyFluidHandler(private val handler: HTSidedFluidHandler, side: Direction?, holder: HTCapabilityHolder?) :
     HTProxyHandler(side, holder),
     HTExtendedFluidHandler {
-    override fun insertFluid(stack: FluidStack, simulate: Boolean): FluidStack = when (readOnlyInsert) {
+    override fun insertFluid(stack: FluidStack, action: HTStorageAction): FluidStack = when (readOnlyInsert) {
         true -> stack
-        false -> handler.insertFluid(stack, simulate, side)
+        false -> handler.insertFluid(stack, action, side)
     }
 
-    override fun extractFluid(amount: Int, simulate: Boolean): FluidStack = when (readOnlyExtract) {
+    override fun extractFluid(amount: Int, action: HTStorageAction): FluidStack = when (readOnlyExtract) {
         true -> FluidStack.EMPTY
-        false -> handler.extractFluid(amount, simulate, side)
+        false -> handler.extractFluid(amount, action, side)
     }
 
-    override fun extractFluid(stack: FluidStack, simulate: Boolean): FluidStack = when (readOnlyExtract) {
+    override fun extractFluid(stack: FluidStack, action: HTStorageAction): FluidStack = when (readOnlyExtract) {
         true -> FluidStack.EMPTY
-        false -> handler.extractFluid(stack, simulate, side)
+        false -> handler.extractFluid(stack, action, side)
     }
 
     override fun getTanks(): Int = handler.getTanks(side)

@@ -1,9 +1,8 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.createTagKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.tag.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

@@ -2,9 +2,9 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.extension.toNonNullList
-import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.util.wrapOptional
+import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.item.ItemStack
@@ -59,7 +59,7 @@ class HTCuttingBoardRecipeBuilder(
         group ?: "",
         ingredients[0],
         ingredients[1],
-        results.toNonNullList(),
+        results.let(NonNullList<ChanceResult>::copyOf),
         sound.wrapOptional(),
     )
 }

@@ -121,6 +121,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
+        addEnchantment(RagiumEnchantments.STRIKE, "雷撃", "モブが頭をドロップします。")
 
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "音響耐性", "ソニックブームなどの音響攻撃を無効にします。")
     }
@@ -395,6 +396,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.RAW_MEAT, "生肉")
         add(RagiumModTags.Items.WIP, "開発中")
 
+        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "容量増加をエンチャント可能")
+        add(RagiumModTags.Items.RANGE_ENCHANTABLE, "範囲増加をエンチャント可能")
+        add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "雷撃をエンチャント可能")
+
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "合金炉で使う基本融剤")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "合金炉で使う発展融剤")
 
@@ -410,6 +415,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
         add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.WASHING, "洗浄")
     }

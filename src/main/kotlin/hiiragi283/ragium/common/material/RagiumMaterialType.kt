@@ -51,5 +51,5 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

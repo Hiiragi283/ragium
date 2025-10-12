@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
@@ -48,7 +48,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         @JvmStatic
         fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
             event.registerItem(
-                HTMultiCapability.ITEM.itemCapability,
+                RagiumCapabilities.ITEM.itemCapability(),
                 { stack: ItemStack, _: Void? -> getter(stack) },
                 *items,
             )
@@ -57,7 +57,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         @JvmStatic
         fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
             event.registerItem(
-                HTMultiCapability.FLUID.itemCapability,
+                RagiumCapabilities.FLUID.itemCapability(),
                 { stack: ItemStack, _: Void? -> getter(stack) },
                 *items,
             )
@@ -66,7 +66,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         @JvmStatic
         fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
             event.registerItem(
-                HTMultiCapability.ENERGY.itemCapability,
+                RagiumCapabilities.ENERGY.itemCapability(),
                 { stack: ItemStack, _: Void? -> getter(stack) },
                 *items,
             )

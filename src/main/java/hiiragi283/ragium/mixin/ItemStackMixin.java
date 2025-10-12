@@ -21,7 +21,7 @@ public abstract class ItemStackMixin {
     private void ragium$getDrinkingSound(CallbackInfoReturnable<SoundEvent> cir) {
         var sound = ragium$self().get(RagiumDataComponents.DRINK_SOUND);
         if (sound != null) {
-            cir.setReturnValue(sound.getSound());
+            cir.setReturnValue(sound.getHolder().value());
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class ItemStackMixin {
     private void ragium$getEatingSound(CallbackInfoReturnable<SoundEvent> cir) {
         var sound = ragium$self().get(RagiumDataComponents.EAT_SOUND);
         if (sound != null) {
-            cir.setReturnValue(sound.getSound());
+            cir.setReturnValue(sound.getHolder().value());
         }
     }
     
@@ -37,7 +37,7 @@ public abstract class ItemStackMixin {
     private void ragium(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
         var damageResistant = ragium$self().get(RagiumDataComponents.DAMAGE_RESISTANT);
         if (damageResistant != null) {
-            cir.setReturnValue(!damageResistant.isResistantTo(damageSource));
+            cir.setReturnValue(!damageSource.is(damageResistant.getTypes()));
         }
     }
 }

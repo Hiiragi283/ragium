@@ -1,10 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
@@ -15,7 +17,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
     protected val variant: HTMachineVariant,
     pos: BlockPos,
     state: BlockState,
@@ -37,19 +39,30 @@ abstract class HTProcessorBlockEntity<INPUT : RecipeInput, RECIPE : Recipe<INPUT
             this.requiredEnergy = recipeEnergy
         }
         // エネルギーを消費する
-        if (!doProgress(network)) return false
-        // レシピを正常に扱えるか判定する
-        if (!canProgressRecipe(level, input, recipe)) return false
-        // レシピを実行する
-        completeRecipe(level, pos, state, input, recipe)
-        return true
+        if (usedEnergy < requiredEnergy) {
+            usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        }
+        return when {
+            usedEnergy < requiredEnergy -> false
+            // レシピを正常に扱えるか判定する
+            canProgressRecipe(level, input, recipe) -> {
+                usedEnergy -= requiredEnergy
+                // レシピを実行する
+                completeRecipe(level, pos, state, input, recipe)
+                true
+            }
+
+            else -> false
+        }
     }
 
     protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): INPUT
 
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
-    protected open fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * 20 * 10)
+    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * getRecipeTime(recipe))
+
+    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 
     protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 

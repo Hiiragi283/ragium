@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -29,8 +29,7 @@ enum class HTArmorVariant(
     ;
 
     companion object {
-        @JvmField
-        val ARMOR_TABLE: HTTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {
+        val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {
             // Iron
             this[HELMET, HTVanillaMaterialType.IRON] = Items.IRON_HELMET
             this[CHESTPLATE, HTVanillaMaterialType.IRON] = Items.IRON_CHESTPLATE
@@ -60,7 +59,7 @@ enum class HTArmorVariant(
         armorMaterial1: Holder<ArmorMaterial>,
         multiplier: Int,
     ): HTDeferredItem<ArmorItem> = register.registerItem(
-        "${material.serializedName}_$serializedName",
+        "${material.materialName()}_${variantName()}",
         { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
         Item.Properties().durability(armorType.getDurability(multiplier)),
     )
@@ -70,5 +69,5 @@ enum class HTArmorVariant(
         HTLanguageType.JA_JP -> jaJpPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

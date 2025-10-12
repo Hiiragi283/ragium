@@ -129,6 +129,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addEnchantment(RagiumEnchantments.RANGE, "Extra Range", "Increase the range of collecting.")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "Noise Canceling", "Increases damage against sculk mobs such as Warden.")
+        addEnchantment(RagiumEnchantments.STRIKE, "Strike", "Drop mob head.")
 
         addEnchantment(RagiumEnchantments.SONIC_PROTECTION, "Sonic Protection", "Immune damage from sonic boom.")
     }
@@ -393,6 +394,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
         add(RagiumModTags.Items.WIP, "Work In Progress")
 
+        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "Capacity Enchantable")
+        add(RagiumModTags.Items.RANGE_ENCHANTABLE, "Range Enchantable")
+        add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "Strike Enchantable")
+
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "Basic Fluxes for Alloy Smelter")
         add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "Advanced Fluxes for Alloy Smelter")
 
@@ -408,6 +413,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.WASHING, "Washing")
     }

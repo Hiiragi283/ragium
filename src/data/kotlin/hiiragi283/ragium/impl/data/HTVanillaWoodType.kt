@@ -21,5 +21,5 @@ enum class HTVanillaWoodType(override val log: TagKey<Item>, override val planks
     WARPED(ItemTags.WARPED_STEMS, Items.WARPED_PLANKS),
     ;
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

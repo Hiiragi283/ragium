@@ -1,11 +1,11 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer

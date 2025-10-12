@@ -1,19 +1,19 @@
 package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.predicate.HTItemPredicates
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Direction
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.attachment.IAttachmentHolder
@@ -27,9 +27,9 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
                 HTMachineUpgradeItemHandler(checkNotNull(holder as? BlockEntity)::setChanged)
 
             @JvmStatic
-            fun getComponentTier(stack: ItemStack): HTComponentTier? = RagiumItems.COMPONENTS
+            fun getComponentTier(stack: HTItemStorageStack): HTComponentTier? = RagiumItems.COMPONENTS
                 .toList()
-                .firstOrNull { (_, item: ItemLike) -> HTItemPredicates.byItem(item).test(stack) }
+                .firstOrNull { (_, item: ItemLike) -> stack.isOf(item) }
                 ?.first
         }
 
@@ -40,7 +40,7 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
                 HTSlotHelper.getSlotPosY(i - 0.5),
                 canExtract = HTItemStackSlot.MANUAL_ONLY,
                 canInsert = HTItemStackSlot.MANUAL_ONLY,
-                filter = { stack: ItemStack ->
+                filter = { stack: HTItemStorageStack ->
                     when (i) {
                         3 -> getComponentTier(stack) != null
                         else -> getComponentTier(stack) == null

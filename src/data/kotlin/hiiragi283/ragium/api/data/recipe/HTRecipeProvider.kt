@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -11,8 +10,10 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.HTRawStorageMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -39,13 +40,25 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
+/**
+ * Ragiumがレシピ生成で使用するクラス
+ * @see [Direct]
+ * @see [Integration]
+ */
 sealed class HTRecipeProvider {
     protected lateinit var provider: HolderLookup.Provider
         private set
     protected lateinit var output: RecipeOutput
         private set
 
+    /**
+     * [HTIngredientHelper]のインスタンス
+     */
     val ingredientHelper: HTIngredientHelper by lazy { HTIngredientHelperImpl(provider) }
+
+    /**
+     * [HTResultHelper]のインスタンス
+     */
     val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -65,14 +78,26 @@ sealed class HTRecipeProvider {
         buildRecipeInternal()
     }
 
+    /**
+     * 指定された[ResourceLocation]を改変します。
+     */
     protected abstract fun modifyId(id: ResourceLocation): ResourceLocation
 
+    /**
+     * 指定された[RecipeOutput]を改変します。
+     */
     protected abstract fun modifyOutput(output: RecipeOutput): RecipeOutput
 
+    /**
+     * レシピを生成します。
+     */
     protected abstract fun buildRecipeInternal()
 
     //    Direct    //
 
+    /**
+     * Ragium単体で使用するレシピ向けの拡張クラス
+     */
     abstract class Direct : HTRecipeProvider() {
         override fun modifyId(id: ResourceLocation): ResourceLocation = RagiumAPI.id(id.path)
 
@@ -81,6 +106,9 @@ sealed class HTRecipeProvider {
 
     //    Integration    //
 
+    /**
+     * 他Modとの連携レシピ向けの拡張クラス
+     */
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
@@ -200,6 +228,10 @@ sealed class HTRecipeProvider {
         }
     }
 
+    /**
+     * 原石または原石ブロックをインゴットに製錬する合金レシピを登録します。
+     * @param material 単体金属系の素材
+     */
     protected fun rawToIngot(material: HTMaterialType) {
         val ingot: TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
         // Basic
@@ -210,6 +242,14 @@ sealed class HTRecipeProvider {
                 ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(ingot, 27),
+                ingredientHelper.item(HTRawStorageMaterialVariant, material, 2),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, 6),
+            ).tagCondition(ingot)
+            .saveSuffixed(output, "_from_block_with_basic_flux")
         // Advanced
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -218,8 +258,21 @@ sealed class HTRecipeProvider {
                 ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
+
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                resultHelper.item(ingot, 18),
+                ingredientHelper.item(HTRawStorageMaterialVariant, material),
+                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, 6),
+            ).tagCondition(ingot)
+            .saveSuffixed(output, "_from_block_with_advanced_flux")
     }
 
+    /**
+     * 指定された引数から作業台でのリセットレシピを登録します。
+     * @param item リセットを行うアイテム
+     * @param targetTypes リセット対象のコンポーネントのキーの一覧
+     */
     protected fun resetComponent(item: HTItemHolderLike, vararg targetTypes: DataComponentType<*>) {
         save(
             item.getId().withPath { "shapeless/${it}_clear" },
@@ -232,16 +285,30 @@ sealed class HTRecipeProvider {
         )
     }
 
+    /**
+     * 指定された引数から鍛冶台でのネザライト強化レシピのビルダーを返します。
+     * @param output 強化後のアイテム
+     * @param input 強化前のアイテム
+     */
     protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
 
-    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, ingredient: ItemLike): HTSmithingRecipeBuilder =
+    /**
+     * 指定された引数から鍛冶台での強化レシピのビルダーを返します。
+     * @param tier アップグレードにつかう構造体のティア
+     * @param output 強化後のアイテム
+     * @param input 強化前のアイテム
+     */
+    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder(output)
             .addIngredient(RagiumItems.getComponent(tier))
-            .addIngredient(ingredient)
+            .addIngredient(input)
 
+    /**
+     * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
+     */
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks

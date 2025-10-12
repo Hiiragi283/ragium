@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
@@ -11,7 +12,11 @@ import net.neoforged.neoforge.fluids.FluidStack
 interface HTFluidIngredient : HTIngredient<FluidStack> {
     fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>>
 
+    fun getRequiredAmount(stack: HTFluidStorageStack): Int = getRequiredAmount(stack.stack)
+
     fun interface CountGetter {
         fun getRequiredAmount(stack: FluidStack): Int
+
+        fun getRequiredAmount(stack: HTFluidStorageStack): Int = getRequiredAmount(stack.stack)
     }
 }

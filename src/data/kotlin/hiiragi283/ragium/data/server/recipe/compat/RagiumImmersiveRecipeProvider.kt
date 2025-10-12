@@ -59,21 +59,21 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .input(ingotOrDust(HTVanillaMaterialType.COPPER))
             .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 2)
-            .build(output, id(RagiumMaterialType.RAGI_ALLOY.serializedName))
+            .build(output, id(RagiumMaterialType.RAGI_ALLOY.materialName()))
         // Gold -> Advanced Ragi-Alloy
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .input(ingotOrDust(HTVanillaMaterialType.GOLD))
             .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4)
-            .build(output, id(RagiumMaterialType.ADVANCED_RAGI_ALLOY.serializedName))
+            .build(output, id(RagiumMaterialType.ADVANCED_RAGI_ALLOY.materialName()))
         // Diamond -> Ragi-Crystal
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
             .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 6)
-            .build(output, id(RagiumMaterialType.RAGI_CRYSTAL.serializedName))
+            .build(output, id(RagiumMaterialType.RAGI_CRYSTAL.materialName()))
     }
 
     @JvmStatic
@@ -84,14 +84,14 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .output(HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE, 2)
             .input(gemOrDust(HTVanillaMaterialType.AMETHYST))
             .input(gemOrDust(HTVanillaMaterialType.LAPIS))
-            .build(output, id(RagiumMaterialType.AZURE.serializedName))
+            .build(output, id(RagiumMaterialType.AZURE.materialName()))
         // Iron -> Azure Steel
         HTArcFurnaceRecipeBuilder
             .builder()
             .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .input(ingotOrDust(HTVanillaMaterialType.IRON))
             .input(gemOrDust(RagiumMaterialType.AZURE), 2)
-            .build(output, id(RagiumMaterialType.AZURE_STEEL.serializedName))
+            .build(output, id(RagiumMaterialType.AZURE_STEEL.materialName()))
     }
 
     @JvmStatic
@@ -102,7 +102,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .output(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
             .input(ingotOrDust(RagiumMaterialType.AZURE_STEEL), 4)
             .input(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL, 4)
-            .build(output, id(RagiumMaterialType.DEEP_STEEL.serializedName))
+            .build(output, id(RagiumMaterialType.DEEP_STEEL.materialName()))
     }
 
     @JvmStatic
@@ -114,15 +114,15 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             BottlingMachineRecipeBuilder
                 .builder()
                 .output(HTItemMaterialVariant.GEM, material)
-                .fluidInput(molten.commonTag, RagiumMoltenCrystalData.MOLTEN_TO_GEM)
-                .build(output, id("bottling/${material.serializedName}"))
+                .fluidInput(molten.commonTag, RagiumConst.MOLTEN_TO_GEM)
+                .build(output, id("bottling/${material.materialName()}"))
 
             val log: TagKey<Item> = data.log ?: continue
             val sap: HTFluidContent<*, *, *> = data.sap ?: continue
             // log -> sap
             SqueezerRecipeBuilder
                 .builder()
-                .output(sap.get(), RagiumMoltenCrystalData.LOG_TO_SAP)
+                .output(sap.get(), RagiumConst.LOG_TO_SAP)
                 .input(log)
                 .setEnergy(6400)
                 .build(output, id("squeezer/${sap.getPath()}"))
@@ -130,7 +130,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             RefineryRecipeBuilder
                 .builder()
                 .input(sap.commonTag, 1000)
-                .output(molten.get(), RagiumMoltenCrystalData.SAP_TO_MOLTEN)
+                .output(molten.get(), RagiumConst.SAP_TO_MOLTEN)
                 .build(output, id("refinery/${molten.getPath()}"))
         }
 

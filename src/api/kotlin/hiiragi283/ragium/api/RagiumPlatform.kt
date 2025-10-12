@@ -1,28 +1,19 @@
 package hiiragi283.ragium.api
 
-import com.google.common.collect.Multimap
-import com.google.common.collect.Table
+import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTMultiMap
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.extension.asKotlinRandom
-import hiiragi283.ragium.api.extension.asList
-import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.extension.recipeAccess
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -34,7 +25,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import kotlin.jvm.optionals.getOrNull
@@ -54,23 +44,6 @@ interface RagiumPlatform {
 
     fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
 
-    //    Collection    //
-
-    /**
-     * @see [buildMultiMap]
-     */
-    fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V>
-
-    /**
-     * @see [mutableTableOf]
-     */
-    fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [asList]
-     */
-    fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>>
-
     /**
      * @see [asKotlinRandom]
      */
@@ -81,13 +54,6 @@ interface RagiumPlatform {
     fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
 
     fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
-
-    //    Recipe    //
-
-    /**
-     * @see [recipeAccess]
-     */
-    fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess
 
     //    Server    //
 
@@ -119,6 +85,10 @@ interface RagiumPlatform {
     fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
 
     //    Storage    //
+
+    fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput
+
+    fun createValueOutput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput
 
     fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
 

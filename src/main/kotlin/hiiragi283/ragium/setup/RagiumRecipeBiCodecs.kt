@@ -1,24 +1,25 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.MapBiCodec
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
-import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.impl.recipe.HTWashingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
 import hiiragi283.ragium.impl.recipe.ingredient.HTFluidIngredientImpl
 import hiiragi283.ragium.impl.recipe.ingredient.HTItemIngredientImpl
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -45,9 +46,7 @@ object RagiumRecipeBiCodecs {
         .composite(
             ITEM_CODEC.fieldOf("ingredient"),
             HTCrushingRecipe::ingredient,
-            HTChancedItemRecipe.ChancedResult.CODEC
-                .listOrElement(1, 4)
-                .fieldOf("results"),
+            HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
             HTCrushingRecipe::results,
             ::HTCrushingRecipe,
         )
@@ -60,20 +59,6 @@ object RagiumRecipeBiCodecs {
             HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
             HTEnchantingRecipe::result,
             ::HTEnchantingRecipe,
-        )
-
-    @JvmField
-    val WASHING: MapBiCodec<RegistryFriendlyByteBuf, HTWashingRecipe> = MapBiCodec
-        .composite(
-            ITEM_CODEC.fieldOf("item_ingredient"),
-            HTWashingRecipe::ingredient,
-            FLUID_CODEC.fieldOf("fluid_ingredient"),
-            HTWashingRecipe::fluidIngredient,
-            HTChancedItemRecipe.ChancedResult.CODEC
-                .listOrElement(1, 4)
-                .fieldOf("results"),
-            HTWashingRecipe::results,
-            ::HTWashingRecipe,
         )
 
     @JvmStatic
@@ -112,17 +97,30 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmStatic
-    fun <R : HTFluidTransformRecipe> fluidTransform(
+    fun <R : HTItemWithFluidToChancedItemRecipeBase> itemWithFluidToChanced(
+        factory: HTItemWithFluidToChancedItemRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        ITEM_CODEC.fieldOf("item_ingredient"),
+        HTItemWithFluidToChancedItemRecipeBase::ingredient,
+        FLUID_CODEC.fieldOf("fluid_ingredient"),
+        HTItemWithFluidToChancedItemRecipeBase::fluidIngredient,
+        HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
+        HTItemWithFluidToChancedItemRecipeBase::results,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R : HTFluidTransformRecipeBase> fluidTransform(
         factory: HTFluidTransformRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         FLUID_CODEC.fieldOf("fluid_ingredient"),
-        HTFluidTransformRecipe::fluidIngredient,
+        HTFluidTransformRecipeBase::fluidIngredient,
         ITEM_CODEC.optionalFieldOf("item_ingredient"),
-        HTFluidTransformRecipe::itemIngredient,
+        HTFluidTransformRecipeBase::itemIngredient,
         HTResultHelper.INSTANCE.itemCodec().optionalFieldOf("item_result"),
-        HTFluidTransformRecipe::itemResult,
+        HTFluidTransformRecipeBase::itemResult,
         HTResultHelper.INSTANCE.fluidCodec().optionalFieldOf("fluid_result"),
-        HTFluidTransformRecipe::fluidResult,
+        HTFluidTransformRecipeBase::fluidResult,
         factory::create,
     )
 }

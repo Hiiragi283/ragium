@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
@@ -10,6 +9,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.vanillaId
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Recipe
@@ -53,6 +53,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTSingleInputFluidRecipe> = create(RagiumConst.MELTING)
+
+    @JvmField
+    val PLANTING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> = create(RagiumConst.PLANTING)
 
     @JvmField
     val SIMULATING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe> = create(RagiumConst.SIMULATING)

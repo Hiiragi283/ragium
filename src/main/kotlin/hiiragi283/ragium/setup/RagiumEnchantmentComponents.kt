@@ -1,9 +1,11 @@
 package hiiragi283.ragium.setup
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.impl.HTDeferredDataComponentRegister
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
+import net.minecraft.util.Unit
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
@@ -21,4 +23,7 @@ object RagiumEnchantmentComponents {
         ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf(),
         null,
     )
+
+    @JvmField
+    val STRIKE: DataComponentType<Unit> = REGISTER.registerType("strike", Codec.unit(Unit.INSTANCE), null)
 }

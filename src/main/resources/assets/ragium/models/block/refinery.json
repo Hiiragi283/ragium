@@ -2,7 +2,7 @@
   "credit": "Made by Hiiragi Russell Tsubasa",
   "render_type": "minecraft:cutout",
   "textures": {
-    "0": "ragium:block/refinery",
+    "all": "ragium:block/refinery",
     "particle": "ragium:block/refinery"
   },
   "elements": [
@@ -12,11 +12,11 @@
       "to": [12, 16, 8],
       "rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 0]},
       "faces": {
-        "north": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "east": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "west": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "up": {"uv": [8, 0, 16, 8], "texture": "#0"},
-        "down": {"uv": [8, 0, 16, 8], "texture": "#0"}
+        "north": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "east": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "west": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "up": {"uv": [8, 0, 16, 8], "texture": "#all"},
+        "down": {"uv": [8, 0, 16, 8], "texture": "#all"}
       }
     },
     {
@@ -25,11 +25,11 @@
       "to": [16, 16, 16],
       "rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
       "faces": {
-        "north": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "east": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "south": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "up": {"uv": [8, 0, 16, 8], "texture": "#0"},
-        "down": {"uv": [8, 0, 16, 8], "texture": "#0"}
+        "north": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "east": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "south": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "up": {"uv": [8, 0, 16, 8], "texture": "#all"},
+        "down": {"uv": [8, 0, 16, 8], "texture": "#all"}
       }
     },
     {
@@ -38,11 +38,11 @@
       "to": [8, 16, 16],
       "rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 8]},
       "faces": {
-        "north": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "south": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "west": {"uv": [0, 0, 8, 16], "texture": "#0"},
-        "up": {"uv": [8, 0, 16, 8], "texture": "#0"},
-        "down": {"uv": [8, 0, 16, 8], "texture": "#0"}
+        "north": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "south": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "west": {"uv": [0, 0, 8, 16], "texture": "#all"},
+        "up": {"uv": [8, 0, 16, 8], "texture": "#all"},
+        "down": {"uv": [8, 0, 16, 8], "texture": "#all"}
       }
     },
     {
@@ -51,12 +51,12 @@
       "to": [16, 4, 8],
       "rotation": {"angle": 0, "axis": "y", "origin": [12, 0, 0]},
       "faces": {
-        "north": {"uv": [12, 8, 16, 12], "texture": "#0"},
-        "east": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#0"},
-        "south": {"uv": [12, 8, 16, 12], "texture": "#0"},
-        "west": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#0"},
-        "up": {"uv": [8, 8, 12, 16], "texture": "#0"},
-        "down": {"uv": [8, 8, 12, 16], "texture": "#0"}
+        "north": {"uv": [12, 8, 16, 12], "texture": "#all"},
+        "east": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#all"},
+        "south": {"uv": [12, 8, 16, 12], "texture": "#all"},
+        "west": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#all"},
+        "up": {"uv": [8, 8, 12, 16], "texture": "#all"},
+        "down": {"uv": [8, 8, 12, 16], "texture": "#all"}
       }
     },
     {
@@ -64,12 +64,12 @@
       "from": [0, 0, 0],
       "to": [4, 4, 8],
       "faces": {
-        "north": {"uv": [12, 8, 16, 12], "texture": "#0"},
-        "east": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#0"},
-        "south": {"uv": [12, 8, 16, 12], "texture": "#0"},
-        "west": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#0"},
-        "up": {"uv": [8, 8, 12, 16], "texture": "#0"},
-        "down": {"uv": [8, 8, 12, 16], "texture": "#0"}
+        "north": {"uv": [12, 8, 16, 12], "texture": "#all"},
+        "east": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#all"},
+        "south": {"uv": [12, 8, 16, 12], "texture": "#all"},
+        "west": {"uv": [8, 8, 12, 16], "rotation": 90, "texture": "#all"},
+        "up": {"uv": [8, 8, 12, 16], "texture": "#all"},
+        "down": {"uv": [8, 8, 12, 16], "texture": "#all"}
       }
     }
   ],

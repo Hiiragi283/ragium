@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api.item.component
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.codec.BiCodec
 import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
@@ -36,21 +35,20 @@ data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val l
 
     constructor(key: ResourceKey<Enchantment>, level: Int) : this(HTKeyOrTagHelper.INSTANCE.create(key), level)
 
-    fun <T : Any> useInstance(getter: HolderGetter<Enchantment>, action: (Holder<Enchantment>, Int) -> T): DataResult<T> =
+    fun <T : Any> useInstance(getter: HolderGetter<Enchantment>, action: (Holder<Enchantment>, Int) -> T): Result<T> =
         entry.getFirstHolder(getter).map { holder: Holder<Enchantment> -> action(holder, level) }
 
-    fun <T : Any> useInstance(provider: HolderLookup.Provider?, action: (Holder<Enchantment>, Int) -> T): DataResult<T> =
+    fun <T : Any> useInstance(provider: HolderLookup.Provider?, action: (Holder<Enchantment>, Int) -> T): Result<T> =
         entry.getFirstHolder(provider).map { holder: Holder<Enchantment> -> action(holder, level) }
 
-    fun getFullName(provider: HolderLookup.Provider?): DataResult<Component> = useInstance(provider, Enchantment::getFullname)
+    fun getFullName(provider: HolderLookup.Provider?): Result<Component> = useInstance(provider, Enchantment::getFullname)
 
-    fun toInstance(provider: HolderLookup.Provider?): DataResult<EnchantmentInstance> = useInstance(provider, ::EnchantmentInstance)
+    fun toInstance(provider: HolderLookup.Provider?): Result<EnchantmentInstance> = useInstance(provider, ::EnchantmentInstance)
 
-    fun toEnchBook(provider: HolderLookup.Provider?): DataResult<ItemStack> =
-        toInstance(provider).map(EnchantedBookItem::createForEnchantment)
+    fun toEnchBook(provider: HolderLookup.Provider?): Result<ItemStack> = toInstance(provider).map(EnchantedBookItem::createForEnchantment)
 
     override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        getFullName(context.registries()).ifSuccess { text: Component ->
+        getFullName(context.registries()).onSuccess { text: Component ->
             when {
                 flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
                 else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)

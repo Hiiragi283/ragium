@@ -3,16 +3,16 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.storage.HTAccessConfigCache
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
@@ -50,13 +50,13 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
-        output.store(RagiumConst.OWNER, BiCodecs.UUID, ownerId)
+        output.store(RagiumConst.OWNER, VanillaBiCodecs.UUID, ownerId)
         accessConfigCache.serialize(output)
     }
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
-        ownerId = input.read(RagiumConst.OWNER, BiCodecs.UUID)
+        ownerId = input.read(RagiumConst.OWNER, VanillaBiCodecs.UUID)
         accessConfigCache.deserialize(input)
     }
 
@@ -99,7 +99,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
-        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
@@ -115,15 +115,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected var isActive: Boolean = false
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
-
-    protected fun doProgress(network: HTEnergyBattery): Boolean {
-        if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, false, HTStorageAccess.INTERNAl)
-        }
-        if (usedEnergy < requiredEnergy) return false
-        usedEnergy -= requiredEnergy
-        return true
-    }
 
     protected open fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyProcessorRate(base) ?: base
 

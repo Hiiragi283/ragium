@@ -7,7 +7,7 @@
   ],
   "type": "mekanism:metallurgic_infusing",
   "chemical_input": {
-    "amount": 160,
+    "amount": 320,
     "chemical": "ragium:azure"
   },
   "item_input": {

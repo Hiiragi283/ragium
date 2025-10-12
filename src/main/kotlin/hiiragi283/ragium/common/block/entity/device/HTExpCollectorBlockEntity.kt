@@ -2,14 +2,14 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -18,7 +18,6 @@ import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
@@ -30,6 +29,14 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
+    override fun onRemove(state: BlockState, level: Level, pos: BlockPos) {
+        super.onRemove(state, level, pos)
+        ExperienceOrb(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), fluidAmountToExpValue(tank.getAmountAsInt()))
+            .let(level::addFreshEntity)
+    }
+
+    private fun fluidAmountToExpValue(amount: Int): Int = amount / RagiumConfig.COMMON.expCollectorMultiplier.asInt
+
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -40,16 +47,11 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         )
         if (expOrbs.isEmpty()) return false
         // それぞれのExp Orbに対して回収を行う
-        for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.asInt
-            val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            val remainStack: FluidStack = tank.insert(stack, false, HTStorageAccess.INTERNAl)
-            if (remainStack.isEmpty) {
-                entity.discard()
-            } else {
-                entity.value = remainStack.amount
-            }
-        }
+        expOrbs
+            .asSequence()
+            .filter(ExperienceOrb::isAlive)
+            .map(::HTExpOrbTank)
+            .forEach { orbFluidTank: HTExpOrbTank -> HTStackSlotHelper.moveStack(orbFluidTank, tank) }
         return true
     }
 

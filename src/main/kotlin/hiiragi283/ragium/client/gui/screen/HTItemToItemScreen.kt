@@ -3,33 +3,29 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTItemToItemScreen<BE : HTProcessorBlockEntity<SingleRecipeInput, *>>(
+class HTItemToItemScreen(
     texture: ResourceLocation,
     private val factory: (() -> Float, Int, Int) -> HTProgressWidget,
-    menu: HTBlockEntityContainerMenu<BE>,
+    menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
     inventory: Inventory,
     title: Component,
-) : HTMachineScreen<BE>(texture, menu, inventory, title) {
+) : HTMachineScreen<HTSingleItemInputBlockEntity<*>>(texture, menu, inventory, title) {
     companion object {
         @JvmStatic
         fun compressor(
-            menu: HTBlockEntityContainerMenu<HTCompressorBlockEntity>,
+            menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
             inventory: Inventory,
             title: Component,
-        ): HTItemToItemScreen<HTCompressorBlockEntity> = HTItemToItemScreen(
+        ): HTItemToItemScreen = HTItemToItemScreen(
             RagiumAPI.id("textures/gui/container/compressor.png"),
             HTProgressWidget::infuse,
             menu,
@@ -39,10 +35,10 @@ class HTItemToItemScreen<BE : HTProcessorBlockEntity<SingleRecipeInput, *>>(
 
         @JvmStatic
         fun extractor(
-            menu: HTBlockEntityContainerMenu<HTExtractorBlockEntity>,
+            menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
             inventory: Inventory,
             title: Component,
-        ): HTItemToItemScreen<HTExtractorBlockEntity> = HTItemToItemScreen(
+        ): HTItemToItemScreen = HTItemToItemScreen(
             RagiumAPI.id("textures/gui/container/extractor.png"),
             HTProgressWidget::arrow,
             menu,
@@ -52,10 +48,10 @@ class HTItemToItemScreen<BE : HTProcessorBlockEntity<SingleRecipeInput, *>>(
 
         @JvmStatic
         fun pulverizer(
-            menu: HTBlockEntityContainerMenu<HTPulverizerBlockEntity>,
+            menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
             inventory: Inventory,
             title: Component,
-        ): HTItemToItemScreen<HTPulverizerBlockEntity> = HTItemToItemScreen(
+        ): HTItemToItemScreen = HTItemToItemScreen(
             RagiumAPI.id("textures/gui/container/pulverizer.png"),
             HTProgressWidget::arrow,
             menu,

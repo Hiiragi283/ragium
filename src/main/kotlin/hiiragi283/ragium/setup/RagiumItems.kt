@@ -2,13 +2,11 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.extension.columnValues
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
-import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -16,16 +14,16 @@ import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
-import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
+import hiiragi283.ragium.common.item.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.HTTierBasedItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
@@ -42,6 +40,7 @@ import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -127,8 +126,7 @@ object RagiumItems {
     @JvmField
     val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll")
 
-    @JvmField
-    val MATERIALS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIALS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Dusts
         listOf(
             // Vanilla - Metal
@@ -150,7 +148,7 @@ object RagiumItems {
             RagiumMaterialType.AZURE,
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { this[HTItemMaterialVariant.DUST, it] = register("${it.serializedName}_dust") }
+        ).forEach { this[HTItemMaterialVariant.DUST, it] = register("${it.materialName()}_dust") }
         this[HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD] = register("sawdust")
         this[HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT] = register("minced_meat")
         // Gems
@@ -160,7 +158,7 @@ object RagiumItems {
             RagiumMaterialType.CRIMSON_CRYSTAL,
             RagiumMaterialType.WARPED_CRYSTAL,
             RagiumMaterialType.ELDRITCH_PEARL,
-        ).forEach { this[HTItemMaterialVariant.GEM, it] = register(it.serializedName) }
+        ).forEach { this[HTItemMaterialVariant.GEM, it] = register(it.materialName()) }
         // Chips
         mapOf(
             RagiumMaterialType.RAGI_CRYSTAL to RagiumConst.RAGI_CRYSTAL + "_chip",
@@ -181,7 +179,7 @@ object RagiumItems {
             RagiumMaterialType.CHOCOLATE,
             RagiumMaterialType.MEAT,
             RagiumMaterialType.COOKED_MEAT,
-        ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.serializedName}_ingot") }
+        ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.materialName()}_ingot") }
         // Nuggets
         listOf(
             RagiumMaterialType.RAGI_ALLOY,
@@ -190,7 +188,7 @@ object RagiumItems {
             RagiumMaterialType.DEEP_STEEL,
             RagiumMaterialType.GILDIUM,
             RagiumMaterialType.IRIDESCENTIUM,
-        ).forEach { this[HTItemMaterialVariant.NUGGET, it] = register("${it.serializedName}_nugget") }
+        ).forEach { this[HTItemMaterialVariant.NUGGET, it] = register("${it.materialName()}_nugget") }
         // Plates
         this[HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC] = register("plastic_plate")
 
@@ -202,7 +200,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getMaterial(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTDeferredItem<*> = MATERIALS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.variantName()} item for ${material.materialName()}")
 
     @JvmStatic
     fun getDust(material: HTMaterialType): HTDeferredItem<*> = getMaterial(HTItemMaterialVariant.DUST, material)
@@ -227,16 +225,16 @@ object RagiumItems {
 
     @JvmField
     val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-        .associateWith { material: HTMaterialType -> register("${material.serializedName}_coil") }
+        .associateWith { material: HTMaterialType -> register("${material.materialName()}_coil") }
 
     @JvmField
     val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
-        register("${tier.serializedName}_circuit", ::HTTierBasedItem.partially1(tier))
+        register("${tier.materialName()}_circuit", ::HTTierBasedItem.partially1(tier))
     }
 
     @JvmField
     val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        register("${tier.serializedName}_component", ::HTTierBasedItem.partially1(tier))
+        register("${tier.materialName()}_component", ::HTTierBasedItem.partially1(tier))
     }
 
     @JvmStatic
@@ -289,8 +287,17 @@ object RagiumItems {
 
     // Azure
     @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> =
-        REGISTER.register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", ::HTAzureSteelTemplateItem)
+    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+        "${RagiumConst.AZURE_STEEL}_upgrade_smithing_template",
+    ) { _ ->
+        HTSmithingTemplateItem(
+            RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS,
+            RagiumTranslation.AZURE_STEEL_UPGRADE,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
+        )
+    }
 
     @JvmField
     val DRILL: HTDeferredItem<Item> = register("drill", ::HTDrillItem)
@@ -312,8 +319,17 @@ object RagiumItems {
 
     // Deep
     @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> =
-        REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
+    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+        "${RagiumConst.DEEP_STEEL}_upgrade_smithing_template",
+    ) { _ ->
+        HTSmithingTemplateItem(
+            RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS,
+            RagiumTranslation.DEEP_STEEL_UPGRADE,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
+        )
+    }
 
     // Other
     @JvmField
@@ -334,8 +350,7 @@ object RagiumItems {
     @JvmField
     val HUGE_DRUM_UPGRADE: HTDeferredItem<Item> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
-    @JvmField
-    val TOOLS: HTTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val TOOLS: ImmutableTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
         val consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit = { variant: HTToolVariant, material: HTMaterialType, tier: Tier ->
             this[variant, material] = variant.registerItem(REGISTER, material, tier)
         }
@@ -361,7 +376,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getTool(variant: HTToolVariant, material: HTMaterialType): HTDeferredItem<*> = TOOLS[variant, material]
-        ?: error("Unknown ${variant.serializedName} item for ${material.serializedName}")
+        ?: error("Unknown ${variant.variantName()} item for ${material.materialName()}")
 
     @JvmStatic
     private fun getAzureTool(variant: HTVanillaToolVariant): HTDeferredItem<*> = getTool(variant, RagiumMaterialType.AZURE_STEEL)
@@ -498,7 +513,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        factory(stack, RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(null, stack, capacity))
+        factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
     }
 
     @JvmStatic
@@ -515,6 +530,7 @@ object RagiumItems {
         setEnch(getAzureTool(HTVanillaToolVariant.SHOVEL), Enchantments.SILK_TOUCH)
 
         setEnch(getDeepTool(HTVanillaToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
+        setEnch(getDeepTool(HTVanillaToolVariant.AXE), RagiumEnchantments.STRIKE)
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
         // Other
         event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->

@@ -11,6 +11,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMachineRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumWashingRecipeProvider
@@ -32,15 +33,16 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEnchantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFluidRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMachineRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumPlantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumSimulatingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)

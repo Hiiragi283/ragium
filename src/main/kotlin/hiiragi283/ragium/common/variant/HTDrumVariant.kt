@@ -25,5 +25,5 @@ enum class HTDrumVariant(private val enPattern: String, private val jaPattern: S
         HTLanguageType.JA_JP -> jaPattern
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

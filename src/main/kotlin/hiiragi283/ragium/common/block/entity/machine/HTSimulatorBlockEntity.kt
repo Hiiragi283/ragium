@@ -6,11 +6,13 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -50,7 +52,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), true, HTStorageAccess.INTERNAl).isEmpty
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -60,9 +62,9 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), false, HTStorageAccess.INTERNAl)
+        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
-        HTIngredientHelper.shrinkStack(inputSlot, recipe.ingredient, false)
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe.ingredient, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.5f, 1f)
     }

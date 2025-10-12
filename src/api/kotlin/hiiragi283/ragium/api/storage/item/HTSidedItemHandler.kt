@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.IItemHandler
@@ -25,22 +26,24 @@ interface HTSidedItemHandler : IItemHandler {
     fun insertItem(
         slot: Int,
         stack: ItemStack,
-        simulate: Boolean,
+        action: HTStorageAction,
         side: Direction?,
     ): ItemStack
 
     @Deprecated("Use `insertItem(Int, ItemStack, Boolean, Direction?)` instead")
-    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = insertItem(slot, stack, simulate, getItemSideFor())
+    override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack =
+        insertItem(slot, stack, HTStorageAction.of(simulate), getItemSideFor())
 
     fun extractItem(
         slot: Int,
         amount: Int,
-        simulate: Boolean,
+        action: HTStorageAction,
         side: Direction?,
     ): ItemStack
 
     @Deprecated("Use `insertItem(Int, Int, Boolean, Direction?)` instead")
-    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = extractItem(slot, amount, simulate, getItemSideFor())
+    override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack =
+        extractItem(slot, amount, HTStorageAction.of(simulate), getItemSideFor())
 
     fun getSlotLimit(slot: Int, side: Direction?): Int
 

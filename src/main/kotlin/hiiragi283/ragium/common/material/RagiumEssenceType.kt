@@ -29,5 +29,5 @@ enum class RagiumEssenceType(override val color: Color, private val enName: Stri
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun materialName(): String = name.lowercase()
 }

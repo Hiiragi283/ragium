@@ -9,7 +9,6 @@ import io.wispforest.accessories.api.Accessory
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.ItemLike
 
 object RagiumAccessoryRegister {
@@ -19,20 +18,16 @@ object RagiumAccessoryRegister {
         register(RagiumItems.DYNAMIC_LANTERN, HTDynamicLightingAccessory)
         register(
             RagiumItems.MAGNET,
-            HTMagnetizationAccessory.create { entity: ItemEntity, player: Player ->
+            HTMagnetizationAccessory.create { entity: ItemEntity, _ ->
                 // IEのコンベヤ上にいるアイテムは無視する
-                if (entity.persistentData.getBoolean(RagiumConst.PREVENT_ITEM_MAGNET)) return@create
-                if (entity.isAlive && !entity.hasPickUpDelay()) {
-                    entity.playerTouch(player)
-                }
+                if (entity.persistentData.getBoolean(RagiumConst.PREVENT_ITEM_MAGNET)) return@create false
+                entity.isAlive && !entity.hasPickUpDelay()
             },
         )
         register(
             RagiumItems.ADVANCED_MAGNET,
-            HTMagnetizationAccessory.create { entity: ExperienceOrb, player: Player ->
-                if (entity.value > 0) {
-                    entity.playerTouch(player)
-                }
+            HTMagnetizationAccessory.create { entity: ExperienceOrb, _ ->
+                entity.isAlive && entity.value > 0
             },
         )
 

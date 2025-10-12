@@ -49,8 +49,11 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
         register(name) { _: ResourceLocation ->
             HTItemMenuType(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
                 checkNotNull(buf)
-                val context: HTItemContainerContext = HTItemContainerContext.CODEC.decode(buf)
-                factory.create(containerId, inventory, context, true)
+                HTItemContainerContext.CODEC
+                    .decode(buf)
+                    .map { context: HTItemContainerContext ->
+                        factory.create(containerId, inventory, context, true)
+                    }.getOrThrow()
             }
         }
         return holder

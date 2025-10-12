@@ -6,7 +6,6 @@ import com.almostreliable.unified.api.unification.recipe.RecipeUnifier
 import com.almostreliable.unified.api.unification.recipe.UnificationHelper
 import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.extension.resultOrNull
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import net.minecraft.core.registries.Registries
@@ -19,24 +18,18 @@ object RagiumRecipeUnifier : RecipeUnifier {
         // Outputs
         val keys: List<String> = listOf(RecipeConstants.RESULT, RecipeConstants.RESULTS, "item_result")
         for (key: String in keys) {
-            var changed: Boolean
+            var changed = false
             val result: JsonObject = recipe.getProperty(key) as? JsonObject ?: continue
             if (result.has(RecipeConstants.ID)) {
-                val either: HTKeyOrTagEntry<Item> = HTKeyOrTagHelper.INSTANCE
+                HTKeyOrTagHelper.INSTANCE
                     .codec(Registries.ITEM)
-                    .codec
-                    .parse(JsonOps.INSTANCE, result.getAsJsonPrimitive(RecipeConstants.ID))
-                    .resultOrNull() ?: continue
-                changed = either.map(
-                    { _: ResourceKey<Item> -> helper.unifyOutputItem(result) },
-                    { tagKey: TagKey<Item> ->
-                        helper.handleTagToItemReplacement(
-                            result,
-                            RecipeConstants.ID,
-                            tagKey,
+                    .decode(JsonOps.INSTANCE, result.getAsJsonPrimitive(RecipeConstants.ID))
+                    .onSuccess { entry: HTKeyOrTagEntry<Item> ->
+                        changed = entry.map(
+                            { _: ResourceKey<Item> -> helper.unifyOutputItem(result) },
+                            { tagKey: TagKey<Item> -> helper.handleTagToItemReplacement(result, RecipeConstants.ID, tagKey) },
                         )
-                    },
-                )
+                    }
                 if (changed) break
             }
         }

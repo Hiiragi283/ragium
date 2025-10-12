@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.item.HTTooltipProvider
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 data class HTLootTicketTargets private constructor(private val lootTables: List<ResourceKey<LootTable>>) : HTTooltipProvider {
     companion object {
         @JvmField
-        val CODEC: BiCodec<ByteBuf, HTLootTicketTargets> = BiCodecs
+        val CODEC: BiCodec<ByteBuf, HTLootTicketTargets> = VanillaBiCodecs
             .resourceKey(Registries.LOOT_TABLE)
             .listOrElement()
             .xmap(::HTLootTicketTargets, HTLootTicketTargets::lootTables)

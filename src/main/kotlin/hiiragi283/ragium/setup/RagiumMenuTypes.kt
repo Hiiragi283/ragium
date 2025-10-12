@@ -15,14 +15,12 @@ import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntit
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
@@ -78,7 +76,7 @@ object RagiumMenuTypes {
     val CHANCED_ITEM_OUTPUT: DeferredMachineMenu<HTChancedItemOutputBlockEntity<*, *>> = registerMachine("chanced_item_output")
 
     @JvmField
-    val COMPRESSOR: DeferredMachineMenu<HTCompressorBlockEntity> = registerMachine("compressor")
+    val COMPRESSOR: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("compressor")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")
@@ -87,7 +85,7 @@ object RagiumMenuTypes {
     val CUTTING_MACHINE: DeferredMachineMenu<HTCuttingMachineBlockEntity> = registerMachine("cutting_machine")
 
     @JvmField
-    val EXTRACTOR: DeferredMachineMenu<HTExtractorBlockEntity> = registerMachine("extractor")
+    val EXTRACTOR: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("extractor")
 
     @JvmField
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
@@ -102,7 +100,7 @@ object RagiumMenuTypes {
     val MOB_CAPTURER: DeferredBEMenu<HTMobCapturerBlockEntity> = registerBE("mob_capturer")
 
     @JvmField
-    val PULVERIZER: DeferredMachineMenu<HTPulverizerBlockEntity> = registerMachine("pulverizer")
+    val PULVERIZER: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("pulverizer")
 
     @JvmField
     val REFINERY: DeferredMachineMenu<HTRefineryBlockEntity> = registerMachine("refinery")

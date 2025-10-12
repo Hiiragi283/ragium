@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.inventory.container
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.ItemStack
@@ -12,9 +12,9 @@ data class HTItemContainerContext(val hand: Optional<InteractionHand>, val stack
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemContainerContext> = BiCodec.composite(
-            BiCodecs.HAND.toOptional().fieldOf("hand"),
+            VanillaBiCodecs.HAND.toOptional().fieldOf("hand"),
             HTItemContainerContext::hand,
-            BiCodecs.itemStack(true).fieldOf("stack"),
+            VanillaBiCodecs.itemStack(true).fieldOf("stack"),
             HTItemContainerContext::stack,
             ::HTItemContainerContext,
         )

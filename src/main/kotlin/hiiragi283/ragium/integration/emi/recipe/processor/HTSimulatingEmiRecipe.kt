@@ -2,13 +2,13 @@ package hiiragi283.ragium.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
+import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTSimulatingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemWithCatalystToItemRecipe>) :
+class HTSimulatingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemWithCatalystToItemRecipe>) :
     HTEmiHolderRecipe<HTItemWithCatalystToItemRecipe>(category, holder) {
     init {
         addInput(recipe.ingredient.getOrNull())

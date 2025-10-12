@@ -4,9 +4,11 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
-import hiiragi283.ragium.common.util.HTIngredientHelper
+import hiiragi283.ragium.api.storage.item.toRecipeInput
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -32,15 +34,13 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
-    override fun getRequiredEnergy(recipe: HTItemToChancedItemRecipe): Int {
-        val multiplier: Double = when (inputTank.extract(10, true, HTStorageAccess.INTERNAl).amount) {
-            10 -> 0.8
-            else -> 1.0
+    override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
+        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amountAsInt()) {
+            10 -> 18 * 10
+            else -> super.getRecipeTime(recipe)
         }
-        return (super.getRequiredEnergy(recipe) * multiplier).toInt()
-    }
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -51,9 +51,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
-        HTIngredientHelper.shrinkStack(inputSlot, recipe::getRequiredCount, false)
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // 潤滑油があれば減らす
-        inputTank.extract(10, false, HTStorageAccess.INTERNAl)
+        inputTank.extract(10, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1f, 0.25f)
     }

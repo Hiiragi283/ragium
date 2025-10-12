@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
-import hiiragi283.ragium.api.storage.value.HTValueSerializable
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import net.minecraft.sounds.SoundEvents

@@ -11,6 +11,10 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import java.util.concurrent.CompletableFuture
 
+/**
+ * データ生成でよく使うインスタンスを束ねたデータクラス
+ */
+@JvmRecord
 data class HTDataGenContext(
     private val generator: DataGenerator,
     val output: PackOutput,

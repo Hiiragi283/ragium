@@ -1,18 +1,15 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
-import hiiragi283.ragium.api.storage.HTMultiCapability
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Position
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -29,28 +26,35 @@ fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble
 //    Level    //
 
 /**
- * 指定した[item]を[entity]の足元にドロップします。
+ * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
  */
-fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
-    dropStackAt(entity, ItemStack(item, count))
+fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
+    if (entity is Player) {
+        giveStackTo(entity, stack)
+    } else {
+        val remainStack: ItemStack = entity.getCapability(Capabilities.ItemHandler.ENTITY)?.let { handler: IItemHandler ->
+            ItemHandlerHelper.insertItem(handler, stack, false)
+        } ?: stack
+        dropStackAt(entity, remainStack, offset)
+    }
 }
 
 /**
- * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
+ * 指定した[stack]を[player]のインベントリに入れます。
  */
-fun dropStackAt(entity: Entity, stack: ItemStack) {
-    if (entity is Player) {
-        if (entity.isFakePlayer) {
-            dropStackAt(entity.level(), entity.position(), stack)
-        } else {
-            ItemHandlerHelper.giveItemToPlayer(entity, stack)
-        }
+fun giveStackTo(player: Player, stack: ItemStack) {
+    if (player.isFakePlayer) {
+        dropStackAt(player, stack)
     } else {
-        val remainStack: ItemStack = HTMultiCapability.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
-            ItemHandlerHelper.insertItem(handler, stack, false)
-        } ?: stack
-        dropStackAt(entity.level(), entity.position(), remainStack)
+        ItemHandlerHelper.giveItemToPlayer(player, stack)
     }
+}
+
+/**
+ * 指定した[stack]を[entity]の足元にドロップします。
+ */
+fun dropStackAt(entity: Entity, stack: ItemStack, offset: Float = 0f) {
+    entity.spawnAtLocation(stack, offset)
 }
 
 /**
@@ -66,5 +70,3 @@ fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
 fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
     Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
-
-val Level.recipeAccess: HTRecipeAccess get() = RagiumPlatform.INSTANCE.wrapRecipeManager(this.recipeManager)

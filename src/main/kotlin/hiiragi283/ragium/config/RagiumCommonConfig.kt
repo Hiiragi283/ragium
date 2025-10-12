@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.config.HTBoolConfigValue
 import hiiragi283.ragium.api.config.HTDoubleConfigValue
 import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
-import hiiragi283.ragium.api.extension.definePositiveDouble
-import hiiragi283.ragium.api.extension.definePositiveInt
+import hiiragi283.ragium.api.config.definePositiveDouble
+import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -102,7 +102,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         // Generator
         builder.push("generator")
         generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            val name: String = variant.serializedName
+            val name: String = variant.variantName()
             builder.push(name)
             // Energy Rate
             val value: HTIntConfigValue = builder.definePositiveInt("energyRate", variant.tier.generatorRate)
@@ -114,7 +114,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         // Machine
         builder.push("machine")
         machineEnergyUsage = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            val name: String = variant.serializedName
+            val name: String = variant.variantName()
             builder.push(name)
             // Energy Usage
             val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", variant.tier.processorRate)
@@ -150,7 +150,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         // Device
         builder.push("device")
         deviceTickRate = HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
-            val name: String = variant.serializedName
+            val name: String = variant.variantName()
             builder.push(name)
             val value: HTIntConfigValue = builder.definePositiveInt("tickRate", 20)
             builder.pop()

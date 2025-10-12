@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.recipe.result
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.resultOrNull
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
 
@@ -18,22 +16,22 @@ interface HTRecipeResult<STACK : Any> {
     val id: ResourceLocation
 
     /**
-     * 指定された[provider]から完成品の[DataResult]を返します。
+     * 指定された[provider]から完成品の[Result]を返します。
      * @param provider レジストリへのアクセス
-     * @return 完成品がある場合は[DataResult.success], ない場合は[DataResult.error]
+     * @return 完成品がある場合は[Result.success], ない場合は[Result.failure]
      */
-    fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK>
+    fun getStackResult(provider: HolderLookup.Provider?): Result<STACK>
 
     /**
      * 指定された[provider]から完成品を返します。
      * @param provider レジストリへのアクセス
      * @return 完成品がない場合は`null`
      */
-    fun getStackOrNull(provider: HolderLookup.Provider?): STACK? = getStackResult(provider).resultOrNull()
+    fun getStackOrNull(provider: HolderLookup.Provider?): STACK? = getStackResult(provider).getOrNull()
 
     /**
      * 完成品が存在するか判定します。
-     * @return [getStackResult]が[DataResult.error]の場合は`true`
+     * @return [getStackResult]が[Result.failure]の場合は`true`
      */
-    fun hasNoMatchingStack(): Boolean = getStackResult(null).isError
+    fun hasNoMatchingStack(): Boolean = getStackResult(null).isFailure
 }

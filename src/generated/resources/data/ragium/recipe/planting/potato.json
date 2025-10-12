@@ -1,0 +1,19 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:crops/potato",
+  "results": [
+    {
+      "count": 3,
+      "id": "minecraft:potato"
+    },
+    {
+      "chance": 0.33333334,
+      "count": 1,
+      "id": "minecraft:potato"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage.item
 
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
 
@@ -18,23 +19,23 @@ interface HTItemHandler :
 
     fun getItemSlot(slot: Int, side: Direction?): HTItemSlot? = getItemSlots(side).getOrNull(slot)
 
-    override fun getStackInSlot(slot: Int, side: Direction?): ItemStack = getItemSlot(slot, side)?.getStack() ?: ItemStack.EMPTY
+    override fun getStackInSlot(slot: Int, side: Direction?): ItemStack = getItemSlot(slot, side)?.getItemStack() ?: ItemStack.EMPTY
 
     override fun getSlots(side: Direction?): Int = getItemSlots(side).size
 
     override fun insertItem(
         slot: Int,
         stack: ItemStack,
-        simulate: Boolean,
+        action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.insert(stack, simulate, HTStorageAccess.forHandler(side)) ?: stack
+    ): ItemStack = getItemSlot(slot, side)?.insertItem(stack, action, HTStorageAccess.forHandler(side)) ?: stack
 
     override fun extractItem(
         slot: Int,
         amount: Int,
-        simulate: Boolean,
+        action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.extract(amount, simulate, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
+    ): ItemStack = getItemSlot(slot, side)?.extractItem(amount, action, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
 
     override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacityAsInt(ItemStack.EMPTY) ?: 0
 

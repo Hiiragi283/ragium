@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.material
 
-import hiiragi283.ragium.api.collection.HTTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -35,19 +35,18 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
     ;
 
     companion object {
-        @JvmField
-        val VANILLA_TABLE: HTTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
+        val VANILLA_TABLE: ImmutableTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
             for (color: HTColorMaterial in HTColorMaterial.entries) {
-                val id: ResourceLocation = vanillaId(color.serializedName)
+                val id: ResourceLocation = vanillaId(color.materialName())
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {
-                    this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.serializedName}"))
+                    this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.variantName()}"))
                 }
             }
         }
 
         @JvmStatic
         fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
-            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.serializedName} ${variant.serializedName}")
+            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.materialName()} ${variant.variantName()}")
     }
 
     val dyeTag: TagKey<Item> = dyeColor.tag
@@ -60,5 +59,5 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun getSerializedName(): String = dyeColor.serializedName
+    override fun materialName(): String = dyeColor.serializedName
 }

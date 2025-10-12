@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType
@@ -96,6 +95,9 @@ object RagiumModTags {
 
         @JvmField
         val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable/range")
+
+        @JvmField
+        val STRIKE_ENCHANTABLE: TagKey<Item> = create("enchantable/strike")
 
         // Flux
         @JvmField

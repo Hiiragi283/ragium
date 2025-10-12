@@ -5,4 +5,6 @@ import net.minecraft.world.item.ItemStack
 /**
  * [ItemStack]向けの[HTRecipeResult]の実装
  */
-interface HTItemResult : HTRecipeResult<ItemStack>
+interface HTItemResult : HTRecipeResult<ItemStack> {
+    fun copyWithCount(count: Int): HTItemResult
+}

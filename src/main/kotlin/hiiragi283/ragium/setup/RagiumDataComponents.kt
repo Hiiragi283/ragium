@@ -1,8 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.item.component.HTDamageResistant
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
@@ -12,6 +10,9 @@ import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredDataComponentRegister
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
@@ -29,7 +30,7 @@ object RagiumDataComponents {
     val BLAST_POWER: DataComponentType<Float> = REGISTER.registerType("blast_power", BiCodecs.POSITIVE_FLOAT)
 
     @JvmField
-    val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", BiCodecs.COLOR)
+    val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", VanillaBiCodecs.COLOR)
 
     @JvmField
     val DAMAGE_RESISTANT: DataComponentType<HTDamageResistant> = REGISTER.registerType("damage_resistant", HTDamageResistant.CODEC)

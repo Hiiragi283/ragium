@@ -2,10 +2,12 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.codec.BiCodecs
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTMultiCapability
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
@@ -15,8 +17,7 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
@@ -26,6 +27,8 @@ import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -110,7 +113,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        output.store("custom_name", BiCodecs.TEXT, customName)
+        output.store("custom_name", VanillaBiCodecs.TEXT, this.customName)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -126,7 +129,17 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Custom Name
-        customName = input.read("custom_name", BiCodecs.TEXT)
+        this.customName = input.read("custom_name", VanillaBiCodecs.TEXT)
+    }
+
+    override fun applyImplicitComponents(componentInput: DataComponentInput) {
+        super.applyImplicitComponents(componentInput)
+        this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
+    }
+
+    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+        super.collectImplicitComponents(components)
+        components.set(DataComponents.CUSTOM_NAME, this.customName)
     }
 
     override fun sendPassivePacket(level: ServerLevel) {
@@ -178,7 +191,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
-        fluidHandlerManager?.resolve(HTMultiCapability.FLUID, direction)
+        fluidHandlerManager?.resolve(RagiumCapabilities.FLUID, direction)
 
     // Energy
 
@@ -192,10 +205,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      */
     override fun hasEnergyStorage(): Boolean = energyStorageManager?.canHandle() ?: false
 
-    final override fun getEnergyHandler(side: Direction?): HTEnergyBattery? = energyStorageManager?.getContainers(side)?.firstOrNull()
+    final override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = energyStorageManager?.getContainers(side)?.firstOrNull()
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        energyStorageManager?.resolve(HTMultiCapability.ENERGY, direction)
+        energyStorageManager?.resolve(RagiumCapabilities.ENERGY, direction)
 
     // Item
 
@@ -213,8 +226,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
-        getItemSlots(getItemSideFor()).map(HTItemSlot::getStack).forEach(consumer)
+        getItemSlots(getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTMultiCapability.ITEM, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? =
+        itemHandlerManager?.resolve(RagiumCapabilities.ITEM, direction)
 }

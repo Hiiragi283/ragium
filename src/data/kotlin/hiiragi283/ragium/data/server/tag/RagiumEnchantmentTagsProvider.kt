@@ -18,6 +18,9 @@ class RagiumEnchantmentTagsProvider(context: HTDataGenContext) : HTTagsProvider<
         builder.addTreasure(RagiumEnchantments.NOISE_CANCELING)
         builder.add(EnchantmentTags.DAMAGE_EXCLUSIVE, RagiumEnchantments.NOISE_CANCELING)
 
+        builder.addTreasure(RagiumEnchantments.STRIKE)
+        builder.add(EnchantmentTags.DAMAGE_EXCLUSIVE, RagiumEnchantments.STRIKE)
+
         builder.addTreasure(RagiumEnchantments.SONIC_PROTECTION)
         builder.add(EnchantmentTags.ARMOR_EXCLUSIVE, RagiumEnchantments.SONIC_PROTECTION)
     }

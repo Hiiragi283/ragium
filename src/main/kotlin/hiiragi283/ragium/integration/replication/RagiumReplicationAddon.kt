@@ -2,14 +2,11 @@ package hiiragi283.ragium.integration.replication
 
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 
-@HTAddon(RagiumConst.REPLICATION)
 object RagiumReplicationAddon : RagiumAddon {
     //    Matter    //
 
@@ -18,7 +15,7 @@ object RagiumReplicationAddon : RagiumAddon {
 
     @JvmField
     val MATTER_MAP: Map<RagiumEssenceType, HTDeferredMatterType<IMatterType>> = RagiumEssenceType.entries.associateWith { type ->
-        MATTER_REGISTER.registerType(type.serializedName, type.color, 128)
+        MATTER_REGISTER.registerType(type.materialName(), type.color, 128)
     }
 
     @JvmStatic

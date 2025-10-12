@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry.impl
 
-import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.createKey
 import hiiragi283.ragium.api.registry.HTDeferredRegister
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.registry.createKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item

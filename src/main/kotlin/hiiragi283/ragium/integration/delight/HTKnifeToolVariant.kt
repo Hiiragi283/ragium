@@ -1,8 +1,6 @@
 package hiiragi283.ragium.integration.delight
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.toId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -17,14 +15,12 @@ import vectorwing.farmersdelight.common.tag.ModTags
 
 object HTKnifeToolVariant : HTToolVariant {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<KnifeItem> =
-        register.register("${material.serializedName}_knife") { _: ResourceLocation ->
+        register.register("${material.materialName()}_knife") { _: ResourceLocation ->
             KnifeItem(
                 tier,
                 ModItems.knifeItem(tier),
             )
         }
-
-    override fun getParentId(path: String): ResourceLocation = RagiumConst.FARMERS_DELIGHT.toId(path)
 
     override val tagKey: TagKey<Item> = ModTags.KNIVES
 
@@ -33,5 +29,5 @@ object HTKnifeToolVariant : HTToolVariant {
         HTLanguageType.JA_JP -> "%sのナイフ"
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = "knife"
+    override fun variantName(): String = "knife"
 }

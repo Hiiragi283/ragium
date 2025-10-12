@@ -1,0 +1,19 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "minecraft:cherry_sapling",
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:cherry_log"
+    },
+    {
+      "chance": 0.16666667,
+      "count": 1,
+      "id": "minecraft:cherry_sapling"
+    }
+  ]
+}

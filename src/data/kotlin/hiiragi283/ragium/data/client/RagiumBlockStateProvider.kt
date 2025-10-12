@@ -3,16 +3,14 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.extension.blockId
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.rowValues
-import hiiragi283.ragium.api.extension.toId
-import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -82,7 +80,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
-            val textureId: String = RagiumAPI.id("block/${material.serializedName}").toString()
+            val textureId: String = RagiumAPI.id("block/${material.materialName()}").toString()
             val stoneTex: String = when (variant) {
                 HTBlockMaterialVariant.ORE -> "block/stone"
                 HTBlockMaterialVariant.DEEP_ORE -> "block/deepslate"
@@ -184,6 +182,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Generator
         machine(HTGeneratorVariant.THERMAL, basicMachine, bricks)
+        altModelBlock(HTGeneratorVariant.COMBUSTION.blockHolder, factory = ::horizontalBlock)
 
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")
@@ -202,6 +201,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Elite
         machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
+        machine(HTMachineVariant.PLANTER, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device

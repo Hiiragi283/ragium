@@ -3,20 +3,22 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.EntitySelector
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -49,31 +51,24 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         // アップグレードにマグネットが入っている場合のみ機能する
         // if (!upgrades.hasStack { stack: ItemStack -> stack.`is`(RagiumItems.RAGI_MAGNET) }) return TriState.FALSE
         // 範囲内のItem Entityを取得する
-        val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
-            ItemEntity::class.java,
+        val itemEntities: List<ItemEntity> = level.getEntities(
+            EntityType.ITEM,
             pos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
+            EntitySelector.NO_SPECTATORS,
         )
         if (itemEntities.isEmpty()) return false
         // それぞれのItem Entityに対して回収を行う
-        for (entity: ItemEntity in itemEntities) {
-            // IEのコンベヤ上にいるアイテムは無視する
-            if (entity.persistentData.getBoolean("PreventRemoteMovement")) continue
-            // 回収までのディレイが残っている場合はスキップ
-            if (entity.hasPickUpDelay()) continue
-            // 各スロットに対して搬入操作を行う
-            val previous: ItemStack = entity.item.copy()
-            var remainder: ItemStack = previous
-            for (slot: HTItemSlot in slots) {
-                remainder = slot.insert(remainder, false, HTStorageAccess.INTERNAl)
-                if (remainder.isEmpty) {
-                    entity.discard()
-                    break
+        itemEntities
+            .asSequence()
+            .filter(ItemEntity::isAlive)
+            .filterNot { entity: ItemEntity -> entity.persistentData.getBoolean("PreventRemoteMovement") }
+            .filterNot(ItemEntity::hasPickUpDelay)
+            .map(::HTItemEntitySlot)
+            .forEach { entitySlot: HTItemSlot ->
+                for (slot: HTItemSlot in slots) {
+                    HTStackSlotHelper.moveStack(entitySlot, slot)
                 }
             }
-            if (remainder != previous) {
-                entity.item = remainder
-            }
-        }
         return true
     }
 }

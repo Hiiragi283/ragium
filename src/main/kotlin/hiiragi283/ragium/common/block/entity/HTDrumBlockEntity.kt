@@ -1,13 +1,15 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
+import hiiragi283.ragium.api.storage.fluid.setFluidStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -33,7 +35,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         tank = HTVariableFluidStackTank.create(listener) {
-            RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(level?.random, this, getDefaultTankCapacity())
+            HTItemHelper.processStorageCapacity(level?.random, this, getDefaultTankCapacity())
         }
         return HTSimpleFluidTankHolder.generic(null, tank)
     }
@@ -55,12 +57,12 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         componentInput
             .getOrDefault(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY)
             .copy()
-            .let(tank::setStack)
+            .let(tank::setFluidStack)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getStack()))
+        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getFluidStack()))
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = true

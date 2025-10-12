@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.blockId
+import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
@@ -45,5 +45,5 @@ enum class HTDecorationVariant(private val enPattern: String, private val jaPatt
         HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

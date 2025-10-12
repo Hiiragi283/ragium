@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.extension.wrapOptional
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.core.registries.BuiltInRegistries

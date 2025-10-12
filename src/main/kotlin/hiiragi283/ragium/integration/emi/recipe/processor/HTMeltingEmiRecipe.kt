@@ -1,14 +1,14 @@
 package hiiragi283.ragium.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.addArrow
 import hiiragi283.ragium.integration.emi.addTank
 import hiiragi283.ragium.integration.emi.recipe.HTEmiHolderRecipe
+import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTMeltingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemToFluidRecipe>) :
+class HTMeltingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToFluidRecipe>) :
     HTEmiHolderRecipe<HTItemToFluidRecipe>(category, holder) {
     init {
         addInput(recipe.ingredient)

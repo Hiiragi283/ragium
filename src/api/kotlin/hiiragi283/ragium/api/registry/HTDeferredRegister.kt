@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.RegistryKey
-import hiiragi283.ragium.api.extension.toId
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Function

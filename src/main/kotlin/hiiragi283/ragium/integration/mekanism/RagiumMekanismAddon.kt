@@ -1,11 +1,9 @@
 package hiiragi283.ragium.integration.mekanism
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -31,7 +29,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 
-@HTAddon(RagiumConst.MEKANISM)
 object RagiumMekanismAddon : RagiumAddon {
     //    Chemical    //
 
@@ -41,7 +38,7 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val CHEMICAL_MAP: Map<HTMaterialType, DeferredChemical<Chemical>> = buildMap {
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-            this[essenceType] = CHEMICAL_REGISTER.registerInfuse(essenceType.serializedName, essenceType.color.rgb)
+            this[essenceType] = CHEMICAL_REGISTER.registerInfuse(essenceType.materialName(), essenceType.color.rgb)
         }
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
@@ -51,18 +48,17 @@ object RagiumMekanismAddon : RagiumAddon {
 
     @JvmStatic
     fun getChemical(material: HTMaterialType): DeferredChemical<Chemical> =
-        CHEMICAL_MAP[material] ?: error("Unknown chemical for ${material.serializedName}")
+        CHEMICAL_MAP[material] ?: error("Unknown chemical for ${material.materialName()}")
 
     //    Item    //
 
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
-    @JvmField
-    val MATERIAL_ITEMS: HTTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIAL_ITEMS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Enriched
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-            this[HTMekMaterialVariant.ENRICHED, essenceType] = ITEM_REGISTER.registerSimpleItem("enriched_${essenceType.serializedName}")
+            this[HTMekMaterialVariant.ENRICHED, essenceType] = ITEM_REGISTER.registerSimpleItem("enriched_${essenceType.materialName()}")
         }
     }
 
@@ -74,7 +70,7 @@ object RagiumMekanismAddon : RagiumAddon {
         HTVanillaMaterialType.OBSIDIAN -> MekanismItems.ENRICHED_OBSIDIAN
         HTVanillaMaterialType.GOLD -> MekanismItems.ENRICHED_GOLD
         else -> MATERIAL_ITEMS[HTMekMaterialVariant.ENRICHED, material]
-            ?: error("Unknown enriched item for ${material.serializedName}")
+            ?: error("Unknown enriched item for ${material.materialName()}")
     }
 
     @JvmStatic

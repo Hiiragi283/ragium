@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.extension.wrapOptional
 import hiiragi283.ragium.api.util.HTDslMarker
+import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance

@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.extension.createCommonTag
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.tag.createCommonTag
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -38,5 +38,5 @@ enum class HTItemMaterialVariant(private val enPattern: String, private val jaPa
         HTLanguageType.JA_JP -> jaPattern
     }.replace("%s", value)
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun variantName(): String = name.lowercase()
 }

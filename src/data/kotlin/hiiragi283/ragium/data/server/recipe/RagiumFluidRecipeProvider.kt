@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -141,17 +142,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 HTItemMaterialVariant.GEM.itemTagKey(material),
                 molten,
-                RagiumMoltenCrystalData.MOLTEN_TO_GEM,
+                RagiumConst.MOLTEN_TO_GEM,
             )
 
             val log: TagKey<Item> = data.log ?: continue
             val sap: HTFluidContent<*, *, *> = data.sap ?: continue
             // log -> sap
             HTItemToObjRecipeBuilder
-                .melting(ingredientHelper.item(log), resultHelper.fluid(sap, RagiumMoltenCrystalData.LOG_TO_SAP))
+                .melting(ingredientHelper.item(log), resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP))
                 .saveSuffixed(output, "_from_stems")
             // sap -> molten
-            distillation(sap to 1000, null, resultHelper.fluid(molten, RagiumMoltenCrystalData.SAP_TO_MOLTEN) to null)
+            distillation(sap to 1000, null, resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN) to null)
         }
     }
 

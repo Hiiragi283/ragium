@@ -1,20 +1,18 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 
-data class HTRepairable(val items: HolderSet<Item>) {
+@JvmInline
+value class HTRepairable(val items: HolderSet<Item>) {
     companion object {
         @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTRepairable> = BiCodecs
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTRepairable> = VanillaBiCodecs
             .holderSet(Registries.ITEM)
             .xmap(::HTRepairable, HTRepairable::items)
     }
-
-    fun isValidRepairItem(stack: ItemStack): Boolean = stack.`is`(items)
 }

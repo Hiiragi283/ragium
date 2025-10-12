@@ -1,6 +1,5 @@
 package hiiragi283.ragium.integration.emi
 
-import com.mojang.serialization.DataResult
 import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -8,8 +7,8 @@ import dev.emi.emi.api.widget.Bounds
 import dev.emi.emi.api.widget.FillingArrowWidget
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.gui.component.HTWidget
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -25,9 +24,9 @@ import net.minecraft.world.level.material.Fluid
 
 fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
-fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(EmiStack::of, ::createErrorStack)
+fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(EmiStack::of, ::createErrorStack)
 
-fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
+fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).fold(NeoForgeEmiStack::of, ::createErrorStack)
 
 fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(this.get())
 
@@ -37,7 +36,7 @@ fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = EmiIngredient.of(this.co
 
 val EmiStack.fluid: Fluid? get() = this.key as? Fluid
 
-private fun createErrorStack(error: DataResult.Error<*>): EmiStack = createErrorStack(error.message())
+private fun createErrorStack(throwable: Throwable): EmiStack = createErrorStack(throwable.message ?: "Failed to create EmiStack")
 
 private fun createErrorStack(error: String): EmiStack =
     createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, Component.literal(error)).let(EmiStack::of)

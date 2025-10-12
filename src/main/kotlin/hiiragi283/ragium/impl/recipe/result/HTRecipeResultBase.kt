@@ -1,13 +1,12 @@
 package hiiragi283.ragium.impl.recipe.result
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.codec.BiCodec
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.codec.MapBiCodec
-import hiiragi283.ragium.api.extension.RegistryKey
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -31,18 +30,18 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
             HTRecipeResultBase<T, *>::entry,
             amountCodec,
             HTRecipeResultBase<T, *>::amount,
-            BiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
+            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
             HTRecipeResultBase<T, *>::components,
             factory,
         )
     }
 
-    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): DataResult<STACK>
+    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): STACK
 
     //    HTRecipeResult    //
 
     final override val id: ResourceLocation = entry.getId()
 
-    final override fun getStackResult(provider: HolderLookup.Provider?): DataResult<STACK> =
-        entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }
+    final override fun getStackResult(provider: HolderLookup.Provider?): Result<STACK> =
+        entry.getFirstHolder(provider).mapCatching { holder: Holder<TYPE> -> createStack(holder, amount, components) }
 }

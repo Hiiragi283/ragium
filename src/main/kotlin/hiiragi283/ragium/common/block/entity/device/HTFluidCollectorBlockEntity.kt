@@ -2,9 +2,11 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.common.storage.fluid.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -42,11 +44,11 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 液体を生成できるかチェック
-        val stack: FluidStack = getGeneratedFluid(level, pos)
-        if (stack.isEmpty) return false
+        val stack: HTFluidStorageStack = getGeneratedFluid(level, pos).let(HTFluidStorageStack::of)
+        if (stack.isEmpty()) return false
         // 液体を搬入できるかチェック
-        if (!tank.insert(stack, true, HTStorageAccess.INTERNAl).isEmpty) return false
-        tank.insert(stack, false, HTStorageAccess.INTERNAl)
+        if (!tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false
+        tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         playSound(level, pos)
         return true
     }

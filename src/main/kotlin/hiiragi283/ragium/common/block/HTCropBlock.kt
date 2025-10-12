@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveStackTo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -78,7 +78,7 @@ abstract class HTCropBlock(properties: Properties) : CropBlock(properties) {
                     droppedSeed = true
                 }
                 if (!drop.isEmpty) {
-                    dropStackAt(player, drop)
+                    giveStackTo(player, drop)
                 }
             }
             level.setBlockAndUpdate(pos, defaultBlockState().setValue(ageProperty, 0))

@@ -1,36 +1,28 @@
 package hiiragi283.ragium.impl
 
-import com.google.common.collect.Multimap
-import com.google.common.collect.Table
+import com.google.gson.JsonObject
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.collection.HTMultiMap
-import hiiragi283.ragium.api.collection.HTTable
-import hiiragi283.ragium.api.extension.createItemStack
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.recipe.manager.HTRecipeAccess
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.value.HTValueInput
-import hiiragi283.ragium.api.storage.value.HTValueOutput
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
-import hiiragi283.ragium.impl.collection.HTHolderSetList
-import hiiragi283.ragium.impl.collection.HTWrappedMultiMap
-import hiiragi283.ragium.impl.collection.HTWrappedTable
-import hiiragi283.ragium.impl.recipe.manager.HTRecipeAccessImpl
-import hiiragi283.ragium.impl.storage.value.HTTagValueInput
-import hiiragi283.ragium.impl.storage.value.HTTagValueOutput
 import hiiragi283.ragium.impl.util.RandomSourceWrapper
+import hiiragi283.ragium.impl.value.HTJsonValueInput
+import hiiragi283.ragium.impl.value.HTJsonValueOutput
+import hiiragi283.ragium.impl.value.HTTagValueInput
+import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -40,8 +32,8 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
+import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import kotlin.random.Random
 
@@ -54,7 +46,9 @@ class RagiumPlatformImpl : RagiumPlatform {
         if (!::addonCache.isInitialized) {
             RagiumAPI.LOGGER.info("Collecting addons for Ragium...")
             addonCache = HTAddonHelper
-                .collectInstances<RagiumAddon>()
+                .collectInstances<RagiumAddon.Provider>()
+                .flatMap { it.getAddons(ModList.get()) }
+                .sortedBy(RagiumAddon::priority)
                 .onEach { addon: RagiumAddon ->
                     RagiumAPI.LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
                 }
@@ -69,7 +63,7 @@ class RagiumPlatformImpl : RagiumPlatform {
             mapCache = buildMap {
                 val consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit =
                     { type: HTMaterialType, variant: HTMaterialVariant.ItemTag ->
-                        check(put(type, variant) == null) { "Duplicate base variant for ${type.serializedName}" }
+                        check(put(type, variant) == null) { "Duplicate base variant for ${type.materialName()}" }
                     }
 
                 setupMaterials(consumer)
@@ -130,22 +124,12 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     //    Collection    //
 
-    override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
-
-    override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
-
-    override fun <T : Any> wrapHolderSet(holderSet: HolderSet<T>): List<Holder<T>> = HTHolderSetList(holderSet)
-
     override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 
     //    Item    //
 
     override fun createSoda(potion: PotionContents, count: Int): ItemStack =
         createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.POTION_CONTENTS, potion, count)
-
-    //    Recipe    //
-
-    override fun wrapRecipeManager(recipeManager: RecipeManager): HTRecipeAccess = HTRecipeAccessImpl(recipeManager)
 
     //    Server    //
 
@@ -164,6 +148,12 @@ class RagiumPlatformImpl : RagiumPlatform {
         ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //
+
+    override fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput =
+        HTJsonValueInput.create(lookup, jsonObject)
+
+    override fun createValueOutput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput =
+        HTJsonValueOutput(lookup, jsonObject)
 
     override fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput =
         HTTagValueInput.create(lookup, compoundTag)

@@ -2,9 +2,12 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -14,7 +17,6 @@ import io.wispforest.accessories.api.slot.SlotEntryReference
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.damagesource.DamageType
@@ -90,7 +92,7 @@ object RagiumRuntimeEvents {
         if (stack.`is`(RagiumItems.BOTTLED_BEE)) {
             val result: InteractionResult = Items.BEE_SPAWN_EGG.use(event.level, player, event.hand).result
             if (result.indicateItemUse()) {
-                dropStackAt(player, Items.GLASS_BOTTLE)
+                giveStackTo(player, ItemStack(Items.GLASS_BOTTLE))
             }
             event.cancellationResult = result
             return
@@ -146,7 +148,7 @@ object RagiumRuntimeEvents {
                 if (!player.level().isClientSide) {
                     target.discard()
                     stack.shrink(1)
-                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
+                    giveStackTo(player, RagiumItems.BOTTLED_BEE.toStack())
                 }
                 event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
                 return
@@ -191,23 +193,42 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun onEntityDeath(event: LivingDeathEvent) {
-        // 対象が共振の残骸を生成しない場合はスキップ
         val entity: LivingEntity = event.entity
-        if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
-        // サーバー側のみで実行する
         val level: Level = entity.level()
+        val source: DamageSource = event.source
+        // サーバー側のみで実行する
         if (level.isClientSide) return
+        generateResonantDebris(entity, level)
+        lootMobHead(entity, level, source)
+    }
+
+    @JvmStatic
+    private fun generateResonantDebris(entity: LivingEntity, level: Level) {
+        // 対象が共振の残骸を生成しない場合はスキップ
+        if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
         // 半径4 m以内のブロックに対して変換を試みる
         val entityPos: BlockPos = entity.blockPosition()
-        val random: RandomSource = entity.random
         BlockPos.betweenClosed(entityPos.offset(-4, -4, -4), entityPos.offset(4, 4, 4)).forEach { pos: BlockPos ->
             val state: BlockState = level.getBlockState(pos)
             if (state.`is`(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)) {
-                if (random.nextInt(15) == 0) {
+                if (entity.random.nextInt(15) == 0) {
                     level.destroyBlock(pos, false)
                     level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
                 }
             }
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    @JvmStatic
+    private fun lootMobHead(entity: LivingEntity, level: Level, source: DamageSource) {
+        // 武器にStrike効果が付いているか判定
+        val weapon: ItemStack = source.weaponItem ?: return
+        if (HTItemHelper.hasStrike(weapon)) {
+            // 対象のモブに対応する頭をドロップする
+            val head: ItemStack = RagiumDataMaps.INSTANCE.getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
+            if (head.isEmpty) return
+            dropStackAt(entity, head)
         }
     }
 

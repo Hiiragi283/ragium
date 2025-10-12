@@ -1,12 +1,12 @@
 package hiiragi283.ragium.integration.emi.recipe.processor
 
 import dev.emi.emi.api.stack.EmiIngredient
-import hiiragi283.ragium.api.recipe.manager.HTRecipeHolder
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.integration.emi.recipe.base.HTMultiOutputEmiRecipe
+import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: HTRecipeHolder<HTItemToItemRecipe>) :
+class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToItemRecipe>) :
     HTMultiOutputEmiRecipe<HTItemToItemRecipe>(category, holder) {
     init {
         addInput(recipe.ingredient)

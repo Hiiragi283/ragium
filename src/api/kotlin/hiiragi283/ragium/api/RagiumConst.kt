@@ -1,8 +1,22 @@
 package hiiragi283.ragium.api
 
+import net.minecraft.world.item.Item
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 
+/**
+ * Ragiumで使用する定数の一覧
+ */
 object RagiumConst {
+    //    Fluid    //
+
+    const val LOG_TO_SAP = 500
+    const val SAP_TO_MOLTEN = 250
+    const val MOLTEN_TO_GEM = 1000
+
+    //    Item    //
+
+    const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
+
     //    Materials    //
 
     const val ADVANCED_RAGI_ALLOY = "advanced_ragi_alloy"
@@ -80,6 +94,7 @@ object RagiumConst {
     const val FLUID_TRANSFORM = "fluid_transform"
     const val MELTING = "melting"
     const val MIXING = "mixing"
+    const val PLANTING = "planting"
     const val REFINING = "refining"
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"

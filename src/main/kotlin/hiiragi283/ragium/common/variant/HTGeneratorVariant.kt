@@ -39,5 +39,5 @@ enum class HTGeneratorVariant(
         HTLanguageType.JA_JP -> jaJpPattern
     }
 
-    override fun getSerializedName(): String = customName ?: name.lowercase()
+    override fun variantName(): String = customName ?: name.lowercase()
 }

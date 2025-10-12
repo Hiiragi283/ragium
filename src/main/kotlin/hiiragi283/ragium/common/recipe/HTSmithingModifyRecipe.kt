@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.codec.BiCodecs
-import hiiragi283.ragium.api.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
@@ -18,11 +18,11 @@ class HTSmithingModifyRecipe(val template: Ingredient, val addition: Ingredient,
     companion object {
         @JvmField
         val CODEC: MapBiCodec<RegistryFriendlyByteBuf, HTSmithingModifyRecipe> = MapBiCodec.composite(
-            BiCodecs.ingredient(false).fieldOf("template"),
+            VanillaBiCodecs.ingredient(false).fieldOf("template"),
             HTSmithingModifyRecipe::template,
-            BiCodecs.ingredient(true).fieldOf("addition"),
+            VanillaBiCodecs.ingredient(true).fieldOf("addition"),
             HTSmithingModifyRecipe::addition,
-            BiCodecs.COMPONENT_PATCH.fieldOf("components"),
+            VanillaBiCodecs.COMPONENT_PATCH.fieldOf("components"),
             HTSmithingModifyRecipe::components,
             ::HTSmithingModifyRecipe,
         )

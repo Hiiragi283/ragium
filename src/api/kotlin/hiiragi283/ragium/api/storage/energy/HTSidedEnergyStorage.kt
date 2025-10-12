@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.energy
 
+import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -10,13 +11,15 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 interface HTSidedEnergyStorage : IEnergyStorage {
     fun getEnergySideFor(): Direction? = null
 
-    fun receiveEnergy(toReceive: Int, simulate: Boolean, side: Direction?): Int
+    fun receiveEnergy(toReceive: Int, action: HTStorageAction, side: Direction?): Int
 
-    override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = receiveEnergy(toReceive, simulate, getEnergySideFor())
+    override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int =
+        receiveEnergy(toReceive, HTStorageAction.of(simulate), getEnergySideFor())
 
-    fun extractEnergy(toExtract: Int, simulate: Boolean, side: Direction?): Int
+    fun extractEnergy(toExtract: Int, action: HTStorageAction, side: Direction?): Int
 
-    override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = extractEnergy(toExtract, simulate, getEnergySideFor())
+    override fun extractEnergy(toExtract: Int, simulate: Boolean): Int =
+        extractEnergy(toExtract, HTStorageAction.of(simulate), getEnergySideFor())
 
     fun getEnergyStored(side: Direction?): Int
 

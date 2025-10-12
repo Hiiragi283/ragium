@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
