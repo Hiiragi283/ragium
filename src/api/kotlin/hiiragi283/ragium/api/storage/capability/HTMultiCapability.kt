@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.storage.capability
 
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability
@@ -82,11 +82,11 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDL
     fun hasCapability(stack: IItemStackExtension): Boolean = getCapability(stack) != null
 
     // HTItemStorageStack
-    fun getCapability(stack: HTItemStorageStack): ITEM_HANDLER? = getCapability(stack.stack)
+    fun getCapability(stack: ImmutableItemStack): ITEM_HANDLER? = getCapability(stack.stack)
 
-    fun getSlottedCapability(stack: HTItemStorageStack): SLOTTED_HANDLER? = getSlottedCapability(stack.stack)
+    fun getSlottedCapability(stack: ImmutableItemStack): SLOTTED_HANDLER? = getSlottedCapability(stack.stack)
 
-    fun getCapabilitySlots(stack: HTItemStorageStack): List<SLOT> = getCapabilitySlots(stack.stack)
+    fun getCapabilitySlots(stack: ImmutableItemStack): List<SLOT> = getCapabilitySlots(stack.stack)
 
-    fun getCapabilitySlot(stack: HTItemStorageStack, index: Int): SLOT? = getCapabilitySlot(stack.stack, index)
+    fun getCapabilitySlot(stack: ImmutableItemStack, index: Int): SLOT? = getCapabilitySlot(stack.stack, index)
 }

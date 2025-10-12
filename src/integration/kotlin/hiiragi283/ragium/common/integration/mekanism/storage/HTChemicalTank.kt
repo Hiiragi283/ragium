@@ -4,20 +4,20 @@ import hiiragi283.ragium.api.storage.HTStackSlot
 import mekanism.api.chemical.ChemicalStack
 
 /**
- * [HTChemicalStorageStack]向けの[HTStackSlot]の拡張インターフェース
+ * [ImmutableChemicalStack]向けの[HTStackSlot]の拡張インターフェース
  */
-interface HTChemicalTank : HTStackSlot<HTChemicalStorageStack> {
+interface HTChemicalTank : HTStackSlot<ImmutableChemicalStack> {
     //    Mutable    //
 
     /**
-     * [HTChemicalStorageStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     * [ImmutableChemicalStack]向けの[HTStackSlot.Mutable]の拡張クラス
      */
     abstract class Mutable :
-        HTStackSlot.Mutable<HTChemicalStorageStack>(),
+        HTStackSlot.Mutable<ImmutableChemicalStack>(),
         HTChemicalTank {
-        final override fun getEmptyStack(): HTChemicalStorageStack = HTChemicalStorageStack.EMPTY
+        final override fun getEmptyStack(): ImmutableChemicalStack = ImmutableChemicalStack.EMPTY
 
-        final override fun isSameStack(first: HTChemicalStorageStack, second: HTChemicalStorageStack): Boolean =
+        final override fun isSameStack(first: ImmutableChemicalStack, second: ImmutableChemicalStack): Boolean =
             ChemicalStack.isSameChemical(first.stack, second.stack)
     }
 }

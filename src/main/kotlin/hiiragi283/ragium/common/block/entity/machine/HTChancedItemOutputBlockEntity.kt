@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -86,7 +86,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
             if (!HTStackSlotHelper
                     .insertStacks(
                         outputSlots,
-                        HTItemStorageStack.of(stackIn),
+                        ImmutableItemStack.of(stackIn),
                         HTStorageAction.SIMULATE,
                     ).isEmpty()
             ) {
@@ -106,7 +106,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                val stackIn: HTItemStorageStack = result.getStackOrNull(level.registryAccess())?.let(HTItemStorageStack::of) ?: continue
+                val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess())?.let(ImmutableItemStack::of) ?: continue
                 HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
             }
         }

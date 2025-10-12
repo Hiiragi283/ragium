@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.integration.mekanism.storage
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.storage.HTStorageStack
+import hiiragi283.ragium.api.storage.ImmutableStack
 import mekanism.api.chemical.Chemical
 import mekanism.api.chemical.ChemicalStack
 import net.minecraft.core.Holder
@@ -12,10 +12,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 
 /**
- * [ChemicalStack]向けの[HTStorageStack]の実装
+ * [ChemicalStack]向けの[ImmutableStack]の実装
  */
 @JvmInline
-value class HTChemicalStorageStack private constructor(val stack: ChemicalStack) : HTStorageStack<Chemical, HTChemicalStorageStack> {
+value class ImmutableChemicalStack private constructor(val stack: ChemicalStack) : ImmutableStack<Chemical, ImmutableChemicalStack> {
     companion object {
         @JvmField
         val RAW_CODEC: BiCodec<RegistryFriendlyByteBuf, ChemicalStack> = BiCodec.of(
@@ -24,15 +24,15 @@ value class HTChemicalStorageStack private constructor(val stack: ChemicalStack)
         )
 
         @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTChemicalStorageStack> =
-            RAW_CODEC.xmap(::of, HTChemicalStorageStack::stack)
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableChemicalStack> =
+            RAW_CODEC.xmap(::of, ImmutableChemicalStack::stack)
 
-        val EMPTY = HTChemicalStorageStack(ChemicalStack.EMPTY)
+        val EMPTY = ImmutableChemicalStack(ChemicalStack.EMPTY)
 
         @JvmStatic
-        fun of(stack: ChemicalStack): HTChemicalStorageStack = when (stack.isEmpty) {
+        fun of(stack: ChemicalStack): ImmutableChemicalStack = when (stack.isEmpty) {
             true -> EMPTY
-            false -> HTChemicalStorageStack(stack)
+            false -> ImmutableChemicalStack(stack)
         }
     }
 
@@ -46,9 +46,9 @@ value class HTChemicalStorageStack private constructor(val stack: ChemicalStack)
 
     override fun amountAsLong(): Long = stack.amount
 
-    override fun copy(): HTChemicalStorageStack = HTChemicalStorageStack(stack)
+    override fun copy(): ImmutableChemicalStack = ImmutableChemicalStack(stack)
 
-    override fun copyWithAmount(amount: Int): HTChemicalStorageStack = HTChemicalStorageStack(stack.copyWithAmount(amountAsLong()))
+    override fun copyWithAmount(amount: Int): ImmutableChemicalStack = ImmutableChemicalStack(stack.copyWithAmount(amountAsLong()))
 
     override fun componentsPatch(): DataComponentPatch = DataComponentPatch.EMPTY
 

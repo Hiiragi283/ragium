@@ -43,17 +43,17 @@ object MekanismCapabilities {
         handler.getChemicalTank(index, handler.sideFor)
     } else {
         object : HTChemicalTank, HTValueSerializable.Empty {
-            override fun getStack(): HTChemicalStorageStack = handler.getChemicalInTank(index).let(HTChemicalStorageStack::of)
+            override fun getStack(): ImmutableChemicalStack = handler.getChemicalInTank(index).let(ImmutableChemicalStack::of)
 
-            override fun getCapacityAsLong(stack: HTChemicalStorageStack): Long = handler.getChemicalTankCapacity(index)
+            override fun getCapacityAsLong(stack: ImmutableChemicalStack): Long = handler.getChemicalTankCapacity(index)
 
-            override fun isValid(stack: HTChemicalStorageStack): Boolean = handler.isValid(index, stack.stack)
+            override fun isValid(stack: ImmutableChemicalStack): Boolean = handler.isValid(index, stack.stack)
 
-            override fun insert(stack: HTChemicalStorageStack, action: HTStorageAction, access: HTStorageAccess): HTChemicalStorageStack =
-                handler.insertChemical(index, stack.stack, convert(action)).let(HTChemicalStorageStack::of)
+            override fun insert(stack: ImmutableChemicalStack, action: HTStorageAction, access: HTStorageAccess): ImmutableChemicalStack =
+                handler.insertChemical(index, stack.stack, convert(action)).let(ImmutableChemicalStack::of)
 
-            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): HTChemicalStorageStack =
-                handler.extractChemical(index, amount.toLong(), convert(action)).let(HTChemicalStorageStack::of)
+            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableChemicalStack =
+                handler.extractChemical(index, amount.toLong(), convert(action)).let(ImmutableChemicalStack::of)
 
             override fun onContentsChanged() {
                 (handler as? IContentsListener)?.onContentsChanged()

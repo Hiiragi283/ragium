@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.isOf
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -15,11 +15,11 @@ class HTPotionBundleItemHandler(parent: ItemStack, size: Long) :
     HTMenuCallback {
     companion object {
         @JvmStatic
-        fun filterPotion(stack: HTItemStorageStack): Boolean = stack.isEmpty() || stack.isOf(Items.POTION)
+        fun filterPotion(stack: ImmutableItemStack): Boolean = stack.isEmpty() || stack.isOf(Items.POTION)
     }
 
     override fun createSlot(slot: Int): HTItemSlot = object : ComponentSlot(parent, size, slot) {
-        override fun isValid(stack: HTItemStorageStack): Boolean = filterPotion(stack)
+        override fun isValid(stack: ImmutableItemStack): Boolean = filterPotion(stack)
     }
 
     override fun openMenu(player: Player) {

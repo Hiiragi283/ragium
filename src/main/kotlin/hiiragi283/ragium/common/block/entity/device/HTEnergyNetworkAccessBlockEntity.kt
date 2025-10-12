@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -48,7 +48,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = { stack: HTItemStorageStack ->
+            filter = { stack: ImmutableItemStack ->
                 val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stack, 0) ?: return@create false
                 !battery.isEmpty()
             },
@@ -58,7 +58,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = { stack: HTItemStorageStack ->
+            filter = { stack: ImmutableItemStack ->
                 val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stack, 0) ?: return@create false
                 battery.getNeededAsInt() > 0
             },
@@ -83,7 +83,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun extractFromItem(): TriState {
-        val stackIn: HTItemStorageStack = extractSlot.getStack()
+        val stackIn: ImmutableItemStack = extractSlot.getStack()
         val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stackIn, 0)
             ?: return TriState.FALSE
         var toExtract: Int = transferRate
@@ -104,7 +104,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     }
 
     private fun receiveToItem(): TriState {
-        val stackIn: HTItemStorageStack = insertSlot.getStack()
+        val stackIn: ImmutableItemStack = insertSlot.getStack()
         val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stackIn, 0)
             ?: return TriState.FALSE
         var toReceive: Int = transferRate

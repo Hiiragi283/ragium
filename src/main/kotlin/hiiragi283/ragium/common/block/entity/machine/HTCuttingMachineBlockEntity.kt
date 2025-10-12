@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -74,7 +74,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean = HTStackSlotHelper
         .insertStacks(
             outputSlots,
-            HTItemStorageStack.of(recipe.assemble(input, level.registryAccess())),
+            ImmutableItemStack.of(recipe.assemble(input, level.registryAccess())),
             HTStorageAction.SIMULATE,
         ).isEmpty()
 
@@ -88,7 +88,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         HTStackSlotHelper.insertStacks(
             outputSlots,
-            HTItemStorageStack.of(recipe.assemble(input, level.registryAccess())),
+            ImmutableItemStack.of(recipe.assemble(input, level.registryAccess())),
             HTStorageAction.EXECUTE,
         )
         // インプットを減らす

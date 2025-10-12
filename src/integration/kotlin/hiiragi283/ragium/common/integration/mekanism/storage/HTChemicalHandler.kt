@@ -30,7 +30,7 @@ interface HTChemicalHandler :
     }
 
     override fun getChemicalTankCapacity(tank: Int, side: Direction?): Long =
-        getChemicalTank(tank, side)?.getCapacityAsLong(HTChemicalStorageStack.EMPTY) ?: 0
+        getChemicalTank(tank, side)?.getCapacityAsLong(ImmutableChemicalStack.EMPTY) ?: 0
 
     override fun isValid(tank: Int, stack: ChemicalStack, side: Direction?): Boolean = getChemicalTank(tank, side)?.isValid(stack) ?: false
 

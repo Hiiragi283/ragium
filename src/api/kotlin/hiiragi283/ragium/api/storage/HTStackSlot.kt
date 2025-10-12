@@ -8,7 +8,7 @@ import kotlin.math.min
  * 単一の[STACK]を保持するスロットのインターフェース
  * @param STACK 保持するスタックのクラス
  */
-interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
+interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
     HTValueSerializable,
     HTContentListener {
     /**
@@ -99,7 +99,7 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
     /**
      * 中身が可変な[HTStackSlot]の拡張クラス
      */
-    abstract class Mutable<STACK : HTStorageStack<*, STACK>> : HTStackSlot<STACK> {
+    abstract class Mutable<STACK : ImmutableStack<*, STACK>> : HTStackSlot<STACK> {
         /**
          * 指定された[stack]を保持します。
          */

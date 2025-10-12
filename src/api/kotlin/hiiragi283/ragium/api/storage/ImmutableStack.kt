@@ -15,13 +15,13 @@ import java.util.function.Predicate
  * @param T スタックが保持する種類のクラス
  * @param STACK [HTStackSlot]を実装したクラス
  */
-interface HTStorageStack<T : Any, STACK : HTStorageStack<T, STACK>> :
+interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     DataComponentHolder,
     HTHasText,
     HTHolderLike {
     companion object {
         @JvmStatic
-        fun <STACK : HTStorageStack<*, *>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
+        fun <STACK : ImmutableStack<*, *>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
     }
 
     /**

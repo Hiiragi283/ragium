@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getBurnTime
 import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.api.variant.HTVariantKey
@@ -77,14 +77,14 @@ object RagiumBlockEntityTypes {
             val factory = when (variant) {
                 // Basic
                 HTGeneratorVariant.THERMAL -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: HTItemStorageStack -> stack.getBurnTime(null) / 10 },
+                    { stack: ImmutableItemStack -> stack.getBurnTime(null) / 10 },
                     HTFluidContent.LAVA,
                     RagiumDataMaps.INSTANCE::getThermalFuel,
                     variant,
                 )
                 // Advanced
                 HTGeneratorVariant.COMBUSTION -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: HTItemStorageStack ->
+                    { stack: ImmutableItemStack ->
                         when {
                             stack.isOf(ItemTags.COALS) -> 100
                             else -> 0

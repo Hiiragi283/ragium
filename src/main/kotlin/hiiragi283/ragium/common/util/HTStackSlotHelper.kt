@@ -6,18 +6,18 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.HTStorageStack
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
+import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.item.hasCraftingRemainingItem
 import java.util.Optional
 import java.util.function.ToIntFunction
 
 object HTStackSlotHelper {
-    fun <STACK : HTStorageStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?, amount: Int): STACK? {
+    fun <STACK : ImmutableStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?, amount: Int): STACK? {
         if (from == null || to == null || amount <= 0) return null
         val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         val simulatedRemain: STACK = to.insert(simulatedExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
@@ -35,14 +35,14 @@ object HTStackSlotHelper {
         return remainder
     }
 
-    fun <STACK : HTStorageStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?): STACK? =
+    fun <STACK : ImmutableStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?): STACK? =
         moveStack(from, to, from?.getAmountAsInt() ?: 0)
 
     //    Item    //
 
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<HTItemStorageStack>, action: HTStorageAction): Int {
-        val stackIn: HTItemStorageStack = slot.getStack()
+    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ImmutableItemStack>, action: HTStorageAction): Int {
+        val stackIn: ImmutableItemStack = slot.getStack()
         if (stackIn.hasCraftingRemainingItem() && stackIn.amountAsInt() == 1) {
             if (action.execute) {
                 slot.setStack(stackIn.getCraftingRemainingItem())
@@ -76,12 +76,12 @@ object HTStackSlotHelper {
     @JvmStatic
     fun insertStacks(
         slots: Iterable<HTItemSlot>,
-        stack: HTItemStorageStack,
+        stack: ImmutableItemStack,
         action: HTStorageAction,
-        filter: (HTItemSlot, HTItemStorageStack) -> Boolean = HTItemSlot::isValid,
+        filter: (HTItemSlot, ImmutableItemStack) -> Boolean = HTItemSlot::isValid,
         onBreak: () -> Unit = {},
-    ): HTItemStorageStack {
-        var remainder: HTItemStorageStack = stack
+    ): ImmutableItemStack {
+        var remainder: ImmutableItemStack = stack
         for (slot: HTItemSlot in slots) {
             if (!filter(slot, remainder)) continue
             remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAL)
@@ -96,7 +96,7 @@ object HTStackSlotHelper {
     //    Fluid    //
 
     @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<HTFluidStorageStack>, action: HTStorageAction): Int =
+    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<ImmutableFluidStack>, action: HTStorageAction): Int =
         tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAL).amountAsInt()
 
     /**

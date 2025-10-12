@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -81,21 +81,21 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
         var player: Player? = null
 
-        override fun getStack(): HTFluidStorageStack {
-            val amount: Int = player?.let(HTExperienceHelper::getPlayerExp) ?: return HTFluidStorageStack.EMPTY
+        override fun getStack(): ImmutableFluidStack {
+            val amount: Int = player?.let(HTExperienceHelper::getPlayerExp) ?: return ImmutableFluidStack.EMPTY
             return RagiumFluidContents.EXPERIENCE.toStorageStack(amount * multiplier)
         }
 
-        override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = when (isValid(stack)) {
+        override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = when (isValid(stack)) {
             true -> Long.MAX_VALUE
             false -> 0
         }
 
-        override fun isValid(stack: HTFluidStorageStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
+        override fun isValid(stack: ImmutableFluidStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
 
         override fun onContentsChanged() {}
 
-        override fun setStack(stack: HTFluidStorageStack) {
+        override fun setStack(stack: ImmutableFluidStack) {
             if (isValid(stack) && player != null) {
                 HTExperienceHelper.setPlayerExp(player!!, stack.amountAsInt() / multiplier)
             }

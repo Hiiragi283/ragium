@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.storageCopy
 import hiiragi283.ragium.api.storage.fluid.toContent
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -37,15 +37,15 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Lon
         HTValueSerializable.Empty {
         protected val component: DataComponentType<SimpleFluidContent> get() = RagiumDataComponents.FLUID_CONTENT
 
-        override fun getStack(): HTFluidStorageStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).storageCopy()
+        override fun getStack(): ImmutableFluidStack = parent.getOrDefault(component, SimpleFluidContent.EMPTY).storageCopy()
 
-        override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = capacity
+        override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacity
 
-        override fun isValid(stack: HTFluidStorageStack): Boolean = true
+        override fun isValid(stack: ImmutableFluidStack): Boolean = true
 
         override fun onContentsChanged() {}
 
-        override fun setStack(stack: HTFluidStorageStack) {
+        override fun setStack(stack: ImmutableFluidStack) {
             parent.setOrRemove(component, stack.toContent(), SimpleFluidContent::isEmpty.negate())
         }
     }

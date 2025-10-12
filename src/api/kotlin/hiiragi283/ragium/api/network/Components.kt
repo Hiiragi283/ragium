@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.network
 
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -86,7 +86,7 @@ fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
  * @param consumer 生成したツールチップを受けとるブロック
  */
 fun addFluidTooltip(
-    stack: HTFluidStorageStack,
+    stack: ImmutableFluidStack,
     consumer: Consumer<Component>,
     flag: TooltipFlag,
     inGui: Boolean,

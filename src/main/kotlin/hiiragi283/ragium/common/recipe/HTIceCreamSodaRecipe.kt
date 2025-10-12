@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
@@ -24,7 +24,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
         var isCherry = false
         var isPotion = false
         var isDye = false
-        for (stack: HTItemStorageStack in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack in ImmutableRecipeInput(input)) {
             if (stack.isEmpty()) continue
             if (stack.isOf(RagiumItems.ICE_CREAM) && !isIceCream) {
                 isIceCream = true
@@ -41,7 +41,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (stack: HTItemStorageStack in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack in ImmutableRecipeInput(input)) {
             if (stack.isEmpty()) continue
             if (stack.has(DataComponents.POTION_CONTENTS)) {
                 potion = stack.get(DataComponents.POTION_CONTENTS)!!

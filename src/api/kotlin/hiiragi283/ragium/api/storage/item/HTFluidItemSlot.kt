@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
@@ -25,7 +25,7 @@ interface HTFluidItemSlot : HTItemSlot {
         val tanks: List<HTFluidTank> = handler.getFluidTanks(handler.getFluidSideFor())
         if (tanks.size != 1) return false
         val tank: HTFluidTank = tanks[0]
-        val stackIn: HTFluidStorageStack = tank.getStack()
+        val stackIn: ImmutableFluidStack = tank.getStack()
         if (!stackIn.isEmpty() && getFluidTank().isValid(stackIn)) {
             if (fillHandlerFromOther(getFluidTank(), tank, stackIn)) {
                 replaceContainer(handlerItem.container)
@@ -37,10 +37,10 @@ interface HTFluidItemSlot : HTItemSlot {
 
     fun replaceContainer(container: ItemStack)
 
-    private fun fillHandlerFromOther(toFill: HTFluidTank, toDrain: HTFluidTank, stack: HTFluidStorageStack): Boolean {
-        val simulatedDrain: HTFluidStorageStack = toDrain.extract(stack.amountAsInt(), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+    private fun fillHandlerFromOther(toFill: HTFluidTank, toDrain: HTFluidTank, stack: ImmutableFluidStack): Boolean {
+        val simulatedDrain: ImmutableFluidStack = toDrain.extract(stack.amountAsInt(), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         if (simulatedDrain.isEmpty()) return false
-        val remainder: HTFluidStorageStack = getFluidTank().insert(simulatedDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+        val remainder: ImmutableFluidStack = getFluidTank().insert(simulatedDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         val remainderAmount: Int = remainder.amountAsInt()
         val drained: Int = simulatedDrain.amountAsInt()
         if (remainderAmount < drained) {

@@ -5,9 +5,9 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
 /**
- * [HTItemStorageStack]向けの[HTStackSlot]の拡張インターフェース
+ * [ImmutableItemStack]向けの[HTStackSlot]の拡張インターフェース
  */
-interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
+interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
     /**
      * GUIにおける[Slot]を返します。
      */
@@ -16,14 +16,14 @@ interface HTItemSlot : HTStackSlot<HTItemStorageStack> {
     //    Mutable    //
 
     /**
-     * [HTItemStorageStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     * [ImmutableItemStack]向けの[HTStackSlot.Mutable]の拡張クラス
      */
     abstract class Mutable :
-        HTStackSlot.Mutable<HTItemStorageStack>(),
+        HTStackSlot.Mutable<ImmutableItemStack>(),
         HTItemSlot {
-        final override fun getEmptyStack(): HTItemStorageStack = HTItemStorageStack.EMPTY
+        final override fun getEmptyStack(): ImmutableItemStack = ImmutableItemStack.EMPTY
 
-        final override fun isSameStack(first: HTItemStorageStack, second: HTItemStorageStack): Boolean =
+        final override fun isSameStack(first: ImmutableItemStack, second: ImmutableItemStack): Boolean =
             ItemStack.isSameItemSameComponents(first.stack, second.stack)
     }
 }

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -27,7 +27,7 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
                 HTMachineUpgradeItemHandler(checkNotNull(holder as? BlockEntity)::setChanged)
 
             @JvmStatic
-            fun getComponentTier(stack: HTItemStorageStack): HTComponentTier? = RagiumItems.COMPONENTS
+            fun getComponentTier(stack: ImmutableItemStack): HTComponentTier? = RagiumItems.COMPONENTS
                 .toList()
                 .firstOrNull { (_, item: ItemLike) -> stack.isOf(item.asItem()) }
                 ?.first
@@ -40,7 +40,7 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
                 HTSlotHelper.getSlotPosY(i - 0.5),
                 canExtract = HTItemStackSlot.MANUAL_ONLY,
                 canInsert = HTItemStackSlot.MANUAL_ONLY,
-                filter = { stack: HTItemStorageStack ->
+                filter = { stack: ImmutableItemStack ->
                     when (i) {
                         3 -> getComponentTier(stack) != null
                         else -> getComponentTier(stack) == null

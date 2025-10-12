@@ -4,12 +4,12 @@ import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.HTStorageStack
+import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.item.hasCraftingRemainingItem
 import java.util.function.Predicate
@@ -19,21 +19,21 @@ import java.util.function.Predicate
  */
 class HTFluidFuelItemStackSlot private constructor(
     tank: HTFluidTank,
-    private val stackToAmount: (HTItemStorageStack) -> Int,
-    private val amountToFuel: (Int) -> HTFluidStorageStack,
-    canExtract: Predicate<HTItemStorageStack>,
-    canInsert: Predicate<HTItemStorageStack>,
+    private val stackToAmount: (ImmutableItemStack) -> Int,
+    private val amountToFuel: (Int) -> ImmutableFluidStack,
+    canExtract: Predicate<ImmutableItemStack>,
+    canInsert: Predicate<ImmutableItemStack>,
     listener: HTContentListener?,
     x: Int,
     y: Int,
     slotType: HTContainerItemSlot.Type,
-) : HTFluidItemStackSlot(tank, canExtract, canInsert, HTStorageStack.alwaysTrue(), listener, x, y, slotType) {
+) : HTFluidItemStackSlot(tank, canExtract, canInsert, ImmutableStack.alwaysTrue(), listener, x, y, slotType) {
     companion object {
         @JvmStatic
         fun create(
             tank: HTFluidTank,
-            stackToAmount: (HTItemStorageStack) -> Int,
-            amountToFuel: (Int) -> HTFluidStorageStack,
+            stackToAmount: (ImmutableItemStack) -> Int,
+            amountToFuel: (Int) -> ImmutableFluidStack,
             listener: HTContentListener?,
             x: Int,
             y: Int,
@@ -42,7 +42,7 @@ class HTFluidFuelItemStackSlot private constructor(
             tank,
             stackToAmount,
             amountToFuel,
-            { stack: HTItemStorageStack ->
+            { stack: ImmutableItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
                 RagiumCapabilities.FLUID.getSlottedCapability(stack)?.let { handler: HTFluidHandler ->
                     for (fluidTank: HTFluidTank in handler.getFluidTanks(handler.getFluidSideFor())) {
@@ -52,7 +52,7 @@ class HTFluidFuelItemStackSlot private constructor(
                 // stackを燃料に変換できない場合はtrue
                 stackToAmount(stack) == 0
             },
-            { stack: HTItemStorageStack -> stackToAmount(stack) > 0 || fillPredicate(tank).test(stack) },
+            { stack: ImmutableItemStack -> stackToAmount(stack) > 0 || fillPredicate(tank).test(stack) },
             listener,
             x,
             y,

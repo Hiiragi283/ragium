@@ -1,18 +1,18 @@
 package hiiragi283.ragium.api.recipe.input
 
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 
 @JvmInline
-value class ImmutableRecipeInput(val input: RecipeInput) : Iterable<HTItemStorageStack> {
-    override fun iterator(): Iterator<HTItemStorageStack> = object : Iterator<HTItemStorageStack> {
+value class ImmutableRecipeInput(val input: RecipeInput) : Iterable<ImmutableItemStack> {
+    override fun iterator(): Iterator<ImmutableItemStack> = object : Iterator<ImmutableItemStack> {
         private var index = 0
 
-        override fun next(): HTItemStorageStack {
+        override fun next(): ImmutableItemStack {
             val stack: ItemStack = input.getItem(index)
             index++
-            return HTItemStorageStack.of(stack)
+            return ImmutableItemStack.of(stack)
         }
 
         override fun hasNext(): Boolean = index < input.size()

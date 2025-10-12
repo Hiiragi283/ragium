@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.core.Direction
 import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -63,15 +63,15 @@ object RagiumCapabilities {
         object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
             override fun createContainerSlot(): Slot? = null
 
-            override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(handler.getStackInSlot(index))
+            override fun getStack(): ImmutableItemStack = ImmutableItemStack.of(handler.getStackInSlot(index))
 
-            override fun getCapacityAsLong(stack: HTItemStorageStack): Long = handler.getSlotLimit(index).toLong()
+            override fun getCapacityAsLong(stack: ImmutableItemStack): Long = handler.getSlotLimit(index).toLong()
 
-            override fun isValid(stack: HTItemStorageStack): Boolean = handler.isItemValid(index, stack.stack)
+            override fun isValid(stack: ImmutableItemStack): Boolean = handler.isItemValid(index, stack.stack)
 
             override fun onContentsChanged() {}
 
-            override fun setStack(stack: HTItemStorageStack) {
+            override fun setStack(stack: ImmutableItemStack) {
                 (handler as? IItemHandlerModifiable)?.setStackInSlot(index, stack.stack)
             }
         }
@@ -92,20 +92,20 @@ object RagiumCapabilities {
         handler.getFluidTank(index, handler.getFluidSideFor())
     } else {
         object : HTFluidTank, HTValueSerializable.Empty {
-            override fun getStack(): HTFluidStorageStack = HTFluidStorageStack.of(handler.getFluidInTank(index))
+            override fun getStack(): ImmutableFluidStack = ImmutableFluidStack.of(handler.getFluidInTank(index))
 
-            override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = handler.getTankCapacity(index).toLong()
+            override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = handler.getTankCapacity(index).toLong()
 
-            override fun isValid(stack: HTFluidStorageStack): Boolean = handler.isFluidValid(index, stack.stack)
+            override fun isValid(stack: ImmutableFluidStack): Boolean = handler.isFluidValid(index, stack.stack)
 
-            override fun insert(stack: HTFluidStorageStack, action: HTStorageAction, access: HTStorageAccess): HTFluidStorageStack =
+            override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
                 when (val filled: Int = handler.fill(stack.stack, action.toFluid())) {
-                    0 -> HTFluidStorageStack.EMPTY
+                    0 -> ImmutableFluidStack.EMPTY
                     else -> stack.copyWithAmount(filled)
                 }
 
-            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): HTFluidStorageStack =
-                HTFluidStorageStack.of(handler.drain(amount, action.toFluid()))
+            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
+                ImmutableFluidStack.of(handler.drain(amount, action.toFluid()))
 
             override fun onContentsChanged() {}
         }

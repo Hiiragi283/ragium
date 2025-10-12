@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.inventory
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.insertItem
 import net.minecraft.world.SimpleContainer
@@ -34,7 +34,7 @@ open class HTContainerItemSlot(
         if (stack.isEmpty) return false
         if (slot.isEmpty()) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
         if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()) return false
-        return slot.isStackValidForInsert(HTItemStorageStack.of(stack), HTStorageAccess.MANUAL)
+        return slot.isStackValidForInsert(ImmutableItemStack.of(stack), HTStorageAccess.MANUAL)
     }
 
     override fun getItem(): ItemStack = slot.getItemStack()
@@ -51,9 +51,9 @@ open class HTContainerItemSlot(
         slot.onContentsChanged()
     }
 
-    override fun getMaxStackSize(): Int = slot.getCapacityAsInt(HTItemStorageStack.EMPTY)
+    override fun getMaxStackSize(): Int = slot.getCapacityAsInt(ImmutableItemStack.EMPTY)
 
-    override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(HTItemStorageStack.of(stack))
+    override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(ImmutableItemStack.of(stack))
 
     override fun mayPickup(player: Player): Boolean = !slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()
 

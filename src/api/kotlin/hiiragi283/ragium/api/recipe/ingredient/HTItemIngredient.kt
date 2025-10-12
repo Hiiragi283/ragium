@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -32,11 +32,11 @@ interface HTItemIngredient : HTIngredient<ItemStack> {
 
     fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>>
 
-    fun getRequiredAmount(stack: HTItemStorageStack): Int = getRequiredAmount(stack.stack)
+    fun getRequiredAmount(stack: ImmutableItemStack): Int = getRequiredAmount(stack.stack)
 
     fun interface CountGetter {
         fun getRequiredCount(stack: ItemStack): Int
 
-        fun getRequiredCount(stack: HTItemStorageStack): Int = getRequiredCount(stack.stack)
+        fun getRequiredCount(stack: ImmutableItemStack): Int = getRequiredCount(stack.stack)
     }
 }

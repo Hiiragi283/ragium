@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -42,7 +42,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
     companion object {
         @JvmStatic
         fun createSimple(
-            itemValueGetter: (HTItemStorageStack) -> Int,
+            itemValueGetter: (ImmutableItemStack) -> Int,
             fuelContent: HTFluidContent<*, *, *>,
             fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
             variant: HTGeneratorVariant,
@@ -77,7 +77,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         tank = HTVariableFluidStackTank.input(
             listener,
             RagiumConfig.COMMON.generatorInputTankCapacity,
-            filter = { stack: HTFluidStorageStack ->
+            filter = { stack: ImmutableFluidStack ->
                 val access: RegistryAccess = level?.registryAccess() ?: return@input false
                 getRequiredAmount(access, stack) > 0
             },
@@ -112,11 +112,11 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         }
     }
 
-    protected abstract fun getFuelValue(stack: HTItemStorageStack): Int
+    protected abstract fun getFuelValue(stack: ImmutableItemStack): Int
 
-    protected abstract fun getFuelStack(value: Int): HTFluidStorageStack
+    protected abstract fun getFuelStack(value: Int): ImmutableFluidStack
 
-    protected abstract fun getRequiredAmount(access: RegistryAccess, stack: HTFluidStorageStack): Int
+    protected abstract fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int
 
     //    HTFluidInteractable    //
 
@@ -126,17 +126,17 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
     //    Simple    //
 
     private class Simple(
-        private val itemValueGetter: (HTItemStorageStack) -> Int,
+        private val itemValueGetter: (ImmutableItemStack) -> Int,
         private val fuelContent: HTFluidContent<*, *, *>,
         private val fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
         variant: HTGeneratorVariant,
         pos: BlockPos,
         state: BlockState,
     ) : HTFuelGeneratorBlockEntity(variant, pos, state) {
-        override fun getFuelValue(stack: HTItemStorageStack): Int = itemValueGetter(stack)
+        override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
-        override fun getFuelStack(value: Int): HTFluidStorageStack = fuelContent.toStorageStack(value)
+        override fun getFuelStack(value: Int): ImmutableFluidStack = fuelContent.toStorageStack(value)
 
-        override fun getRequiredAmount(access: RegistryAccess, stack: HTFluidStorageStack): Int = fluidAmountGetter(access, stack.holder())
+        override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int = fluidAmountGetter(access, stack.holder())
     }
 }

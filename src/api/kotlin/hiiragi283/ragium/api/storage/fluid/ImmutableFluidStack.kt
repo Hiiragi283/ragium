@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.storage.HTStorageStack
+import hiiragi283.ragium.api.storage.ImmutableStack
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
@@ -12,28 +12,28 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
- * [FluidStack]向けの[HTStorageStack]の実装
+ * [FluidStack]向けの[ImmutableStack]の実装
  */
 @JvmInline
-value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTStorageStack<Fluid, HTFluidStorageStack> {
+value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
         @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidStorageStack> =
-            VanillaBiCodecs.fluidStack(true).xmap(::of, HTFluidStorageStack::stack)
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
+            VanillaBiCodecs.fluidStack(true).xmap(::of, ImmutableFluidStack::stack)
 
         /**
-         * 空の[HTFluidStorageStack]
+         * 空の[ImmutableFluidStack]
          */
-        val EMPTY = HTFluidStorageStack(FluidStack.EMPTY)
+        val EMPTY = ImmutableFluidStack(FluidStack.EMPTY)
 
         /**
-         * [FluidStack]を[HTFluidStorageStack]に変換します。
+         * [FluidStack]を[ImmutableFluidStack]に変換します。
          * @return [FluidStack.isEmpty]が`true`の場合は[EMPTY]を返します。
          */
         @JvmStatic
-        fun of(stack: FluidStack): HTFluidStorageStack = when (stack.isEmpty) {
+        fun of(stack: FluidStack): ImmutableFluidStack = when (stack.isEmpty) {
             true -> EMPTY
-            false -> HTFluidStorageStack(stack)
+            false -> ImmutableFluidStack(stack)
         }
     }
 
@@ -45,9 +45,9 @@ value class HTFluidStorageStack private constructor(val stack: FluidStack) : HTS
 
     override fun amountAsInt(): Int = stack.amount
 
-    override fun copy(): HTFluidStorageStack = of(stack.copy())
+    override fun copy(): ImmutableFluidStack = of(stack.copy())
 
-    override fun copyWithAmount(amount: Int): HTFluidStorageStack = of(stack.copyWithAmount(amount))
+    override fun copyWithAmount(amount: Int): ImmutableFluidStack = of(stack.copyWithAmount(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 

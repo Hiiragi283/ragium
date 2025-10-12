@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.item.getOrEmpty
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
@@ -40,15 +40,15 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         override fun createContainerSlot(): Slot? = null
 
-        override fun getStack(): HTItemStorageStack = getContents().getOrEmpty(slot).let(HTItemStorageStack::of)
+        override fun getStack(): ImmutableItemStack = getContents().getOrEmpty(slot).let(ImmutableItemStack::of)
 
-        override fun getCapacityAsLong(stack: HTItemStorageStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
+        override fun getCapacityAsLong(stack: ImmutableItemStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 
-        override fun isValid(stack: HTItemStorageStack): Boolean = true
+        override fun isValid(stack: ImmutableItemStack): Boolean = true
 
         override fun onContentsChanged() {}
 
-        override fun setStack(stack: HTItemStorageStack) {
+        override fun setStack(stack: ImmutableItemStack) {
             val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack.stack) }
             parent.setOrRemove(component, contents) { it.asNonEmptySequence().any() }
             onContentsChanged()

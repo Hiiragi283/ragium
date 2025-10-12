@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageStack
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
+import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -17,14 +17,14 @@ import java.util.function.Predicate
  */
 open class HTFluidStackTank protected constructor(
     private val capacity: Long,
-    private val canExtract: BiPredicate<HTFluidStorageStack, HTStorageAccess>,
-    private val canInsert: BiPredicate<HTFluidStorageStack, HTStorageAccess>,
-    private val filter: Predicate<HTFluidStorageStack>,
+    private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
+    private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
+    private val filter: Predicate<ImmutableFluidStack>,
     private val listener: HTContentListener?,
 ) : HTFluidTank.Mutable() {
     companion object {
         @JvmField
-        val ALWAYS_TRUE: BiPredicate<HTFluidStorageStack, HTStorageAccess> =
+        val ALWAYS_TRUE: BiPredicate<ImmutableFluidStack, HTStorageAccess> =
             BiPredicate { _, _ -> true }
 
         @JvmStatic
@@ -35,18 +35,18 @@ open class HTFluidStackTank protected constructor(
 
         @JvmStatic
         fun create(listener: HTContentListener?, capacity: Long): HTFluidStackTank =
-            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, HTStorageStack.alwaysTrue(), listener)
+            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, ImmutableStack.alwaysTrue(), listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: Long,
-            canInsert: Predicate<HTFluidStorageStack> = HTStorageStack.alwaysTrue(),
-            filter: Predicate<HTFluidStorageStack> = canInsert,
+            canInsert: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
+            filter: Predicate<ImmutableFluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
             { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
-            { stack: HTFluidStorageStack, _ -> canInsert.test(stack) },
+            { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
             filter,
             listener,
         )
@@ -56,7 +56,7 @@ open class HTFluidStackTank protected constructor(
             validateCapacity(capacity),
             ALWAYS_TRUE,
             { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
-            HTStorageStack.alwaysTrue(),
+            ImmutableStack.alwaysTrue(),
             listener,
         )
     }
@@ -64,35 +64,35 @@ open class HTFluidStackTank protected constructor(
     @JvmField
     protected var stack: FluidStack = FluidStack.EMPTY
 
-    override fun getStack(): HTFluidStorageStack = HTFluidStorageStack.of(stack)
+    override fun getStack(): ImmutableFluidStack = ImmutableFluidStack.of(stack)
 
-    override fun getCapacityAsLong(stack: HTFluidStorageStack): Long = capacity
+    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacity
 
-    override fun isValid(stack: HTFluidStorageStack): Boolean = filter.test(stack)
+    override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
 
-    override fun isStackValidForInsert(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
+    override fun isStackValidForInsert(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
-    override fun canStackExtract(stack: HTFluidStorageStack, access: HTStorageAccess): Boolean =
+    override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.FLUID, HTFluidStorageStack.CODEC, getStack())
+        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.FLUID, HTFluidStorageStack.CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
         listener?.onContentsChanged()
     }
 
-    override fun setStack(stack: HTFluidStorageStack) {
+    override fun setStack(stack: ImmutableFluidStack) {
         setStackUnchecked(stack, true)
     }
 
-    fun setStackUnchecked(stack: HTFluidStorageStack, validate: Boolean = false) {
+    fun setStackUnchecked(stack: ImmutableFluidStack, validate: Boolean = false) {
         if (stack.isEmpty()) {
             if (this.isEmpty()) return
             this.stack = FluidStack.EMPTY

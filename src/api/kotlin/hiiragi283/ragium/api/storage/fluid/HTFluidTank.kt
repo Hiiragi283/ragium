@@ -8,10 +8,10 @@ import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
- * [HTFluidStorageStack]向けの[HTStackSlot]の拡張インターフェース
+ * [ImmutableFluidStack]向けの[HTStackSlot]の拡張インターフェース
  */
 interface HTFluidTank :
-    HTStackSlot<HTFluidStorageStack>,
+    HTStackSlot<ImmutableFluidStack>,
     IFluidTank {
     fun toSingleHandler(): IFluidHandler = HTFluidTankWrapper(this)
 
@@ -46,14 +46,14 @@ interface HTFluidTank :
     //    Mutable    //
 
     /**
-     * [HTFluidStorageStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     * [ImmutableFluidStack]向けの[HTStackSlot.Mutable]の拡張クラス
      */
     abstract class Mutable :
-        HTStackSlot.Mutable<HTFluidStorageStack>(),
+        HTStackSlot.Mutable<ImmutableFluidStack>(),
         HTFluidTank {
-        final override fun getEmptyStack(): HTFluidStorageStack = HTFluidStorageStack.EMPTY
+        final override fun getEmptyStack(): ImmutableFluidStack = ImmutableFluidStack.EMPTY
 
-        final override fun isSameStack(first: HTFluidStorageStack, second: HTFluidStorageStack): Boolean =
+        final override fun isSameStack(first: ImmutableFluidStack, second: ImmutableFluidStack): Boolean =
             FluidStack.isSameFluidSameComponents(first.stack, second.stack)
     }
 }
