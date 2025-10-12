@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
-        RagiumRecipeTypes.CRUSHING.get(),
+        RagiumRecipeTypes.CRUSHING,
         HTMachineVariant.CRUSHER,
         pos,
         state,

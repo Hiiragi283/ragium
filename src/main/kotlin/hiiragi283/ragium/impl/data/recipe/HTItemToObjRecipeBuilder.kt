@@ -11,7 +11,6 @@ import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
-import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import net.minecraft.resources.ResourceLocation
 
 class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTSingleInputRecipe>(
@@ -36,10 +35,6 @@ class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>, RECIPE : HTSingleInpu
         @JvmStatic
         fun melting(ingredient: HTItemIngredient, result: HTFluidResult): HTItemToObjRecipeBuilder<HTFluidResult, HTMeltingRecipe> =
             HTItemToObjRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, ingredient, result)
-
-        @JvmStatic
-        fun sawmill(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult, HTSawmillRecipe> =
-            HTItemToObjRecipeBuilder("sawmill", ::HTSawmillRecipe, ingredient, result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id

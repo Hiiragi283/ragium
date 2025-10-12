@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "minecraft:warped_planks",
+  "ingredient": {
+    "item": "minecraft:warped_planks"
+  },
   "result": {
     "count": 2,
     "id": "minecraft:warped_slab"

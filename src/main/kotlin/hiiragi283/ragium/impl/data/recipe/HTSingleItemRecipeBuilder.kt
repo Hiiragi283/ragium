@@ -1,8 +1,10 @@
 package hiiragi283.ragium.impl.data.recipe
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
@@ -19,6 +21,15 @@ class HTSingleItemRecipeBuilder<RECIPE : SingleItemRecipe>(
 ) : HTStackRecipeBuilder<HTSingleItemRecipeBuilder<RECIPE>>(prefix, item, count, component),
     HTIngredientRecipeBuilder<HTSingleItemRecipeBuilder<RECIPE>> {
     companion object {
+        @JvmStatic
+        fun sawmill(item: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<HTSawmillRecipe> = HTSingleItemRecipeBuilder(
+            RagiumConst.SAWMILL,
+            ::HTSawmillRecipe,
+            HTItemHolderLike.fromItem(item),
+            count,
+            DataComponentPatch.EMPTY,
+        )
+
         @JvmStatic
         fun stonecutter(item: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<StonecutterRecipe> =
             HTSingleItemRecipeBuilder("stonecutting", ::StonecutterRecipe, HTItemHolderLike.fromItem(item), count, DataComponentPatch.EMPTY)

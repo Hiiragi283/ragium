@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedItemOutputBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
-        RagiumRecipeTypes.PLANTING.get(),
+        RagiumRecipeTypes.PLANTING,
         HTMachineVariant.PLANTER,
         pos,
         state,

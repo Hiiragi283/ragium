@@ -8,29 +8,37 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.recipe.manager.withPrefix
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
-import hiiragi283.ragium.api.registry.vanillaId
-import net.minecraft.world.item.crafting.CraftingInput
-import net.minecraft.world.item.crafting.CraftingRecipe
+import hiiragi283.ragium.api.text.RagiumTranslation
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.item.crafting.SmithingRecipe
-import net.minecraft.world.item.crafting.SmithingRecipeInput
-import net.minecraft.world.item.crafting.StonecutterRecipe
 
 object RagiumRecipeTypes {
     @JvmField
-    val CRAFTING: HTDeferredRecipeType<CraftingInput, CraftingRecipe> = HTDeferredRecipeType(vanillaId("crafting"))
+    val SAWMILL: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = create(RagiumConst.SAWMILL)
 
     @JvmField
-    val SMITHING: HTDeferredRecipeType<SmithingRecipeInput, SmithingRecipe> = HTDeferredRecipeType(vanillaId("smithing"))
+    val CUTTING: HTRecipeType<SingleRecipeInput, SingleItemRecipe> = object :
+        HTRecipeType<SingleRecipeInput, SingleItemRecipe> {
+        override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out SingleItemRecipe>> = buildList {
+            addAll(SAWMILL.getAllHolders(manager))
+            addAll(
+                VanillaRecipeTypes.INSTANCE
+                    .stonecutting()
+                    .getAllHolders(manager)
+                    .map { holder -> holder.withPrefix("/") },
+            )
+        }.asSequence()
 
-    @JvmField
-    val STONECUTTER: HTDeferredRecipeType<SingleRecipeInput, StonecutterRecipe> = HTDeferredRecipeType(vanillaId("stonecutting"))
-
-    @JvmField
-    val SAWMILL: HTDeferredRecipeType<SingleRecipeInput, HTSingleInputRecipe> = create("sawmill")
+        override fun getText(): Component = RagiumTranslation.RECIPE_CUTTING.getText()
+    }
 
     // Machine
     @JvmField

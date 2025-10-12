@@ -7,7 +7,11 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 
 interface HTRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : HTHasText {
-    fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<RECIPE>>
+    fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>>
 
-    fun getAllRecipes(manager: RecipeManager): Sequence<RECIPE> = getAllHolders(manager).map(RecipeHolder<RECIPE>::value)
+    fun getAllRecipes(manager: RecipeManager): Sequence<RECIPE> = getAllHolders(manager).map(RecipeHolder<out RECIPE>::value)
+
+    interface Findable<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
+        HTRecipeFinder<INPUT, RECIPE>,
+        HTRecipeType<INPUT, RECIPE>
 }

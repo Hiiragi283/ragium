@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "#minecraft:bamboo_blocks",
+  "ingredient": {
+    "tag": "minecraft:bamboo_blocks"
+  },
   "result": {
     "count": 6,
     "id": "minecraft:bamboo_planks"

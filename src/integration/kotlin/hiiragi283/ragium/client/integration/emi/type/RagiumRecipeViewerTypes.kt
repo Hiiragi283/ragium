@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.integration.emi.type
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
-import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -13,12 +13,16 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeViewerTypes {
@@ -47,17 +51,19 @@ object RagiumRecipeViewerTypes {
     //    Machines    //
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> machine(
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> machine(
         recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
         vararg variants: HTMachineVariant,
     ): HTRegistryRecipeViewerType<INPUT, RECIPE> =
         HTRegistryRecipeViewerType(recipeType, variants[0].toStack(), null, MACHINE_BOUNDS, *variants)
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> machine(
-        recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> machine(
+        id: ResourceLocation,
+        recipeType: HTRecipeType<INPUT, RECIPE>,
         variant: HTMachineVariant,
-    ): HTRegistryRecipeViewerType<INPUT, RECIPE> = HTRegistryRecipeViewerType(recipeType, variant.toStack(), null, MACHINE_BOUNDS, variant)
+    ): HTRegistryRecipeViewerType<INPUT, RECIPE> =
+        HTRegistryRecipeViewerType(id, recipeType, variant.toStack(), null, MACHINE_BOUNDS, variant)
 
     // Basic
     @JvmField
@@ -73,12 +79,12 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.CRUSHING, HTMachineVariant.PULVERIZER, HTMachineVariant.CRUSHER)
 
     @JvmField
-    val EXTRACTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
-        machine(RagiumRecipeTypes.EXTRACTING, HTMachineVariant.EXTRACTOR)
+    val CUTTING: HTRegistryRecipeViewerType<SingleRecipeInput, SingleItemRecipe> =
+        machine(RagiumAPI.id("cutting"), RagiumRecipeTypes.CUTTING, HTMachineVariant.CUTTING_MACHINE)
 
     @JvmField
-    val SAWMILL: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
-        machine(RagiumRecipeTypes.SAWMILL, HTMachineVariant.CUTTING_MACHINE)
+    val EXTRACTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
+        machine(RagiumRecipeTypes.EXTRACTING, HTMachineVariant.EXTRACTOR)
 
     // Advanced
     @JvmField

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
@@ -14,7 +15,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
@@ -81,7 +81,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
         state: BlockState,
     ) : HTProcessorBlockEntity<INPUT, RECIPE>(variant, pos, state) {
         constructor(
-            recipeType: RecipeType<RECIPE>,
+            recipeType: HTRecipeFinder<INPUT, RECIPE>,
             variant: HTMachineVariant,
             pos: BlockPos,
             state: BlockState,

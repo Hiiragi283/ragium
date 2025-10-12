@@ -248,6 +248,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun keyMapping() {
         add(RagiumTranslation.KEY_CATEGORY, "Ragium")
 
+        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
+
         add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "ポーションバンドルを開く")
         add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
     }

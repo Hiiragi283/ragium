@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedItemOutputBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
-        RagiumRecipeTypes.WASHING.get(),
+        RagiumRecipeTypes.WASHING,
         HTMachineVariant.WASHER,
         pos,
         state,

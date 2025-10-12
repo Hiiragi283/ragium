@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "minecraft:birch_planks",
+  "ingredient": {
+    "item": "minecraft:birch_planks"
+  },
   "result": {
     "count": 2,
     "id": "minecraft:birch_slab"

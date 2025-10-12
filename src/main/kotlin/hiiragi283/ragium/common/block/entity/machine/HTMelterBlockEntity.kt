@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(
-        RagiumRecipeTypes.MELTING.get(),
+        RagiumRecipeTypes.MELTING,
         HTMachineVariant.MELTER,
         pos,
         state,

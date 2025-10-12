@@ -3,7 +3,9 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
@@ -55,8 +57,16 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val SAWMILL: RecipeSerializer<HTSawmillRecipe> = register(
-        "sawmill",
-        RagiumRecipeBiCodecs.itemToItem(::HTSawmillRecipe),
+        RagiumConst.SAWMILL,
+        MapBiCodec.composite(
+            BiCodec.STRING.optionalFieldOf("group", ""),
+            HTSawmillRecipe::getGroup,
+            VanillaBiCodecs.ingredient(false).fieldOf("ingredient"),
+            HTSawmillRecipe::ingredient1,
+            VanillaBiCodecs.itemStack(false).fieldOf("result"),
+            HTSawmillRecipe::result1,
+            ::HTSawmillRecipe,
+        ),
     )
 
     @JvmField

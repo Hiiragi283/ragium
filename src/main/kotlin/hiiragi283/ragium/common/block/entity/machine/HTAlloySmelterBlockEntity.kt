@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTCombineItemToItemRecipe>(
-        RagiumRecipeTypes.ALLOYING.get(),
+        RagiumRecipeTypes.ALLOYING,
         HTMachineVariant.ALLOY_SMELTER,
         pos,
         state,

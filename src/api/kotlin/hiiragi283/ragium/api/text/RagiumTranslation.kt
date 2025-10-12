@@ -41,8 +41,11 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_SHOW_INFO("tooltip", RagiumAPI.MOD_ID, "show_info"),
     TOOLTIP_WIP("tooltip", RagiumAPI.MOD_ID, "work_in_progress"),
 
-    // key Mapping
+    // Key Mapping
     KEY_CATEGORY("key", RagiumAPI.MOD_ID, "category"),
+
+    // Recipe
+    RECIPE_CUTTING("recipe_type", RagiumAPI.MOD_ID, "cutting"),
 
     // Jade
     JADE_OUTPUT_SIDE("tooltip", RagiumAPI.MOD_ID, "output_side"),

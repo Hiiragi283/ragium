@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "#minecraft:birch_logs",
+  "ingredient": {
+    "tag": "minecraft:birch_logs"
+  },
   "result": {
     "count": 6,
     "id": "minecraft:birch_planks"

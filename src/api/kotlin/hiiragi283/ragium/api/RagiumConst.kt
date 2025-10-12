@@ -100,6 +100,8 @@ object RagiumConst {
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
 
+    const val SAWMILL = "sawmill"
+
     //    Tag Prefixes    //
 
     const val CHIPS = "chips"

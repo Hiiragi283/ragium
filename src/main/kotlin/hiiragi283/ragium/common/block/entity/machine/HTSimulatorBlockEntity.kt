@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
-        RagiumRecipeTypes.SIMULATING.get(),
+        RagiumRecipeTypes.SIMULATING,
         HTMachineVariant.SIMULATOR,
         pos,
         state,

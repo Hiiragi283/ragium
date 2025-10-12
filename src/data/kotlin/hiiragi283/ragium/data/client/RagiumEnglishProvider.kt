@@ -246,6 +246,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun keyMapping() {
         add(RagiumTranslation.KEY_CATEGORY, "Ragium")
 
+        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
+
         add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "Open Potion Bundle")
         add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
     }

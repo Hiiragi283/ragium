@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
-import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -24,7 +24,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
@@ -35,10 +34,10 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             menuType: HTDeferredMenuType<*>,
             sound: SoundEvent,
             soundValues: Pair<Float, Float>,
-            recipeType: HTDeferredRecipeType<SingleRecipeInput, RECIPE>,
+            recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
             variant: HTMachineVariant,
         ): HTBlockEntityFactory<HTSingleItemInputBlockEntity<RECIPE>> = HTBlockEntityFactory { pos: BlockPos, state: BlockState ->
-            Simple(menuType, sound, soundValues, recipeType.get(), variant, pos, state)
+            Simple(menuType, sound, soundValues, recipeType, variant, pos, state)
         }
     }
 
@@ -50,7 +49,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
     ) : super(recipeCache, variant, pos, state)*/
 
     constructor(
-        recipeType: RecipeType<RECIPE>,
+        recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         variant: HTMachineVariant,
         pos: BlockPos,
         state: BlockState,
@@ -66,7 +65,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         private val menuType: HTDeferredMenuType<*>,
         private val sound: SoundEvent,
         private val soundValues: Pair<Float, Float>,
-        recipeType: RecipeType<RECIPE>,
+        recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         variant: HTMachineVariant,
         pos: BlockPos,
         state: BlockState,

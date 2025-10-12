@@ -428,6 +428,7 @@
   "recipe_type.ragium.alloying": "合金",
   "recipe_type.ragium.compressing": "圧縮",
   "recipe_type.ragium.crushing": "破砕",
+  "recipe_type.ragium.cutting": "裁断",
   "recipe_type.ragium.enchanting": "エンチャント",
   "recipe_type.ragium.extracting": "抽出",
   "recipe_type.ragium.fluid_transform": "液体変換",

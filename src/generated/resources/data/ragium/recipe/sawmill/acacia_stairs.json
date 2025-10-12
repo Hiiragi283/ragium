@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "minecraft:acacia_planks",
+  "ingredient": {
+    "item": "minecraft:acacia_planks"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:acacia_stairs"

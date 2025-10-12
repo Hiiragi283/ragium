@@ -22,6 +22,7 @@ import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTIngredientHelperImpl
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
@@ -312,28 +313,25 @@ sealed class HTRecipeProvider {
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks
-        HTItemToObjRecipeBuilder
-            .sawmill(
-                ingredientHelper.item(type.log),
-                resultHelper.item(planks, 6),
-            ).modCondition(type.getModId())
+        HTSingleItemRecipeBuilder
+            .sawmill(planks, 6)
+            .addIngredient(type.log)
+            .modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
         type.getSlab().ifPresent { slab ->
-            HTItemToObjRecipeBuilder
-                .sawmill(
-                    ingredientHelper.item(planks),
-                    resultHelper.item(slab, 2),
-                ).modCondition(type.getModId())
+            HTSingleItemRecipeBuilder
+                .sawmill(slab, 2)
+                .addIngredient(planks)
+                .modCondition(type.getModId())
                 .save(output)
         }
         // Planks -> Stairs
         type.getStairs().ifPresent { stairs ->
-            HTItemToObjRecipeBuilder
-                .sawmill(
-                    ingredientHelper.item(planks),
-                    resultHelper.item(stairs),
-                ).modCondition(type.getModId())
+            HTSingleItemRecipeBuilder
+                .sawmill(stairs)
+                .addIngredient(planks)
+                .modCondition(type.getModId())
                 .save(output)
         }
     }
