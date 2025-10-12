@@ -11,6 +11,8 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.accessory.HTAccessorySlot
+import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
@@ -18,8 +20,6 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
-import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems

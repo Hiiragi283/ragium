@@ -7,11 +7,11 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.integration.replication.HTDeferredMatterType
+import hiiragi283.ragium.common.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.integration.replication.HTDeferredMatterType
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item

@@ -1,8 +1,0 @@
-package hiiragi283.ragium.integration.jade
-
-import net.neoforged.neoforge.fluids.FluidStack
-import snownee.jade.api.fluid.JadeFluidObject
-
-//    JadeFluidObject    //
-
-fun FluidStack.toJade(): JadeFluidObject = JadeFluidObject.of(this.fluid, this.amount.toLong(), this.componentsPatch)

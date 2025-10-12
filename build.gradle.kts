@@ -16,6 +16,7 @@ group = "hiiragi283.ragium"
 base.archivesName = modId
 
 val apiModule: SourceSet = sourceSets.create("api")
+val integrationModule: SourceSet = sourceSets.create("integration")
 val dataModule: SourceSet = sourceSets.create("data")
 
 sourceSets {
@@ -26,12 +27,19 @@ sourceSets {
             srcDir("src/generated/resources")
         }
     }
-    getByName("data") {
+    getByName("integration") {
         val main: SourceSet by main
         compileClasspath += main.compileClasspath
         compileClasspath += main.output
         runtimeClasspath += main.runtimeClasspath
         runtimeClasspath += main.output
+    }
+    getByName("data") {
+        val integration: SourceSet = integrationModule
+        compileClasspath += integration.compileClasspath
+        compileClasspath += integration.output
+        runtimeClasspath += integration.runtimeClasspath
+        runtimeClasspath += integration.output
     }
 }
 
@@ -43,7 +51,8 @@ configurations.apply {
     runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
     getByName("apiCompileClasspath").extendsFrom(getByName("compileClasspath"))
-    getByName("compileClasspath").extendsFrom(getByName("dataCompileClasspath"))
+    getByName("compileClasspath").extendsFrom(getByName("integrationCompileClasspath"))
+    getByName("integrationCompileClasspath").extendsFrom(getByName("dataCompileClasspath"))
 }
 
 repositories {
@@ -176,6 +185,7 @@ neoForge {
         create(modId) {
             sourceSet(sourceSets.main.get())
             sourceSet(apiModule)
+            sourceSet(integrationModule)
             sourceSet(dataModule)
         }
     }
@@ -298,6 +308,7 @@ tasks {
             rename { "${it}_ragium" }
         }
         from(apiModule.output)
+        from(integrationModule.output)
         from(dataModule.output)
         exclude("**/ragium/data/**")
         exclude("**/unused/**")

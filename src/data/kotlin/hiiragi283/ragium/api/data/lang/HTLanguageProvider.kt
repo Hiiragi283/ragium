@@ -13,6 +13,11 @@ import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.integration.delight.HTKnifeToolVariant
+import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.common.integration.replication.HTDeferredMatterType
+import hiiragi283.ragium.common.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -21,11 +26,6 @@ import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.integration.delight.HTKnifeToolVariant
-import hiiragi283.ragium.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.integration.replication.HTDeferredMatterType
-import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey

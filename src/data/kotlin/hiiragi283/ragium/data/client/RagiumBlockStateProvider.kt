@@ -13,12 +13,12 @@ import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
