@@ -1,0 +1,19 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 25,
+    "fluids": "#c:eldritch_flux"
+  },
+  "item_ingredient": "minecraft:chorus_flower",
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:chorus_fruit"
+    },
+    {
+      "chance": 0.16666667,
+      "count": 1,
+      "id": "minecraft:chorus_flower"
+    }
+  ]
+}

@@ -110,7 +110,14 @@ abstract class HTEmiRecipe<RECIPE : Any>(
                     ?: createErrorStack("Empty Tag: ${tagKey.location}")
             },
             { stacks: List<ItemStack> -> stacks.map(EmiStack::of).let(::ingredient) },
-        )
+        ).apply {
+            for (stack: EmiStack in emiStacks) {
+                val itemStack: ItemStack = stack.itemStack
+                if (itemStack.hasCraftingRemainingItem()) {
+                    stack.remainder = EmiStack.of(itemStack.craftingRemainingItem)
+                }
+            }
+        }
 
     protected fun ingredient(ingredient: HTFluidIngredient): EmiIngredient = ingredient
         .unwrap()
