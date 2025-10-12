@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.accessory
 
 import hiiragi283.ragium.api.extension.getRangedAABB
-import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
-import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.common.util.HTItemHelper
 import io.wispforest.accessories.api.Accessory
 import io.wispforest.accessories.api.slot.SlotReference
 import net.minecraft.server.level.ServerLevel
@@ -22,11 +21,7 @@ class HTMagnetizationAccessory<T : Entity>(val entityClass: Class<T>, val intera
         super.tick(stack, reference)
         val player: Player = reference.entity() as? Player ?: return
         val level: ServerLevel = player.level() as? ServerLevel ?: return
-        val range: Double = RagiumEnchantmentHelper.INSTANCE.processCollectorRange(
-            level,
-            stack,
-            RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble,
-        )
+        val range: Double = HTItemHelper.processCollectorRange(level, stack)
         val entitiesInRange: List<T> = level.getEntitiesOfClass(
             entityClass,
             player.position().getRangedAABB(range),

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -26,12 +25,6 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         @JvmStatic
         fun extractEnergy(stack: ItemStack, amount: Int, action: HTStorageAction): Int =
             getBattery(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAL) ?: 0
-
-        @JvmStatic
-        fun canConsumeEnergy(stack: ItemStack, amount: Int): Boolean {
-            val battery: HTEnergyBattery = getBattery(stack) ?: return false
-            return battery.getAmountAsInt() >= HTItemHelper.getFixedUsage(stack, amount)
-        }
     }
 
     //    Item    //
@@ -61,7 +54,5 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
 
     abstract class User(properties: Properties) : HTEnergyItem(properties) {
         protected abstract val energyUsage: Int
-
-        protected fun canConsumeEnergy(stack: ItemStack): Boolean = canConsumeEnergy(stack, energyUsage)
     }
 }

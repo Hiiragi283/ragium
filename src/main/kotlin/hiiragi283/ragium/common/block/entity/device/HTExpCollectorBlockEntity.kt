@@ -4,10 +4,10 @@ import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.moveStack
 import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
@@ -51,7 +51,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             .asSequence()
             .filter(ExperienceOrb::isAlive)
             .map(::HTExpOrbTank)
-            .forEach { orbFluidTank: HTExpOrbTank -> moveStack(orbFluidTank, tank) }
+            .forEach { orbFluidTank: HTExpOrbTank -> HTStackSlotHelper.moveStack(orbFluidTank, tank) }
         return true
     }
 

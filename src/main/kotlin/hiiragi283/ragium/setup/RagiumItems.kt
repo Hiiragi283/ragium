@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
-import hiiragi283.ragium.api.item.component.RagiumEnchantmentHelper
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -15,16 +14,16 @@ import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
-import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
+import hiiragi283.ragium.common.item.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.HTTierBasedItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
@@ -41,6 +40,7 @@ import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -287,8 +287,17 @@ object RagiumItems {
 
     // Azure
     @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> =
-        REGISTER.register("${RagiumConst.AZURE_STEEL}_upgrade_smithing_template", ::HTAzureSteelTemplateItem)
+    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+        "${RagiumConst.AZURE_STEEL}_upgrade_smithing_template",
+    ) { _ ->
+        HTSmithingTemplateItem(
+            RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS,
+            RagiumTranslation.AZURE_STEEL_UPGRADE,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
+            RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
+        )
+    }
 
     @JvmField
     val DRILL: HTDeferredItem<Item> = register("drill", ::HTDrillItem)
@@ -310,8 +319,17 @@ object RagiumItems {
 
     // Deep
     @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> =
-        REGISTER.register("${RagiumConst.DEEP_STEEL}_upgrade_smithing_template", ::HTDeepSteelTemplateItem)
+    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+        "${RagiumConst.DEEP_STEEL}_upgrade_smithing_template",
+    ) { _ ->
+        HTSmithingTemplateItem(
+            RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS,
+            RagiumTranslation.DEEP_STEEL_UPGRADE,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
+            RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
+        )
+    }
 
     // Other
     @JvmField
@@ -495,7 +513,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        factory(stack, RagiumEnchantmentHelper.INSTANCE.processStorageCapacity(null, stack, capacity))
+        factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
     }
 
     @JvmStatic

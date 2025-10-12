@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.item.tool
 
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -37,14 +39,13 @@ class HTDrillItem(properties: Properties) :
 
     override fun canPerformAction(stack: ItemStack, itemAbility: ItemAbility): Boolean = itemAbility in ACTIONS
 
-    override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float = if (canConsumeEnergy(stack)) {
-        if (state.`is`(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)) {
-            super.getDestroySpeed(stack, state)
-        } else {
-            1f
+    override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
+        val battery: HTEnergyBattery = getBattery(stack) ?: return 0f
+        val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
+        if (battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
+            return if (state.`is`(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)) super.getDestroySpeed(stack, state) else 1f
         }
-    } else {
-        0f
+        return 0f
     }
 
     override fun mineBlock(
@@ -56,14 +57,21 @@ class HTDrillItem(properties: Properties) :
     ): Boolean {
         if (level.isClientSide) return false
         if (state.getDestroySpeed(level, pos) == 0f) return false
-        if (!canConsumeEnergy(stack)) return false
-        val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
-        extractEnergy(stack, usage, HTStorageAction.EXECUTE)
-        return true
+        val battery: HTEnergyBattery = getBattery(stack) ?: return false
+        val usage: Int = HTItemHelper.getFixedUsage(level, stack, energyUsage)
+        if (battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
+            extractEnergy(stack, usage, HTStorageAction.EXECUTE)
+            return true
+        }
+        return false
     }
 
-    override fun isCorrectToolForDrops(stack: ItemStack, state: BlockState): Boolean =
-        canConsumeEnergy(stack) && super.isCorrectToolForDrops(stack, state)
+    override fun isCorrectToolForDrops(stack: ItemStack, state: BlockState): Boolean {
+        if (!super.isCorrectToolForDrops(stack, state)) return false
+        val battery: HTEnergyBattery = getBattery(stack) ?: return false
+        val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
+        return battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage
+    }
 
     override fun getEnchantmentValue(stack: ItemStack): Int = 15
 }

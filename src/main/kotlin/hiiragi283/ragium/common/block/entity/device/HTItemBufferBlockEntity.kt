@@ -5,10 +5,10 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.moveStack
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -66,7 +66,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
             .map(::HTItemEntitySlot)
             .forEach { entitySlot: HTItemSlot ->
                 for (slot: HTItemSlot in slots) {
-                    moveStack(entitySlot, slot)
+                    HTStackSlotHelper.moveStack(entitySlot, slot)
                 }
             }
         return true
