@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.9.2b
+
+### API
+
+- Core: Replaced reference for `DataResult` into `Result`
+- Core: Split extension functions to each related packages
+
+- Addon: Redesigned structure of  `RagiumAddon`
+
+- Collection: Replaced `HTTable` and `HTMultiMap` with `ImmutableTable` and `ImmutableMultiMap`
+
+- Data: Added new DataMapType `mobHeadType` to bind mobs and its head item
+
+- Material: Removed `StringRepresentable` from `HTMaterialType` and `HTVariantKey`
+- Material: Added `HTRawStorageMaterialVariant` to handle raw blocks
+
+- Menu: Changed `HTContainerMenu` design back to the previous one
+
+- Storage: Changed to a more common design
+- Storage: Added `HTStorageAction` to clarify whether the current interference is a simulation.
+- Storage: Added `HTStorageStack` to unify `XXStack`s
+  - `ItemStack` -> `HTItemStorageStack`
+  - `FluidStack` -> `HTFluidStorageStack`
+  - `ChemicalStack` -> `HTChemicalStorageStack` (if Mekanism is loaded
+- Storage: Redesign `HTMultiCapability`
+
+### Common
+
+- Enchantment: Added Strike
+  - When mobs killed, their head is dropped
+
+- Block: Fix blocks with block entity not copying custom name from/to item
+
+- Machine
+  - Generator: Added model and recipe for Combustion Generator
+  - Processor: Added Planting Chamber
+
+- Device: Fix values of exp orbs which are not collected by Exp Collector increased
+
+- Recipe: Added new ore processing for raw blocks
+- 
+
+- World Gen: Added new generation pattern at lower heights for Raginite Ore
+
 ## v0.9.1b
 
 ### API
