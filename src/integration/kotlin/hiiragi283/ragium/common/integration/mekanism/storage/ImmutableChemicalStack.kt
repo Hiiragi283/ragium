@@ -48,7 +48,9 @@ value class ImmutableChemicalStack private constructor(val stack: ChemicalStack)
 
     override fun copy(): ImmutableChemicalStack = ImmutableChemicalStack(stack)
 
-    override fun copyWithAmount(amount: Int): ImmutableChemicalStack = ImmutableChemicalStack(stack.copyWithAmount(amountAsLong()))
+    override fun copyWithAmount(amount: Int): ImmutableChemicalStack = copyWithAmount(amount.toLong())
+
+    override fun copyWithAmount(amount: Long): ImmutableChemicalStack = ImmutableChemicalStack(stack.copyWithAmount(amount))
 
     override fun componentsPatch(): DataComponentPatch = DataComponentPatch.EMPTY
 

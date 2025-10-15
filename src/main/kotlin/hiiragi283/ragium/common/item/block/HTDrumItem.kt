@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.item.HTBlockItem
-import hiiragi283.ragium.api.network.addFluidTooltip
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.getFluidStack
+import hiiragi283.ragium.api.text.addFluidTooltip
 import hiiragi283.ragium.common.block.HTDrumBlock
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack

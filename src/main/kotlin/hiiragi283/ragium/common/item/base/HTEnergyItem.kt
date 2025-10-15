@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.item.base
 
-import hiiragi283.ragium.api.network.addEnergyTooltip
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack

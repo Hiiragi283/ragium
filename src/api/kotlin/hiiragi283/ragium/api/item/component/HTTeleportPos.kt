@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.item.component
 
 import hiiragi283.ragium.api.item.HTTooltipProvider
-import hiiragi283.ragium.api.network.blockPosText
-import hiiragi283.ragium.api.network.bracketText
-import hiiragi283.ragium.api.network.joinedText
-import hiiragi283.ragium.api.network.levelText
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.text.blockPosText
+import hiiragi283.ragium.api.text.bracketText
+import hiiragi283.ragium.api.text.joinedText
+import hiiragi283.ragium.api.text.levelText
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos

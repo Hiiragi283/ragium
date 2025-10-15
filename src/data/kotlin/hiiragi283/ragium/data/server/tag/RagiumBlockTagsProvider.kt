@@ -27,13 +27,12 @@ import vectorwing.farmersdelight.common.tag.ModTags
 
 class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>(Registries.BLOCK, context) {
     companion object {
-        @Suppress("DEPRECATION")
         @JvmField
         val VANILLA_STORAGE_BLOCKS: Map<HTVanillaMaterialType, HTHolderLike> = mapOf(
-            HTVanillaMaterialType.AMETHYST to Blocks.AMETHYST_BLOCK,
-            HTVanillaMaterialType.GLOWSTONE to Blocks.GLOWSTONE,
-            HTVanillaMaterialType.QUARTZ to Blocks.QUARTZ_BLOCK,
-        ).mapValues { (_, block: Block) -> HTHolderLike.fromBlock(block) }
+            HTVanillaMaterialType.AMETHYST to HTHolderLike.fromBlock(Blocks.AMETHYST_BLOCK),
+            HTVanillaMaterialType.GLOWSTONE to HTHolderLike.fromBlock(Blocks.GLOWSTONE),
+            HTVanillaMaterialType.QUARTZ to HTHolderLike.fromBlock(Blocks.QUARTZ_BLOCK),
+        )
     }
 
     override fun addTags(builder: HTTagBuilder<Block>) {

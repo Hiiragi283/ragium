@@ -61,6 +61,12 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun copyWithAmount(amount: Int): STACK
 
     /**
+     * このスタックのコピーを指定した個数で返します。
+     * @param amount コピー後の個数
+     */
+    fun copyWithAmount(amount: Long): STACK
+
+    /**
      * このスタックの[DataComponentPatch]を返します。
      */
     fun componentsPatch(): DataComponentPatch
