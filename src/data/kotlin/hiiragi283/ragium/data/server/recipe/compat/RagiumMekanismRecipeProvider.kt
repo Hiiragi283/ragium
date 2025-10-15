@@ -143,8 +143,8 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ethene + Catalyst -> HDPE
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(RagiumItems.POLYMER_CATALYST),
-                ingredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
+                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
+                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
             ).addResult(resultHelper.item(MekanismItems.HDPE_PELLET))
             .save(output)
     }

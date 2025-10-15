@@ -27,7 +27,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     override fun buildRecipeInternal() {
         // Milk
         extractAndInfuse(
-            ingredientHelper.item(Items.GLASS_BOTTLE),
+            itemCreator.fromItem(Items.GLASS_BOTTLE),
             HTItemHolderLike.fromItem(ModItems.MILK_BOTTLE.get()),
             HTFluidContent.MILK,
             250,
@@ -35,14 +35,14 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         // Rich soil
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(ModItems.ORGANIC_COMPOST.get()),
-                ingredientHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+                itemCreator.fromItem(ModItems.ORGANIC_COMPOST.get()),
+                fluidCreator.fromContent(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
             ).addResult(resultHelper.item(ModItems.RICH_SOIL.get()))
             .save(output)
 
         // Rice Panicle
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(ModItems.RICE_PANICLE.get()))
+            .crushing(itemCreator.fromItem(ModItems.RICE_PANICLE.get()))
             .addResult(resultHelper.item(ModItems.RICE.get()))
             .addResult(resultHelper.item(ModItems.STRAW.get()), 0.5f)
             .save(output)

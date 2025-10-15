@@ -37,8 +37,8 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Ominous Bottle
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.GLASS_BOTTLE),
-                ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 1000),
+                itemCreator.fromItem(Items.GLASS_BOTTLE),
+                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 1000),
             ).addResult(resultHelper.item(Items.OMINOUS_BOTTLE))
             .save(output)
     }
@@ -48,29 +48,29 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Dirt -> Mud
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.DIRT, 8),
-                ingredientHelper.water(1000),
+                itemCreator.fromItem(Items.DIRT, 8),
+                fluidCreator.water(1000),
             ).addResult(resultHelper.item(Items.MUD, 8))
             .saveSuffixed(output, "_from_dirt")
         // Gravel -> Flint
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.GRAVELS),
-                ingredientHelper.water(250),
+                itemCreator.fromTagKey(Tags.Items.GRAVELS),
+                fluidCreator.water(250),
             ).addResult(resultHelper.item(Items.FLINT))
             .addResult(resultHelper.item(Items.FLINT), 1 / 2f)
             .save(output)
         // Silt -> Clay
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(RagiumBlocks.SILT, 8),
-                ingredientHelper.water(1000),
+                itemCreator.fromItem(RagiumBlocks.SILT, 8),
+                fluidCreator.water(1000),
             ).addResult(resultHelper.item(Items.CLAY, 8))
             .saveSuffixed(output, "_from_silt")
 
         // Ice <-> Water
         meltAndFreeze(
-            ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
             HTItemHolderLike.fromItem(Items.ICE),
             HTFluidContent.WATER,
             1000,
@@ -78,8 +78,8 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Water Bottle
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.GLASS_BOTTLE),
-                ingredientHelper.water(250),
+                itemCreator.fromItem(Items.GLASS_BOTTLE),
+                fluidCreator.water(250),
             ).addResult(resultHelper.item(PotionContents.createItemStack(Items.POTION, Potions.WATER)))
             .save(output, RagiumAPI.id("water_bottle"))
 
@@ -87,8 +87,8 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         for (color: HTColorMaterial in HTColorMaterial.entries) {
             HTItemWithFluidToChancedItemRecipeBuilder
                 .washing(
-                    ingredientHelper.item(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE_POWDER, color), 8),
-                    ingredientHelper.water(1000),
+                    itemCreator.fromItem(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE_POWDER, color), 8),
+                    fluidCreator.water(1000),
                 ).addResult(resultHelper.item(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE, color), 8))
                 .saveSuffixed(output, "_from_powder")
         }
@@ -98,7 +98,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
     private fun exp() {
         // Exp Bottle
         extractAndInfuse(
-            ingredientHelper.item(Items.GLASS_BOTTLE),
+            itemCreator.fromItem(Items.GLASS_BOTTLE),
             HTItemHolderLike.fromItem(Items.EXPERIENCE_BOTTLE),
             RagiumFluidContents.EXPERIENCE,
             250,
@@ -106,43 +106,43 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Berries -> Liquid Exp
         HTItemToObjRecipeBuilder
             .melting(
-                ingredientHelper.item(RagiumBlocks.EXP_BERRIES),
+                itemCreator.fromItem(RagiumBlocks.EXP_BERRIES),
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),
             ).saveSuffixed(output, "_from_berries")
 
         // Golden Apple
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.GOLDEN_APPLE),
-                ingredientHelper.fluid(RagiumFluidContents.EXPERIENCE, 8000),
+                itemCreator.fromItem(Items.GOLDEN_APPLE),
+                fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 8000),
             ).addResult(resultHelper.item(Items.ENCHANTED_GOLDEN_APPLE))
             .save(output)
         // Exp Berries
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.EXP_BERRIES),
-                ingredientHelper.item(Tags.Items.FOODS_BERRY),
-                ingredientHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 4),
+                itemCreator.fromTagKey(Tags.Items.FOODS_BERRY),
+                itemCreator.fromTagKey(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 4),
             ).save(output)
         // Blaze Powder
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
-                ingredientHelper.fluid(RagiumFluidContents.EXPERIENCE, 250),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+                fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 250),
             ).addResult(resultHelper.item(Items.BLAZE_POWDER))
             .save(output)
         // Wind Charge
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.SNOWBALL),
-                ingredientHelper.fluid(RagiumFluidContents.EXPERIENCE, 250),
+                itemCreator.fromItem(Items.SNOWBALL),
+                fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 250),
             ).addResult(resultHelper.item(Items.WIND_CHARGE))
             .save(output)
         // Ghast Tear
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.CHISELED_QUARTZ_BLOCK),
-                ingredientHelper.fluid(RagiumFluidContents.EXPERIENCE, 1000),
+                itemCreator.fromItem(Items.CHISELED_QUARTZ_BLOCK),
+                fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 1000),
             ).addResult(resultHelper.item(Items.GHAST_TEAR))
             .save(output)
     }
@@ -152,30 +152,30 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Crimson Nylium
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.NETHERRACKS),
-                ingredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
+                itemCreator.fromTagKey(Tags.Items.NETHERRACKS),
+                fluidCreator.fromContent(RagiumFluidContents.CRIMSON_BLOOD, 250),
             ).addResult(resultHelper.item(Items.CRIMSON_NYLIUM))
             .save(output)
         // Crimson Fungus
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.RED_MUSHROOM),
-                ingredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
+                itemCreator.fromItem(Items.RED_MUSHROOM),
+                fluidCreator.fromContent(RagiumFluidContents.CRIMSON_BLOOD, 250),
             ).addResult(resultHelper.item(Items.CRIMSON_FUNGUS))
             .save(output)
         // Nether Wart
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.CROPS_BEETROOT),
-                ingredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 250),
+                itemCreator.fromTagKey(Tags.Items.CROPS_BEETROOT),
+                fluidCreator.fromContent(RagiumFluidContents.CRIMSON_BLOOD, 250),
             ).addResult(resultHelper.item(Items.NETHER_WART))
             .save(output)
 
         // Crimson Soil
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.SOUL_SOIL),
-                ingredientHelper.fluid(RagiumFluidContents.CRIMSON_BLOOD, 2000),
+                itemCreator.fromItem(Items.SOUL_SOIL),
+                fluidCreator.fromContent(RagiumFluidContents.CRIMSON_BLOOD, 2000),
             ).addResult(resultHelper.item(RagiumBlocks.CRIMSON_SOIL))
             .save(output)
     }
@@ -185,22 +185,22 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Warped Nylium
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.NETHERRACKS),
-                ingredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
+                itemCreator.fromTagKey(Tags.Items.NETHERRACKS),
+                fluidCreator.fromContent(RagiumFluidContents.DEW_OF_THE_WARP, 250),
             ).addResult(resultHelper.item(Items.WARPED_NYLIUM))
             .save(output)
         // Warped Fungus
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.RED_MUSHROOM),
-                ingredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 250),
+                itemCreator.fromItem(Items.RED_MUSHROOM),
+                fluidCreator.fromContent(RagiumFluidContents.DEW_OF_THE_WARP, 250),
             ).addResult(resultHelper.item(Items.WARPED_FUNGUS))
             .save(output)
         // Warped Wart
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.CROPS_BEETROOT),
-                ingredientHelper.fluid(RagiumFluidContents.DEW_OF_THE_WARP, 1000),
+                itemCreator.fromTagKey(Tags.Items.CROPS_BEETROOT),
+                fluidCreator.fromContent(RagiumFluidContents.DEW_OF_THE_WARP, 1000),
             ).addResult(resultHelper.item(RagiumBlocks.WARPED_WART))
             .save(output)
     }
@@ -210,22 +210,22 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Budding Amethyst
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.AMETHYST),
-                ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.AMETHYST),
+                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)
         // Ominous Trial Key
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.TRIAL_KEY),
-                ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+                itemCreator.fromItem(Items.TRIAL_KEY),
+                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.OMINOUS_TRIAL_KEY))
             .save(output)
         // Crying Obsidian
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.OBSIDIANS_NORMAL),
-                ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+                itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
+                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.CRYING_OBSIDIAN))
             .save(output)
     }

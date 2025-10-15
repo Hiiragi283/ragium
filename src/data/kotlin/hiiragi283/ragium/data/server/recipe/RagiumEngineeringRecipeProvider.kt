@@ -34,7 +34,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Plastic Plate
         HTItemToObjRecipeBuilder
             .compressing(
-                ingredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
                 resultHelper.item(HTItemMaterialVariant.PLATE, RagiumMaterialType.PLASTIC),
             ).save(output)
         // Synthetic Fiber / Leather
@@ -59,15 +59,15 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(Items.BLAZE_ROD),
-                ingredientHelper.item(Items.BLAZE_POWDER, 4),
-                ingredientHelper.item(Tags.Items.RODS_WOODEN),
+                itemCreator.fromItem(Items.BLAZE_POWDER, 4),
+                itemCreator.fromTagKey(Tags.Items.RODS_WOODEN),
             ).save(output)
         // Breeze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(Items.BREEZE_ROD),
-                ingredientHelper.item(Items.WIND_CHARGE, 6),
-                ingredientHelper.item(Tags.Items.RODS_WOODEN),
+                itemCreator.fromItem(Items.WIND_CHARGE, 6),
+                itemCreator.fromTagKey(Tags.Items.RODS_WOODEN),
             ).save(output)
 
         // Gravity-Unit
@@ -122,15 +122,15 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
-                ingredientHelper.item(RagiumModTags.Items.PLASTICS),
-                ingredientHelper.gemOrDust(HTVanillaMaterialType.QUARTZ),
+                itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
+                itemCreator.gemOrDust(HTVanillaMaterialType.QUARTZ),
             ).save(output)
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
-                ingredientHelper.item(RagiumModTags.Items.PLASTICS, 2),
-                ingredientHelper.item(RagiumItems.BASALT_MESH),
+                itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS, 2),
+                itemCreator.fromItem(RagiumItems.BASALT_MESH),
             ).save(output)
         // Basic
         HTShapedRecipeBuilder
@@ -158,9 +158,9 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.BASIC), 4),
-                ingredientHelper.ingotOrDust(HTVanillaMaterialType.COPPER, 2),
-                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
-                ingredientHelper.item(RagiumItems.CIRCUIT_BOARD),
+                itemCreator.ingotOrDust(HTVanillaMaterialType.COPPER, 2),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Advanced
         HTShapedRecipeBuilder
@@ -183,25 +183,25 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ADVANCED), 2),
-                ingredientHelper.ingotOrDust(HTVanillaMaterialType.GOLD, 2),
-                ingredientHelper.gemOrDust(RagiumMaterialType.AZURE),
-                ingredientHelper.item(RagiumItems.CIRCUIT_BOARD),
+                itemCreator.ingotOrDust(HTVanillaMaterialType.GOLD, 2),
+                itemCreator.gemOrDust(RagiumMaterialType.AZURE),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Elite
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ELITE)),
-                ingredientHelper.ingotOrDust(RagiumMaterialType.ADVANCED_RAGI_ALLOY, 2),
-                ingredientHelper.gemOrDust(RagiumMaterialType.RAGI_CRYSTAL),
-                ingredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.ingotOrDust(RagiumMaterialType.ADVANCED_RAGI_ALLOY, 2),
+                itemCreator.gemOrDust(RagiumMaterialType.RAGI_CRYSTAL),
+                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
             ).save(output)
         // Ultimate
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ULTIMATE)),
-                ingredientHelper.item(HTItemMaterialVariant.NUGGET, RagiumMaterialType.IRIDESCENTIUM),
-                ingredientHelper.gemOrDust(HTVanillaMaterialType.ECHO),
-                ingredientHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.fromTagKey(HTItemMaterialVariant.NUGGET, RagiumMaterialType.IRIDESCENTIUM),
+                itemCreator.gemOrDust(HTVanillaMaterialType.ECHO),
+                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
             ).save(output)
     }
 
@@ -300,24 +300,24 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.REDSTONE_BOARD, 4),
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
-                ingredientHelper.item(Items.SMOOTH_STONE_SLAB),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromItem(Items.SMOOTH_STONE_SLAB),
             ).save(output)
         // Repeater
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(Items.REPEATER, 2),
-                ingredientHelper.item(Items.REDSTONE_TORCH),
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
-                ingredientHelper.item(RagiumItems.REDSTONE_BOARD),
+                itemCreator.fromItem(Items.REDSTONE_TORCH),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromItem(RagiumItems.REDSTONE_BOARD),
             ).save(output)
         // Comparator
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(Items.COMPARATOR, 2),
-                ingredientHelper.item(Items.REDSTONE_TORCH),
-                ingredientHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.QUARTZ),
-                ingredientHelper.item(Items.REPEATER),
+                itemCreator.fromItem(Items.REDSTONE_TORCH),
+                itemCreator.fromTagKey(HTItemMaterialVariant.GEM, HTVanillaMaterialType.QUARTZ),
+                itemCreator.fromItem(Items.REPEATER),
             ).save(output)
     }
 
@@ -327,8 +327,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.LED, 4),
-                ingredientHelper.item(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER),
-                ingredientHelper.item(RagiumItems.LUMINOUS_PASTE),
+                itemCreator.fromTagKey(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.COPPER),
+                itemCreator.fromItem(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
         // LED Block
         HTShapedRecipeBuilder
@@ -351,8 +351,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.SOLAR_PANEL),
-                ingredientHelper.item(RagiumModTags.Items.PLASTICS),
-                ingredientHelper.item(RagiumItems.LUMINOUS_PASTE, 2),
+                itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
+                itemCreator.fromItem(RagiumItems.LUMINOUS_PASTE, 2),
             ).save(output)
     }
 }

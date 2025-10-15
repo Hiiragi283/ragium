@@ -26,38 +26,38 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
 
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(AEBlocks.QUARTZ_BLOCK),
-                ingredientHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, 8000),
+                itemCreator.fromItem(AEBlocks.QUARTZ_BLOCK),
+                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 8000),
             ).addResult(resultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ))
             .save(output)
         // Fluix Crystal
         combineWithRedstone(
             resultHelper.item(HTItemMaterialVariant.GEM, HTCommonMaterialTypes.getGem("fluix"), 2),
-            ingredientHelper.gemOrDust(HTCommonMaterialTypes.getGem("certus_quartz")),
-            ingredientHelper.gemOrDust(HTVanillaMaterialType.QUARTZ),
+            itemCreator.gemOrDust(HTCommonMaterialTypes.getGem("certus_quartz")),
+            itemCreator.gemOrDust(HTVanillaMaterialType.QUARTZ),
         )
         // Sky Stone
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(AEBlocks.SKY_STONE_BLOCK),
+                itemCreator.fromItem(AEBlocks.SKY_STONE_BLOCK),
                 resultHelper.item(AEItems.SKY_DUST),
             ).save(output)
 
         // Processor
         combineWithRedstone(
             resultHelper.item(AEItems.LOGIC_PROCESSOR),
-            ingredientHelper.item(AEItems.LOGIC_PROCESSOR_PRINT),
-            ingredientHelper.item(AEItems.SILICON_PRINT),
+            itemCreator.fromItem(AEItems.LOGIC_PROCESSOR_PRINT),
+            itemCreator.fromItem(AEItems.SILICON_PRINT),
         )
         combineWithRedstone(
             resultHelper.item(AEItems.CALCULATION_PROCESSOR),
-            ingredientHelper.item(AEItems.CALCULATION_PROCESSOR_PRINT),
-            ingredientHelper.item(AEItems.SILICON_PRINT),
+            itemCreator.fromItem(AEItems.CALCULATION_PROCESSOR_PRINT),
+            itemCreator.fromItem(AEItems.SILICON_PRINT),
         )
         combineWithRedstone(
             resultHelper.item(AEItems.ENGINEERING_PROCESSOR),
-            ingredientHelper.item(AEItems.ENGINEERING_PROCESSOR_PRINT),
-            ingredientHelper.item(AEItems.SILICON_PRINT),
+            itemCreator.fromItem(AEItems.ENGINEERING_PROCESSOR_PRINT),
+            itemCreator.fromItem(AEItems.SILICON_PRINT),
         )
     }
 
@@ -66,7 +66,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 null,
-                ingredientHelper.item(budding),
+                itemCreator.fromItem(budding),
                 resultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count),
             ).saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
     }
@@ -77,7 +77,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .alloying(
                 result,
                 left,
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
                 right,
             ).save(output)
     }

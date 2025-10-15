@@ -16,43 +16,43 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Vanilla
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Tags.Items.GRAVELS),
+                itemCreator.fromTagKey(Tags.Items.GRAVELS),
                 resultHelper.item(Items.FLINT),
             ).saveSuffixed(output, "_from_gravel")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
+                itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS),
                 resultHelper.item(Items.REDSTONE),
             ).saveSuffixed(output, "_from_red_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
+                itemCreator.fromItem(Items.BROWN_MUSHROOM_BLOCK),
                 resultHelper.item(Items.BROWN_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Items.RED_MUSHROOM_BLOCK),
+                itemCreator.fromItem(Items.RED_MUSHROOM_BLOCK),
                 resultHelper.item(Items.RED_MUSHROOM, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
                 resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
+                itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
                 resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.item(Tags.Items.GUNPOWDERS),
+                itemCreator.fromTagKey(Tags.Items.GUNPOWDERS),
                 resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
@@ -64,13 +64,13 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
+                itemCreator.fuelOrDust(HTVanillaMaterialType.CHARCOAL),
                 resultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(
-                ingredientHelper.fuelOrDust(HTVanillaMaterialType.COAL),
+                itemCreator.fuelOrDust(HTVanillaMaterialType.COAL),
                 resultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 
@@ -80,7 +80,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
 
             HTItemToObjRecipeBuilder
                 .extracting(
-                    ingredientHelper.item(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
+                    itemCreator.fromTagKey(HTItemMaterialVariant.RAW_MATERIAL.itemTagKey("dyes/$name")),
                     resultHelper.item(dye, 2),
                 ).saveSuffixed(output, "_from_$name")
         }

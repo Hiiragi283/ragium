@@ -30,13 +30,13 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Mushroom Stew
         HTFluidTransformRecipeBuilder
             .mixing(
-                ingredientHelper.item(Tags.Items.MUSHROOMS, 2),
-                ingredientHelper.milk(250),
+                itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2),
+                fluidCreator.milk(250),
                 resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250),
             ).save(output)
 
         extractAndInfuse(
-            ingredientHelper.item(Items.BOWL),
+            itemCreator.fromItem(Items.BOWL),
             HTItemHolderLike.fromItem(Items.MUSHROOM_STEW),
             RagiumFluidContents.MUSHROOM_STEW,
             250,
@@ -45,15 +45,15 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Chocolate
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
-                ingredientHelper.milk(250),
+                itemCreator.fromTagKey(Tags.Items.CROPS_COCOA_BEAN),
+                fluidCreator.milk(250),
             ).addResult(resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE))
             .saveSuffixed(output, "_from_milk")
 
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
-                ingredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
+                fluidCreator.fromTagKey(RagiumCommonTags.Fluids.CHOCOLATES, 250),
                 resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.CHOCOLATE),
             ).save(output)
         // Melon Pie
@@ -67,8 +67,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Ice Cream
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(Items.SNOWBALL),
-                ingredientHelper.milk(250),
+                itemCreator.fromItem(Items.SNOWBALL),
+                fluidCreator.milk(250),
             ).addResult(resultHelper.item(RagiumItems.ICE_CREAM))
             .save(output)
         // Ice Cream Soda
@@ -81,8 +81,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.AMBROSIA),
-                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
-                ingredientHelper.item(Items.HONEY_BLOCK, 64),
+                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
+                itemCreator.fromItem(Items.HONEY_BLOCK, 64),
             ).save(output)
 
         cherry()
@@ -113,14 +113,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
-            ingredientHelper.item(Tags.Items.GLASS_BLOCKS),
+            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
             HTItemHolderLike.fromItem(Items.HONEY_BLOCK),
             RagiumFluidContents.HONEY,
             1000,
         )
         // Honey Bottle <-> Honey
         extractAndInfuse(
-            ingredientHelper.item(Items.GLASS_BOTTLE),
+            itemCreator.fromItem(Items.GLASS_BOTTLE),
             HTItemHolderLike.fromItem(Items.HONEY_BOTTLE),
             RagiumFluidContents.HONEY,
             250,
@@ -132,20 +132,20 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Minced Meat
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(RagiumModTags.Items.RAW_MEAT),
+                itemCreator.fromTagKey(RagiumModTags.Items.RAW_MEAT),
                 resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
             ).save(output)
         // Meat Ingot
         HTItemToObjRecipeBuilder
             .compressing(
-                ingredientHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT),
                 resultHelper.item(RagiumItems.getIngot(RagiumMaterialType.MEAT)),
             ).save(output)
 
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
-                ingredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),
+                fluidCreator.fromTagKey(RagiumCommonTags.Fluids.MEAT, 250),
                 resultHelper.item(HTItemMaterialVariant.INGOT, RagiumMaterialType.MEAT),
             ).save(output)
 

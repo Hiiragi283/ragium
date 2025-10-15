@@ -119,22 +119,22 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
-                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
-                ingredientHelper.item(Items.SOUL_SAND),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                itemCreator.fromItem(Items.SOUL_SAND),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)
 
         // Normal -> Tinted
