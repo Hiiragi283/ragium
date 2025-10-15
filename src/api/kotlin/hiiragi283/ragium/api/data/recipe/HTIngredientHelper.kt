@@ -5,18 +5,15 @@ import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidContent
-import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
-import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 /**
- * @see [IItemStackIngredientCreator], [IFluidStackIngredientCreator]
+ * @see [mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator]
+ * @see [mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator]
  */
 interface HTIngredientHelper {
     //    Item    //
@@ -27,7 +24,7 @@ interface HTIngredientHelper {
 
     fun item(holderSet: HolderSet<Item>, count: Int = 1): HTItemIngredient
 
-    fun item(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredient
+    // fun item(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredient
 
     fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemIngredient
 
@@ -57,7 +54,7 @@ interface HTIngredientHelper {
 
     fun fluid(holderSet: HolderSet<Fluid>, amount: Int): HTFluidIngredient
 
-    fun fluid(ingredient: FluidIngredient, amount: Int): HTFluidIngredient
+    // fun fluid(ingredient: FluidIngredient, amount: Int): HTFluidIngredient
 
     fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidIngredient
 

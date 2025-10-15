@@ -16,36 +16,22 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.common.crafting.IngredientType
-import net.neoforged.neoforge.registries.NeoForgeRegistries
 
-class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, ICustomIngredient>, amount: Int = 1) :
-    HTIngredientBase<Item, ItemStack, ICustomIngredient>(either, amount),
+class HTItemIngredientImpl private constructor(holderSet: HolderSet<Item>, amount: Int = 1) :
+    HTIngredientBase<Item, ItemStack>(holderSet, amount),
     HTItemIngredient {
         companion object {
-            @JvmField
-            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, ICustomIngredient> = VanillaBiCodecs
-                .registryBased(
-                    NeoForgeRegistries.INGREDIENT_TYPES,
-                ).dispatch(ICustomIngredient::getType, IngredientType<*>::codec, IngredientType<*>::streamCodec)
+            @JvmStatic
+            private val ENTRY_CODEC: BiCodec<RegistryFriendlyByteBuf, HolderSet<Item>> = VanillaBiCodecs.holderSet(Registries.ITEM)
 
             @JvmStatic
-            private val ENTRY_CODEC: BiCodec<RegistryFriendlyByteBuf, Either<HolderSet<Item>, ICustomIngredient>> = eitherCodec(
-                Registries.ITEM,
-                INGREDIENT_CODEC,
-            )
-
-            @JvmStatic
-            private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredientImpl> = ENTRY_CODEC.xmap(
-                ::HTItemIngredientImpl,
-                HTItemIngredientImpl::either,
-            )
+            private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredientImpl> =
+                ENTRY_CODEC.xmap(::HTItemIngredientImpl, HTItemIngredientImpl::holderSet)
 
             @JvmStatic
             private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, HTItemIngredientImpl> = BiCodec.composite(
                 ENTRY_CODEC.fieldOf("items"),
-                HTItemIngredientImpl::either,
+                HTItemIngredientImpl::holderSet,
                 BiCodecs.POSITIVE_INT.optionalFieldOf("count", 1),
                 HTItemIngredientImpl::amount,
                 ::HTItemIngredientImpl,
@@ -71,43 +57,23 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
             @JvmStatic
             fun of(holderSet: HolderSet<Item>, count: Int = 1): HTItemIngredientImpl {
                 check(count >= 1)
-                return HTItemIngredientImpl(Either.left(holderSet), count)
+                return HTItemIngredientImpl(holderSet, count)
             }
 
-            @JvmStatic
-            fun of(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredientImpl {
+            /*fun of(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredientImpl {
                 check(count >= 1)
                 return HTItemIngredientImpl(Either.right(ingredient), count)
-            }
+            }*/
         }
 
-        override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = either.map(
-            { holderSet: HolderSet<Item> ->
-                holderSet.unwrap().map(
-                    { Either.left(it to amount) },
-                    { holders: List<Holder<Item>> ->
-                        Either.right(holders.map { holder: Holder<Item> -> ItemStack(holder, amount) })
-                    },
-                )
-            },
-            { ingredient: ICustomIngredient ->
-                Either.right(
-                    ingredient.items.toList().onEach { stack: ItemStack ->
-                        stack.count = this.amount
-                    },
-                )
+        override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = holderSet.unwrap().map(
+            { Either.left(it to amount) },
+            { holders: List<Holder<Item>> ->
+                Either.right(holders.map { holder: Holder<Item> -> ItemStack(holder, amount) })
             },
         )
 
         override fun test(stack: ItemStack): Boolean = testOnlyType(stack) && stack.count >= this.amount
 
-        override fun testOnlyType(stack: ItemStack): Boolean =
-            either.map(stack::`is`) { ingredient: ICustomIngredient -> ingredient.test(stack) }
-
-        override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) this.amount else 0
-
-        override fun hasNoMatchingStacks(): Boolean = either.map(
-            { holderSet: HolderSet<Item> -> holderSet.toList().isEmpty() },
-            { ingredient: ICustomIngredient -> ingredient.toVanilla().hasNoItems() },
-        )
+        override fun testOnlyType(stack: ItemStack): Boolean = stack.`is`(holderSet)
     }

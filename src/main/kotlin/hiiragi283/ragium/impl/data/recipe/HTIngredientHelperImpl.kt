@@ -15,8 +15,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 class HTIngredientHelperImpl(private val itemGetter: HolderGetter<Item>, private val fluidGetter: HolderGetter<Fluid>) :
@@ -31,7 +29,7 @@ class HTIngredientHelperImpl(private val itemGetter: HolderGetter<Item>, private
 
     override fun item(holderSet: HolderSet<Item>, count: Int): HTItemIngredient = HTItemIngredientImpl.of(holderSet, count)
 
-    override fun item(ingredient: ICustomIngredient, count: Int): HTItemIngredient = HTItemIngredientImpl.of(ingredient, count)
+    // override fun item(ingredient: ICustomIngredient, count: Int): HTItemIngredient = HTItemIngredientImpl.of(ingredient, count)
 
     override fun item(tagKey: TagKey<Item>, count: Int): HTItemIngredient = item(itemGetter.getOrThrow(tagKey), count)
 
@@ -75,7 +73,7 @@ class HTIngredientHelperImpl(private val itemGetter: HolderGetter<Item>, private
 
     override fun fluid(holderSet: HolderSet<Fluid>, amount: Int): HTFluidIngredient = HTFluidIngredientImpl.of(holderSet, amount)
 
-    override fun fluid(ingredient: FluidIngredient, amount: Int): HTFluidIngredient = HTFluidIngredientImpl.of(ingredient, amount)
+    // override fun fluid(ingredient: FluidIngredient, amount: Int): HTFluidIngredient = HTFluidIngredientImpl.of(ingredient, amount)
 
     override fun fluid(tagKey: TagKey<Fluid>, amount: Int): HTFluidIngredient = fluid(fluidGetter.getOrThrow(tagKey), amount)
 }

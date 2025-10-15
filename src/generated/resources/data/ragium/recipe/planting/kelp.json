@@ -1,7 +1,7 @@
 {
   "type": "ragium:planting",
   "fluid_ingredient": {
-    "amount": 250,
+    "amount": 500,
     "fluids": "#c:water"
   },
   "item_ingredient": "minecraft:kelp",

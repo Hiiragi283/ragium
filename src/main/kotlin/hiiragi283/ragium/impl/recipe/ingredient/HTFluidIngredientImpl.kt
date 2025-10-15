@@ -14,25 +14,16 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
-import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
-import net.neoforged.neoforge.registries.NeoForgeRegistries
 
-class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>, FluidIngredient>, amount: Int) :
-    HTIngredientBase<Fluid, FluidStack, FluidIngredient>(either, amount),
+class HTFluidIngredientImpl private constructor(holderSet: HolderSet<Fluid>, amount: Int) :
+    HTIngredientBase<Fluid, FluidStack>(holderSet, amount),
     HTFluidIngredient {
         companion object {
             @JvmField
-            val INGREDIENT_CODEC: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = VanillaBiCodecs
-                .registryBased(
-                    NeoForgeRegistries.FLUID_INGREDIENT_TYPES,
-                ).dispatch(FluidIngredient::getType, FluidIngredientType<*>::codec, FluidIngredientType<*>::streamCodec)
-
-            @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidIngredient> = BiCodec
                 .composite(
-                    eitherCodec(Registries.FLUID, INGREDIENT_CODEC).fieldOf("fluids"),
-                    HTFluidIngredientImpl::either,
+                    VanillaBiCodecs.holderSet(Registries.FLUID).fieldOf("fluids"),
+                    HTFluidIngredientImpl::holderSet,
                     BiCodecs.POSITIVE_INT.fieldOf("amount"),
                     HTFluidIngredientImpl::amount,
                     ::HTFluidIngredientImpl,
@@ -48,43 +39,23 @@ class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>,
             @JvmStatic
             fun of(holderSet: HolderSet<Fluid>, amount: Int = 1): HTFluidIngredientImpl {
                 check(amount >= 1)
-                return HTFluidIngredientImpl(Either.left(holderSet), amount)
+                return HTFluidIngredientImpl(holderSet, amount)
             }
 
-            @JvmStatic
-            fun of(ingredient: FluidIngredient, amount: Int = 1): HTFluidIngredientImpl {
+            /*fun of(ingredient: FluidIngredient, amount: Int = 1): HTFluidIngredientImpl {
                 check(amount >= 1)
                 return HTFluidIngredientImpl(Either.right(ingredient), amount)
-            }
+            }*/
         }
 
-        override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>> = either.map(
-            { holderSet: HolderSet<Fluid> ->
-                holderSet.unwrap().map(
-                    { Either.left(it to amount) },
-                    { holders: List<Holder<Fluid>> ->
-                        Either.right(holders.map { holder: Holder<Fluid> -> FluidStack(holder, amount) })
-                    },
-                )
-            },
-            { ingredient: FluidIngredient ->
-                Either.right(
-                    ingredient.stacks.toList().onEach { stack: FluidStack ->
-                        stack.amount = this.amount
-                    },
-                )
+        override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>> = holderSet.unwrap().map(
+            { Either.left(it to amount) },
+            { holders: List<Holder<Fluid>> ->
+                Either.right(holders.map { holder: Holder<Fluid> -> FluidStack(holder, amount) })
             },
         )
 
         override fun test(stack: FluidStack): Boolean = testOnlyType(stack) && stack.amount >= this.amount
 
-        override fun testOnlyType(stack: FluidStack): Boolean =
-            either.map(stack::`is`) { ingredient: FluidIngredient -> ingredient.test(stack) }
-
-        override fun getRequiredAmount(stack: FluidStack): Int = if (test(stack)) this.amount else 0
-
-        override fun hasNoMatchingStacks(): Boolean = either.map(
-            { holderSet: HolderSet<Fluid> -> holderSet.toList().isEmpty() },
-            { ingredient: FluidIngredient -> ingredient.hasNoFluids() },
-        )
+        override fun testOnlyType(stack: FluidStack): Boolean = stack.`is`(holderSet)
     }
