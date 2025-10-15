@@ -21,11 +21,6 @@ interface HTIngredient<STACK : Any> : Predicate<STACK> {
     fun testOnlyType(stack: STACK): Boolean
 
     /**
-     * 指定された[stack]から，この[HTIngredient]に合致する[STACK]を返します。
-     */
-    fun getMatchingStack(stack: STACK): STACK
-
-    /**
      * 指定された[stack]から，この[HTIngredient]に合致する数量を返します。
      */
     fun getRequiredAmount(stack: STACK): Int
@@ -35,9 +30,4 @@ interface HTIngredient<STACK : Any> : Predicate<STACK> {
      * @return ない場合は`true`, ある場合は`false`
      */
     fun hasNoMatchingStacks(): Boolean
-
-    /**
-     * 条件に合致する[STACK]の一覧を返します。
-     */
-    fun getMatchingStacks(): List<STACK>
 }

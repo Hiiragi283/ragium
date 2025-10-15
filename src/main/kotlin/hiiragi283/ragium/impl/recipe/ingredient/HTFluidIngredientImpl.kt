@@ -81,19 +81,10 @@ class HTFluidIngredientImpl private constructor(either: Either<HolderSet<Fluid>,
         override fun testOnlyType(stack: FluidStack): Boolean =
             either.map(stack::`is`) { ingredient: FluidIngredient -> ingredient.test(stack) }
 
-        override fun getMatchingStack(stack: FluidStack): FluidStack =
-            if (test(stack)) stack.copyWithAmount(this.amount) else FluidStack.EMPTY
-
         override fun getRequiredAmount(stack: FluidStack): Int = if (test(stack)) this.amount else 0
 
         override fun hasNoMatchingStacks(): Boolean = either.map(
             { holderSet: HolderSet<Fluid> -> holderSet.toList().isEmpty() },
             { ingredient: FluidIngredient -> ingredient.hasNoFluids() },
         )
-
-        override fun getMatchingStacks(): List<FluidStack> = either
-            .map(
-                { holderSet: HolderSet<Fluid> -> holderSet.stream().map { holder: Holder<Fluid> -> FluidStack(holder, amount) }.toList() },
-                { ingredient: FluidIngredient -> ingredient.stacks.onEach { stack: FluidStack -> stack.amount = this.amount }.toList() },
-            )
     }

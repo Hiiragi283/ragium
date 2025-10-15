@@ -20,19 +20,15 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<Sin
         val ingredient: Ingredient = recipe.ingredients[0]
         addInput(
             object : HTItemIngredient {
-                override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = Either.right(getMatchingStacks())
+                override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = Either.right(ingredient.items.toList())
 
                 override fun test(stack: ItemStack): Boolean = ingredient.test(stack)
 
                 override fun testOnlyType(stack: ItemStack): Boolean = ingredient.test(stack)
 
-                override fun getMatchingStack(stack: ItemStack): ItemStack = if (test(stack)) stack.copyWithCount(1) else ItemStack.EMPTY
-
                 override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) 1 else 0
 
                 override fun hasNoMatchingStacks(): Boolean = ingredient.hasNoItems()
-
-                override fun getMatchingStacks(): List<ItemStack> = ingredient.items.toList()
             },
         )
 

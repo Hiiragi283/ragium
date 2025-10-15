@@ -12,15 +12,25 @@ class HTSimpleItemSlotHolder(
     private val catalyst: HTItemSlot? = null,
 ) : HTSimpleCapabilityHolder(transferProvider),
     HTItemSlotHolder {
-    override fun getItemSlot(side: Direction?): List<HTItemSlot> = when {
-        side == null -> buildList {
+    override fun getItemSlot(side: Direction?): List<HTItemSlot> = when (side) {
+        null -> buildList {
             addAll(inputSlots)
             addAll(outputSlots)
             catalyst?.let(::add)
         }
 
-        canInsert(side) -> inputSlots
-        canExtract(side) -> outputSlots
-        else -> listOf()
+        else -> {
+            val canInsert: Boolean = canInsert(side)
+            val canExtract: Boolean = canExtract(side)
+            when {
+                canInsert && canExtract -> buildList {
+                    addAll(inputSlots)
+                    addAll(outputSlots)
+                }
+                canInsert -> inputSlots
+                canExtract -> outputSlots
+                else -> listOf()
+            }
+        }
     }
 }

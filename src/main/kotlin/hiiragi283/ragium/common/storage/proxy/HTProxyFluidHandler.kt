@@ -38,5 +38,5 @@ class HTProxyFluidHandler(private val handler: HTSidedFluidHandler, side: Direct
 
     override fun getTankCapacity(tank: Int): Int = handler.getTankCapacity(tank, side)
 
-    override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = handler.isFluidValid(tank, stack, side)
+    override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = !readOnly || handler.isFluidValid(tank, stack, side)
 }

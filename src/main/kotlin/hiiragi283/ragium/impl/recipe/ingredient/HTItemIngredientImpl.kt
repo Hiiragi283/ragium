@@ -104,21 +104,10 @@ class HTItemIngredientImpl private constructor(either: Either<HolderSet<Item>, I
         override fun testOnlyType(stack: ItemStack): Boolean =
             either.map(stack::`is`) { ingredient: ICustomIngredient -> ingredient.test(stack) }
 
-        override fun getMatchingStack(stack: ItemStack): ItemStack = if (test(stack)) stack.copyWithCount(this.amount) else ItemStack.EMPTY
-
         override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) this.amount else 0
 
         override fun hasNoMatchingStacks(): Boolean = either.map(
             { holderSet: HolderSet<Item> -> holderSet.toList().isEmpty() },
             { ingredient: ICustomIngredient -> ingredient.toVanilla().hasNoItems() },
         )
-
-        override fun getMatchingStacks(): List<ItemStack> = either
-            .map(
-                { holderSet: HolderSet<Item> -> holderSet.stream().map(Holder<Item>::value).map(::ItemStack) },
-                ICustomIngredient::getItems,
-            ).map { stack: ItemStack ->
-                stack.count = this.amount
-                stack
-            }.toList()
     }

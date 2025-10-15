@@ -26,10 +26,26 @@ class HTSimpleFluidTankHolder(
             HTSimpleFluidTankHolder(transferProvider, null, null, tank)
     }
 
-    override fun getFluidTank(side: Direction?): List<HTFluidTank> = when {
-        side == null -> listOfNotNull(inputTank, outputTank, generic)
-        canInsert(side) -> listOfNotNull(inputTank, generic)
-        canExtract(side) -> listOfNotNull(outputTank, generic)
-        else -> listOf()
+    override fun getFluidTank(side: Direction?): List<HTFluidTank> {
+        val allTanks: List<HTFluidTank> = listOfNotNull(inputTank, outputTank, generic)
+        when (side) {
+            null -> return allTanks
+            else -> {
+                val canInsert: Boolean = canInsert(side)
+                val canExtract: Boolean = canExtract(side)
+                return when {
+                    canInsert && canExtract -> allTanks
+                    else -> buildList {
+                        if (canInsert) {
+                            add(inputTank)
+                        }
+                        if (canExtract) {
+                            add(outputTank)
+                        }
+                        add(generic)
+                    }.filterNotNull()
+                }
+            }
+        }
     }
 }

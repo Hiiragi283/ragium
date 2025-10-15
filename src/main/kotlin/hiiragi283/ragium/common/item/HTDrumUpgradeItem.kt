@@ -3,8 +3,10 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -19,7 +21,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Supplier
 
 /**
@@ -43,8 +44,9 @@ abstract class HTDrumUpgradeItem(
         val state: BlockState = level.getBlockState(pos)
         if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
-                val fluid: FluidStack = (level.getBlockEntity(pos) as? HTDrumBlockEntity)
-                    ?.getFluidInTank(0)
+                val fluid: ImmutableFluidStack = RagiumCapabilities.FLUID
+                    .getCapabilitySlot(level, pos, null, 0)
+                    ?.getStack()
                     ?: return InteractionResult.FAIL
                 val newState: BlockState = newDrum.get().defaultBlockState()
                 level.setBlockAndUpdate(pos, newState)
@@ -54,7 +56,9 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                (level.getBlockEntity(pos) as? HTDrumBlockEntity)?.insertFluid(fluid, HTStorageAction.EXECUTE)
+                RagiumCapabilities.FLUID
+                    .getCapabilitySlot(level, pos, null, 0)
+                    ?.insert(fluid, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 val drop = ItemStack(state.block)
                 player?.let { giveStackTo(it, drop) } ?: dropStackAt(level, pos, drop)
                 context.itemInHand.shrink(1)
