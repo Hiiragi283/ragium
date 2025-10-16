@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -50,10 +51,10 @@ internal class HTItemIngredientImpl(holderSet: HolderSet<Item>, amount: Int = 1)
             }*/
     }
 
-    override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = holderSet.unwrap().map(
+    override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> = holderSet.unwrap().map(
         { Either.left(it to amount) },
         { holders: List<Holder<Item>> ->
-            Either.right(holders.map { holder: Holder<Item> -> ItemStack(holder, amount) })
+            Either.right(holders.map { holder: Holder<Item> -> ImmutableItemStack.of(holder.value(), amount) })
         },
     )
 

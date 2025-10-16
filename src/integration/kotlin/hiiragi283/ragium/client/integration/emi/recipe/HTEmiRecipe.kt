@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.createErrorStack
 import hiiragi283.ragium.client.integration.emi.toEmi
@@ -23,7 +25,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.fluids.FluidStack
 
 /**
  * @see [mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe]
@@ -102,7 +103,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         .unwrap()
         .map(
             { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
-            { stacks: List<ItemStack> -> stacks.map(ItemStack::toEmi).let(::ingredient) },
+            { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
         ).apply {
             for (stack: EmiStack in emiStacks) {
                 val itemStack: ItemStack = stack.itemStack
@@ -116,7 +117,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         .unwrap()
         .map(
             { (tagKey: TagKey<Fluid>, count: Int) -> tagKey.toEmi(count) },
-            { stacks: List<FluidStack> -> stacks.map(FluidStack::toEmi).let(::ingredient) },
+            { stacks: List<ImmutableFluidStack> -> stacks.map(ImmutableFluidStack::toEmi).let(::ingredient) },
         )
 
     private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {

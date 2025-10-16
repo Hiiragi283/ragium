@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Either
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.storage.item.toImmutable
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.RagiumEmiPlugin
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputEmiRecipe
@@ -20,7 +22,8 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<Sin
         val ingredient: Ingredient = recipe.ingredients[0]
         addInput(
             object : HTItemIngredient {
-                override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>> = Either.right(ingredient.items.toList())
+                override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> =
+                    Either.right(ingredient.items.map(ItemStack::toImmutable))
 
                 override fun test(stack: ItemStack): Boolean = ingredient.test(stack)
 

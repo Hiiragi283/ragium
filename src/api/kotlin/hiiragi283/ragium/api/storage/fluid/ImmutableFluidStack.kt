@@ -27,6 +27,9 @@ value class ImmutableFluidStack private constructor(val stack: FluidStack) : Imm
          */
         val EMPTY = ImmutableFluidStack(FluidStack.EMPTY)
 
+        @JvmStatic
+        fun of(fluid: Fluid, amount: Int): ImmutableFluidStack = of(FluidStack(fluid, amount))
+
         /**
          * [FluidStack]を[ImmutableFluidStack]に変換します。
          * @return [FluidStack.isEmpty]が`true`の場合は[EMPTY]を返します。

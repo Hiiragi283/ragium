@@ -10,7 +10,7 @@ import net.neoforged.neoforge.fluids.FluidStack
  * [FluidStack]向けの[HTIngredient]の拡張インターフェース
  */
 interface HTFluidIngredient : HTIngredient<FluidStack> {
-    fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>>
+    fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>>
 
     fun getRequiredAmount(stack: ImmutableFluidStack): Int = getRequiredAmount(stack.stack)
 

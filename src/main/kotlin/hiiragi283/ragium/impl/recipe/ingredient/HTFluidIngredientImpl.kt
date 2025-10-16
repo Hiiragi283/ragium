@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -34,10 +35,10 @@ internal class HTFluidIngredientImpl(holderSet: HolderSet<Fluid>, amount: Int) :
             }*/
     }
 
-    override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<FluidStack>> = holderSet.unwrap().map(
+    override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> = holderSet.unwrap().map(
         { Either.left(it to amount) },
         { holders: List<Holder<Fluid>> ->
-            Either.right(holders.map { holder: Holder<Fluid> -> FluidStack(holder, amount) })
+            Either.right(holders.map { holder: Holder<Fluid> -> ImmutableFluidStack.of(holder.value(), amount) })
         },
     )
 

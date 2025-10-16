@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack
  * [ItemStack]向けの[HTIngredient]の拡張インターフェース
  */
 interface HTItemIngredient : HTIngredient<ItemStack> {
-    fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ItemStack>>
+    fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>>
 
     fun getRequiredAmount(stack: ImmutableItemStack): Int = getRequiredAmount(stack.stack)
 
