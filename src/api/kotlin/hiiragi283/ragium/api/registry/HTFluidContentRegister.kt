@@ -123,11 +123,9 @@ class HTFluidContentRegister(modId: String) {
         val blockHolder: HTDeferredHolder<Block, *>,
         val bucketHolder: HTDeferredItem<*>,
     ) : HTFluidContent<TYPE, STILL, FLOW> {
-        private val commonId: ResourceLocation = commonId(getPath())
+        override val commonTag: TagKey<Fluid> = Registries.FLUID.createTagKey(commonId(getPath()))
 
-        override val commonTag: TagKey<Fluid> = Registries.FLUID.createTagKey(commonId)
-
-        override val bucketTag: TagKey<Item> = Registries.ITEM.createTagKey(commonId.withPrefix("buckets/"))
+        override val bucketTag: TagKey<Item> = Registries.ITEM.createTagKey(commonId("buckets", getPath()))
 
         override fun getType(): TYPE = typeHolder.get()
 

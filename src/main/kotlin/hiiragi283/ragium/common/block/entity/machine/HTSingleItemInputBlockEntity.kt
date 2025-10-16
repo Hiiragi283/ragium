@@ -31,7 +31,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
     companion object {
         @JvmStatic
         fun <RECIPE : HTSingleInputRecipe> createSimple(
-            menuType: HTDeferredMenuType<*>,
+            menuType: HTDeferredMenuType.WithContext<*, HTSingleItemInputBlockEntity<*>>,
             sound: SoundEvent,
             soundValues: Pair<Float, Float>,
             recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
@@ -62,7 +62,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
     //    Simple    //
 
     private class Simple<RECIPE : HTSingleInputRecipe>(
-        private val menuType: HTDeferredMenuType<*>,
+        private val menuType: HTDeferredMenuType.WithContext<*, HTSingleItemInputBlockEntity<*>>,
         private val sound: SoundEvent,
         private val soundValues: Pair<Float, Float>,
         recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,

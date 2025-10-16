@@ -53,7 +53,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         layeredBlock(
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
-            vanillaId("block/obsidian"),
+            vanillaId("block", "obsidian"),
             RagiumAPI.id("block/mysterious_obsidian"),
         )
 
@@ -140,13 +140,13 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         altModelBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
-        altTextureBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
+        altTextureBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block", "note_block"))
 
-        cubeColumn(RagiumBlocks.STONE_CASING, vanillaId("block/furnace_side"), vanillaId("block/furnace_top"))
+        cubeColumn(RagiumBlocks.STONE_CASING, vanillaId("block", "furnace_side"), vanillaId("block", "furnace_top"))
         cubeColumn(
             RagiumBlocks.REINFORCED_STONE_CASING,
-            vanillaId("block/blast_furnace_side"),
-            vanillaId("block/blast_furnace_top"),
+            vanillaId("block", "blast_furnace_side"),
+            vanillaId("block", "blast_furnace_top"),
         )
 
         // Machine
@@ -172,13 +172,13 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
-        val bricks: ResourceLocation = vanillaId("block/bricks")
+        val bricks: ResourceLocation = vanillaId("block", "bricks")
 
-        val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
-        val blackstone: ResourceLocation = vanillaId("block/polished_blackstone_bricks")
+        val advancedMachine: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
+        val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
-        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
-        val deepslateTiles: ResourceLocation = vanillaId("block/deepslate_tiles")
+        val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
+        val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         // Generator
         machine(HTGeneratorVariant.THERMAL, basicMachine, bricks)
@@ -210,22 +210,22 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 HTDeviceVariant.WATER_COLLECTOR -> {
                     layeredBlock(
                         block,
-                        vanillaId("block/water_still"),
-                        RagiumAPI.id("block/device_overlay"),
+                        vanillaId("block", "water_still"),
+                        RagiumAPI.id("block", "device_overlay"),
                     )
                 }
                 HTDeviceVariant.LAVA_COLLECTOR -> {
                     layeredBlock(
                         block,
-                        vanillaId("block/lava_still"),
-                        RagiumAPI.id("block/device_overlay"),
+                        vanillaId("block", "lava_still"),
+                        RagiumAPI.id("block", "device_overlay"),
                     )
                 }
                 HTDeviceVariant.MILK_COLLECTOR -> {
                     layeredBlock(
                         block,
-                        RagiumConst.NEOFORGE.toId("block/milk_still"),
-                        RagiumAPI.id("block/device_overlay"),
+                        RagiumConst.NEOFORGE.toId("block", "milk_still"),
+                        RagiumAPI.id("block", "device_overlay"),
                     )
                 }
                 else -> simpleBlock(block.get())
@@ -252,7 +252,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .addModels(
                     models()
                         .getBuilder("block/${content.getPath()}")
-                        .texture("particle", vanillaId("block/water_still"))
+                        .texture("particle", vanillaId("block", "water_still"))
                         .let(::ConfiguredModel),
                 )
         }
@@ -271,10 +271,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             val suffix: String = if (bites > 0) "_slice$bites" else ""
             val pieModel: BlockModelBuilder = models()
                 .getBuilder(block.getPath() + suffix)
-                .parent(ModelFile.ExistingModelFile(RagiumConst.FARMERS_DELIGHT.toId("block/pie$suffix"), fileHelper))
+                .parent(ModelFile.ExistingModelFile(RagiumConst.FARMERS_DELIGHT.toId("block", "pie$suffix"), fileHelper))
                 .texture("particle", blockId.withSuffix("_top"))
-                .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block/pie_bottom"))
-                .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block/pie_side"))
+                .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_bottom"))
+                .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_side"))
                 .texture("top", blockId.withSuffix("_top"))
                 .texture("inner", blockId.withSuffix("_inner"))
 

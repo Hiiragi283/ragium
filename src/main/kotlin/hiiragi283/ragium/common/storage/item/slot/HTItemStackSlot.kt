@@ -133,7 +133,7 @@ open class HTItemStackSlot protected constructor(
     override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
-    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
+    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, slotType)
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())

@@ -3,22 +3,23 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.common.item.base.HTContainerItem
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.Level
 
-class HTPotionBundleItem(properties: Properties) : HTContainerItem(properties.stacksTo(1)) {
+class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
-        for (slot: HTItemSlot in getItemSlots(stack)) {
+        for (slot: HTItemSlot in RagiumCapabilities.ITEM.getCapabilitySlots(stack)) {
             if (slot.isEmpty()) continue
             val stackIn: ItemStack = slot.getItemStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player
  * @see [mekanism.common.inventory.container.tile.MekanismTileContainer]
  */
 abstract class HTContainerWithContextMenu<C : Any>(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.WithContext<*, C>,
     containerId: Int,
     inventory: Inventory,
     val context: C,

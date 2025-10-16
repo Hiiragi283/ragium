@@ -4,18 +4,19 @@ import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.item.base.HTContainerItem
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.neoforged.api.distmarker.Dist
 
 @Suppress("DEPRECATION")
 abstract class HTGenericItemContainerMenu(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.OnHand<*>,
     containerId: Int,
     inventory: Inventory,
     context: HTItemContainerContext,
-    isClientSide: Boolean,
+    isClientSide: Dist,
     final override val rows: Int,
 ) : HTItemContainerMenu(
         menuType,
@@ -25,8 +26,8 @@ abstract class HTGenericItemContainerMenu(
     ),
     HTGenericContainerRows {
     protected val handler: HTItemHandler = when (isClientSide) {
-        true -> null
-        false -> HTContainerItem.getHandler(stack)
+        Dist.CLIENT -> null
+        Dist.DEDICATED_SERVER -> RagiumCapabilities.ITEM.getSlottedCapability(stack)
     } ?: createHandler(rows)
 
     protected abstract fun createHandler(rows: Int): HTItemHandler

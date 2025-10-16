@@ -13,9 +13,19 @@ import net.minecraft.resources.ResourceLocation
 fun String.toId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this, path)
 
 /**
+ * この文字列を名前空間として[ResourceLocation]を返します。
+ */
+fun String.toId(prefix: String, value: String): ResourceLocation = this.toId("$prefix/$value")
+
+/**
  * 名前空間が`minecraft`となる[ResourceLocation]を返します。
  */
 fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
+
+/**
+ * 名前空間が`minecraft`となる[ResourceLocation]を返します。
+ */
+fun vanillaId(prefix: String, value: String): ResourceLocation = ResourceLocation.withDefaultNamespace("$prefix/$value")
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。

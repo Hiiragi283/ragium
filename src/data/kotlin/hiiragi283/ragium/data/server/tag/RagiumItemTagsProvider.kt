@@ -317,7 +317,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     private fun accessories(builder: HTTagBuilder<Item>) {
         builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
+        // builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
         builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
         builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
         builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)

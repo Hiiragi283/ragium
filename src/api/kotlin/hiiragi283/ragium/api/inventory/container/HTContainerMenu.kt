@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import kotlin.math.min
 
-abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int, inventory: Inventory) :
+abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId) {
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

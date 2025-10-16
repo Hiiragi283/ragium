@@ -20,10 +20,11 @@ import kotlin.math.min
  * @see [mekanism.common.inventory.container.slot.InventoryContainerSlot]
  */
 open class HTContainerItemSlot(
-    val slot: HTItemSlot.Mutable,
+    val slot: HTItemSlot,
     x: Int,
     y: Int,
     private val uncheckedSetter: Consumer<ItemStack>,
+    private val manualFilter: (ImmutableItemStack, HTStorageAccess) -> Boolean,
     val slotType: Type,
 ) : Slot(emptyContainer, 0, x, y) {
     companion object {
@@ -35,7 +36,7 @@ open class HTContainerItemSlot(
         if (stack.isEmpty) return false
         if (slot.isEmpty()) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
         if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()) return false
-        return slot.isStackValidForInsert(stack.toImmutable(), HTStorageAccess.MANUAL)
+        return manualFilter(stack.toImmutable(), HTStorageAccess.MANUAL)
     }
 
     override fun getItem(): ItemStack = slot.getItemStack()

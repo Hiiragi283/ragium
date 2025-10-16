@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.ItemStack
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.neoforge.network.IContainerFactory
 
 /**
@@ -20,7 +21,7 @@ class HTItemMenuType<MENU : AbstractContainerMenu>(factory: HTItemContainerFacto
      */
     fun create(hand: InteractionHand?, stack: ItemStack): MenuConstructor? = when {
         !stack.isEmpty -> MenuConstructor { containerId: Int, inventory: Inventory, _: Player ->
-            factory.create(containerId, inventory, hand, stack, false)
+            factory.create(containerId, inventory, hand, stack, Dist.DEDICATED_SERVER)
         }
         else -> null
     }

@@ -6,19 +6,18 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * @see [net.minecraft.world.inventory.ChestMenu]
  */
 @Suppress("DEPRECATION")
 class HTGenericContainerMenu(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.WithContext<*, HTItemHandler>,
     containerId: Int,
     inventory: Inventory,
     context: HTItemHandler,
     override val rows: Int,
-) : HTContainerWithContextMenu<IItemHandler>(
+) : HTContainerWithContextMenu<HTItemHandler>(
         menuType,
         containerId,
         inventory,

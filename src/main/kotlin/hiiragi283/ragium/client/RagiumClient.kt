@@ -172,7 +172,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
         event.registerFluidType(
-            HTSimpleFluidExtensions(vanillaId("block/honey_block_top")),
+            HTSimpleFluidExtensions(vanillaId("block", "honey_block_top")),
             RagiumFluidContents.HONEY.getType(),
         )
 
@@ -215,7 +215,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        fun <BE : HTMachineBlockEntity> registerMachine(menuType: HTDeferredMenuType<out HTBlockEntityContainerMenu<BE>>) {
+        fun <BE : HTMachineBlockEntity> registerMachine(menuType: HTDeferredMenuType.WithContext<out HTBlockEntityContainerMenu<BE>, BE>) {
             event.register(
                 menuType.get(),
                 HTMachineScreen.create(menuType.id.withPath { "textures/gui/container/$it.png" }),

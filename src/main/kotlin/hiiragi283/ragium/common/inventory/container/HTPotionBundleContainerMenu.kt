@@ -5,12 +5,13 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
+import net.neoforged.api.distmarker.Dist
 
 class HTPotionBundleContainerMenu(
     containerId: Int,
     inventory: Inventory,
     context: HTItemContainerContext,
-    isClientSide: Boolean,
+    isClientSide: Dist,
 ) : HTGenericItemContainerMenu(
         RagiumMenuTypes.POTION_BUNDLE,
         containerId,

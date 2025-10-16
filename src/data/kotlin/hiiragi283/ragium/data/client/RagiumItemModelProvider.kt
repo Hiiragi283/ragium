@@ -32,7 +32,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         registerItems()
     }
 
-    private val generated: ModelFile = ModelFile.ExistingModelFile(vanillaId("item/generated"), fileHelper)
+    private val generated: ModelFile = ModelFile.ExistingModelFile(vanillaId("item", "generated"), fileHelper)
 
     private fun registerBlocks() {
         // Blocks
@@ -56,11 +56,11 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         }.forEach(::simpleBlockItem)
 
         for ((variant: HTDecorationVariant, wall: HTHolderLike) in RagiumBlocks.WALLS) {
-            withExistingParent(wall.getPath(), vanillaId("block/wall_inventory"))
+            withExistingParent(wall.getPath(), vanillaId("block", "wall_inventory"))
                 .texture("wall", variant.textureId)
         }
         for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
-            withExistingParent(block.getPath(), RagiumAPI.id("block/led_block"))
+            withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
     }
 
@@ -100,7 +100,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.getId().withSuffix("_bucket").path)
-                .parent(ModelFile.ExistingModelFile(RagiumConst.NEOFORGE.toId("item/bucket"), fileHelper))
+                .parent(ModelFile.ExistingModelFile(RagiumConst.NEOFORGE.toId("item", "bucket"), fileHelper))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }

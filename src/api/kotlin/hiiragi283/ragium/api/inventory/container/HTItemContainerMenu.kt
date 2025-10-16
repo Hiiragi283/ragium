@@ -13,7 +13,7 @@ import java.util.Optional
  * @see [mekanism.common.inventory.container.item.MekanismItemContainer]
  */
 abstract class HTItemContainerMenu(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.OnHand<*>,
     containerId: Int,
     inventory: Inventory,
     context: HTItemContainerContext,
