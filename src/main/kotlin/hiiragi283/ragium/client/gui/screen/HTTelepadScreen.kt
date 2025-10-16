@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.createKey
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
@@ -18,7 +19,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 import org.lwjgl.glfw.GLFW
 
 class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
@@ -128,8 +128,8 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: FluidStack) {
-        fluidWidget.stack = stack
+    override fun setFluidStack(index: Int, stack: ImmutableFluidStack) {
+        fluidWidget.setStack(stack)
     }
 
     override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)

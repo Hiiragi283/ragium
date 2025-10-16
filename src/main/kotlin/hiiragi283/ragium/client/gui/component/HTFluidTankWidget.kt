@@ -3,8 +3,9 @@ package hiiragi283.ragium.client.gui.component
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getFluidStack
-import hiiragi283.ragium.api.storage.fluid.setFluidStack
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.fluid.getClientExtensions
+import hiiragi283.ragium.api.storage.fluid.getTintColor
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -13,8 +14,6 @@ import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTFluidTankWidget(
@@ -42,10 +41,10 @@ class HTFluidTankWidget(
         @JvmStatic
         fun createTank(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { widget: HTFluidWidget ->
-                val capacity: Int = widget.capacity
+                val capacity: Long = widget.getCapacity()
                 when {
                     capacity <= 0 -> 0f
-                    else -> widget.stack.amount / capacity.toFloat()
+                    else -> widget.getStack().amountAsLong() / capacity.toFloat()
                 }
             },
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
@@ -69,12 +68,12 @@ class HTFluidTankWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = !stack.isEmpty
+    override fun shouldRender(): Boolean = !getStack().isEmpty()
 
     override fun getSprite(): TextureAtlasSprite? =
-        getSprite(IClientFluidTypeExtensions.of(stack.fluid).getStillTexture(stack), InventoryMenu.BLOCK_ATLAS)
+        getSprite(getStack().getClientExtensions().getStillTexture(getStack().stack), InventoryMenu.BLOCK_ATLAS)
 
-    override fun getColor(): Int = IClientFluidTypeExtensions.of(stack.fluid).getTintColor(stack)
+    override fun getColor(): Int = getStack().getTintColor()
 
     override fun getLevel(): Float = levelGetter(this)
 
@@ -86,13 +85,13 @@ class HTFluidTankWidget(
         background(guiGraphics, getBounds())
     }
 
-    //    HTFluidWidget    //
+    //    HTFluidWidgetNew    //
 
-    override var stack: FluidStack
-        get() = tank.getFluidStack()
-        set(value) {
-            tank.setFluidStack(value)
-        }
-    override val capacity: Int
-        get() = tank.getCapacityAsInt(tank.getStack())
+    override fun getStack(): ImmutableFluidStack = tank.getStack()
+
+    override fun setStack(stack: ImmutableFluidStack) {
+        tank.setStack(stack)
+    }
+
+    override fun getCapacity(): Long = tank.getCapacityAsLong(getStack())
 }

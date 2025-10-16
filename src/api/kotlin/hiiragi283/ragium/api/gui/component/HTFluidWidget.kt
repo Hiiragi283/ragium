@@ -1,15 +1,18 @@
 package hiiragi283.ragium.api.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 interface HTFluidWidget : HTWidget {
-    var stack: FluidStack
-    val capacity: Int
+    fun getStack(): ImmutableFluidStack
+
+    fun setStack(stack: ImmutableFluidStack)
+
+    fun getCapacity(): Long
 
     companion object {
         @JvmField

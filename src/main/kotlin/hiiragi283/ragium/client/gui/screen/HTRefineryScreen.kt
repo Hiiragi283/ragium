@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -11,7 +12,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, inventory: Inventory, title: Component) :
@@ -43,12 +43,12 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: FluidStack) {
+    override fun setFluidStack(index: Int, stack: ImmutableFluidStack) {
         when (index) {
             0 -> fluidWidget
             1 -> fluidWidget1
             else -> return
-        }.stack = stack
+        }.setStack(stack)
     }
 
     override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget, fluidWidget1)

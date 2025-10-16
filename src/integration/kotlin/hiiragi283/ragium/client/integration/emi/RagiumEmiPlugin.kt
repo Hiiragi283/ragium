@@ -116,12 +116,12 @@ class RagiumEmiPlugin : EmiPlugin {
             ) { id: ResourceLocation ->
                 EmiCraftingRecipe(
                     listOf(
-                        EmiStack.of(RagiumItems.ICE_CREAM),
-                        EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
-                        EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
-                        EmiIngredient.of(Tags.Items.DYES_GREEN),
+                        RagiumItems.ICE_CREAM.toEmi(),
+                        RagiumCommonTags.Items.FOODS_CHERRY.toEmi(),
+                        PotionContents.createItemStack(Items.POTION, holder).toEmi(),
+                        Tags.Items.DYES_GREEN.toEmi(),
                     ),
-                    EmiStack.of(RagiumPlatform.INSTANCE.createSoda(holder)),
+                    RagiumPlatform.INSTANCE.createSoda(holder).toEmi(),
                     id,
                     true,
                 )
@@ -165,7 +165,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     HTEmiFluidFuelData(
                         key.location().withPrefix("/${RagiumDataMaps.INSTANCE.thermalFuelType.id().path}/"),
                         (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
-                        itemRegistry.getOrThrow(key).let(EmiStack::of),
+                        itemRegistry.getOrThrow(key).toEmi(),
                         lavaInput,
                     )
                 }.asSequence(),
@@ -182,7 +182,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTEmiFluidFuelData(
                     id,
                     HTGeneratorVariant.COMBUSTION.energyRate,
-                    EmiIngredient.of(ItemTags.COALS),
+                    ItemTags.COALS.toEmi(),
                     RagiumFluidContents.CRUDE_OIL.toFluidEmi(100),
                 ),
             )
@@ -218,22 +218,22 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addInteractions(registry: EmiRegistry) {
         // Water Well
         registry.addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.WATER_COLLECTOR))
+            leftInput(HTDeviceVariant.WATER_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
         registry.addInteraction(HTFluidContent.LAVA.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.LAVA_COLLECTOR))
+            leftInput(HTDeviceVariant.LAVA_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
         registry.addInteraction(HTFluidContent.MILK.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.MILK_COLLECTOR))
-            rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
+            leftInput(HTDeviceVariant.MILK_COLLECTOR.toEmi())
+            rightInput(Items.COW_SPAWN_EGG.toEmi(), true)
         }
         // Exp Collector
         registry.addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.EXP_COLLECTOR))
+            leftInput(HTDeviceVariant.EXP_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
 
@@ -319,7 +319,7 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun registerCategory(registry: EmiRegistry, viewerType: HTRecipeViewerType<*>): HTEmiRecipeCategory {
         val category: HTEmiRecipeCategory = HTEmiRecipeCategory.create(viewerType)
         registry.addCategory(category)
-        viewerType.workStations.map(EmiStack::of).forEach(registry::addWorkstation.partially1(category))
+        viewerType.workStations.map(ItemLike::toEmi).forEach(registry::addWorkstation.partially1(category))
         return category
     }
 
@@ -364,14 +364,9 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun EmiRegistry.addFluidInteraction(output: ItemLike, source: HTFluidContent<*, *, *>, flowing: HTFluidContent<*, *, *>) {
-        val outputStack: EmiStack = EmiStack.of(output)
-
-        val sourceStack: EmiStack = source.toFluidEmi(1000)
-        val flowingStack: EmiStack = flowing.toFluidEmi(1000)
-
-        addInteraction(outputStack, prefix = "fluid_interaction") {
-            leftInput(sourceStack.copyAsCatalyst())
-            rightInput(flowingStack.copyAsCatalyst(), false)
+        addInteraction(output.toEmi(), prefix = "fluid_interaction") {
+            leftInput(source.toFluidEmi(1000).copyAsCatalyst())
+            rightInput(flowing.toFluidEmi(1000).copyAsCatalyst(), false)
         }
     }
 }

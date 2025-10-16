@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
@@ -14,7 +15,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
@@ -62,8 +62,8 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: FluidStack) {
-        fluidWidget.stack = stack
+    override fun setFluidStack(index: Int, stack: ImmutableFluidStack) {
+        fluidWidget.setStack(stack)
     }
 
     override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)
