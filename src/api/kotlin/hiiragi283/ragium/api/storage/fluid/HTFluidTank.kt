@@ -10,6 +10,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [ImmutableFluidStack]向けの[HTStackSlot]の拡張インターフェース
+ * @see [mekanism.api.fluid.IExtendedFluidTank]
  */
 interface HTFluidTank :
     HTStackSlot<ImmutableFluidStack>,
@@ -40,6 +41,7 @@ interface HTFluidTank :
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
+        if (this.isEmpty()) return FluidStack.EMPTY
         if (!FluidStack.isSameFluidSameComponents(resource, getFluidStack())) return FluidStack.EMPTY
         return extractFluid(resource.amount, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
     }

@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -15,7 +13,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -59,8 +56,6 @@ abstract class HTDrumUpgradeItem(
                 RagiumCapabilities.FLUID
                     .getCapabilitySlot(level, pos, null, 0)
                     ?.insert(fluid, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                val drop = ItemStack(state.block)
-                player?.let { giveStackTo(it, drop) } ?: dropStackAt(level, pos, drop)
                 context.itemInHand.shrink(1)
             }
             return InteractionResult.sidedSuccess(level.isClientSide)

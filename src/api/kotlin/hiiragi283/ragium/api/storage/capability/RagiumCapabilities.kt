@@ -80,8 +80,8 @@ object RagiumCapabilities {
 
         override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
             when (val filled: Int = handler.fill(stack.stack, action.toFluid())) {
-                0 -> ImmutableFluidStack.EMPTY
-                else -> stack.copyWithAmount(filled)
+                0 -> stack
+                else -> stack.copyAndShrink(filled)
             }
 
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =

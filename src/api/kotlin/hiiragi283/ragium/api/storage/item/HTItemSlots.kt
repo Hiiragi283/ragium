@@ -1,18 +1,20 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-fun HTItemSlot.getItemStack(): ItemStack = this.getStack().stack
+fun HTStackView<ImmutableItemStack>.getItemStack(): ItemStack = this.getStack().stack
 
-fun HTItemSlot.toRecipeInput(): SingleRecipeInput = SingleRecipeInput(this.getItemStack())
+fun HTStackView<ImmutableItemStack>.toRecipeInput(): SingleRecipeInput = SingleRecipeInput(this.getItemStack())
 
-fun HTItemSlot.getCapacityAsLong(stack: ItemStack): Long = this.getCapacityAsLong(stack.toImmutable())
+fun HTStackView<ImmutableItemStack>.getCapacityAsLong(stack: ItemStack): Long = this.getCapacityAsLong(stack.toImmutable())
 
-fun HTItemSlot.getCapacityAsInt(stack: ItemStack): Int = this.getCapacityAsInt(stack.toImmutable())
+fun HTStackView<ImmutableItemStack>.getCapacityAsInt(stack: ItemStack): Int = this.getCapacityAsInt(stack.toImmutable())
 
 fun HTItemSlot.isValid(stack: ItemStack): Boolean = this.isValid(stack.toImmutable())
 
@@ -22,6 +24,6 @@ fun HTItemSlot.insertItem(stack: ItemStack, action: HTStorageAction, access: HTS
 fun HTItemSlot.extractItem(amount: Int, action: HTStorageAction, access: HTStorageAccess): ItemStack =
     this.extract(amount, action, access).stack
 
-fun HTItemSlot.Mutable.setItemStack(stack: ItemStack) {
+fun HTStackView.Mutable<ImmutableItemStack>.setItemStack(stack: ItemStack) {
     setStack(stack.toImmutable())
 }

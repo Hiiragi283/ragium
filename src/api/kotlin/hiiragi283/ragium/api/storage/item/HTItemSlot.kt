@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack
 
 /**
  * [ImmutableItemStack]向けの[HTStackSlot]の拡張インターフェース
+ * @see [mekanism.api.inventory.IInventorySlot]
  */
 interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
     /**

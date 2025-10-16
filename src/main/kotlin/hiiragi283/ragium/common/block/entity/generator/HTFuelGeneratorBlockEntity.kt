@@ -12,10 +12,12 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -54,22 +56,6 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         }
     }
 
-    protected lateinit var slot: HTFluidFuelItemStackSlot
-        private set
-
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        // fuel
-        slot = HTFluidFuelItemStackSlot.create(
-            tank,
-            ::getFuelValue,
-            ::getFuelStack,
-            listener,
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(1),
-        )
-        return HTSimpleItemSlotHolder(this, listOf(slot), listOf())
-    }
-
     protected lateinit var tank: HTVariableFluidStackTank
         private set
 
@@ -85,6 +71,24 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         return HTSimpleFluidTankHolder.input(this, tank)
     }
 
+    protected lateinit var fuelSlot: HTFluidFuelItemStackSlot
+        private set
+    private lateinit var outputSlot: HTItemSlot.Mutable
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        // fuel
+        fuelSlot = HTFluidFuelItemStackSlot.create(
+            tank,
+            ::getFuelValue,
+            ::getFuelStack,
+            listener,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(0),
+        )
+        outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        return HTSimpleItemSlotHolder(this, listOf(fuelSlot), listOf(outputSlot))
+    }
+
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.FUEL_GENERATOR.openMenu(player, title, this, ::writeExtraContainerData)
 
@@ -97,7 +101,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant, pos: Bloc
         network: HTEnergyBattery,
     ): Boolean {
         // スロット内のアイテムを液体に変換する
-        slot.fillOrBurn()
+        fuelSlot.fillOrBurn(outputSlot)
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false

@@ -19,14 +19,14 @@ class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, recipe: HTEmiFluid
     override fun addWidgets(widgets: WidgetHolder) {
         // item fuel slot
         widgets.addSlot(input(0), getPosition(1), getPosition(1))
+        // fluid tank
+        widgets.addTank(input(1), getPosition(3), getPosition(0))
         // energy tank
         val energyRate: Int = recipe.energyRate
         HTEnergyBatteryWidget(
             { HTEnergyNetwork(energyRate, energyRate) },
-            getPosition(3),
+            getPosition(5),
             getPosition(0) + 1,
         ).let(widgets::addWidget)
-        // fluid tank
-        widgets.addTank(input(1), getPosition(5), getPosition(0))
     }
 }

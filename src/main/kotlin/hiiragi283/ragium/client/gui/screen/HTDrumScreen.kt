@@ -16,7 +16,7 @@ import net.neoforged.api.distmarker.OnlyIn
 class HTDrumScreen(menu: HTBlockEntityContainerMenu<HTDrumBlockEntity>, inventory: Inventory, title: Component) :
     HTBlockEntityContainerScreen<HTDrumBlockEntity>(menu, inventory, title),
     HTFluidScreen {
-    override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/refinery.png")
+    override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/fuel_generator.png")
 
     private lateinit var fluidWidget: HTFluidWidget
 

@@ -22,6 +22,9 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     companion object {
         @JvmStatic
         fun <STACK : ImmutableStack<*, *>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
+
+        @JvmStatic
+        fun <STACK : ImmutableStack<*, *>> alwaysFalse(): Predicate<STACK> = Predicates.alwaysFalse<STACK>()
     }
 
     /**
@@ -65,6 +68,14 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
      * @param amount コピー後の個数
      */
     fun copyWithAmount(amount: Long): STACK
+
+    fun copyAndGrow(amount: Int): STACK = copyWithAmount(amountAsInt() + amount)
+
+    fun copyAndGrow(amount: Long): STACK = copyWithAmount(amountAsLong() + amount)
+
+    fun copyAndShrink(amount: Int): STACK = copyWithAmount(amountAsInt() - amount)
+
+    fun copyAndShrink(amount: Long): STACK = copyWithAmount(amountAsLong() - amount)
 
     /**
      * このスタックの[net.minecraft.core.component.DataComponentPatch]を返します。

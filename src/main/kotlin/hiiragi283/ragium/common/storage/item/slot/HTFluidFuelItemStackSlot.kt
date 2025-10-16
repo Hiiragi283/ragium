@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.storage.item.slot
 
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTContentListener
@@ -12,6 +10,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import java.util.function.Predicate
 
 /**
@@ -26,8 +25,7 @@ class HTFluidFuelItemStackSlot private constructor(
     listener: HTContentListener?,
     x: Int,
     y: Int,
-    slotType: HTContainerItemSlot.Type,
-) : HTFluidItemStackSlot(tank, canExtract, canInsert, ImmutableStack.alwaysTrue(), listener, x, y, slotType) {
+) : HTFluidItemStackSlot(tank, canExtract, canInsert, listener, x, y) {
     companion object {
         @JvmStatic
         fun create(
@@ -37,7 +35,6 @@ class HTFluidFuelItemStackSlot private constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            slotType: HTContainerItemSlot.Type = HTContainerItemSlot.Type.BOTH,
         ): HTFluidFuelItemStackSlot = HTFluidFuelItemStackSlot(
             tank,
             stackToAmount,
@@ -56,14 +53,13 @@ class HTFluidFuelItemStackSlot private constructor(
             listener,
             x,
             y,
-            slotType,
         )
     }
 
-    fun fillOrBurn() {
+    fun fillOrBurn(moveTo: HTItemSlot.Mutable) {
         if (isEmpty()) return
         val needed: Int = tank.getNeededAsInt(tank.getStack())
-        if (needed > 0 && !fillTank()) {
+        if (needed > 0 && !fillTank(moveTo)) {
             val amount: Int = stackToAmount(getStack())
             if (amount in 1..needed) {
                 val hasContainer: Boolean = getStack().hasCraftingRemainingItem()

@@ -36,6 +36,10 @@ open class HTItemStackSlot protected constructor(
             BiPredicate { _, _ -> true }
 
         @JvmField
+        val INTERNAL_ONLY: BiPredicate<ImmutableItemStack, HTStorageAccess> =
+            BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL }
+
+        @JvmField
         val MANUAL_ONLY: BiPredicate<ImmutableItemStack, HTStorageAccess> =
             BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.MANUAL }
 
@@ -79,22 +83,6 @@ open class HTItemStackSlot protected constructor(
             { stack: ImmutableItemStack, _ -> canInsert.test(stack) },
             filter,
             HTContainerItemSlot.Type.INPUT,
-        )
-
-        @JvmStatic
-        fun output(
-            listener: HTContentListener?,
-            x: Int,
-            y: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-        ): HTItemStackSlot = create(
-            listener,
-            x,
-            y,
-            limit,
-            ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
-            slotType = HTContainerItemSlot.Type.OUTPUT,
         )
     }
 

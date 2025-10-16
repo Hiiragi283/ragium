@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumItems
@@ -39,7 +40,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
             filter = { stack: ImmutableItemStack -> stack.isOf(RagiumItems.ELDRITCH_EGG) },
         )
         outputSlots = (0..<9).map { i: Int ->
-            HTItemStackSlot.output(
+            HTOutputItemStackSlot.create(
                 listener,
                 HTSlotHelper.getSlotPosX(4 + i % 3),
                 HTSlotHelper.getSlotPosY(i / 3),

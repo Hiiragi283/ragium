@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -49,7 +50,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0))
         // output
-        outputSlot = HTItemStackSlot.output(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
+        outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
     }
 

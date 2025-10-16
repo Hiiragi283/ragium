@@ -89,4 +89,6 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDL
     fun getCapabilitySlots(stack: ImmutableItemStack): List<SLOT> = getCapabilitySlots(stack.stack)
 
     fun getCapabilitySlot(stack: ImmutableItemStack, index: Int): SLOT? = getCapabilitySlot(stack.stack, index)
+
+    fun hasCapability(stack: ImmutableItemStack): Boolean = hasCapability(stack.stack)
 }

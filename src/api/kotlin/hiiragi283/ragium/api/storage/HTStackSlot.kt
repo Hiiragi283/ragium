@@ -41,12 +41,9 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
     /**
      * 中身が可変な[HTStackSlot]の拡張クラス
      */
-    abstract class Mutable<STACK : ImmutableStack<*, STACK>> : HTStackSlot<STACK> {
-        /**
-         * 指定された[stack]を保持します。
-         */
-        abstract fun setStack(stack: STACK)
-
+    abstract class Mutable<STACK : ImmutableStack<*, STACK>> :
+        HTStackSlot<STACK>,
+        HTStackView.Mutable<STACK> {
         /**
          * 空の[STACK]を返します。
          */
@@ -65,7 +62,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
          * @return 実際に置換された個数
          */
-        open fun setStackSize(amount: Int, action: HTStorageAction): Int {
+        override fun setStackSize(amount: Int, action: HTStorageAction): Int {
             if (isEmpty()) return 0
             if (amount <= 0) {
                 if (action.execute) setEmpty()
@@ -81,32 +78,6 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             onContentsChanged()
             return fixedAmount
         }
-
-        /**
-         * 指定された[amount]から，現在の個数に追加します。
-         * @param amount 追加する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に追加を行います。
-         * @return 実際に追加された個数
-         */
-        fun growStack(amount: Int, action: HTStorageAction): Int {
-            val current: Int = getAmountAsInt()
-            if (current == 0) return 0
-            val fixedAmount: Int = if (amount > 0) {
-                min(amount, getCapacityAsInt(getStack()))
-            } else {
-                amount
-            }
-            val newSize: Int = setStackSize(current + fixedAmount, action)
-            return newSize - current
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数を削除します。
-         * @param amount 削除する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-         * @return 実際に削除された個数
-         */
-        fun shrinkStack(amount: Int, action: HTStorageAction): Int = -growStack(-amount, action)
 
         final override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
             if (stack.isEmpty()) return getEmptyStack()
@@ -125,7 +96,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                         setStack(stack.copyWithAmount(toAdd))
                     }
                 }
-                return stack.copyWithAmount(stack.amountAsInt() - toAdd)
+                return stack.copyAndShrink(toAdd)
             }
             return stack
         }
