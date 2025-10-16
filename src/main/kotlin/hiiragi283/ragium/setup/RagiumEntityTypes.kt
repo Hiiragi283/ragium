@@ -56,7 +56,7 @@ object RagiumEntityTypes {
             HTDrumVariant.HUGE -> HTDrumMinecart::Huge
         }
         REGISTER.registerType(
-            "${variant.variantName()}_minecart",
+            "${variant.variantName()}_drum_minecart",
             factory,
             MobCategory.MISC,
         ) { builder: EntityType.Builder<HTDrumMinecart> -> builder.sized(0.98f, 0.7f) }

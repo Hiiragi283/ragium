@@ -17,7 +17,8 @@ enum class HTDeviceVariant(
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
-) : HTVariantKey.WithBE<HTBlockEntity> {
+) : HTVariantKey.WithBlock<HTEntityBlock>,
+    HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     ITEM_BUFFER(HTMachineTier.BASIC, "Item Buffer", "アイテムバッファ"),
     MILK_COLLECTOR(HTMachineTier.BASIC, "Milk Collector", "搾乳機"),

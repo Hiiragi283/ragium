@@ -42,8 +42,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumBlocks.EXP_BERRIES)
             remove(RagiumBlocks.WARPED_WART)
 
-            remove(HTGeneratorVariant.SOLAR.blockHolder)
-            remove(HTGeneratorVariant.NUCLEAR_REACTOR.blockHolder)
+            remove(HTGeneratorVariant.SOLAR.blockHolder) // TODO
+            remove(HTGeneratorVariant.NUCLEAR_REACTOR.blockHolder) // TODO
 
             removeAll(RagiumBlocks.LED_BLOCKS.values)
             removeAll(RagiumBlocks.WALLS.values)
@@ -77,6 +77,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.LARGE_DRUM_UPGRADE)
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
+
+            removeAll(RagiumItems.DRUM_MINECARTS.values) // TODO
             // Delight
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
 

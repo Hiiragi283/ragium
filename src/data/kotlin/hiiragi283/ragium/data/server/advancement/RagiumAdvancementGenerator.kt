@@ -76,7 +76,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ALLOY_SMELTER,
             RagiumAdvancements.RAGI_ALLOY,
-            HTMachineVariant.ALLOY_SMELTER,
+            HTMachineVariant.ALLOY_SMELTER.blockHolder,
         ) { setGoal() }
 
         createSimple(
@@ -105,7 +105,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.MELTER,
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            HTMachineVariant.MELTER,
+            HTMachineVariant.MELTER.blockHolder,
         ) { setGoal() }
 
         // Elite
@@ -157,7 +157,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.SIMULATOR,
             RagiumAdvancements.AZURE_STEEL,
-            HTMachineVariant.SIMULATOR,
+            HTMachineVariant.SIMULATOR.blockHolder,
         ) { setGoal() }
     }
 

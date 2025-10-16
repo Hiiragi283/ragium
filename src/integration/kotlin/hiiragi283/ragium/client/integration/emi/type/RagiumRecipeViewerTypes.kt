@@ -33,7 +33,7 @@ object RagiumRecipeViewerTypes {
 
     @JvmStatic
     private fun generator(variant: HTGeneratorVariant): HTFakeRecipeViewerType<HTEmiFluidFuelData> =
-        HTFakeRecipeViewerType(variant, MACHINE_BOUNDS)
+        HTFakeRecipeViewerType.create(variant, MACHINE_BOUNDS)
 
     @JvmField
     val THERMAL: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(HTGeneratorVariant.THERMAL)
@@ -101,7 +101,15 @@ object RagiumRecipeViewerTypes {
 
     // Elite
     @JvmField
-    val BREWING = HTFakeRecipeViewerType<HTEmiBrewingEffect>(HTMachineVariant.BREWERY, HTBounds(0, 0, 4 * 18, 1 * 18))
+    val BREWING: HTFakeRecipeViewerType<HTEmiBrewingEffect> = HTFakeRecipeViewerType.create(
+        HTMachineVariant.BREWERY,
+        HTBounds(
+            0,
+            0,
+            4 * 18,
+            1 * 18,
+        ),
+    )
 
     @JvmField
     val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =

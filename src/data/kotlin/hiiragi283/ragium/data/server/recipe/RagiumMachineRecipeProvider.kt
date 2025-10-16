@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -271,7 +272,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Huge
         createNetheriteUpgrade(HTDrumVariant.HUGE, HTDrumVariant.LARGE).save(output)
         // Upgrades
-        for (variant: HTDrumVariant in RagiumBlocks.DRUMS.keys) {
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
             val upgrade: ItemLike = when (variant) {
                 HTDrumVariant.SMALL -> continue
                 HTDrumVariant.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
@@ -294,6 +295,15 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 ).define('A', pair.first, pair.second)
                 .define('B', Items.SMOOTH_STONE_SLAB)
                 .define('C', Tags.Items.GLASS_BLOCKS)
+                .save(output)
+        }
+
+        // Minecarts
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            HTShapelessRecipeBuilder
+                .misc(variant.minecartItem)
+                .addIngredient(variant.blockHolder)
+                .addIngredient(Items.MINECART)
                 .save(output)
         }
     }

@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
@@ -265,6 +266,12 @@ object RagiumCreativeTabs {
                 Items.NETHERITE_PICKAXE,
                 RagiumItems.getTool(HTHammerToolVariant, HTVanillaMaterialType.NETHERITE),
             )
+        }
+
+        if (BLOCKS.`is`(key)) {
+            for (variant: HTDrumVariant in HTDrumVariant.entries) {
+                insertAfter(variant.blockHolder, variant.minecartItem)
+            }
         }
 
         if (INGREDIENTS.`is`(key)) {

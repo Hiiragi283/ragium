@@ -9,6 +9,7 @@ import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -136,6 +137,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun entity() {
         add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
+
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            val value: String = variant.translate(type, "Minecart with %s")
+            add(variant.entityHolder, value)
+            add(variant.minecartItem, value)
+        }
 
         // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
         // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")

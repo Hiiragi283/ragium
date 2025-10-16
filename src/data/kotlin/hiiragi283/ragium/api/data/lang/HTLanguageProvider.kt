@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
+import hiiragi283.ragium.api.data.advancement.descKey
+import hiiragi283.ragium.api.data.advancement.titleKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -85,9 +87,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private inline fun <reified V> addVariants() where V : HTVariantKey.WithBE<*>, V : Enum<V> {
+    private inline fun <reified V> addVariants() where V : HTVariantKey.WithBlock<*>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
-            add(variant.blockHolder, variant.translate(type, ""))
+            add(variant.blockHolder, variant.translate(type, "%s"))
         }
     }
 
@@ -116,8 +118,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     }
 
     fun add(translatable: HTDeferredBlock<*, *>, blockValue: String, itemValue: String = blockValue) {
-        add(translatable.translationKey, blockValue)
-        add(translatable.itemHolder.translationKey, itemValue)
+        val blockKey: String = translatable.translationKey
+        add(blockKey, blockValue)
+        val itemKey: String = translatable.itemHolder.translationKey
+        if (itemKey != blockKey) {
+            add(itemKey, itemValue)
+        }
     }
 
     fun addAdvancement(key: HTAdvancementKey, title: String, desc: String) {

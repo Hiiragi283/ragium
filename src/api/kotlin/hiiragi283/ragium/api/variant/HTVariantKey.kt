@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.variant
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -28,28 +28,32 @@ interface HTVariantKey {
     }
 
     /**
-     * [BlockEntity]を保持する[HTVariantKey]の拡張インターフェース
+     * [Block]を保持する[HTVariantKey]の拡張インターフェース
+     * @param BLOCK [Block]のクラス
      */
-    interface WithBE<BE : BlockEntity> :
+    interface WithBlock<BLOCK : Block> :
         HTVariantKey,
-        HTItemHolderLike {
-        val blockHolder: HTDeferredBlock<*, *>
-        val blockEntityHolder: HTDeferredBlockEntityType<out BE>
-
-        override fun getId(): ResourceLocation = blockHolder.id
-
-        override fun asItem(): Item = blockHolder.asItem()
-    }
-    
-    interface WithBlock<BLOCK: Block> : HTVariantKey, ItemLike {
+        ItemLike {
         val blockHolder: HTDeferredBlock<BLOCK, *>
 
         override fun asItem(): Item = blockHolder.asItem()
 
         fun toStack(count: Int = 1): ItemStack = blockHolder.toStack(count)
     }
-    
-    interface WithBENew<BE : BlockEntity> : HTVariantKey{
+
+    /**
+     * [BlockEntity]を保持する[HTVariantKey]の拡張インターフェース
+     * @param BE [BlockEntity]のクラス
+     */
+    interface WithBE<BE : BlockEntity> : HTVariantKey {
         val blockEntityHolder: HTDeferredBlockEntityType<out BE>
+    }
+
+    /**
+     * [Entity]を保持する[HTVariantKey]の拡張インターフェース
+     * @param ENTITY [Entity]のクラス
+     */
+    interface WithEntity<ENTITY : Entity> : HTVariantKey {
+        val entityHolder: HTDeferredEntityType<out ENTITY>
     }
 }

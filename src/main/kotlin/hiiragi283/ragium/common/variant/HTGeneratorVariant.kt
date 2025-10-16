@@ -17,7 +17,8 @@ enum class HTGeneratorVariant(
     private val enUsPattern: String,
     private val jaJpPattern: String,
     private val customName: String? = null,
-) : HTVariantKey.WithBE<HTBlockEntity> {
+) : HTVariantKey.WithBlock<HTEntityBlock>,
+    HTVariantKey.WithBE<HTBlockEntity> {
     // Basic
     THERMAL(HTMachineTier.BASIC, "Thermal Generator", "火力発電機", "thermal_generator"),
 

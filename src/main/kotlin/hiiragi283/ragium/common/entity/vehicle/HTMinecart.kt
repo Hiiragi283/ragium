@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.entity.vehicle
 
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
@@ -39,9 +38,7 @@ abstract class HTMinecart<BE : HTBlockEntity> :
         )
     }
 
-    constructor(entityType: EntityType<*>, level: Level) : super(entityType, level) {
-        this.blockEntity = createBlockEntity()
-    }
+    constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
     constructor(entityType: EntityType<*>, level: Level, x: Double, y: Double, z: Double) : super(
         entityType,
@@ -49,16 +46,18 @@ abstract class HTMinecart<BE : HTBlockEntity> :
         x,
         y,
         z,
-    ) {
-        this.blockEntity = createBlockEntity()
+    )
+
+    private var blockEntity: BE? = null
+
+    protected fun bindBlockEntity(): BE {
+        blockEntity?.let { return it }
+        val newBlockEntity: BE = createBlockEntity()
+        this.blockEntity = newBlockEntity
+        return newBlockEntity
     }
 
-    protected var blockEntity: BE
-        private set
-
-    protected abstract fun createBlockEntity(pos: BlockPos, state: BlockState): BE
-
-    protected fun createBlockEntity(): BE = createBlockEntity(BlockPos.ZERO, displayBlockState)
+    protected abstract fun createBlockEntity(): BE
 
     override fun destroy(source: DamageSource) {
         this.kill()
@@ -69,12 +68,12 @@ abstract class HTMinecart<BE : HTBlockEntity> :
                 result.set(DataComponents.CUSTOM_NAME, this.customName)
             }
             this.spawnAtLocation(result)
-            blockEntity.onRemove(this.level(), this.position())
+            bindBlockEntity().onRemove(this.level(), this.position())
         }
     }
 
     protected fun saveToDrop(stack: ItemStack) {
-        this.blockEntity.saveToItem(stack, this.level().registryAccess())
+        bindBlockEntity().saveToItem(stack, this.level().registryAccess())
     }
 
     override fun interact(player: Player, hand: InteractionHand): InteractionResult =
@@ -109,10 +108,10 @@ abstract class HTMinecart<BE : HTBlockEntity> :
         }
     }
 
-    private fun saveBlockEntity(): CompoundTag = this.blockEntity.saveWithoutMetadata(this.level().registryAccess())
+    private fun saveBlockEntity(): CompoundTag = bindBlockEntity().saveWithoutMetadata(this.level().registryAccess())
 
     private fun loadBlockEntity(compound: CompoundTag) {
-        this.blockEntity.loadCustomOnly(compound, this.level().registryAccess())
+        bindBlockEntity().loadCustomOnly(compound, this.level().registryAccess())
     }
 
     //    AbstractMinecart    //
@@ -127,11 +126,11 @@ abstract class HTMinecart<BE : HTBlockEntity> :
 
     //    HTHandlerProvider    //
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = blockEntity.getItemHandler(direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = bindBlockEntity().getItemHandler(direction)
 
-    final override fun getFluidHandler(direction: Direction?): IFluidHandler? = blockEntity.getFluidHandler(direction)
+    final override fun getFluidHandler(direction: Direction?): IFluidHandler? = bindBlockEntity().getFluidHandler(direction)
 
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = blockEntity.getEnergyStorage(direction)
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = bindBlockEntity().getEnergyStorage(direction)
 
     //    Factory    //
 

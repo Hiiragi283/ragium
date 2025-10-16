@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.integration.emi.type
 
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.api.variant.HTVariantKey
 import net.minecraft.resources.ResourceLocation
@@ -19,14 +20,24 @@ class HTFakeRecipeViewerType<RECIPE : Any>(
     override val workStations: List<ItemLike>,
 ) : HTRecipeViewerType<RECIPE>,
     HTHasText by hasText {
-    constructor(variant: HTVariantKey.WithBE<*>, bounds: HTBounds) : this(
-        variant.getId(),
-        variant.blockHolder,
-        variant.toStack(),
-        null,
-        bounds,
-        listOf(variant),
-    )
+    companion object {
+        @JvmStatic
+        fun <RECIPE : Any> create(variant: HTVariantKey.WithBlock<*>, bounds: HTBounds): HTFakeRecipeViewerType<RECIPE> =
+            create(variant.blockHolder, bounds)
+
+        @JvmStatic
+        fun <RECIPE : Any, ITEM> create(
+            item: ITEM,
+            bounds: HTBounds,
+        ): HTFakeRecipeViewerType<RECIPE> where ITEM : HTItemHolderLike, ITEM : HTHasText = HTFakeRecipeViewerType(
+            item.getId(),
+            item,
+            item.toStack(),
+            null,
+            bounds,
+            listOf(item),
+        )
+    }
 
     override fun getBounds(): HTBounds = bounds
 

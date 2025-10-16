@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.util.HTDslMarker
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.advancements.Advancement
@@ -12,6 +13,7 @@ import net.minecraft.advancements.DisplayInfo
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -28,7 +30,7 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
         fun child(parent: HTAdvancementKey): HTAdvancementBuilder = HTAdvancementBuilder(parent)
 
         @JvmStatic
-        fun child(parent: AdvancementHolder): HTAdvancementBuilder = child(HTAdvancementKey(parent.id))
+        fun child(parent: AdvancementHolder): HTAdvancementBuilder = child(Registries.ADVANCEMENT.createKey(parent.id))
     }
 
     var display: DisplayInfo? = null
@@ -74,9 +76,9 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
     }
 
     fun save(output: HTAdvancementOutput, key: HTAdvancementKey): AdvancementHolder {
-        val id: ResourceLocation = key.id
+        val id: ResourceLocation = key.location()
         val adv = Advancement(
-            parent?.id.wrapOptional(),
+            parent?.location().wrapOptional(),
             display.wrapOptional(),
             rewards,
             criteria,

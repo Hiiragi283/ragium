@@ -207,7 +207,9 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private inline fun <reified V> addAll(event: BlockEntityTypeAddBlocksEvent) where V : HTVariantKey.WithBE<*>, V : Enum<V> {
+    private inline fun <reified V> addAll(
+        event: BlockEntityTypeAddBlocksEvent,
+    ) where V : HTVariantKey.WithBlock<*>, V : HTVariantKey.WithBE<*>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
             add(event, variant.blockEntityHolder, variant.blockHolder)
         }

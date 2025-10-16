@@ -151,7 +151,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Machine
         fun machine(
-            variant: HTVariantKey.WithBE<*>,
+            variant: HTVariantKey.WithBlock<*>,
             top: ResourceLocation,
             bottom: ResourceLocation,
             front: ResourceLocation,
@@ -167,7 +167,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             )
         }
 
-        fun machine(variant: HTVariantKey.WithBE<*>, top: ResourceLocation, bottom: ResourceLocation) {
+        fun machine(variant: HTVariantKey.WithBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
             machine(variant, top, bottom, variant.blockHolder.id.withPath { "block/${it}_front" })
         }
 
