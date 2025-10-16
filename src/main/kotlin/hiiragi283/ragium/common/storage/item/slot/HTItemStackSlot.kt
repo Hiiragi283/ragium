@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.maxStackSize
+import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate
@@ -119,7 +120,7 @@ open class HTItemStackSlot protected constructor(
 
     private var stack: ItemStack = ItemStack.EMPTY
 
-    override fun getStack(): ImmutableItemStack = ImmutableItemStack.of(stack)
+    override fun getStack(): ImmutableItemStack = stack.toImmutable()
 
     override fun getCapacityAsLong(stack: ImmutableItemStack): Long =
         if (stack.isEmpty()) limit else min(limit, stack.maxStackSize().toLong())
@@ -151,7 +152,7 @@ open class HTItemStackSlot protected constructor(
     }
 
     fun setStackUnchecked(stack: ItemStack, validate: Boolean = false) {
-        setStackUnchecked(ImmutableItemStack.of(stack), validate)
+        setStackUnchecked(stack.toImmutable(), validate)
     }
 
     fun setStackUnchecked(stack: ImmutableItemStack, validate: Boolean = false) {

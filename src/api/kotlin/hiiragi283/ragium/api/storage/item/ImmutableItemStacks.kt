@@ -4,7 +4,9 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.ItemStack
+
+fun ItemStack.toImmutable(): ImmutableItemStack = ImmutableItemStack.of(this)
 
 fun ImmutableItemStack.isOf(item: Item): Boolean = this.stack.`is`(item)
 
@@ -18,6 +20,4 @@ fun ImmutableItemStack.maxStackSize(): Int = stack.maxStackSize
 
 fun ImmutableItemStack.hasCraftingRemainingItem(): Boolean = stack.hasCraftingRemainingItem()
 
-fun ImmutableItemStack.getCraftingRemainingItem(): ImmutableItemStack = ImmutableItemStack.of(stack.craftingRemainingItem)
-
-fun ImmutableItemStack.getBurnTime(recipeType: RecipeType<*>?): Int = this.stack.getBurnTime(recipeType)
+fun ImmutableItemStack.getCraftingRemainingItem(): ImmutableItemStack = stack.craftingRemainingItem.toImmutable()

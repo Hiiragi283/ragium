@@ -7,7 +7,10 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.SimpleFluidContent
+
+fun FluidStack.toImmutable(): ImmutableFluidStack = ImmutableFluidStack.of(this)
 
 fun ImmutableFluidStack.isOf(fluid: Fluid): Boolean = this.stack.`is`(fluid)
 
@@ -19,7 +22,7 @@ fun ImmutableFluidStack.isOf(holderSet: HolderSet<Fluid>): Boolean = this.stack.
 
 fun ImmutableFluidStack.toContent(): SimpleFluidContent = SimpleFluidContent.copyOf(this.stack)
 
-fun SimpleFluidContent.storageCopy(): ImmutableFluidStack = ImmutableFluidStack.of(this.copy())
+fun SimpleFluidContent.storageCopy(): ImmutableFluidStack = this.copy().toImmutable()
 
 @OnlyIn(Dist.CLIENT)
 fun ImmutableFluidStack.getClientExtensions(): IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(this.stack.fluidType)

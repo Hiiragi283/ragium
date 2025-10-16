@@ -11,6 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ItemLike
 
 /**
  * [ItemStack]向けの[ImmutableStack]の実装
@@ -26,6 +27,9 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
          * 空の[ImmutableItemStack]
          */
         val EMPTY = ImmutableItemStack(ItemStack.EMPTY)
+
+        @JvmStatic
+        fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = of(ItemStack(item, count))
 
         /**
          * [ItemStack]を[ImmutableItemStack]に変換します。

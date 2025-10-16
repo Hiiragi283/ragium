@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.storage.item.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
@@ -223,7 +224,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            HTShapelessRecipeBuilder(HTUniversalBundleItem.createBundle(variant.dyeColor), CraftingBookCategory.EQUIPMENT)
+            HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, HTUniversalBundleItem.createBundle(variant.dyeColor).toImmutable())
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
                 .savePrefixed(output, "${variant.materialName()}_")
@@ -355,7 +356,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun addAzureSmithing(output: ItemLike, ingredient: ItemLike) {
-        HTSmithingRecipeBuilder(output)
+        HTSmithingRecipeBuilder
+            .create(output)
             .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
             .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
@@ -364,7 +366,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun addDeepSmithing(output: ItemLike, ingredient: ItemLike) {
-        HTSmithingRecipeBuilder(output)
+        HTSmithingRecipeBuilder
+            .create(output)
             .addIngredient(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             .addIngredient(ingredient)
             .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
@@ -373,7 +376,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
-        HTShapelessRecipeBuilder(HTDefaultLootTickets.getLootTicket(lootTicket), CraftingBookCategory.EQUIPMENT)
+        HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, HTDefaultLootTickets.getLootTicket(lootTicket).toImmutable())
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
             .saveSuffixed(output, "/${lootTicket.name.lowercase()}")

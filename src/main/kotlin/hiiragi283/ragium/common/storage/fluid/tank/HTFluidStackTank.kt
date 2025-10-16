@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.fluid.toImmutable
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -64,7 +65,7 @@ open class HTFluidStackTank protected constructor(
     @JvmField
     protected var stack: FluidStack = FluidStack.EMPTY
 
-    override fun getStack(): ImmutableFluidStack = ImmutableFluidStack.of(stack)
+    override fun getStack(): ImmutableFluidStack = stack.toImmutable()
 
     override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacity
 

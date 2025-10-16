@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.input
 
 import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 
@@ -12,7 +13,7 @@ value class ImmutableRecipeInput(val input: RecipeInput) : Iterable<ImmutableIte
         override fun next(): ImmutableItemStack {
             val stack: ItemStack = input.getItem(index)
             index++
-            return ImmutableItemStack.of(stack)
+            return stack.toImmutable()
         }
 
         override fun hasNext(): Boolean = index < input.size()

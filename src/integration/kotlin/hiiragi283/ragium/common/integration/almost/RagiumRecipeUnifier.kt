@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item
 object RagiumRecipeUnifier : RecipeUnifier {
     override fun unify(helper: UnificationHelper, recipe: RecipeJson) {
         // Outputs
-        val keys: List<String> = listOf(RecipeConstants.RESULT, RecipeConstants.RESULTS, "item_result")
+        val keys: Array<String> = arrayOf(RecipeConstants.RESULT, RecipeConstants.RESULTS, "item_result")
         for (key: String in keys) {
             var changed = false
             val result: JsonObject = recipe.getProperty(key) as? JsonObject ?: continue

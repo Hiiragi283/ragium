@@ -128,7 +128,7 @@ object RagiumItems {
 
     val MATERIALS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Dusts
-        listOf(
+        arrayOf<HTMaterialType>(
             // Vanilla - Metal
             HTVanillaMaterialType.COPPER,
             HTVanillaMaterialType.IRON,
@@ -153,7 +153,7 @@ object RagiumItems {
         this[HTItemMaterialVariant.DUST, RagiumMaterialType.MEAT] = register("minced_meat")
         // Gems
         this[HTItemMaterialVariant.GEM, RagiumMaterialType.AZURE] = register("azure_shard")
-        listOf(
+        arrayOf(
             RagiumMaterialType.RAGI_CRYSTAL,
             RagiumMaterialType.CRIMSON_CRYSTAL,
             RagiumMaterialType.WARPED_CRYSTAL,
@@ -167,7 +167,7 @@ object RagiumItems {
             HTVanillaMaterialType.ECHO to "echo_shard_chip",
         ).forEach { this[HTItemMaterialVariant.CHIP, it.key] = register(it.value) }
         // Ingots
-        listOf(
+        arrayOf(
             // Metals
             RagiumMaterialType.RAGI_ALLOY,
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
@@ -181,7 +181,7 @@ object RagiumItems {
             RagiumMaterialType.COOKED_MEAT,
         ).forEach { this[HTItemMaterialVariant.INGOT, it] = register("${it.materialName()}_ingot") }
         // Nuggets
-        listOf(
+        arrayOf(
             RagiumMaterialType.RAGI_ALLOY,
             RagiumMaterialType.ADVANCED_RAGI_ALLOY,
             RagiumMaterialType.AZURE_STEEL,
@@ -224,7 +224,7 @@ object RagiumItems {
     }
 
     @JvmField
-    val COILS: Map<HTMaterialType, HTDeferredItem<*>> = listOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
+    val COILS: Map<HTMaterialType, HTDeferredItem<*>> = arrayOf(RagiumMaterialType.RAGI_ALLOY, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
         .associateWith { material: HTMaterialType -> register("${material.materialName()}_coil") }
 
     @JvmField

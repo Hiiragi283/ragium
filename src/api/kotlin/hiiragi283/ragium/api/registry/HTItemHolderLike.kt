@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.isOf
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
@@ -82,14 +80,4 @@ interface HTItemHolderLike :
         stack.applyComponents(components)
         return stack
     }
-
-    /**
-     * 指定した[stack]にアイテムが一致するか判定します。
-     */
-    fun isOf(stack: ItemStack): Boolean = stack.`is`(asItem())
-
-    /**
-     * 指定した[stack]にアイテムが一致するか判定します。
-     */
-    fun isOf(stack: ImmutableItemStack): Boolean = stack.isOf(asItem())
 }

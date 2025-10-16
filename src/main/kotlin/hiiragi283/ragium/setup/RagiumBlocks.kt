@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
+import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
@@ -113,15 +114,15 @@ object RagiumBlocks {
         REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     @JvmField
-    val MYSTERIOUS_OBSIDIAN: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
+    val MYSTERIOUS_OBSIDIAN: HTBasicDeferredBlock<HTEnchantPowerBlock> =
+        REGISTER.registerSimple("mysterious_obsidian", copyOf(Blocks.OBSIDIAN), ::HTEnchantPowerBlock.partially1(15f))
 
     // val ELDRITCH_PORTAL: DeferredBlock<Block> = REGISTER.registerBlock("eldritch_portal", ::HTEldritchPortalBlock, copyOf(Blocks.END_GATEWAY))
 
     //    Materials    //
 
     val ORES: ImmutableTable<HTMaterialVariant.BlockTag, HTMaterialType, HTSimpleDeferredBlock> = buildTable {
-        listOf(
+        arrayOf(
             HTBlockMaterialVariant.ORE,
             HTBlockMaterialVariant.DEEP_ORE,
             HTBlockMaterialVariant.NETHER_ORE,
@@ -229,7 +230,7 @@ object RagiumBlocks {
     fun getTintedGlass(material: HTMaterialType): HTSimpleDeferredBlock = getMaterial(HTBlockMaterialVariant.TINTED_GLASS_BLOCK, material)
 
     @JvmField
-    val COILS: Map<HTMaterialType, HTBasicDeferredBlock<RotatedPillarBlock>> = listOf(
+    val COILS: Map<HTMaterialType, HTBasicDeferredBlock<RotatedPillarBlock>> = arrayOf(
         RagiumMaterialType.RAGI_ALLOY,
         RagiumMaterialType.ADVANCED_RAGI_ALLOY,
     ).associateWith { material: HTMaterialType ->

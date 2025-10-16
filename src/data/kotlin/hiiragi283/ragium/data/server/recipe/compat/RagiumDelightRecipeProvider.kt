@@ -71,7 +71,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cherry() {
-        HTCuttingBoardRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PULP, 2)
+        HTCuttingBoardRecipeBuilder
+            .create(RagiumDelightAddon.RAGI_CHERRY_PULP, 2)
             .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
@@ -88,7 +89,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .define('D', ModItems.PIE_CRUST.get())
             .save(output)
 
-        HTCuttingBoardRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
+        HTCuttingBoardRecipeBuilder
+            .create(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
             .addIngredient(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
@@ -127,7 +129,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cake() {
-        HTCuttingBoardRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
+        HTCuttingBoardRecipeBuilder
+            .create(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)

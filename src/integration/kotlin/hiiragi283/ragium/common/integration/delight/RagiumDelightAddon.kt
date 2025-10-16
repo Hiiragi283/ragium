@@ -142,7 +142,7 @@ object RagiumDelightAddon : RagiumAddon {
                 )
             }
 
-            val items: List<HTDeferredItem<*>> = listOf(
+            val items: Array<HTDeferredItem<*>> = arrayOf(
                 // Cherry
                 RagiumItems.RAGI_CHERRY,
                 RAGI_CHERRY_PULP,

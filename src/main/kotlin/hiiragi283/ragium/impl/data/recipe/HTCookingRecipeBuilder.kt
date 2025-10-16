@@ -2,8 +2,7 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.registry.HTItemHolderLike
-import net.minecraft.core.component.DataComponentPatch
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
@@ -19,15 +18,8 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
     prefix: String,
     private val factory: AbstractCookingRecipe.Factory<RECIPE>,
     private val timeOperator: IntUnaryOperator,
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-) : HTStackRecipeBuilder<HTCookingRecipeBuilder<RECIPE>>(
-        prefix,
-        item,
-        count,
-        component,
-    ),
+    stack: ImmutableItemStack,
+) : HTStackRecipeBuilder<HTCookingRecipeBuilder<RECIPE>>(prefix, stack),
     HTIngredientRecipeBuilder<HTCookingRecipeBuilder<RECIPE>> {
     companion object {
         @JvmStatic
@@ -35,9 +27,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
             "smelting",
             ::SmeltingRecipe,
             IntUnaryOperator.identity(),
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
@@ -45,9 +35,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
             "blasting",
             ::BlastingRecipe,
             { it / 2 },
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
@@ -55,9 +43,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
             "smoking",
             ::SmokingRecipe,
             { it / 2 },
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic

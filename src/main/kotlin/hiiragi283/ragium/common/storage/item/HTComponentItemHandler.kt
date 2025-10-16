@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
@@ -40,7 +41,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         override fun createContainerSlot(): Slot? = null
 
-        override fun getStack(): ImmutableItemStack = getContents().getOrEmpty(slot).let(ImmutableItemStack::of)
+        override fun getStack(): ImmutableItemStack = getContents().getOrEmpty(slot).toImmutable()
 
         override fun getCapacityAsLong(stack: ImmutableItemStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 

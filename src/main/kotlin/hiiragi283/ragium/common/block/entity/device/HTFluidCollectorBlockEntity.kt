@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.fluid.toImmutable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
@@ -44,7 +45,7 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 液体を生成できるかチェック
-        val stack: ImmutableFluidStack = getGeneratedFluid(level, pos).let(ImmutableFluidStack::of)
+        val stack: ImmutableFluidStack = getGeneratedFluid(level, pos).toImmutable()
         if (stack.isEmpty()) return false
         // 液体を搬入できるかチェック
         if (!tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false

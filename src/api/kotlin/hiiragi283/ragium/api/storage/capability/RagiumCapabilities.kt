@@ -8,9 +8,11 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.fluid.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.core.Direction
 import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -63,7 +65,7 @@ object RagiumCapabilities {
         object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
             override fun createContainerSlot(): Slot? = null
 
-            override fun getStack(): ImmutableItemStack = ImmutableItemStack.of(handler.getStackInSlot(index))
+            override fun getStack(): ImmutableItemStack = handler.getStackInSlot(index).toImmutable()
 
             override fun getCapacityAsLong(stack: ImmutableItemStack): Long = handler.getSlotLimit(index).toLong()
 
@@ -92,7 +94,7 @@ object RagiumCapabilities {
         handler.getFluidTank(index, handler.getFluidSideFor())
     } else {
         object : HTFluidTank, HTValueSerializable.Empty {
-            override fun getStack(): ImmutableFluidStack = ImmutableFluidStack.of(handler.getFluidInTank(index))
+            override fun getStack(): ImmutableFluidStack = handler.getFluidInTank(index).toImmutable()
 
             override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = handler.getTankCapacity(index).toLong()
 
@@ -105,7 +107,7 @@ object RagiumCapabilities {
                 }
 
             override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
-                ImmutableFluidStack.of(handler.drain(amount, action.toFluid()))
+                handler.drain(amount, action.toFluid()).toImmutable()
 
             override fun onContentsChanged() {}
         }

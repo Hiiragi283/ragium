@@ -3,9 +3,8 @@ package hiiragi283.ragium.impl.data.recipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SingleItemRecipe
@@ -15,24 +14,17 @@ import net.minecraft.world.level.ItemLike
 class HTSingleItemRecipeBuilder<RECIPE : SingleItemRecipe>(
     prefix: String,
     private val factory: SingleItemRecipe.Factory<RECIPE>,
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-) : HTStackRecipeBuilder<HTSingleItemRecipeBuilder<RECIPE>>(prefix, item, count, component),
+    stack: ImmutableItemStack,
+) : HTStackRecipeBuilder<HTSingleItemRecipeBuilder<RECIPE>>(prefix, stack),
     HTIngredientRecipeBuilder<HTSingleItemRecipeBuilder<RECIPE>> {
     companion object {
         @JvmStatic
-        fun sawmill(item: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<HTSawmillRecipe> = HTSingleItemRecipeBuilder(
-            RagiumConst.SAWMILL,
-            ::HTSawmillRecipe,
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
-        )
+        fun sawmill(item: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<HTSawmillRecipe> =
+            HTSingleItemRecipeBuilder(RagiumConst.SAWMILL, ::HTSawmillRecipe, ImmutableItemStack.of(item, count))
 
         @JvmStatic
         fun stonecutter(item: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<StonecutterRecipe> =
-            HTSingleItemRecipeBuilder("stonecutting", ::StonecutterRecipe, HTItemHolderLike.fromItem(item), count, DataComponentPatch.EMPTY)
+            HTSingleItemRecipeBuilder("stonecutting", ::StonecutterRecipe, ImmutableItemStack.of(item, count))
     }
 
     private lateinit var ingredient: Ingredient

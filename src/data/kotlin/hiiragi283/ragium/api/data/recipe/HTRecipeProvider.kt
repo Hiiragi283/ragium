@@ -294,7 +294,8 @@ sealed class HTRecipeProvider {
      * @param output 強化後のアイテム
      * @param input 強化前のアイテム
      */
-    protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
+    protected fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder
+        .create(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
@@ -306,7 +307,8 @@ sealed class HTRecipeProvider {
      * @param input 強化前のアイテム
      */
     protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder =
-        HTSmithingRecipeBuilder(output)
+        HTSmithingRecipeBuilder
+            .create(output)
             .addIngredient(RagiumItems.getComponent(tier))
             .addIngredient(input)
 

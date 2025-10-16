@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.maxStackSize
+import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.inventory.Slot
 import kotlin.math.min
@@ -14,7 +15,7 @@ class HTItemEntitySlot(private val entity: ItemEntity) :
     HTValueSerializable.Empty {
     override fun createContainerSlot(): Slot? = null
 
-    override fun getStack(): ImmutableItemStack = ImmutableItemStack.of(entity.item)
+    override fun getStack(): ImmutableItemStack = entity.item.toImmutable()
 
     override fun getCapacityAsLong(stack: ImmutableItemStack): Long {
         val limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
