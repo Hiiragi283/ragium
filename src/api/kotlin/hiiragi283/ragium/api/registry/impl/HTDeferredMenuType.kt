@@ -36,7 +36,7 @@ sealed class HTDeferredMenuType<MENU : AbstractContainerMenu, TYPE : MenuType<ME
      * @param title このGUIのタイトル
      * @return [MenuType.create]に基づいた[SimpleMenuProvider]
      */
-    fun getProvider(title: Component): MenuProvider = SimpleMenuProvider(
+    fun getVanillaProvider(title: Component): MenuProvider = SimpleMenuProvider(
         { id: Int, inv: Inventory, _: Player -> get().create(id, inv) },
         title,
     )

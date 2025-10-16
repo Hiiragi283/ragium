@@ -99,8 +99,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
-        add(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
+        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
         add(RagiumBlocks.WARPED_WART, "Warped Wart")
 
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")

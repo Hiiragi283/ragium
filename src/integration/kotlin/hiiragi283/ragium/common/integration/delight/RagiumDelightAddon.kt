@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -142,22 +143,22 @@ object RagiumDelightAddon : RagiumAddon {
                 )
             }
 
-            val items: Array<HTDeferredItem<*>> = arrayOf(
+            val items: Array<HTItemHolderLike> = arrayOf(
                 // Cherry
                 RagiumItems.RAGI_CHERRY,
                 RAGI_CHERRY_PULP,
                 // Pie
-                RAGI_CHERRY_PIE.itemHolder,
+                RAGI_CHERRY_PIE,
                 RAGI_CHERRY_PIE_SLICE,
                 // Jam
                 RAGI_CHERRY_JAM,
-                RAGI_CHERRY_TOAST_BLOCK.itemHolder,
+                RAGI_CHERRY_TOAST_BLOCK,
                 RAGI_CHERRY_TOAST,
             )
 
             for (i: Int in items.indices) {
-                val item: HTDeferredItem<*> = items[i]
-                val nextItem: HTDeferredItem<*> = items.getOrNull(i + 1) ?: continue
+                val item: HTItemHolderLike = items[i]
+                val nextItem: HTItemHolderLike = items.getOrNull(i + 1) ?: continue
                 event.insertAfter(
                     item.toStack(),
                     nextItem.toStack(),

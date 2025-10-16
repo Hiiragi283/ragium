@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -112,6 +113,11 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     fun add(translatable: HTHasTranslationKey, value: String) {
         add(translatable.translationKey, value)
+    }
+
+    fun add(translatable: HTDeferredBlock<*, *>, blockValue: String, itemValue: String = blockValue) {
+        add(translatable.translationKey, blockValue)
+        add(translatable.itemHolder.translationKey, itemValue)
     }
 
     fun addAdvancement(key: HTAdvancementKey, title: String, desc: String) {

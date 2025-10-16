@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.itemId
@@ -120,7 +119,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
 
     private fun basicItem(item: HTHolderLike): ItemModelBuilder = basicItem(item.getId())
 
-    private fun basicItem(block: HTDeferredBlock<*, *>): ItemModelBuilder = basicItem(block.itemHolder)
+    // private fun basicItem(block: HTDeferredBlock<*, *>): ItemModelBuilder = basicItem(block.itemHolder)
 
     private fun handheldItem(item: HTHolderLike): ItemModelBuilder = handheldItem(item.getId())
 }
