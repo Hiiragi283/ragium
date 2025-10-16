@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.Direction
-import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -62,8 +61,6 @@ object RagiumCapabilities {
         handler.getItemSlot(index, handler.getItemSideFor())
     } else {
         object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
-            override fun createContainerSlot(): Slot? = null
-
             override fun getStack(): ImmutableItemStack = handler.getStackInSlot(index).toImmutable()
 
             override fun getCapacityAsLong(stack: ImmutableItemStack): Long = handler.getSlotLimit(index).toLong()

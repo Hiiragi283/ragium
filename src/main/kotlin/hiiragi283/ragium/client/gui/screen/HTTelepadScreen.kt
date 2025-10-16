@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.createKey
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
@@ -128,9 +127,5 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: ImmutableFluidStack) {
-        fluidWidget.setStack(stack)
-    }
-
-    override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)
+    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

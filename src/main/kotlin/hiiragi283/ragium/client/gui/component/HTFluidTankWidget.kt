@@ -40,13 +40,7 @@ class HTFluidTankWidget(
 
         @JvmStatic
         fun createTank(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
-            { widget: HTFluidWidget ->
-                val capacity: Long = widget.getCapacity()
-                when {
-                    capacity <= 0 -> 0f
-                    else -> widget.getStack().amountAsLong() / capacity.toFloat()
-                }
-            },
+            { widget: HTFluidWidget -> widget.getStoredLevelAsFloat(widget.getStack()) },
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
                     HTFluidWidget.TANK_ID,
@@ -93,5 +87,5 @@ class HTFluidTankWidget(
         tank.setStack(stack)
     }
 
-    override fun getCapacity(): Long = tank.getCapacityAsLong(getStack())
+    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = tank.getCapacityAsLong(stack)
 }

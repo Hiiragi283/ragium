@@ -12,7 +12,7 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
     /**
      * GUIにおける[Slot]を返します。
      */
-    fun createContainerSlot(): Slot?
+    fun createContainerSlot(): Slot? = null
 
     //    Mutable    //
 

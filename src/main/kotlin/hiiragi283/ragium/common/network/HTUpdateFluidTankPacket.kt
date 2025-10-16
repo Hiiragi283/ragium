@@ -46,6 +46,6 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
         override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
             val screen: HTFluidScreen = minecraft.screen as? HTFluidScreen ?: return
             if (!screen.checkPosition(pos)) return
-            screen.setFluidStack(index, stack)
+            screen.getFluidWidgets().getOrNull(index)?.setStack(stack)
         }
     }

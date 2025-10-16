@@ -7,14 +7,11 @@ import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.inventory.Slot
 import kotlin.math.min
 
 class HTItemEntitySlot(private val entity: ItemEntity) :
     HTItemSlot.Mutable(),
     HTValueSerializable.Empty {
-    override fun createContainerSlot(): Slot? = null
-
     override fun getStack(): ImmutableItemStack = entity.item.toImmutable()
 
     override fun getCapacityAsLong(stack: ImmutableItemStack): Long {

@@ -1,52 +1,17 @@
 package hiiragi283.ragium.api.storage
 
-import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableStack
 import kotlin.math.min
 
 /**
- * 単一の[STACK]を保持するスロットのインターフェース
+ * 単一の[STACK]を保持し，出し入れが可能な[HTStackView]の拡張インターフェース
  * @param STACK 保持するスタックのクラス
  */
 interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
+    HTStackView<STACK>,
     HTValueSerializable,
     HTContentListener {
-    /**
-     * 保持している[STACK]を返します。
-     */
-    fun getStack(): STACK
-
-    /**
-     * このスロットが空かどうか判定します。
-     * @return 空の場合は`true`
-     */
-    fun isEmpty(): Boolean = getStack().isEmpty()
-
-    /**
-     * このスロットが保持している個数を返します。
-     * @return [Long]値での個数
-     */
-    fun getAmountAsLong(): Long = getStack().amountAsLong()
-
-    /**
-     * このスロットが保持している個数を返します。
-     * @return [Int]値での個数
-     */
-    fun getAmountAsInt(): Int = getStack().amountAsInt()
-
-    /**
-     * このスロットの容量を返します。
-     * @return [Long]値での容量
-     */
-    fun getCapacityAsLong(stack: STACK): Long
-
-    /**
-     * このスロットの容量を返します。
-     * @return [Int]値での容量
-     */
-    fun getCapacityAsInt(stack: STACK): Int = Ints.saturatedCast(getCapacityAsLong(stack))
-
     /**
      * 指定した[stack]がスロットに有効かどうか判定します。
      * @return 有効な場合は`true`
@@ -70,30 +35,6 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      * @return 搬出された[STACK]
      */
     fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
-
-    /**
-     * このスロットの空き容量を返します。
-     * @return [Long]値での空き容量
-     */
-    fun getNeededAsLong(stack: STACK): Long = getCapacityAsLong(stack) - getAmountAsLong()
-
-    /**
-     * このスロットの空き容量を返します。
-     * @return [Int]値での空き容量
-     */
-    fun getNeededAsInt(stack: STACK): Int = getCapacityAsInt(stack) - getAmountAsInt()
-
-    /**
-     * このスロットの占有率を返します。
-     * @return [Double]値での占有率
-     */
-    fun getStoredLevelAsDouble(stack: STACK): Double = getAmountAsLong() / getCapacityAsLong(stack).toDouble()
-
-    /**
-     * このスロットの占有率を返します。
-     * @return [Float]値での占有率
-     */
-    fun getStoredLevelAsFloat(stack: STACK): Float = getAmountAsLong() / getCapacityAsLong(stack).toFloat()
 
     //    Mutable    //
 

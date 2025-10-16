@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
@@ -38,8 +37,6 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
         protected val component: DataComponentType<ItemContainerContents> get() = DataComponents.CONTAINER
 
         protected fun getContents(): ItemContainerContents = parent.getOrDefault(component, ItemContainerContents.EMPTY)
-
-        override fun createContainerSlot(): Slot? = null
 
         override fun getStack(): ImmutableItemStack = getContents().getOrEmpty(slot).toImmutable()
 
