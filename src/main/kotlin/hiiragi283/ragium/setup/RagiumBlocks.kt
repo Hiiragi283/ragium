@@ -25,7 +25,7 @@ import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.item.block.HTDrumItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
@@ -421,7 +421,7 @@ object RagiumBlocks {
                 HTDrumVariant.LARGE -> Blocks.DIAMOND_BLOCK
                 HTDrumVariant.HUGE -> Blocks.NETHERITE_BLOCK
             }
-            val type: HTDeferredBlockEntityType<HTBlockEntity> = variant.blockEntityHolder
+            val type: HTDeferredBlockEntityType<HTDrumBlockEntity> = variant.blockEntityHolder
             REGISTER.register(
                 type.getPath(),
                 { HTDrumBlock(type, copyOf(base)) },

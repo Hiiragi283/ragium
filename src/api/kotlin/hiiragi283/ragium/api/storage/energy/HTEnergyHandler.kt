@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.storage.energy
 
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
@@ -10,9 +9,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  * [IEnergyStorage]に基づいた[HTSidedEnergyStorage]の拡張インターフェース
  * @see [mekanism.api.energy.IMekanismStrictEnergyHandler]
  */
-interface HTEnergyHandler :
-    HTSidedEnergyStorage,
-    HTContentListener {
+fun interface HTEnergyHandler : HTSidedEnergyStorage {
     fun hasEnergyStorage(): Boolean = true
 
     fun getEnergyBattery(side: Direction?): HTEnergyBattery?

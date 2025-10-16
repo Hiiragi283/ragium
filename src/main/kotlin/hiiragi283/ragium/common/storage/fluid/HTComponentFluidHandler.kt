@@ -30,8 +30,6 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Lon
 
     override fun getFluidTanks(side: Direction?): List<HTFluidTank> = listOf(tank)
 
-    override fun onContentsChanged() {}
-
     protected open class ComponentTank(private val parent: MutableDataComponentHolder, private val capacity: Long) :
         HTFluidTank.Mutable(),
         HTValueSerializable.Empty {

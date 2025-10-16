@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -10,6 +9,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
+import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -177,7 +177,7 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, HTDeferredBlockEntityType<HTBlockEntity>> =
+    val DRUMS: Map<HTDrumVariant, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
             val factory = when (variant) {
                 HTDrumVariant.SMALL -> HTDrumBlockEntity::Small
@@ -231,17 +231,17 @@ object RagiumBlockEntityTypes {
             event.registerBlockEntity(
                 RagiumCapabilities.ITEM.blockCapability(),
                 type1,
-                HTHandlerBlockEntity::getItemHandler,
+                HTHandlerProvider::getItemHandler,
             )
             event.registerBlockEntity(
                 RagiumCapabilities.FLUID.blockCapability(),
                 type1,
-                HTHandlerBlockEntity::getFluidHandler,
+                HTHandlerProvider::getFluidHandler,
             )
             event.registerBlockEntity(
                 RagiumCapabilities.ENERGY.blockCapability(),
                 type1,
-                HTHandlerBlockEntity::getEnergyStorage,
+                HTHandlerProvider::getEnergyStorage,
             )
         }
     }

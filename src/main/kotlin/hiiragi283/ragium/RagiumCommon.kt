@@ -73,7 +73,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
-        RagiumEntityTypes.REGISTER.register(eventBus)
+        RagiumEntityTypes.init(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
         for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {

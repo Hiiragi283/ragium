@@ -1,36 +1,35 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
+import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
+import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.common.entity.HTBlastCharge
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
-import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.function.Supplier
+import net.minecraft.world.level.Level
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 
 object RagiumEntityTypes {
     @JvmField
-    val REGISTER: DeferredRegister<EntityType<*>> = DeferredRegister.create(Registries.ENTITY_TYPE, RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredEntityTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
-    private fun <T : Entity> register(
-        name: String,
-        factory: EntityType.EntityFactory<T>,
-        category: MobCategory,
-        builderAction: (EntityType.Builder<T>) -> Unit,
-    ): Supplier<EntityType<T>> = REGISTER.register(name) { id: ResourceLocation ->
-        EntityType.Builder
-            .of(factory, category)
-            .apply(builderAction)
-            .build(id.path)
+    fun init(eventBus: IEventBus) {
+        REGISTER.register(eventBus)
+
+        eventBus.addListener(::registerEntityCapabilities)
     }
 
     @JvmField
-    val BLAST_CHARGE: Supplier<EntityType<HTBlastCharge>> =
-        register("blast_charge", ::HTBlastCharge, MobCategory.MISC) { builder: EntityType.Builder<HTBlastCharge> ->
+    val BLAST_CHARGE: HTDeferredEntityType<HTBlastCharge> =
+        REGISTER.registerType("blast_charge", ::HTBlastCharge, MobCategory.MISC) { builder: EntityType.Builder<HTBlastCharge> ->
             builder
                 .sized(0.25f, 0.25f)
                 .clientTrackingRange(4)
@@ -38,11 +37,50 @@ object RagiumEntityTypes {
         }
 
     @JvmField
-    val ELDRITCH_EGG: Supplier<EntityType<HTThrownCaptureEgg>> =
-        register("eldritch_egg", ::HTThrownCaptureEgg, MobCategory.MISC) { builder: EntityType.Builder<HTThrownCaptureEgg> ->
+    val ELDRITCH_EGG: HTDeferredEntityType<HTThrownCaptureEgg> =
+        REGISTER.registerType("eldritch_egg", ::HTThrownCaptureEgg, MobCategory.MISC) { builder: EntityType.Builder<HTThrownCaptureEgg> ->
             builder
                 .sized(0.25f, 0.25f)
                 .clientTrackingRange(4)
                 .updateInterval(10)
         }
+
+    //    Minecart    //
+
+    @JvmField
+    val DRUMS: Map<HTDrumVariant, HTDeferredEntityType<HTDrumMinecart>> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+        val factory: (EntityType<*>, Level) -> HTDrumMinecart = when (variant) {
+            HTDrumVariant.SMALL -> HTDrumMinecart::Small
+            HTDrumVariant.MEDIUM -> HTDrumMinecart::Medium
+            HTDrumVariant.LARGE -> HTDrumMinecart::Large
+            HTDrumVariant.HUGE -> HTDrumMinecart::Huge
+        }
+        REGISTER.registerType(
+            "${variant.variantName()}_minecart",
+            factory,
+            MobCategory.MISC,
+        ) { builder: EntityType.Builder<HTDrumMinecart> -> builder.sized(0.98f, 0.7f) }
+    }
+
+    //    Event    //
+
+    // Capabilities
+    @JvmStatic
+    private fun registerEntityCapabilities(event: RegisterCapabilitiesEvent) {
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            registerCapability(event, variant.entityHolder)
+        }
+    }
+
+    @JvmStatic
+    private fun <ENTITY> registerCapability(
+        event: RegisterCapabilitiesEvent,
+        type: HTDeferredEntityType<ENTITY>,
+    ) where ENTITY : Entity, ENTITY : HTHandlerProvider {
+        val type1: EntityType<ENTITY> = type.get()
+        event.registerEntity(Capabilities.ItemHandler.ENTITY, type1) { entity: ENTITY, _ -> entity.getItemHandler(null) }
+        event.registerEntity(Capabilities.ItemHandler.ENTITY_AUTOMATION, type1, HTHandlerProvider::getItemHandler)
+        event.registerEntity(Capabilities.FluidHandler.ENTITY, type1, HTHandlerProvider::getFluidHandler)
+        event.registerEntity(Capabilities.EnergyStorage.ENTITY, type1, HTHandlerProvider::getEnergyStorage)
+    }
 }

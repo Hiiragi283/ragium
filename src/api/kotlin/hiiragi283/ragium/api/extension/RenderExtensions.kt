@@ -12,13 +12,13 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.resources.model.BakedModel
+import net.minecraft.core.Position
 import net.minecraft.core.Vec3i
 import net.minecraft.util.FastColor
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.Vec3
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.model.data.ModelData
@@ -35,8 +35,8 @@ fun PoseStack.translate(pos: Vec3i) {
     translate(pos.x, pos.y, pos.z)
 }
 
-fun PoseStack.translate(pos: Vec3) {
-    translate(pos.x, pos.y, pos.z)
+fun PoseStack.translate(pos: Position) {
+    translate(pos.x(), pos.y(), pos.z())
 }
 
 fun PoseStack.scale(i: Number) {
@@ -47,8 +47,8 @@ fun PoseStack.scale(x: Number, y: Number, z: Number) {
     scale(x.toFloat(), y.toFloat(), z.toFloat())
 }
 
-fun PoseStack.scale(pos: Vec3) {
-    scale(pos.x, pos.y, pos.z)
+fun PoseStack.scale(pos: Position) {
+    scale(pos.x(), pos.y(), pos.z())
 }
 
 //    Rendering    //

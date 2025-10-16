@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
@@ -54,7 +54,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     HTItemHandler,
     HTFluidHandler,
     HTEnergyHandler,
-    HTHandlerBlockEntity {
+    HTHandlerProvider {
     //    Ticking    //
 
     companion object {
@@ -161,10 +161,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getCustomName(): Component? = customName
 
     //    Capability    //
-
-    override fun onContentsChanged() {
-        setChanged()
-    }
 
     protected val fluidHandlerManager: HTFluidHandlerManager?
     protected val energyStorageManager: HTEnergyStorageManager?

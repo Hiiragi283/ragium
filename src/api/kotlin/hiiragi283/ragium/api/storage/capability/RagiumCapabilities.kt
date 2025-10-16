@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -49,79 +48,51 @@ object RagiumCapabilities {
     // Item
     @JvmStatic
     private fun wrapHandler(handler: IItemHandler): HTItemHandler = handler as? HTItemHandler
-        ?: object : HTItemHandler {
-            override fun getItemSlots(side: Direction?): List<HTItemSlot> =
-                (0..<handler.slots).mapNotNull { index: Int -> createSlot(handler, index) }
-
-            override fun onContentsChanged() {}
-        }
+        ?: HTItemHandler { (0..<handler.slots).map { index: Int -> createSlot(handler, index) } }
 
     @JvmStatic
-    private fun createSlot(handler: IItemHandler, index: Int): HTItemSlot? = if (handler is HTItemHandler) {
-        handler.getItemSlot(index, handler.getItemSideFor())
-    } else {
-        object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
-            override fun getStack(): ImmutableItemStack = handler.getStackInSlot(index).toImmutable()
+    private fun createSlot(handler: IItemHandler, index: Int): HTItemSlot = object : HTItemSlot.Mutable(), HTValueSerializable.Empty {
+        override fun getStack(): ImmutableItemStack = handler.getStackInSlot(index).toImmutable()
 
-            override fun getCapacityAsLong(stack: ImmutableItemStack): Long = handler.getSlotLimit(index).toLong()
+        override fun getCapacityAsLong(stack: ImmutableItemStack): Long = handler.getSlotLimit(index).toLong()
 
-            override fun isValid(stack: ImmutableItemStack): Boolean = handler.isItemValid(index, stack.stack)
+        override fun isValid(stack: ImmutableItemStack): Boolean = handler.isItemValid(index, stack.stack)
 
-            override fun onContentsChanged() {}
+        override fun onContentsChanged() {}
 
-            override fun setStack(stack: ImmutableItemStack) {
-                (handler as? IItemHandlerModifiable)?.setStackInSlot(index, stack.stack)
-            }
+        override fun setStack(stack: ImmutableItemStack) {
+            (handler as? IItemHandlerModifiable)?.setStackInSlot(index, stack.stack)
         }
     }
 
     // Fluid
     @JvmStatic
     private fun wrapHandler(handler: IFluidHandler): HTFluidHandler = handler as? HTFluidHandler
-        ?: object : HTFluidHandler {
-            override fun getFluidTanks(side: Direction?): List<HTFluidTank> =
-                (0..<handler.tanks).mapNotNull { index -> createTank(handler, index) }
-
-            override fun onContentsChanged() {}
-        }
+        ?: HTFluidHandler { (0..<handler.tanks).map { index: Int -> createTank(handler, index) } }
 
     @JvmStatic
-    private fun createTank(handler: IFluidHandler, index: Int): HTFluidTank? = if (handler is HTFluidHandler) {
-        handler.getFluidTank(index, handler.getFluidSideFor())
-    } else {
-        object : HTFluidTank, HTValueSerializable.Empty {
-            override fun getStack(): ImmutableFluidStack = handler.getFluidInTank(index).toImmutable()
+    private fun createTank(handler: IFluidHandler, index: Int): HTFluidTank = object : HTFluidTank, HTValueSerializable.Empty {
+        override fun getStack(): ImmutableFluidStack = handler.getFluidInTank(index).toImmutable()
 
-            override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = handler.getTankCapacity(index).toLong()
+        override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = handler.getTankCapacity(index).toLong()
 
-            override fun isValid(stack: ImmutableFluidStack): Boolean = handler.isFluidValid(index, stack.stack)
+        override fun isValid(stack: ImmutableFluidStack): Boolean = handler.isFluidValid(index, stack.stack)
 
-            override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
-                when (val filled: Int = handler.fill(stack.stack, action.toFluid())) {
-                    0 -> ImmutableFluidStack.EMPTY
-                    else -> stack.copyWithAmount(filled)
-                }
+        override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
+            when (val filled: Int = handler.fill(stack.stack, action.toFluid())) {
+                0 -> ImmutableFluidStack.EMPTY
+                else -> stack.copyWithAmount(filled)
+            }
 
-            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
-                handler.drain(amount, action.toFluid()).toImmutable()
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
+            handler.drain(amount, action.toFluid()).toImmutable()
 
-            override fun onContentsChanged() {}
-        }
+        override fun onContentsChanged() {}
     }
 
     // Energy
     @JvmStatic
-    private fun wrapStorage(storage: IEnergyStorage): HTEnergyHandler =
-        storage as? HTEnergyHandler ?: object : HTEnergyHandler, HTValueSerializable.Empty {
-            override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = createBattery(storage)
-
-            override fun onContentsChanged() {}
-        }
-
-    @JvmStatic
-    private fun createBattery(storage: IEnergyStorage): HTEnergyBattery? = if (storage is HTEnergyHandler) {
-        storage.getEnergyBattery(storage.getEnergySideFor())
-    } else {
+    private fun wrapStorage(storage: IEnergyStorage): HTEnergyHandler = storage as? HTEnergyHandler ?: HTEnergyHandler {
         object : HTEnergyBattery, HTValueSerializable.Empty {
             override fun getAmountAsLong(): Long = storage.energyStored.toLong()
 

@@ -20,8 +20,6 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
 
     override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = storage
 
-    override fun onContentsChanged() {}
-
     protected open class ComponentStorage(private val parent: MutableDataComponentHolder, private val capacity: Long) :
         HTEnergyBattery.Mutable,
         HTValueSerializable.Empty {

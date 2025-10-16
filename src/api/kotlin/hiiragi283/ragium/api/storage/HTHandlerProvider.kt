@@ -1,11 +1,11 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.api.storage
 
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
-interface HTHandlerBlockEntity {
+interface HTHandlerProvider {
     /**
      * 指定した[direction]から[IItemHandler]を返します。
      */

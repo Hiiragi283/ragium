@@ -126,14 +126,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun entity() {
-        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
-        addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
+        add(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
+        add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
 
-        // addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
-        // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
-        // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
-        // addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
+        // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
+        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
+        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
+        // add(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
     }
 
     private fun fluid() {

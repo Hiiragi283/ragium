@@ -134,14 +134,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun entity() {
-        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
-        addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
+        add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
+        add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
 
-        // addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
-        // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
-        // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
-        // addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
-        // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
+        // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
+        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
+        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
+        // add(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
     }
 
     private fun fluid() {

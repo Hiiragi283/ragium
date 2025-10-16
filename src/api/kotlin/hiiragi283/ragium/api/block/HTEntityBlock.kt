@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
+import hiiragi283.ragium.api.extension.toVec3
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -95,7 +96,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.onRemove(state, level, pos)
+            level.getHTBlockEntity(pos)?.onRemove(level, pos.toVec3())
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
@@ -129,7 +130,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
     }
 
-    final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)
+    final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = type.create(pos, state)
 
     @Suppress("UNCHECKED_CAST")
     final override fun <T : BlockEntity> getTicker(

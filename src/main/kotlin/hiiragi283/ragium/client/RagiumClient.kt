@@ -21,11 +21,13 @@ import hiiragi283.ragium.client.gui.screen.HTMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.renderer.entity.RagiumModelLayers
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -34,7 +36,11 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
 import io.wispforest.accessories.api.client.AccessoryRenderer
+import net.minecraft.client.model.MinecartModel
+import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.renderer.BiomeColors
+import net.minecraft.client.renderer.entity.EntityRendererProvider
+import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
@@ -69,6 +75,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
+        eventBus.addListener(::registerLayerDefinitions)
         eventBus.addListener(::registerTooltipRenderer)
         eventBus.addListener(::registerKeyMappings)
 
@@ -249,11 +256,26 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         RagiumAPI.LOGGER.info("Registered Screens!")
     }
 
+    private fun registerLayerDefinitions(event: EntityRenderersEvent.RegisterLayerDefinitions) {
+        for (location: ModelLayerLocation in RagiumModelLayers.DRUM_MINECARTS.values) {
+            event.registerLayerDefinition(location, MinecartModel<*>::createBodyLayer)
+        }
+
+        RagiumAPI.LOGGER.info("Registered Layer Definitions!")
+    }
+
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
 
-        RagiumAPI.LOGGER.info("Registered BlockEntityRenderers!")
+        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+            val layerDefinition: ModelLayerLocation = RagiumModelLayers.DRUM_MINECARTS[variant] ?: continue
+            event.registerEntityRenderer(
+                variant.entityHolder.get(),
+            ) { context: EntityRendererProvider.Context -> MinecartRenderer(context, layerDefinition) }
+        }
+
+        RagiumAPI.LOGGER.info("Registered Entity Renderers!")
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {

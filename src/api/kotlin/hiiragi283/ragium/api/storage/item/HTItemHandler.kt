@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
@@ -10,9 +9,7 @@ import net.minecraft.world.item.ItemStack
  * [HTItemSlot]に基づいた[HTSidedItemHandler]の拡張インターフェース
  * @see [mekanism.api.inventory.IMekanismInventory]
  */
-interface HTItemHandler :
-    HTSidedItemHandler,
-    HTContentListener {
+fun interface HTItemHandler : HTSidedItemHandler {
     fun hasItemHandler(): Boolean = true
 
     fun getItemSlots(side: Direction?): List<HTItemSlot>

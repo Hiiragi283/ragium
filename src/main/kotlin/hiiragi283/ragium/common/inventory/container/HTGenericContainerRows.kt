@@ -33,7 +33,6 @@ interface HTGenericContainerRows {
                     filter,
                 )
             },
-            null,
         )
     }
 }

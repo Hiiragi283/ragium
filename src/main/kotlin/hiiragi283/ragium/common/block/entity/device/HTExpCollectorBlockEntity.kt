@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Position
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -29,10 +30,15 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
-    override fun onRemove(state: BlockState, level: Level, pos: BlockPos) {
-        super.onRemove(state, level, pos)
-        ExperienceOrb(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), fluidAmountToExpValue(tank.getAmountAsInt()))
-            .let(level::addFreshEntity)
+    override fun onRemove(level: Level, pos: Position) {
+        super.onRemove(level, pos)
+        ExperienceOrb(
+            level,
+            pos.x(),
+            pos.y(),
+            pos.z(),
+            fluidAmountToExpValue(tank.getAmountAsInt()),
+        )
     }
 
     private fun fluidAmountToExpValue(amount: Int): Int = amount / RagiumConfig.COMMON.expCollectorMultiplier.asInt

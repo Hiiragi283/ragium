@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumPlatform
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Position
 import net.minecraft.util.RandomSource
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
@@ -56,7 +57,11 @@ fun giveStackTo(player: Player, stack: ItemStack) {
  * 指定した[stack]を[pos]にドロップします。
  */
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
-    Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
+    dropStackAt(level, pos.toVec3(), stack)
+}
+
+fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
+    Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
 }
 
 //    RandomSource    //

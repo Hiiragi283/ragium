@@ -29,8 +29,6 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
     override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
 
-    override fun onContentsChanged() {}
-
     protected open class ComponentSlot(protected val parent: MutableDataComponentHolder, protected val size: Int, protected val slot: Int) :
         HTItemSlot.Mutable(),
         HTValueSerializable.Empty {
@@ -42,7 +40,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
         override fun getCapacityAsLong(stack: ImmutableItemStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 
-        override fun isValid(stack: ImmutableItemStack): Boolean = true
+        override fun isValid(stack: ImmutableItemStack): Boolean = stack.stack.canFitInsideContainerItems()
 
         override fun onContentsChanged() {}
 

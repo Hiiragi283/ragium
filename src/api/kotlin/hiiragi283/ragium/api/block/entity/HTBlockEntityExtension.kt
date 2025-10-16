@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.Position
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceKey
@@ -120,7 +121,7 @@ interface HTBlockEntityExtension {
      */
     fun dropInventory(consumer: Consumer<ItemStack>) {}
 
-    fun onRemove(state: BlockState, level: Level, pos: BlockPos) {
+    fun onRemove(level: Level, pos: Position) {
         dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
     }
 

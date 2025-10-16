@@ -18,7 +18,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.attachment.IAttachmentHolder
 
-class HTMachineUpgradeItemHandler private constructor(private val listener: HTContentListener?) :
+class HTMachineUpgradeItemHandler private constructor(listener: HTContentListener?) :
     HTItemHandler,
     HTValueSerializable {
         companion object {
@@ -50,10 +50,6 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
         }
 
         override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
-
-        override fun onContentsChanged() {
-            listener?.onContentsChanged()
-        }
 
         override fun serialize(output: HTValueOutput) {
             HTCapabilityCodec.ITEM.saveTo(output, getItemSlots(getItemSideFor()))

@@ -9,7 +9,6 @@ import mekanism.api.Action
 import mekanism.api.IContentsListener
 import mekanism.api.chemical.IChemicalHandler
 import mekanism.common.capabilities.Capabilities
-import net.minecraft.core.Direction
 
 /**
  * @see [hiiragi283.ragium.api.storage.capability.RagiumCapabilities]
@@ -26,17 +25,8 @@ object MekanismCapabilities {
 
     //    Wrapper    //
     @JvmStatic
-    private fun wrapHandler(handler: IChemicalHandler): HTChemicalHandler = when (handler) {
-        is HTChemicalHandler -> handler
-        else -> object : HTChemicalHandler {
-            override fun getChemicalTanks(side: Direction?): List<HTChemicalTank> =
-                (0..<handler.chemicalTanks).mapNotNull { index: Int -> createTank(handler, index) }
-
-            override fun onContentsChanged() {
-                (handler as? IContentsListener)?.onContentsChanged()
-            }
-        }
-    }
+    private fun wrapHandler(handler: IChemicalHandler): HTChemicalHandler = handler as? HTChemicalHandler
+        ?: HTChemicalHandler { (0..<handler.chemicalTanks).mapNotNull { index: Int -> createTank(handler, index) } }
 
     @JvmStatic
     private fun createTank(handler: IChemicalHandler, index: Int): HTChemicalTank? = if (handler is HTChemicalHandler) {

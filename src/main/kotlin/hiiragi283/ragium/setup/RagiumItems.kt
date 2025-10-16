@@ -16,11 +16,14 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
+import hiiragi283.ragium.common.entity.vehicle.HTMinecart
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTMinecartItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
 import hiiragi283.ragium.common.item.HTSmithingTemplateItem
@@ -467,6 +470,22 @@ object RagiumItems {
 
     @JvmField
     val ADVANCED_CIRCUIT_BOARD: HTDeferredItem<Item> = register("advanced_circuit_board")
+
+    //    Vehicles    //
+
+    @JvmField
+    val DRUM_MINECARTS: Map<HTDrumVariant, HTDeferredItem<Item>> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+        val factory: HTMinecart.Factory = when (variant) {
+            HTDrumVariant.SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
+            HTDrumVariant.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
+            HTDrumVariant.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
+            HTDrumVariant.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
+        }
+        register(
+            variant.entityHolder.id.path,
+            { prop: Item.Properties -> HTMinecartItem(factory, prop) },
+        )
+    }
 
     //    Extensions    //
 

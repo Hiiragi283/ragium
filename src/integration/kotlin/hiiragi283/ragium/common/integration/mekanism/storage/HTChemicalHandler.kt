@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.integration.mekanism.storage
 
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import mekanism.api.Action
 import mekanism.api.chemical.ChemicalStack
@@ -11,9 +10,7 @@ import net.minecraft.core.Direction
  * [HTChemicalTank]に基づいた[ISidedChemicalHandler]の拡張インターフェース
  * @see [mekanism.api.chemical.IMekanismChemicalHandler]
  */
-interface HTChemicalHandler :
-    ISidedChemicalHandler,
-    HTContentListener {
+fun interface HTChemicalHandler : ISidedChemicalHandler {
     fun hasChemicalHandler(): Boolean = true
 
     fun getChemicalTanks(side: Direction?): List<HTChemicalTank>
