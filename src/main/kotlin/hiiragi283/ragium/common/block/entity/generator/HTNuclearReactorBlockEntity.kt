@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.isOf
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.setup.RagiumFluidContents

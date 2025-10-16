@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.item.asNonEmptySequence
 import hiiragi283.ragium.api.item.copy
 import hiiragi283.ragium.api.item.getOrEmpty
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents

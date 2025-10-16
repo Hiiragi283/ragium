@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.isOf
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Player

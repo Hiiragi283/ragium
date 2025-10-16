@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.inventory
 
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.insertItem
-import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot

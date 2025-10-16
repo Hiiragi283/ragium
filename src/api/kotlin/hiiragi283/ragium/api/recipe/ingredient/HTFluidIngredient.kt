@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack

@@ -1,18 +1,17 @@
 package hiiragi283.ragium.api.storage.capability
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.fluid.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.core.Direction
 import net.minecraft.world.inventory.Slot
 import net.neoforged.neoforge.capabilities.Capabilities

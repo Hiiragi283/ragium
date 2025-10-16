@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.stack.getCraftingRemainingItem
+import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.getCraftingRemainingItem
-import hiiragi283.ragium.api.storage.item.hasCraftingRemainingItem
 import java.util.function.Predicate
 
 /**

@@ -3,7 +3,7 @@ package hiiragi283.ragium.impl.data.recipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient

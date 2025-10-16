@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.api.storage.item.toImmutable
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.integration.delight.HTKnifeToolVariant
 import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.gui.screen
 
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 

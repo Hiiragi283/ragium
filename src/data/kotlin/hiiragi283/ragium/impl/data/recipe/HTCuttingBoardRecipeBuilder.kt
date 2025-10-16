@@ -2,8 +2,8 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.toImmutable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.core.NonNullList
 import net.minecraft.sounds.SoundEvent

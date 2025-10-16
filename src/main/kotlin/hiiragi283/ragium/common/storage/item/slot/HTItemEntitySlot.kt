@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.maxStackSize
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.maxStackSize
-import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.inventory.Slot
 import kotlin.math.min

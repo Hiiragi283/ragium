@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.fluid
 
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.neoforged.neoforge.fluids.FluidStack

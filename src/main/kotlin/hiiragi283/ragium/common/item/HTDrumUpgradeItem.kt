@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer

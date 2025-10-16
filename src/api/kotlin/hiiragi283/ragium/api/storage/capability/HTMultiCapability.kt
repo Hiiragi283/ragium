@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.storage.capability
 
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability

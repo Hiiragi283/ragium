@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.registry.isOf
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -35,7 +36,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
             listener,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
-            filter = RagiumItems.ELDRITCH_EGG::isOf,
+            filter = { stack: ImmutableItemStack -> stack.isOf(RagiumItems.ELDRITCH_EGG) },
         )
         outputSlots = (0..<9).map { i: Int ->
             HTItemStackSlot.output(

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe

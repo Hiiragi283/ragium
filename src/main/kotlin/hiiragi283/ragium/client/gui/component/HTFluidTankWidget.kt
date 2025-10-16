@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.getClientExtensions
+import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.fluid.getClientExtensions
-import hiiragi283.ragium.api.storage.fluid.getTintColor
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStackSlot
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack

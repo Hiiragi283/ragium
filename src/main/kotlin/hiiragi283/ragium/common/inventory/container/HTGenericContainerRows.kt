@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import java.util.function.Predicate

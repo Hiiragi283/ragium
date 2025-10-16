@@ -4,13 +4,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.stack.maxStackSize
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.maxStackSize
-import hiiragi283.ragium.api.storage.item.toImmutable
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate

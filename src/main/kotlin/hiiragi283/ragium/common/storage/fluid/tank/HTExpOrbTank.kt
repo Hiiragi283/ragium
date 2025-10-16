@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.entity.ExperienceOrb

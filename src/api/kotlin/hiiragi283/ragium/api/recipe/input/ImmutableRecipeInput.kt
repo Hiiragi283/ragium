@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe.input
 
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.toImmutable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 

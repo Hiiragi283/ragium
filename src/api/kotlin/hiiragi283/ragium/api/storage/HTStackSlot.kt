@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableStack
 import kotlin.math.min
 
 /**

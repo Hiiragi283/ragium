@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack

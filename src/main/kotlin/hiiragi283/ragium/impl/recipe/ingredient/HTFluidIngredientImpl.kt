@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.storage.fluid
 
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.ItemStack
 

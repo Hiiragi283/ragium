@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage
+package hiiragi283.ragium.api.stack
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.registry.HTHolderLike
@@ -11,9 +11,9 @@ import net.minecraft.resources.ResourceLocation
 import java.util.function.Predicate
 
 /**
- * [HTStackSlot]で使われるスタックのラッパー
+ * [hiiragi283.ragium.api.storage.HTStackSlot]で使われるスタックのラッパー
  * @param T スタックが保持する種類のクラス
- * @param STACK [HTStackSlot]を実装したクラス
+ * @param STACK [hiiragi283.ragium.api.storage.HTStackSlot]を実装したクラス
  */
 interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     DataComponentHolder,
@@ -35,7 +35,7 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun value(): T
 
     /**
-     * このスタックの種類の[Holder]を返します。
+     * このスタックの種類の[net.minecraft.core.Holder]を返します。
      */
     fun holder(): Holder<T>
 
@@ -67,7 +67,7 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun copyWithAmount(amount: Long): STACK
 
     /**
-     * このスタックの[DataComponentPatch]を返します。
+     * このスタックの[net.minecraft.core.component.DataComponentPatch]を返します。
      */
     fun componentsPatch(): DataComponentPatch
 

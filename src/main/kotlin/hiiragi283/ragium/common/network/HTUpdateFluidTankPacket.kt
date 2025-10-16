@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.network
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer

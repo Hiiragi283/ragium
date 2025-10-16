@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn

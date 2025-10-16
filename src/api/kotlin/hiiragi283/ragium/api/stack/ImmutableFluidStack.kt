@@ -1,9 +1,8 @@
-package hiiragi283.ragium.api.storage.fluid
+package hiiragi283.ragium.api.stack
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.storage.ImmutableStack
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch

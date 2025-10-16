@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.client.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents

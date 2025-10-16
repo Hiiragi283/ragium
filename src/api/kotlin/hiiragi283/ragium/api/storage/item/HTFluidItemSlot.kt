@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 

@@ -4,8 +4,8 @@ import com.mojang.datafixers.util.Either
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.toImmutable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.RagiumEmiPlugin
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputEmiRecipe

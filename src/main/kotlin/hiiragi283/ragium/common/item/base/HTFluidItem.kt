@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.item.base
 
+import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getTintColor
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item

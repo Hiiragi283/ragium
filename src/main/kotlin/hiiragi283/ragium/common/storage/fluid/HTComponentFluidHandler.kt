@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.storage.fluid
 import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.storageCopy
+import hiiragi283.ragium.api.stack.toContent
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.fluid.storageCopy
-import hiiragi283.ragium.api.storage.fluid.toContent
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType

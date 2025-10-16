@@ -3,16 +3,16 @@ package hiiragi283.ragium.common.util
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.stack.getCraftingRemainingItem
+import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.ImmutableStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.getCraftingRemainingItem
-import hiiragi283.ragium.api.storage.item.hasCraftingRemainingItem
 import java.util.Optional
 import java.util.function.ToIntFunction
 

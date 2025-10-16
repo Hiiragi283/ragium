@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.fluid
+package hiiragi283.ragium.api.stack
 
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
