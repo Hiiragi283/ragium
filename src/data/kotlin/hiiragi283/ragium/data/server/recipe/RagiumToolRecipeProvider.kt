@@ -178,7 +178,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             val beforeTool: ItemLike = when (variant) {
                 is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE[variant, beforeMaterial]
                 is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeMaterial]
-                is HTKnifeToolVariant -> RagiumDelightAddon.ALL_KNIFE_MAP[beforeMaterial]?.get()
+                is HTKnifeToolVariant -> RagiumDelightAddon.KNIFE_MAP[beforeMaterial]
                 else -> null
             } ?: continue
             upgradeFactory(tool, beforeTool)

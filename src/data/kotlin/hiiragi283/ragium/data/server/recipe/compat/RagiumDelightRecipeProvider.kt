@@ -55,7 +55,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumDelightAddon.RAGI_ALLOY_KNIFE)
+            .equipment(RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_ALLOY))
             .pattern("A", "B")
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
@@ -63,8 +63,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            RagiumDelightAddon.RAGI_CRYSTAL_KNIFE,
-            RagiumDelightAddon.RAGI_ALLOY_KNIFE,
+            RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_CRYSTAL),
+            RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_ALLOY),
         ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
             .save(output)
     }

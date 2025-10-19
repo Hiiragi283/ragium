@@ -30,14 +30,13 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.common.SimpleTier
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import vectorwing.farmersdelight.common.block.FeastBlock
 import vectorwing.farmersdelight.common.block.PieBlock
 import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
-import java.util.function.Supplier
-import kotlin.collections.iterator
 
 object RagiumDelightAddon : RagiumAddon {
     //    Block    //
@@ -66,29 +65,22 @@ object RagiumDelightAddon : RagiumAddon {
 
     // Knives
     @JvmField
-    val RAGI_ALLOY_KNIFE: HTDeferredItem<KnifeItem> =
-        HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
-
-    @JvmField
-    val RAGI_CRYSTAL_KNIFE: HTDeferredItem<KnifeItem> =
-        HTKnifeToolVariant.registerItem(ITEM_REGISTER, RagiumMaterialType.RAGI_CRYSTAL, RagiumToolTiers.RAGI_CRYSTAL)
-
-    @JvmField
-    val KNIFE_MAP: Map<RagiumMaterialType, HTDeferredItem<KnifeItem>> = buildMap {
-        put(RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
-        put(RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
+    val KNIFE_MAP: Map<HTMaterialType, HTDeferredItem<KnifeItem>> = buildMap {
+        mapOf(
+            RagiumMaterialType.RAGI_ALLOY to RagiumToolTiers.RAGI_ALLOY,
+            RagiumMaterialType.RAGI_CRYSTAL to RagiumToolTiers.RAGI_CRYSTAL,
+        ).forEach { (material: HTMaterialType, tier: SimpleTier) ->
+            put(material, HTKnifeToolVariant.registerItem(ITEM_REGISTER, material, tier))
+        }
     }
 
-    @JvmField
-    val ALL_KNIFE_MAP: Map<HTMaterialType, Supplier<out Item>> = buildMap {
-        // Delight
-        put(HTVanillaMaterialType.IRON, ModItems.IRON_KNIFE)
-        put(HTVanillaMaterialType.GOLD, ModItems.GOLDEN_KNIFE)
-        put(HTVanillaMaterialType.DIAMOND, ModItems.DIAMOND_KNIFE)
-        put(HTVanillaMaterialType.NETHERITE, ModItems.NETHERITE_KNIFE)
-        // Ragium
-        put(RagiumMaterialType.RAGI_ALLOY, RAGI_ALLOY_KNIFE)
-        put(RagiumMaterialType.RAGI_CRYSTAL, RAGI_CRYSTAL_KNIFE)
+    @JvmStatic
+    fun getKnife(material: HTMaterialType): HTItemHolderLike = when (material) {
+        HTVanillaMaterialType.IRON -> HTItemHolderLike.fromItem(ModItems.IRON_KNIFE)
+        HTVanillaMaterialType.GOLD -> HTItemHolderLike.fromItem(ModItems.GOLDEN_KNIFE)
+        HTVanillaMaterialType.DIAMOND -> HTItemHolderLike.fromItem(ModItems.DIAMOND_KNIFE)
+        HTVanillaMaterialType.NETHERITE -> HTItemHolderLike.fromItem(ModItems.NETHERITE_KNIFE)
+        else -> KNIFE_MAP[material] ?: error("Unknown knife item for ${material.materialName()}")
     }
 
     // Food
@@ -123,7 +115,7 @@ object RagiumDelightAddon : RagiumAddon {
     }
 
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        event.modify(RAGI_CRYSTAL_KNIFE) { builder: DataComponentPatch.Builder ->
+        event.modify(getKnife(RagiumMaterialType.RAGI_CRYSTAL)) { builder: DataComponentPatch.Builder ->
             builder.set(
                 RagiumDataComponents.INTRINSIC_ENCHANTMENT,
                 HTIntrinsicEnchantment(Enchantments.MENDING, 1),
@@ -138,7 +130,7 @@ object RagiumDelightAddon : RagiumAddon {
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
-            for ((material: RagiumMaterialType, knife: HTDeferredItem<KnifeItem>) in KNIFE_MAP) {
+            for ((material: HTMaterialType, knife: HTDeferredItem<KnifeItem>) in KNIFE_MAP) {
                 event.insertAfter(
                     RagiumItems.getTool(HTHammerToolVariant, material).toStack(),
                     knife.toStack(),

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
@@ -245,10 +246,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 
-        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
-        builder.add(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
-        builder.add(ModTags.KNIVES, RagiumDelightAddon.RAGI_ALLOY_KNIFE)
-        builder.add(ModTags.KNIVES, RagiumDelightAddon.RAGI_CRYSTAL_KNIFE)
+        for (item: HTDeferredItem<*> in RagiumDelightAddon.KNIFE_MAP.values) {
+            builder.add(CommonTags.TOOLS_KNIFE, item)
+            builder.add(ModTags.KNIVES, item)
+        }
 
         fun setupTool(tagKey: TagKey<Item>) {
             builder.addTag(ItemTags.BREAKS_DECORATED_POTS, tagKey)
