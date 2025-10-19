@@ -17,8 +17,8 @@ import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.partially1
-import hiiragi283.ragium.api.recipe.VanillaRecipeTypes
 import hiiragi283.ragium.api.recipe.manager.castRecipe
+import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -65,6 +65,7 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -128,8 +129,8 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Smithing
-        VanillaRecipeTypes.INSTANCE
-            .smithing()
+        RecipeType.SMITHING
+            .toFindable()
             .getAllRecipes(recipeManager())
             .filterIsInstance<HTSmithingModifyRecipe>()
             .forEach { recipe: HTSmithingModifyRecipe ->
@@ -145,9 +146,9 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addGenerators(registry: EmiRegistry) {
         val thermalCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.THERMAL, RagiumDataMaps.INSTANCE.thermalFuelType)
+            addFuelRecipes(registry, HTGeneratorVariant.THERMAL, RagiumDataMaps.THERMAL_FUEL)
         val combustionCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.COMBUSTION, RagiumDataMaps.INSTANCE.combustionFuelType)
+            addFuelRecipes(registry, HTGeneratorVariant.COMBUSTION, RagiumDataMaps.COMBUSTION_FUEL)
 
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
 
@@ -163,7 +164,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
 
                     HTEmiFluidFuelData(
-                        key.location().withPrefix("/${RagiumDataMaps.INSTANCE.thermalFuelType.id().path}/"),
+                        key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/"),
                         (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
                         itemRegistry.getOrThrow(key).toEmi(),
                         lavaInput,
@@ -173,7 +174,7 @@ class RagiumEmiPlugin : EmiPlugin {
         )
         // Combustion Generator
         registry.addRecipeSafe(
-            RagiumDataMaps.INSTANCE.thermalFuelType
+            RagiumDataMaps.THERMAL_FUEL
                 .id()
                 .withPrefix("/"),
         ) { id: ResourceLocation ->
@@ -206,7 +207,7 @@ class RagiumEmiPlugin : EmiPlugin {
             RagiumRecipeViewerTypes.BREWING,
             EmiPort
                 .getItemRegistry()
-                .getDataMap(RagiumDataMaps.INSTANCE.brewingEffectType)
+                .getDataMap(RagiumDataMaps.BREWING_EFFECT)
                 .map { (key: ResourceKey<Item>, value: HTBrewingEffect) -> HTEmiBrewingEffect(HTItemHolderLike.fromKey(key), value) }
                 .asSequence(),
             ::HTBrewingEffectEmiRecipe,

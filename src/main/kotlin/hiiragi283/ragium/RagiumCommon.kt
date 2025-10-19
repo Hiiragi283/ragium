@@ -133,14 +133,14 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.INSTANCE.thermalFuelType)
-        event.register(RagiumDataMaps.INSTANCE.combustionFuelType)
-        event.register(RagiumDataMaps.INSTANCE.nuclearFuelType)
-        event.register(RagiumDataMaps.INSTANCE.solarPowerType)
+        event.register(RagiumDataMaps.THERMAL_FUEL)
+        event.register(RagiumDataMaps.COMBUSTION_FUEL)
+        event.register(RagiumDataMaps.NUCLEAR_FUEL)
+        event.register(RagiumDataMaps.SOLAR_POWER)
 
-        event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
+        event.register(RagiumDataMaps.BREWING_EFFECT)
 
-        event.register(RagiumDataMaps.INSTANCE.mobHeadType)
+        event.register(RagiumDataMaps.MOB_HEAD)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

@@ -50,11 +50,11 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
     ) : super(recipeCache, variant, pos, state)*/
 
     constructor(
-        recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
+        finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         variant: HTMachineVariant,
         pos: BlockPos,
         state: BlockState,
-    ) : super(recipeType, variant, pos, state)
+    ) : super(finder, variant, pos, state)
 
     protected lateinit var inputSlot: HTItemSlot.Mutable
 

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
@@ -81,11 +81,11 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
         state: BlockState,
     ) : HTProcessorBlockEntity<INPUT, RECIPE>(variant, pos, state) {
         constructor(
-            recipeType: HTRecipeFinder<INPUT, RECIPE>,
+            finder: HTRecipeFinder<INPUT, RECIPE>,
             variant: HTMachineVariant,
             pos: BlockPos,
             state: BlockState,
-        ) : this(HTSimpleRecipeCache(recipeType), variant, pos, state)
+        ) : this(finder.createCache(), variant, pos, state)
 
         override fun writeValue(output: HTValueOutput) {
             super.writeValue(output)

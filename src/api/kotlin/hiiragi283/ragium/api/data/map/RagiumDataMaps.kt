@@ -23,6 +23,24 @@ interface RagiumDataMaps {
          */
         @JvmField
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
+
+        @JvmField
+        val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
+
+        @JvmField
+        val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.combustionFuelType
+
+        @JvmField
+        val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
+
+        @JvmField
+        val SOLAR_POWER: DataMapType<Block, HTSolarPower> = INSTANCE.solarPowerType
+
+        @JvmField
+        val BREWING_EFFECT: DataMapType<Item, HTBrewingEffect> = INSTANCE.brewingEffectType
+
+        @JvmField
+        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
     }
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>

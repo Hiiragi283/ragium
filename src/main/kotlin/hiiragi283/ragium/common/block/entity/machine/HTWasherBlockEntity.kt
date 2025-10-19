@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedItemOutputBlockEntity<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
+    HTChancedItemOutputBlockEntity.Cached<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
         RagiumRecipeTypes.WASHING,
         HTMachineVariant.WASHER,
         pos,

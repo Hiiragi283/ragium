@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.VanillaRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.serialization.value.HTValueInput
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -19,7 +18,6 @@ import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -33,6 +31,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmokingRecipe
@@ -59,34 +58,17 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot), catalystSlot)
     }
 
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        smeltingCache.serialize(output)
-        blastingCache.serialize(output)
-        smokingCache.serialize(output)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        smeltingCache.deserialize(input)
-        blastingCache.deserialize(input)
-        smokingCache.deserialize(input)
-    }
-
     override fun openGui(player: Player, title: Component): InteractionResult =
         RagiumMenuTypes.SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
 
-    private val smeltingCache: HTSimpleRecipeCache<SingleRecipeInput, SmeltingRecipe> =
-        HTSimpleRecipeCache(VanillaRecipeTypes.INSTANCE.smelting())
-    private val blastingCache: HTSimpleRecipeCache<SingleRecipeInput, BlastingRecipe> =
-        HTSimpleRecipeCache(VanillaRecipeTypes.INSTANCE.blasting())
-    private val smokingCache: HTSimpleRecipeCache<SingleRecipeInput, SmokingRecipe> =
-        HTSimpleRecipeCache(VanillaRecipeTypes.INSTANCE.smoking())
+    private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> = RecipeType.SMELTING.createCache()
+    private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> = RecipeType.BLASTING.createCache()
+    private val smokingCache: HTRecipeCache<SingleRecipeInput, SmokingRecipe> = RecipeType.SMOKING.createCache()
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): MultiSmeltingRecipe? {
-        val cache: HTSimpleRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack().value()) {
+        val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack().value()) {
             Items.BLAST_FURNACE -> blastingCache
             Items.SMOKER -> smokingCache
             else -> smeltingCache

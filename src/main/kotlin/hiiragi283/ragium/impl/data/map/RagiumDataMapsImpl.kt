@@ -23,24 +23,6 @@ import kotlin.jvm.optionals.getOrNull
 class RagiumDataMapsImpl : RagiumDataMaps {
     companion object {
         @JvmStatic
-        private val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
-
-        @JvmStatic
-        private val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
-
-        @JvmStatic
-        private val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
-
-        @JvmStatic
-        private val SOLAR_POWER: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
-
-        @JvmStatic
-        private val BREWING_EFFECT: DataMapType<Item, HTBrewingEffect> = create("brewing/effect", Registries.ITEM, HTBrewingEffect.CODEC)
-
-        @JvmStatic
-        private val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
-
-        @JvmStatic
         private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =
             DataMapType
                 .builder(RagiumAPI.id(path), registryKey, codec)
@@ -52,14 +34,14 @@ class RagiumDataMapsImpl : RagiumDataMaps {
             create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
     }
 
-    override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = THERMAL_FUEL
-    override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = COMBUSTION_FUEL
-    override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = NUCLEAR_FUEL
-    override val solarPowerType: DataMapType<Block, HTSolarPower> = SOLAR_POWER
+    override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
+    override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
+    override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
+    override val solarPowerType: DataMapType<Block, HTSolarPower> = create("solar_power", Registries.BLOCK, HTSolarPower.CODEC)
 
-    override val brewingEffectType: DataMapType<Item, HTBrewingEffect> = BREWING_EFFECT
+    override val brewingEffectType: DataMapType<Item, HTBrewingEffect> = create("brewing/effect", Registries.ITEM, HTBrewingEffect.CODEC)
 
-    override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = MOB_HEAD
+    override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
 
     override fun <TYPE : Any, DATA : Any> getData(
         access: RegistryAccess,

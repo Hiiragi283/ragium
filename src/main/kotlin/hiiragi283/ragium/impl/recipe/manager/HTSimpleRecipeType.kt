@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import kotlin.jvm.optionals.getOrNull
 
-@JvmRecord
-data class HTSimpleRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val recipeType: RecipeType<RECIPE>) :
+@JvmInline
+internal value class HTSimpleRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val recipeType: RecipeType<RECIPE>) :
     HTRecipeType.Findable<INPUT, RECIPE> {
     override fun getRecipeFor(
         manager: RecipeManager,

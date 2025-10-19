@@ -5,6 +5,9 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -25,6 +28,9 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import kotlin.jvm.optionals.getOrNull
@@ -55,6 +61,12 @@ interface RagiumPlatform {
 
     fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
 
+    //    Recipe    //
+
+    fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(finder: HTRecipeFinder<INPUT, RECIPE>): HTRecipeCache<INPUT, RECIPE>
+
+    fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> wrapRecipeType(recipeType: RecipeType<RECIPE>): HTRecipeType.Findable<INPUT, RECIPE>
+
     //    Server    //
 
     fun getCurrentServer(): MinecraftServer?
@@ -62,7 +74,9 @@ interface RagiumPlatform {
     fun getLevel(key: ResourceKey<Level>): ServerLevel? = getCurrentServer()?.getLevel(key)
 
     fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess() ?: when {
-        FMLEnvironment.dist.isClient -> Minecraft.getInstance().level?.registryAccess()
+        FMLEnvironment.dist.isClient -> runCatching {
+            Minecraft.getInstance().level?.registryAccess()
+        }.getOrNull()
         else -> null
     }
 
@@ -75,12 +89,14 @@ interface RagiumPlatform {
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 
     /**
-     * エネルギーネットワークのマネージャを返します。
+     * 指定した[level]からエネルギーのネットワークを返します。
+     * @return 取得できなかった場合は`null`
      */
     fun getEnergyNetwork(level: Level?): HTEnergyBattery?
 
     /**
-     * エネルギーネットワークのマネージャを返します。
+     * 指定した[key]からエネルギーのネットワークを返します。
+     * @return 取得できなかった場合は`null`
      */
     fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
 

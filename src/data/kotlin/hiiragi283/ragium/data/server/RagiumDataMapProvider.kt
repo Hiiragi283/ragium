@@ -83,14 +83,14 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     //    Ragium    //
 
     private fun thermalFuels() {
-        builder(RagiumDataMaps.INSTANCE.thermalFuelType)
+        builder(RagiumDataMaps.THERMAL_FUEL)
             .add("steam", 100)
             .add(HTFluidContent.LAVA, 10)
             .add("blaze_blood", 5)
     }
 
     private fun combustionFuels() {
-        builder(RagiumDataMaps.INSTANCE.combustionFuelType)
+        builder(RagiumDataMaps.COMBUSTION_FUEL)
             // lowest
             .add(RagiumFluidContents.CRUDE_OIL, 100)
             .add("oil", 100)
@@ -115,12 +115,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun nuclearFuels() {
-        builder(RagiumDataMaps.INSTANCE.nuclearFuelType)
+        builder(RagiumDataMaps.NUCLEAR_FUEL)
             .add(RagiumFluidContents.GREEN_FUEL, 5)
     }
 
     private fun solarPower() {
-        builder(RagiumDataMaps.INSTANCE.solarPowerType)
+        builder(RagiumDataMaps.SOLAR_POWER)
             // low
             .add(Tags.Blocks.PUMPKINS_JACK_O_LANTERNS, HTSolarPower(0.5f), false)
             // medium
@@ -138,7 +138,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun brewingEffect() {
         // Potions
-        val builder: Builder<HTBrewingEffect, Item> = builder(RagiumDataMaps.INSTANCE.brewingEffectType)
+        val builder: Builder<HTBrewingEffect, Item> = builder(RagiumDataMaps.BREWING_EFFECT)
             .add(Items.GOLDEN_CARROT, HTBrewingEffect(Potions.NIGHT_VISION))
             .add(Tags.Items.GEMS_AMETHYST, HTBrewingEffect(Potions.INVISIBILITY), false)
             .add(Items.RABBIT_FOOT, HTBrewingEffect(Potions.LEAPING))
@@ -180,7 +180,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     //    Mob Head    //
 
     private fun mobHead() {
-        builder(RagiumDataMaps.INSTANCE.mobHeadType)
+        builder(RagiumDataMaps.MOB_HEAD)
             .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
             .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
             .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))

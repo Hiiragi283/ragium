@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.recipe.manager.withPrefix
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -17,6 +18,7 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -30,8 +32,8 @@ object RagiumRecipeTypes {
         override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out SingleItemRecipe>> = buildList {
             addAll(SAWMILL.getAllHolders(manager))
             addAll(
-                VanillaRecipeTypes.INSTANCE
-                    .stonecutting()
+                RecipeType.STONECUTTING
+                    .toFindable()
                     .getAllHolders(manager)
                     .map { holder -> holder.withPrefix("/") },
             )
