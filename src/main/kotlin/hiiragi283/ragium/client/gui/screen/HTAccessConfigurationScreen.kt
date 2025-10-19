@@ -2,9 +2,9 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
+import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.Minecraft
@@ -28,7 +28,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         inventory,
         title,
     ) {
-    private val blockEntity: HTMachineBlockEntity = menu.context
+    private val blockEntity: HTConfigurableBlockEntity = menu.context
 
     override val texture: ResourceLocation? = null
 
@@ -39,7 +39,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         startY + HTSlotHelper.getSlotPosY(y) - 4,
         Component.empty(),
     ).apply {
-        tooltip = blockEntity.getAccessConfiguration(side).let(::createTooltip)
+        tooltip = blockEntity.getAccessConfig(side).let(::createTooltip)
     }
 
     private fun createTooltip(config: HTAccessConfiguration): Tooltip =
@@ -71,10 +71,10 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
     ) : ExtendedButton(x, y, 24, 24, message, {}) {
         override fun onPress() {
             super.onPress()
-            val value: HTAccessConfiguration = blockEntity.getAccessConfiguration(side).nextEntry
+            val value: HTAccessConfiguration = blockEntity.getAccessConfig(side).nextEntry
             tooltip = createTooltip(value)
             // Client update
-            blockEntity.setAccessConfiguration(side, value)
+            blockEntity.setAccessConfig(side, value)
             // Server update
             HTPacketHelper.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
         }
@@ -87,7 +87,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         ) {
             if (!visible) return
             // Render background
-            setShaderColor(guiGraphics, blockEntity.getAccessConfiguration(side).color) {
+            setShaderColor(guiGraphics, blockEntity.getAccessConfig(side).color) {
                 guiGraphics.blitSprite(SPRITES.get(this.active, this.isHoveredOrFocused), x, y, width, height)
             }
             // Render icon

@@ -61,6 +61,8 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         }
     }
 
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
         output.store("teleport_pos", HTTeleportPos.CODEC, teleportPos)
@@ -85,8 +87,6 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
             InteractionResult.FAIL
         }
     }
-
-    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     //    HTFluidInteractable    //
 

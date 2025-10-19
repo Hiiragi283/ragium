@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage
+package hiiragi283.ragium.api.util.access
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.toDescriptionKey
@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import io.netty.buffer.ByteBuf
-import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 
 enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean, val color: Int) :
@@ -35,12 +34,4 @@ enum class HTAccessConfiguration(val canInsert: Boolean, val canExtract: Boolean
             BOTH -> NONE
             NONE -> INPUT_ONLY
         }
-
-    //    Holder    //
-
-    interface Holder {
-        fun getAccessConfiguration(side: Direction): HTAccessConfiguration
-
-        fun setAccessConfiguration(side: Direction, value: HTAccessConfiguration)
-    }
 }

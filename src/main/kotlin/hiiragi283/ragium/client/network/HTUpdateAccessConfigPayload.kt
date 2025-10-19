@@ -2,8 +2,9 @@ package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
+import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -32,8 +33,8 @@ data class HTUpdateAccessConfigPayload(val pos: BlockPos, val direction: Directi
     }
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val receiver: HTAccessConfiguration.Holder = player.serverLevel().getBlockEntity(pos) as? HTAccessConfiguration.Holder ?: return
-        receiver.setAccessConfiguration(direction, transferIO)
+        val receiver: HTAccessConfigSetter = player.serverLevel().getBlockEntity(pos) as? HTAccessConfigSetter ?: return
+        receiver.setAccessConfig(direction, transferIO)
         if (receiver is HTContentListener) {
             receiver.onContentsChanged()
         }

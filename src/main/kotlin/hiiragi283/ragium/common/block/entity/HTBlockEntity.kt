@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -33,15 +35,18 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
+import java.util.UUID
 import java.util.function.Consumer
 
 /**
+ * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
  * @see [mekanism.common.tile.base.TileEntityMekanism]
  */
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -54,7 +59,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     HTItemHandler,
     HTFluidHandler,
     HTEnergyHandler,
-    HTHandlerProvider {
+    HTHandlerProvider,
+    HTOwnedBlockEntity {
     //    Ticking    //
 
     companion object {
@@ -114,6 +120,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         output.store("custom_name", VanillaBiCodecs.TEXT, this.customName)
+        // Owner
+        output.store(RagiumConst.OWNER, VanillaBiCodecs.UUID, ownerId)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -130,6 +138,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Custom Name
         this.customName = input.read("custom_name", VanillaBiCodecs.TEXT)
+        // Owner
+        this.ownerId = input.read(RagiumConst.OWNER, VanillaBiCodecs.UUID)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -159,6 +169,23 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     final override fun getName(): Component = customName ?: blockState.block.name
 
     final override fun getCustomName(): Component? = customName
+
+    //    HTOwnedBlockEntity    //
+
+    private var ownerId: UUID? = null
+
+    override fun setPlacedBy(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+        super.setPlacedBy(level, pos, state, placer, stack)
+        this.ownerId = placer?.uuid
+    }
+
+    override fun getOwner(): UUID? = ownerId
 
     //    Capability    //
 

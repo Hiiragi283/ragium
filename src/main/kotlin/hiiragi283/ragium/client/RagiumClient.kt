@@ -22,7 +22,7 @@ import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidMachineScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.renderer.entity.RagiumModelLayers
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData

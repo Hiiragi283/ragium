@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -18,7 +18,7 @@ enum class HTGeneratorVariant(
     private val jaJpPattern: String,
     private val customName: String? = null,
 ) : HTVariantKey.WithBlock<HTEntityBlock>,
-    HTVariantKey.WithBE<HTBlockEntity> {
+    HTVariantKey.WithBE<HTGeneratorBlockEntity> {
     // Basic
     THERMAL(HTMachineTier.BASIC, "Thermal Generator", "火力発電機", "thermal_generator"),
 
@@ -33,7 +33,7 @@ enum class HTGeneratorVariant(
     val energyRate: Int get() = RagiumConfig.COMMON.generatorEnergyRate[this]!!.asInt
 
     override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> by lazy { RagiumBlocks.GENERATORS[this]!! }
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> by lazy { RagiumBlockEntityTypes.GENERATORS[this]!! }
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTGeneratorBlockEntity> by lazy { RagiumBlockEntityTypes.GENERATORS[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

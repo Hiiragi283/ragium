@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.screens.MenuScreens

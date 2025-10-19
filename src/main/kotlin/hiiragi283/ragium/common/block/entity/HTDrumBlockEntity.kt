@@ -34,7 +34,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(type, pos, state),
+    HTConfigurableBlockEntity(type, pos, state),
     HTFluidInteractable {
     constructor(variant: HTDrumVariant, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
 

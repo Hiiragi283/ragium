@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -33,8 +32,6 @@ import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
-    override val energyUsage: Int get() = HTMachineVariant.BLOCK_BREAKER.energyUsage
-
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -52,7 +49,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlo
         network: HTEnergyBattery,
     ): Boolean {
         // 採掘用のFake Playerを用意する
-        val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwnerUUID(), getLastOwnerName()))
+        val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwner(), getOwnerName()))
         val inventory: Inventory = player.inventory
         val toolStack: ItemStack = toolSlot.getItemStack()
         inventory.items[inventory.selected] = toolStack

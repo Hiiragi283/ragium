@@ -9,22 +9,6 @@ import net.neoforged.neoforge.common.util.INBTSerializable
  * [HTValueInput], [HTValueOutput]に対応した[INBTSerializable]の拡張インターフェース
  */
 interface HTValueSerializable : INBTSerializable<CompoundTag> {
-    companion object {
-        @JvmStatic
-        fun trySerialize(obj: Any?, output: HTValueOutput) {
-            if (obj is HTValueSerializable) {
-                obj.serialize(output)
-            }
-        }
-
-        @JvmStatic
-        fun tryDeserialize(obj: Any?, input: HTValueInput) {
-            if (obj is HTValueSerializable) {
-                obj.deserialize(input)
-            }
-        }
-    }
-
     /**
      * [output]に値を書き込みます。
      */

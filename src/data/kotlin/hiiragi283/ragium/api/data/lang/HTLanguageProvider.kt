@@ -34,10 +34,12 @@ import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
+import snownee.jade.api.IJadeProvider
 import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
@@ -158,6 +160,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     // Mekanism
     fun add(translatable: IHasTranslationKey, value: String) {
         add(translatable.translationKey, value)
+    }
+
+    // Jade
+    fun add(provider: IJadeProvider, value: String) {
+        val id: ResourceLocation = provider.uid
+        val key = "config.jade.plugin_${id.namespace}.${id.path}"
+        add(key, value)
     }
 
     //    English    //

@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
@@ -33,6 +34,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
+import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 import kotlin.random.Random
 
@@ -85,6 +87,11 @@ interface RagiumPlatform {
 
     fun <T : Any> getHolder(lookup: HolderLookup.Provider?, key: ResourceKey<T>): Holder<T>? =
         (lookup ?: getRegistryAccess())?.holder(key)?.getOrNull()
+    
+    fun getPlayer(uuid: UUID?): ServerPlayer? {
+        if (uuid == null) return null
+        return getCurrentServer()?.playerList?.getPlayer(uuid)
+    }
 
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 

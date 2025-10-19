@@ -3,13 +3,9 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
-import hiiragi283.ragium.api.serialization.value.HTValueInput
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -17,13 +13,13 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
-    protected val variant: HTMachineVariant,
-    pos: BlockPos,
-    state: BlockState,
-) : HTMachineBlockEntity(variant, pos, state) {
-    final override val energyUsage: Int get() = variant.energyUsage
-
+/**
+ * レシピの処理を行う機械に使用される[HTMachineBlockEntity]の拡張クラス
+ * @param INPUT レシピの入力となるクラス
+ * @param RECIPE レシピのクラス
+ */
+abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMachineVariant, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(variant, pos, state) {
     override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,
@@ -74,6 +70,11 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
         recipe: RECIPE,
     )
 
+    //    Cached    //
+
+    /**
+     * レシピのキャッシュを保持する[HTProcessorBlockEntity]の拡張クラス
+     */
     abstract class Cached<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
         private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
         variant: HTMachineVariant,
@@ -86,16 +87,6 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(
             pos: BlockPos,
             state: BlockState,
         ) : this(finder.createCache(), variant, pos, state)
-
-        override fun writeValue(output: HTValueOutput) {
-            super.writeValue(output)
-            HTValueSerializable.trySerialize(recipeCache, output)
-        }
-
-        override fun readValue(input: HTValueInput) {
-            super.readValue(input)
-            HTValueSerializable.tryDeserialize(recipeCache, input)
-        }
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }

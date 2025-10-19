@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(HTDeviceVariant.EXP_COLLECTOR, pos, state),
+    HTDeviceBlockEntity.Tickable(HTDeviceVariant.EXP_COLLECTOR, pos, state),
     HTFluidInteractable {
     private lateinit var tank: HTVariableFluidStackTank
 

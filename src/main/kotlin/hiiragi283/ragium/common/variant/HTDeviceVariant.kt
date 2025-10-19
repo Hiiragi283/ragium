@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -18,7 +18,7 @@ enum class HTDeviceVariant(
     private val jaJpPattern: String,
     private val customName: String? = null,
 ) : HTVariantKey.WithBlock<HTEntityBlock>,
-    HTVariantKey.WithBE<HTBlockEntity> {
+    HTVariantKey.WithBE<HTDeviceBlockEntity> {
     // Basic
     ITEM_BUFFER(HTMachineTier.BASIC, "Item Buffer", "アイテムバッファ"),
     MILK_COLLECTOR(HTMachineTier.BASIC, "Milk Collector", "搾乳機"),
@@ -41,7 +41,7 @@ enum class HTDeviceVariant(
     val tickRate: IntSupplier get() = RagiumConfig.COMMON.deviceTickRate[this]!!
 
     override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> by lazy { RagiumBlocks.DEVICES[this]!! }
-    override val blockEntityHolder: HTDeferredBlockEntityType<HTBlockEntity> by lazy { RagiumBlockEntityTypes.DEVICES[this]!! }
+    override val blockEntityHolder: HTDeferredBlockEntityType<HTDeviceBlockEntity> by lazy { RagiumBlockEntityTypes.DEVICES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enUsPattern

@@ -24,7 +24,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(variant, pos, state),
+    HTDeviceBlockEntity.Tickable(variant, pos, state),
     HTFluidInteractable {
     private lateinit var tank: HTVariableFluidStackTank
 

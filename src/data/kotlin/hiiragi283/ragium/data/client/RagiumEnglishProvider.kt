@@ -2,10 +2,12 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import hiiragi283.ragium.client.RagiumKeyMappings
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.variant.HTDeviceVariant
@@ -507,8 +509,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.output_side", "Output Side")
-
-        add(RagiumTranslation.JADE_OUTPUT_SIDE, "Output Side: %s")
+        add(HTBlockConfigurationDataProvider, "Access Configuration")
+        add(HTBlockOwnerProvider, "Block Owner")
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(TODO() as HTDeviceVariant, pos, state) {
     private val tank: HTFluidStackTank = TODO()
 
     //    Ticking    //

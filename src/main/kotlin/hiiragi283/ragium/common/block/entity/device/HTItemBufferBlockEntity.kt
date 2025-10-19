@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.ITEM_BUFFER, pos, state) {
+class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.ITEM_BUFFER, pos, state) {
     private lateinit var slots: List<HTItemSlot>
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

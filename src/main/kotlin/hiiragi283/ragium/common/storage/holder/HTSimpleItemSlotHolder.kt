@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.storage.holder
 
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import net.minecraft.core.Direction
 
 class HTSimpleItemSlotHolder(
-    transferProvider: HTAccessConfiguration.Holder?,
+    transferProvider: HTAccessConfigGetter?,
     private val inputSlots: List<HTItemSlot>,
     private val outputSlots: List<HTItemSlot>,
     private val catalyst: HTItemSlot? = null,

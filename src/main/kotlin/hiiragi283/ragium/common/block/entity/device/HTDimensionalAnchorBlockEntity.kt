@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
@@ -12,8 +11,7 @@ import net.minecraft.world.level.block.state.BlockState
 /**
  * @see [appeng.blockentity.spatial.SpatialAnchorBlockEntity]
  */
-class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBlockEntity(HTDeviceVariant.DIM_ANCHOR.blockEntityHolder, pos, state) {
+class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.DIM_ANCHOR, pos, state) {
     override fun afterLevelInit(level: Level) {
         super.afterLevelInit(level)
         forceChunk()

@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -24,6 +25,7 @@ import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
@@ -71,7 +73,7 @@ object RagiumBlockEntityTypes {
     //    Generator    //
 
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTDeferredBlockEntityType<HTBlockEntity>> =
+    val GENERATORS: Map<HTGeneratorVariant, HTDeferredBlockEntityType<HTGeneratorBlockEntity>> =
         HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
             val factory = when (variant) {
                 // Basic
@@ -150,7 +152,7 @@ object RagiumBlockEntityTypes {
     //    Device    //
 
     @JvmField
-    val DEVICES: Map<HTDeviceVariant, HTDeferredBlockEntityType<HTBlockEntity>> =
+    val DEVICES: Map<HTDeviceVariant, HTDeferredBlockEntityType<HTDeviceBlockEntity>> =
         HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
             val factory = when (variant) {
                 // Basic

@@ -28,7 +28,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
-class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(HTDeviceVariant.MOB_CAPTURER, pos, state) {
+class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.MOB_CAPTURER, pos, state) {
     private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlots: List<HTItemSlot>
 

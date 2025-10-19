@@ -30,7 +30,7 @@ import net.neoforged.neoforge.common.util.TriState
 import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(variant, pos, state) {
+    HTDeviceBlockEntity.Tickable(variant, pos, state) {
     private lateinit var battery: HTEnergyBattery
 
     override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? {
