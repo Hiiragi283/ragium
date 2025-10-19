@@ -1,5 +1,6 @@
-package hiiragi283.ragium.common.integration.mekanism.storage
+package hiiragi283.ragium.api.storage.chemical
 
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import mekanism.api.chemical.ChemicalStack

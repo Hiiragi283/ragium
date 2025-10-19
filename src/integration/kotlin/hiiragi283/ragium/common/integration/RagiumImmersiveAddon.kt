@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration.immersive
+package hiiragi283.ragium.common.integration
 
 import blusunrize.immersiveengineering.api.tool.RailgunHandler
 import hiiragi283.ragium.api.addon.RagiumAddon

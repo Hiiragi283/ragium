@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration.mekanism.storage
+package hiiragi283.ragium.api.stack
 
 import mekanism.api.chemical.ChemicalStack
 

@@ -1,6 +1,8 @@
-package hiiragi283.ragium.common.integration.mekanism.storage
+package hiiragi283.ragium.api.storage.chemical
 
+import hiiragi283.ragium.api.stack.ImmutableChemicalStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.capability.toStorage
 import mekanism.api.Action
 import mekanism.api.chemical.ChemicalStack
 import mekanism.api.chemical.ISidedChemicalHandler
@@ -36,15 +38,13 @@ fun interface HTChemicalHandler : ISidedChemicalHandler {
         stack: ChemicalStack,
         side: Direction?,
         action: Action,
-    ): ChemicalStack =
-        getChemicalTank(tank, side)?.insertChemical(stack, MekanismCapabilities.convert(action), HTStorageAccess.INTERNAL) ?: stack
+    ): ChemicalStack = getChemicalTank(tank, side)?.insertChemical(stack, action.toStorage(), HTStorageAccess.INTERNAL) ?: stack
 
     override fun extractChemical(
         tank: Int,
         amount: Long,
         side: Direction?,
         action: Action,
-    ): ChemicalStack =
-        getChemicalTank(tank, side)?.extractChemical(amount.toInt(), MekanismCapabilities.convert(action), HTStorageAccess.INTERNAL)
-            ?: ChemicalStack.EMPTY
+    ): ChemicalStack = getChemicalTank(tank, side)?.extractChemical(amount.toInt(), action.toStorage(), HTStorageAccess.INTERNAL)
+        ?: ChemicalStack.EMPTY
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration.almost
+package hiiragi283.ragium.common.integration
 
 import com.almostreliable.unified.api.plugin.AlmostUnifiedNeoPlugin
 import com.almostreliable.unified.api.plugin.AlmostUnifiedPlugin

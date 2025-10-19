@@ -1,8 +1,10 @@
-package hiiragi283.ragium.common.integration.replication
+package hiiragi283.ragium.common.integration
 
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMatterTypeRegister
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus

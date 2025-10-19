@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration.delight
+package hiiragi283.ragium.common.integration
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -14,8 +14,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumDelightFoods
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.core.component.DataComponentPatch
@@ -35,6 +37,7 @@ import vectorwing.farmersdelight.common.block.PieBlock
 import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
 import java.util.function.Supplier
+import kotlin.collections.iterator
 
 object RagiumDelightAddon : RagiumAddon {
     //    Block    //

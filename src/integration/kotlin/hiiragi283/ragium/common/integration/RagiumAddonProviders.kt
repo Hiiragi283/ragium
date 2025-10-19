@@ -3,10 +3,6 @@ package hiiragi283.ragium.common.integration
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.immersive.RagiumImmersiveAddon
-import hiiragi283.ragium.common.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.common.integration.replication.RagiumReplicationAddon
 import net.neoforged.fml.ModList
 
 @HTAddon

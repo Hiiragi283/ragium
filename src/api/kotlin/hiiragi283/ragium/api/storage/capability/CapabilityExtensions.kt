@@ -11,6 +11,14 @@ import net.minecraft.core.Direction
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
+
+val IItemHandler.slotRange: IntRange get() = (0..<this.slots)
+
+val IFluidHandler.tankRange: IntRange get() = (0..<this.tanks)
+
+//    HTMultiCapability    //
 
 fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getBattery(
     level: ILevelExtension,

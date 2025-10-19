@@ -1,16 +1,16 @@
-package hiiragi283.ragium.common.integration.mekanism.storage
+package hiiragi283.ragium.api.storage.capability
 
+import hiiragi283.ragium.api.stack.ImmutableChemicalStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStackView
-import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTViewCapability
+import hiiragi283.ragium.api.storage.chemical.HTChemicalHandler
 import hiiragi283.ragium.impl.storage.capability.HTViewCapabilityBase
-import mekanism.api.Action
 import mekanism.api.chemical.IChemicalHandler
 import mekanism.common.capabilities.Capabilities
 import net.minecraft.core.Direction
 
 /**
- * @see [hiiragi283.ragium.api.storage.capability.RagiumCapabilities]
+ * @see [RagiumCapabilities]
  */
 object MekanismCapabilities {
     @JvmField
@@ -21,7 +21,7 @@ object MekanismCapabilities {
         if (handler is HTChemicalHandler) {
             handler.getChemicalTanks(side)
         } else {
-            (0..<handler.chemicalTanks).map { tank: Int ->
+            handler.tankRange.map { tank: Int ->
                 object : HTStackView<ImmutableChemicalStack> {
                     override fun getStack(): ImmutableChemicalStack = handler.getChemicalInTank(tank).toImmutable()
 
@@ -62,16 +62,4 @@ object MekanismCapabilities {
             }
         }
     }*/
-
-    @JvmStatic
-    fun convert(action: Action): HTStorageAction = when (action.execute()) {
-        true -> HTStorageAction.EXECUTE
-        false -> HTStorageAction.SIMULATE
-    }
-
-    @JvmStatic
-    fun convert(action: HTStorageAction): Action = when (action.execute) {
-        true -> Action.EXECUTE
-        false -> Action.SIMULATE
-    }
 }

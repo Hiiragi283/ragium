@@ -1,8 +1,7 @@
-package hiiragi283.ragium.common.integration.mekanism.storage
+package hiiragi283.ragium.api.stack
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.stack.ImmutableStack
 import mekanism.api.chemical.Chemical
 import mekanism.api.chemical.ChemicalStack
 import net.minecraft.core.Holder

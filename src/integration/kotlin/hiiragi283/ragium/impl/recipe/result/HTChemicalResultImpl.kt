@@ -1,6 +1,6 @@
-package hiiragi283.ragium.common.integration.mekanism.recipe
+package hiiragi283.ragium.impl.recipe.result
 
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.serialization.codec.BiCodec
@@ -13,15 +13,17 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
 
-class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val amount: Long) : HTRecipeResult<ChemicalStack> {
+class HTChemicalResultImpl(private val entry: HTKeyOrTagEntry<Chemical>, private val amount: Long) : HTChemicalResult {
     companion object {
         @JvmField
-        val CODEC: BiCodec<ByteBuf, HTChemicalResult> = BiCodec.composite(
-            HTKeyOrTagHelper.INSTANCE.codec(MekanismAPI.CHEMICAL_REGISTRY_NAME).fieldOf("id"),
-            HTChemicalResult::entry,
+        val CODEC: BiCodec<ByteBuf, HTChemicalResultImpl> = BiCodec.composite(
+            HTKeyOrTagHelper.INSTANCE
+                .codec(MekanismAPI.CHEMICAL_REGISTRY_NAME)
+                .fieldOf("id"),
+            HTChemicalResultImpl::entry,
             BiCodecs.POSITIVE_LONG.fieldOf("amount"),
-            HTChemicalResult::amount,
-            ::HTChemicalResult,
+            HTChemicalResultImpl::amount,
+            ::HTChemicalResultImpl,
         )
     }
 
@@ -34,4 +36,6 @@ class HTChemicalResult(private val entry: HTKeyOrTagEntry<Chemical>, private val
             check(!stack.isEmpty) { "Empty chemical stack is not valid for recipe result" }
             stack
         }
+
+    override fun copyWithAmount(amount: Long): HTChemicalResult = HTChemicalResultImpl(this.entry, amount)
 }
