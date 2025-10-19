@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import java.util.function.Predicate
@@ -41,10 +40,8 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ImmutableItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                RagiumCapabilities.FLUID.getSlottedCapability(stack)?.let { handler: HTFluidHandler ->
-                    for (fluidTank: HTFluidTank in handler.getFluidTanks(handler.getFluidSideFor())) {
-                        if (tank.isValid(fluidTank.getStack())) return@HTFluidFuelItemStackSlot false
-                    }
+                for (stack: ImmutableFluidStack in RagiumCapabilities.FLUID.getCapabilityStacks(stack)) {
+                    if (tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
                 }
                 // stackを燃料に変換できない場合はtrue
                 stackToAmount(stack) == 0

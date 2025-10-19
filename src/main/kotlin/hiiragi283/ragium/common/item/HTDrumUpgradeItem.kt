@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -18,6 +16,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Supplier
 
 /**
@@ -41,9 +40,9 @@ abstract class HTDrumUpgradeItem(
         val state: BlockState = level.getBlockState(pos)
         if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
-                val fluid: ImmutableFluidStack = RagiumCapabilities.FLUID
-                    .getCapabilitySlot(level, pos, null, 0)
-                    ?.getStack()
+                val fluid: FluidStack = RagiumCapabilities.FLUID
+                    .getCapability(level, pos, null)
+                    ?.getFluidInTank(0)
                     ?: return InteractionResult.FAIL
                 val newState: BlockState = newDrum.get().defaultBlockState()
                 level.setBlockAndUpdate(pos, newState)
@@ -53,9 +52,7 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                RagiumCapabilities.FLUID
-                    .getCapabilitySlot(level, pos, null, 0)
-                    ?.insert(fluid, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                RagiumCapabilities.FLUID.getCapability(level, pos, null)?.fill(fluid, HTStorageAction.EXECUTE.toFluid())
                 context.itemInHand.shrink(1)
             }
             return InteractionResult.sidedSuccess(level.isClientSide)

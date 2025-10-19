@@ -1,9 +1,8 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [HTFluidTank]に基づいた[HTSidedFluidHandler]の拡張インターフェース
@@ -27,51 +26,44 @@ fun interface HTFluidHandler : HTSidedFluidHandler {
 
     override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean = getFluidTank(tank, side)?.isValid(stack) ?: false
 
-    override fun insertFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack {
+    @Suppress("DEPRECATION")
+    override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): Int {
         val tanks: List<HTFluidTank> = getFluidTanks(side)
-        val access: HTStorageAccess = HTStorageAccess.forHandler(side)
         return when (tanks.size) {
-            1 -> tanks[0].insertFluid(stack, action, access)
+            1 -> tanks[0].fill(resource, action)
             2 -> {
-                val first: FluidStack = tanks[0].insertFluid(stack, action, access)
-                tanks[1].insertFluid(first, action, access)
+                val resource1: FluidStack = when {
+                    action.simulate() -> resource.copy()
+                    else -> resource
+                }
+                val first: Int = tanks[0].fill(resource1, action)
+                tanks[1].fill(resource1.copyWithAmount(resource1.amount - first), action)
             }
-            else -> stack
+            else -> 0
         }
     }
 
-    override fun extractFluid(amount: Int, action: HTStorageAction, side: Direction?): FluidStack {
+    @Suppress("DEPRECATION")
+    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
         val tanks: List<HTFluidTank> = getFluidTanks(side)
-        val access: HTStorageAccess = HTStorageAccess.forHandler(side)
         return when (tanks.size) {
-            1 -> tanks[0].extractFluid(amount, action, access)
+            1 -> tanks[0].drain(resource, action)
             2 -> {
-                val first: FluidStack = tanks[0].extractFluid(amount, action, access)
-                val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
-                tank1.extractFluid(first.amount, action, access)
+                val first: FluidStack = tanks[0].drain(resource, action)
+                tanks[1].drain(first, action)
             }
             else -> FluidStack.EMPTY
         }
     }
 
-    override fun extractFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack {
+    @Suppress("DEPRECATION")
+    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
         val tanks: List<HTFluidTank> = getFluidTanks(side)
-        val access: HTStorageAccess = HTStorageAccess.forHandler(side)
         return when (tanks.size) {
-            1 -> {
-                val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
-                tank.extractFluid(stack.amount, action, access)
-            }
+            1 -> tanks[0].drain(maxDrain, action)
             2 -> {
-                val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
-                val first: FluidStack = tank.extractFluid(stack.amount, action, access)
-
-                val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
-                tank1.extractFluid(first.amount, action, access)
+                val first: FluidStack = tanks[0].drain(maxDrain, action)
+                tanks[1].drain(first, action)
             }
             else -> FluidStack.EMPTY
         }

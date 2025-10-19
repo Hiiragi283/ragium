@@ -1,14 +1,14 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
- * 向きに応じて制御された[HTExtendedFluidHandler]の拡張インターフェース
+ * 向きに応じて制御された[IFluidHandler]の拡張インターフェース
  * @see [mekanism.api.fluid.ISidedFluidHandler]
  */
-interface HTSidedFluidHandler : HTExtendedFluidHandler {
+interface HTSidedFluidHandler : IFluidHandler {
     fun getFluidSideFor(): Direction? = null
 
     fun getTanks(side: Direction?): Int
@@ -26,23 +26,23 @@ interface HTSidedFluidHandler : HTExtendedFluidHandler {
     @Deprecated("Use `getTankCapacity(Int, Direction?)` instead")
     override fun getTankCapacity(tank: Int): Int = getTankCapacity(tank, getFluidSideFor())
 
-    fun insertFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack
-
-    @Deprecated("Use `insertFluid(FluidStack, Boolean, Direction?)` instead")
-    override fun insertFluid(stack: FluidStack, action: HTStorageAction): FluidStack = insertFluid(stack, action, getFluidSideFor())
-
-    fun extractFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack
-
-    @Deprecated("Use `extractFluid(FluidStack, Boolean, Direction?)` instead")
-    override fun extractFluid(stack: FluidStack, action: HTStorageAction): FluidStack = extractFluid(stack, action, getFluidSideFor())
-
     fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean
 
     @Deprecated("Use `isFluidValid(Int, FluidStack, Direction?)` instead")
     override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = isFluidValid(tank, stack, getFluidSideFor())
 
-    fun extractFluid(amount: Int, action: HTStorageAction, side: Direction?): FluidStack
+    fun fill(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): Int
 
-    @Deprecated("Use `extractFluid(Int, Boolean, Direction?)` instead")
-    override fun extractFluid(amount: Int, action: HTStorageAction): FluidStack = extractFluid(amount, action, getFluidSideFor())
+    @Deprecated("Use `fill(FluidStack, IFluidHandler.FluidAction, Direction?)` instead")
+    override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int = fill(resource, action, getFluidSideFor())
+
+    fun drain(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): FluidStack
+
+    @Deprecated("Use `drain(FluidStack, IFluidHandler.FluidAction, Direction?)` instead")
+    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack = drain(resource, action, getFluidSideFor())
+
+    fun drain(maxDrain: Int, action: IFluidHandler.FluidAction, side: Direction?): FluidStack
+
+    @Deprecated("Use `drain(Int, IFluidHandler.FluidAction, Direction?)` instead")
+    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack = drain(maxDrain, action, getFluidSideFor())
 }

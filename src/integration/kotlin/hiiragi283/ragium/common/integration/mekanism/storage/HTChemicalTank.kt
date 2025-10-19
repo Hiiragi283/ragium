@@ -7,6 +7,9 @@ import mekanism.api.chemical.ChemicalStack
  * [ImmutableChemicalStack]向けの[HTStackSlot]の拡張インターフェース
  */
 interface HTChemicalTank : HTStackSlot<ImmutableChemicalStack> {
+    override fun isSameStack(first: ImmutableChemicalStack, second: ImmutableChemicalStack): Boolean =
+        ChemicalStack.isSameChemical(first.stack, second.stack)
+
     //    Mutable    //
 
     /**
@@ -16,8 +19,5 @@ interface HTChemicalTank : HTStackSlot<ImmutableChemicalStack> {
         HTStackSlot.Mutable<ImmutableChemicalStack>(),
         HTChemicalTank {
         final override fun getEmptyStack(): ImmutableChemicalStack = ImmutableChemicalStack.EMPTY
-
-        final override fun isSameStack(first: ImmutableChemicalStack, second: ImmutableChemicalStack): Boolean =
-            ChemicalStack.isSameChemical(first.stack, second.stack)
     }
 }

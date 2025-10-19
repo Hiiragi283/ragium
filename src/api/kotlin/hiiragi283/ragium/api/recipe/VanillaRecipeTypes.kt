@@ -16,6 +16,24 @@ interface VanillaRecipeTypes {
     companion object {
         @JvmField
         val INSTANCE: VanillaRecipeTypes = RagiumAPI.getService()
+        
+        @JvmField
+        val CRAFTING = INSTANCE.crafting()
+        
+        @JvmField
+        val SMELTING = INSTANCE.smelting()
+        
+        @JvmField
+        val BLASTING = INSTANCE.blasting()
+        
+        @JvmField
+        val SMOKING = INSTANCE.smoking()
+        
+        @JvmField
+        val STONE_CUTTING = INSTANCE.stonecutting()
+        
+        @JvmField
+        val SMITHING = INSTANCE.smithing()
     }
 
     fun crafting(): HTRecipeType.Findable<CraftingInput, CraftingRecipe>

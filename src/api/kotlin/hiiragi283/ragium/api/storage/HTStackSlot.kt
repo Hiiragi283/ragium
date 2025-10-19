@@ -29,12 +29,27 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
 
     /**
      * 指定された引数から[STACK]を搬出します。
+     * @param stack 搬出される[STACK]
+     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬出を行います。
+     * @param access このスロットへのアクセスの種類
+     * @return 搬出された[STACK]
+     */
+    fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK
+
+    /**
+     * 指定された引数から[STACK]を搬出します。
      * @param amount 搬出する個数の最大値
      * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬出を行います。
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
+    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK =
+        extract(getStack().copyWithAmount(amount), action, access)
+
+    /**
+     * 指定された[first]と[second]が等価か判定します。
+     */
+    fun isSameStack(first: STACK, second: STACK): Boolean
 
     //    Mutable    //
 
@@ -101,25 +116,15 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             return stack
         }
 
-        final override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
-            val stack: STACK = getStack()
-            if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) {
-                return getEmptyStack()
-            }
-            val current: Int = min(stack.amountAsInt(), getCapacityAsInt(stack))
-            val fixedAmount: Int = min(amount, current)
-            val result: STACK = stack.copyWithAmount(fixedAmount)
+        final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
+            if (isEmpty() || stack.isEmpty() || !canStackExtract(stack, access)) return getEmptyStack()
+            val fixedAmount: Int = min(stack.amountAsInt(), getCapacityAsInt(stack))
             if (action.execute) {
                 shrinkStack(fixedAmount, action)
                 onContentsChanged()
             }
-            return result
+            return stack.copyWithAmount(fixedAmount)
         }
-
-        /**
-         * 指定された[first]と[second]が等価か判定します。
-         */
-        protected abstract fun isSameStack(first: STACK, second: STACK): Boolean
 
         /**
          * 指定された[stack]をこのスロットに搬入できるか判定します。

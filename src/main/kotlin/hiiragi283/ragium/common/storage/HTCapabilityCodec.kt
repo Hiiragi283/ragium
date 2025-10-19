@@ -4,17 +4,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * @see [mekanism.common.attachments.containers.ContainerType]
@@ -44,33 +37,6 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
 
         @JvmField
         val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)
-
-        @JvmStatic
-        fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
-            event.registerItem(
-                RagiumCapabilities.ITEM.itemCapability(),
-                { stack: ItemStack, _: Void? -> getter(stack) },
-                *items,
-            )
-        }
-
-        @JvmStatic
-        fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
-            event.registerItem(
-                RagiumCapabilities.FLUID.itemCapability(),
-                { stack: ItemStack, _: Void? -> getter(stack) },
-                *items,
-            )
-        }
-
-        @JvmStatic
-        fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
-            event.registerItem(
-                RagiumCapabilities.ENERGY.itemCapability(),
-                { stack: ItemStack, _: Void? -> getter(stack) },
-                *items,
-            )
-        }
     }
 
     //    Save & Read    //

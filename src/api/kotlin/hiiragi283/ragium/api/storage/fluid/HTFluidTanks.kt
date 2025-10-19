@@ -18,6 +18,9 @@ fun HTFluidTank.isValid(stack: FluidStack): Boolean = this.isValid(stack.toImmut
 fun HTFluidTank.insertFluid(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack =
     this.insert(stack.toImmutable(), action, access).stack
 
+fun HTFluidTank.extractFluid(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack =
+    this.extract(stack.toImmutable(), action, access).stack
+
 fun HTFluidTank.extractFluid(amount: Int, action: HTStorageAction, access: HTStorageAccess): FluidStack =
     this.extract(amount, action, access).stack
 

@@ -1,15 +1,15 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "#c:ores/copper",
+  "ingredient": "#c:ores/nickel",
   "results": [
     {
       "count": 2,
-      "id": "#c:raw_materials/copper"
+      "id": "#c:raw_materials/nickel"
     },
     {
       "chance": 0.25,
       "count": 1,
-      "id": "#c:raw_materials/gold"
+      "id": "#c:raw_materials/platinum"
     }
   ]
 }

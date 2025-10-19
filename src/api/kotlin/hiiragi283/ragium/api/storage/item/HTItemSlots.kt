@@ -21,6 +21,9 @@ fun HTItemSlot.isValid(stack: ItemStack): Boolean = this.isValid(stack.toImmutab
 fun HTItemSlot.insertItem(stack: ItemStack, action: HTStorageAction, access: HTStorageAccess): ItemStack =
     this.insert(stack.toImmutable(), action, access).stack
 
+fun HTItemSlot.extractItem(stack: ItemStack, action: HTStorageAction, access: HTStorageAccess): ItemStack =
+    this.extract(stack.toImmutable(), action, access).stack
+
 fun HTItemSlot.extractItem(amount: Int, action: HTStorageAction, access: HTStorageAccess): ItemStack =
     this.extract(amount, action, access).stack
 

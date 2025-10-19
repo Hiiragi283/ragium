@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.giveStackTo
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
@@ -19,7 +21,8 @@ import net.minecraft.world.level.Level
 
 class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
-        for (slot: HTItemSlot in RagiumCapabilities.ITEM.getCapabilitySlots(stack)) {
+        for (slot: HTStackView<ImmutableItemStack> in RagiumCapabilities.ITEM.getCapabilityViews(stack)) {
+            if (slot !is HTItemSlot) continue
             if (slot.isEmpty()) continue
             val stackIn: ItemStack = slot.getItemStack()
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)

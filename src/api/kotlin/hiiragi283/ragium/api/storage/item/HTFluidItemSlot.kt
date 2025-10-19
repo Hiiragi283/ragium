@@ -27,16 +27,16 @@ interface HTFluidItemSlot :
      * @see [mekanism.common.inventory.slot.IFluidHandlerSlot.fillTank]
      */
     fun fillTank(moveTo: HTItemSlot.Mutable): Boolean {
-        val tanks: List<HTFluidTank> = RagiumCapabilities.FLUID.getCapabilitySlots(getStack())
-        if (tanks.size == 1) {
-            val stackIn: ImmutableFluidStack = tanks[0].getStack()
+        val stacks: List<ImmutableFluidStack> = RagiumCapabilities.FLUID.getCapabilityStacks(getStack())
+        if (stacks.size == 1) {
+            val stackIn: ImmutableFluidStack = stacks[0]
             if (!stackIn.isEmpty() && getFluidTank().isValid(stackIn)) {
                 return drainItemAndMove(moveTo, stackIn)
             }
-        } else if (tanks.size > 1) {
+        } else if (stacks.size > 1) {
             var changed = false
-            for (tank: HTFluidTank in tanks) {
-                if (drainItemAndMove(moveTo, tank.getStack()) && this.isEmpty()) {
+            for (tank: ImmutableFluidStack in stacks) {
+                if (drainItemAndMove(moveTo, tank) && this.isEmpty()) {
                     changed = true
                     break
                 }
@@ -44,6 +44,41 @@ interface HTFluidItemSlot :
             return changed
         }
         return false
+    }
+
+    /**
+     * @see [mekanism.common.inventory.slot.IFluidHandlerSlot.drainTank]
+     */
+    fun drainTank(moveTo: HTItemSlot.Mutable) {
+        if (!RagiumCapabilities.FLUID.hasCapability(this.getStack())) return
+        val stackIn: ImmutableFluidStack = this.getFluidTank().getStack()
+        if (!stackIn.isEmpty()) {
+            val simulatedDrain: ImmutableFluidStack = this.getFluidTank().extract(
+                stackIn.amountAsInt(),
+                HTStorageAction.SIMULATE,
+                HTStorageAccess.INTERNAL,
+            )
+            if (simulatedDrain.isEmpty()) return
+
+            val input: ImmutableItemStack = this.getStack().copyWithAmount(1)
+            val handlerItem: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(input) ?: return
+            val toDrain: Int = handlerItem.fill(stackIn.copy().stack, HTStorageAction.SIMULATE.toFluid())
+            if (toDrain == 0) return
+            if (this.getAmountAsInt() == 1) {
+                RagiumCapabilities.FLUID.getCapability(handlerItem.container)?.let { fluidHandlerItem: IFluidHandlerItem ->
+                    if (fluidHandlerItem.fill(stackIn.copy().stack, HTStorageAction.SIMULATE.toFluid()) > 0) {
+                        setItemStack(handlerItem.container)
+                        this.getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                        this.isDraining = true
+                        return
+                    }
+                }
+            }
+            if (moveItem(moveTo, handlerItem.container.toImmutable())) {
+                this.getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                this.isDraining = false
+            }
+        }
     }
 
     /**
@@ -66,7 +101,7 @@ interface HTFluidItemSlot :
         if (drained.isEmpty) return false
 
         if (this.getAmountAsInt() == 1) {
-            RagiumCapabilities.FLUID.getCapability(handlerItem.container)?.let { fluidHandlerItem ->
+            RagiumCapabilities.FLUID.getCapability(handlerItem.container)?.let { fluidHandlerItem: IFluidHandlerItem ->
                 if (!fluidHandlerItem.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid()).isEmpty) {
                     setItemStack(handlerItem.container)
                     this.getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -100,7 +135,7 @@ interface HTFluidItemSlot :
 
     /*fun fillTank(): Boolean {
         if (this.getAmountAsInt() != 1) return false
-        val handlerItem: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(getStack()) ?: return false
+        val handlerItem: IFluidHandlerItem = RagiumCapabilitiesNew.INSTANCE.fluid.getCapability(getStack()) ?: return false
         val tanks: Int = handlerItem.tanks
         if (tanks == 1) {
             val stackIn: FluidStack = handlerItem.getFluidInTank(0)
@@ -112,7 +147,7 @@ interface HTFluidItemSlot :
             }
         } else if (tanks > 1) {
             var changed = false
-            for (i: Int in (0..<tanks)) {
+            for (i: Int in (0.<tanks)) {
                 val stackIn: FluidStack = handlerItem.getFluidInTank(i)
                 if (stackIn.isEmpty) continue
                 if (fillHandlerFromOther(getFluidTank(), handlerItem, stackIn)) {

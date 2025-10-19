@@ -85,11 +85,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")
-        addAdvancement(
-            RagiumAdvancements.MYSTERIOUS_OBSIDIAN,
-            "Who is Falling Meteorites?",
-            "Get Mysterious Obsidian by right-clicking Crying Obsidian with Eldritch Ticket",
-        )
+        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "Who is Falling Meteorites?", "")
         // Iridescentium
         addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "The sky's the limit", "Get Iridescentium Ingot")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "Eternal Requiem", "Get Eternal Component for making tools unbreakable")

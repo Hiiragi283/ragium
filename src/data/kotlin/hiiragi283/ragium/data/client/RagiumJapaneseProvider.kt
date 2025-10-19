@@ -82,7 +82,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")
-        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "泣く黒曜石に異質なチケットを使って神秘的な黒曜石を手に入れる")
+        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "")
         // Iridescentium
         addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "虹色の錬金術師", "七色金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "さあ，地獄を楽しみな！", "ツールを不可壊にするためにエターナル構造体を手に入れる")

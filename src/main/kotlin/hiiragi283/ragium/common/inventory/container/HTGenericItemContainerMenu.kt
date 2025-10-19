@@ -27,7 +27,7 @@ abstract class HTGenericItemContainerMenu(
     HTGenericContainerRows {
     protected val handler: HTItemHandler = when (isClientSide) {
         Dist.CLIENT -> null
-        Dist.DEDICATED_SERVER -> RagiumCapabilities.ITEM.getSlottedCapability(stack)
+        Dist.DEDICATED_SERVER -> RagiumCapabilities.ITEM.getCapability(stack) as? HTItemHandler
     } ?: createHandler(rows)
 
     protected abstract fun createHandler(rows: Int): HTItemHandler

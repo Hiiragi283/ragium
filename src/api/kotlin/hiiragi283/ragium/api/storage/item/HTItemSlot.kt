@@ -15,6 +15,9 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
      */
     fun createContainerSlot(): Slot? = null
 
+    override fun isSameStack(first: ImmutableItemStack, second: ImmutableItemStack): Boolean =
+        ItemStack.isSameItemSameComponents(first.stack, second.stack)
+
     //    Mutable    //
 
     /**
@@ -24,8 +27,5 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
         HTStackSlot.Mutable<ImmutableItemStack>(),
         HTItemSlot {
         final override fun getEmptyStack(): ImmutableItemStack = ImmutableItemStack.EMPTY
-
-        final override fun isSameStack(first: ImmutableItemStack, second: ImmutableItemStack): Boolean =
-            ItemStack.isSameItemSameComponents(first.stack, second.stack)
     }
 }

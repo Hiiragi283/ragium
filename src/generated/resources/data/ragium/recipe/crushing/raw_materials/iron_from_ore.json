@@ -9,7 +9,7 @@
     {
       "chance": 0.25,
       "count": 1,
-      "id": "minecraft:flint"
+      "id": "#c:raw_materials/tin"
     }
   ]
 }

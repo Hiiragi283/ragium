@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTToolVariant
@@ -36,7 +37,6 @@ import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
@@ -69,7 +69,10 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
+import net.neoforged.neoforge.items.IItemHandler
 
 object RagiumItems {
     @JvmField
@@ -505,7 +508,7 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        HTCapabilityCodec.registerItem(event, provider(9, ::HTPotionBundleItemHandler), POTION_BUNDLE)
+        registerItem(event, provider(9, ::HTPotionBundleItemHandler), POTION_BUNDLE)
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
@@ -515,12 +518,12 @@ object RagiumItems {
                 HTDrumVariant.LARGE -> RagiumCommonConfig::largeDrumCapacity
                 HTDrumVariant.HUGE -> RagiumCommonConfig::hugeDrumCapacity
             }(RagiumConfig.COMMON).asLong
-            HTCapabilityCodec.registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
+            registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
         }
-        HTCapabilityCodec.registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
+        registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
         // Energy
-        HTCapabilityCodec.registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
+        registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
 
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
@@ -533,6 +536,33 @@ object RagiumItems {
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
+    }
+
+    @JvmStatic
+    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
+        event.registerItem(
+            RagiumCapabilities.ITEM.itemCapability(),
+            { stack: ItemStack, _: Void? -> getter(stack) },
+            *items,
+        )
+    }
+
+    @JvmStatic
+    fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
+        event.registerItem(
+            RagiumCapabilities.FLUID.itemCapability(),
+            { stack: ItemStack, _: Void? -> getter(stack) },
+            *items,
+        )
+    }
+
+    @JvmStatic
+    fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
+        event.registerItem(
+            RagiumCapabilities.ENERGY.itemCapability(),
+            { stack: ItemStack, _: Void? -> getter(stack) },
+            *items,
+        )
     }
 
     @JvmStatic

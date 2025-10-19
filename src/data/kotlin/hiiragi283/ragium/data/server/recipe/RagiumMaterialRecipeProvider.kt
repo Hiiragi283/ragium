@@ -22,6 +22,8 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -157,11 +159,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .addIngredient(HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .save(output)
-
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(RagiumCommonTags.Items.ORES_DEEP_SCRAP))
-            .addResult(resultHelper.item(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL, 2))
-            .saveSuffixed(output, "_from_ore")
     }
 
     @JvmStatic
@@ -291,25 +288,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, 2))
             .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
-        // Copper
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.COPPER))
-            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.COPPER, 4))
-            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.GOLD), 1 / 4f)
-            .saveSuffixed(output, "_from_ore")
-        // Iron
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.IRON))
-            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.IRON, 2))
-            .addResult(resultHelper.item(Items.FLINT), 1 / 4f)
-            .saveSuffixed(output, "_from_ore")
-        // Gold
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.GOLD))
-            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.GOLD, 2))
-            .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, HTVanillaMaterialType.COPPER), 1 / 4f)
-            .saveSuffixed(output, "_from_ore")
-
         // Redstone
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(HTBlockMaterialVariant.ORE, HTVanillaMaterialType.REDSTONE))
@@ -324,6 +302,24 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE, 4), 1 / 2f)
             .addResult(resultHelper.item(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL, 1), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
+
+        // Raws
+        mapOf(
+            HTVanillaMaterialType.COPPER to HTVanillaMaterialType.GOLD,
+            HTVanillaMaterialType.IRON to HTCommonMaterialTypes.getMetal("tin"),
+            HTVanillaMaterialType.GOLD to HTVanillaMaterialType.COPPER,
+            HTCommonMaterialTypes.getMetal("tin") to HTCommonMaterialTypes.getMetal("lead"),
+            HTCommonMaterialTypes.getMetal("lead") to HTCommonMaterialTypes.getMetal("silver"),
+            HTCommonMaterialTypes.getMetal("silver") to HTCommonMaterialTypes.getMetal("lead"),
+            HTCommonMaterialTypes.getMetal("nickel") to HTCommonMaterialTypes.getMetal("platinum"),
+            HTCommonMaterialTypes.getMetal("platinum") to HTCommonMaterialTypes.getMetal("nickel"),
+        ).forEach { (primary: HTMaterialType, secondary: HTMaterialType) ->
+            HTItemToChancedItemRecipeBuilder
+                .crushing(itemCreator.fromTagKey(HTBlockMaterialVariant.ORE, primary))
+                .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, primary, 2))
+                .addResult(resultHelper.item(HTItemMaterialVariant.RAW_MATERIAL, secondary), 1 / 4f)
+                .saveSuffixed(output, "_from_ore")
+        }
 
         // Gems
         mapOf(
@@ -343,11 +339,16 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 .saveSuffixed(output, "_from_ore")
         }
 
-        // Netherite
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(Tags.Items.ORES_NETHERITE_SCRAP))
-            .addResult(resultHelper.item(HTItemMaterialVariant.SCRAP, HTVanillaMaterialType.NETHERITE, 2))
-            .saveSuffixed(output, "_from_ore")
+        // Scraps
+        mapOf(
+            Tags.Items.ORES_NETHERITE_SCRAP to HTVanillaMaterialType.NETHERITE,
+            RagiumCommonTags.Items.ORES_DEEP_SCRAP to RagiumMaterialType.DEEP_STEEL,
+        ).forEach { (ore: TagKey<Item>, scrap: HTMaterialType) ->
+            HTItemToChancedItemRecipeBuilder
+                .crushing(itemCreator.fromTagKey(ore))
+                .addResult(resultHelper.item(HTItemMaterialVariant.SCRAP, scrap, 2))
+                .saveSuffixed(output, "_from_ore")
+        }
     }
 
     @JvmStatic

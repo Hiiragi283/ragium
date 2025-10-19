@@ -2,8 +2,6 @@ package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -15,7 +13,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.extensions.ILevelExtension
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforgespi.language.IModInfo
 import java.text.NumberFormat
 import java.util.function.Consumer
@@ -66,13 +63,8 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     )
 }
 
-private fun energyText(amount: Int, capacity: Int): MutableComponent =
-    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
-
 private fun energyText(amount: Long, capacity: Long): MutableComponent =
     RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(longText(amount), longText(capacity))
-
-fun energyText(storage: IEnergyStorage): MutableComponent = energyText(storage.energyStored, storage.maxEnergyStored)
 
 fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmountAsLong(), battery.getCapacityAsLong())
 
@@ -116,8 +108,8 @@ fun addFluidTooltip(
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-fun addFluidTooltip(handler: HTFluidHandler, consumer: Consumer<Component>, flag: TooltipFlag) {
-    for (tank: HTFluidTank in handler.getFluidTanks(handler.getFluidSideFor())) {
-        addFluidTooltip(tank.getStack(), consumer, flag, false)
+fun addFluidTooltip(stacks: Iterable<ImmutableFluidStack>, consumer: Consumer<Component>, flag: TooltipFlag) {
+    for (stack: ImmutableFluidStack in stacks) {
+        addFluidTooltip(stack, consumer, flag, false)
     }
 }

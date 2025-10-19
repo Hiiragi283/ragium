@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.getBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -49,17 +50,17 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ImmutableItemStack ->
-                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stack, 0) ?: return@create false
+                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
                 !battery.isEmpty()
             },
         )
         // insert
         insertSlot = HTItemStackSlot.create(
             listener,
-            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
             filter = { stack: ImmutableItemStack ->
-                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stack, 0) ?: return@create false
+                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
                 battery.getNeededAsInt() > 0
             },
         )
@@ -84,7 +85,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     private fun extractFromItem(): TriState {
         val stackIn: ImmutableItemStack = extractSlot.getStack()
-        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stackIn, 0)
+        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stackIn)
             ?: return TriState.FALSE
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
@@ -105,7 +106,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     private fun receiveToItem(): TriState {
         val stackIn: ImmutableItemStack = insertSlot.getStack()
-        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getCapabilitySlot(stackIn, 0)
+        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stackIn)
             ?: return TriState.FALSE
         var toReceive: Int = transferRate
         toReceive = energyIn.insertEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)

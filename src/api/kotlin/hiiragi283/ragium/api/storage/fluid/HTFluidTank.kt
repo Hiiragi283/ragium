@@ -15,7 +15,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 interface HTFluidTank :
     HTStackSlot<ImmutableFluidStack>,
     IFluidTank {
-    fun toSingleHandler(): IFluidHandler = HTFluidTankWrapper(this)
+    override fun isSameStack(first: ImmutableFluidStack, second: ImmutableFluidStack): Boolean =
+        FluidStack.isSameFluidSameComponents(first.stack, second.stack)
 
     //    IFluidTank    //
 
@@ -40,11 +41,8 @@ interface HTFluidTank :
         extractFluid(maxDrain, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
-    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        if (this.isEmpty()) return FluidStack.EMPTY
-        if (!FluidStack.isSameFluidSameComponents(resource, getFluidStack())) return FluidStack.EMPTY
-        return extractFluid(resource.amount, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
-    }
+    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack =
+        extractFluid(resource, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
 
     //    Mutable    //
 
@@ -55,8 +53,5 @@ interface HTFluidTank :
         HTStackSlot.Mutable<ImmutableFluidStack>(),
         HTFluidTank {
         final override fun getEmptyStack(): ImmutableFluidStack = ImmutableFluidStack.EMPTY
-
-        final override fun isSameStack(first: ImmutableFluidStack, second: ImmutableFluidStack): Boolean =
-            FluidStack.isSameFluidSameComponents(first.stack, second.stack)
     }
 }
