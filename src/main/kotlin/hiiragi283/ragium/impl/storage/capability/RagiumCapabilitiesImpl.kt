@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.capability.HTMultiCapability
 import hiiragi283.ragium.api.storage.capability.HTViewCapability
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.slotRange
+import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.Direction
@@ -29,7 +31,7 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
         if (handler is HTFluidHandler) {
             handler.getFluidTanks(side)
         } else {
-            (0..<handler.tanks).map { tank: Int ->
+            handler.tankRange.map { tank: Int ->
                 object : HTStackView<ImmutableFluidStack> {
                     override fun getStack(): ImmutableFluidStack = handler.getFluidInTank(tank).toImmutable()
 
@@ -46,7 +48,7 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
         if (handler is HTItemHandler) {
             handler.getItemSlots(side)
         } else {
-            (0..<handler.slots).map { slot: Int ->
+            handler.slotRange.map { slot: Int ->
                 object : HTStackView<ImmutableItemStack> {
                     override fun getStack(): ImmutableItemStack = handler.getStackInSlot(slot).toImmutable()
 

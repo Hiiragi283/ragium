@@ -34,12 +34,12 @@ sealed class HTDrumMinecart :
 
     protected fun getDrumBlockEntityType(): HTDeferredBlockEntityType<HTDrumBlockEntity> = getDrumVariant().blockEntityHolder
 
-    override fun tick() {
+    /*override fun tick() {
         super.tick()
         getDrumBlockEntityType()
             .getTicker(this.level().isClientSide)
             ?.tick(this.level(), this.blockPosition(), this.displayBlockState, bindBlockEntity())
-    }
+    }*/
 
     override fun createBlockEntity(): HTDrumBlockEntity =
         getDrumBlockEntityType().create(BlockPos.ZERO, getDrumVariant().blockHolder.get().defaultBlockState())

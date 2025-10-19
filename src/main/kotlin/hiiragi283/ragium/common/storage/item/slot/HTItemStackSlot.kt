@@ -154,4 +154,8 @@ open class HTItemStackSlot protected constructor(
         }
         onContentsChanged()
     }
+
+    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+        this.stack.count = amount
+    }
 }

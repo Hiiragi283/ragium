@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
+import java.util.function.Supplier
 
 /**
  * [ItemLike]を継承した[HTHolderLike]の拡張インターフェース
@@ -42,6 +43,9 @@ interface HTItemHolderLike :
 
             override fun getId(): ResourceLocation = holder.idOrThrow
         }
+
+        @JvmStatic
+        fun fromItem(item: Supplier<out Item>): HTItemHolderLike = fromItem(ItemLike(item::get))
 
         /**
          * [ItemLike]を[HTItemHolderLike]に変換します。

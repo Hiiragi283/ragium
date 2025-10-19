@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
-import hiiragi283.ragium.api.extension.andThen
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -58,6 +57,15 @@ object RagiumBlocks {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
+
+        // Eldritch Stone
+        REGISTER.addFirstAlias("polished_eldritch_stone", "eldritch_stone")
+        REGISTER.addFirstAlias("polished_eldritch_stone_bricks", "eldritch_stone_bricks")
+
+        for (suffix: String in listOf("_slab", "_stairs", "_wall")) {
+            REGISTER.addFirstAlias("polished_eldritch_stone$suffix", "eldritch_stone$suffix")
+            REGISTER.addFirstAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
+        }
     }
 
     @JvmStatic
@@ -253,15 +261,11 @@ object RagiumBlocks {
 
     @JvmField
     val ELDRITCH_STONE: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
+        REGISTER.registerSimple("eldritch_stone", copyOf(Blocks.END_STONE, MapColor.COLOR_PURPLE))
 
     @JvmField
-    val POLISHED_ELDRITCH_STONE: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("polished_eldritch_stone", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
-
-    @JvmField
-    val POLISHED_ELDRITCH_STONE_BRICKS: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("polished_eldritch_stone_bricks", copyOf(Blocks.BLACKSTONE, MapColor.COLOR_PURPLE))
+    val ELDRITCH_STONE_BRICKS: HTSimpleDeferredBlock =
+        REGISTER.registerSimple("eldritch_stone_bricks", copyOf(Blocks.END_STONE_BRICKS, MapColor.COLOR_PURPLE))
 
     @JvmField
     val PLASTIC_BRICKS: HTSimpleDeferredBlock =
@@ -284,8 +288,7 @@ object RagiumBlocks {
         HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
         HTDecorationVariant.AZURE_TILE to AZURE_TILES,
         HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
-        HTDecorationVariant.POLISHED_ELDRITCH_STONE to POLISHED_ELDRITCH_STONE,
-        HTDecorationVariant.POLISHED_ELDRITCH_STONE_BRICK to POLISHED_ELDRITCH_STONE_BRICKS,
+        HTDecorationVariant.ELDRITCH_STONE_BRICK to ELDRITCH_STONE_BRICKS,
         HTDecorationVariant.PLASTIC_BRICK to PLASTIC_BRICKS,
         HTDecorationVariant.PLASTIC_TILE to PLASTIC_TILES,
         HTDecorationVariant.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
@@ -295,20 +298,16 @@ object RagiumBlocks {
     @JvmField
     val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            REGISTER.registerSimple(
-                "${variant.variantName()}_slab",
-                variant.base::get.andThen(::copyOf).andThen(::SlabBlock),
-            )
+            REGISTER.registerSimple("${variant.variantName()}_slab", { copyOf(variant.base.get()) }, ::SlabBlock)
         }
 
     @JvmField
     val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlock<StairBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            val base: HTDeferredBlock<*, *> = variant.base
             REGISTER.registerSimple(
                 "${variant.variantName()}_stairs",
                 {
-                    val block: Block = base.get()
+                    val block: Block = variant.base.get()
                     StairBlock(block.defaultBlockState(), copyOf(block))
                 },
             )
@@ -319,7 +318,8 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.variantName()}_wall",
-                variant.base::get.andThen(::copyOf).andThen(::WallBlock),
+                { copyOf(variant.base.get()) },
+                ::WallBlock,
             )
         }
 
@@ -336,7 +336,11 @@ object RagiumBlocks {
 
     @JvmField
     val SWEET_BERRIES_CAKE: HTBasicDeferredBlock<HTSweetBerriesCakeBlock> =
-        REGISTER.registerSimple("sweet_berries_cake", copyOf(Blocks.YELLOW_WOOL).forceSolidOn(), ::HTSweetBerriesCakeBlock)
+        REGISTER.registerSimple(
+            "sweet_berries_cake",
+            { copyOf(SPONGE_CAKE.get()).forceSolidOn() },
+            ::HTSweetBerriesCakeBlock,
+        )
 
     //    Generators    //
 

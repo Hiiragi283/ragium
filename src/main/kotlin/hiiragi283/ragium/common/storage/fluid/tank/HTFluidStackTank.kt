@@ -104,4 +104,8 @@ open class HTFluidStackTank protected constructor(
         }
         onContentsChanged()
     }
+
+    override fun updateCount(stack: ImmutableFluidStack, amount: Int) {
+        this.stack.amount = amount
+    }
 }

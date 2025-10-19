@@ -14,14 +14,12 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
 /**
  * @see [mekanism.common.inventory.slot.IFluidHandlerSlot]
+ * @see [me.desht.pneumaticcraft.common.block.entity.AbstractFluidTankBlockEntity]
  */
 interface HTFluidItemSlot :
     HTItemSlot,
     HTStackView.Mutable<ImmutableItemStack> {
     fun getFluidTank(): HTFluidTank
-
-    var isDraining: Boolean
-    var isFilling: Boolean
 
     /**
      * @see [mekanism.common.inventory.slot.IFluidHandlerSlot.fillTank]
@@ -69,14 +67,12 @@ interface HTFluidItemSlot :
                     if (fluidHandlerItem.fill(stackIn.copy().stack, HTStorageAction.SIMULATE.toFluid()) > 0) {
                         setItemStack(handlerItem.container)
                         this.getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                        this.isDraining = true
                         return
                     }
                 }
             }
             if (moveItem(moveTo, handlerItem.container.toImmutable())) {
                 this.getFluidTank().extract(toDrain, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                this.isDraining = false
             }
         }
     }
@@ -105,7 +101,6 @@ interface HTFluidItemSlot :
                 if (!fluidHandlerItem.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid()).isEmpty) {
                     setItemStack(handlerItem.container)
                     this.getFluidTank().insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                    this.isFilling = true
                     return true
                 }
             }

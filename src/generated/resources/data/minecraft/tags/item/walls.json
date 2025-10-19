@@ -2,11 +2,10 @@
   "values": [
     "ragium:azure_tile_wall",
     "ragium:blue_nether_brick_wall",
+    "ragium:eldritch_stone_brick_wall",
     "ragium:eldritch_stone_wall",
     "ragium:plastic_brick_wall",
     "ragium:plastic_tile_wall",
-    "ragium:polished_eldritch_stone_brick_wall",
-    "ragium:polished_eldritch_stone_wall",
     "ragium:ragi_brick_wall",
     "ragium:sponge_cake_wall"
   ]

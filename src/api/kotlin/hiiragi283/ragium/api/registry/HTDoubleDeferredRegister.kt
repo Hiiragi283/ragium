@@ -48,4 +48,12 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
 
     val firstEntries: Collection<HTDeferredHolder<FIRST, out FIRST>> get() = firstRegister.entries
     val secondEntries: Collection<HTDeferredHolder<SECOND, out SECOND>> get() = secondRegister.entries
+
+    fun addFirstAlias(from: String, to: String) {
+        firstRegister.addAlias(firstRegister.createId(from), firstRegister.createId(to))
+    }
+
+    fun addSecondAlias(from: String, to: String) {
+        secondRegister.addAlias(secondRegister.createId(from), secondRegister.createId(to))
+    }
 }

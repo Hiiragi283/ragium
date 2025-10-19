@@ -44,8 +44,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK =
-        extract(getStack().copyWithAmount(amount), action, access)
+    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
 
     /**
      * 指定された[first]と[second]が等価か判定します。
@@ -87,16 +86,20 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             val stack: STACK = getStack()
             val maxStackSize: Int = getCapacityAsInt(stack)
             val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.amountAsInt() == fixedAmount || !action.execute) {
+            if (stack.amountAsInt() == fixedAmount || action.simulate) {
                 return fixedAmount
             }
-            setStack(stack.copyWithAmount(fixedAmount))
+            updateCount(stack, fixedAmount)
             onContentsChanged()
             return fixedAmount
         }
 
+        protected open fun updateCount(stack: STACK, amount: Int) {
+            setStack(stack.copyWithAmount(amount))
+        }
+
         final override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
-            if (stack.isEmpty()) return getEmptyStack()
+            if (stack.isEmpty()) return stack
 
             val needed: Int = getNeededAsInt(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
@@ -117,14 +120,21 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             return stack
         }
 
-        final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
-            if (isEmpty() || stack.isEmpty() || !canStackExtract(stack, access)) return getEmptyStack()
-            val fixedAmount: Int = min(stack.amountAsInt(), getCapacityAsInt(stack))
-            if (action.execute) {
+        final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK = when {
+            !this.isEmpty() && isSameStack(this.getStack(), stack) -> extract(stack.amountAsInt(), action, access)
+            else -> getEmptyStack()
+        }
+
+        final override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
+            val stack: STACK = this.getStack()
+            if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) return getEmptyStack()
+            val fixedAmount: Int = min(amount, getAmountAsInt())
+            val result: STACK = stack.copyWithAmount(fixedAmount)
+            if (!result.isEmpty() && action.execute) {
                 shrinkStack(fixedAmount, action)
                 onContentsChanged()
             }
-            return stack.copyWithAmount(fixedAmount)
+            return result
         }
 
         /**

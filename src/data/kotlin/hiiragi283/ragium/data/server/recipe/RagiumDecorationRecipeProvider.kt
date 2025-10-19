@@ -42,30 +42,19 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.ELDRITCH_STONE, 8)
             .hollow8()
-            .define('A', Items.BLACKSTONE)
+            .define('A', Tags.Items.END_STONES)
             .define('B', gemOrDust(RagiumMaterialType.ELDRITCH_PEARL))
             .save(output)
 
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE, 4)
+            .building(RagiumBlocks.ELDRITCH_STONE_BRICKS, 4)
             .storage4()
             .define('A', RagiumBlocks.ELDRITCH_STONE)
             .save(output)
 
         HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            .stonecutter(RagiumBlocks.ELDRITCH_STONE_BRICKS)
             .addIngredient(RagiumBlocks.ELDRITCH_STONE)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, 4)
-            .storage4()
-            .define('A', RagiumBlocks.POLISHED_ELDRITCH_STONE)
-            .save(output)
-
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS)
-            .addIngredient(RagiumBlocks.ELDRITCH_STONE, RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
         // Plastics
         HTShapedRecipeBuilder
@@ -210,12 +199,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         return buildList {
             add(variant.base)
             // Eldritch
-            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE) {
+            if (variant == HTDecorationVariant.ELDRITCH_STONE_BRICK) {
                 add(RagiumBlocks.ELDRITCH_STONE)
-            }
-            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE_BRICK) {
-                add(RagiumBlocks.ELDRITCH_STONE)
-                add(RagiumBlocks.POLISHED_ELDRITCH_STONE)
             }
         }.toTypedArray().let { Ingredient.of(*it) }
     }

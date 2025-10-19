@@ -29,6 +29,13 @@ class HTDeferredBlockRegister(namespace: String) :
 
     fun <BLOCK : Block> registerSimple(
         name: String,
+        blockProp: () -> BlockBehaviour.Properties,
+        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        itemProp: Item.Properties = Item.Properties(),
+    ): HTBasicDeferredBlock<BLOCK> = register(name, blockProp, blockGetter, ::HTBlockItem, itemProp)
+
+    fun <BLOCK : Block> registerSimple(
+        name: String,
         blockGetter: () -> BLOCK,
         itemProp: Item.Properties = Item.Properties(),
     ): HTBasicDeferredBlock<BLOCK> = register(name, blockGetter, ::HTBlockItem, itemProp)
@@ -42,6 +49,19 @@ class HTDeferredBlockRegister(namespace: String) :
     ): HTDeferredBlock<BLOCK, ITEM> = register(
         name,
         { blockGetter(blockProp) },
+        itemGetter,
+        itemProp,
+    )
+
+    fun <BLOCK : Block, ITEM : Item> register(
+        name: String,
+        blockProp: () -> BlockBehaviour.Properties,
+        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        itemGetter: (BLOCK, Item.Properties) -> ITEM,
+        itemProp: Item.Properties = Item.Properties(),
+    ): HTDeferredBlock<BLOCK, ITEM> = register(
+        name,
+        { blockGetter(blockProp()) },
         itemGetter,
         itemProp,
     )

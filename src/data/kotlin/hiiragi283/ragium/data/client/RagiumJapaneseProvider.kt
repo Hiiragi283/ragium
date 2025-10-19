@@ -102,9 +102,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
         add(RagiumBlocks.AZURE_TILES, "紺碧のタイル")
-        add(RagiumBlocks.ELDRITCH_STONE, "異質石")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE, "磨かれた異質石")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "磨かれた異質石レンガ")
+        add(RagiumBlocks.ELDRITCH_STONE, "エルドリッチストーン")
+        add(RagiumBlocks.ELDRITCH_STONE_BRICKS, "エルドリッチストーンレンガ")
         add(RagiumBlocks.PLASTIC_BRICKS, "プラスチックレンガ")
         add(RagiumBlocks.PLASTIC_TILES, "プラスチックタイル")
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
