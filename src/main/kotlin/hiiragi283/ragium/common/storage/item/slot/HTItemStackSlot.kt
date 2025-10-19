@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.stack.toImmutable
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate

@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.storage.energy
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.util.Mth
 import kotlin.math.min
 

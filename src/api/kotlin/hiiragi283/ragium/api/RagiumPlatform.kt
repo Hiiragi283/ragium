@@ -87,7 +87,7 @@ interface RagiumPlatform {
 
     fun <T : Any> getHolder(lookup: HolderLookup.Provider?, key: ResourceKey<T>): Holder<T>? =
         (lookup ?: getRegistryAccess())?.holder(key)?.getOrNull()
-    
+
     fun getPlayer(uuid: UUID?): ServerPlayer? {
         if (uuid == null) return null
         return getCurrentServer()?.playerList?.getPlayer(uuid)

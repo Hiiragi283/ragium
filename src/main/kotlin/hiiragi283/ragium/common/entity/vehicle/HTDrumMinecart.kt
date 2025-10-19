@@ -56,7 +56,7 @@ sealed class HTDrumMinecart :
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
         bindBlockEntity().interactWith(level, player, hand)
-    
+
     //    OwnableEntity    //
 
     override fun getOwnerUUID(): UUID? = bindBlockEntity().getOwner()

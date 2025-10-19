@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder

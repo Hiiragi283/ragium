@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableStack
-import hiiragi283.ragium.api.storage.HTContentListener
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.BiPredicate
 import java.util.function.LongSupplier
 import java.util.function.Predicate

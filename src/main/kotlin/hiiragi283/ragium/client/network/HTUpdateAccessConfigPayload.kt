@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
 import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import net.minecraft.core.BlockPos

@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.storage.item.slot
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableStack
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.util.HTContentListener
 
 /**
  * @see [mekanism.common.inventory.slot.OutputInventorySlot]

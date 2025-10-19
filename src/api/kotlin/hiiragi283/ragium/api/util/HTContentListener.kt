@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage
+package hiiragi283.ragium.api.util
 
 /**
  * 変化が起きた時に呼び出されるインターフェース
