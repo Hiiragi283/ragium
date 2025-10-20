@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
@@ -43,12 +44,9 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     private object BrewingRecipe : HTItemToChancedItemRecipe, HTSingleInputRecipe {
         override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemResult> {
-            val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return listOf()
             // ポーションに変換する
-            val stack: ItemStack = RagiumDataMaps.INSTANCE
-                .getBrewingEffect(access, input.item().itemHolder)
-                ?.toPotion()
-                ?: return listOf()
+            val stack: ItemStack = findFirstPotion(input.item())
+            if (stack.isEmpty) return listOf()
             return HTResultHelper.INSTANCE
                 .item(stack)
                 .let(::HTChancedItemResult)
@@ -57,9 +55,12 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun getRequiredCount(stack: ItemStack): Int = 1
 
-        override fun test(input: SingleRecipeInput): Boolean {
-            val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return false
-            return RagiumDataMaps.INSTANCE.getBrewingEffect(access, input.item().itemHolder) != null
+        override fun test(input: SingleRecipeInput): Boolean = !findFirstPotion(input.item()).isEmpty
+
+        private fun findFirstPotion(stack: ItemStack): ItemStack {
+            val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return ItemStack.EMPTY
+
+            return HTBrewingEffect.getPotion(access.lookupOrThrow(RagiumAPI.BREWING_EFFECT_KEY), stack)
         }
 
         override fun isIncomplete(): Boolean = false

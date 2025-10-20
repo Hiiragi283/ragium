@@ -1,0 +1,8 @@
+{
+  "content": {
+    "potion": "minecraft:swiftness"
+  },
+  "ingredient": {
+    "item": "minecraft:sugar"
+  }
+}

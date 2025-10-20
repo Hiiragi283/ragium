@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
+import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.network.HTPayloadRegister
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -44,6 +46,7 @@ import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -58,6 +61,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
         eventBus.addListener(::registerRegistries)
+        eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
         RagiumDataComponents.REGISTER.register(eventBus)
@@ -88,6 +92,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         RagiumAPI.LOGGER.info("Registered new registries!")
+    }
+
+    private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        event.dataPackRegistry(RagiumAPI.BREWING_EFFECT_KEY, HTBrewingEffect.DIRECT_CODEC, HTBrewingEffect.DIRECT_CODEC)
+        event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
+
+        RagiumAPI.LOGGER.info("Registered new data pack registries!")
     }
 
     private fun onRegister(event: RegisterEvent) {
@@ -136,9 +147,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMaps.THERMAL_FUEL)
         event.register(RagiumDataMaps.COMBUSTION_FUEL)
         event.register(RagiumDataMaps.NUCLEAR_FUEL)
-        event.register(RagiumDataMaps.SOLAR_POWER)
-
-        event.register(RagiumDataMaps.BREWING_EFFECT)
 
         event.register(RagiumDataMaps.MOB_HEAD)
 

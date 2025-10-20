@@ -1,0 +1,18 @@
+{
+  "content": {
+    "custom_effects": [
+      {
+        "duration": 3600,
+        "id": "minecraft:haste",
+        "neoforge:cures": [
+          "protected_by_totem",
+          "milk"
+        ],
+        "show_icon": true
+      }
+    ]
+  },
+  "ingredient": {
+    "item": "minecraft:golden_apple"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "location": {
+    "block": {
+      "blocks": "#c:storage_blocks/glowstone"
+    }
+  },
+  "power": 1.0
+}

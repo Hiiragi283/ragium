@@ -13,15 +13,13 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.data.map.HTBrewingEffect
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.extension.partially1
 import hiiragi283.ragium.api.recipe.manager.castRecipe
 import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -162,26 +160,21 @@ class RagiumEmiPlugin : EmiPlugin {
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
                     val lavaInput: EmiStack = HTFluidContent.LAVA.toFluidEmi(fuel.burnTime / 10)
                     val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
-
-                    HTEmiFluidFuelData(
-                        key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/"),
-                        (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
-                        itemRegistry.getOrThrow(key).toEmi(),
-                        lavaInput,
-                    )
+                    key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
+                        HTEmiFluidFuelData(
+                            (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
+                            itemRegistry.getOrThrow(key).toEmi(),
+                            lavaInput,
+                        )
                 }.asSequence(),
             ::HTFuelGeneratorEmiRecipe,
         )
         // Combustion Generator
-        registry.addRecipeSafe(
-            RagiumDataMaps.THERMAL_FUEL
-                .id()
-                .withPrefix("/"),
-        ) { id: ResourceLocation ->
+        registry.addRecipeSafe(RagiumDataMaps.THERMAL_FUEL.id().withPrefix("/")) { id: ResourceLocation ->
             HTFuelGeneratorEmiRecipe(
                 combustionCategory,
+                id,
                 HTEmiFluidFuelData(
-                    id,
                     HTGeneratorVariant.COMBUSTION.energyRate,
                     ItemTags.COALS.toEmi(),
                     RagiumFluidContents.CRUDE_OIL.toFluidEmi(100),
@@ -205,11 +198,13 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(
             registry,
             RagiumRecipeViewerTypes.BREWING,
-            EmiPort
-                .getItemRegistry()
-                .getDataMap(RagiumDataMaps.BREWING_EFFECT)
-                .map { (key: ResourceKey<Item>, value: HTBrewingEffect) -> HTEmiBrewingEffect(HTItemHolderLike.fromKey(key), value) }
-                .asSequence(),
+            registryAccess
+                .registryOrThrow(RagiumAPI.BREWING_EFFECT_KEY)
+                .entrySet()
+                .map { (key: ResourceKey<HTBrewingEffect>, effect: HTBrewingEffect) ->
+                    key.location().withPrefix("/brewing/effect/") to
+                        HTEmiBrewingEffect(EmiIngredient.of(effect.ingredient), effect.toPotion().toEmi())
+                }.asSequence(),
             ::HTBrewingEffectEmiRecipe,
         )
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
@@ -290,11 +285,11 @@ class RagiumEmiPlugin : EmiPlugin {
      * @return 渡された[category]
      * @see [mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes]
      */
-    private fun <RECIPE : HTHolderLike, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
+    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
         registry: EmiRegistry,
         viewerType: HTRecipeViewerType<RECIPE>,
-        recipes: Sequence<RECIPE>,
-        factory: (HTEmiRecipeCategory, RECIPE) -> EMI_RECIPE?,
+        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
+        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): HTEmiRecipeCategory = addRecipes(registry, registerCategory(registry, viewerType), recipes, factory)
 
     /**
@@ -304,13 +299,13 @@ class RagiumEmiPlugin : EmiPlugin {
      * @param EMI_RECIPE [factory]で返すレシピのクラス
      * @return 渡された[category]
      */
-    private fun <CATEGORY : EmiRecipeCategory, RECIPE : HTHolderLike, EMI_RECIPE : EmiRecipe> addRecipes(
+    private fun <CATEGORY : EmiRecipeCategory, RECIPE : Any, EMI_RECIPE : EmiRecipe> addRecipes(
         registry: EmiRegistry,
         category: CATEGORY,
-        recipes: Sequence<RECIPE>,
-        factory: (CATEGORY, RECIPE) -> EMI_RECIPE?,
+        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
+        factory: (CATEGORY, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): CATEGORY {
-        recipes.mapNotNull(factory.partially1(category)).forEach(registry::addRecipe)
+        recipes.mapNotNull { (id: ResourceLocation, recipe: RECIPE) -> factory(category, id, recipe) }.forEach(registry::addRecipe)
         return category
     }
 
@@ -337,12 +332,12 @@ class RagiumEmiPlugin : EmiPlugin {
             fluidRegistry
                 .getDataMap(dataMapType)
                 .map { (key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) ->
-                    HTEmiFluidFuelData(
-                        key.location().withPrefix("/${dataMapType.id().path}/"),
-                        variant.energyRate,
-                        EmiStack.EMPTY,
-                        fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
-                    )
+                    key.location().withPrefix("/${dataMapType.id().path}/") to
+                        HTEmiFluidFuelData(
+                            variant.energyRate,
+                            EmiStack.EMPTY,
+                            fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
+                        )
                 }.asSequence(),
             ::HTFuelGeneratorEmiRecipe,
         )

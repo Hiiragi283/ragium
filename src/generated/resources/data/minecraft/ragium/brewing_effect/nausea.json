@@ -1,0 +1,18 @@
+{
+  "content": {
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:nausea",
+        "neoforge:cures": [
+          "protected_by_totem",
+          "milk"
+        ],
+        "show_icon": true
+      }
+    ]
+  },
+  "ingredient": {
+    "item": "minecraft:poisonous_potato"
+  }
+}

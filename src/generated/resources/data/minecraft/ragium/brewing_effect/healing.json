@@ -1,0 +1,8 @@
+{
+  "content": {
+    "potion": "minecraft:healing"
+  },
+  "ingredient": {
+    "item": "minecraft:glistering_melon_slice"
+  }
+}
