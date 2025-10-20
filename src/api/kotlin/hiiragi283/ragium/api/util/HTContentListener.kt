@@ -10,4 +10,8 @@ fun interface HTContentListener : Runnable {
     override fun run() {
         onContentsChanged()
     }
+
+    interface Empty : HTContentListener {
+        override fun onContentsChanged() {}
+    }
 }

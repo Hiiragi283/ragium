@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
@@ -22,6 +23,7 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
 
     protected open class ComponentStorage(private val parent: MutableDataComponentHolder, private val capacity: Long) :
         HTEnergyBattery.Mutable,
+        HTContentListener.Empty,
         HTValueSerializable.Empty {
         protected val component: DataComponentType<Long> get() = RagiumDataComponents.ENERGY
 
@@ -33,7 +35,5 @@ open class HTComponentEnergyStorage(private val parent: MutableDataComponentHold
         override fun getAmountAsLong(): Long = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
 
         override fun getCapacityAsLong(): Long = capacity
-
-        override fun onContentsChanged() {}
     }
 }

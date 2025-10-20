@@ -131,7 +131,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
-            object : HTEnergyBattery, HTValueSerializable.Empty {
+            object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
                 override fun getAmountAsLong(): Long = 0
 
                 override fun getCapacityAsLong(): Long = Long.MAX_VALUE
@@ -139,8 +139,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
                 override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
 
                 override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
-
-                override fun onContentsChanged() {}
             }
 
         override val transferRate: Int = Int.MAX_VALUE

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
+import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
@@ -35,7 +36,7 @@ fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getBattery(stack: Immutabl
 
 private fun wrapBattery(storage: IEnergyStorage, side: Direction?): HTEnergyBattery? = when (storage) {
     is HTEnergyHandler -> storage.getEnergyBattery(side)
-    else -> object : HTEnergyBattery, HTValueSerializable.Empty {
+    else -> object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
         override fun getAmountAsLong(): Long = storage.energyStored.toLong()
 
         override fun getCapacityAsLong(): Long = storage.maxEnergyStored.toLong()
@@ -45,7 +46,5 @@ private fun wrapBattery(storage: IEnergyStorage, side: Direction?): HTEnergyBatt
 
         override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
             storage.extractEnergy(amount, action.simulate)
-
-        override fun onContentsChanged() {}
     }
 }

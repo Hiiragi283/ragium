@@ -49,7 +49,7 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     //    Extensions    //
 
     private fun getTank(index: Int): HTFluidTank.Mutable =
-        blockEntity.getFluidTanks(blockEntity.getFluidSideFor())[index] as? HTFluidTank.Mutable
+        blockEntity.getFluidTank(index, blockEntity.getFluidSideFor()) as? HTFluidTank.Mutable
             ?: error("Fluid tank at $index is not mutable.")
 
     fun createFluidTank(index: Int, x: Int, y: Int): HTFluidTankWidget =

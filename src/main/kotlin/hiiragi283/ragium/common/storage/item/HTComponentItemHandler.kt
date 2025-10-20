@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
@@ -31,6 +32,7 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
 
     protected open class ComponentSlot(protected val parent: MutableDataComponentHolder, protected val size: Int, protected val slot: Int) :
         HTItemSlot.Mutable(),
+        HTContentListener.Empty,
         HTValueSerializable.Empty {
         protected val component: DataComponentType<ItemContainerContents> get() = DataComponents.CONTAINER
 
@@ -41,8 +43,6 @@ open class HTComponentItemHandler(protected val parent: MutableDataComponentHold
         override fun getCapacityAsLong(stack: ImmutableItemStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 
         override fun isValid(stack: ImmutableItemStack): Boolean = stack.stack.canFitInsideContainerItems()
-
-        override fun onContentsChanged() {}
 
         override fun setStack(stack: ImmutableItemStack) {
             val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack.stack) }

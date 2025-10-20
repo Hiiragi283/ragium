@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getClientExtensions
 import hiiragi283.ragium.api.stack.getTintColor
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -19,7 +19,7 @@ import net.neoforged.api.distmarker.OnlyIn
 class HTFluidTankWidget(
     private val levelGetter: (HTFluidWidget) -> Float,
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val tank: HTFluidTank.Mutable,
+    private val tank: HTStackView.Mutable<ImmutableFluidStack>,
     x: Int,
     y: Int,
     width: Int,
@@ -28,10 +28,10 @@ class HTFluidTankWidget(
     HTFluidWidget {
     companion object {
         @JvmStatic
-        fun createSlot(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createSlot(view: HTStackView.Mutable<ImmutableFluidStack>, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { 1f },
             { _, _ -> },
-            tank,
+            view,
             x,
             y,
             16,
@@ -39,7 +39,7 @@ class HTFluidTankWidget(
         )
 
         @JvmStatic
-        fun createTank(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createTank(view: HTStackView.Mutable<ImmutableFluidStack>, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { widget: HTFluidWidget -> widget.getStoredLevelAsFloat(widget.getStack()) },
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
@@ -54,7 +54,7 @@ class HTFluidTankWidget(
                     bounds.height + 2,
                 )
             },
-            tank,
+            view,
             x,
             y,
             16,

@@ -43,6 +43,7 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     private inner class ExpTank :
         HTFluidTank.Mutable(),
+        HTContentListener.Empty,
         HTValueSerializable.Empty {
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
         val player: Player? get() = RagiumPlatform.INSTANCE.getPlayer(this@HTExpInterfaceBlockEntity.getOwner())
@@ -58,8 +59,6 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun isValid(stack: ImmutableFluidStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
-
-        override fun onContentsChanged() {}
 
         override fun setStack(stack: ImmutableFluidStack) {
             if (isValid(stack) && player != null) {
