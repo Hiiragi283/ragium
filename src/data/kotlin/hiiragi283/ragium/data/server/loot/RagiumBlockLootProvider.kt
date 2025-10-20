@@ -9,11 +9,13 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
@@ -26,6 +28,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.predicates.MatchTool
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 
@@ -94,6 +97,26 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 else -> { block: Block -> createOreDrop(block, RagiumItems.getGem(material).get()) }
             }
             add(ore.get(), factory)
+        }
+
+        add(RagiumBlocks.AZURE_CLUSTER.get()) { block: Block ->
+            createSilkTouchDispatchTable(
+                block,
+                LootItem
+                    .lootTableItem(RagiumItems.getGem(RagiumMaterialType.AZURE))
+                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4f)))
+                    .apply(ApplyBonusCount.addOreBonusCount(fortune))
+                    .`when`(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES)))
+                    .otherwise(
+                        applyExplosionDecay(
+                            block,
+                            LootItem
+                                .lootTableItem(
+                                    RagiumItems.getGem(RagiumMaterialType.AZURE),
+                                ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2f))),
+                        ),
+                    ),
+            )
         }
     }
 

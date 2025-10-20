@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.block.AzureClusterBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
@@ -96,6 +97,13 @@ object RagiumBlocks {
 
     @JvmField
     val SILT: HTBasicDeferredBlock<HTSiltBlock> = REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
+
+    @JvmField
+    val AZURE_CLUSTER: HTBasicDeferredBlock<AzureClusterBlock> = REGISTER.registerSimple(
+        "azure_cluster",
+        copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.TERRACOTTA_BLUE),
+        ::AzureClusterBlock,
+    )
 
     @JvmField
     val CRIMSON_SOIL: HTBasicDeferredBlock<HTCrimsonSoilBlock> = REGISTER.registerSimple(
@@ -379,16 +387,15 @@ object RagiumBlocks {
         REGISTER.registerSimple("reinforced_stone_casing", copyOf(Blocks.COBBLED_DEEPSLATE))
 
     @JvmField
-    val DEVICE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("device_casing", machineProperty())
-
-    @JvmField
     val CASINGS: List<HTSimpleDeferredBlock> = listOf(
         WOODEN_CASING,
         STONE_CASING,
         REINFORCED_STONE_CASING,
-        DEVICE_CASING,
     )
+
+    @JvmField
+    val DEVICE_CASING: HTSimpleDeferredBlock =
+        REGISTER.registerSimple("device_casing", machineProperty())
 
     @JvmField
     val DEVICES: Map<HTDeviceVariant, HTBasicDeferredBlock<HTEntityBlock>> =

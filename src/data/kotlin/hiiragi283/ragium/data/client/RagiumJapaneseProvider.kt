@@ -92,6 +92,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
+        add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
         add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 

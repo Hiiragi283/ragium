@@ -95,6 +95,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
+        add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
         add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 

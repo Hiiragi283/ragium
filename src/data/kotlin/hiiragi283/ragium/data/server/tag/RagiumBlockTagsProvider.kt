@@ -49,9 +49,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Hoe
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICE_CASING)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumModTags.Blocks.LED_BLOCKS)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
 
         for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
             // Slab
@@ -104,6 +106,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
                 else -> return@forEach
             }
             builder.add(groundTag, ore)
+
+            if (variant == HTBlockMaterialVariant.END_ORE) {
+                builder.add(BlockTags.DRAGON_IMMUNE, ore)
+            }
         }
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
@@ -139,13 +145,15 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
         builder.add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.WARPED_CRYSTAL))
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialType.CRIMSON_CRYSTAL))
+        builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
 
         // WIP
-        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS.toMutableList().apply { remove(RagiumBlocks.DEVICE_CASING) })
         builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.NUCLEAR_REACTOR.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.SOLAR.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
+        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 

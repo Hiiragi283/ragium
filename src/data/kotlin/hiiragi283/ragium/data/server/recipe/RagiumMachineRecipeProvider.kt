@@ -17,7 +17,6 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -25,57 +24,11 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        casings()
-
         generators()
         processors()
         devices()
 
         drums()
-    }
-
-    @JvmStatic
-    private fun casings() {
-        // Wooden
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.WOODEN_CASING, 4)
-            .cross8()
-            .define('A', ItemTags.LOGS)
-            .define('B', ItemTags.PLANKS)
-            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .save(output)
-        // Stone
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.STONE_CASING)
-            .casing()
-            .define('A', Tags.Items.COBBLESTONES_NORMAL)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .define('C', Items.SMOOTH_STONE)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.REINFORCED_STONE_CASING)
-            .casing()
-            .define('A', Items.BASALT)
-            .define('B', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .define('C', Items.SMOOTH_STONE)
-            .save(output)
-        // Device
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING)
-            .cross8()
-            .define('A', Items.BLACK_CONCRETE)
-            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING, 4)
-            .cross8()
-            .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
-            .define('C', HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .saveSuffixed(output, "_with_obsidian")
     }
 
     //    Generators    //
@@ -221,6 +174,22 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun devices() {
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.DEVICE_CASING)
+            .cross8()
+            .define('A', Items.BLACK_CONCRETE)
+            .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+            .define('C', HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.DEVICE_CASING, 4)
+            .cross8()
+            .define('A', Tags.Items.OBSIDIANS_NORMAL)
+            .define('B', HTItemMaterialVariant.INGOT, HTVanillaMaterialType.IRON)
+            .define('C', HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
+            .saveSuffixed(output, "_with_obsidian")
+
         val storage = HTBlockMaterialVariant.STORAGE_BLOCK
         for (variant: HTDeviceVariant in HTDeviceVariant.entries) {
             val ingredient: Ingredient = when (variant) {

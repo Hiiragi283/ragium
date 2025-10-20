@@ -21,6 +21,7 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -240,6 +241,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
             builder.add(variant.tagKey, item)
+
+            if (variant == HTVanillaToolVariant.PICKAXE) {
+                builder.add(ItemTags.CLUSTER_MAX_HARVESTABLES, item)
+            }
         }
 
         builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.WRENCH)
@@ -253,6 +258,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         fun setupTool(tagKey: TagKey<Item>) {
             builder.addTag(ItemTags.BREAKS_DECORATED_POTS, tagKey)
+            builder.addTag(ItemTags.CLUSTER_MAX_HARVESTABLES, tagKey)
             builder.addTag(ItemTags.DURABILITY_ENCHANTABLE, tagKey)
             builder.addTag(ItemTags.MINING_ENCHANTABLE, tagKey)
             builder.addTag(ItemTags.MINING_LOOT_ENCHANTABLE, tagKey)

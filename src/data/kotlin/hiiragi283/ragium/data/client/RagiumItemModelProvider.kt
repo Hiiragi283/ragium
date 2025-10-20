@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.itemId
@@ -38,6 +39,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         buildSet {
             // Ragium
             addAll(RagiumBlocks.REGISTER.firstEntries)
+
+            remove(RagiumBlocks.AZURE_CLUSTER)
 
             remove(RagiumBlocks.EXP_BERRIES)
             remove(RagiumBlocks.WARPED_WART)
@@ -86,6 +89,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
 
+        blockTexItem(RagiumBlocks.AZURE_CLUSTER)
+
         basicItem(RagiumBlocks.EXP_BERRIES)
         basicItem(RagiumBlocks.WARPED_WART)
 
@@ -118,6 +123,10 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
     private fun simpleBlockItem(block: HTHolderLike): ItemModelBuilder = simpleBlockItem(block.getId())
 
     private fun basicItem(item: HTHolderLike): ItemModelBuilder = basicItem(item.getId())
+
+    private fun blockTexItem(item: HTHolderLike): ItemModelBuilder = getBuilder(item.getId().toString())
+        .parent(generated)
+        .texture("layer0", item.blockId)
 
     // private fun basicItem(block: HTDeferredBlock<*, *>): ItemModelBuilder = basicItem(block.itemHolder)
 

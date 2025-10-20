@@ -6,10 +6,10 @@
       "tag": "c:obsidians/normal"
     },
     "B": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "c:ingots/iron"
     },
     "C": {
-      "tag": "c:dusts/raginite"
+      "tag": "c:dusts/redstone"
     }
   },
   "pattern": [

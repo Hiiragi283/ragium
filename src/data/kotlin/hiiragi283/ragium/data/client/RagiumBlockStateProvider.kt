@@ -102,6 +102,14 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
 
+        directionalBlock(
+            RagiumBlocks.AZURE_CLUSTER.get(),
+            models()
+                .withExistingParent(RagiumBlocks.AZURE_CLUSTER.id.path, "cross")
+                .texture("cross", RagiumBlocks.AZURE_CLUSTER.blockId)
+                .renderType("cutout"),
+        )
+
         // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRIES.get())
             .forAllStates { state: BlockState ->
