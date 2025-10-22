@@ -6,6 +6,7 @@
     }
   ],
   "type": "kaleidoscope_cookery:chopping_board",
+  "cut_count": 6,
   "ingredient": {
     "item": "ragium:sweet_berries_cake"
   },

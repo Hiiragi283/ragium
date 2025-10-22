@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.impl.data.recipe.HTCookingBoardRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -42,17 +42,19 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
     @JvmStatic
     private fun cherry() {
-        HTCookingBoardRecipeBuilder
-            .chopping(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
+        HTChoppingBoardRecipeBuilder
+            .create(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
             .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .setCutCount(1)
             .save(output)
     }
 
     @JvmStatic
     private fun cake() {
-        HTCookingBoardRecipeBuilder
-            .chopping(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
+        HTChoppingBoardRecipeBuilder
+            .create(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .setCutCount(6)
             .save(output)
     }
 }

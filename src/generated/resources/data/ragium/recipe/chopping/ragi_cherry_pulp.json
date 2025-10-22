@@ -6,6 +6,7 @@
     }
   ],
   "type": "kaleidoscope_cookery:chopping_board",
+  "cut_count": 1,
   "ingredient": {
     "tag": "c:foods/ragi_cherry"
   },
