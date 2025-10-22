@@ -7,13 +7,14 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.accessory.HTAccessorySlot
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
+import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
@@ -21,6 +22,8 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -195,12 +198,12 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
         builder.add(RagiumModTags.Items.RAW_MEAT, HTHolderLike.fromItem(Items.ROTTEN_FLESH))
         // Delight
-        builder.add(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
+        builder.add(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_PULP)
 
         builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
         builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
 
-        builder.add(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
+        builder.add(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_JAM)
         builder.add(ModTags.MEALS, RagiumDelightAddon.RAGI_CHERRY_TOAST)
         builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
     }
@@ -251,10 +254,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 
-        for (item: HTDeferredItem<*> in RagiumDelightAddon.KNIFE_MAP.values) {
-            builder.add(CommonTags.TOOLS_KNIFE, item)
-            builder.add(ModTags.KNIVES, item)
-        }
+        builder.addTool(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.KNIFE_MAP.values)
+        builder.addTool(HTKitchenKnifeToolVariant, RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
+        builder.addTool(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP.values)
 
         fun setupTool(tagKey: TagKey<Item>) {
             builder.addTag(ItemTags.BREAKS_DECORATED_POTS, tagKey)
@@ -339,7 +341,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Extensions    //
 
     private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike) =
-        addTag(parent, child).add(child, holder)
+        this.addTag(parent, child).add(child, holder)
 
     private fun HTTagBuilder<Item>.addMaterial(
         variant: HTMaterialVariant.ItemTag,
@@ -348,10 +350,21 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     ): HTTagBuilder<Item> {
         val itemCommonTag: TagKey<Item> = variant.itemCommonTag ?: return this
         val tagKey: TagKey<Item> = variant.itemTagKey(material)
-        return add(itemCommonTag, tagKey, holder)
+        return this.add(itemCommonTag, tagKey, holder)
     }
 
-    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> = add(slot.slotTag, holder)
+    private fun HTTagBuilder<Item>.addTool(variant: HTToolVariant, holders: Iterable<HTHolderLike>) {
+        this.addTool(variant.tagKey, holders)
+    }
+
+    private fun HTTagBuilder<Item>.addTool(tagKey: TagKey<Item>, holders: Iterable<HTHolderLike>) {
+        for (holder: HTHolderLike in holders) {
+            this.add(tagKey, holder)
+        }
+    }
+
+    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> =
+        this.add(slot.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

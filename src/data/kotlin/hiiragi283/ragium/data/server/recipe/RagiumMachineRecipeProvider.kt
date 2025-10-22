@@ -203,8 +203,9 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDeviceVariant.LAVA_COLLECTOR -> Ingredient.of(Tags.Items.BUCKETS_LAVA)
                 // Elite
                 HTDeviceVariant.DIM_ANCHOR -> HTItemMaterialVariant.GEM.toIngredient(RagiumMaterialType.WARPED_CRYSTAL)
-                HTDeviceVariant.TELEPAD -> storage.toIngredient(RagiumMaterialType.WARPED_CRYSTAL)
                 HTDeviceVariant.MOB_CAPTURER -> storage.toIngredient(RagiumMaterialType.ELDRITCH_PEARL)
+                // Ultimate
+                HTDeviceVariant.TELEPAD -> storage.toIngredient(RagiumMaterialType.WARPED_CRYSTAL)
                 // Creative
                 HTDeviceVariant.CEU -> continue
             }

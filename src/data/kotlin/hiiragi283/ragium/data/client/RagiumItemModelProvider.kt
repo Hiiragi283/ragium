@@ -11,8 +11,10 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
+import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -80,10 +82,13 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.LARGE_DRUM_UPGRADE)
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
-            // Delight
-            addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
+
+            // Food
+            addAll(RagiumFoodAddon.ITEM_REGISTER.entries)
 
             removeAll(RagiumDelightAddon.KNIFE_MAP.values)
+            removeAll(RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
+
             remove(RagiumDelightAddon.RAGI_CHERRY_TOAST) // TODO
             // Mekanism
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
@@ -115,6 +120,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             add(RagiumItems.BLAST_CHARGE)
 
             addAll(RagiumDelightAddon.KNIFE_MAP.values)
+            addAll(RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
         }.forEach(::handheldItem)
     }
 

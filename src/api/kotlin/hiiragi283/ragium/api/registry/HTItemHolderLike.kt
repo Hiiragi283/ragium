@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 /**
@@ -32,6 +33,13 @@ interface HTItemHolderLike :
             override fun asItem(): Item = BuiltInRegistries.ITEM.getOrThrow(key)
 
             override fun getId(): ResourceLocation = key.location()
+        }
+
+        @JvmStatic
+        fun fromHolder(holder: DeferredHolder<Item, *>): HTItemHolderLike = object : HTItemHolderLike {
+            override fun asItem(): Item = holder.get()
+
+            override fun getId(): ResourceLocation = holder.id
         }
 
         /**

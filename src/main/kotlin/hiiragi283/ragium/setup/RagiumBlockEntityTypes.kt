@@ -167,8 +167,10 @@ object RagiumBlockEntityTypes {
 
                 // Elite
                 HTDeviceVariant.DIM_ANCHOR -> ::HTDimensionalAnchorBlockEntity
-                HTDeviceVariant.TELEPAD -> ::HTTelepadBlockentity
                 HTDeviceVariant.MOB_CAPTURER -> ::HTMobCapturerBlockEntity
+
+                // Ultimate
+                HTDeviceVariant.TELEPAD -> ::HTTelepadBlockentity
 
                 // Creative
                 HTDeviceVariant.CEU -> HTEnergyNetworkAccessBlockEntity::Creative

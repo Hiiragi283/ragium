@@ -31,8 +31,10 @@ enum class HTDeviceVariant(
 
     // Elite
     DIM_ANCHOR(HTMachineTier.ELITE, "Dimensional Anchor", "次元アンカー", "dimensional_anchor"),
-    TELEPAD(HTMachineTier.ELITE, "Telepad", "テレパッド"),
     MOB_CAPTURER(HTMachineTier.ELITE, "Mob Capturer", "モブ捕獲機"),
+
+    // Ultimate
+    TELEPAD(HTMachineTier.ELITE, "Telepad", "テレパッド"),
 
     // Creative
     CEU(HTMachineTier.CREATIVE, "C.E.U", "C.E.U", "creative_energy_unit"),

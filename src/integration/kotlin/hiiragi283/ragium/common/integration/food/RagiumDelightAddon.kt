@@ -1,16 +1,14 @@
-package hiiragi283.ragium.common.integration
+package hiiragi283.ragium.common.integration.food
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -21,8 +19,6 @@ import hiiragi283.ragium.setup.RagiumDelightFoods
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantments
@@ -35,8 +31,8 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import vectorwing.farmersdelight.common.block.FeastBlock
 import vectorwing.farmersdelight.common.block.PieBlock
-import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
+import kotlin.collections.iterator
 
 object RagiumDelightAddon : RagiumAddon {
     //    Block    //
@@ -60,18 +56,13 @@ object RagiumDelightAddon : RagiumAddon {
 
     //    Item    //
 
-    @JvmField
-    val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
-
     // Knives
     @JvmField
-    val KNIFE_MAP: Map<HTMaterialType, HTDeferredItem<KnifeItem>> = buildMap {
-        mapOf(
-            RagiumMaterialType.RAGI_ALLOY to RagiumToolTiers.RAGI_ALLOY,
-            RagiumMaterialType.RAGI_CRYSTAL to RagiumToolTiers.RAGI_CRYSTAL,
-        ).forEach { (material: HTMaterialType, tier: SimpleTier) ->
-            put(material, HTKnifeToolVariant.registerItem(ITEM_REGISTER, material, tier))
-        }
+    val KNIFE_MAP: Map<HTMaterialType, HTDeferredItem<*>> = mapOf(
+        RagiumMaterialType.RAGI_ALLOY to RagiumToolTiers.RAGI_ALLOY,
+        RagiumMaterialType.RAGI_CRYSTAL to RagiumToolTiers.RAGI_CRYSTAL,
+    ).mapValues { (material: HTMaterialType, tier: SimpleTier) ->
+        HTKnifeToolVariant.registerItem(RagiumFoodAddon.ITEM_REGISTER, material, tier)
     }
 
     @JvmStatic
@@ -84,53 +75,32 @@ object RagiumDelightAddon : RagiumAddon {
     }
 
     // Food
-    @JvmStatic
-    private fun registerFood(name: String, food: FoodProperties): HTDeferredItem<Item> =
-        ITEM_REGISTER.registerSimpleItem(name, Item.Properties().food(food))
-
-    @JvmField
-    val RAGI_CHERRY_PULP: HTDeferredItem<Item> =
-        registerFood("${RagiumConst.RAGI_CHERRY}_pulp", RagiumDelightFoods.RAGI_CHERRY_PULP)
-
     @JvmField
     val RAGI_CHERRY_PIE_SLICE: HTDeferredItem<Item> =
-        registerFood("${RagiumConst.RAGI_CHERRY}_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
-
-    @JvmField
-    val RAGI_CHERRY_JAM: HTDeferredItem<Item> =
-        registerFood("${RagiumConst.RAGI_CHERRY}_jam", RagiumDelightFoods.RAGI_CHERRY_JAM)
+        RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
 
     @JvmField
     val RAGI_CHERRY_TOAST: HTDeferredItem<Item> =
-        registerFood("${RagiumConst.RAGI_CHERRY}_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
+        RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //
 
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
-        eventBus.addListener(::modifyComponents)
-        eventBus.addListener(::buildCreativeTabs)
-
         BLOCK_REGISTER.register(eventBus)
-        ITEM_REGISTER.register(eventBus)
     }
 
-    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+    override fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         event.modify(getKnife(RagiumMaterialType.RAGI_CRYSTAL)) { builder: DataComponentPatch.Builder ->
             builder.set(
                 RagiumDataComponents.INTRINSIC_ENCHANTMENT,
                 HTIntrinsicEnchantment(Enchantments.MENDING, 1),
             )
         }
-
-        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-        }
     }
 
-    private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
-            for ((material: HTMaterialType, knife: HTDeferredItem<KnifeItem>) in KNIFE_MAP) {
+    override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
+        helper.ifMatchTab(RagiumCreativeTabs.ITEMS) { event: BuildCreativeModeTabContentsEvent ->
+            for ((material: HTMaterialType, knife: HTDeferredItem<*>) in KNIFE_MAP) {
                 event.insertAfter(
                     RagiumItems.getTool(HTHammerToolVariant, material).toStack(),
                     knife.toStack(),
@@ -138,28 +108,19 @@ object RagiumDelightAddon : RagiumAddon {
                 )
             }
 
-            val items: Array<HTItemHolderLike> = arrayOf(
+            helper.insertAfter(
+                event,
                 // Cherry
                 RagiumItems.RAGI_CHERRY,
-                RAGI_CHERRY_PULP,
+                RagiumFoodAddon.RAGI_CHERRY_PULP,
                 // Pie
                 RAGI_CHERRY_PIE,
                 RAGI_CHERRY_PIE_SLICE,
                 // Jam
-                RAGI_CHERRY_JAM,
+                RagiumFoodAddon.RAGI_CHERRY_JAM,
                 RAGI_CHERRY_TOAST_BLOCK,
                 RAGI_CHERRY_TOAST,
             )
-
-            for (i: Int in items.indices) {
-                val item: HTItemHolderLike = items[i]
-                val nextItem: HTItemHolderLike = items.getOrNull(i + 1) ?: continue
-                event.insertAfter(
-                    item.toStack(),
-                    nextItem.toStack(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-                )
-            }
         }
     }
 }

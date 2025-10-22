@@ -80,23 +80,20 @@ object RagiumMekanismAddon : RagiumAddon {
     //    RagiumAddon    //
 
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
-        eventBus.addListener(::buildCreativeTabs)
-        eventBus.addListener(::modifyComponent)
-
         CHEMICAL_REGISTER.addAlias(RagiumAPI.id("raginite"), RagiumAPI.id("ragium"))
 
         CHEMICAL_REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
     }
 
-    private fun modifyComponent(event: ModifyDefaultComponentsEvent) {
+    override fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         event.modify(MekanismItems.YELLOW_CAKE_URANIUM) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, RagiumFoods.YELLOW_CAKE)
         }
     }
 
-    private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        if (RagiumCreativeTabs.INGREDIENTS.`is`(event.tabKey)) {
+    override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
+        helper.ifMatchTab(RagiumCreativeTabs.INGREDIENTS) { event: BuildCreativeModeTabContentsEvent ->
             for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
                 event.insertAfter(
                     RagiumItems.getMaterial(essenceType.baseVariant, essenceType.parent).toStack(),

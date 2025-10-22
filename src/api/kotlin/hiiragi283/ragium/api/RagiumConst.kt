@@ -55,6 +55,7 @@ object RagiumConst {
     const val FARMERS_DELIGHT = "farmersdelight"
     const val FOREGOING = "industrialforegoing"
     const val IMMERSIVE = "immersiveengineering"
+    const val KALEIDO_COOKERY = "kaleidoscope_cookery"
     const val MAGITECH = "magitech"
     const val MEKANISM = "mekanism"
     const val MODERN = "modern_industrialization"

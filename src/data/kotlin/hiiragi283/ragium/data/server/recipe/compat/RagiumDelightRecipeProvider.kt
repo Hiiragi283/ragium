@@ -5,11 +5,12 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTCookingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -71,8 +72,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cherry() {
-        HTCuttingBoardRecipeBuilder
-            .create(RagiumDelightAddon.RAGI_CHERRY_PULP, 2)
+        HTCookingBoardRecipeBuilder
+            .cutting(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
             .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
@@ -89,8 +90,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .define('D', ModItems.PIE_CRUST.get())
             .save(output)
 
-        HTCuttingBoardRecipeBuilder
-            .create(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
+        HTCookingBoardRecipeBuilder
+            .cutting(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
             .addIngredient(RagiumDelightAddon.RAGI_CHERRY_PIE)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
@@ -103,7 +104,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         // Jam
         CookingPotRecipeBuilder
             .cookingPotRecipe(
-                RagiumDelightAddon.RAGI_CHERRY_JAM,
+                RagiumFoodAddon.RAGI_CHERRY_JAM,
                 1,
                 200,
                 0.35f,
@@ -129,8 +130,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cake() {
-        HTCuttingBoardRecipeBuilder
-            .create(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
+        HTCookingBoardRecipeBuilder
+            .cutting(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)

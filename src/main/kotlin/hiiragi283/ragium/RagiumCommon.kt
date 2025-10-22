@@ -40,12 +40,15 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -82,8 +85,19 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumMenuTypes.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
 
-        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
+        val addons: List<RagiumAddon> = RagiumPlatform.INSTANCE.getAddons()
+        for (addon: RagiumAddon in addons) {
             addon.onModConstruct(eventBus, dist)
+        }
+        eventBus.addListener(EventPriority.LOW) { event: ModifyDefaultComponentsEvent ->
+            for (addon: RagiumAddon in addons) {
+                addon.modifyComponents(event)
+            }
+        }
+        eventBus.addListener(EventPriority.LOW) { event: BuildCreativeModeTabContentsEvent ->
+            for (addon: RagiumAddon in addons) {
+                addon.buildCreativeTabs(RagiumAddon.CreativeTabHelper(event))
+            }
         }
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
