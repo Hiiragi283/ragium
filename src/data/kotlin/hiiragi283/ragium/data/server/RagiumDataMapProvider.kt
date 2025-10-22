@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -135,7 +136,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     // Fluid
     private fun <T : Any> Builder<T, Fluid>.add(fluid: Supplier<out Fluid>, value: T): Builder<T, Fluid> =
-        add(HTHolderLike.fromFluid(fluid.get()), value)
+        add(fluid.get().toHolderLike(), value)
 
     private fun Builder<HTFluidFuelData, Fluid>.add(content: HTFluidContent<*, *, *>, amount: Int): Builder<HTFluidFuelData, Fluid> =
         add(content.commonTag, HTFluidFuelData(amount), false)
@@ -145,5 +146,5 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     // Entity Type
     private fun <T : Any> Builder<T, EntityType<*>>.add(type: EntityType<*>, value: T): Builder<T, EntityType<*>> =
-        add(HTHolderLike.fromEntity(type), value)
+        add(type.toHolderLike(), value)
 }

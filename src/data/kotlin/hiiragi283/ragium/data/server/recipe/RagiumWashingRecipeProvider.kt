@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
@@ -71,7 +71,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Ice <-> Water
         meltAndFreeze(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
-            HTItemHolderLike.fromItem(Items.ICE),
+            Items.ICE.toHolderLike(),
             HTFluidContent.WATER,
             1000,
         )
@@ -99,7 +99,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Bottle
         extractAndInfuse(
             itemCreator.fromItem(Items.GLASS_BOTTLE),
-            HTItemHolderLike.fromItem(Items.EXPERIENCE_BOTTLE),
+            Items.EXPERIENCE_BOTTLE.toHolderLike(),
             RagiumFluidContents.EXPERIENCE,
             250,
         )

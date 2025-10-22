@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
@@ -122,16 +123,16 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             },
         )
         // Fuels
-        builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, HTHolderLike.fromItem(Items.COAL))
-        builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, HTHolderLike.fromItem(Items.CHARCOAL))
+        builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.COAL, Items.COAL.toHolderLike())
+        builder.addMaterial(HTItemMaterialVariant.FUEL, HTVanillaMaterialType.CHARCOAL, Items.CHARCOAL.toHolderLike())
 
         val coalCoke: TagKey<Item> = HTItemMaterialVariant.FUEL.itemTagKey(RagiumMaterialType.COAL_COKE)
         builder.addTag(HTItemMaterialVariant.FUEL.itemCommonTag, coalCoke)
         builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
 
-        builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, HTHolderLike.fromItem(Items.ECHO_SHARD))
+        builder.addMaterial(HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO, Items.ECHO_SHARD.toHolderLike())
         // Scraps
-        builder.addMaterial(HTItemMaterialVariant.SCRAP, HTVanillaMaterialType.NETHERITE, HTHolderLike.fromItem(Items.NETHERITE_SCRAP))
+        builder.addMaterial(HTItemMaterialVariant.SCRAP, HTVanillaMaterialType.NETHERITE, Items.NETHERITE_SCRAP.toHolderLike())
         // Mekanism Addon
         fromTriples(builder, RagiumMekanismAddon.MATERIAL_ITEMS.entries)
     }
@@ -179,7 +180,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(Tags.Items.FOODS_BERRY, RagiumBlocks.EXP_BERRIES)
         builder.add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
 
-        builder.add(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_APPLE, HTHolderLike.fromItem(Items.APPLE))
+        builder.add(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_APPLE, Items.APPLE.toHolderLike())
 
         builder.addTag(Tags.Items.FOODS_FRUIT, RagiumCommonTags.Items.FOODS_CHERRY)
         builder.add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
@@ -196,7 +197,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_MEAT)
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
-        builder.add(RagiumModTags.Items.RAW_MEAT, HTHolderLike.fromItem(Items.ROTTEN_FLESH))
+        builder.add(RagiumModTags.Items.RAW_MEAT, Items.ROTTEN_FLESH.toHolderLike())
         // Delight
         builder.add(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_PULP)
 
@@ -271,7 +272,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         setupTool(RagiumModTags.Items.TOOLS_HAMMER)
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            builder.add(Tags.Items.BUCKETS, content.bucketTag, HTHolderLike.fromItem(content.getBucket()))
+            builder.add(Tags.Items.BUCKETS, content.bucketTag, content.getBucket().toHolderLike())
         }
         // LED
         for ((color: HTColorMaterial, block: HTHolderLike) in RagiumBlocks.LED_BLOCKS) {
@@ -284,11 +285,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(Tags.Items.STRINGS, RagiumItems.SYNTHETIC_FIBER)
 
         listOf(Items.GHAST_TEAR, Items.PHANTOM_MEMBRANE, Items.WIND_CHARGE)
-            .map(HTHolderLike::fromItem)
+            .map(Item::toHolderLike)
             .forEach { holder: HTHolderLike -> builder.add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, holder) }
 
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
-        builder.add(RagiumModTags.Items.POLYMER_RESIN, HTHolderLike.fromItem(ItemContent.POLYMER_RESIN), HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagBuilder.DependType.OPTIONAL)
 
         val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
         builder.add(plastics, RagiumItems.getPlate(RagiumMaterialType.PLASTIC))
@@ -304,7 +305,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagBuilder.DependType.OPTIONAL)
         builder.add(
             RagiumModTags.Items.IS_NUCLEAR_FUEL,
-            HTHolderLike.fromItem(ItemContent.SMALL_URANIUM_PELLET),
+            ItemContent.SMALL_URANIUM_PELLET.toHolderLike(),
             HTTagBuilder.DependType.OPTIONAL,
         )
         // Other

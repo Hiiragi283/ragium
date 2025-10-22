@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.extension.buildComponentPatch
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
@@ -71,7 +71,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Gravity-Unit
-        val gravityUnit: HTDeferredItem<Item> = RagiumItems.GRAVITATIONAL_UNIT
+        val gravityUnit: HTSimpleDeferredItem = RagiumItems.GRAVITATIONAL_UNIT
         HTShapedRecipeBuilder
             .misc(gravityUnit)
             .cross8()

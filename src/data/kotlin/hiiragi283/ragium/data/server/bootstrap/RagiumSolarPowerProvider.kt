@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.createKey
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
@@ -35,7 +35,7 @@ object RagiumSolarPowerProvider : RegistrySetBuilder.RegistryBootstrap<HTSolarPo
         builderAction: LocationPredicate.Builder.() -> Unit = {},
     ) {
         context.register(
-            RagiumAPI.SOLAR_POWER_KEY.createKey(HTHolderLike.fromBlock(block).getId().let(RagiumAPI::wrapId)),
+            RagiumAPI.SOLAR_POWER_KEY.createKey(block.toHolderLike().getId().let(RagiumAPI::wrapId)),
             HTSolarPower(
                 LocationPredicate.Builder
                     .location()

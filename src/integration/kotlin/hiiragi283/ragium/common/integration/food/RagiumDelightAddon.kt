@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -20,7 +22,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -67,20 +68,20 @@ object RagiumDelightAddon : RagiumAddon {
 
     @JvmStatic
     fun getKnife(material: HTMaterialType): HTItemHolderLike = when (material) {
-        HTVanillaMaterialType.IRON -> HTItemHolderLike.fromItem(ModItems.IRON_KNIFE)
-        HTVanillaMaterialType.GOLD -> HTItemHolderLike.fromItem(ModItems.GOLDEN_KNIFE)
-        HTVanillaMaterialType.DIAMOND -> HTItemHolderLike.fromItem(ModItems.DIAMOND_KNIFE)
-        HTVanillaMaterialType.NETHERITE -> HTItemHolderLike.fromItem(ModItems.NETHERITE_KNIFE)
+        HTVanillaMaterialType.IRON -> ModItems.IRON_KNIFE.toHolderLike()
+        HTVanillaMaterialType.GOLD -> ModItems.GOLDEN_KNIFE.toHolderLike()
+        HTVanillaMaterialType.DIAMOND -> ModItems.DIAMOND_KNIFE.toHolderLike()
+        HTVanillaMaterialType.NETHERITE -> ModItems.NETHERITE_KNIFE.toHolderLike()
         else -> KNIFE_MAP[material] ?: error("Unknown knife item for ${material.materialName()}")
     }
 
     // Food
     @JvmField
-    val RAGI_CHERRY_PIE_SLICE: HTDeferredItem<Item> =
+    val RAGI_CHERRY_PIE_SLICE: HTSimpleDeferredItem =
         RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
 
     @JvmField
-    val RAGI_CHERRY_TOAST: HTDeferredItem<Item> =
+    val RAGI_CHERRY_TOAST: HTSimpleDeferredItem =
         RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //

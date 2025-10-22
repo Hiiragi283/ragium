@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumDelightFoods
 import net.minecraft.core.component.DataComponentPatch
@@ -24,15 +24,15 @@ object RagiumFoodAddon : RagiumAddon {
 
     // Food
     @JvmStatic
-    fun registerFood(name: String, food: FoodProperties): HTDeferredItem<Item> =
+    fun registerFood(name: String, food: FoodProperties): HTSimpleDeferredItem =
         ITEM_REGISTER.registerSimpleItem(name, Item.Properties().food(food))
 
     @JvmField
-    val RAGI_CHERRY_PULP: HTDeferredItem<Item> =
+    val RAGI_CHERRY_PULP: HTSimpleDeferredItem =
         registerFood("${RagiumConst.RAGI_CHERRY}_pulp", RagiumDelightFoods.RAGI_CHERRY_PULP)
 
     @JvmField
-    val RAGI_CHERRY_JAM: HTDeferredItem<Item> =
+    val RAGI_CHERRY_JAM: HTSimpleDeferredItem =
         registerFood("${RagiumConst.RAGI_CHERRY}_jam", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //

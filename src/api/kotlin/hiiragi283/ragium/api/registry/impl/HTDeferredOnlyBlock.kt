@@ -9,24 +9,23 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 
-typealias HTSimpleDeferredItem = HTDeferredItem<Item>
-
-/**
- * @see [net.neoforged.neoforge.registries.DeferredItem]
- */
-class HTDeferredItem<ITEM : Item> :
-    HTDeferredHolder<Item, ITEM>,
+class HTDeferredOnlyBlock<BLOCK : Block> :
+    HTDeferredHolder<Block, BLOCK>,
     HTHasTranslationKey,
     HTHasText,
     HTItemHolderLike {
-    constructor(key: ResourceKey<Item>) : super(key)
+    constructor(key: ResourceKey<Block>) : super(key)
 
-    constructor(id: ResourceLocation) : super(Registries.ITEM, id)
-
-    override fun asItem(): Item = get()
+    constructor(id: ResourceLocation) : super(Registries.BLOCK, id)
 
     override val translationKey: String get() = get().descriptionId
 
-    override fun getText(): Component = get().description
+    override fun getText(): Component = get().name
+
+    override fun asItem(): Item = get().asItem()
+
+    fun isOf(state: BlockState): Boolean = state.`is`(this)
 }

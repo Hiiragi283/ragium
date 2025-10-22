@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
@@ -14,7 +14,6 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.item.Item
 
 enum class HTDrumVariant(private val enPattern: String, private val jaPattern: String) :
     HTVariantKey.WithBlock<HTDrumBlock>,
@@ -29,7 +28,7 @@ enum class HTDrumVariant(private val enPattern: String, private val jaPattern: S
     override val blockHolder: HTDeferredBlock<HTDrumBlock, HTDrumItem> by lazy { RagiumBlocks.DRUMS[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> by lazy { RagiumBlockEntityTypes.DRUMS[this]!! }
     override val entityHolder: HTDeferredEntityType<HTDrumMinecart> by lazy { RagiumEntityTypes.DRUMS[this]!! }
-    val minecartItem: HTDeferredItem<Item> by lazy { RagiumItems.DRUM_MINECARTS[this]!! }
+    val minecartItem: HTSimpleDeferredItem by lazy { RagiumItems.DRUM_MINECARTS[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = value.replace(
         "%s",

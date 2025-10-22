@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.common.material.HTMekMaterialVariant
@@ -22,13 +23,11 @@ import mekanism.common.registries.MekanismItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.registries.DeferredHolder
 
 object RagiumMekanismAddon : RagiumAddon {
     //    Chemical    //
@@ -64,18 +63,18 @@ object RagiumMekanismAddon : RagiumAddon {
     }
 
     @JvmStatic
-    fun getEnriched(material: HTMaterialType): DeferredHolder<Item, *> = when (material) {
-        HTVanillaMaterialType.COAL -> MekanismItems.ENRICHED_CARBON
-        HTVanillaMaterialType.REDSTONE -> MekanismItems.ENRICHED_REDSTONE
-        HTVanillaMaterialType.DIAMOND -> MekanismItems.ENRICHED_DIAMOND
-        HTVanillaMaterialType.OBSIDIAN -> MekanismItems.ENRICHED_OBSIDIAN
-        HTVanillaMaterialType.GOLD -> MekanismItems.ENRICHED_GOLD
+    fun getEnriched(material: HTMaterialType): HTItemHolderLike = when (material) {
+        HTVanillaMaterialType.COAL -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_CARBON)
+        HTVanillaMaterialType.REDSTONE -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_REDSTONE)
+        HTVanillaMaterialType.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
+        HTVanillaMaterialType.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
+        HTVanillaMaterialType.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
         else -> MATERIAL_ITEMS[HTMekMaterialVariant.ENRICHED, material]
             ?: error("Unknown enriched item for ${material.materialName()}")
     }
 
     @JvmStatic
-    fun getEnrichedStack(material: HTMaterialType): ItemStack = getEnriched(material).let(::ItemStack)
+    fun getEnrichedStack(material: HTMaterialType, count: Int = 1): ItemStack = getEnriched(material).toStack(count)
 
     //    RagiumAddon    //
 

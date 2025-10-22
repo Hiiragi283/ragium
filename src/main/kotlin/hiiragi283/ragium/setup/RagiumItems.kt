@@ -13,6 +13,8 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -90,47 +92,47 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTDeferredItem<Item> = register("${RagiumConst.RAGI_ALLOY}_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = register("${RagiumConst.RAGI_ALLOY}_compound")
 
     @JvmField
-    val RAGI_COKE: HTDeferredItem<Item> = register("ragi_coke")
+    val RAGI_COKE: HTSimpleDeferredItem = register("ragi_coke")
 
     // Wood
     @JvmField
-    val COMPRESSED_SAWDUST: HTDeferredItem<Item> = register("compressed_sawdust")
+    val COMPRESSED_SAWDUST: HTSimpleDeferredItem = register("compressed_sawdust")
 
     @JvmField
-    val RESIN: HTDeferredItem<Item> = register("resin")
+    val RESIN: HTSimpleDeferredItem = register("resin")
 
     // Oil
     @JvmField
-    val TAR: HTDeferredItem<Item> = register("tar")
+    val TAR: HTSimpleDeferredItem = register("tar")
 
     // Nuclear Fuel
     @JvmField
-    val POTATO_SPROUTS: HTDeferredItem<Item> = register("potato_sprouts")
+    val POTATO_SPROUTS: HTSimpleDeferredItem = register("potato_sprouts")
 
     @JvmField
-    val GREEN_CAKE: HTDeferredItem<Item> = register("green_cake")
+    val GREEN_CAKE: HTSimpleDeferredItem = register("green_cake")
 
     @JvmField
-    val GREEN_CAKE_DUST: HTDeferredItem<Item> = register("green_cake_dust")
+    val GREEN_CAKE_DUST: HTSimpleDeferredItem = register("green_cake_dust")
 
     @JvmField
-    val GREEN_PELLET: HTDeferredItem<Item> = register("green_pellet")
+    val GREEN_PELLET: HTSimpleDeferredItem = register("green_pellet")
 
     // Misc
     @JvmField
-    val BASALT_MESH: HTDeferredItem<Item> = register("basalt_mesh")
+    val BASALT_MESH: HTSimpleDeferredItem = register("basalt_mesh")
 
     @JvmField
-    val ECHO_STAR: HTDeferredItem<Item> = register("echo_star", Item.Properties().rarity(Rarity.UNCOMMON))
+    val ECHO_STAR: HTSimpleDeferredItem = register("echo_star", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
-    val ELDER_HEART: HTDeferredItem<Item> = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
+    val ELDER_HEART: HTSimpleDeferredItem = register("elder_heart", Item.Properties().rarity(Rarity.UNCOMMON))
 
     @JvmField
-    val WITHER_DOLl: HTDeferredItem<Item> = register("wither_doll")
+    val WITHER_DOLl: HTSimpleDeferredItem = register("wither_doll")
 
     val MATERIALS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
         // Dusts
@@ -225,7 +227,7 @@ object RagiumItems {
 
     @JvmStatic
     fun getScrap(material: HTMaterialType): HTItemHolderLike = when (material) {
-        HTVanillaMaterialType.NETHERITE -> HTItemHolderLike.fromItem(Items.NETHERITE_SCRAP)
+        HTVanillaMaterialType.NETHERITE -> Items.NETHERITE_SCRAP.toHolderLike()
         else -> getMaterial(HTItemMaterialVariant.SCRAP, material)
     }
 
@@ -274,26 +276,26 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val WRENCH: HTDeferredItem<Item> = register("wrench", Item.Properties().stacksTo(1))
+    val WRENCH: HTSimpleDeferredItem = register("wrench", Item.Properties().stacksTo(1))
 
     @JvmField
-    val MAGNET: HTDeferredItem<Item> = register("ragi_magnet")
+    val MAGNET: HTSimpleDeferredItem = register("ragi_magnet")
 
     @JvmField
-    val ADVANCED_MAGNET: HTDeferredItem<Item> = register("advanced_ragi_magnet")
+    val ADVANCED_MAGNET: HTSimpleDeferredItem = register("advanced_ragi_magnet")
 
     @JvmField
-    val DYNAMIC_LANTERN: HTDeferredItem<Item> = register("ragi_lantern")
+    val DYNAMIC_LANTERN: HTSimpleDeferredItem = register("ragi_lantern")
 
     @JvmField
-    val LOOT_TICKET: HTDeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
+    val LOOT_TICKET: HTSimpleDeferredItem = register("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
-    val NIGHT_VISION_GOGGLES: HTDeferredItem<Item> = register("night_vision_goggles", Item.Properties().stacksTo(1))
+    val NIGHT_VISION_GOGGLES: HTSimpleDeferredItem = register("night_vision_goggles", Item.Properties().stacksTo(1))
 
     // Azure
     @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
         "${RagiumConst.AZURE_STEEL}_upgrade_smithing_template",
     ) { _ ->
         HTSmithingTemplateItem(
@@ -306,26 +308,26 @@ object RagiumItems {
     }
 
     @JvmField
-    val DRILL: HTDeferredItem<Item> = register("drill", ::HTDrillItem)
+    val DRILL: HTSimpleDeferredItem = register("drill", ::HTDrillItem)
 
     // Crimson
     @JvmField
-    val BLAST_CHARGE: HTDeferredItem<Item> = register("blast_charge", ::HTBlastChargeItem)
+    val BLAST_CHARGE: HTSimpleDeferredItem = register("blast_charge", ::HTBlastChargeItem)
 
     // Warped
     @JvmField
-    val TELEPORT_KEY: HTDeferredItem<Item> = register("teleport_key", ::HTTeleportKeyItem)
+    val TELEPORT_KEY: HTSimpleDeferredItem = register("teleport_key", ::HTTeleportKeyItem)
 
     // Eldritch
     @JvmField
-    val ELDRITCH_EGG: HTDeferredItem<Item> = register("eldritch_egg", ::HTCaptureEggItem)
+    val ELDRITCH_EGG: HTSimpleDeferredItem = register("eldritch_egg", ::HTCaptureEggItem)
 
     @JvmField
-    val UNIVERSAL_BUNDLE: HTDeferredItem<Item> = register("universal_bundle", ::HTUniversalBundleItem)
+    val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = register("universal_bundle", ::HTUniversalBundleItem)
 
     // Deep
     @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTDeferredItem<Item> = REGISTER.register(
+    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
         "${RagiumConst.DEEP_STEEL}_upgrade_smithing_template",
     ) { _ ->
         HTSmithingTemplateItem(
@@ -339,22 +341,22 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val POTION_BUNDLE: HTDeferredItem<Item> = register("potion_bundle", ::HTPotionBundleItem)
+    val POTION_BUNDLE: HTSimpleDeferredItem = register("potion_bundle", ::HTPotionBundleItem)
 
     @JvmField
-    val SLOT_COVER: HTDeferredItem<Item> = register("slot_cover")
+    val SLOT_COVER: HTSimpleDeferredItem = register("slot_cover")
 
     @JvmField
-    val TRADER_CATALOG: HTDeferredItem<Item> = register("trader_catalog", ::HTTraderCatalogItem)
+    val TRADER_CATALOG: HTSimpleDeferredItem = register("trader_catalog", ::HTTraderCatalogItem)
 
     @JvmField
-    val MEDIUM_DRUM_UPGRADE: HTDeferredItem<Item> = register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
+    val MEDIUM_DRUM_UPGRADE: HTSimpleDeferredItem = register("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
 
     @JvmField
-    val LARGE_DRUM_UPGRADE: HTDeferredItem<Item> = register("large_drum_upgrade", HTDrumUpgradeItem::Large)
+    val LARGE_DRUM_UPGRADE: HTSimpleDeferredItem = register("large_drum_upgrade", HTDrumUpgradeItem::Large)
 
     @JvmField
-    val HUGE_DRUM_UPGRADE: HTDeferredItem<Item> = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
+    val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = register("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
     val TOOLS: ImmutableTable<HTToolVariant, HTMaterialType, HTDeferredItem<*>> = buildTable {
         val consumer: (HTToolVariant, HTMaterialType, Tier) -> Unit = { variant: HTToolVariant, material: HTMaterialType, tier: Tier ->
@@ -397,87 +399,87 @@ object RagiumItems {
         name: String,
         foodProperties: FoodProperties,
         properties: Item.Properties = Item.Properties(),
-    ): HTDeferredItem<Item> = register(name, properties.food(foodProperties))
+    ): HTSimpleDeferredItem = register(name, properties.food(foodProperties))
 
     @JvmField
-    val ICE_CREAM: HTDeferredItem<Item> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
+    val ICE_CREAM: HTSimpleDeferredItem = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: HTDeferredItem<Item> = register("ice_cream_soda", ::HTPotionSodaItem)
+    val ICE_CREAM_SODA: HTSimpleDeferredItem = register("ice_cream_soda", ::HTPotionSodaItem)
 
     // Meat
     @JvmField
-    val CANNED_COOKED_MEAT: HTDeferredItem<Item> = registerFood("canned_${RagiumConst.COOKED_MEAT}", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_${RagiumConst.COOKED_MEAT}", RagiumFoods.CANNED_COOKED_MEAT)
 
     // Sponge
     @JvmField
-    val MELON_PIE: HTDeferredItem<Item> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
+    val MELON_PIE: HTSimpleDeferredItem = registerFood("melon_pie", RagiumFoods.MELON_PIE)
 
     @JvmField
-    val SWEET_BERRIES_CAKE_SLICE: HTDeferredItem<Item> = registerFood("sweet_berries_cake_slice", RagiumFoods.SWEET_BERRIES_CAKE)
+    val SWEET_BERRIES_CAKE_SLICE: HTSimpleDeferredItem = registerFood("sweet_berries_cake_slice", RagiumFoods.SWEET_BERRIES_CAKE)
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: HTDeferredItem<Item> = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
 
     @JvmField
-    val FEVER_CHERRY: HTDeferredItem<Item> =
+    val FEVER_CHERRY: HTSimpleDeferredItem =
         registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, properties = Item.Properties().rarity(Rarity.RARE))
 
     // Other
     @JvmField
-    val BOTTLED_BEE: HTDeferredItem<Item> = register("bottled_bee")
+    val BOTTLED_BEE: HTSimpleDeferredItem = register("bottled_bee")
 
     @JvmField
-    val AMBROSIA: HTDeferredItem<Item> =
+    val AMBROSIA: HTSimpleDeferredItem =
         registerFood("ambrosia", RagiumFoods.AMBROSIA, properties = Item.Properties().rarity(Rarity.EPIC))
 
     //    Machine Parts    //
 
     @JvmField
-    val GRAVITATIONAL_UNIT: HTDeferredItem<Item> = register("gravitational_unit")
+    val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = register("gravitational_unit")
 
     // Catalyst
     @JvmField
-    val PLATING_CATALYST: HTDeferredItem<Item> = register("plating_catalyst", ::HTCatalystItem)
+    val PLATING_CATALYST: HTSimpleDeferredItem = register("plating_catalyst", ::HTCatalystItem)
 
     @JvmField
-    val POLYMER_CATALYST: HTDeferredItem<Item> = register("polymer_catalyst", ::HTCatalystItem)
+    val POLYMER_CATALYST: HTSimpleDeferredItem = register("polymer_catalyst", ::HTCatalystItem)
 
     // LED
     @JvmField
-    val LUMINOUS_PASTE: HTDeferredItem<Item> = register("luminous_paste")
+    val LUMINOUS_PASTE: HTSimpleDeferredItem = register("luminous_paste")
 
     @JvmField
-    val LED: HTDeferredItem<Item> = register("led")
+    val LED: HTSimpleDeferredItem = register("led")
 
     @JvmField
-    val SOLAR_PANEL: HTDeferredItem<Item> = register("solar_panel")
+    val SOLAR_PANEL: HTSimpleDeferredItem = register("solar_panel")
 
     // Redstone
     @JvmField
-    val REDSTONE_BOARD: HTDeferredItem<Item> = register("redstone_board")
+    val REDSTONE_BOARD: HTSimpleDeferredItem = register("redstone_board")
 
     // Plastics
     @JvmField
-    val POLYMER_RESIN: HTDeferredItem<Item> = register("polymer_resin")
+    val POLYMER_RESIN: HTSimpleDeferredItem = register("polymer_resin")
 
     @JvmField
-    val SYNTHETIC_FIBER: HTDeferredItem<Item> = register("synthetic_fiber")
+    val SYNTHETIC_FIBER: HTSimpleDeferredItem = register("synthetic_fiber")
 
     @JvmField
-    val SYNTHETIC_LEATHER: HTDeferredItem<Item> = register("synthetic_leather")
+    val SYNTHETIC_LEATHER: HTSimpleDeferredItem = register("synthetic_leather")
 
     @JvmField
-    val CIRCUIT_BOARD: HTDeferredItem<Item> = register("circuit_board")
+    val CIRCUIT_BOARD: HTSimpleDeferredItem = register("circuit_board")
 
     @JvmField
-    val ADVANCED_CIRCUIT_BOARD: HTDeferredItem<Item> = register("advanced_circuit_board")
+    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = register("advanced_circuit_board")
 
     //    Vehicles    //
 
     @JvmField
-    val DRUM_MINECARTS: Map<HTDrumVariant, HTDeferredItem<Item>> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+    val DRUM_MINECARTS: Map<HTDrumVariant, HTSimpleDeferredItem> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
         val factory: HTMinecart.Factory = when (variant) {
             HTDrumVariant.SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
             HTDrumVariant.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
@@ -493,7 +495,7 @@ object RagiumItems {
     //    Extensions    //
 
     @JvmStatic
-    private fun register(name: String, properties: Item.Properties = Item.Properties()): HTDeferredItem<Item> =
+    private fun register(name: String, properties: Item.Properties = Item.Properties()): HTSimpleDeferredItem =
         REGISTER.registerSimpleItem(name, properties)
 
     @JvmStatic

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
@@ -29,9 +30,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     companion object {
         @JvmField
         val VANILLA_STORAGE_BLOCKS: Map<HTVanillaMaterialType, HTHolderLike> = mapOf(
-            HTVanillaMaterialType.AMETHYST to HTHolderLike.fromBlock(Blocks.AMETHYST_BLOCK),
-            HTVanillaMaterialType.GLOWSTONE to HTHolderLike.fromBlock(Blocks.GLOWSTONE),
-            HTVanillaMaterialType.QUARTZ to HTHolderLike.fromBlock(Blocks.QUARTZ_BLOCK),
+            HTVanillaMaterialType.AMETHYST to Blocks.AMETHYST_BLOCK.toHolderLike(),
+            HTVanillaMaterialType.GLOWSTONE to Blocks.GLOWSTONE.toHolderLike(),
+            HTVanillaMaterialType.QUARTZ to Blocks.QUARTZ_BLOCK.toHolderLike(),
         )
     }
 

@@ -19,7 +19,7 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
         properties: Item.Properties = Item.Properties(),
     ): HTDeferredItem<ITEM> = register(name) { _: ResourceLocation -> factory(properties) }
 
-    fun registerSimpleItem(name: String, properties: Item.Properties = Item.Properties()): HTDeferredItem<Item> =
+    fun registerSimpleItem(name: String, properties: Item.Properties = Item.Properties()): HTSimpleDeferredItem =
         registerItem(name, ::Item, properties)
 
     //    HTDeferredRegister    //

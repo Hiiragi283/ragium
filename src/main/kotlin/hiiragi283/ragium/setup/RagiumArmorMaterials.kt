@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import net.minecraft.core.Holder
@@ -12,12 +13,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
 object RagiumArmorMaterials {
     @JvmField
-    val REGISTER: DeferredRegister<ArmorMaterial> = DeferredRegister.create(Registries.ARMOR_MATERIAL, RagiumAPI.MOD_ID)
+    val REGISTER: HTDeferredRegister<ArmorMaterial> = HTDeferredRegister(Registries.ARMOR_MATERIAL, RagiumAPI.MOD_ID)
 
     @JvmStatic
     private fun register(

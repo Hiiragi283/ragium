@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -37,7 +37,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         extractAndInfuse(
             itemCreator.fromItem(Items.BOWL),
-            HTItemHolderLike.fromItem(Items.MUSHROOM_STEW),
+            Items.MUSHROOM_STEW.toHolderLike(),
             RagiumFluidContents.MUSHROOM_STEW,
             250,
         )
@@ -114,14 +114,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Honey Block <-> Honey
         meltAndFreeze(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
-            HTItemHolderLike.fromItem(Items.HONEY_BLOCK),
+            Items.HONEY_BLOCK.toHolderLike(),
             RagiumFluidContents.HONEY,
             1000,
         )
         // Honey Bottle <-> Honey
         extractAndInfuse(
             itemCreator.fromItem(Items.GLASS_BOTTLE),
-            HTItemHolderLike.fromItem(Items.HONEY_BOTTLE),
+            Items.HONEY_BOTTLE.toHolderLike(),
             RagiumFluidContents.HONEY,
             250,
         )

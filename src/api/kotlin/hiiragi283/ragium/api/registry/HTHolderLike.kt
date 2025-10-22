@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.extension.andThen
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 
@@ -45,11 +43,5 @@ fun interface HTHolderLike {
          */
         @JvmStatic
         fun fromFluid(fluid: Fluid): HTHolderLike = fluid::builtInRegistryHolder.let(::fromHolder)
-
-        /**
-         * 指定した[ItemLike]を[HTHolderLike]に変換します。
-         */
-        @JvmStatic
-        fun fromItem(item: ItemLike): HTHolderLike = item::asItem.andThen(Item::builtInRegistryHolder).let(::fromHolder)
     }
 }

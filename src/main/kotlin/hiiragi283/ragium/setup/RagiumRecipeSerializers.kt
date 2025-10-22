@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -28,12 +29,11 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
-import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumRecipeSerializers {
     @JvmField
-    val REGISTER: DeferredRegister<RecipeSerializer<*>> =
-        DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
+    val REGISTER: HTDeferredRegister<RecipeSerializer<*>> =
+        HTDeferredRegister(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
 
     @JvmStatic
     private fun <RECIPE : Recipe<*>> register(name: String, serializer: RecipeSerializer<RECIPE>): RecipeSerializer<RECIPE> {

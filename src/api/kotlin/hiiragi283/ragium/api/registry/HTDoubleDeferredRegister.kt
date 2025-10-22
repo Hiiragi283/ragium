@@ -11,12 +11,6 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
     protected val firstRegister: HTDeferredRegister<FIRST>,
     protected val secondRegister: HTDeferredRegister<SECOND>,
 ) {
-    protected constructor(
-        namespace: String,
-        first: RegistryKey<FIRST>,
-        second: HTDeferredRegister<SECOND>,
-    ) : this(HTDeferredRegister(first, namespace), second)
-
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerEach(
         name: String,
         first: (ResourceLocation) -> F,

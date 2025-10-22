@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
@@ -30,7 +30,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Magma Block <-> Lava
         meltAndFreeze(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
-            HTItemHolderLike.fromItem(Items.MAGMA_BLOCK),
+            Items.MAGMA_BLOCK.toHolderLike(),
             HTFluidContent.LAVA,
             125,
         )
