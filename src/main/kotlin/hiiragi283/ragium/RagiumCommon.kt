@@ -26,6 +26,7 @@ import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
+import hiiragi283.ragium.setup.RagiumFeatures
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -76,9 +77,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
-        RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumEntityTypes.init(eventBus)
+        RagiumFeatures.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
+        RagiumRecipeSerializers.REGISTER.register(eventBus)
 
         for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.onModConstruct(eventBus, dist)
