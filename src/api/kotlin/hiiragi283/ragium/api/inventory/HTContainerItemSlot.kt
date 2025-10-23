@@ -41,7 +41,7 @@ open class HTContainerItemSlot(
 
     override fun getItem(): ItemStack = slot.getItemStack()
 
-    override fun hasItem(): Boolean = !slot.isEmpty()
+    override fun hasItem(): Boolean = slot.isNotEmpty()
 
     override fun set(stack: ItemStack) {
         uncheckedSetter.accept(stack)

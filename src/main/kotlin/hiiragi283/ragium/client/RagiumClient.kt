@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
+import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
+import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTConsumerScreen
@@ -23,12 +25,14 @@ import hiiragi283.ragium.client.gui.screen.HTSingleFluidConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
+import hiiragi283.ragium.client.renderer.block.HTCrateRenderer
 import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -270,6 +274,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION.get(), ::HTFuelGeneratorRenderer)
+
+        for (variant: HTCrateVariant in HTCrateVariant.entries) {
+            event.registerBlockEntityRenderer(variant.blockEntityHolder.get(), ::HTCrateRenderer)
+        }
         // Entity
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
@@ -285,6 +293,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
+        event.register(HTItemTooltipContent::class.java, ::HTClientItemTooltipComponent)
+
         RagiumAPI.LOGGER.info("Registered ClientTooltipComponents!")
     }
 

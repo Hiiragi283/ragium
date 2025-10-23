@@ -9,8 +9,9 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 /**
  * 水平方向の回転を行える[HTEntityBlock]
  */
-class HTHorizontalEntityBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTDirectionalEntityBlock(type, properties) {
-    override val directionProperty: DirectionProperty get() = BlockStateProperties.HORIZONTAL_FACING
+open class HTHorizontalEntityBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
+    HTDirectionalEntityBlock(type, properties) {
+    final override val directionProperty: DirectionProperty get() = BlockStateProperties.HORIZONTAL_FACING
 
-    override fun placedFront(context: BlockPlaceContext): Direction = context.horizontalDirection.opposite
+    final override fun placedFront(context: BlockPlaceContext): Direction = context.horizontalDirection.opposite
 }

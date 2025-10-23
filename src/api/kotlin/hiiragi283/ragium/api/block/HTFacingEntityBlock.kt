@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 /**
  * 六方位を向くことができる[HTEntityBlock]
  */
-class HTFacingEntityBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTDirectionalEntityBlock(type, properties) {
-    override val directionProperty: DirectionProperty get() = BlockStateProperties.FACING
+open class HTFacingEntityBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTDirectionalEntityBlock(type, properties) {
+    final override val directionProperty: DirectionProperty get() = BlockStateProperties.FACING
 
-    override fun placedFront(context: BlockPlaceContext): Direction = context.nearestLookingDirection.opposite
+    final override fun placedFront(context: BlockPlaceContext): Direction = context.nearestLookingDirection.opposite
 }

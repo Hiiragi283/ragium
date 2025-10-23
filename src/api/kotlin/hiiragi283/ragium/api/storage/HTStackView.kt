@@ -19,6 +19,8 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
      */
     fun isEmpty(): Boolean = getStack().isEmpty()
 
+    fun isNotEmpty(): Boolean = getStack().isNotEmpty()
+
     /**
      * このスロットが保持している個数を返します。
      * @return [Int]値での個数

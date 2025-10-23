@@ -115,13 +115,13 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                         setStack(stack.copyWithAmount(toAdd))
                     }
                 }
-                return stack.copyWithAmount(stack.amountAsInt() + toAdd)
+                return stack.copyWithAmount(stack.amountAsInt() - toAdd)
             }
             return stack
         }
 
         final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK = when {
-            !this.isEmpty() && isSameStack(stack) -> extract(stack.amountAsInt(), action, access)
+            this.isNotEmpty() && isSameStack(stack) -> extract(stack.amountAsInt(), action, access)
             else -> getEmptyStack()
         }
 

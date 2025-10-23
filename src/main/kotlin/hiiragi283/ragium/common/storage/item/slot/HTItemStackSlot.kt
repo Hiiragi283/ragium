@@ -56,7 +56,7 @@ open class HTItemStackSlot protected constructor(
             canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
             canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
             filter: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
-        ): HTItemStackSlot = create(listener, x, y, validateLimit(limit), canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
+        ): HTItemStackSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
 
         @JvmStatic
         private fun create(
@@ -82,7 +82,7 @@ open class HTItemStackSlot protected constructor(
             listener,
             x,
             y,
-            validateLimit(limit),
+            limit,
             { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
             { stack: ImmutableItemStack, _ -> canInsert.test(stack) },
             filter,

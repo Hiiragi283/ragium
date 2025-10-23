@@ -224,7 +224,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crate() {
         for ((variant: HTCrateVariant, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
+            resetComponent(crate)
 
             val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
                 HTCrateVariant.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.IRON

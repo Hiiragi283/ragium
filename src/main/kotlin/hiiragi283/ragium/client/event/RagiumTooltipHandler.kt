@@ -1,7 +1,9 @@
 package hiiragi283.ragium.client.event
 
+import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
@@ -17,6 +19,7 @@ import net.minecraft.world.item.component.TooltipProvider
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 
 @EventBusSubscriber(value = [Dist.CLIENT], modid = RagiumAPI.MOD_ID)
@@ -72,5 +75,13 @@ object RagiumTooltipHandler {
         if (stack.`is`(RagiumModTags.Items.WIP)) {
             consumer(RagiumTranslation.TOOLTIP_WIP.getColoredComponent(ChatFormatting.DARK_RED))
         }
+    }
+
+    @SubscribeEvent
+    fun gatherClientComponents(event: RenderTooltipEvent.GatherComponents) {
+        val stack: ItemStack = event.itemStack
+        val stackIn: ImmutableItemStack = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
+        val content: HTItemTooltipContent = HTItemTooltipContent.of(stackIn) ?: return
+        event.tooltipElements.add(Either.right(content))
     }
 }

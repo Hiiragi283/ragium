@@ -29,6 +29,14 @@ fun PoseStack.scale(i: Float) {
     scale(i, i, i)
 }
 
+fun PoseStack.translate(i: Float) {
+    translate(i, i, i)
+}
+
+fun PoseStack.translate(x: Number, y: Number, z: Number) {
+    translate(x.toDouble(), y.toDouble(), z.toDouble())
+}
+
 //    Rendering    //
 
 fun renderItem(
@@ -52,7 +60,7 @@ fun renderItem(
     if (!quads.isEmpty()) {
         poseStack.translate(xOffset, itemY, zOffset)
         poseStack.mulPose(Quaternionf().rotateX(Mth.DEG_TO_RAD * 90))
-        poseStack.scale(0.5f, 0.5f, 0.5f)
+        poseStack.scale(0.5f)
     } else {
         poseStack.translate(xOffset, blockY, zOffset)
     }

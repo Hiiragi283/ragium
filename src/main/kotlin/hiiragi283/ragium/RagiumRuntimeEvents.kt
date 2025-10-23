@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -41,6 +42,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -237,5 +239,16 @@ object RagiumRuntimeEvents {
         if (cure == EffectCures.MILK && RagiumConfig.COMMON.disableMilkCure.asBoolean) {
             event.isCanceled = true
         }
+    }
+
+    //    Recipe    //
+
+    @SubscribeEvent
+    fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
+        val result: ItemStack = event.crafting
+        if (result.isEmpty) return
+        val stackIn: ImmutableItemStack = result.remove(RagiumDataComponents.ITEM_CONTENT) ?: return
+        if (stackIn.isEmpty()) return
+        giveStackTo(event.entity, stackIn.stack)
     }
 }

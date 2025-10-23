@@ -112,6 +112,17 @@ object RagiumBlockEntityTypes {
         ::HTNuclearReactorBlockEntity,
     )
 
+    @JvmField
+    val GENERATORS: List<HTDeferredBlockEntityType<out HTGeneratorBlockEntity>> = listOf(
+        // Basic
+        THERMAL,
+        // Advanced
+        COMBUSTION,
+        SOLAR,
+        // Elite
+        NUCLEAR,
+    )
+
     @JvmStatic
     private fun <BE : HTGeneratorBlockEntity> generator(
         variant: HTGeneratorVariant<*, BE>,
@@ -250,7 +261,7 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        registerHandlers(event, HTGeneratorVariant.entries.map(HTGeneratorVariant<*, *>::blockEntityHolder))
+        registerHandlers(event, GENERATORS)
         registerHandlers(event, MACHINES.values)
 
         registerHandlers(event, DEVICES.values)
