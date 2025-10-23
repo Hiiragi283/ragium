@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.getClientExtensions
+import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.common.block.HTDrumBlock
@@ -20,6 +20,6 @@ class HTDrumBlockItem(variant: HTDrumVariant, properties: Properties) :
 
     override fun getBarColor(stack: ItemStack): Int {
         val stack: ImmutableFluidStack = RagiumCapabilities.FLUID.getCapabilityStack(stack, 0) ?: return 0
-        return stack.getClientExtensions().getTintColor(stack.stack)
+        return stack.getTintColor()
     }
 }

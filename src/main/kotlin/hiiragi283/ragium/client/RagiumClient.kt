@@ -27,6 +27,8 @@ import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.client.renderer.block.HTCrateRenderer
 import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
+import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
+import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -35,6 +37,7 @@ import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -116,7 +119,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     else -> -1
                 }
             },
-            HTDeviceVariant.WATER_COLLECTOR.blockHolder.get(),
+            HTDeviceVariant.WATER_COLLECTOR.getBlock(),
         )
         // LED Blocks
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
@@ -275,8 +278,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION.get(), ::HTFuelGeneratorRenderer)
 
+        event.registerBlockEntityRenderer(HTMachineVariant.MELTER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
+        event.registerBlockEntityRenderer(HTMachineVariant.REFINERY.getBlockEntityType(), ::HTRefineryRenderer)
+        event.registerBlockEntityRenderer(HTMachineVariant.WASHER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
+
         for (variant: HTCrateVariant in HTCrateVariant.entries) {
-            event.registerBlockEntityRenderer(variant.blockEntityHolder.get(), ::HTCrateRenderer)
+            event.registerBlockEntityRenderer(variant.getBlockEntityType(), ::HTCrateRenderer)
         }
         // Entity
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)

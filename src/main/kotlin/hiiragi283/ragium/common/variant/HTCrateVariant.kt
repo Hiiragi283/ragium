@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -20,7 +21,7 @@ enum class HTCrateVariant(private val enPattern: String, private val jaPattern: 
 
     val multiplier: Int get() = RagiumConfig.COMMON.crateCapacity[this]!!.asInt
 
-    override val blockHolder: HTDeferredBlock<HTCrateBlock, *> by lazy { RagiumBlocks.CRATES[this]!! }
+    override val blockHolder: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> by lazy { RagiumBlocks.CRATES[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<out HTCrateBlockEntity> by lazy { RagiumBlockEntityTypes.CRATES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = value.replace(

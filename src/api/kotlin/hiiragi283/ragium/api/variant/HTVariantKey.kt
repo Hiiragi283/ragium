@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
 
 /**
  * さまざまな要素のキーとなるインターフェース
@@ -36,6 +37,8 @@ interface HTVariantKey {
         ItemLike {
         val blockHolder: HTDeferredBlock<BLOCK, *>
 
+        fun getBlock(): BLOCK = blockHolder.get()
+
         override fun asItem(): Item = blockHolder.asItem()
 
         fun toStack(count: Int = 1): ItemStack = blockHolder.toStack(count)
@@ -47,6 +50,8 @@ interface HTVariantKey {
      */
     interface WithBE<BE : BlockEntity> : HTVariantKey {
         val blockEntityHolder: HTDeferredBlockEntityType<out BE>
+
+        fun getBlockEntityType(): BlockEntityType<out BE> = blockEntityHolder.get()
     }
 
     interface WithBlockAndBE<BLOCK : Block, BE : BlockEntity> :

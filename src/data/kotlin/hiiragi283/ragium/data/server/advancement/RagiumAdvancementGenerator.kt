@@ -225,7 +225,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             addCriterion(
                 "place_dim_anchor",
-                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.blockHolder.get()),
+                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.getBlock()),
             )
         }
         child(RagiumAdvancements.TELEPORT_KEY, RagiumAdvancements.WARPED_CRYSTAL) {

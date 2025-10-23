@@ -2,17 +2,11 @@
 
 package hiiragi283.ragium.api.extension
 
-import com.mojang.blaze3d.vertex.BufferUploader
-import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.Tesselator
-import com.mojang.blaze3d.vertex.VertexFormat
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.resources.model.BakedModel
-import net.minecraft.util.FastColor
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
@@ -20,7 +14,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.model.data.ModelData
-import org.joml.Matrix4f
 import org.joml.Quaternionf
 
 //    PoseStack    //
@@ -76,43 +69,6 @@ fun renderItem(
         0,
     )
     poseStack.popPose()
-}
-
-inline fun setShaderColor(guiGraphics: GuiGraphics, color: Int, action: () -> Unit) {
-    val red: Float = FastColor.ARGB32.red(color) / 255f
-    val green: Float = FastColor.ARGB32.green(color) / 255f
-    val blue: Float = FastColor.ARGB32.blue(color) / 255f
-    val alpha: Float = FastColor.ARGB32.alpha(color) / 255f
-    guiGraphics.setColor(red, green, blue, alpha)
-    action()
-    guiGraphics.setColor(1f, 1f, 1f, 1f)
-}
-
-/**
- * @see [me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture]
- */
-fun drawQuad(
-    guiGraphics: GuiGraphics,
-    x: Float,
-    y: Float,
-    width: Float,
-    height: Float,
-    minU: Float,
-    minV: Float,
-    maxU: Float,
-    maxV: Float,
-) {
-    val matrix4f: Matrix4f = guiGraphics.pose().last().pose()
-    Tesselator
-        .getInstance()
-        .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
-        .apply {
-            addVertex(matrix4f, x, y + height, 0f).setUv(minU, maxV)
-            addVertex(matrix4f, x + width, y + height, 0f).setUv(maxU, maxV)
-            addVertex(matrix4f, x + width, y, 0f).setUv(maxU, minV)
-            addVertex(matrix4f, x, y, 0f).setUv(minU, minV)
-        }.buildOrThrow()
-        .let(BufferUploader::drawWithShader)
 }
 
 /*fun HTMultiblockController.renderMultiblock(

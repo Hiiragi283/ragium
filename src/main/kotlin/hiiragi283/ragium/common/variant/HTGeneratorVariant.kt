@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntit
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.item.block.HTGeneratorBlockItem
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -39,7 +40,7 @@ sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlock
         COMBUSTION(HTMachineTier.ADVANCED, "Combustion Generator", "燃焼発電機"),
         ;
 
-        override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, *>
+        override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<*>>
             get() = when (this) {
                 THERMAL -> RagiumBlocks.THERMAL_GENERATOR
                 COMBUSTION -> RagiumBlocks.COMBUSTION_GENERATOR
@@ -62,7 +63,7 @@ sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlock
     //    Advanced    //
 
     data object Solar : HTGeneratorVariant<HTEntityBlock, HTSolarGeneratorBlockEntity> {
-        override val blockHolder: HTDeferredBlock<HTEntityBlock, *>
+        override val blockHolder: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<*>>
             get() = RagiumBlocks.SOLAR_PANEL_CONTROLLER
 
         override fun translate(type: HTLanguageType, value: String): String = when (type) {
@@ -81,7 +82,7 @@ sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlock
     //    Elite    //
 
     data object Nuclear : HTGeneratorVariant<HTEntityBlock, HTNuclearReactorBlockEntity> {
-        override val blockHolder: HTDeferredBlock<HTEntityBlock, *>
+        override val blockHolder: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<*>>
             get() = RagiumBlocks.NUCLEAR_REACTOR
 
         override fun translate(type: HTLanguageType, value: String): String = when (type) {

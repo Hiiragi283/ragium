@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.gui.component
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.getClientExtensions
+import hiiragi283.ragium.api.stack.getStillTexture
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.text.addFluidTooltip
@@ -64,8 +64,7 @@ class HTFluidTankWidget(
 
     override fun shouldRender(): Boolean = getStack().isNotEmpty()
 
-    override fun getSprite(): TextureAtlasSprite? =
-        getSprite(getStack().getClientExtensions().getStillTexture(getStack().stack), InventoryMenu.BLOCK_ATLAS)
+    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack().getStillTexture(), InventoryMenu.BLOCK_ATLAS)
 
     override fun getColor(): Int = getStack().getTintColor()
 

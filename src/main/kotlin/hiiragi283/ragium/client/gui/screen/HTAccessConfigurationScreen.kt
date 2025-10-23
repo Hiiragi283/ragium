@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
+import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.util.HTPacketHelper
@@ -87,7 +87,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         ) {
             if (!visible) return
             // Render background
-            setShaderColor(guiGraphics, blockEntity.getAccessConfig(side).color) {
+            HTSpriteRenderHelper.setShaderColor(guiGraphics, blockEntity.getAccessConfig(side).color) {
                 guiGraphics.blitSprite(SPRITES.get(this.active, this.isHoveredOrFocused), x, y, width, height)
             }
             // Render icon

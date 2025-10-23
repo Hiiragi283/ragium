@@ -42,7 +42,7 @@ sealed class HTDrumMinecart :
     }*/
 
     override fun createBlockEntity(): HTDrumBlockEntity =
-        getDrumBlockEntityType().create(BlockPos.ZERO, getDrumVariant().blockHolder.get().defaultBlockState())
+        getDrumBlockEntityType().create(BlockPos.ZERO, getDrumVariant().getBlock().defaultBlockState())
 
     //    HTMinecart    //
 
@@ -50,7 +50,7 @@ sealed class HTDrumMinecart :
 
     override fun getPickResult(): ItemStack = getDrumVariant().minecartItem.toStack()
 
-    override fun getDefaultDisplayBlockState(): BlockState = getDrumVariant().blockHolder.get().defaultBlockState()
+    override fun getDefaultDisplayBlockState(): BlockState = getDrumVariant().getBlock().defaultBlockState()
 
     //    HTFluidInteractable    //
 

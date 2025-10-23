@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEnti
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
@@ -48,12 +49,10 @@ import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import java.util.function.Supplier
 
 object RagiumBlockEntityTypes {
     @JvmField
@@ -132,7 +131,7 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
-    val MACHINES: Map<HTMachineVariant, HTDeferredBlockEntityType<HTBlockEntity>> =
+    val MACHINES: Map<HTMachineVariant, HTDeferredBlockEntityType<HTConsumerBlockEntity>> =
         HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
             val factory = when (variant) {
                 // Basic
@@ -247,14 +246,9 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun add(event: BlockEntityTypeAddBlocksEvent, type: HTDeferredBlockEntityType<*>, block: Supplier<out Block>) {
-        event.modify(type.get(), block.get())
-    }
-
-    @JvmStatic
     private fun <V : HTVariantKey.WithBlockAndBE<*, *>> addAll(event: BlockEntityTypeAddBlocksEvent, entries: Iterable<V>) {
         for (variant: V in entries) {
-            add(event, variant.blockEntityHolder, variant.blockHolder)
+            event.modify(variant.getBlockEntityType(), variant.getBlock())
         }
     }
 

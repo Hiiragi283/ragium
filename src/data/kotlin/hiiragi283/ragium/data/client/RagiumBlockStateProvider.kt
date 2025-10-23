@@ -35,7 +35,6 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
@@ -157,38 +156,34 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             )
         }
 
-        val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        val basicCasing: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
-        val advancedMachine: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
+        val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
+        val advancedFrame: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
         val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         // Generator
-        fun generator(block: HTDeferredBlock<*, *>, particle: ResourceLocation) {
-            simpleBlock(block.get(), models().getBuilder(block).texture("particle", particle))
-            builtIn(block)
-        }
-
-        generator(RagiumBlocks.THERMAL_GENERATOR, basicMachine)
-        generator(RagiumBlocks.COMBUSTION_GENERATOR, advancedMachine)
+        builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
+        builtIn(RagiumBlocks.COMBUSTION_GENERATOR, advancedCasing)
 
         // Processor
-        val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")
+        val smelterFront: ResourceLocation = RagiumAPI.id("block", "smelter_front")
         // Basic
-        machine(HTMachineVariant.ALLOY_SMELTER, basicMachine, bricks, smelterFront)
-        machine(HTMachineVariant.BLOCK_BREAKER, basicMachine, bricks)
-        machine(HTMachineVariant.COMPRESSOR, basicMachine, bricks)
-        machine(HTMachineVariant.CUTTING_MACHINE, basicMachine, bricks)
-        machine(HTMachineVariant.EXTRACTOR, basicMachine, bricks)
-        machine(HTMachineVariant.PULVERIZER, basicMachine, bricks)
+        machine(HTMachineVariant.ALLOY_SMELTER, basicCasing, bricks, smelterFront)
+        machine(HTMachineVariant.BLOCK_BREAKER, basicCasing, bricks)
+        machine(HTMachineVariant.COMPRESSOR, basicCasing, bricks)
+        machine(HTMachineVariant.CUTTING_MACHINE, basicCasing, bricks)
+        machine(HTMachineVariant.EXTRACTOR, basicCasing, bricks)
+        machine(HTMachineVariant.PULVERIZER, basicCasing, bricks)
         // Advanced
-        machine(HTMachineVariant.CRUSHER, advancedMachine, blackstone, RagiumAPI.id("block/pulverizer_front"))
-        machine(HTMachineVariant.MELTER, advancedMachine, blackstone)
+        machine(HTMachineVariant.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
+        machine(HTMachineVariant.MELTER, advancedFrame, blackstone)
         altModelBlock(HTMachineVariant.REFINERY.blockHolder, factory = ::horizontalBlock)
-        machine(HTMachineVariant.WASHER, advancedMachine, blackstone)
+        machine(HTMachineVariant.WASHER, advancedFrame, blackstone)
         // Elite
         machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
         machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
@@ -330,8 +325,18 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Item
         itemModels()
             .getBuilder(block)
-            .parent(UncheckedModelFile("item/generated"))
+            .parent(ModelFile.UncheckedModelFile("item/generated"))
             .texture("layer0", blockId)
+    }
+
+    private fun builtIn(block: HTDeferredBlock<*, *>, particle: ResourceLocation) {
+        // Block
+        simpleBlock(block.get(), models().getBuilder(block).texture("particle", particle))
+        // Item
+        itemModels()
+            .getBuilder(block)
+            .parent(ModelFile.UncheckedModelFile(vanillaId("builtin", "entity")))
+            .blockTransforms()
     }
 
     private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
@@ -359,11 +364,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
     }
 
     // Item
-    private fun builtIn(holder: HTHolderLike): ItemModelBuilder = itemModels()
-        .getBuilder(holder)
-        .parent(ModelFile.UncheckedModelFile(vanillaId("builtin", "entity")))
-        .blockTransforms()
-
     private fun ItemModelBuilder.blockTransforms(): ItemModelBuilder = this.transforms {
         transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
             rotation(75f, 45f, 0f).translation(0f, 2.5f, 0f).scale(0.375f)

@@ -1,9 +1,8 @@
 package hiiragi283.ragium.client.gui.component
 
 import com.mojang.blaze3d.systems.RenderSystem
-import hiiragi283.ragium.api.extension.drawQuad
-import hiiragi283.ragium.api.extension.setShaderColor
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
+import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
@@ -64,12 +63,12 @@ abstract class HTSpriteWidget(
 
         RenderSystem.setShaderTexture(0, sprite.atlasLocation())
         RenderSystem.defaultBlendFunc()
-        setShaderColor(guiGraphics, color) {
+        HTSpriteRenderHelper.setShaderColor(guiGraphics, color) {
             RenderSystem.enableBlend()
             for (i: Int in (0..(Mth.ceil(fillLevel) / width))) {
                 val subHeight: Float = min(width.toFloat(), fillLevel - (width * i))
                 val offsetY: Float = height - width * i - subHeight
-                drawQuad(
+                HTSpriteRenderHelper.drawQuad(
                     guiGraphics,
                     x.toFloat(),
                     y + offsetY,
@@ -92,10 +91,10 @@ abstract class HTSpriteWidget(
         },
     )
 
-    protected fun getSprite(id: ResourceLocation, atlas: ResourceLocation): TextureAtlasSprite? = Minecraft
-        .getInstance()
-        .getTextureAtlas(atlas)
-        .apply(id)
+    protected fun getSprite(id: ResourceLocation?, atlas: ResourceLocation): TextureAtlasSprite? = when (id) {
+        null -> null
+        else -> Minecraft.getInstance().getTextureAtlas(atlas).apply(id)
+    }
 
     protected abstract fun shouldRender(): Boolean
 
