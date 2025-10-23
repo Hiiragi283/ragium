@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.registry.createKey
@@ -8,16 +9,23 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.util.function.Function
 import java.util.function.Supplier
+import java.util.function.UnaryOperator
 
 class HTDeferredFluidTypeRegister(namespace: String) : HTDeferredRegister<FluidType>(NeoForgeRegistries.Keys.FLUID_TYPES, namespace) {
     fun <TYPE : FluidType> registerType(
         name: String,
         properties: FluidType.Properties,
-        factory: (FluidType.Properties) -> TYPE,
-    ): HTDeferredFluidType<TYPE> = register(name) { _: ResourceLocation -> factory(properties) }
+        factory: Function<FluidType.Properties, TYPE>,
+    ): HTDeferredFluidType<TYPE> = register(name) { _: ResourceLocation -> factory.apply(properties) }
 
-    fun registerSimpleType(name: String, properties: FluidType.Properties): HTDeferredFluidType<FluidType> =
-        registerType(name, properties, ::FluidType)
+    fun <TYPE : FluidType> registerType(
+        name: String,
+        factory: Function<FluidType.Properties, TYPE>,
+        operator: UnaryOperator<FluidType.Properties>,
+    ): HTDeferredFluidType<TYPE> = register(name) { _: ResourceLocation -> factory.apply(operator.apply(FluidType.Properties.create())) }
+
+    fun registerSimpleType(name: String, operator: UnaryOperator<FluidType.Properties>): HTDeferredFluidType<FluidType> =
+        registerType(name, ::FluidType, operator)
 
     //    HTDeferredRegister    //
 
@@ -25,7 +33,7 @@ class HTDeferredFluidTypeRegister(namespace: String) : HTDeferredRegister<FluidT
 
     override fun getEntries(): Collection<HTDeferredFluidType<*>> = super.getEntries().filterIsInstance<HTDeferredFluidType<*>>()
 
-    override fun <I : FluidType> register(name: String, func: Function<ResourceLocation, out I>): HTDeferredFluidType<I> =
+    override fun <I : FluidType> register(name: String, func: IdToFunction<out I>): HTDeferredFluidType<I> =
         super.register(name, func) as HTDeferredFluidType<I>
 
     override fun <I : FluidType> register(name: String, sup: Supplier<out I>): HTDeferredFluidType<I> =

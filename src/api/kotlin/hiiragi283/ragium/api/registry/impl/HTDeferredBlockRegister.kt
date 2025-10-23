@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.function.BlockFactory
+import hiiragi283.ragium.api.function.ItemFactory
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
@@ -22,60 +24,58 @@ class HTDeferredBlockRegister(namespace: String) :
     fun <BLOCK : Block> registerSimple(
         name: String,
         blockProp: BlockBehaviour.Properties,
-        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        blockGetter: BlockFactory<BLOCK>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTBasicDeferredBlock<BLOCK> = register(name, blockProp, blockGetter, ::HTBlockItem, itemProp)
 
     fun <BLOCK : Block> registerSimple(
         name: String,
         blockProp: () -> BlockBehaviour.Properties,
-        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
+        blockFactory: BlockFactory<BLOCK>,
         itemProp: Item.Properties = Item.Properties(),
-    ): HTBasicDeferredBlock<BLOCK> = register(name, blockProp, blockGetter, ::HTBlockItem, itemProp)
+    ): HTBasicDeferredBlock<BLOCK> = register(name, blockProp, blockFactory, ::HTBlockItem, itemProp)
 
     fun <BLOCK : Block> registerSimple(
         name: String,
-        blockGetter: () -> BLOCK,
+        blockFactory: () -> BLOCK,
         itemProp: Item.Properties = Item.Properties(),
-    ): HTBasicDeferredBlock<BLOCK> = register(name, blockGetter, ::HTBlockItem, itemProp)
+    ): HTBasicDeferredBlock<BLOCK> = register(name, blockFactory, ::HTBlockItem, itemProp)
 
     fun <BLOCK : Block, ITEM : Item> register(
         name: String,
         blockProp: BlockBehaviour.Properties,
-        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
-        itemGetter: (BLOCK, Item.Properties) -> ITEM,
+        blockFactory: BlockFactory<BLOCK>,
+        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = register(
         name,
-        { blockGetter(blockProp) },
-        itemGetter,
+        { blockFactory.apply(blockProp) },
+        itemFactory,
         itemProp,
     )
 
     fun <BLOCK : Block, ITEM : Item> register(
         name: String,
         blockProp: () -> BlockBehaviour.Properties,
-        blockGetter: (BlockBehaviour.Properties) -> BLOCK,
-        itemGetter: (BLOCK, Item.Properties) -> ITEM,
+        blockFactory: BlockFactory<BLOCK>,
+        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = register(
         name,
-        { blockGetter(blockProp()) },
-        itemGetter,
+        { blockFactory.apply(blockProp()) },
+        itemFactory,
         itemProp,
     )
 
     fun <BLOCK : Block, ITEM : Item> register(
         name: String,
         blockGetter: () -> BLOCK,
-        itemGetter: (BLOCK, Item.Properties) -> ITEM,
+        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = registerAdvanced(
         name,
         { _: ResourceLocation -> blockGetter() },
-        { block: HTDeferredHolder<Block, BLOCK> ->
-            itemGetter(block.get(), itemProp)
-        },
+        { block: HTDeferredHolder<Block, BLOCK> -> itemFactory.apply(block.get(), itemProp) },
         ::HTDeferredBlock,
     )
 }

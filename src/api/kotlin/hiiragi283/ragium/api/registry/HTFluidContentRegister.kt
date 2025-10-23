@@ -73,13 +73,12 @@ class HTFluidContentRegister(modId: String) {
         val typeHolder: HTDeferredFluidType<TYPE> = typeRegister.registerType(name, properties, typeFactory)
         // Fluid Holder
         val stillHolder: HTDeferredFluid<BaseFlowingFluid.Source> = HTDeferredFluid(fluidRegister.createId(name))
-        val flowingHolder: HTDeferredFluid<BaseFlowingFluid.Flowing> = HTDeferredFluid(fluidRegister.createId("flowing_$name"))
         // Bucket Item
-        val bucket: HTDeferredItem<BucketItem> = itemRegister.registerItem(
+        val bucket: HTDeferredItem<BucketItem> = itemRegister.registerItemWith(
             "${name}_bucket",
-            { prop: Item.Properties -> BucketItem(stillHolder.get(), prop) },
-            Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET),
-        )
+            stillHolder.get(),
+            ::BucketItem,
+        ) { it.stacksTo(1).craftRemainder(Items.BUCKET) }
         // Liquid Block
         val liquidBlock: HTDeferredOnlyBlock<LiquidBlock> = blockRegister.registerBlock(
             name,
@@ -95,12 +94,9 @@ class HTFluidContentRegister(modId: String) {
             LiquidBlock(stillHolder.get(), prop)
         }
         // Fluid
-        val fluidProp: BaseFlowingFluid.Properties = BaseFlowingFluid
-            .Properties(typeHolder, stillHolder, flowingHolder)
-            .bucket(bucket)
-            .block(liquidBlock)
-        fluidRegister.registerSource(stillHolder.id.path, fluidProp)
-        fluidRegister.registerFlowing(flowingHolder.id.path, fluidProp)
+        val (_, flowingHolder: HTDeferredFluid<BaseFlowingFluid.Flowing>) = fluidRegister.registerFluids(name, typeHolder) {
+            it.bucket(bucket).block(liquidBlock)
+        }
         // Content
         val content: HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = ContentImpl(
             typeHolder,

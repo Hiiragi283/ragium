@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
-import hiiragi283.ragium.api.extension.partially1
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.manager.castRecipe
 import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent

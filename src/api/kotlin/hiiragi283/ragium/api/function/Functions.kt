@@ -1,4 +1,9 @@
-package hiiragi283.ragium.api.extension
+package hiiragi283.ragium.api.function
+
+import net.minecraft.resources.ResourceLocation
+import java.util.function.Function
+
+typealias IdToFunction<R> = Function<ResourceLocation, R>
 
 fun <IP, R> (() -> IP).andThen(f: (IP) -> R): () -> R = { this().let(f) }
 

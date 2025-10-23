@@ -60,8 +60,7 @@ enum class HTArmorVariant(
         multiplier: Int,
     ): HTDeferredItem<ArmorItem> = register.registerItem(
         "${material.materialName()}_${variantName()}",
-        { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
-        Item.Properties().durability(armorType.getDurability(multiplier)),
+        { ArmorItem(armorMaterial1, armorType, it.durability(armorType.getDurability(multiplier))) },
     )
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

@@ -13,10 +13,7 @@ import net.minecraft.world.item.Tier
 
 object HTKitchenKnifeToolVariant : HTToolVariant {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-        register.registerItem(
-            "${material.materialName()}_kitchen_knife",
-            { prop: Item.Properties -> KitchenKnifeItem(tier, prop) },
-        )
+        register.registerItemWith("${material.materialName()}_kitchen_knife", tier, ::KitchenKnifeItem)
 
     override val tagKey: TagKey<Item>
         get() = TagMod.KITCHEN_KNIFE

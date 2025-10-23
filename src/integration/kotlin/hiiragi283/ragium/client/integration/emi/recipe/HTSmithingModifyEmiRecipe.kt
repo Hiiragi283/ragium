@@ -8,7 +8,7 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import dev.emi.emi.recipe.EmiSmithingRecipe
-import hiiragi283.ragium.api.extension.compose
+import hiiragi283.ragium.api.function.compose
 import hiiragi283.ragium.client.integration.emi.RagiumEmiPlugin
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe

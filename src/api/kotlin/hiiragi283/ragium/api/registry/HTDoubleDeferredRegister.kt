@@ -1,8 +1,9 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.andThen
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.api.function.IdToFunction
+import hiiragi283.ragium.api.function.andThen
 import net.neoforged.bus.api.IEventBus
+import java.util.function.Supplier
 
 /**
  * @see [mekanism.common.registration.DoubleDeferredRegister]
@@ -13,26 +14,33 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
 ) {
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerEach(
         name: String,
-        first: (ResourceLocation) -> F,
-        second: (ResourceLocation) -> S,
-        wrapper: (HTDeferredHolder<FIRST, F>, HTDeferredHolder<SECOND, S>) -> H,
-    ): H = wrapper(firstRegister.register(name, first), secondRegister.register(name, second))
+        first: Supplier<F>,
+        second: Supplier<S>,
+        combiner: HolderCombiner<FIRST, SECOND, F, S, H>,
+    ): H = combiner.combine(firstRegister.register(name, first), secondRegister.register(name, second))
+
+    fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerEach(
+        name: String,
+        first: IdToFunction<F>,
+        second: IdToFunction<S>,
+        combiner: HolderCombiner<FIRST, SECOND, F, S, H>,
+    ): H = combiner.combine(firstRegister.register(name, first), secondRegister.register(name, second))
 
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> register(
         name: String,
-        first: (ResourceLocation) -> F,
+        first: IdToFunction<F>,
         second: (F) -> S,
-        wrapper: (HTDeferredHolder<FIRST, F>, HTDeferredHolder<SECOND, S>) -> H,
-    ): H = registerAdvanced(name, first, HTDeferredHolder<FIRST, F>::get.andThen(second), wrapper)
+        combiner: HolderCombiner<FIRST, SECOND, F, S, H>,
+    ): H = registerAdvanced(name, first, HTDeferredHolder<FIRST, F>::get.andThen(second), combiner)
 
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerAdvanced(
         name: String,
-        first: (ResourceLocation) -> F,
+        first: IdToFunction<F>,
         second: (HTDeferredHolder<FIRST, F>) -> S,
-        wrapper: (HTDeferredHolder<FIRST, F>, HTDeferredHolder<SECOND, S>) -> H,
+        combiner: HolderCombiner<FIRST, SECOND, F, S, H>,
     ): H {
         val firstHolder: HTDeferredHolder<FIRST, F> = firstRegister.register(name, first)
-        return wrapper(firstHolder, secondRegister.register(name) { _: ResourceLocation -> second(firstHolder) })
+        return combiner.combine(firstHolder, secondRegister.register(name) { _ -> second(firstHolder) })
     }
 
     fun register(bus: IEventBus) {
@@ -49,5 +57,9 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
 
     fun addSecondAlias(from: String, to: String) {
         secondRegister.addAlias(secondRegister.createId(from), secondRegister.createId(to))
+    }
+
+    fun interface HolderCombiner<FIRST : Any, SECOND : Any, F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> {
+        fun combine(first: HTDeferredHolder<FIRST, F>, second: HTDeferredHolder<SECOND, S>): H
     }
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.storage.fluid
 
-import hiiragi283.ragium.api.extension.negate
 import hiiragi283.ragium.api.extension.setOrRemove
+import hiiragi283.ragium.api.function.negate
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.storageCopy

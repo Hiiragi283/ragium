@@ -2,12 +2,12 @@ package hiiragi283.ragium.api.registry.impl
 
 import com.buuz135.replication.ReplicationRegistry
 import com.buuz135.replication.api.IMatterType
+import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.registry.createKey
 import net.minecraft.resources.ResourceLocation
 import java.awt.Color
-import java.util.function.Function
 import java.util.function.Supplier
 
 class HTDeferredMatterTypeRegister(namespace: String) :
@@ -37,7 +37,7 @@ class HTDeferredMatterTypeRegister(namespace: String) :
 
     override fun getEntries(): Collection<HTDeferredMatterType<*>> = super.getEntries().filterIsInstance<HTDeferredMatterType<*>>()
 
-    override fun <I : IMatterType> register(name: String, func: Function<ResourceLocation, out I>): HTDeferredMatterType<I> =
+    override fun <I : IMatterType> register(name: String, func: IdToFunction<out I>): HTDeferredMatterType<I> =
         super.register(name, func) as HTDeferredMatterType<I>
 
     override fun <I : IMatterType> register(name: String, sup: Supplier<out I>): HTDeferredMatterType<I> =

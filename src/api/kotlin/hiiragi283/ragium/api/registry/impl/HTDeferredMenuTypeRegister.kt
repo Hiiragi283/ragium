@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.api.distmarker.Dist
+import java.util.function.Function
 
 /**
  * Ragiumで使用する[MenuType]向けの[HTDeferredRegister]
@@ -29,12 +30,12 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
     fun <MENU : AbstractContainerMenu, C : Any> registerType(
         name: String,
         factory: HTContainerFactory<MENU, C>,
-        decoder: (RegistryFriendlyByteBuf?) -> C,
+        decoder: Function<RegistryFriendlyByteBuf?, C>,
     ): HTDeferredMenuType.WithContext<MENU, C> {
         val holder = HTDeferredMenuType.WithContext<MENU, C>(createId(name))
         register(name) { _: ResourceLocation ->
             HTMenuTypeWithContext(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
-                factory.create(containerId, inventory, decoder(buf))
+                factory.create(containerId, inventory, decoder.apply(buf))
             }
         }
         return holder

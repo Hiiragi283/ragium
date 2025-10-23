@@ -14,11 +14,9 @@ import net.minecraft.world.item.Tier
 
 object HTHammerToolVariant : HTToolVariant {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-        register.registerItem(
-            "${material.materialName()}_hammer",
-            { prop: Item.Properties -> HTHammerItem(tier, prop) },
-            Item.Properties().attributes(DiggerItem.createAttributes(tier, 1f, -2.8f)),
-        )
+        register.registerItemWith("${material.materialName()}_hammer", tier, ::HTHammerItem) {
+            it.attributes(DiggerItem.createAttributes(tier, 1f, -2.8f))
+        }
 
     override val tagKey: TagKey<Item> = RagiumModTags.Items.TOOLS_HAMMER
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.andThen
+import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
@@ -69,6 +69,8 @@ interface HTItemHolderLike :
             .xmap(::HolderImpl, HolderImpl::holder)
             .downCast()
     }
+
+    fun isOf(stack: ItemStack): Boolean = stack.`is`(this.asItem())
 
     /**
      * 指定した[count]から[ItemStack]を返します。

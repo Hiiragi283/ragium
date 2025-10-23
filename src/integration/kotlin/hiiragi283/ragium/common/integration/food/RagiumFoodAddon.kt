@@ -11,7 +11,6 @@ import hiiragi283.ragium.setup.RagiumDelightFoods
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
-import net.minecraft.world.item.Item
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
@@ -24,8 +23,8 @@ object RagiumFoodAddon : RagiumAddon {
 
     // Food
     @JvmStatic
-    fun registerFood(name: String, food: FoodProperties): HTSimpleDeferredItem =
-        ITEM_REGISTER.registerSimpleItem(name, Item.Properties().food(food))
+    fun registerFood(name: String, foodProperties: FoodProperties): HTSimpleDeferredItem =
+        ITEM_REGISTER.registerSimpleItem(name) { it.food(foodProperties) }
 
     @JvmField
     val RAGI_CHERRY_PULP: HTSimpleDeferredItem =
