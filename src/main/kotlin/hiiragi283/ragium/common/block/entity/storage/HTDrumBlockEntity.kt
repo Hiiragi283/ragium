@@ -54,7 +54,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         return HTSimpleItemSlotHolder(null, listOf(fillSlot), listOf(outputSlot))
     }
 
-    protected abstract fun getDefaultTankCapacity(): Long
+    protected abstract fun getDefaultTankCapacity(): Int
 
     override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
         RagiumMenuTypes.DRUM.openMenu(context.player, name, this, ::writeExtraContainerData)
@@ -86,18 +86,18 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
-        override fun getDefaultTankCapacity(): Long = HTDrumVariant.SMALL.capacity
+        override fun getDefaultTankCapacity(): Int = HTDrumVariant.SMALL.capacity
     }
 
     class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
-        override fun getDefaultTankCapacity(): Long = HTDrumVariant.MEDIUM.capacity
+        override fun getDefaultTankCapacity(): Int = HTDrumVariant.MEDIUM.capacity
     }
 
     class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
-        override fun getDefaultTankCapacity(): Long = HTDrumVariant.LARGE.capacity
+        override fun getDefaultTankCapacity(): Int = HTDrumVariant.LARGE.capacity
     }
 
     class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
-        override fun getDefaultTankCapacity(): Long = HTDrumVariant.HUGE.capacity
+        override fun getDefaultTankCapacity(): Int = HTDrumVariant.HUGE.capacity
     }
 }

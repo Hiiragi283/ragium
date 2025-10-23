@@ -18,7 +18,7 @@ enum class HTCrateVariant(private val enPattern: String, private val jaPattern: 
     HUGE("Huge Crate", "クレート（特大）"),
     ;
 
-    val multiplier: Long get() = RagiumConfig.COMMON.crateCapacity[this]!!.asLong
+    val multiplier: Int get() = RagiumConfig.COMMON.crateCapacity[this]!!.asInt
 
     override val blockHolder: HTDeferredBlock<HTCrateBlock, *> by lazy { RagiumBlocks.CRATES[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<out HTCrateBlockEntity> by lazy { RagiumBlockEntityTypes.CRATES[this]!! }

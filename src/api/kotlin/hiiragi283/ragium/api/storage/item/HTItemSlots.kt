@@ -12,8 +12,6 @@ fun HTStackView<ImmutableItemStack>.getItemStack(): ItemStack = this.getStack().
 
 fun HTStackView<ImmutableItemStack>.toRecipeInput(): SingleRecipeInput = SingleRecipeInput(this.getItemStack())
 
-fun HTStackView<ImmutableItemStack>.getCapacityAsLong(stack: ItemStack): Long = this.getCapacityAsLong(stack.toImmutable())
-
 fun HTStackView<ImmutableItemStack>.getCapacityAsInt(stack: ItemStack): Int = this.getCapacityAsInt(stack.toImmutable())
 
 fun HTItemSlot.isValid(stack: ItemStack): Boolean = this.isValid(stack.toImmutable())

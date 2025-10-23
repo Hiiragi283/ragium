@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.BiPredicate
 import java.util.function.Predicate
-import java.util.function.ToLongFunction
+import java.util.function.ToIntFunction
 
 class HTVariableItemStackSlot(
-    private val capacityFunction: ToLongFunction<ImmutableItemStack>,
+    private val capacityFunction: ToIntFunction<ImmutableItemStack>,
     canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     filter: Predicate<ImmutableItemStack>,
@@ -20,7 +20,7 @@ class HTVariableItemStackSlot(
     y: Int,
     slotType: HTContainerItemSlot.Type,
 ) : HTItemStackSlot(
-        capacityFunction.applyAsLong(ImmutableItemStack.EMPTY),
+        capacityFunction.applyAsInt(ImmutableItemStack.EMPTY),
         canExtract,
         canInsert,
         filter,
@@ -33,7 +33,7 @@ class HTVariableItemStackSlot(
         @JvmStatic
         fun create(
             listener: HTContentListener?,
-            capacity: ToLongFunction<ImmutableItemStack>,
+            capacity: ToIntFunction<ImmutableItemStack>,
             x: Int,
             y: Int,
         ): HTVariableItemStackSlot = HTVariableItemStackSlot(
@@ -50,7 +50,7 @@ class HTVariableItemStackSlot(
         @JvmStatic
         fun input(
             listener: HTContentListener?,
-            capacity: ToLongFunction<ImmutableItemStack>,
+            capacity: ToIntFunction<ImmutableItemStack>,
             canInsert: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
             filter: Predicate<ImmutableItemStack> = canInsert,
             x: Int,
@@ -69,7 +69,7 @@ class HTVariableItemStackSlot(
         @JvmStatic
         fun output(
             listener: HTContentListener?,
-            capacity: ToLongFunction<ImmutableItemStack>,
+            capacity: ToIntFunction<ImmutableItemStack>,
             x: Int,
             y: Int,
         ): HTVariableItemStackSlot = HTVariableItemStackSlot(
@@ -84,7 +84,7 @@ class HTVariableItemStackSlot(
         )
     }
 
-    override fun getCapacityAsLong(stack: ImmutableItemStack): Long = capacityFunction.applyAsLong(stack)
+    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = capacityFunction.applyAsInt(stack)
 
     override fun setStackSize(amount: Int, action: HTStorageAction): Int {
         if (isEmpty()) {

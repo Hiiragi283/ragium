@@ -3,17 +3,16 @@ package hiiragi283.ragium.common.storage.item
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.world.item.ItemStack
 
-class HTCrateItemHandler(private val multiplier: Long, parent: ItemStack) : HTComponentItemHandler(parent, 1) {
+class HTCrateItemHandler(private val multiplier: Int, parent: ItemStack) : HTComponentItemHandler(parent, 1) {
     override fun createSlot(slot: Int): HTItemSlot = CrateSlot(multiplier, parent)
 
-    private class CrateSlot(private val multiplier: Long, private val parent: ItemStack) :
+    private class CrateSlot(private val multiplier: Int, private val parent: ItemStack) :
         HTItemSlot.Mutable(),
         HTContentListener.Empty,
         HTValueSerializable.Empty {
@@ -21,8 +20,8 @@ class HTCrateItemHandler(private val multiplier: Long, parent: ItemStack) : HTCo
 
         override fun getStack(): ImmutableItemStack = parent.getOrDefault(RagiumDataComponents.ITEM_CONTENT, ImmutableItemStack.EMPTY)
 
-        override fun getCapacityAsLong(stack: ImmutableItemStack): Long {
-            val capacity: Long = stack.maxStackSize() * multiplier
+        override fun getCapacityAsInt(stack: ImmutableItemStack): Int {
+            val capacity: Int = HTItemSlot.getMaxStackSize(stack) * multiplier
             return HTItemHelper.processStorageCapacity(null, parent, capacity)
         }
 

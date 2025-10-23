@@ -14,8 +14,8 @@ class HTExpOrbTank(private val expOrb: ExperienceOrb) :
 
     override fun getStack(): ImmutableFluidStack = RagiumFluidContents.EXPERIENCE.toStorageStack(expOrb.value * multiplier)
 
-    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = when (isValid(stack)) {
-        true -> Long.MAX_VALUE
+    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = when (isValid(stack)) {
+        true -> Int.MAX_VALUE
         false -> 0
     }
 

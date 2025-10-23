@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -33,13 +32,13 @@ abstract class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         slot = HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack ->
-            val capacity: Long = stack.maxStackSize() * getDefaultSlotMultiplier()
+            val capacity: Int = HTItemSlot.getMaxStackSize(stack) * getDefaultSlotMultiplier()
             HTItemHelper.processStorageCapacity(level?.random, this, capacity)
         }, 0, 0)
         return HTSimpleItemSlotHolder(null, listOf(), listOf(), slot)
     }
 
-    protected abstract fun getDefaultSlotMultiplier(): Long
+    protected abstract fun getDefaultSlotMultiplier(): Int
 
     override fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult {
         val result: ItemInteractionResult = super.onRightClickedWithItem(context, stack, hand)
@@ -77,18 +76,18 @@ abstract class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateVariant.SMALL, pos, state) {
-        override fun getDefaultSlotMultiplier(): Long = HTCrateVariant.SMALL.multiplier
+        override fun getDefaultSlotMultiplier(): Int = HTCrateVariant.SMALL.multiplier
     }
 
     class Medium(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateVariant.MEDIUM, pos, state) {
-        override fun getDefaultSlotMultiplier(): Long = HTCrateVariant.MEDIUM.multiplier
+        override fun getDefaultSlotMultiplier(): Int = HTCrateVariant.MEDIUM.multiplier
     }
 
     class Large(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateVariant.LARGE, pos, state) {
-        override fun getDefaultSlotMultiplier(): Long = HTCrateVariant.LARGE.multiplier
+        override fun getDefaultSlotMultiplier(): Int = HTCrateVariant.LARGE.multiplier
     }
 
     class Huge(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateVariant.HUGE, pos, state) {
-        override fun getDefaultSlotMultiplier(): Long = HTCrateVariant.HUGE.multiplier
+        override fun getDefaultSlotMultiplier(): Int = HTCrateVariant.HUGE.multiplier
     }
 }

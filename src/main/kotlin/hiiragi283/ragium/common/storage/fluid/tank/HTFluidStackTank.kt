@@ -17,7 +17,7 @@ import java.util.function.Predicate
  * @see [mekanism.common.capabilities.fluid.BasicFluidTank]
  */
 open class HTFluidStackTank protected constructor(
-    private val capacity: Long,
+    private val capacity: Int,
     private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val filter: Predicate<ImmutableFluidStack>,
@@ -29,19 +29,19 @@ open class HTFluidStackTank protected constructor(
             BiPredicate { _, _ -> true }
 
         @JvmStatic
-        private fun validateCapacity(capacity: Long): Long {
+        private fun validateCapacity(capacity: Int): Int {
             check(capacity >= 0) { "Capacity must be non negative" }
             return capacity
         }
 
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: Long): HTFluidStackTank =
+        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank =
             HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, ImmutableStack.alwaysTrue(), listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
-            capacity: Long,
+            capacity: Int,
             canInsert: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
@@ -53,7 +53,7 @@ open class HTFluidStackTank protected constructor(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Long): HTFluidStackTank = HTFluidStackTank(
+        fun output(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
             ALWAYS_TRUE,
             { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
@@ -67,7 +67,7 @@ open class HTFluidStackTank protected constructor(
 
     override fun getStack(): ImmutableFluidStack = stack.toImmutable()
 
-    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacity
+    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacity
 
     override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
 

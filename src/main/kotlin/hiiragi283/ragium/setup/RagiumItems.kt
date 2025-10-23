@@ -524,6 +524,11 @@ object RagiumItems {
     }
 
     @JvmStatic
+    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
+        factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
+    }
+
+    @JvmStatic
     private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
     }

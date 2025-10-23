@@ -53,8 +53,8 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
             return RagiumFluidContents.EXPERIENCE.toStorageStack(amount * multiplier)
         }
 
-        override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = when (isValid(stack)) {
-            true -> Long.MAX_VALUE
+        override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = when (isValid(stack)) {
+            true -> Int.MAX_VALUE
             false -> 0
         }
 

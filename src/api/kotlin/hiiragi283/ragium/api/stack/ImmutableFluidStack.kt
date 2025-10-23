@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.stack
 
-import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -69,8 +68,6 @@ value class ImmutableFluidStack private constructor(val stack: FluidStack) : Imm
     override fun copy(): ImmutableFluidStack = of(stack.copy())
 
     override fun copyWithAmount(amount: Int): ImmutableFluidStack = of(stack.copyWithAmount(amount))
-
-    override fun copyWithAmount(amount: Long): ImmutableFluidStack = copyWithAmount(Ints.saturatedCast(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 

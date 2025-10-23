@@ -25,7 +25,7 @@ enum class HTDrumVariant(private val enPattern: String, private val jaPattern: S
     HUGE("Huge Drum", "ドラム（特大）"),
     ;
 
-    val capacity: Long get() = RagiumConfig.COMMON.drumCapacity[this]!!.asLong
+    val capacity: Int get() = RagiumConfig.COMMON.drumCapacity[this]!!.asInt
 
     override val blockHolder: HTDeferredBlock<HTDrumBlock, HTDrumBlockItem> by lazy { RagiumBlocks.DRUMS[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> by lazy { RagiumBlockEntityTypes.DRUMS[this]!! }

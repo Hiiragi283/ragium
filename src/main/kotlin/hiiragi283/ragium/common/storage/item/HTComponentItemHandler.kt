@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storage.item
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.item.asNonEmptySequence
 import hiiragi283.ragium.api.item.copy
@@ -39,7 +38,7 @@ open class HTComponentItemHandler(protected val parent: ItemStack, protected val
 
         override fun getStack(): ImmutableItemStack = getContents().getOrEmpty(slot).toImmutable()
 
-        override fun getCapacityAsLong(stack: ImmutableItemStack): Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
+        override fun getCapacityAsInt(stack: ImmutableItemStack): Int = HTItemSlot.getMaxStackSize(stack)
 
         override fun setStack(stack: ImmutableItemStack) {
             val contents: ItemContainerContents = getContents().copy(size) { set(slot, stack.stack) }

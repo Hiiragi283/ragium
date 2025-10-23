@@ -115,7 +115,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                         setStack(stack.copyWithAmount(toAdd))
                     }
                 }
-                return stack.copyAndShrink(toAdd)
+                return stack.copyWithAmount(stack.amountAsInt() + toAdd)
             }
             return stack
         }

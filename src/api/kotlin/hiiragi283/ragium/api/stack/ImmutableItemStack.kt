@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.stack
 
-import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -71,8 +70,6 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
     override fun copy(): ImmutableItemStack = of(stack.copy())
 
     override fun copyWithAmount(amount: Int): ImmutableItemStack = of(stack.copyWithCount(amount))
-
-    override fun copyWithAmount(amount: Long): ImmutableItemStack = copyWithAmount(Ints.saturatedCast(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 

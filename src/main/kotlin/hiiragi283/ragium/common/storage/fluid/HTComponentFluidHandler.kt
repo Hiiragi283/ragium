@@ -15,18 +15,18 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 /**
  * [HTFluidHandler]に基づいたコンポーネント向けの実装
  */
-open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Long) :
+open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Int) :
     IFluidHandlerItem,
     HTFluidHandler {
     protected val tank: HTFluidTank = createTank(capacity)
 
-    protected open fun createTank(capacity: Long): HTFluidTank = ComponentTank(stack, capacity)
+    protected open fun createTank(capacity: Int): HTFluidTank = ComponentTank(stack, capacity)
 
     final override fun getContainer(): ItemStack = stack
 
     override fun getFluidTanks(side: Direction?): List<HTFluidTank> = listOf(tank)
 
-    protected open class ComponentTank(private val parent: ItemStack, private val capacity: Long) :
+    protected open class ComponentTank(private val parent: ItemStack, private val capacity: Int) :
         HTFluidTank.Mutable(),
         HTContentListener.Empty,
         HTValueSerializable.Empty {
@@ -34,7 +34,7 @@ open class HTComponentFluidHandler(protected val stack: ItemStack, capacity: Lon
 
         override fun getStack(): ImmutableFluidStack = parent.getOrDefault(component, ImmutableFluidStack.EMPTY)
 
-        override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacity
+        override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacity
 
         override fun isValid(stack: ImmutableFluidStack): Boolean = true
 

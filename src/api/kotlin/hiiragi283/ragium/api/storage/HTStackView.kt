@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.storage
 
-import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.stack.ImmutableStack
 import kotlin.math.min
 
@@ -22,33 +21,15 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
 
     /**
      * このスロットが保持している個数を返します。
-     * @return [Long]値での個数
-     */
-    fun getAmountAsLong(): Long = getStack().amountAsLong()
-
-    /**
-     * このスロットが保持している個数を返します。
      * @return [Int]値での個数
      */
     fun getAmountAsInt(): Int = getStack().amountAsInt()
 
     /**
      * このスロットの容量を返します。
-     * @return [Long]値での容量
-     */
-    fun getCapacityAsLong(stack: STACK): Long
-
-    /**
-     * このスロットの容量を返します。
      * @return [Int]値での容量
      */
-    fun getCapacityAsInt(stack: STACK): Int = Ints.saturatedCast(getCapacityAsLong(stack))
-
-    /**
-     * このスロットの空き容量を返します。
-     * @return [Long]値での空き容量
-     */
-    fun getNeededAsLong(stack: STACK): Long = getCapacityAsLong(stack) - getAmountAsLong()
+    fun getCapacityAsInt(stack: STACK): Int
 
     /**
      * このスロットの空き容量を返します。
@@ -61,9 +42,9 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
      * @return [Double]値での占有率
      */
     fun getStoredLevelAsDouble(stack: STACK): Double {
-        val capacity: Long = getCapacityAsLong(stack)
-        if (capacity <= 0L) return 0.0
-        return getAmountAsLong() / capacity.toDouble()
+        val capacity: Int = getCapacityAsInt(stack)
+        if (capacity <= 0) return 0.0
+        return getAmountAsInt() / capacity.toDouble()
     }
 
     /**
@@ -71,9 +52,9 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
      * @return [Float]値での占有率
      */
     fun getStoredLevelAsFloat(stack: STACK): Float {
-        val capacity: Long = getCapacityAsLong(stack)
-        if (capacity <= 0L) return 0f
-        return getAmountAsLong() / capacity.toFloat()
+        val capacity: Int = getCapacityAsInt(stack)
+        if (capacity <= 0) return 0f
+        return getAmountAsInt() / capacity.toFloat()
     }
 
     //    Mutable    //

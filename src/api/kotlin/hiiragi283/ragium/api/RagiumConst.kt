@@ -15,7 +15,7 @@ object RagiumConst {
 
     //    Item    //
 
-    const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
+    const val ABSOLUTE_MAX_STACK_SIZE: Int = Item.ABSOLUTE_MAX_STACK_SIZE
 
     //    Materials    //
 

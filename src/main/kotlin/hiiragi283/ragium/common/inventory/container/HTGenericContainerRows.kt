@@ -17,7 +17,7 @@ interface HTGenericContainerRows {
         @JvmStatic
         fun createHandler(
             rows: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
+            limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
             canInsert: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
             filter: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),

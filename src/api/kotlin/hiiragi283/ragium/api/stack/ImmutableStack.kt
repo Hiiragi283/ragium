@@ -45,11 +45,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun holder(): Holder<T>
 
     /**
-     * このスタックの量を[Long]値で返します。
-     */
-    fun amountAsLong(): Long = amountAsInt().toLong()
-
-    /**
      * このスタックの量を[Int]値で返します。
      */
     fun amountAsInt(): Int
@@ -64,20 +59,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
      * @param amount コピー後の個数
      */
     fun copyWithAmount(amount: Int): STACK
-
-    /**
-     * このスタックのコピーを指定した個数で返します。
-     * @param amount コピー後の個数
-     */
-    fun copyWithAmount(amount: Long): STACK
-
-    fun copyAndGrow(amount: Int): STACK = copyWithAmount(amountAsInt() + amount)
-
-    fun copyAndGrow(amount: Long): STACK = copyWithAmount(amountAsLong() + amount)
-
-    fun copyAndShrink(amount: Int): STACK = copyWithAmount(amountAsInt() - amount)
-
-    fun copyAndShrink(amount: Long): STACK = copyWithAmount(amountAsLong() - amount)
 
     /**
      * このスタックの[DataComponentPatch]を返します。

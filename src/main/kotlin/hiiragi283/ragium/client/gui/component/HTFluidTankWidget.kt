@@ -87,5 +87,5 @@ class HTFluidTankWidget(
         tank.setStack(stack)
     }
 
-    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = tank.getCapacityAsLong(stack)
+    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = tank.getCapacityAsInt(stack)
 }

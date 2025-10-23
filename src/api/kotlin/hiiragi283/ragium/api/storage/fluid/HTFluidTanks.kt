@@ -9,8 +9,6 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 fun HTStackView<ImmutableFluidStack>.getFluidStack(): FluidStack = this.getStack().stack
 
-fun HTStackView<ImmutableFluidStack>.getCapacityAsLong(stack: FluidStack): Long = this.getCapacityAsLong(stack.toImmutable())
-
 fun HTStackView<ImmutableFluidStack>.getCapacityAsInt(stack: FluidStack): Int = this.getCapacityAsInt(stack.toImmutable())
 
 fun HTFluidTank.isValid(stack: FluidStack): Boolean = this.isValid(stack.toImmutable())

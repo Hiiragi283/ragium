@@ -6,28 +6,28 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.BiPredicate
-import java.util.function.LongSupplier
+import java.util.function.IntSupplier
 import java.util.function.Predicate
 
 /**
  * @see [mekanism.common.capabilities.fluid.VariableCapacityFluidTank]
  */
 class HTVariableFluidStackTank(
-    private val capacitySupplier: LongSupplier,
+    private val capacitySupplier: IntSupplier,
     canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     filter: Predicate<ImmutableFluidStack>,
     listener: HTContentListener?,
-) : HTFluidStackTank(capacitySupplier.asLong, canExtract, canInsert, filter, listener) {
+) : HTFluidStackTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: LongSupplier): HTVariableFluidStackTank =
+        fun create(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank =
             HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, ImmutableStack.alwaysTrue(), listener)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
-            capacity: LongSupplier,
+            capacity: IntSupplier,
             canInsert: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
         ): HTVariableFluidStackTank = HTVariableFluidStackTank(
@@ -39,7 +39,7 @@ class HTVariableFluidStackTank(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: LongSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
+        fun output(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
             ALWAYS_TRUE,
             { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
@@ -48,7 +48,7 @@ class HTVariableFluidStackTank(
         )
     }
 
-    override fun getCapacityAsLong(stack: ImmutableFluidStack): Long = capacitySupplier.asLong
+    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacitySupplier.asInt
 
     override fun setStackSize(amount: Int, action: HTStorageAction): Int {
         if (isEmpty()) {

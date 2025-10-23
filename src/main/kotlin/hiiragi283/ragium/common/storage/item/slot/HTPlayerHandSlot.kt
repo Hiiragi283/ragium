@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
@@ -24,7 +23,7 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
 
     override fun getStack(): ImmutableItemStack = player.getItemInHand(hand).toImmutable()
 
-    override fun getCapacityAsLong(stack: ImmutableItemStack): Long = stack.maxStackSize().toLong()
+    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = HTItemSlot.getMaxStackSize(stack)
 
     override fun setStack(stack: ImmutableItemStack) {
         player.setItemInHand(hand, stack.stack)

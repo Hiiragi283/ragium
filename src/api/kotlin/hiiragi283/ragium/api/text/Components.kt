@@ -88,12 +88,7 @@ fun addFluidTooltip(
         return
     }
     // Fluid Name and Amount
-    consumer.accept(
-        RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(
-            stack.getText(),
-            longText(stack.amountAsLong()),
-        ),
-    )
+    consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(stack.getText(), intText(stack.amountAsInt())))
     if (!inGui) return
     // Fluid id if advanced
     if (flag.isAdvanced) {
