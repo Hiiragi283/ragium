@@ -189,8 +189,15 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         // Generator
-        machine(HTGeneratorVariant.THERMAL, basicMachine, bricks)
-        altModelBlock(HTGeneratorVariant.COMBUSTION.blockHolder, factory = ::horizontalBlock)
+        fun generator(variant: HTVariantKey.WithBlock<*>, particle: ResourceLocation) {
+            val block: HTDeferredBlock<*, *> = variant.blockHolder
+            getVariantBuilder(block.get())
+                .partialState()
+                .setModels(ConfiguredModel(models().getBuilder(block.id.toString()).texture("particle", particle)))
+        }
+
+        generator(HTGeneratorVariant.THERMAL, basicMachine)
+        generator(HTGeneratorVariant.COMBUSTION, advancedMachine)
 
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")

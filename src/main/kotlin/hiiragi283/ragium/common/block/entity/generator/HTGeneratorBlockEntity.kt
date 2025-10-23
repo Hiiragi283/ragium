@@ -26,7 +26,7 @@ import java.util.function.Consumer
 /**
  * 電力を生産する設備に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
-abstract class HTGeneratorBlockEntity(protected val variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
+abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(variant.blockEntityHolder, pos, state) {
     val upgradeHandler: HTMachineUpgradeItemHandler get() = getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
