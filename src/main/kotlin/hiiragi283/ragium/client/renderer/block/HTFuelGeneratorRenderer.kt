@@ -27,7 +27,11 @@ class HTFuelGeneratorRenderer(context: BlockEntityRendererProvider.Context) :
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
         poseStack.scale(-1f, -1f, 1f)
-        model.render(poseStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, blockEntity.ticks, partialTick)
+        val time: Float = when {
+            blockEntity.isActive -> blockEntity.ticks + partialTick
+            else -> 0f
+        }
+        model.render(poseStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, time, blockEntity.upgradeHandler.getTier())
         poseStack.popPose()
     }
 }

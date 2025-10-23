@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, inventory: Inventory, title: Component) :
-    HTMachineScreen<HTRefineryBlockEntity>(
+    HTConsumerScreen<HTRefineryBlockEntity>(
         RagiumAPI.id("textures/gui/container/refinery.png"),
         menu,
         inventory,

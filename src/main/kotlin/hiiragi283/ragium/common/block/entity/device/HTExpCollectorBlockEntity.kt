@@ -49,7 +49,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 範囲内のExp Orbを取得する
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
-            pos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
+            pos.center.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
         )
         if (expOrbs.isEmpty()) return false
         // それぞれのExp Orbに対して回収を行う

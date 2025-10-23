@@ -6,16 +6,19 @@
       "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "minecraft:piston"
+      "tag": "c:glass_blocks/quartz"
     },
     "C": {
-      "tag": "c:circuits/advanced"
+      "item": "ragium:advanced_ragi_alloy_coil_block"
+    },
+    "D": {
+      "item": "minecraft:blast_furnace"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "ACA"
+    " B ",
+    "CDC"
   ],
   "result": {
     "count": 1,

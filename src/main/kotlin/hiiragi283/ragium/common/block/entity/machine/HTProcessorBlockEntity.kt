@@ -14,12 +14,12 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * レシピの処理を行う機械に使用される[HTMachineBlockEntity]の拡張クラス
+ * レシピの処理を行う機械に使用される[HTConsumerBlockEntity]の拡張クラス
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */
 abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMachineVariant, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(variant, pos, state) {
+    HTConsumerBlockEntity(variant, pos, state) {
     override fun onUpdateServer(
         level: ServerLevel,
         pos: BlockPos,

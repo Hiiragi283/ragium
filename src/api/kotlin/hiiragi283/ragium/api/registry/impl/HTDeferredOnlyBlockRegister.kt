@@ -16,7 +16,7 @@ class HTDeferredOnlyBlockRegister(namespace: String) : HTDeferredRegister<Block>
         name: String,
         blockProp: BlockBehaviour.Properties,
         factory: BlockFactory<BLOCK>,
-    ): HTDeferredOnlyBlock<BLOCK> = register(name) { _: ResourceLocation -> factory.apply(blockProp) }
+    ): HTDeferredOnlyBlock<BLOCK> = register(name) { _: ResourceLocation -> factory(blockProp) }
 
     fun registerSimpleBlock(name: String, blockProp: BlockBehaviour.Properties): HTDeferredOnlyBlock<Block> =
         registerBlock(name, blockProp, ::Block)

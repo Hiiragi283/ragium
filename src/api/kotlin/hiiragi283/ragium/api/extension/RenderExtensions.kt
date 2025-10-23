@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.resources.model.BakedModel
-import net.minecraft.core.Position
-import net.minecraft.core.Vec3i
 import net.minecraft.util.FastColor
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
@@ -27,28 +25,8 @@ import org.joml.Quaternionf
 
 //    PoseStack    //
 
-fun PoseStack.translate(x: Number, y: Number, z: Number) {
-    translate(x.toDouble(), y.toDouble(), z.toDouble())
-}
-
-fun PoseStack.translate(pos: Vec3i) {
-    translate(pos.x, pos.y, pos.z)
-}
-
-fun PoseStack.translate(pos: Position) {
-    translate(pos.x(), pos.y(), pos.z())
-}
-
-fun PoseStack.scale(i: Number) {
-    scale(i.toFloat(), i.toFloat(), i.toFloat())
-}
-
-fun PoseStack.scale(x: Number, y: Number, z: Number) {
-    scale(x.toFloat(), y.toFloat(), z.toFloat())
-}
-
-fun PoseStack.scale(pos: Position) {
-    scale(pos.x(), pos.y(), pos.z())
+fun PoseStack.scale(i: Float) {
+    scale(i, i, i)
 }
 
 //    Rendering    //
@@ -74,7 +52,7 @@ fun renderItem(
     if (!quads.isEmpty()) {
         poseStack.translate(xOffset, itemY, zOffset)
         poseStack.mulPose(Quaternionf().rotateX(Mth.DEG_TO_RAD * 90))
-        poseStack.scale(0.5, 0.5, 0.5)
+        poseStack.scale(0.5f, 0.5f, 0.5f)
     } else {
         poseStack.translate(xOffset, blockY, zOffset)
     }

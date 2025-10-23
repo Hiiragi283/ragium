@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
-import hiiragi283.ragium.api.function.BlockFactory
-import hiiragi283.ragium.api.function.ItemFactory
+import hiiragi283.ragium.api.function.BlockWithContextFactory
+import hiiragi283.ragium.api.function.ItemWithContextFactory
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
@@ -76,8 +76,8 @@ object RagiumBlocks {
     @JvmStatic
     private fun <BLOCK : HTEntityBlock, ITEM : Item> registerEntity(
         type: HTDeferredBlockEntityType<*>,
-        blockGetter: Supplier<BLOCK>,
-        itemGetter: Supplier<ITEM>,
+        blockGetter: Supplier<out BLOCK>,
+        itemGetter: Supplier<out ITEM>,
     ): HTDeferredBlock<BLOCK, ITEM> = REGISTER.registerEach(type.getPath(), blockGetter, itemGetter, ::HTDeferredBlock)
 
     @JvmStatic
@@ -105,7 +105,7 @@ object RagiumBlocks {
     @JvmField
     val AZURE_CLUSTER: HTBasicDeferredBlock<AzureClusterBlock> = REGISTER.registerSimple(
         "azure_cluster",
-        copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.TERRACOTTA_BLUE),
+        copyOf(Blocks.AMETHYST_CLUSTER, MapColor.TERRACOTTA_BLUE),
         ::AzureClusterBlock,
     )
 
@@ -414,8 +414,8 @@ object RagiumBlocks {
     private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock, ITEM : Item> createVariantMap(
         entries: Iterable<V>,
         properties: BlockBehaviour.Properties,
-        blockFactory: BlockFactory.WithContext<HTDeferredBlockEntityType<*>, BLOCK>,
-        itemFactory: ItemFactory.WithContext<V, ITEM>,
+        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
+        itemFactory: ItemWithContextFactory<V, ITEM>,
     ): Map<V, HTDeferredBlock<BLOCK, ITEM>> = entries.associateWith { variant: V ->
         val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
         registerEntity(type, { blockFactory(type, properties) }, { itemFactory(variant, Item.Properties()) })
@@ -425,8 +425,8 @@ object RagiumBlocks {
     private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock, ITEM : Item> createVariantMap(
         entries: Iterable<V>,
         properties: (V) -> BlockBehaviour.Properties,
-        blockFactory: (V) -> (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
-        itemFactory: ItemFactory.WithContext<V, ITEM>,
+        blockFactory: (V) -> BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
+        itemFactory: ItemWithContextFactory<V, ITEM>,
     ): Map<V, HTDeferredBlock<BLOCK, ITEM>> = entries.associateWith { variant: V ->
         val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
         registerEntity(type, { blockFactory(variant)(type, properties(variant)) }, { itemFactory(variant, Item.Properties()) })

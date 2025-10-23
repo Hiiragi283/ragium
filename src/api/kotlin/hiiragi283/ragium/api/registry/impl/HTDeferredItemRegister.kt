@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.function.ItemFactory
+import hiiragi283.ragium.api.function.ItemWithContextFactory
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.RegistryKey
@@ -20,7 +21,7 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
         name: String,
         factory: ItemFactory<ITEM>,
         operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
-    ): HTDeferredItem<ITEM> = register(name) { _: ResourceLocation -> factory.apply(operator.apply(Item.Properties())) }
+    ): HTDeferredItem<ITEM> = register(name) { _: ResourceLocation -> factory(operator.apply(Item.Properties())) }
 
     fun registerSimpleItem(name: String, operator: UnaryOperator<Item.Properties> = UnaryOperator.identity()): HTSimpleDeferredItem =
         registerItem(name, ::Item, operator)
@@ -28,7 +29,7 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
     fun <ITEM : Item, C> registerItemWith(
         name: String,
         context: C,
-        factory: ItemFactory.WithContext<C, ITEM>,
+        factory: ItemWithContextFactory<C, ITEM>,
         operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
     ): HTDeferredItem<ITEM> = registerItem(name, factory.partially1(context), operator)
 

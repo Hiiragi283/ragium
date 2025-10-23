@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.screens.MenuScreens
@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTMachineScreen<BE : HTMachineBlockEntity>(
+open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
     override val texture: ResourceLocation,
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
@@ -21,11 +21,11 @@ open class HTMachineScreen<BE : HTMachineBlockEntity>(
 ) : HTBlockEntityContainerScreen<BE>(menu, inventory, title) {
     companion object {
         @JvmStatic
-        fun <BE : HTMachineBlockEntity> create(
+        fun <BE : HTConsumerBlockEntity> create(
             texture: ResourceLocation,
-        ): MenuScreens.ScreenConstructor<HTBlockEntityContainerMenu<BE>, HTMachineScreen<BE>> =
+        ): MenuScreens.ScreenConstructor<HTBlockEntityContainerMenu<BE>, HTConsumerScreen<BE>> =
             MenuScreens.ScreenConstructor { menu: HTBlockEntityContainerMenu<BE>, inventory: Inventory, title: Component ->
-                HTMachineScreen(texture, menu, inventory, title)
+                HTConsumerScreen(texture, menu, inventory, title)
             }
     }
 

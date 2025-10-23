@@ -40,22 +40,24 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .misc(HTGeneratorVariant.THERMAL)
             .pattern(
                 "AAA",
-                "ABA",
-                "CCC",
+                " B ",
+                "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', Items.FURNACE)
-            .define('C', Items.BRICKS)
+            .define('B', Tags.Items.GLASS_BLOCKS)
+            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY))
+            .define('D', Items.FURNACE)
             .save(output)
         // Advanced
         HTShapedRecipeBuilder
             .misc(HTGeneratorVariant.COMBUSTION)
             .pattern(
                 "AAA",
-                "ABA",
-                "ACA",
+                " B ",
+                "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', Items.PISTON)
-            .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.ADVANCED)
+            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('D', Items.BLAST_FURNACE)
             .save(output)
     }
 

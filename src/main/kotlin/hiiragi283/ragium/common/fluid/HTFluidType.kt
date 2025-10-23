@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.fluid
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.giveStackTo
-import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Player
@@ -31,7 +30,7 @@ class HTFluidType(private val builder: Builder, properties: Properties) : FluidT
                     null,
                     null,
                     null,
-                    pos.toCenterVec3(),
+                    pos.center,
                     power,
                     true,
                     Level.ExplosionInteraction.BLOCK,

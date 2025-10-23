@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
+import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelPart
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.Mth
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
+import kotlin.math.min
 
 @OnlyIn(Dist.CLIENT)
 class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entityCutout) {
@@ -46,7 +48,7 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
             CubeListBuilder
                 .create()
                 .texOffs(24, 46)
-                .addBox(-5f, -4f, -5f, 10f, 8f, 10f)
+                .addBox(-5f, 0f, -5f, 10f, 8f, 10f)
         }
 
         @JvmStatic
@@ -94,11 +96,20 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
         buffer: VertexConsumer,
         packedLight: Int,
         packedOverlay: Int,
-        ticks: Int,
-        partialTicks: Float,
+        time: Float,
+        tier: HTComponentTier?,
     ) {
-        val time: Float = ticks + partialTicks
-        top.y = Mth.sin(time * 0.2f) * 4 - 4f
+        val speed: Float = when (tier) {
+            HTComponentTier.BASIC -> 0.3f
+            HTComponentTier.ADVANCED -> 0.4f
+            HTComponentTier.ELITE -> 0.6f
+            HTComponentTier.ULTIMATE -> 0.8f
+            HTComponentTier.ETERNAL -> 1f
+            null -> 0.2f
+        }
+        top.y = Mth.sin(time * speed + Mth.HALF_PI) * 4 - 4f
+        bellow.y = min(Mth.sin(time * speed + Mth.HALF_PI) * 4, 0f)
+
         top.render(poseStack, buffer, packedLight, packedOverlay)
         bottom.render(poseStack, buffer, packedLight, packedOverlay)
         core.render(poseStack, buffer, packedLight, packedOverlay)

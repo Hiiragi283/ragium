@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -96,7 +95,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
 
             val transition = DimensionTransition(
                 level,
-                pos.toCenterVec3(),
+                pos.bottomCenter,
                 player.deltaMovement,
                 player.yRot,
                 player.xRot,

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.function.BlockFactory
-import hiiragi283.ragium.api.function.ItemFactory
+import hiiragi283.ragium.api.function.ItemWithContextFactory
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDoubleDeferredRegister
@@ -45,11 +45,11 @@ class HTDeferredBlockRegister(namespace: String) :
         name: String,
         blockProp: BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
-        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
+        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = register(
         name,
-        { blockFactory.apply(blockProp) },
+        { blockFactory(blockProp) },
         itemFactory,
         itemProp,
     )
@@ -58,11 +58,11 @@ class HTDeferredBlockRegister(namespace: String) :
         name: String,
         blockProp: () -> BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
-        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
+        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = register(
         name,
-        { blockFactory.apply(blockProp()) },
+        { blockFactory(blockProp()) },
         itemFactory,
         itemProp,
     )
@@ -70,12 +70,12 @@ class HTDeferredBlockRegister(namespace: String) :
     fun <BLOCK : Block, ITEM : Item> register(
         name: String,
         blockGetter: () -> BLOCK,
-        itemFactory: ItemFactory.WithContext<BLOCK, ITEM>,
+        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         itemProp: Item.Properties = Item.Properties(),
     ): HTDeferredBlock<BLOCK, ITEM> = registerAdvanced(
         name,
         { _: ResourceLocation -> blockGetter() },
-        { block: HTDeferredHolder<Block, BLOCK> -> itemFactory.apply(block.get(), itemProp) },
+        { block: HTDeferredHolder<Block, BLOCK> -> itemFactory(block.get(), itemProp) },
         ::HTDeferredBlock,
     )
 }

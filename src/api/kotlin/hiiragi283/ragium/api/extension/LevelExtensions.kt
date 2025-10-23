@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumPlatform
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Position
 import net.minecraft.util.RandomSource
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
@@ -17,12 +16,6 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 import kotlin.random.Random
 
 //    Position    //
-
-fun BlockPos.toVec3(): Vec3 = Vec3(this.x.toDouble(), this.y.toDouble(), this.z.toDouble())
-
-fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
-
-fun BlockPos.getRangedAABB(radius: Number): AABB = toCenterVec3().getRangedAABB(radius)
 
 fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble(), radius.toDouble(), radius.toDouble())
 
@@ -57,11 +50,7 @@ fun giveStackTo(player: Player, stack: ItemStack) {
  * 指定した[stack]を[pos]にドロップします。
  */
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
-    dropStackAt(level, pos.toVec3(), stack)
-}
-
-fun dropStackAt(level: Level, pos: Position, stack: ItemStack) {
-    Containers.dropItemStack(level, pos.x(), pos.y(), pos.z(), stack)
+    Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
 }
 
 //    RandomSource    //

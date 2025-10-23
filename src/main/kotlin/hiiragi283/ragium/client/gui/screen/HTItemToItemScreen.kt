@@ -18,7 +18,7 @@ class HTItemToItemScreen(
     menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
     inventory: Inventory,
     title: Component,
-) : HTMachineScreen<HTSingleItemInputBlockEntity<*>>(texture, menu, inventory, title) {
+) : HTConsumerScreen<HTSingleItemInputBlockEntity<*>>(texture, menu, inventory, title) {
     companion object {
         @JvmStatic
         fun compressor(

@@ -31,7 +31,7 @@ import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
-class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
+class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

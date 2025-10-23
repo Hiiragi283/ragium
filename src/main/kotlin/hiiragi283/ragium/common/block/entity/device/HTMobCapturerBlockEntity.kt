@@ -63,7 +63,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         // 範囲内のエンティティを取得する
         val entities: List<LivingEntity> = level.getEntitiesOfClass(
             LivingEntity::class.java,
-            pos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
+            pos.center.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
         )
         if (entities.isEmpty()) return false
         // それぞれのエンティティについて捕獲を行う

@@ -53,7 +53,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntities(
             EntityType.ITEM,
-            pos.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
+            pos.center.getRangedAABB(RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble),
             EntitySelector.NO_SPECTATORS,
         )
         if (itemEntities.isEmpty()) return false

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
-import hiiragi283.ragium.api.extension.toVec3
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.Vec3
 
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
@@ -96,7 +97,10 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.onRemove(level, pos.toVec3())
+            level.getHTBlockEntity(pos)?.let { extension: HTBlockEntityExtension ->
+                extension.onRemove(level, Vec3.atCenterOf(pos))
+                extension.dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
+            }
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }

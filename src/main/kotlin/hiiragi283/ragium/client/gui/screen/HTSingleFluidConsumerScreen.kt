@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
@@ -16,13 +16,13 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
-    private val factory: HTSingleFluidMachineScreen<BE>.(Int) -> HTFluidTankWidget,
+class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
+    private val factory: HTSingleFluidConsumerScreen<BE>.(Int) -> HTFluidTankWidget,
     texture: ResourceLocation,
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTMachineScreen<BE>(texture, menu, inventory, title),
+) : HTConsumerScreen<BE>(texture, menu, inventory, title),
     HTFluidScreen {
     companion object {
         @JvmStatic
@@ -30,7 +30,7 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
             menu: HTBlockEntityContainerMenu<HTChancedItemOutputBlockEntity<*, *>>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidMachineScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidMachineScreen(
+        ): HTSingleFluidConsumerScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidConsumerScreen(
             { index: Int -> createFluidSlot(index, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             RagiumAPI.id("textures/gui/container/crusher.png"),
             menu,
@@ -43,7 +43,7 @@ class HTSingleFluidMachineScreen<BE : HTMachineBlockEntity>(
             menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidMachineScreen<HTMelterBlockEntity> = HTSingleFluidMachineScreen(
+        ): HTSingleFluidConsumerScreen<HTMelterBlockEntity> = HTSingleFluidConsumerScreen(
             { index: Int -> createFluidTank(index, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             RagiumAPI.id("textures/gui/container/melter.png"),
             menu,

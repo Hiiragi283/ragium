@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
+import net.neoforged.neoforge.client.model.generators.BlockModelProvider
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -193,7 +195,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             val block: HTDeferredBlock<*, *> = variant.blockHolder
             getVariantBuilder(block.get())
                 .partialState()
-                .setModels(ConfiguredModel(models().getBuilder(block.id.toString()).texture("particle", particle)))
+                .setModels(ConfiguredModel(models().getBuilder(block).texture("particle", particle)))
         }
 
         generator(HTGeneratorVariant.THERMAL, basicMachine)
@@ -266,7 +268,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .partialState()
                 .addModels(
                     models()
-                        .getBuilder("block/${content.getPath()}")
+                        .getBuilder(content.blockId)
                         .texture("particle", vanillaId("block", "water_still"))
                         .let(::ConfiguredModel),
                 )
@@ -278,15 +280,19 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
     //    Extensions    //
 
+    private fun BlockModelProvider.getBuilder(holder: HTHolderLike): BlockModelBuilder = this.getBuilder(holder.getId())
+
+    private fun BlockModelProvider.getBuilder(id: ResourceLocation): BlockModelBuilder = this.getBuilder(id.toString())
+
     private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
         val blockId: ResourceLocation = block.blockId
 
         getVariantBuilder(block.get()).forAllStates { state: BlockState ->
             val bites: Int = state.getValue(PieBlock.BITES)
             val suffix: String = if (bites > 0) "_slice$bites" else ""
+
             val pieModel: BlockModelBuilder = models()
-                .getBuilder(block.getPath() + suffix)
-                .parent(ModelFile.ExistingModelFile(RagiumConst.FARMERS_DELIGHT.toId("block", "pie$suffix"), fileHelper))
+                .withExistingParent(block.getPath() + suffix, RagiumConst.FARMERS_DELIGHT.toId("block", "pie$suffix"))
                 .texture("particle", blockId.withSuffix("_top"))
                 .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_bottom"))
                 .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_side"))

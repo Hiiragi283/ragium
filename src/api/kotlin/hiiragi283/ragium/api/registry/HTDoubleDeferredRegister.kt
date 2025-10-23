@@ -14,8 +14,8 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
 ) {
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerEach(
         name: String,
-        first: Supplier<F>,
-        second: Supplier<S>,
+        first: Supplier<out F>,
+        second: Supplier<out S>,
         combiner: HolderCombiner<FIRST, SECOND, F, S, H>,
     ): H = combiner.combine(firstRegister.register(name, first), secondRegister.register(name, second))
 

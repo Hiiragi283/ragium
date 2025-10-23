@@ -74,11 +74,11 @@ class HTFluidContentRegister(modId: String) {
         // Fluid Holder
         val stillHolder: HTDeferredFluid<BaseFlowingFluid.Source> = HTDeferredFluid(fluidRegister.createId(name))
         // Bucket Item
-        val bucket: HTDeferredItem<BucketItem> = itemRegister.registerItemWith(
+        val bucket: HTDeferredItem<BucketItem> = itemRegister.registerItem(
             "${name}_bucket",
-            stillHolder.get(),
-            ::BucketItem,
-        ) { it.stacksTo(1).craftRemainder(Items.BUCKET) }
+            { BucketItem(stillHolder.get(), it) },
+            { it.stacksTo(1).craftRemainder(Items.BUCKET) },
+        )
         // Liquid Block
         val liquidBlock: HTDeferredOnlyBlock<LiquidBlock> = blockRegister.registerBlock(
             name,

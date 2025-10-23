@@ -7,18 +7,17 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
@@ -26,7 +25,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTGeneratorContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
@@ -40,8 +38,6 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.loading.FMLEnvironment
 
 typealias DeferredBEMenu<BE> = HTDeferredMenuType.WithContext<HTBlockEntityContainerMenu<BE>, BE>
-
-typealias DeferredGeneratorMenu<BE> = HTDeferredMenuType.WithContext<HTGeneratorContainerMenu<BE>, BE>
 
 typealias DeferredMachineMenu<BE> = HTDeferredMenuType.WithContext<HTMachineContainerMenu<BE>, BE>
 
@@ -71,7 +67,7 @@ object RagiumMenuTypes {
     //    Generator    //
 
     @JvmField
-    val FUEL_GENERATOR: DeferredGeneratorMenu<HTFuelGeneratorBlockEntity> = registerGenerator("fuel_generator")
+    val FUEL_GENERATOR: DeferredMachineMenu<HTFuelGeneratorBlockEntity> = registerMachine("fuel_generator")
 
     //    Machine    //
 
@@ -144,16 +140,6 @@ object RagiumMenuTypes {
         return REGISTER.registerType(
             name,
             { containerId: Int, inventory: Inventory, context: BE -> HTBlockEntityContainerMenu(holder, containerId, inventory, context) },
-            ::getBlockEntityFromBuf,
-        )
-    }
-
-    @JvmStatic
-    inline fun <reified BE : HTGeneratorBlockEntity> registerGenerator(name: String): DeferredGeneratorMenu<BE> {
-        val holder: DeferredGeneratorMenu<BE> = HTDeferredMenuType.WithContext(RagiumAPI.id(name))
-        return REGISTER.registerType(
-            name,
-            { containerId: Int, inventory: Inventory, context: BE -> HTGeneratorContainerMenu(holder, containerId, inventory, context) },
             ::getBlockEntityFromBuf,
         )
     }
