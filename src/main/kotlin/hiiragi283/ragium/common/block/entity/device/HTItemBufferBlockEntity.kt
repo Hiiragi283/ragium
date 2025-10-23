@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -18,10 +19,8 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntitySelector
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.ITEM_BUFFER, pos, state) {
@@ -34,13 +33,8 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         return HTSimpleItemSlotHolder(null, slots, listOf())
     }
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = RagiumMenuTypes.ITEM_BUFFER.openMenu(player, name, this, ::writeExtraContainerData)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
+        RagiumMenuTypes.ITEM_BUFFER.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))

@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import java.util.function.Consumer
 
@@ -59,30 +58,17 @@ interface HTBlockEntityExtension {
      *
      * [onRightClicked]より先に呼び出されます。
      */
-    fun onRightClickedWithItem(
-        stack: ItemStack,
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
-    ): ItemInteractionResult = when (this) {
-        // 液体コンテナで触ると搬出入を行う
-        is HTFluidInteractable -> interactWith(level, player, hand)
-        else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-    }
+    fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult =
+        when (this) {
+            // 液体コンテナで触ると搬出入を行う
+            is HTFluidInteractable -> interactWith(context.level, context.player, hand)
+            else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+        }
 
     /**
      * ブロックが右クリックされたときに呼ばれます。
      */
-    fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = InteractionResult.PASS
+    fun onRightClicked(context: HTBlockInteractContext): InteractionResult = InteractionResult.PASS
 
     /**
      * [onRightClicked]でGUIを開くときに，クライアント側へ送るデータを書き込みます。

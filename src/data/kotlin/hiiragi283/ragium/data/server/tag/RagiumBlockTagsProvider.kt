@@ -69,6 +69,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CASINGS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COILS)
+        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CRATES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)

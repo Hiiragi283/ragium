@@ -63,7 +63,7 @@ object RagiumRecipeSerializers {
             HTSawmillRecipe::getGroup,
             VanillaBiCodecs.ingredient(false).fieldOf("ingredient"),
             HTSawmillRecipe::ingredient1,
-            VanillaBiCodecs.itemStack(false).fieldOf("result"),
+            VanillaBiCodecs.ITEM_STACK_NON_EMPTY.fieldOf("result"),
             HTSawmillRecipe::result1,
             ::HTSawmillRecipe,
         ),

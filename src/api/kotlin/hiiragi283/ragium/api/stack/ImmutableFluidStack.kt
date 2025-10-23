@@ -2,14 +2,17 @@ package hiiragi283.ragium.api.stack
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
 /**
  * [FluidStack]向けの[ImmutableStack]の実装
@@ -18,8 +21,23 @@ import net.neoforged.neoforge.fluids.FluidStack
 value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
         @JvmField
+        val CODEC_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> = BiCodec.composite(
+            VanillaBiCodecs.holder(Registries.FLUID).fieldOf("id"),
+            ImmutableFluidStack::holder,
+            BiCodecs.POSITIVE_INT.fieldOf("amount"),
+            ImmutableFluidStack::amountAsInt,
+            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
+            ImmutableFluidStack::componentsPatch,
+        ) { holder: Holder<Fluid>, amount: Int, components: DataComponentPatch ->
+            FluidStack(holder, amount, components).toImmutable()
+        }
+
+        @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
-            VanillaBiCodecs.fluidStack(true).xmap(::of, ImmutableFluidStack::stack)
+            CODEC_NON_EMPTY.toOptional().xmap(
+                { optional: Optional<ImmutableFluidStack> -> optional.orElse(EMPTY) },
+                { stack: ImmutableFluidStack -> Optional.of(stack).filter(ImmutableFluidStack::isNotEmpty) },
+            )
 
         /**
          * 空の[ImmutableFluidStack]

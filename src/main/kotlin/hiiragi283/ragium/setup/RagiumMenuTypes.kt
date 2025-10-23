@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
@@ -23,6 +22,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.vehicle
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand

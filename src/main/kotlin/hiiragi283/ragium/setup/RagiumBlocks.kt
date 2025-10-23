@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.AzureClusterBlock
+import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
@@ -27,6 +28,7 @@ import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
+import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTDeviceBlockItem
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
@@ -37,6 +39,7 @@ import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
@@ -464,6 +467,21 @@ object RagiumBlocks {
     }
 
     //    Storages    //
+
+    @JvmField
+    val CRATES: Map<HTCrateVariant, HTDeferredBlock<HTCrateBlock, HTCrateBlockItem>> = createVariantMap(
+        HTCrateVariant.entries,
+        { variant: HTCrateVariant ->
+            when (variant) {
+                HTCrateVariant.SMALL -> Blocks.IRON_BLOCK
+                HTCrateVariant.MEDIUM -> Blocks.GOLD_BLOCK
+                HTCrateVariant.LARGE -> Blocks.DIAMOND_BLOCK
+                HTCrateVariant.HUGE -> Blocks.NETHERITE_BLOCK
+            }.let(::copyOf)
+        },
+        ::HTCrateBlock,
+        ::HTCrateBlockItem,
+    )
 
     @JvmField
     val DRUMS: Map<HTDrumVariant, HTDeferredBlock<HTDrumBlock, HTDrumBlockItem>> = createVariantMap(

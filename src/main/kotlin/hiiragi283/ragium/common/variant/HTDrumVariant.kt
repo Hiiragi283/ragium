@@ -7,9 +7,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTDrumBlock
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -23,6 +24,8 @@ enum class HTDrumVariant(private val enPattern: String, private val jaPattern: S
     LARGE("Large Drum", "ドラム（大）"),
     HUGE("Huge Drum", "ドラム（特大）"),
     ;
+
+    val capacity: Long get() = RagiumConfig.COMMON.drumCapacity[this]!!.asLong
 
     override val blockHolder: HTDeferredBlock<HTDrumBlock, HTDrumBlockItem> by lazy { RagiumBlocks.DRUMS[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDrumBlockEntity> by lazy { RagiumBlockEntityTypes.DRUMS[this]!! }

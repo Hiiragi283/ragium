@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
@@ -17,11 +18,8 @@ import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.Tags
 
 /**
@@ -54,20 +52,12 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
         input.read(RagiumConst.ACCESS_CONFIG, CONFIG_CODEC)?.forEach(accessConfigCache::put)
     }
 
-    override fun onRightClickedWithItem(
-        stack: ItemStack,
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
-    ): ItemInteractionResult {
+    override fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult {
         if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            RagiumMenuTypes.ACCESS_CONFIG.openMenu(player, name, this, ::writeExtraContainerData)
-            return ItemInteractionResult.sidedSuccess(level.isClientSide)
+            RagiumMenuTypes.ACCESS_CONFIG.openMenu(context.player, name, this, ::writeExtraContainerData)
+            return ItemInteractionResult.sidedSuccess(context.level.isClientSide)
         }
-        return super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
+        return super.onRightClickedWithItem(context, stack, hand)
     }
 
     //    HTAccessConfiguration    //

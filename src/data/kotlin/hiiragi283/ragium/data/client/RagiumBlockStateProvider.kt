@@ -35,6 +35,7 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
@@ -327,7 +328,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .renderType("cutout"),
         )
         // Item
-        itemModels().basicItem(blockId)
+        itemModels()
+            .getBuilder(block)
+            .parent(UncheckedModelFile("item/generated"))
+            .texture("layer0", blockId)
     }
 
     private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {

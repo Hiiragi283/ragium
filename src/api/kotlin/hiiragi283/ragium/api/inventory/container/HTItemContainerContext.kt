@@ -14,7 +14,7 @@ data class HTItemContainerContext(val hand: Optional<InteractionHand>, val stack
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemContainerContext> = BiCodec.composite(
             VanillaBiCodecs.HAND.toOptional().fieldOf("hand"),
             HTItemContainerContext::hand,
-            VanillaBiCodecs.itemStack(true).fieldOf("stack"),
+            VanillaBiCodecs.ITEM_STACK.fieldOf("stack"),
             HTItemContainerContext::stack,
             ::HTItemContainerContext,
         )

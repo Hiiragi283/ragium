@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
@@ -52,7 +53,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         hitResult: BlockHitResult,
     ): InteractionResult = level
         .getHTBlockEntity(pos)
-        ?.onRightClicked(state, level, pos, player, hitResult)
+        ?.onRightClicked(HTBlockInteractContext(level, pos, state, player, hitResult))
         ?: super.useWithoutItem(state, level, pos, player, hitResult)
 
     override fun useItemOn(
@@ -65,7 +66,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         hitResult: BlockHitResult,
     ): ItemInteractionResult = level
         .getHTBlockEntity(pos)
-        ?.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
+        ?.onRightClickedWithItem(HTBlockInteractContext(level, pos, state, player, hitResult), stack, hand)
         ?: super.useItemOn(stack, state, level, pos, player, hand, hitResult)
 
     override fun attack(

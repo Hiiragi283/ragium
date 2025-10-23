@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -40,6 +39,9 @@ import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -194,6 +196,18 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
+    val CRATES: Map<HTCrateVariant, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
+        HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
+            val factory = when (variant) {
+                HTCrateVariant.SMALL -> HTCrateBlockEntity::Small
+                HTCrateVariant.MEDIUM -> HTCrateBlockEntity::Medium
+                HTCrateVariant.LARGE -> HTCrateBlockEntity::Large
+                HTCrateVariant.HUGE -> HTCrateBlockEntity::Huge
+            }
+            registerTick("${variant.variantName()}_crate", factory)
+        }
+
+    @JvmField
     val DRUMS: Map<HTDrumVariant, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
             val factory = when (variant) {
@@ -212,7 +226,10 @@ object RagiumBlockEntityTypes {
     private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
         addAll(event, HTGeneratorVariant.entries)
         addAll(event, HTMachineVariant.entries)
+
         addAll(event, HTDeviceVariant.entries)
+
+        addAll(event, HTCrateVariant.entries)
         addAll(event, HTDrumVariant.entries)
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
@@ -235,7 +252,10 @@ object RagiumBlockEntityTypes {
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         registerHandlers(event, HTGeneratorVariant.entries.map(HTGeneratorVariant<*, *>::blockEntityHolder))
         registerHandlers(event, MACHINES.values)
+
         registerHandlers(event, DEVICES.values)
+
+        registerHandlers(event, CRATES.values)
         registerHandlers(event, DRUMS.values)
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")

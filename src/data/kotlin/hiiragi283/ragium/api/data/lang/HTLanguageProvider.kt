@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -67,7 +68,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         addVariants(HTGeneratorVariant.entries)
         addVariants(HTMachineVariant.entries)
+
         addVariants(HTDeviceVariant.entries)
+
+        addVariants(HTCrateVariant.entries)
         addVariants(HTDrumVariant.entries)
 
         // Delight

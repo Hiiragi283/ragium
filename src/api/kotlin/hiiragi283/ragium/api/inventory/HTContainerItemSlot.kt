@@ -57,7 +57,7 @@ open class HTContainerItemSlot(
 
     override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(stack.toImmutable())
 
-    override fun mayPickup(player: Player): Boolean = !slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()
+    override fun mayPickup(player: Player): Boolean = slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isNotEmpty()
 
     override fun remove(amount: Int): ItemStack = slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL).stack
 

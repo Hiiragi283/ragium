@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
@@ -222,8 +221,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Enchantments
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant.blockHolder)
+        buildList {
+            addAll(RagiumBlocks.CRATES.values)
+            addAll(RagiumBlocks.DRUMS.values)
+        }.forEach { variant: HTHolderLike ->
+            builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, variant)
         }
         builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.DRILL)
         builder.add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, RagiumItems.TELEPORT_KEY)

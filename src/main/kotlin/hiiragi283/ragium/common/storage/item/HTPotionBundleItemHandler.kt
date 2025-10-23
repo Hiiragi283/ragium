@@ -13,9 +13,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.MutableDataComponentHolder
 
-class HTPotionBundleItemHandler(parent: ItemStack, size: Long) :
+class HTPotionBundleItemHandler(parent: ItemStack, size: Int) :
     HTComponentItemHandler(parent, size),
     HTMenuCallback {
     companion object {
@@ -33,7 +32,7 @@ class HTPotionBundleItemHandler(parent: ItemStack, size: Long) :
         player.level().playSound(null, player.blockPosition(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS)
     }
 
-    private class PotionSlot(parent: MutableDataComponentHolder, size: Int, slot: Int) : ComponentSlot(parent, size, slot) {
+    private class PotionSlot(parent: ItemStack, size: Int, slot: Int) : ComponentSlot(parent, size, slot) {
         override fun createContainerSlot(): Slot = HTContainerItemSlot(
             this,
             HTSlotHelper.getSlotPosX(slot % 9),

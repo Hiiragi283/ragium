@@ -32,13 +32,15 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
      */
     fun isEmpty(): Boolean
 
+    fun isNotEmpty(): Boolean = !isEmpty()
+
     /**
      * このスタックの種類を返します。
      */
     fun value(): T
 
     /**
-     * このスタックの種類の[net.minecraft.core.Holder]を返します。
+     * このスタックの種類の[Holder]を返します。
      */
     fun holder(): Holder<T>
 
@@ -78,7 +80,7 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun copyAndShrink(amount: Long): STACK = copyWithAmount(amountAsLong() - amount)
 
     /**
-     * このスタックの[net.minecraft.core.component.DataComponentPatch]を返します。
+     * このスタックの[DataComponentPatch]を返します。
      */
     fun componentsPatch(): DataComponentPatch
 

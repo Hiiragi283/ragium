@@ -8,7 +8,6 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 fun FluidStack.toImmutable(): ImmutableFluidStack = ImmutableFluidStack.of(this)
 
@@ -19,10 +18,6 @@ fun ImmutableFluidStack.isOf(tagKey: TagKey<Fluid>): Boolean = this.stack.`is`(t
 fun ImmutableFluidStack.isOf(holder: Holder<Fluid>): Boolean = this.stack.`is`(holder)
 
 fun ImmutableFluidStack.isOf(holderSet: HolderSet<Fluid>): Boolean = this.stack.`is`(holderSet)
-
-fun ImmutableFluidStack.toContent(): SimpleFluidContent = SimpleFluidContent.copyOf(this.stack)
-
-fun SimpleFluidContent.storageCopy(): ImmutableFluidStack = this.copy().toImmutable()
 
 @OnlyIn(Dist.CLIENT)
 fun ImmutableFluidStack.getClientExtensions(): IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(this.stack.fluidType)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -17,7 +18,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import java.util.function.Consumer
 
 /**
@@ -37,13 +37,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         this.isActive = input.getBoolean("is_active", false)
     }
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = openGui(player, name)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = openGui(context.player, name)
 
     protected abstract fun openGui(player: Player, title: Component): InteractionResult
 

@@ -130,7 +130,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) return getEmptyStack()
             val fixedAmount: Int = min(amount, getAmountAsInt())
             val result: STACK = stack.copyWithAmount(fixedAmount)
-            if (!result.isEmpty() && action.execute) {
+            if (result.isNotEmpty() && action.execute) {
                 shrinkStack(fixedAmount, action)
                 onContentsChanged()
             }

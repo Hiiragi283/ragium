@@ -17,8 +17,7 @@
               "include": [
                 "minecraft:custom_name",
                 "minecraft:enchantments",
-                "minecraft:hide_additional_tooltip",
-                "ragium:fluid_content"
+                "minecraft:hide_additional_tooltip"
               ],
               "source": "block_entity"
             }

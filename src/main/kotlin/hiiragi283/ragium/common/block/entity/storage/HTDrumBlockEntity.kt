@@ -1,16 +1,17 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getFluidStack
-import hiiragi283.ragium.api.storage.fluid.setFluidStack
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.storage.item.slot.HTFluidItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTDrumVariant
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -30,8 +30,6 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
@@ -58,27 +56,22 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     protected abstract fun getDefaultTankCapacity(): Long
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = RagiumMenuTypes.DRUM.openMenu(player, name, this, ::writeExtraContainerData)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
+        RagiumMenuTypes.DRUM.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     //    Save & Read    //
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
         componentInput
-            .getOrDefault(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY)
+            .getOrDefault(RagiumDataComponents.FLUID_CONTENT, ImmutableFluidStack.EMPTY)
             .copy()
-            .let(tank::setFluidStack)
+            .let(tank::setStack)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.getFluidStack()))
+        components.set(RagiumDataComponents.FLUID_CONTENT, tank.getStack())
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -93,18 +86,18 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     //    Impl    //
 
     class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
-        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.smallDrumCapacity.asLong
+        override fun getDefaultTankCapacity(): Long = HTDrumVariant.SMALL.capacity
     }
 
     class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
-        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.mediumDrumCapacity.asLong
+        override fun getDefaultTankCapacity(): Long = HTDrumVariant.MEDIUM.capacity
     }
 
     class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
-        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.largeDrumCapacity.asLong
+        override fun getDefaultTankCapacity(): Long = HTDrumVariant.LARGE.capacity
     }
 
     class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
-        override fun getDefaultTankCapacity(): Long = RagiumConfig.COMMON.hugeDrumCapacity.asLong
+        override fun getDefaultTankCapacity(): Long = HTDrumVariant.HUGE.capacity
     }
 }

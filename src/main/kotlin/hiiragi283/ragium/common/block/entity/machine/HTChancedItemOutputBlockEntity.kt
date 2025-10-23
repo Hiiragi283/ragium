@@ -75,13 +75,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
-            if (!HTStackSlotHelper
-                    .insertStacks(
-                        outputSlots,
-                        stackIn.toImmutable(),
-                        HTStorageAction.SIMULATE,
-                    ).isEmpty()
-            ) {
+            if (HTStackSlotHelper.insertStacks(outputSlots, stackIn.toImmutable(), HTStorageAction.SIMULATE).isNotEmpty()) {
                 return false
             }
         }

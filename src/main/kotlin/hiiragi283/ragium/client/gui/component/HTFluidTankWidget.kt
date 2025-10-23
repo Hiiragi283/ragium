@@ -62,7 +62,7 @@ class HTFluidTankWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = !getStack().isEmpty()
+    override fun shouldRender(): Boolean = getStack().isNotEmpty()
 
     override fun getSprite(): TextureAtlasSprite? =
         getSprite(getStack().getClientExtensions().getStillTexture(getStack().stack), InventoryMenu.BLOCK_ATLAS)

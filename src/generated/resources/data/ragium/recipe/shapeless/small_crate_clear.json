@@ -1,0 +1,5 @@
+{
+  "type": "ragium:clear_component",
+  "ingredient": "ragium:small_crate",
+  "targets": "ragium:item_content"
+}

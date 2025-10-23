@@ -8,7 +8,9 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
@@ -62,18 +64,13 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val milkCollectorMultiplier: HTIntConfigValue
 
+    // Crate
+    @JvmField
+    val crateCapacity: Map<HTCrateVariant, HTIntConfigValue>
+
     // Drum
     @JvmField
-    val smallDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val mediumDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val largeDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val hugeDrumCapacity: HTIntConfigValue
+    val drumCapacity: Map<HTDrumVariant, HTIntConfigValue>
 
     // Block
     @JvmField
@@ -177,23 +174,43 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
 
         builder.pop()
+        // Crate
+        builder.push("crate")
+        crateCapacity = HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
+            val name: String = variant.variantName()
+            builder.push(name)
+            // Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt(
+                "multiplier",
+                when (variant) {
+                    HTCrateVariant.SMALL -> 32
+                    HTCrateVariant.MEDIUM -> 128
+                    HTCrateVariant.LARGE -> 512
+                    HTCrateVariant.HUGE -> 2048
+                },
+            )
+            builder.pop()
+            value
+        }
+        builder.pop()
         // Drum
         builder.push("drum")
-        builder.push("small")
-        smallDrumCapacity = builder.definePositiveInt("capacity", 16_000)
-        builder.pop()
-
-        builder.push("medium")
-        mediumDrumCapacity = builder.definePositiveInt("capacity", 32_000)
-        builder.pop()
-
-        builder.push("large")
-        largeDrumCapacity = builder.definePositiveInt("capacity", 64_000)
-        builder.pop()
-
-        builder.push("huge")
-        hugeDrumCapacity = builder.definePositiveInt("capacity", 256_000)
-        builder.pop()
+        drumCapacity = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+            val name: String = variant.variantName()
+            builder.push(name)
+            // Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt(
+                "capacity",
+                when (variant) {
+                    HTDrumVariant.SMALL -> 16_000
+                    HTDrumVariant.MEDIUM -> 32_000
+                    HTDrumVariant.LARGE -> 64_000
+                    HTDrumVariant.HUGE -> 256_000
+                },
+            )
+            builder.pop()
+            value
+        }
         builder.pop()
         // Block
         builder.push("block")

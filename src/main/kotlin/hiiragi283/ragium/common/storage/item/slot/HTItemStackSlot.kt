@@ -106,7 +106,8 @@ open class HTItemStackSlot protected constructor(
         slotType,
     )
 
-    private var stack: ItemStack = ItemStack.EMPTY
+    @JvmField
+    protected var stack: ItemStack = ItemStack.EMPTY
 
     override fun getStack(): ImmutableItemStack = stack.toImmutable()
 

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -23,7 +24,6 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import kotlin.streams.asSequence
 
 class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
@@ -73,17 +73,14 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         teleportPos = input.read("teleport_pos", HTTeleportPos.CODEC)
     }
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = when {
-        validateStructure(level, pos) -> RagiumMenuTypes.TELEPAD.openMenu(player, name, this, ::writeExtraContainerData)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = when {
+        validateStructure(
+            context.level,
+            context.pos,
+        ) -> RagiumMenuTypes.TELEPAD.openMenu(context.player, name, this, ::writeExtraContainerData)
 
         else -> {
-            player.displayClientMessage(Component.literal("Telepad must be surrounded by Device Casing!"), true)
+            context.player.displayClientMessage(Component.literal("Telepad must be surrounded by Device Casing!"), true)
             InteractionResult.FAIL
         }
     }

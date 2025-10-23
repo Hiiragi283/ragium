@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -22,11 +23,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 
 class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.MOB_CAPTURER, pos, state) {
     private lateinit var inputSlot: HTItemSlot.Mutable
@@ -49,13 +47,8 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         return HTSimpleItemSlotHolder(null, listOf(inputSlot), outputSlots)
     }
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = RagiumMenuTypes.MOB_CAPTURER.openMenu(player, name, this, ::writeExtraContainerData)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
+        RagiumMenuTypes.MOB_CAPTURER.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     //    Ticking    //
 

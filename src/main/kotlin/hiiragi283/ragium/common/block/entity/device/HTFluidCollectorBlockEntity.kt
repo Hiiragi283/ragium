@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -20,7 +21,6 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
@@ -33,13 +33,8 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
         return HTSimpleFluidTankHolder.output(null, tank)
     }
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult = RagiumMenuTypes.FLUID_COLLECTOR.openMenu(player, name, this, ::writeExtraContainerData)
+    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
+        RagiumMenuTypes.FLUID_COLLECTOR.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     //    Ticking    //
 
@@ -48,7 +43,7 @@ abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockP
         val stack: ImmutableFluidStack = getGeneratedFluid(level, pos).toImmutable()
         if (stack.isEmpty()) return false
         // 液体を搬入できるかチェック
-        if (!tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false
+        if (tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isNotEmpty()) return false
         tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         playSound(level, pos)
         return true

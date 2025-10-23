@@ -12,9 +12,9 @@ fun <T : Any> MutableDataComponentHolder.compute(type: DataComponentType<T>, upd
 fun <T : Any, U : Any> MutableDataComponentHolder.compute(type: DataComponentType<T>, context: U, updater: (T?, U) -> T?): T? =
     set(type, updater(get(type), context))
 
-fun <T : Any> MutableDataComponentHolder.setOrRemove(type: DataComponentType<T>, value: T, validator: (T) -> Boolean): T? = when {
-    validator(value) -> set(type, value)
-    else -> remove(type)
+fun <T : Any> MutableDataComponentHolder.setOrRemove(type: DataComponentType<T>, value: T, isEmpty: (T) -> Boolean): T? = when {
+    isEmpty(value) -> remove(type)
+    else -> set(type, value)
 }
 
 // Supplier

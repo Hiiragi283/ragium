@@ -2,15 +2,18 @@ package hiiragi283.ragium.api.stack
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
+import java.util.Optional
 
 /**
  * [ItemStack]向けの[ImmutableStack]の実装
@@ -19,8 +22,24 @@ import net.minecraft.world.level.ItemLike
 value class ImmutableItemStack private constructor(val stack: ItemStack) : ImmutableStack<Item, ImmutableItemStack> {
     companion object {
         @JvmField
+        val CODEC_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
+            BiCodec.composite(
+                VanillaBiCodecs.holder(Registries.ITEM).fieldOf("id"),
+                ImmutableItemStack::holder,
+                BiCodecs.POSITIVE_INT.optionalFieldOf("count") { 1 },
+                ImmutableItemStack::amountAsInt,
+                VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
+                ImmutableItemStack::componentsPatch,
+            ) { holder: Holder<Item>, count: Int, components: DataComponentPatch ->
+                ItemStack(holder, count, components).toImmutable()
+            }
+
+        @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
-            VanillaBiCodecs.itemStack(true).xmap(::of, ImmutableItemStack::stack)
+            CODEC_NON_EMPTY.toOptional().xmap(
+                { optional: Optional<ImmutableItemStack> -> optional.orElse(EMPTY) },
+                { stack: ImmutableItemStack -> Optional.of(stack).filter(ImmutableItemStack::isNotEmpty) },
+            )
 
         /**
          * 空の[ImmutableItemStack]

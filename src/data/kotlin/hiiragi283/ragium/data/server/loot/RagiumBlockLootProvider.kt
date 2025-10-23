@@ -4,7 +4,9 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -49,7 +51,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             include(DataComponents.CUSTOM_NAME)
                             include(DataComponents.ENCHANTMENTS)
                             include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
-                            include(RagiumDataComponents.FLUID_CONTENT)
+                            when (block) {
+                                is HTDrumBlock -> include(RagiumDataComponents.FLUID_CONTENT)
+                                is HTCrateBlock -> include(RagiumDataComponents.ITEM_CONTENT)
+                            }
                         }
                     } else {
                         createSingleItemTable(block)

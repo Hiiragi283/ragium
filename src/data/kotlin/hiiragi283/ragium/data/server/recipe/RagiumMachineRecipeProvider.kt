@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -27,6 +28,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         processors()
         devices()
 
+        crate()
         drums()
     }
 
@@ -215,6 +217,35 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .addIngredient(ingredient)
                 .save(output)
         }
+    }
+
+    //    Storage    //
+
+    @JvmStatic
+    private fun crate() {
+        for ((variant: HTCrateVariant, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
+            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
+
+            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
+                HTCrateVariant.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.IRON
+                HTCrateVariant.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTCrateVariant.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
+                HTCrateVariant.HUGE -> continue
+            }
+
+            HTShapedRecipeBuilder
+                .misc(crate)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', pair.first, pair.second)
+                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('C', Tags.Items.CHESTS_WOODEN)
+                .save(output)
+        }
+        // Huge
+        createNetheriteUpgrade(HTCrateVariant.HUGE, HTCrateVariant.LARGE).save(output)
     }
 
     @JvmStatic

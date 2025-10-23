@@ -41,17 +41,17 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
+import hiiragi283.ragium.common.storage.item.HTCrateItemHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.config.RagiumCommonConfig
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -73,7 +73,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.UnaryOperator
 
 object RagiumItems {
@@ -499,17 +498,22 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        registerItem(event, provider(9, ::HTPotionBundleItemHandler), POTION_BUNDLE)
+        for (variant: HTCrateVariant in HTCrateVariant.entries) {
+            event.registerItem(
+                RagiumCapabilities.ITEM.itemCapability(),
+                { stack: ItemStack, _: Void? -> HTCrateItemHandler(variant.multiplier, stack) },
+                variant,
+            )
+        }
+        event.registerItem(
+            RagiumCapabilities.ITEM.itemCapability(),
+            { stack: ItemStack, _: Void? -> HTPotionBundleItemHandler(stack, 9) },
+            POTION_BUNDLE,
+        )
 
         // Fluid
         for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val capacity: Long = when (variant) {
-                HTDrumVariant.SMALL -> RagiumCommonConfig::smallDrumCapacity
-                HTDrumVariant.MEDIUM -> RagiumCommonConfig::mediumDrumCapacity
-                HTDrumVariant.LARGE -> RagiumCommonConfig::largeDrumCapacity
-                HTDrumVariant.HUGE -> RagiumCommonConfig::hugeDrumCapacity
-            }(RagiumConfig.COMMON).asLong
-            registerFluid(event, providerEnch(capacity, ::HTComponentFluidHandler), variant)
+            registerFluid(event, providerEnch(variant.capacity, ::HTComponentFluidHandler), variant)
         }
         registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
@@ -520,22 +524,8 @@ object RagiumItems {
     }
 
     @JvmStatic
-    private fun <T : Any> provider(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        factory(stack, capacity)
-    }
-
-    @JvmStatic
     private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
-    }
-
-    @JvmStatic
-    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
-        event.registerItem(
-            RagiumCapabilities.ITEM.itemCapability(),
-            { stack: ItemStack, _: Void? -> getter(stack) },
-            *items,
-        )
     }
 
     @JvmStatic

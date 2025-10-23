@@ -13,11 +13,12 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 object RagiumDataComponents {
     @JvmField
@@ -45,11 +46,7 @@ object RagiumDataComponents {
     val ENERGY: DataComponentType<Long> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_LONG)
 
     @JvmField
-    val FLUID_CONTENT: DataComponentType<SimpleFluidContent> = REGISTER.registerType(
-        "fluid_content",
-        SimpleFluidContent.CODEC,
-        SimpleFluidContent.STREAM_CODEC,
-    )
+    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
 
     @JvmField
     val IMMUNE_DAMAGE_TYPES: DataComponentType<HTKeyOrTagEntry<DamageType>> = REGISTER.registerType(
@@ -62,6 +59,9 @@ object RagiumDataComponents {
         "intrinsic_enchantment",
         HTIntrinsicEnchantment.CODEC,
     )
+
+    @JvmField
+    val ITEM_CONTENT: DataComponentType<ImmutableItemStack> = REGISTER.registerType("item_content", ImmutableItemStack.CODEC)
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)

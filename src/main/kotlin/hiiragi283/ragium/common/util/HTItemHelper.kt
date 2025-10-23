@@ -77,6 +77,7 @@ object HTItemHelper {
 
     //    ItemStack    //
 
+    @JvmStatic
     fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Long): Long {
         val float = MutableFloat(capacity)
         EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
@@ -85,6 +86,7 @@ object HTItemHelper {
         return max(0, float.toLong())
     }
 
+    @JvmStatic
     fun processCollectorRange(
         serverLevel: ServerLevel,
         stack: ItemStack,

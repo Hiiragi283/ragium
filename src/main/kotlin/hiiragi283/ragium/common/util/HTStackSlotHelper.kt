@@ -26,9 +26,9 @@ object HTStackSlotHelper {
         val extracted: STACK = from.extract(simulatedAccepted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         val remainder: STACK = to.insert(extracted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
 
-        if (!remainder.isEmpty()) {
+        if (remainder.isNotEmpty()) {
             val leftover: STACK = from.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            if (!leftover.isEmpty()) {
+            if (leftover.isNotEmpty()) {
                 RagiumAPI.LOGGER.error("Stack slot $from did not accept leftover stack from $to! Voiding it.")
             }
         }
