@@ -42,7 +42,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
 import snownee.jade.api.IJadeProvider
-import kotlin.enums.enumEntries
 
 abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) :
     LanguageProvider(output, RagiumAPI.MOD_ID, type.name.lowercase()) {
@@ -67,9 +66,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromTable(RagiumItems.TOOLS)
 
         addVariants(HTGeneratorVariant.entries)
-        addVariants<HTMachineVariant>()
-        addVariants<HTDeviceVariant>()
-        addVariants<HTDrumVariant>()
+        addVariants(HTMachineVariant.entries)
+        addVariants(HTDeviceVariant.entries)
+        addVariants(HTDrumVariant.entries)
 
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
@@ -90,12 +89,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         // Replication
         for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumReplicationAddon.MATTER_MAP) {
             add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
-        }
-    }
-
-    private inline fun <reified V> addVariants() where V : HTVariantKey.WithBlock<*>, V : Enum<V> {
-        for (variant: V in enumEntries<V>()) {
-            add(variant.blockHolder, variant.translate(type, "%s"))
         }
     }
 

@@ -201,7 +201,7 @@
   "block.ragium.silt": "シルト",
   "block.ragium.simulator": "シミュレーション室",
   "block.ragium.small_drum": "ドラム（小）",
-  "block.ragium.solar_generator": "太陽光発電機",
+  "block.ragium.solar_generator": "太陽光パネルコントローラー",
   "block.ragium.soul_glass": "ソウルガラス",
   "block.ragium.soul_glass.tooltip": "プレイヤーのみ通過できます。\nまた，シルクタッチなしで回収することが可能です。",
   "block.ragium.sponge_cake": "スポンジケーキ",

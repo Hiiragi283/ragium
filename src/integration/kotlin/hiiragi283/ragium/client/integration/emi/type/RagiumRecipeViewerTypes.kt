@@ -45,8 +45,8 @@ object RagiumRecipeViewerTypes {
 
     @JvmStatic
     fun getGenerator(variant: HTGeneratorVariant<*, *>): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
-        HTGeneratorVariant.Thermal -> THERMAL
-        HTGeneratorVariant.Combustion -> COMBUSTION
+        HTGeneratorVariant.Fuel.THERMAL -> THERMAL
+        HTGeneratorVariant.Fuel.COMBUSTION -> COMBUSTION
         else -> error("Unsupported variant: ${variant.variantName()}")
     }
 
@@ -104,7 +104,7 @@ object RagiumRecipeViewerTypes {
     // Elite
     @JvmField
     val BREWING: HTFakeRecipeViewerType<HTEmiBrewingEffect> = HTFakeRecipeViewerType.create(
-        HTMachineVariant.BREWERY,
+        HTMachineVariant.BREWERY.blockHolder,
         HTBounds(
             0,
             0,

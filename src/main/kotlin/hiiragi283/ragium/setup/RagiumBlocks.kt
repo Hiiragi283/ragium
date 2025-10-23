@@ -369,23 +369,23 @@ object RagiumBlocks {
     //    Generators    //
 
     @JvmField
-    val THERMAL_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<HTHorizontalEntityBlock>> = registerEntity(
-        HTGeneratorVariant.Thermal,
+    val THERMAL_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
+        HTGeneratorVariant.Fuel.THERMAL,
         machineProperty().noOcclusion(),
         ::HTHorizontalEntityBlock,
         ::HTGeneratorBlockItem,
     )
 
     @JvmField
-    val COMBUSTION_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<HTHorizontalEntityBlock>> = registerEntity(
-        HTGeneratorVariant.Combustion,
+    val COMBUSTION_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
+        HTGeneratorVariant.Fuel.COMBUSTION,
         machineProperty().noOcclusion(),
         ::HTHorizontalEntityBlock,
         ::HTGeneratorBlockItem,
     )
 
     @JvmField
-    val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<HTEntityBlock>> = registerEntity(
+    val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
         HTGeneratorVariant.Solar,
         machineProperty().noOcclusion(),
         HTEntityBlock::Simple,
@@ -393,7 +393,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val NUCLEAR_REACTOR: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<HTEntityBlock>> = registerEntity(
+    val NUCLEAR_REACTOR: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
         HTGeneratorVariant.Nuclear,
         machineProperty().noOcclusion(),
         HTEntityBlock::Simple,

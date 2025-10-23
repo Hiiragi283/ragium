@@ -18,7 +18,7 @@ object HTHammerToolVariant : HTToolVariant {
             it.attributes(DiggerItem.createAttributes(tier, 1f, -2.8f))
         }
 
-    override val tagKey: TagKey<Item> = RagiumModTags.Items.TOOLS_HAMMER
+    override val tagKeys: Iterable<TagKey<Item>> = listOf(RagiumModTags.Items.TOOLS_HAMMER)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> "%s Hammer"

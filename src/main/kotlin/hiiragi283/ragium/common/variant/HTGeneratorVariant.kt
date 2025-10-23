@@ -15,83 +15,85 @@ import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 
-sealed class HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlockEntity>(
-    val tier: HTMachineTier,
-    private val enUsPattern: String,
-    private val jaJpPattern: String,
-) : HTVariantKey.WithBlock<BLOCK>,
-    HTVariantKey.WithBE<BE> {
+sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlockEntity> : HTVariantKey.WithBlockAndBE<BLOCK, BE> {
     companion object {
-        @JvmField
-        val entries: List<HTGeneratorVariant<*, *>> = listOf(Thermal, Combustion, Solar, Nuclear)
+        @JvmStatic
+        val entries: List<HTGeneratorVariant<*, *>> by lazy {
+            buildList {
+                addAll(Fuel.entries)
+                add(Solar)
+                add(Nuclear)
+            }
+        }
     }
 
     val energyRate: Int get() = RagiumConfig.COMMON.generatorEnergyRate[this]!!.asInt
 
-    final override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enUsPattern
-        HTLanguageType.JA_JP -> jaJpPattern
-    }
+    val tier: HTMachineTier
 
-    //    Basic    //
+    //    Fuel    //
 
-    data object Thermal : HTGeneratorVariant<HTHorizontalEntityBlock, HTFuelGeneratorBlockEntity>(
-        HTMachineTier.BASIC,
-        "Thermal Generator",
-        "火力発電機",
-    ) {
+    enum class Fuel(override val tier: HTMachineTier, private val enUsPattern: String, private val jaJpPattern: String) :
+        HTGeneratorVariant<HTHorizontalEntityBlock, HTFuelGeneratorBlockEntity> {
+        THERMAL(HTMachineTier.BASIC, "Thermal Generator", "火力発電機"),
+        COMBUSTION(HTMachineTier.ADVANCED, "Combustion Generator", "燃焼発電機"),
+        ;
+
         override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, *>
-            get() = RagiumBlocks.THERMAL_GENERATOR
+            get() = when (this) {
+                THERMAL -> RagiumBlocks.THERMAL_GENERATOR
+                COMBUSTION -> RagiumBlocks.COMBUSTION_GENERATOR
+            }
 
-        override fun variantName(): String = "thermal_generator"
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> enUsPattern
+            HTLanguageType.JA_JP -> jaJpPattern
+        }
+
+        override fun variantName(): String = "${name.lowercase()}_generator"
 
         override val blockEntityHolder: HTDeferredBlockEntityType<out HTFuelGeneratorBlockEntity>
-            get() = RagiumBlockEntityTypes.THERMAL
+            get() = when (this) {
+                THERMAL -> RagiumBlockEntityTypes.THERMAL
+                COMBUSTION -> RagiumBlockEntityTypes.COMBUSTION
+            }
     }
 
     //    Advanced    //
 
-    data object Combustion : HTGeneratorVariant<HTHorizontalEntityBlock, HTFuelGeneratorBlockEntity>(
-        HTMachineTier.ADVANCED,
-        "Combustion Generator",
-        "燃焼発電機",
-    ) {
-        override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, *>
-            get() = RagiumBlocks.COMBUSTION_GENERATOR
-
-        override fun variantName(): String = "combustion_generator"
-
-        override val blockEntityHolder: HTDeferredBlockEntityType<out HTFuelGeneratorBlockEntity>
-            get() = RagiumBlockEntityTypes.COMBUSTION
-    }
-
-    data object Solar : HTGeneratorVariant<HTEntityBlock, HTSolarGeneratorBlockEntity>(
-        HTMachineTier.ADVANCED,
-        "Solar Panel Controller",
-        "太陽光パネルコントローラー",
-    ) {
+    data object Solar : HTGeneratorVariant<HTEntityBlock, HTSolarGeneratorBlockEntity> {
         override val blockHolder: HTDeferredBlock<HTEntityBlock, *>
             get() = RagiumBlocks.SOLAR_PANEL_CONTROLLER
+
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> "Solar Panel Controller"
+            HTLanguageType.JA_JP -> "太陽光パネルコントローラー"
+        }
 
         override fun variantName(): String = "solar_generator"
 
         override val blockEntityHolder: HTDeferredBlockEntityType<out HTSolarGeneratorBlockEntity>
             get() = RagiumBlockEntityTypes.SOLAR
+
+        override val tier: HTMachineTier = HTMachineTier.ADVANCED
     }
 
     //    Elite    //
 
-    data object Nuclear : HTGeneratorVariant<HTEntityBlock, HTNuclearReactorBlockEntity>(
-        HTMachineTier.ELITE,
-        "Nuclear Reactor",
-        "原子炉",
-    ) {
+    data object Nuclear : HTGeneratorVariant<HTEntityBlock, HTNuclearReactorBlockEntity> {
         override val blockHolder: HTDeferredBlock<HTEntityBlock, *>
             get() = RagiumBlocks.NUCLEAR_REACTOR
 
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> "Nuclear Reactor"
+            HTLanguageType.JA_JP -> "原子炉"
+        }
+
         override fun variantName(): String = "nuclear_reactor"
 
-        override val blockEntityHolder: HTDeferredBlockEntityType<out HTNuclearReactorBlockEntity> get() =
-            RagiumBlockEntityTypes.NUCLEAR
+        override val blockEntityHolder: HTDeferredBlockEntityType<out HTNuclearReactorBlockEntity>
+            get() = RagiumBlockEntityTypes.NUCLEAR
+
+        override val tier: HTMachineTier = HTMachineTier.ELITE
     }
 }

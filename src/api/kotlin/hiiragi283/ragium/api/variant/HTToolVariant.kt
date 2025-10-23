@@ -9,7 +9,7 @@ import net.minecraft.world.item.Tier
 /**
  * ツール系アイテム向けの[HTVariantKey]の拡張インターフェース
  */
-interface HTToolVariant : HTVariantKey.Tagged<Item> {
+interface HTToolVariant : HTVariantKey.WithTag<Item> {
     /**
      * 指定した引数からアイテムを登録します。
      * @param register アイテムのレジストリ

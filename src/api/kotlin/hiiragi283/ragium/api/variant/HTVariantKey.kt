@@ -23,8 +23,8 @@ interface HTVariantKey {
     /**
      * [TagKey]を保持する[HTVariantKey]の拡張インターフェース
      */
-    interface Tagged<TYPE : Any> : HTVariantKey {
-        val tagKey: TagKey<TYPE>
+    interface WithTag<TYPE : Any> : HTVariantKey {
+        val tagKeys: Iterable<TagKey<TYPE>>
     }
 
     /**
@@ -48,6 +48,10 @@ interface HTVariantKey {
     interface WithBE<BE : BlockEntity> : HTVariantKey {
         val blockEntityHolder: HTDeferredBlockEntityType<out BE>
     }
+
+    interface WithBlockAndBE<BLOCK : Block, BE : BlockEntity> :
+        WithBlock<BLOCK>,
+        WithBE<BE>
 
     /**
      * [Entity]を保持する[HTVariantKey]の拡張インターフェース

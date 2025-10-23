@@ -15,8 +15,7 @@ object HTKitchenKnifeToolVariant : HTToolVariant {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
         register.registerItemWith("${material.materialName()}_kitchen_knife", tier, ::KitchenKnifeItem)
 
-    override val tagKey: TagKey<Item>
-        get() = TagMod.KITCHEN_KNIFE
+    override val tagKeys: Iterable<TagKey<Item>> = listOf(TagMod.KITCHEN_KNIFE)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> "%s Kitchen Knife"

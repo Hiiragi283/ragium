@@ -42,7 +42,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import rearth.oritech.init.ItemContent
-import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
@@ -237,14 +236,20 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.STRIKE_ENCHANTABLE)
         // Armors
         for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.AZURE_ARMORS) {
-            builder.add(variant.tagKey, armor)
+            for (tagKey: TagKey<Item> in variant.tagKeys) {
+                builder.add(tagKey, armor)
+            }
         }
         for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.DEEP_ARMORS) {
-            builder.add(variant.tagKey, armor)
+            for (tagKey: TagKey<Item> in variant.tagKeys) {
+                builder.add(tagKey, armor)
+            }
         }
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
-            builder.add(variant.tagKey, item)
+            for (tagKey: TagKey<Item> in variant.tagKeys) {
+                builder.add(tagKey, item)
+            }
 
             if (variant == HTVanillaToolVariant.PICKAXE) {
                 builder.add(ItemTags.CLUSTER_MAX_HARVESTABLES, item)
@@ -255,7 +260,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 
-        builder.addTool(CommonTags.TOOLS_KNIFE, RagiumDelightAddon.KNIFE_MAP.values)
         builder.addTool(HTKitchenKnifeToolVariant, RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
         builder.addTool(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP.values)
 
@@ -355,12 +359,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     }
 
     private fun HTTagBuilder<Item>.addTool(variant: HTToolVariant, holders: Iterable<HTHolderLike>) {
-        this.addTool(variant.tagKey, holders)
-    }
-
-    private fun HTTagBuilder<Item>.addTool(tagKey: TagKey<Item>, holders: Iterable<HTHolderLike>) {
-        for (holder: HTHolderLike in holders) {
-            this.add(tagKey, holder)
+        for (tagKey: TagKey<Item> in variant.tagKeys) {
+            for (holder: HTHolderLike in holders) {
+                this.add(tagKey, holder)
+            }
         }
     }
 

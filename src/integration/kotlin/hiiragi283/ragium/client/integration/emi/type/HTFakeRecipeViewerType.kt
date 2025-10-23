@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.integration.emi.type
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.text.HTHasText
-import hiiragi283.ragium.api.variant.HTVariantKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -21,10 +20,6 @@ class HTFakeRecipeViewerType<RECIPE : Any>(
 ) : HTRecipeViewerType<RECIPE>,
     HTHasText by hasText {
     companion object {
-        @JvmStatic
-        fun <RECIPE : Any> create(variant: HTVariantKey.WithBlock<*>, bounds: HTBounds): HTFakeRecipeViewerType<RECIPE> =
-            create(variant.blockHolder, bounds)
-
         @JvmStatic
         fun <RECIPE : Any, ITEM> create(
             item: ITEM,

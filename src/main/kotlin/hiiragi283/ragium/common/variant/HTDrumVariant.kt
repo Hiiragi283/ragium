@@ -16,8 +16,7 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
 
 enum class HTDrumVariant(private val enPattern: String, private val jaPattern: String) :
-    HTVariantKey.WithBlock<HTDrumBlock>,
-    HTVariantKey.WithBE<HTDrumBlockEntity>,
+    HTVariantKey.WithBlockAndBE<HTDrumBlock, HTDrumBlockEntity>,
     HTVariantKey.WithEntity<HTDrumMinecart> {
     SMALL("Small Drum", "ドラム（小）"),
     MEDIUM("Medium Drum", "ドラム（中）"),

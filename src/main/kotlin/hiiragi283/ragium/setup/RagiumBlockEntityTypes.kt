@@ -52,7 +52,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import java.util.function.Supplier
-import kotlin.enums.enumEntries
 
 object RagiumBlockEntityTypes {
     @JvmField
@@ -74,18 +73,18 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val THERMAL: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Thermal,
+        HTGeneratorVariant.Fuel.THERMAL,
         HTFuelGeneratorBlockEntity.createSimple(
             { stack: ImmutableItemStack -> stack.stack.getBurnTime(null) / 10 },
             HTFluidContent.LAVA,
             RagiumDataMaps.INSTANCE::getThermalFuel,
-            HTGeneratorVariant.Thermal,
+            HTGeneratorVariant.Fuel.THERMAL,
         ),
     )
 
     @JvmField
     val COMBUSTION: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Combustion,
+        HTGeneratorVariant.Fuel.COMBUSTION,
         HTFuelGeneratorBlockEntity.createSimple(
             { stack: ImmutableItemStack ->
                 when {
@@ -95,7 +94,7 @@ object RagiumBlockEntityTypes {
             },
             RagiumFluidContents.CRUDE_OIL,
             RagiumDataMaps.INSTANCE::getCombustionFuel,
-            HTGeneratorVariant.Combustion,
+            HTGeneratorVariant.Fuel.COMBUSTION,
         ),
     )
 
@@ -212,9 +211,9 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
         addAll(event, HTGeneratorVariant.entries)
-        addAll<HTMachineVariant>(event)
-        addAll<HTDeviceVariant>(event)
-        addAll<HTDrumVariant>(event)
+        addAll(event, HTMachineVariant.entries)
+        addAll(event, HTDeviceVariant.entries)
+        addAll(event, HTDrumVariant.entries)
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
     }
@@ -225,20 +224,10 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun <V> addAll(
-        event: BlockEntityTypeAddBlocksEvent,
-        entries: Iterable<V>,
-    ) where V : HTVariantKey.WithBlock<*>, V : HTVariantKey.WithBE<*> {
+    private fun <V : HTVariantKey.WithBlockAndBE<*, *>> addAll(event: BlockEntityTypeAddBlocksEvent, entries: Iterable<V>) {
         for (variant: V in entries) {
             add(event, variant.blockEntityHolder, variant.blockHolder)
         }
-    }
-
-    @JvmStatic
-    private inline fun <reified V> addAll(
-        event: BlockEntityTypeAddBlocksEvent,
-    ) where V : HTVariantKey.WithBlock<*>, V : HTVariantKey.WithBE<*>, V : Enum<V> {
-        addAll(event, enumEntries<V>())
     }
 
     // Capabilities

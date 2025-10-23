@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
 import vectorwing.farmersdelight.common.item.KnifeItem
 import vectorwing.farmersdelight.common.registry.ModItems
+import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 
 object HTKnifeToolVariant : HTToolVariant {
@@ -22,7 +23,7 @@ object HTKnifeToolVariant : HTToolVariant {
             )
         }
 
-    override val tagKey: TagKey<Item> = ModTags.KNIVES
+    override val tagKeys: Iterable<TagKey<Item>> = listOf(CommonTags.TOOLS_KNIFE, ModTags.KNIVES)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> "%s Knife"

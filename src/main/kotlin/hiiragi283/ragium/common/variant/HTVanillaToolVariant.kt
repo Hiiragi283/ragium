@@ -20,8 +20,11 @@ import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tier
 
-enum class HTVanillaToolVariant(private val enPattern: String, private val jaPattern: String, override val tagKey: TagKey<Item>) :
-    HTToolVariant {
+enum class HTVanillaToolVariant(
+    private val enPattern: String,
+    private val jaPattern: String,
+    override val tagKeys: Iterable<TagKey<Item>>,
+) : HTToolVariant {
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
             register.registerItemWith("${material.materialName()}_shovel", tier, ::ShovelItem) {
@@ -52,6 +55,8 @@ enum class HTVanillaToolVariant(private val enPattern: String, private val jaPat
                 it.attributes(SwordItem.createAttributes(tier, 3f, -2.4f))
             }
     }, ;
+
+    constructor(enPattern: String, jaPattern: String, tagKey: TagKey<Item>) : this(enPattern, jaPattern, listOf(tagKey))
 
     companion object {
         val TOOL_TABLE: ImmutableTable<HTVanillaToolVariant, HTVanillaMaterialType, Item> = buildTable {
