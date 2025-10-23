@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFuelGeneratorBlockEntity(
-        HTGeneratorVariant.NUCLEAR_REACTOR,
+        HTGeneratorVariant.Nuclear,
         pos,
         state,
     ) {

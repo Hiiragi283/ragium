@@ -16,7 +16,7 @@ import net.neoforged.neoforge.common.ModConfigSpec
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     // Generator
     @JvmField
-    val generatorEnergyRate: Map<HTGeneratorVariant, HTIntConfigValue>
+    val generatorEnergyRate: Map<HTGeneratorVariant<*, *>, HTIntConfigValue>
 
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
@@ -104,7 +104,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     init {
         // Generator
         builder.push("generator")
-        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
+        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant<*, *> ->
             val name: String = variant.variantName()
             builder.push(name)
             // Energy Rate

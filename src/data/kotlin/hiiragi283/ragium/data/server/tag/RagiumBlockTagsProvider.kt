@@ -15,7 +15,6 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
@@ -150,10 +149,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
         // WIP
         builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
-        builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.NUCLEAR_REACTOR.blockHolder)
-        builder.add(RagiumModTags.Blocks.WIP, HTGeneratorVariant.SOLAR.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
         builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }

@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState
 /**
  * 電力を生産する設備に使用される[HTMachineBlockEntity]の拡張クラス
  */
-abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant, pos: BlockPos, state: BlockState) :
+abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant<*, *>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
     //    Ticking    //
 
@@ -21,5 +21,5 @@ abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant, pos: Bloc
     //    Energy Storage    //
 
     final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder =
-        HTSimpleEnergyStorageHolder.output(this, HTEnergyBatteryWrapper { getter(level) })
+        HTSimpleEnergyStorageHolder.viewOnly(this, HTEnergyBatteryWrapper { getter(level) })
 }

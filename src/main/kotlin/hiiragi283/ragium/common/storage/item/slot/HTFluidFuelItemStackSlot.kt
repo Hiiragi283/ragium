@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
@@ -56,7 +57,7 @@ class HTFluidFuelItemStackSlot private constructor(
     fun fillOrBurn(moveTo: HTItemSlot.Mutable) {
         if (isEmpty()) return
         val needed: Int = tank.getNeededAsInt(tank.getStack())
-        if (needed > 0 && !fillTank(moveTo)) {
+        if (needed > 0 && !HTFluidItemSlot.moveFluid(tank, this, moveTo)) {
             val amount: Int = stackToAmount(getStack())
             if (amount in 1..needed) {
                 val hasContainer: Boolean = getStack().hasCraftingRemainingItem()

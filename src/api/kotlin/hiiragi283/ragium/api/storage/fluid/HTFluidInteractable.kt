@@ -32,5 +32,5 @@ fun interface HTFluidInteractable {
      * @param tank 内部の液体ストレージ
      */
     fun interactWith(player: Player, hand: InteractionHand, tank: HTFluidTank): ItemInteractionResult =
-        interactWith(player, hand, HTFluidHandler { listOf(tank) })
+        interactWith(player, hand, tank.toSingleHandler())
 }

@@ -51,7 +51,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     private lateinit var outputSlot: HTItemSlot.Mutable
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
-        fillSlot = HTFluidItemStackSlot.fill(tank, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        fillSlot = HTFluidItemStackSlot.create(tank, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         return HTSimpleItemSlotHolder(null, listOf(fillSlot), listOf(outputSlot))
     }
@@ -82,7 +82,7 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        fillSlot.fillTank(outputSlot)
+        HTFluidItemSlot.moveFluid(fillSlot.getFluidTank(), fillSlot, outputSlot)
         return false
     }
 

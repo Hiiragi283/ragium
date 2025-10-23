@@ -41,7 +41,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumBlocks.EXP_BERRIES)
             remove(RagiumBlocks.WARPED_WART)
 
-            removeAll(RagiumBlocks.GENERATORS.values)
+            removeAll(RagiumBlocks.GENERATORS)
             removeAll(RagiumBlocks.LED_BLOCKS.values)
             removeAll(RagiumBlocks.WALLS.values)
             // Delight
@@ -115,7 +115,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
 
         // Built-In
         buildList {
-            addAll(RagiumBlocks.GENERATORS.values)
+            addAll(RagiumBlocks.GENERATORS)
         }.forEach(::builtIn)
     }
 

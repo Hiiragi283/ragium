@@ -81,6 +81,18 @@ object RagiumBlocks {
     ): HTDeferredBlock<BLOCK, ITEM> = REGISTER.registerEach(type.getPath(), blockGetter, itemGetter, ::HTDeferredBlock)
 
     @JvmStatic
+    private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock, ITEM : Item> registerEntity(
+        variant: V,
+        properties: BlockBehaviour.Properties,
+        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
+        itemFactory: ItemWithContextFactory<V, ITEM>,
+    ): HTDeferredBlock<BLOCK, ITEM> = registerEntity(
+        variant.blockEntityHolder,
+        { blockFactory(variant.blockEntityHolder, properties) },
+        { itemFactory(variant, Item.Properties()) },
+    )
+
+    @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
         .of()
         .mapColor(MapColor.COLOR_BLACK)
@@ -357,23 +369,44 @@ object RagiumBlocks {
     //    Generators    //
 
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem>> =
-        createVariantMap(
-            HTGeneratorVariant.entries,
-            { machineProperty().noOcclusion() },
-            { variant: HTGeneratorVariant ->
-                when (variant) {
-                    // Basic
-                    HTGeneratorVariant.THERMAL -> ::HTHorizontalEntityBlock
-                    // Advanced
-                    HTGeneratorVariant.COMBUSTION -> ::HTHorizontalEntityBlock
-                    HTGeneratorVariant.SOLAR -> HTEntityBlock::Simple
-                    // Elite
-                    HTGeneratorVariant.NUCLEAR_REACTOR -> HTEntityBlock::Simple
-                }
-            },
-            ::HTGeneratorBlockItem,
-        )
+    val THERMAL_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<HTHorizontalEntityBlock>> = registerEntity(
+        HTGeneratorVariant.Thermal,
+        machineProperty().noOcclusion(),
+        ::HTHorizontalEntityBlock,
+        ::HTGeneratorBlockItem,
+    )
+
+    @JvmField
+    val COMBUSTION_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<HTHorizontalEntityBlock>> = registerEntity(
+        HTGeneratorVariant.Combustion,
+        machineProperty().noOcclusion(),
+        ::HTHorizontalEntityBlock,
+        ::HTGeneratorBlockItem,
+    )
+
+    @JvmField
+    val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<HTEntityBlock>> = registerEntity(
+        HTGeneratorVariant.Solar,
+        machineProperty().noOcclusion(),
+        HTEntityBlock::Simple,
+        ::HTGeneratorBlockItem,
+    )
+
+    @JvmField
+    val NUCLEAR_REACTOR: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<HTEntityBlock>> = registerEntity(
+        HTGeneratorVariant.Nuclear,
+        machineProperty().noOcclusion(),
+        HTEntityBlock::Simple,
+        ::HTGeneratorBlockItem,
+    )
+
+    @JvmField
+    val GENERATORS: List<HTDeferredBlock<*, out HTGeneratorBlockItem<*>>> = listOf(
+        THERMAL_GENERATOR,
+        COMBUSTION_GENERATOR,
+        SOLAR_PANEL_CONTROLLER,
+        NUCLEAR_REACTOR,
+    )
 
     //    Machines    //
 
@@ -417,19 +450,17 @@ object RagiumBlocks {
         blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
         itemFactory: ItemWithContextFactory<V, ITEM>,
     ): Map<V, HTDeferredBlock<BLOCK, ITEM>> = entries.associateWith { variant: V ->
-        val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
-        registerEntity(type, { blockFactory(type, properties) }, { itemFactory(variant, Item.Properties()) })
+        registerEntity(variant, properties, blockFactory, itemFactory)
     }
 
     @JvmStatic
     private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock, ITEM : Item> createVariantMap(
         entries: Iterable<V>,
         properties: (V) -> BlockBehaviour.Properties,
-        blockFactory: (V) -> BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
+        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
         itemFactory: ItemWithContextFactory<V, ITEM>,
     ): Map<V, HTDeferredBlock<BLOCK, ITEM>> = entries.associateWith { variant: V ->
-        val type: HTDeferredBlockEntityType<*> = variant.blockEntityHolder
-        registerEntity(type, { blockFactory(variant)(type, properties(variant)) }, { itemFactory(variant, Item.Properties()) })
+        registerEntity(variant, properties(variant), blockFactory, itemFactory)
     }
 
     //    Storages    //
@@ -445,7 +476,7 @@ object RagiumBlocks {
                 HTDrumVariant.HUGE -> Blocks.NETHERITE_BLOCK
             }.let(::copyOf)
         },
-        { ::HTDrumBlock },
+        ::HTDrumBlock,
         ::HTDrumBlockItem,
     )
 }

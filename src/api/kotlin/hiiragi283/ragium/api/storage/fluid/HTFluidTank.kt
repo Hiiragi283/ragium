@@ -15,8 +15,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 interface HTFluidTank :
     HTStackSlot<ImmutableFluidStack>,
     IFluidTank {
-    override fun isSameStack(first: ImmutableFluidStack, second: ImmutableFluidStack): Boolean =
-        FluidStack.isSameFluidSameComponents(first.stack, second.stack)
+    fun toSingleHandler(): HTFluidHandler = HTFluidHandler { listOf(this) }
+
+    override fun isSameStack(other: ImmutableFluidStack): Boolean = FluidStack.isSameFluidSameComponents(this.getFluidStack(), other.stack)
 
     //    IFluidTank    //
 

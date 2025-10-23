@@ -24,6 +24,10 @@ class HTSimpleEnergyStorageHolder(
         @JvmStatic
         fun generic(transferProvider: HTAccessConfigGetter?, storage: HTEnergyBattery): HTSimpleEnergyStorageHolder =
             HTSimpleEnergyStorageHolder(transferProvider, storage, canInsert = true, canExtract = true)
+
+        @JvmStatic
+        fun viewOnly(transferProvider: HTAccessConfigGetter?, storage: HTEnergyBattery): HTSimpleEnergyStorageHolder =
+            HTSimpleEnergyStorageHolder(transferProvider, storage, canInsert = false, canExtract = false)
     }
 
     override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = when {

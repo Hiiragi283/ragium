@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
@@ -46,7 +45,7 @@ open class HTFluidItemStackSlot protected constructor(
                 val stackIn: FluidStack = handler.getFluidInTank(i)
                 val bool1: Boolean = !stackIn.isEmpty
                 val bool2: Boolean =
-                    tank.insertFluid(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amount < stack.amountAsInt()
+                    tank.insertFluid(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amount < stackIn.amount
                 if (bool1 && bool2) {
                     return@Predicate true
                 }
@@ -67,30 +66,12 @@ open class HTFluidItemStackSlot protected constructor(
         }
 
         @JvmStatic
-        fun fill(
+        fun create(
             tank: HTFluidTank,
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTFluidItemStackSlot = create(tank, listener, x, y, ImmutableStack.alwaysFalse(), fillPredicate(tank))
-
-        @JvmStatic
-        fun drain(
-            tank: HTFluidTank,
-            listener: HTContentListener?,
-            x: Int,
-            y: Int,
-        ): HTFluidItemStackSlot = create(tank, listener, x, y, ImmutableStack.alwaysFalse()) { stack: ImmutableItemStack ->
-            val handler: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(stack) ?: return@create false
-            if (tank.isEmpty()) {
-                for (i: Int in handler.tankRange) {
-                    if (handler.getFluidInTank(i).amount < handler.getTankCapacity(i)) {
-                        return@create true
-                    }
-                }
-            }
-            handler.fill(tank.getFluidStack(), HTStorageAction.SIMULATE.toFluid()) > 0
-        }
+        ): HTFluidItemStackSlot = create(tank, listener, x, y, ImmutableStack.alwaysFalse(), RagiumCapabilities.FLUID::hasCapability)
 
         @JvmStatic
         private fun create(

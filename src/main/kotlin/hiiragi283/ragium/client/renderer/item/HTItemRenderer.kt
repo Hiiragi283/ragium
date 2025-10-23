@@ -27,7 +27,7 @@ abstract class HTItemRenderer :
 
     protected fun getClientPartialTicks(): Float = Minecraft.getInstance().timer.getGameTimeDeltaPartialTick(false)
 
-    protected inline fun renderItemAngle(poseStack: PoseStack, action: () -> Unit) {
+    protected fun renderItemAngle(poseStack: PoseStack, action: () -> Unit) {
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
         poseStack.mulPose(Axis.ZP.rotationDegrees(180f))

@@ -73,8 +73,8 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
         bellow = BELLOW.getChild(root)
     }
 
-    fun renderType(variant: HTGeneratorVariant): RenderType? = when (variant) {
-        HTGeneratorVariant.SOLAR -> null
+    fun renderType(variant: HTGeneratorVariant<*, *>): RenderType? = when (variant) {
+        HTGeneratorVariant.Solar -> null
         else -> RagiumAPI.id("textures/entity/${variant.variantName()}.png")
     }?.let(this::renderType)
 

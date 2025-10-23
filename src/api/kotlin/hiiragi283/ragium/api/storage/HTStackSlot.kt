@@ -47,9 +47,9 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
     fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
 
     /**
-     * 指定された[first]と[second]が等価か判定します。
+     * 指定された[other]と[getStack]が等価か判定します。
      */
-    fun isSameStack(first: STACK, second: STACK): Boolean
+    fun isSameStack(other: STACK): Boolean
 
     //    Mutable    //
 
@@ -104,7 +104,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             val needed: Int = getNeededAsInt(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
-            val sameType: Boolean = isSameStack(getStack(), stack)
+            val sameType: Boolean = isSameStack(stack)
             if (isEmpty() || sameType) {
                 val toAdd: Int = min(stack.amountAsInt(), needed)
                 if (action.execute) {
@@ -121,7 +121,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
         }
 
         final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK = when {
-            !this.isEmpty() && isSameStack(this.getStack(), stack) -> extract(stack.amountAsInt(), action, access)
+            !this.isEmpty() && isSameStack(stack) -> extract(stack.amountAsInt(), action, access)
             else -> getEmptyStack()
         }
 

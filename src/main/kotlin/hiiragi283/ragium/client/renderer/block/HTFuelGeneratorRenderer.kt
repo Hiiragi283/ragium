@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -14,9 +14,9 @@ import net.neoforged.api.distmarker.OnlyIn
  */
 @OnlyIn(Dist.CLIENT)
 class HTFuelGeneratorRenderer(context: BlockEntityRendererProvider.Context) :
-    HTModelBlockEntityRenderer<HTGeneratorBlockEntity, HTFuelGeneratorModel>(::HTFuelGeneratorModel, context) {
+    HTModelBlockEntityRenderer<HTFuelGeneratorBlockEntity, HTFuelGeneratorModel>(::HTFuelGeneratorModel, context) {
     override fun render(
-        blockEntity: HTGeneratorBlockEntity,
+        blockEntity: HTFuelGeneratorBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
         bufferSource: MultiBufferSource,

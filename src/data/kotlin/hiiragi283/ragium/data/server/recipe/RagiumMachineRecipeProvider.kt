@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -37,7 +36,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun generators() {
         // Basic
         HTShapedRecipeBuilder
-            .misc(HTGeneratorVariant.THERMAL)
+            .misc(RagiumBlocks.THERMAL_GENERATOR)
             .pattern(
                 "AAA",
                 " B ",
@@ -49,7 +48,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Advanced
         HTShapedRecipeBuilder
-            .misc(HTGeneratorVariant.COMBUSTION)
+            .misc(RagiumBlocks.COMBUSTION_GENERATOR)
             .pattern(
                 "AAA",
                 " B ",

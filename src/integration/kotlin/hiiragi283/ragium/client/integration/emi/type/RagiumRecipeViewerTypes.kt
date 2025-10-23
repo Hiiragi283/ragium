@@ -14,11 +14,13 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -32,19 +34,19 @@ object RagiumRecipeViewerTypes {
     //    Generators    //
 
     @JvmStatic
-    private fun generator(variant: HTGeneratorVariant): HTFakeRecipeViewerType<HTEmiFluidFuelData> =
-        HTFakeRecipeViewerType.create(variant, MACHINE_BOUNDS)
+    private fun generator(block: HTDeferredBlock<*, *>): HTFakeRecipeViewerType<HTEmiFluidFuelData> =
+        HTFakeRecipeViewerType.create(block, MACHINE_BOUNDS)
 
     @JvmField
-    val THERMAL: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(HTGeneratorVariant.THERMAL)
+    val THERMAL: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.THERMAL_GENERATOR)
 
     @JvmField
-    val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(HTGeneratorVariant.COMBUSTION)
+    val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
     @JvmStatic
-    fun getGenerator(variant: HTGeneratorVariant): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
-        HTGeneratorVariant.THERMAL -> THERMAL
-        HTGeneratorVariant.COMBUSTION -> COMBUSTION
+    fun getGenerator(variant: HTGeneratorVariant<*, *>): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
+        HTGeneratorVariant.Thermal -> THERMAL
+        HTGeneratorVariant.Combustion -> COMBUSTION
         else -> error("Unsupported variant: ${variant.variantName()}")
     }
 

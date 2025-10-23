@@ -66,7 +66,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromMapWithColumn(RagiumMaterialType.DEEP_STEEL, RagiumItems.DEEP_ARMORS)
         fromTable(RagiumItems.TOOLS)
 
-        addVariants<HTGeneratorVariant>()
+        addVariants(HTGeneratorVariant.entries)
         addVariants<HTMachineVariant>()
         addVariants<HTDeviceVariant>()
         addVariants<HTDrumVariant>()
@@ -95,6 +95,12 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     private inline fun <reified V> addVariants() where V : HTVariantKey.WithBlock<*>, V : Enum<V> {
         for (variant: V in enumEntries<V>()) {
+            add(variant.blockHolder, variant.translate(type, "%s"))
+        }
+    }
+
+    private fun <V : HTVariantKey.WithBlock<*>> addVariants(entries: Iterable<V>) {
+        for (variant: V in entries) {
             add(variant.blockHolder, variant.translate(type, "%s"))
         }
     }

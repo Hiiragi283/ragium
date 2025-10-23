@@ -144,9 +144,9 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addGenerators(registry: EmiRegistry) {
         val thermalCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.THERMAL, RagiumDataMaps.THERMAL_FUEL)
+            addFuelRecipes(registry, HTGeneratorVariant.Thermal, RagiumDataMaps.THERMAL_FUEL)
         val combustionCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.COMBUSTION, RagiumDataMaps.COMBUSTION_FUEL)
+            addFuelRecipes(registry, HTGeneratorVariant.Combustion, RagiumDataMaps.COMBUSTION_FUEL)
 
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
 
@@ -162,7 +162,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
                     key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
                         HTEmiFluidFuelData(
-                            (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
+                            (HTGeneratorVariant.Thermal.energyRate * lavaLevel).toInt(),
                             itemRegistry.getOrThrow(key).toEmi(),
                             lavaInput,
                         )
@@ -175,7 +175,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 combustionCategory,
                 id,
                 HTEmiFluidFuelData(
-                    HTGeneratorVariant.COMBUSTION.energyRate,
+                    HTGeneratorVariant.Combustion.energyRate,
                     ItemTags.COALS.toEmi(),
                     RagiumFluidContents.CRUDE_OIL.toFluidEmi(100),
                 ),
@@ -321,7 +321,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addFuelRecipes(
         registry: EmiRegistry,
-        variant: HTGeneratorVariant,
+        variant: HTGeneratorVariant<*, *>,
         dataMapType: DataMapType<Fluid, HTFluidFuelData>,
     ): HTEmiRecipeCategory {
         val viewerType: HTRecipeViewerType<HTEmiFluidFuelData> = RagiumRecipeViewerTypes.getGenerator(variant)

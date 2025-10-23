@@ -73,35 +73,49 @@ object RagiumBlockEntityTypes {
     //    Generator    //
 
     @JvmField
-    val GENERATORS: Map<HTGeneratorVariant, HTDeferredBlockEntityType<HTGeneratorBlockEntity>> =
-        HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            val factory = when (variant) {
-                // Basic
-                HTGeneratorVariant.THERMAL -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: ImmutableItemStack -> stack.stack.getBurnTime(null) / 10 },
-                    HTFluidContent.LAVA,
-                    RagiumDataMaps.INSTANCE::getThermalFuel,
-                    variant,
-                )
-                // Advanced
-                HTGeneratorVariant.COMBUSTION -> HTFuelGeneratorBlockEntity.createSimple(
-                    { stack: ImmutableItemStack ->
-                        when {
-                            stack.isOf(ItemTags.COALS) -> 100
-                            else -> 0
-                        }
-                    },
-                    RagiumFluidContents.CRUDE_OIL,
-                    RagiumDataMaps.INSTANCE::getCombustionFuel,
-                    variant,
-                )
+    val THERMAL: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
+        HTGeneratorVariant.Thermal,
+        HTFuelGeneratorBlockEntity.createSimple(
+            { stack: ImmutableItemStack -> stack.stack.getBurnTime(null) / 10 },
+            HTFluidContent.LAVA,
+            RagiumDataMaps.INSTANCE::getThermalFuel,
+            HTGeneratorVariant.Thermal,
+        ),
+    )
 
-                HTGeneratorVariant.SOLAR -> ::HTSolarGeneratorBlockEntity
-                // Elite
-                HTGeneratorVariant.NUCLEAR_REACTOR -> ::HTNuclearReactorBlockEntity
-            }
-            registerTick(variant.variantName(), factory)
-        }
+    @JvmField
+    val COMBUSTION: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
+        HTGeneratorVariant.Combustion,
+        HTFuelGeneratorBlockEntity.createSimple(
+            { stack: ImmutableItemStack ->
+                when {
+                    stack.isOf(ItemTags.COALS) -> 100
+                    else -> 0
+                }
+            },
+            RagiumFluidContents.CRUDE_OIL,
+            RagiumDataMaps.INSTANCE::getCombustionFuel,
+            HTGeneratorVariant.Combustion,
+        ),
+    )
+
+    @JvmField
+    val SOLAR: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = generator(
+        HTGeneratorVariant.Solar,
+        ::HTSolarGeneratorBlockEntity,
+    )
+
+    @JvmField
+    val NUCLEAR: HTDeferredBlockEntityType<HTNuclearReactorBlockEntity> = generator(
+        HTGeneratorVariant.Nuclear,
+        ::HTNuclearReactorBlockEntity,
+    )
+
+    @JvmStatic
+    private fun <BE : HTGeneratorBlockEntity> generator(
+        variant: HTGeneratorVariant<*, BE>,
+        factory: HTBlockEntityFactory<BE>,
+    ): HTDeferredBlockEntityType<BE> = registerTick(variant.variantName(), factory)
 
     //    Machine    //
 
@@ -197,7 +211,7 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
-        addAll<HTGeneratorVariant>(event)
+        addAll(event, HTGeneratorVariant.entries)
         addAll<HTMachineVariant>(event)
         addAll<HTDeviceVariant>(event)
         addAll<HTDrumVariant>(event)
@@ -211,28 +225,36 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
+    private fun <V> addAll(
+        event: BlockEntityTypeAddBlocksEvent,
+        entries: Iterable<V>,
+    ) where V : HTVariantKey.WithBlock<*>, V : HTVariantKey.WithBE<*> {
+        for (variant: V in entries) {
+            add(event, variant.blockEntityHolder, variant.blockHolder)
+        }
+    }
+
+    @JvmStatic
     private inline fun <reified V> addAll(
         event: BlockEntityTypeAddBlocksEvent,
     ) where V : HTVariantKey.WithBlock<*>, V : HTVariantKey.WithBE<*>, V : Enum<V> {
-        for (variant: V in enumEntries<V>()) {
-            add(event, variant.blockEntityHolder, variant.blockHolder)
-        }
+        addAll(event, enumEntries<V>())
     }
 
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        registerHandlers(event, GENERATORS)
-        registerHandlers(event, MACHINES)
-        registerHandlers(event, DEVICES)
-        registerHandlers(event, DRUMS)
+        registerHandlers(event, HTGeneratorVariant.entries.map(HTGeneratorVariant<*, *>::blockEntityHolder))
+        registerHandlers(event, MACHINES.values)
+        registerHandlers(event, DEVICES.values)
+        registerHandlers(event, DRUMS.values)
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic
-    private fun registerHandlers(event: RegisterCapabilitiesEvent, types: Map<*, HTDeferredBlockEntityType<out HTBlockEntity>>) {
-        for (type: HTDeferredBlockEntityType<out HTBlockEntity> in types.values) {
+    private fun registerHandlers(event: RegisterCapabilitiesEvent, types: Iterable<HTDeferredBlockEntityType<out HTBlockEntity>>) {
+        for (type: HTDeferredBlockEntityType<out HTBlockEntity> in types) {
             val type1: BlockEntityType<out HTBlockEntity> = type.get()
             event.registerBlockEntity(
                 RagiumCapabilities.ITEM.blockCapability(),

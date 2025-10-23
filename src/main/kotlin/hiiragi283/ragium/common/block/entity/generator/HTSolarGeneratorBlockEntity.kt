@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.roundToInt
 
-class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGeneratorBlockEntity(HTGeneratorVariant.SOLAR, pos, state) {
+class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) : HTGeneratorBlockEntity(HTGeneratorVariant.Solar, pos, state) {
     override fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
 
     override fun onUpdateServer(

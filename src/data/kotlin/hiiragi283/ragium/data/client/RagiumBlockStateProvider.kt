@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -191,15 +190,14 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         // Generator
-        fun generator(variant: HTVariantKey.WithBlock<*>, particle: ResourceLocation) {
-            val block: HTDeferredBlock<*, *> = variant.blockHolder
+        fun generator(block: HTDeferredBlock<*, *>, particle: ResourceLocation) {
             getVariantBuilder(block.get())
                 .partialState()
                 .setModels(ConfiguredModel(models().getBuilder(block).texture("particle", particle)))
         }
 
-        generator(HTGeneratorVariant.THERMAL, basicMachine)
-        generator(HTGeneratorVariant.COMBUSTION, advancedMachine)
+        generator(RagiumBlocks.THERMAL_GENERATOR, basicMachine)
+        generator(RagiumBlocks.COMBUSTION_GENERATOR, advancedMachine)
 
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")

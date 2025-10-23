@@ -32,10 +32,12 @@ object HTFuelGeneratorItemRenderer : HTItemRenderer() {
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        renderItemAngle(poseStack) {
-            val variant: HTGeneratorVariant = (stack.item as? HTGeneratorBlockItem)?.variant ?: return
-            val renderType: RenderType = model?.renderType(variant) ?: return
-            model?.renderToBuffer(poseStack, buffer.getBuffer(renderType), packedLight, packedOverlay)
-        }
+        val variant: HTGeneratorVariant<*, *> = (stack.item as? HTGeneratorBlockItem<*>)?.variant ?: return
+        val renderType: RenderType = model?.renderType(variant) ?: return
+        poseStack.pushPose()
+        poseStack.translate(0.5, 0.5, 0.5)
+        poseStack.scale(-1f, -1f, 1f)
+        model?.render(poseStack, buffer.getBuffer(renderType), packedLight, packedOverlay, 0f, null)
+        poseStack.popPose()
     }
 }

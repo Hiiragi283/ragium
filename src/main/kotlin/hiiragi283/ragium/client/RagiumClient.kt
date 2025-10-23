@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
@@ -32,7 +31,7 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -44,7 +43,6 @@ import io.wispforest.accessories.api.client.AccessoryRenderer
 import net.minecraft.client.model.MinecartModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.renderer.BiomeColors
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
@@ -52,7 +50,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -218,10 +215,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // Item
         event.registerItem(
             HTFuelGeneratorItemRenderer.ITEM_EXTENSION,
-            *arrayOf(
-                HTGeneratorVariant.THERMAL,
-                HTGeneratorVariant.COMBUSTION,
-            ).map(HTGeneratorVariant::asItem).toTypedArray(),
+            RagiumBlocks.THERMAL_GENERATOR.asItem(),
+            RagiumBlocks.COMBUSTION_GENERATOR.asItem(),
         )
 
         RagiumAPI.LOGGER.info("Registered client extensions!")
@@ -273,8 +268,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(HTGeneratorVariant.THERMAL, ::HTFuelGeneratorRenderer)
-        event.registerBlockEntityRenderer(HTGeneratorVariant.COMBUSTION, ::HTFuelGeneratorRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL.get(), ::HTFuelGeneratorRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION.get(), ::HTFuelGeneratorRenderer)
         // Entity
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
@@ -311,13 +306,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *>, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getType())
-    }
-
-    private fun <BE : BlockEntity> EntityRenderersEvent.RegisterRenderers.registerBlockEntityRenderer(
-        variant: HTVariantKey.WithBE<BE>,
-        provider: BlockEntityRendererProvider<BE>,
-    ) {
-        this.registerBlockEntityRenderer(variant.blockEntityHolder.get(), provider)
     }
 
     private fun <BE : HTConsumerBlockEntity> RegisterMenuScreensEvent.registerConsumer(
