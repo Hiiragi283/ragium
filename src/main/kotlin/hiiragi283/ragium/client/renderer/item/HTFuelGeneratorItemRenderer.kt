@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.renderer.item
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.common.item.block.HTGeneratorBlockItem
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
@@ -36,8 +37,8 @@ object HTFuelGeneratorItemRenderer : HTItemRenderer() {
         val renderType: RenderType = model?.renderType(variant) ?: return
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
-        poseStack.scale(-1f, -1f, 1f)
-        model?.render(poseStack, buffer.getBuffer(renderType), packedLight, packedOverlay, 0f, null)
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
+        model?.renderToBuffer(poseStack, buffer.getBuffer(renderType), packedLight, packedOverlay)
         poseStack.popPose()
     }
 }

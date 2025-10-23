@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -35,8 +33,6 @@ enum class HTDecorationVariant(private val enPattern: String, private val jaPatt
     val slab: HTBasicDeferredBlock<SlabBlock> get() = RagiumBlocks.SLABS[this]!!
     val stairs: HTBasicDeferredBlock<StairBlock> get() = RagiumBlocks.STAIRS[this]!!
     val wall: HTBasicDeferredBlock<WallBlock> get() = RagiumBlocks.WALLS[this]!!
-
-    val textureId: ResourceLocation get() = base.blockId
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enPattern

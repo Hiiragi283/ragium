@@ -485,7 +485,7 @@ object RagiumItems {
             HTDrumVariant.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
             HTDrumVariant.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
         }
-        REGISTER.registerItemWith(variant.entityHolder.id.path, factory, ::HTMinecartItem)
+        REGISTER.registerItemWith(variant.entityHolder.getPath(), factory, ::HTMinecartItem)
     }
 
     //    Extensions    //
