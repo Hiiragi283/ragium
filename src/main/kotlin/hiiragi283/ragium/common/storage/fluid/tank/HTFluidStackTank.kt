@@ -69,12 +69,12 @@ open class HTFluidStackTank protected constructor(
 
     override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacity
 
-    override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
+    final override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
 
-    override fun isStackValidForInsert(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
+    final override fun isStackValidForInsert(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
-    override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
+    final override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {

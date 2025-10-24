@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.common.storage.energy.battery
 
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.util.Mth
 
 class HTEnergyNetwork(private var amount: Long, private var capacity: Long) :
-    HTEnergyBattery.Mutable,
+    HTEnergyBattery.Mutable(),
     HTContentListener.Empty {
     constructor(amount: Int, capacity: Int) : this(amount.toLong(), capacity.toLong())
 

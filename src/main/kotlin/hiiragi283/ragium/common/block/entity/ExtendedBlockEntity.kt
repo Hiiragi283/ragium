@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.util.TriState
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
- * @see [mekanism.common.tile.base.TileEntityUpdateable]
+ * @see mekanism.common.tile.base.TileEntityUpdateable
  */
 abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),

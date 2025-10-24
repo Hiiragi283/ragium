@@ -98,7 +98,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: HTEnergyBattery,
+        battery: HTEnergyBattery,
     ): Boolean {
         // スロット内のアイテムを液体に変換する
         fuelSlot.fillOrBurn(outputSlot)
@@ -107,9 +107,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false
         val usage: Int = getModifiedEnergy(energyUsage)
-        return if (network.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0) {
+        return if (battery.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            network.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            battery.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true
         } else {
             false

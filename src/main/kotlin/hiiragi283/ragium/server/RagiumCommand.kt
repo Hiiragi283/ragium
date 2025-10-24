@@ -1,6 +1,7 @@
 package hiiragi283.ragium.server
 
-import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.google.common.primitives.Ints
+import com.mojang.brigadier.arguments.LongArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
@@ -31,7 +32,7 @@ object RagiumCommand {
                                 .literal("add")
                                 .then(
                                     Commands
-                                        .argument("value", IntegerArgumentType.integer())
+                                        .argument("value", LongArgumentType.longArg())
                                         .executes(::addEnergy),
                                 ),
                         ).then(
@@ -39,9 +40,9 @@ object RagiumCommand {
                                 .literal("set")
                                 .then(
                                     Commands
-                                        .argument("value", IntegerArgumentType.integer())
+                                        .argument("value", LongArgumentType.longArg())
                                         .executes { context: CommandContext<CommandSourceStack> ->
-                                            setEnergy(context, IntegerArgumentType.getInteger(context, "value"))
+                                            setEnergy(context, LongArgumentType.getLong(context, "value"))
                                         },
                                 ),
                         ).then(
@@ -56,26 +57,26 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val amount: Int = getEnergyNetwork(source)?.getAmountAsInt() ?: 0
+        val amount: Long = getEnergyNetwork(source)?.getAmountAsLong() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
-        return amount
+        return Ints.saturatedCast(amount)
     }
 
     @JvmStatic
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val value: Int = IntegerArgumentType.getInteger(context, "value")
-        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
+        val value: Long = LongArgumentType.getLong(context, "value")
+        val received: Long = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
-        return received
+        return Ints.saturatedCast(received)
     }
 
     @JvmStatic
-    private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
+    private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Long): Int {
         val source: CommandSourceStack = context.source
-        (getEnergyNetwork(source) as? HTEnergyBattery.Mutable)?.setAmountAsInt(value)
+        (getEnergyNetwork(source) as? HTEnergyBattery.Mutable)?.setAmountAsLong(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
-        return value
+        return Ints.saturatedCast(value)
     }
 
     @JvmStatic

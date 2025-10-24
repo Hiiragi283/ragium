@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
-import net.minecraft.util.Mth
 import kotlin.math.min
 
 /**
@@ -22,9 +21,15 @@ interface HTEnergyBattery :
 
     fun getCapacityAsInt(): Int = Ints.saturatedCast(getCapacityAsLong())
 
-    fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int
+    fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long
 
-    fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int
+    fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
+        insertEnergy(amount.toLong(), action, access).let(Ints::saturatedCast)
+
+    fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long
+
+    fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
+        extractEnergy(amount.toLong(), action, access).let(Ints::saturatedCast)
 
     fun getNeededAsLong(): Long = getCapacityAsLong() - getAmountAsLong()
 
@@ -38,29 +43,41 @@ interface HTEnergyBattery :
 
     //    Mutable    //
 
-    interface Mutable : HTEnergyBattery {
-        fun setAmountAsLong(amount: Long)
+    abstract class Mutable : HTEnergyBattery {
+        abstract fun setAmountAsLong(amount: Long)
 
         fun setAmountAsInt(amount: Int) {
             setAmountAsLong(amount.toLong())
         }
 
-        override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
-            if (amount <= 0) return 0
-            val received: Int = Mth.clamp(getNeededAsInt(), 0, amount)
+        override fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long {
+            if (amount <= 0 || !canInsert(access)) return 0
+            val needed: Long = min(getInsertRate(access), getNeededAsLong())
+            if (needed <= 0) return amount
+            val toAdd: Long = min(amount, needed)
             if (action.execute) {
-                setAmountAsInt(getAmountAsInt() + received)
+                setAmountAsLong(getAmountAsLong() + toAdd)
+                onContentsChanged()
             }
-            return received
+            return amount - toAdd
         }
 
-        override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
-            if (amount <= 0) return 0
-            val extracted: Int = min(getAmountAsInt(), amount)
-            if (action.execute) {
-                setAmountAsInt(getAmountAsInt() - extracted)
+        override fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long {
+            if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
+            val toRemove: Long = min(min(getExtractRate(access), getAmountAsLong()), amount)
+            if (toRemove < 0 && action.execute) {
+                setAmountAsLong(getAmountAsLong() - toRemove)
+                onContentsChanged()
             }
-            return extracted
+            return toRemove
         }
+
+        protected open fun canInsert(access: HTStorageAccess): Boolean = true
+
+        protected open fun canExtract(access: HTStorageAccess): Boolean = true
+
+        protected open fun getInsertRate(access: HTStorageAccess): Long = Long.MAX_VALUE
+
+        protected open fun getExtractRate(access: HTStorageAccess): Long = Long.MAX_VALUE
     }
 }

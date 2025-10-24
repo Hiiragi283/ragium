@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
+import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
@@ -34,8 +35,13 @@ abstract class HTConsumerBlockEntity(protected val variant: HTMachineVariant, po
 
     //    Energy Storage    //
 
-    final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder =
-        HTSimpleEnergyStorageHolder.input(this, HTEnergyBatteryWrapper { getter(level) })
+    protected lateinit var battery: HTEnergyBattery.Mutable
+        private set
+
+    final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder {
+        battery = HTBasicEnergyBattery.input(listener) { variant.energyCapacity }
+        return HTSimpleEnergyStorageHolder.input(this, battery)
+    }
 
     //    Slot    //
 

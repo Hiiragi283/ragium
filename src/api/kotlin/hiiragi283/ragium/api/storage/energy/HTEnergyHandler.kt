@@ -14,6 +14,8 @@ fun interface HTEnergyHandler : HTSidedEnergyStorage {
 
     fun getEnergyBattery(side: Direction?): HTEnergyBattery?
 
+    fun getEnergyBatteries(side: Direction?): List<HTEnergyBattery> = listOfNotNull(getEnergyBattery(side))
+
     override fun receiveEnergy(toReceive: Int, action: HTStorageAction, side: Direction?): Int =
         getEnergyBattery(side)?.insertEnergy(toReceive, action, HTStorageAccess.EXTERNAL) ?: 0
 

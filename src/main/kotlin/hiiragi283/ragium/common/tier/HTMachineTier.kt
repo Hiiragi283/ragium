@@ -8,8 +8,10 @@ enum class HTMachineTier(private val base: HTBaseTier, val generatorRate: Int, v
     ADVANCED(HTBaseTier.ADVANCED, 128, 32),
     ELITE(HTBaseTier.ELITE, 512, 64),
     ULTIMATE(HTBaseTier.ULTIMATE, 2048, 128),
-    CREATIVE(HTBaseTier.CREATIVE, Int.MAX_VALUE, Int.MAX_VALUE),
+    CREATIVE(HTBaseTier.CREATIVE, 0, Int.MAX_VALUE),
     ;
+
+    val batteryCapacity: Int = processorRate * 256
 
     override fun getBaseTier(): HTBaseTier = base
 }

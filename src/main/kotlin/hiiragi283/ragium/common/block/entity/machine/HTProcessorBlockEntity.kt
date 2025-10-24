@@ -24,7 +24,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMach
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: HTEnergyBattery,
+        battery: HTEnergyBattery,
     ): Boolean {
         // インプットに一致するレシピを探索する
         val input: INPUT = createRecipeInput(level, pos)
@@ -36,7 +36,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMach
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            usedEnergy += battery.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         return when {
             usedEnergy < requiredEnergy -> false

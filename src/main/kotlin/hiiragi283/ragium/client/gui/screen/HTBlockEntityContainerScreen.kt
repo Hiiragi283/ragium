@@ -11,10 +11,8 @@ import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.level.Level
 
 abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     menu: HTBlockEntityContainerMenu<BE>,
@@ -58,13 +56,9 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     fun createFluidSlot(index: Int, x: Int, y: Int): HTFluidTankWidget =
         HTFluidTankWidget.createSlot(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)
 
-    fun createEnergyWidget(
-        key: ResourceKey<Level>,
-        x: Int = HTSlotHelper.getSlotPosX(0),
-        y: Int = HTSlotHelper.getSlotPosY(0),
-    ): HTEnergyBatteryWidget = HTEnergyBatteryWidget
-        .createNetwork(
-            key,
+    fun createEnergyWidget(x: Int = HTSlotHelper.getSlotPosX(0), y: Int = HTSlotHelper.getSlotPosY(0)): HTEnergyBatteryWidget =
+        HTEnergyBatteryWidget(
+            { blockEntity.getEnergyBattery(blockEntity.getItemSideFor()) },
             startX + x,
             startY + y,
         ).apply(::addRenderableWidget)

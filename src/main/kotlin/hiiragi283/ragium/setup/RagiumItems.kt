@@ -38,7 +38,7 @@ import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
+import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
 import hiiragi283.ragium.common.storage.item.HTCrateItemHandler
@@ -518,7 +518,7 @@ object RagiumItems {
         registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
         // Energy
-        registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
+        registerEnergy(event, providerEnch(160000, ::HTComponentEnergyHandler), DRILL)
 
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }

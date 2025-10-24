@@ -82,6 +82,10 @@ object RagiumConst {
     const val TANK = "tank"
     const val FLUIDS = "fluids"
 
+    const val AMOUNT = "amount"
+    const val INDEX = "index"
+    const val BATTERIES = "batteries"
+
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //

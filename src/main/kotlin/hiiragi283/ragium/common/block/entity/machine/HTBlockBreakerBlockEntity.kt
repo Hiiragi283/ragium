@@ -46,7 +46,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBl
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: HTEnergyBattery,
+        battery: HTEnergyBattery,
     ): Boolean {
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(getOwner(), getOwnerName()))
@@ -70,7 +70,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBl
             return false
         }
         // エネルギーを消費する
-        usedEnergy += network.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        usedEnergy += battery.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         if (usedEnergy < getModifiedEnergy(energyUsage * 20)) return false
         usedEnergy = 0
         // ブロックを採掘する

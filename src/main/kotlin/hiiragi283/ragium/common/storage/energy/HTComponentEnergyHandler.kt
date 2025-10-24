@@ -14,15 +14,15 @@ import net.minecraft.world.item.ItemStack
 /**
  * [HTEnergyHandler]に基づいたコンポーネント向けの実装
  */
-open class HTComponentEnergyStorage(private val parent: ItemStack, capacity: Long) : HTEnergyHandler {
+open class HTComponentEnergyHandler(private val parent: ItemStack, capacity: Long) : HTEnergyHandler {
     protected val storage: HTEnergyBattery = createBattery(capacity)
 
-    protected open fun createBattery(capacity: Long): HTEnergyBattery = ComponentStorage(parent, capacity)
+    protected open fun createBattery(capacity: Long): HTEnergyBattery = ComponentBattery(parent, capacity)
 
     override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = storage
 
-    protected open class ComponentStorage(private val parent: ItemStack, private val capacity: Long) :
-        HTEnergyBattery.Mutable,
+    protected open class ComponentBattery(private val parent: ItemStack, private val capacity: Long) :
+        HTEnergyBattery.Mutable(),
         HTContentListener.Empty,
         HTValueSerializable.Empty {
         protected val component: DataComponentType<Long> get() = RagiumDataComponents.ENERGY

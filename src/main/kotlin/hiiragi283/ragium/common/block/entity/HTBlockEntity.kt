@@ -47,7 +47,7 @@ import java.util.function.Consumer
 
 /**
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
- * @see [mekanism.common.tile.base.TileEntityMekanism]
+ * @see mekanism.common.tile.base.TileEntityMekanism
  */
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(
@@ -202,12 +202,12 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     // Fluid
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialFluidTanks]
+     * @see mekanism.common.tile.base.TileEntityMekanism.getInitialFluidTanks
      */
     protected open fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? = null
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleFluid]
+     * @see mekanism.common.tile.base.TileEntityMekanism.canHandleFluid
      */
     override fun hasFluidHandler(): Boolean = fluidHandlerManager?.canHandle() ?: false
 
@@ -219,12 +219,12 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     // Energy
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers]
+     * @see mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers
      */
     protected open fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = null
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.canHandleEnergy]
+     * @see mekanism.common.tile.base.TileEntityMekanism.canHandleEnergy
      */
     override fun hasEnergyStorage(): Boolean = energyStorageManager?.canHandle() ?: false
 
@@ -236,12 +236,12 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     // Item
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.getInitialInventory]
+     * @see mekanism.common.tile.base.TileEntityMekanism.getInitialInventory
      */
     protected open fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? = null
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityMekanism.hasInventory]
+     * @see mekanism.common.tile.base.TileEntityMekanism.hasInventory
      */
     final override fun hasItemHandler(): Boolean = itemHandlerManager?.canHandle() ?: false
 

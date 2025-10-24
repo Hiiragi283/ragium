@@ -30,7 +30,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
@@ -157,13 +156,9 @@ class RagiumPlatformImpl : RagiumPlatform {
         server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
     override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = when (level) {
-        is ServerLevel -> level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
-        else -> level?.dimension()?.let(::getEnergyNetwork)
-    }
-
-    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumPlatform.INSTANCE
-        .getLevel(key)
-        ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+        is ServerLevel -> level
+        else -> level?.dimension()?.let(::getLevel)
+    }?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //
 

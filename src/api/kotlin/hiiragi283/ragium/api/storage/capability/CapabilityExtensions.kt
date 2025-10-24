@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.capability
 
+import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -41,10 +42,10 @@ private fun wrapBattery(storage: IEnergyStorage, side: Direction?): HTEnergyBatt
 
         override fun getCapacityAsLong(): Long = storage.maxEnergyStored.toLong()
 
-        override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
-            storage.receiveEnergy(amount, action.simulate)
+        override fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long =
+            storage.receiveEnergy(Ints.saturatedCast(amount), action.simulate).toLong()
 
-        override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
-            storage.extractEnergy(amount, action.simulate)
+        override fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long =
+            storage.extractEnergy(Ints.saturatedCast(amount), action.simulate).toLong()
     }
 }

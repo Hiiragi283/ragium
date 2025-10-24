@@ -24,7 +24,7 @@ import net.neoforged.neoforge.common.Tags
 
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
- * @see [mekanism.common.tile.prefab.TileEntityConfigurableMachine]
+ * @see mekanism.common.tile.prefab.TileEntityConfigurableMachine
  */
 abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(

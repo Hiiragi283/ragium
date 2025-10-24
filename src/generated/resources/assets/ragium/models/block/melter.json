@@ -3,6 +3,6 @@
   "textures": {
     "bottom": "minecraft:block/polished_blackstone_bricks",
     "front": "ragium:block/melter_front",
-    "top": "ragium:block/advanced_machine_casing"
+    "top": "ragium:block/advanced_machine_frame"
   }
 }

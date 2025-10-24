@@ -117,12 +117,12 @@ open class HTItemStackSlot protected constructor(
 
     override fun getCapacityAsInt(stack: ImmutableItemStack): Int = HTItemSlot.getMaxStackSize(stack, limit)
 
-    override fun isValid(stack: ImmutableItemStack): Boolean = filter.test(stack)
+    final override fun isValid(stack: ImmutableItemStack): Boolean = filter.test(stack)
 
-    override fun isStackValidForInsert(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
+    final override fun isStackValidForInsert(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
         super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
 
-    override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
+    final override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, slotType)

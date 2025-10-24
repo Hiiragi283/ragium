@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -16,7 +15,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Consumer
 
@@ -57,8 +55,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         protected set
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        val network: HTEnergyBattery = getter(level) ?: return false
-        val result: Boolean = onUpdateServer(level, pos, state, network)
+        val battery: HTEnergyBattery = getEnergyBattery(getEnergySideFor()) ?: return false
+        val result: Boolean = onUpdateServer(level, pos, state, battery)
         // 以前の結果と異なる場合は強制的に同期させる
         if (result != this.isActive) {
             isActive = result
@@ -71,12 +69,10 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: HTEnergyBattery,
+        battery: HTEnergyBattery,
     ): Boolean
 
     //    Energy Storage    //
-
-    protected val getter: (Level?) -> HTEnergyBattery? = RagiumPlatform.INSTANCE::getEnergyNetwork
 
     protected fun getModifiedEnergy(base: Int): Int = upgradeHandler.getTier()?.modifyProcessorRate(base) ?: base
 }

@@ -14,5 +14,5 @@ class HTEnergyStorageManager(holder: HTEnergyStorageHolder?, baseHandler: HTSide
         holder,
         baseHandler,
         ::HTProxyEnergyStorage,
-        { holder, side -> listOfNotNull(holder.getEnergyBattery(side)) },
+        HTEnergyStorageHolder::getEnergyBatteries,
     )

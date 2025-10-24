@@ -25,6 +25,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Machine
     @JvmField
+    val machineEnergyCapacity: Map<HTMachineVariant, HTIntConfigValue>
+
+    @JvmField
     val machineEnergyUsage: Map<HTMachineVariant, HTIntConfigValue>
 
     @JvmField
@@ -113,6 +116,14 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Machine
         builder.push("machine")
+        machineEnergyCapacity = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
+            val name: String = variant.variantName()
+            builder.push(name)
+            // Energy Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt("energyCapacity", variant.tier.batteryCapacity)
+            builder.pop()
+            value
+        }
         machineEnergyUsage = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
             val name: String = variant.variantName()
             builder.push(name)

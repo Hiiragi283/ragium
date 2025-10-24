@@ -101,12 +101,6 @@ interface RagiumPlatform {
      */
     fun getEnergyNetwork(level: Level?): HTEnergyBattery?
 
-    /**
-     * 指定した[key]からエネルギーのネットワークを返します。
-     * @return 取得できなかった場合は`null`
-     */
-    fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery?
-
     //    Storage    //
 
     fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput

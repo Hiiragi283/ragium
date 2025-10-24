@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.energy.HTEnergyBatteryWrapper
+import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
 import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -129,9 +129,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
                 override fun getCapacityAsLong(): Long = Long.MAX_VALUE
 
-                override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
+                override fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long = amount
 
-                override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
+                override fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long = amount
             }
 
         override val transferRate: Int = Int.MAX_VALUE
