@@ -7,7 +7,8 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -26,8 +27,9 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var tank: ExpTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = ExpTank()
-        return HTSimpleFluidTankHolder.generic(null, tank)
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        tank = builder.addSlot(HTAccessConfig.BOTH, ExpTank())
+        return builder.build()
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false

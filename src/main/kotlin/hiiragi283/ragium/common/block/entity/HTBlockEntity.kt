@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -221,7 +221,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers
      */
-    protected open fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? = null
+    protected open fun initializeEnergyStorage(listener: HTContentListener): HTEnergyBatteryHolder? = null
 
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.canHandleEnergy

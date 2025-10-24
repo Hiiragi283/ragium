@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
-import hiiragi283.ragium.api.util.access.HTAccessConfiguration
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -36,8 +36,8 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
     HTAccessConfigSetter {
     companion object {
         @JvmStatic
-        private val CONFIG_CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfiguration>> =
-            BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfiguration.CODEC)
+        private val CONFIG_CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfig>> =
+            BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfig.CODEC)
     }
 
     override fun writeValue(output: HTValueOutput) {
@@ -62,13 +62,13 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
 
     //    HTAccessConfiguration    //
 
-    private val accessConfigCache: MutableMap<Direction, HTAccessConfiguration> = hashMapOf()
+    private val accessConfigCache: MutableMap<Direction, HTAccessConfig> = hashMapOf()
 
-    final override fun getAccessConfig(side: Direction): HTAccessConfiguration =
-        accessConfigCache.computeIfAbsent(side) { _: Direction -> HTAccessConfiguration.BOTH }
+    final override fun getAccessConfig(side: Direction): HTAccessConfig =
+        accessConfigCache.computeIfAbsent(side) { _: Direction -> HTAccessConfig.BOTH }
 
-    final override fun setAccessConfig(side: Direction, value: HTAccessConfiguration) {
-        val old: HTAccessConfiguration? = accessConfigCache.put(side, value)
+    final override fun setAccessConfig(side: Direction, value: HTAccessConfig) {
+        val old: HTAccessConfig? = accessConfigCache.put(side, value)
         RagiumAPI.LOGGER.debug("Updated access config: {} -> {}", old, value)
     }
 }

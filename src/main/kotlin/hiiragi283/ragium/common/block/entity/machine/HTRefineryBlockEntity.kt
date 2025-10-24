@@ -13,9 +13,10 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -47,20 +48,34 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // input
-        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0))
+        inputSlot = builder.addSlot(
+            HTAccessConfig.INPUT_ONLY,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0)),
+        )
         // output
-        outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2))
-        return HTSimpleItemSlotHolder(this, listOf(inputSlot), listOf(outputSlot))
+        outputSlot = builder.addSlot(
+            HTAccessConfig.OUTPUT_ONLY,
+            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2)),
+        )
+        return builder.build()
     }
 
     private lateinit var inputTank: HTVariableFluidStackTank
     private lateinit var outputTank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        inputTank = HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity)
-        outputTank = HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity)
-        return HTSimpleFluidTankHolder(this, inputTank, outputTank, null)
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        inputTank = builder.addSlot(
+            HTAccessConfig.INPUT_ONLY,
+            HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity),
+        )
+        outputTank = builder.addSlot(
+            HTAccessConfig.OUTPUT_ONLY,
+            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity),
+        )
+        return builder.build()
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

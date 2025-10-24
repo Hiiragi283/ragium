@@ -10,13 +10,14 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.capability.getBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
-import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -31,9 +32,10 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     HTDeviceBlockEntity.Tickable(variant, pos, state) {
     private lateinit var battery: HTEnergyBattery
 
-    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder? {
-        battery = createEnergyStorage(listener)
-        return HTSimpleEnergyStorageHolder.generic(null, battery)
+    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyBatteryHolder? {
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+        battery = builder.addSlot(HTAccessConfig.BOTH, createEnergyStorage(listener))
+        return builder.build()
     }
 
     protected abstract fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery
@@ -42,27 +44,34 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     private lateinit var insertSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
         // extract
-        extractSlot = HTItemStackSlot.create(
-            listener,
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(1),
-            filter = { stack: ImmutableItemStack ->
-                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
-                !battery.isEmpty()
-            },
+        extractSlot = builder.addSlot(
+            HTAccessConfig.NONE,
+            HTItemStackSlot.create(
+                listener,
+                HTSlotHelper.getSlotPosX(2),
+                HTSlotHelper.getSlotPosY(1),
+                filter = { stack: ImmutableItemStack ->
+                    val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
+                    !battery.isEmpty()
+                },
+            ),
         )
         // insert
-        insertSlot = HTItemStackSlot.create(
-            listener,
-            HTSlotHelper.getSlotPosX(6),
-            HTSlotHelper.getSlotPosY(1),
-            filter = { stack: ImmutableItemStack ->
-                val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
-                battery.getNeededAsInt() > 0
-            },
+        insertSlot = builder.addSlot(
+            HTAccessConfig.NONE,
+            HTItemStackSlot.create(
+                listener,
+                HTSlotHelper.getSlotPosX(6),
+                HTSlotHelper.getSlotPosY(1),
+                filter = { stack: ImmutableItemStack ->
+                    val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
+                    battery.getNeededAsInt() > 0
+                },
+            ),
         )
-        return HTSimpleItemSlotHolder(null, listOf(extractSlot), listOf(extractSlot))
+        return builder.build()
     }
 
     override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =

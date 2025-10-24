@@ -10,8 +10,9 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTPlayerHandSlot
 import hiiragi283.ragium.common.storage.item.slot.HTVariableItemStackSlot
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -35,11 +36,15 @@ abstract class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     private lateinit var slot: HTItemSlot.Mutable
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        slot = HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack ->
-            val capacity: Int = HTItemSlot.getMaxStackSize(stack) * getDefaultSlotMultiplier()
-            HTItemHelper.processStorageCapacity(level?.random, this, capacity)
-        }, 0, 0)
-        return HTSimpleItemSlotHolder(null, listOf(), listOf(), slot)
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        slot = builder.addSlot(
+            HTAccessConfig.BOTH,
+            HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack ->
+                val capacity: Int = HTItemSlot.getMaxStackSize(stack) * getDefaultSlotMultiplier()
+                HTItemHelper.processStorageCapacity(level?.random, this, capacity)
+            }, 0, 0),
+        )
+        return builder.build()
     }
 
     protected abstract fun getDefaultSlotMultiplier(): Int

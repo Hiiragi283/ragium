@@ -15,8 +15,9 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -44,9 +45,10 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         private set
 
     final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
         // input
-        inputTank = createTank(listener)
-        return HTSimpleFluidTankHolder.input(this, inputTank)
+        inputTank = builder.addSlot(HTAccessConfig.INPUT_ONLY, createTank(listener))
+        return builder.build()
     }
 
     protected abstract fun createTank(listener: HTContentListener): HTFluidTank
@@ -57,16 +59,22 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         private set
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // input
-        inputSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        // outputs
-        outputSlots = listOf(
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5)),
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5)),
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5)),
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
+        inputSlot = builder.addSlot(
+            HTAccessConfig.INPUT_ONLY,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
         )
-        return HTSimpleItemSlotHolder(this, listOf(inputSlot), outputSlots)
+        // outputs
+        outputSlots = intArrayOf(5, 6).flatMap { x: Int ->
+            doubleArrayOf(0.5, 1.5).map { y: Double ->
+                builder.addSlot(
+                    HTAccessConfig.OUTPUT_ONLY,
+                    HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
+                )
+            }
+        }
+        return builder.build()
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

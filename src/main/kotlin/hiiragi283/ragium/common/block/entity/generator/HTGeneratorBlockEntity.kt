@@ -1,11 +1,12 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTEnergyStorageHolder
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
-import hiiragi283.ragium.common.storage.holder.HTSimpleEnergyStorageHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
@@ -24,8 +25,9 @@ abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant<*, *>, pos
     protected lateinit var battery: HTEnergyBattery.Mutable
         private set
 
-    final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyStorageHolder {
-        battery = HTBasicEnergyBattery.output(listener) { 16_000 }
-        return HTSimpleEnergyStorageHolder.output(this, battery)
+    final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyBatteryHolder {
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+        battery = builder.addSlot(HTAccessConfig.OUTPUT_ONLY, HTBasicEnergyBattery.output(listener) { 16_000 })
+        return builder.build()
     }
 }

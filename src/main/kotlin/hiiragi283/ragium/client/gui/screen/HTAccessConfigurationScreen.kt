@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.util.access.HTAccessConfiguration
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
@@ -42,8 +42,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         tooltip = blockEntity.getAccessConfig(side).let(::createTooltip)
     }
 
-    private fun createTooltip(config: HTAccessConfiguration): Tooltip =
-        config.translationKey.let(Component::translatable).let(Tooltip::create)
+    private fun createTooltip(config: HTAccessConfig): Tooltip = config.translationKey.let(Component::translatable).let(Tooltip::create)
 
     override fun init() {
         super.init()
@@ -71,7 +70,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
     ) : ExtendedButton(x, y, 24, 24, message, {}) {
         override fun onPress() {
             super.onPress()
-            val value: HTAccessConfiguration = blockEntity.getAccessConfig(side).nextEntry
+            val value: HTAccessConfig = blockEntity.getAccessConfig(side).nextEntry
             tooltip = createTooltip(value)
             // Client update
             blockEntity.setAccessConfig(side, value)

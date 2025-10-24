@@ -11,10 +11,11 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTSimpleFluidTankHolder
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -39,19 +40,30 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
     private lateinit var tank: HTFluidTank.Mutable
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        tank = HTVariableFluidStackTank.create(listener) {
-            HTItemHelper.processStorageCapacity(level?.random, this, getDefaultTankCapacity())
-        }
-        return HTSimpleFluidTankHolder.generic(null, tank)
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        tank = builder.addSlot(
+            HTAccessConfig.BOTH,
+            HTVariableFluidStackTank.create(listener) {
+                HTItemHelper.processStorageCapacity(level?.random, this, getDefaultTankCapacity())
+            },
+        )
+        return builder.build()
     }
 
     private lateinit var fillSlot: HTFluidItemSlot
     private lateinit var outputSlot: HTItemSlot.Mutable
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
-        fillSlot = HTFluidItemStackSlot.create(tank, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
-        return HTSimpleItemSlotHolder(null, listOf(fillSlot), listOf(outputSlot))
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        fillSlot = builder.addSlot(
+            HTAccessConfig.INPUT_ONLY,
+            HTFluidItemStackSlot.create(tank, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
+        )
+        outputSlot = builder.addSlot(
+            HTAccessConfig.OUTPUT_ONLY,
+            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
+        )
+        return builder.build()
     }
 
     protected abstract fun getDefaultTankCapacity(): Int

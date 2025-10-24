@@ -12,7 +12,8 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -38,15 +39,20 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // input
-        inputSlots = listOf(
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
-        )
+        inputSlots = (1..3).map { i: Int ->
+            builder.addSlot(
+                HTAccessConfig.INPUT_ONLY,
+                HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(i), HTSlotHelper.getSlotPosY(0)),
+            )
+        }
         // output
-        outputSlot = HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
-        return HTSimpleItemSlotHolder(this, inputSlots, listOf(outputSlot))
+        outputSlot = builder.addSlot(
+            HTAccessConfig.OUTPUT_ONLY,
+            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
+        )
+        return builder.build()
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

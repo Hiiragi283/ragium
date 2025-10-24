@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.util.access.HTAccessConfiguration
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
@@ -456,10 +456,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
         add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
 
-        add(HTAccessConfiguration.INPUT_ONLY, "モード：搬入")
-        add(HTAccessConfiguration.OUTPUT_ONLY, "モード：搬出")
-        add(HTAccessConfiguration.BOTH, "モード：双方")
-        add(HTAccessConfiguration.NONE, "モード：なし")
+        add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
+        add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
+        add(HTAccessConfig.BOTH, "モード：双方")
+        add(HTAccessConfig.NONE, "モード：なし")
     }
 
     private fun information() {

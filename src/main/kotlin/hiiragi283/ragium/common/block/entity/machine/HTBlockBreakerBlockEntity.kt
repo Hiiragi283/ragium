@@ -9,7 +9,8 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -35,8 +36,12 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBl
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        toolSlot = HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
-        return HTSimpleItemSlotHolder(this, listOf(toolSlot), listOf())
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        toolSlot = builder.addSlot(
+            HTAccessConfig.INPUT_ONLY,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
+        )
+        return builder.build()
     }
 
     override fun openGui(player: Player, title: Component): InteractionResult =

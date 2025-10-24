@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.holder.HTSimpleItemSlotHolder
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -27,10 +28,14 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
     private lateinit var slots: List<HTItemSlot>
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
         slots = (0..8).map { index: Int ->
-            HTItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
+            builder.addSlot(
+                HTAccessConfig.BOTH,
+                HTItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3)),
+            )
         }
-        return HTSimpleItemSlotHolder(null, slots, listOf())
+        return builder.build()
     }
 
     override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
