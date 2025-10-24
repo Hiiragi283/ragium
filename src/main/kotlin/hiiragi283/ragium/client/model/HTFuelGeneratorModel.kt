@@ -74,8 +74,8 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
     }
 
     fun renderType(variant: HTGeneratorVariant<*, *>): RenderType? = when (variant) {
-        HTGeneratorVariant.Solar -> null
-        else -> RagiumAPI.id("textures/entity/${variant.variantName()}.png")
+        is HTGeneratorVariant.Fuel -> RagiumAPI.id("textures/entity/${variant.variantName()}.png")
+        else -> null
     }?.let(this::renderType)
 
     override fun renderToBuffer(

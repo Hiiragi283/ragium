@@ -388,6 +388,14 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val ENCHANTMENT_GENERATOR: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
+        HTGeneratorVariant.Fuel.ENCHANTMENT,
+        machineProperty().noOcclusion(),
+        ::HTHorizontalEntityBlock,
+        ::HTGeneratorBlockItem,
+    )
+
+    @JvmField
     val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTEntityBlock, HTGeneratorBlockItem<*>> = registerEntity(
         HTGeneratorVariant.Solar,
         machineProperty().noOcclusion(),
@@ -405,10 +413,15 @@ object RagiumBlocks {
 
     @JvmField
     val GENERATORS: List<HTDeferredBlock<*, out HTGeneratorBlockItem<*>>> = listOf(
+        // Basic
         THERMAL_GENERATOR,
+        // Advanced
         COMBUSTION_GENERATOR,
         SOLAR_PANEL_CONTROLLER,
+        // Elite
         NUCLEAR_REACTOR,
+        // Ultimate
+        ENCHANTMENT_GENERATOR,
     )
 
     //    Machines    //

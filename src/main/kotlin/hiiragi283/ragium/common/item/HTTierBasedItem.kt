@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
 /**
- * @see [mekanism.common.item.ItemAlloy]
+ * @see mekanism.common.item.ItemAlloy
  */
 class HTTierBasedItem(provider: HTTierProvider, properties: Properties) :
     Item(properties),

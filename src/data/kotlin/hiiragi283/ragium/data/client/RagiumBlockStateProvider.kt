@@ -160,15 +160,18 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
         val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
-        val advancedFrame: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
+        val advancedFrame: ResourceLocation = RagiumAPI.id("block", "advanced_machine_frame")
         val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
+        val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
+
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
         builtIn(RagiumBlocks.COMBUSTION_GENERATOR, advancedCasing)
+        builtIn(RagiumBlocks.ENCHANTMENT_GENERATOR, ultimateMachine)
 
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block", "smelter_front")

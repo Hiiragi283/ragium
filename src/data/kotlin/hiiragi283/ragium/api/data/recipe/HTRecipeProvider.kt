@@ -47,8 +47,8 @@ import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
 /**
  * Ragiumがレシピ生成で使用するクラス
- * @see [Direct]
- * @see [Integration]
+ * @see Direct
+ * @see Integration
  */
 sealed class HTRecipeProvider {
     protected lateinit var provider: HolderLookup.Provider

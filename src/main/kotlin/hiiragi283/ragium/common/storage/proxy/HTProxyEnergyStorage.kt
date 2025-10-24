@@ -11,7 +11,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  * @param storage ラップ対象の[HTSidedEnergyStorage]
  * @param side 現在の向き
  * @param holder 搬入出の制御
- * @see [mekanism.common.capabilities.proxy.ProxyStrictEnergyHandler]
+ * @see mekanism.common.capabilities.proxy.ProxyStrictEnergyHandler
  */
 class HTProxyEnergyStorage(private val storage: HTSidedEnergyStorage, side: Direction?, holder: HTCapabilityHolder?) :
     HTProxyHandler(side, holder),

@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
 
 /**
- * @see [appeng.server.services.ChunkLoadingService]
+ * @see appeng.server.services.ChunkLoadingService
  */
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumChunkLoader : LoadingValidationCallback {

@@ -163,6 +163,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMaps.THERMAL_FUEL)
         event.register(RagiumDataMaps.COMBUSTION_FUEL)
         event.register(RagiumDataMaps.NUCLEAR_FUEL)
+        event.register(RagiumDataMaps.ENCHANT_FUEL)
 
         event.register(RagiumDataMaps.MOB_HEAD)
 

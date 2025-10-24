@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Supplier
 
 /**
- * @see [me.desht.pneumaticcraft.common.item.AbstractChestUpgradeKitItem]
+ * @see me.desht.pneumaticcraft.common.item.AbstractChestUpgradeKitItem
  */
 abstract class HTDrumUpgradeItem(
     private val filter: List<HTDeferredBlock<*, *>>,

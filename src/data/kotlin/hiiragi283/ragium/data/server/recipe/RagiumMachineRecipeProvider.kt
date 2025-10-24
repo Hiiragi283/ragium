@@ -45,7 +45,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
             .define('B', Tags.Items.GLASS_BLOCKS)
-            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY))
+            .define('C', RagiumItems.getCoil(RagiumMaterialType.RAGI_ALLOY))
             .define('D', Items.FURNACE)
             .save(output)
         // Advanced
@@ -57,8 +57,21 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
             .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
-            .define('C', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .define('C', RagiumItems.getCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .define('D', Items.BLAST_FURNACE)
+            .save(output)
+        // Elite
+        // Ultimate
+        HTShapedRecipeBuilder
+            .misc(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .pattern(
+                "AAA",
+                " B ",
+                "CDC",
+            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
+            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
+            .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
+            .define('D', Items.GRINDSTONE)
             .save(output)
     }
 

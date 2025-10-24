@@ -18,7 +18,7 @@ import net.neoforged.neoforge.common.ItemAbilities
 import net.neoforged.neoforge.common.ItemAbility
 
 /**
- * @see [de.ellpeck.actuallyadditions.mod.items.DrillItem]
+ * @see de.ellpeck.actuallyadditions.mod.items.DrillItem
  */
 class HTDrillItem(properties: Properties) :
     HTEnergyItem.User(

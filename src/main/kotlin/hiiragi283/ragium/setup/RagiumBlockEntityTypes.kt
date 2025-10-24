@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
@@ -100,6 +101,12 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
+    val ENCHANTMENT: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
+        HTGeneratorVariant.Fuel.ENCHANTMENT,
+        ::HTEnchGeneratorBlockEntity,
+    )
+
+    @JvmField
     val SOLAR: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = generator(
         HTGeneratorVariant.Solar,
         ::HTSolarGeneratorBlockEntity,
@@ -120,6 +127,8 @@ object RagiumBlockEntityTypes {
         SOLAR,
         // Elite
         NUCLEAR,
+        // Ultimate
+        ENCHANTMENT,
     )
 
     @JvmStatic

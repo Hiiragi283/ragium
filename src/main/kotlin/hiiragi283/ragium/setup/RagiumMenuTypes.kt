@@ -122,7 +122,7 @@ object RagiumMenuTypes {
     //    Extensions    //
 
     /**
-     * @see [mekanism.common.inventory.container.type.MekanismContainerType.getTileFromBuf]
+     * @see mekanism.common.inventory.container.type.MekanismContainerType.getTileFromBuf
      */
     @JvmStatic
     inline fun <reified BE : BlockEntity> getBlockEntityFromBuf(buf: FriendlyByteBuf?): BE {

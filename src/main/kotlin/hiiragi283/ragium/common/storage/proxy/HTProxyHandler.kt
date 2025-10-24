@@ -7,7 +7,7 @@ import net.minecraft.core.Direction
  * 任意のCapabilityのラッパーとなる抽象クラス
  * @param side 現在の向き
  * @param holder 搬入出の制御
- * @see [mekanism.common.capabilities.proxy.ProxyHandler]
+ * @see mekanism.common.capabilities.proxy.ProxyHandler
  */
 abstract class HTProxyHandler(protected val side: Direction?, protected val holder: HTCapabilityHolder?) {
     /**

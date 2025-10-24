@@ -43,7 +43,7 @@ object HTSpriteRenderHelper {
     }
 
     //    Renderer    //
-    
+
     /**
      * @see [me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture]
      */

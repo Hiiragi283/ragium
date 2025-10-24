@@ -1,0 +1,14 @@
+{
+  "values": {
+    "#minecraft:curse": {
+      "type": "minecraft:linear",
+      "base": -1.0,
+      "per_level_above_first": -1.0
+    },
+    "#minecraft:treasure": {
+      "type": "minecraft:linear",
+      "base": 3.0,
+      "per_level_above_first": 3.0
+    }
+  }
+}

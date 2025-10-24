@@ -7,6 +7,8 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -32,12 +34,17 @@ interface RagiumDataMaps {
         val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
 
         @JvmField
+        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
+
+        @JvmField
         val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
     }
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
     val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
+
+    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
@@ -75,6 +82,9 @@ interface RagiumDataMaps {
      */
     fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
+
+    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
+        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
 
     /**
      * 指定した値からエンチャントでドロップするモブの頭を取得します。

@@ -12,6 +12,8 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import kotlin.jvm.optionals.getOrNull
@@ -33,6 +35,11 @@ class RagiumDataMapsImpl : RagiumDataMaps {
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
     override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
+    override val enchFuelType: DataMapType<Enchantment, LevelBasedValue> = create(
+        "fuel",
+        Registries.ENCHANTMENT,
+        LevelBasedValue.DISPATCH_CODEC,
+    )
 
     override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
 

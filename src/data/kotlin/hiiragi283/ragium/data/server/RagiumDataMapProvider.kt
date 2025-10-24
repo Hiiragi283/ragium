@@ -21,9 +21,11 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.EnchantmentTags
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
@@ -45,6 +47,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         thermalFuels()
         combustionFuels()
         nuclearFuels()
+        enchFactories()
 
         mobHead()
     }
@@ -104,6 +107,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun nuclearFuels() {
         builder(RagiumDataMaps.NUCLEAR_FUEL)
             .add(RagiumFluidContents.GREEN_FUEL, 5)
+    }
+
+    private fun enchFactories() {
+        builder(RagiumDataMaps.ENCHANT_FUEL)
+            .add(EnchantmentTags.TREASURE, LevelBasedValue.perLevel(3f), false)
+            .add(EnchantmentTags.CURSE, LevelBasedValue.perLevel(-1f), false)
     }
 
     //    Mob Head    //

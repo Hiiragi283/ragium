@@ -38,12 +38,14 @@ sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlock
         HTGeneratorVariant<HTHorizontalEntityBlock, HTFuelGeneratorBlockEntity> {
         THERMAL(HTMachineTier.BASIC, "Thermal Generator", "火力発電機"),
         COMBUSTION(HTMachineTier.ADVANCED, "Combustion Generator", "燃焼発電機"),
+        ENCHANTMENT(HTMachineTier.ULTIMATE, "Enchantment Generator", "エンチャント発電機"),
         ;
 
         override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, HTGeneratorBlockItem<*>>
             get() = when (this) {
                 THERMAL -> RagiumBlocks.THERMAL_GENERATOR
                 COMBUSTION -> RagiumBlocks.COMBUSTION_GENERATOR
+                ENCHANTMENT -> RagiumBlocks.ENCHANTMENT_GENERATOR
             }
 
         override fun translate(type: HTLanguageType, value: String): String = when (type) {
@@ -57,6 +59,7 @@ sealed interface HTGeneratorVariant<BLOCK : HTEntityBlock, BE : HTGeneratorBlock
             get() = when (this) {
                 THERMAL -> RagiumBlockEntityTypes.THERMAL
                 COMBUSTION -> RagiumBlockEntityTypes.COMBUSTION
+                ENCHANTMENT -> RagiumBlockEntityTypes.ENCHANTMENT
             }
     }
 

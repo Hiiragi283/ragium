@@ -37,8 +37,8 @@ import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -220,11 +220,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         // Item
-        event.registerItem(
-            HTFuelGeneratorItemRenderer.ITEM_EXTENSION,
-            RagiumBlocks.THERMAL_GENERATOR.asItem(),
-            RagiumBlocks.COMBUSTION_GENERATOR.asItem(),
-        )
+        for (fuel: HTGeneratorVariant.Fuel in HTGeneratorVariant.Fuel.entries) {
+            event.registerItem(HTFuelGeneratorItemRenderer.ITEM_EXTENSION, fuel.asItem())
+        }
 
         RagiumAPI.LOGGER.info("Registered client extensions!")
     }
@@ -275,12 +273,13 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL.get(), ::HTFuelGeneratorRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION.get(), ::HTFuelGeneratorRenderer)
-
         event.registerBlockEntityRenderer(HTMachineVariant.MELTER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
         event.registerBlockEntityRenderer(HTMachineVariant.REFINERY.getBlockEntityType(), ::HTRefineryRenderer)
         event.registerBlockEntityRenderer(HTMachineVariant.WASHER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
+
+        for (fuel: HTGeneratorVariant.Fuel in HTGeneratorVariant.Fuel.entries) {
+            event.registerBlockEntityRenderer(fuel.getBlockEntityType(), ::HTFuelGeneratorRenderer)
+        }
 
         for (variant: HTCrateVariant in HTCrateVariant.entries) {
             event.registerBlockEntityRenderer(variant.getBlockEntityType(), ::HTCrateRenderer)

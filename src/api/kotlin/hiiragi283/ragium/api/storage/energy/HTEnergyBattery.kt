@@ -8,6 +8,9 @@ import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.util.Mth
 import kotlin.math.min
 
+/**
+ * @see mekanism.api.energy.IEnergyContainer
+ */
 interface HTEnergyBattery :
     HTValueSerializable,
     HTContentListener {
