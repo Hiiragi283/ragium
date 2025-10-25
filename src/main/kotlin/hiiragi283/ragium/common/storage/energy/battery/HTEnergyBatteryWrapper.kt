@@ -4,19 +4,19 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 
-class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyBattery?) : HTEnergyBattery {
-    private val delegate: HTEnergyBattery? get() = getter()
+class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyStorage?) : HTEnergyStorage {
+    private val delegate: HTEnergyStorage? get() = getter()
 
-    override fun getAmountAsLong(): Long = delegate?.getAmountAsLong() ?: 0
+    override fun getAmountAsInt(): Int = delegate?.getAmountAsInt() ?: 0
 
-    override fun getCapacityAsLong(): Long = delegate?.getCapacityAsLong() ?: 0
+    override fun getCapacityAsInt(): Int = delegate?.getCapacityAsInt() ?: 0
 
-    override fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long =
+    override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
         delegate?.insertEnergy(amount, action, access) ?: 0
 
-    override fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long =
+    override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
         delegate?.extractEnergy(amount, action, access) ?: 0
 
     override fun serialize(output: HTValueOutput) {

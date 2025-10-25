@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -31,6 +32,7 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
@@ -90,6 +92,8 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         HTFluidItemSlot.moveFluid(fillSlot.getFluidTank(), fillSlot, outputSlot)
         return false
     }
+
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     //    HTFluidInteractable    //
 

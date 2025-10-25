@@ -1,14 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
-import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
-import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
+import hiiragi283.ragium.common.storage.energy.HTBasicEnergyStorage
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.util.Mth
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.block.state.BlockState
@@ -36,14 +34,19 @@ abstract class HTConsumerBlockEntity(protected val variant: HTMachineVariant, po
 
     //    Energy Storage    //
 
-    protected lateinit var battery: HTEnergyBattery.Mutable
-        private set
+    protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.input(::setOnlySave, variant.energyCapacity)
 
-    final override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyBatteryHolder {
-        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        battery = builder.addSlot(HTAccessConfig.INPUT_ONLY, HTBasicEnergyBattery.input(listener) { variant.energyCapacity })
-        return builder.build()
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        energyStorage.serialize(output)
     }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        energyStorage.deserialize(input)
+    }
+
+    final override fun getEnergyStorage(direction: Direction?): HTBasicEnergyStorage = energyStorage
 
     //    Slot    //
 

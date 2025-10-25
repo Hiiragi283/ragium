@@ -1,13 +1,12 @@
 package hiiragi283.ragium.server
 
-import com.google.common.primitives.Ints
-import com.mojang.brigadier.arguments.LongArgumentType
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -32,7 +31,7 @@ object RagiumCommand {
                                 .literal("add")
                                 .then(
                                     Commands
-                                        .argument("value", LongArgumentType.longArg())
+                                        .argument("value", IntegerArgumentType.integer())
                                         .executes(::addEnergy),
                                 ),
                         ).then(
@@ -40,9 +39,9 @@ object RagiumCommand {
                                 .literal("set")
                                 .then(
                                     Commands
-                                        .argument("value", LongArgumentType.longArg())
+                                        .argument("value", IntegerArgumentType.integer())
                                         .executes { context: CommandContext<CommandSourceStack> ->
-                                            setEnergy(context, LongArgumentType.getLong(context, "value"))
+                                            setEnergy(context, IntegerArgumentType.getInteger(context, "value"))
                                         },
                                 ),
                         ).then(
@@ -57,28 +56,28 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val amount: Long = getEnergyNetwork(source)?.getAmountAsLong() ?: 0
+        val amount: Int = getEnergyNetwork(source)?.getAmountAsInt() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
-        return Ints.saturatedCast(amount)
+        return amount
     }
 
     @JvmStatic
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val value: Long = LongArgumentType.getLong(context, "value")
-        val received: Long = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
+        val value: Int = IntegerArgumentType.getInteger(context, "value")
+        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
-        return Ints.saturatedCast(received)
+        return received
     }
 
     @JvmStatic
-    private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Long): Int {
+    private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-        (getEnergyNetwork(source) as? HTEnergyBattery.Mutable)?.setAmountAsLong(value)
+        (getEnergyNetwork(source) as? HTEnergyStorage.Mutable)?.setAmountAsInt(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
-        return Ints.saturatedCast(value)
+        return value
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyStorage? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
 }

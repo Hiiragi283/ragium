@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
@@ -55,8 +54,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         protected set
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        val battery: HTEnergyBattery = getEnergyBattery(getEnergySideFor()) ?: return false
-        val result: Boolean = onUpdateServer(level, pos, state, battery)
+        val result: Boolean = onUpdateMachine(level, pos, state)
         // 以前の結果と異なる場合は強制的に同期させる
         if (result != this.isActive) {
             isActive = result
@@ -65,12 +63,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         return result
     }
 
-    protected abstract fun onUpdateServer(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        battery: HTEnergyBattery,
-    ): Boolean
+    protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
 
     //    Energy Storage    //
 

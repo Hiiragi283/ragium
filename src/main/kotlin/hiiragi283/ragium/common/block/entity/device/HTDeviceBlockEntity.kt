@@ -4,9 +4,11 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.function.IntSupplier
 
 /**
@@ -19,6 +21,8 @@ abstract class HTDeviceBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         pos,
         state,
     )
+
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     //    Tickable    //
 

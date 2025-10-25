@@ -8,20 +8,19 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.capability.getBattery
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.ragium.api.storage.capability.getStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
-import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.level.block.state.BlockState
@@ -30,15 +29,11 @@ import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(variant, pos, state) {
-    private lateinit var battery: HTEnergyBattery
+    private val energyStorage: HTEnergyStorage = createEnergyStorage(::setOnlySave)
 
-    override fun initializeEnergyStorage(listener: HTContentListener): HTEnergyBatteryHolder? {
-        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        battery = builder.addSlot(HTAccessConfig.BOTH, createEnergyStorage(listener))
-        return builder.build()
-    }
+    protected abstract fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage
 
-    protected abstract fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery
+    final override fun getEnergyStorage(direction: Direction?): HTEnergyStorage = energyStorage
 
     private lateinit var extractSlot: HTItemSlot
     private lateinit var insertSlot: HTItemSlot
@@ -53,8 +48,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
                 HTSlotHelper.getSlotPosX(2),
                 HTSlotHelper.getSlotPosY(1),
                 filter = { stack: ImmutableItemStack ->
-                    val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
-                    !battery.isEmpty()
+                    val storage: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stack) ?: return@create false
+                    !storage.isEmpty()
                 },
             ),
         )
@@ -66,8 +61,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
                 HTSlotHelper.getSlotPosX(6),
                 HTSlotHelper.getSlotPosY(1),
                 filter = { stack: ImmutableItemStack ->
-                    val battery: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stack) ?: return@create false
-                    battery.getNeededAsInt() > 0
+                    val storage: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stack) ?: return@create false
+                    storage.getNeededAsInt() > 0
                 },
             ),
         )
@@ -87,16 +82,16 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     private fun extractFromItem(): TriState {
         val stackIn: ImmutableItemStack = extractSlot.getStack()
-        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stackIn)
+        val energyIn: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stackIn)
             ?: return TriState.FALSE
         var toExtract: Int = transferRate
         toExtract = energyIn.extractEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         if (toExtract > 0) {
-            var mayReceive: Int = battery.insertEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+            var mayReceive: Int = energyStorage.insertEnergy(toExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
             mayReceive = min(toExtract, mayReceive)
             if (mayReceive > 0) {
                 energyIn.extractEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                battery.insertEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                energyStorage.insertEnergy(mayReceive, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -108,16 +103,16 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     private fun receiveToItem(): TriState {
         val stackIn: ImmutableItemStack = insertSlot.getStack()
-        val energyIn: HTEnergyBattery = RagiumCapabilities.ENERGY.getBattery(stackIn)
+        val energyIn: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stackIn)
             ?: return TriState.FALSE
         var toReceive: Int = transferRate
         toReceive = energyIn.insertEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         if (toReceive > 0) {
-            var mayExtract: Int = battery.extractEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+            var mayExtract: Int = energyStorage.extractEnergy(toReceive, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
             mayExtract = min(toReceive, mayExtract)
             if (mayExtract > 0) {
                 energyIn.insertEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                battery.extractEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                energyStorage.extractEnergy(mayExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 return TriState.TRUE
             } else {
                 return TriState.DEFAULT
@@ -132,15 +127,15 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     //    Creative    //
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
-        override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
-            object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
-                override fun getAmountAsLong(): Long = 0
+        override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
+            object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
+                override fun getAmountAsInt(): Int = 0
 
-                override fun getCapacityAsLong(): Long = Long.MAX_VALUE
+                override fun getCapacityAsInt(): Int = Int.MAX_VALUE
 
-                override fun insertEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long = amount
+                override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
 
-                override fun extractEnergy(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long = amount
+                override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
             }
 
         override val transferRate: Int = Int.MAX_VALUE
@@ -149,7 +144,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
     //    Simple    //
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
-        override fun createEnergyStorage(listener: HTContentListener): HTEnergyBattery =
+        override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
             HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
 
         override val transferRate: Int = 1000

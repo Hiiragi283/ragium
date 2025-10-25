@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -106,12 +105,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
 
     //    Ticking    //
 
-    override fun onUpdateServer(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        battery: HTEnergyBattery,
-    ): Boolean {
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // スロット内のアイテムを液体に変換する
         fuelSlot.fillOrBurn(outputSlot)
         // 燃料を消費して発電する
@@ -119,9 +113,9 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false
         val usage: Int = getModifiedEnergy(energyUsage)
-        return if (battery.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0) {
+        return if (energyStorage.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            battery.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            energyStorage.insertEnergy(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true
         } else {
             false

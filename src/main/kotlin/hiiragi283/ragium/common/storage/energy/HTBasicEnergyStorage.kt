@@ -1,25 +1,24 @@
-package hiiragi283.ragium.common.storage.energy.battery
+package hiiragi283.ragium.common.storage.energy
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.util.HTContentListener
-import java.util.function.LongSupplier
 import java.util.function.Predicate
 import kotlin.math.min
 
 /**
  * @see mekanism.common.capabilities.energy.BasicEnergyContainer
  */
-open class HTBasicEnergyBattery(
-    private val capacity: LongSupplier,
+open class HTBasicEnergyStorage(
+    private val capacity: Int,
     protected val canExtract: Predicate<HTStorageAccess>,
     protected val canInsert: Predicate<HTStorageAccess>,
     private val listener: HTContentListener?,
-) : HTEnergyBattery.Mutable() {
+) : HTEnergyStorage.Mutable() {
     companion object {
         @JvmField
         val INTERNAL_ONLY: Predicate<HTStorageAccess> = Predicate { it == HTStorageAccess.INTERNAL }
@@ -31,28 +30,28 @@ open class HTBasicEnergyBattery(
         val NOT_EXTERNAL: Predicate<HTStorageAccess> = Predicate { it != HTStorageAccess.EXTERNAL }
 
         @JvmStatic
-        fun input(listener: HTContentListener?, capacity: LongSupplier): HTBasicEnergyBattery =
+        fun input(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
             create(listener, capacity, NOT_EXTERNAL, Predicates.alwaysTrue())
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: LongSupplier): HTBasicEnergyBattery =
+        fun output(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
             create(listener, capacity, Predicates.alwaysTrue(), INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
             listener: HTContentListener?,
-            capacity: LongSupplier,
+            capacity: Int,
             canExtract: Predicate<HTStorageAccess> = Predicates.alwaysTrue(),
             canInsert: Predicate<HTStorageAccess> = Predicates.alwaysTrue(),
-        ): HTBasicEnergyBattery = HTBasicEnergyBattery(capacity, canExtract, canInsert, listener)
+        ): HTBasicEnergyStorage = HTBasicEnergyStorage(capacity, canExtract, canInsert, listener)
     }
 
     @JvmField
-    protected var amount: Long = 0
+    protected var amount: Int = 0
 
-    override fun setAmountAsLong(amount: Long) {
+    override fun setAmountAsInt(amount: Int) {
         check(amount >= 0) { "Energy cannot be negative" }
-        val fixedAmount: Long = min(amount, getCapacityAsLong())
+        val fixedAmount: Int = min(amount, getCapacityAsInt())
         if (this.amount != fixedAmount) {
             this.amount = fixedAmount
             onContentsChanged()
@@ -63,16 +62,16 @@ open class HTBasicEnergyBattery(
 
     final override fun canExtract(access: HTStorageAccess): Boolean = this.canExtract.test(access)
 
-    override fun getAmountAsLong(): Long = amount
+    override fun getAmountAsInt(): Int = amount
 
-    override fun getCapacityAsLong(): Long = capacity.asLong
+    override fun getCapacityAsInt(): Int = capacity
 
     override fun serialize(output: HTValueOutput) {
-        output.putLong(RagiumConst.AMOUNT, getAmountAsLong())
+        output.putInt(RagiumConst.AMOUNT, getAmountAsInt())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getLong(RagiumConst.AMOUNT)?.let(::setAmountAsLong)
+        input.getInt(RagiumConst.AMOUNT)?.let(::setAmountAsInt)
     }
 
     final override fun onContentsChanged() {

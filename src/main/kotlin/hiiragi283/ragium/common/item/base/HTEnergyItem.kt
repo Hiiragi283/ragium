@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.item.base
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.capability.getBattery
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.capability.getStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
@@ -18,23 +18,23 @@ import kotlin.math.roundToInt
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getBattery(stack: ItemStack): HTEnergyBattery? = RagiumCapabilities.ENERGY.getBattery(stack)
+        fun getStorage(stack: ItemStack): HTEnergyStorage? = RagiumCapabilities.ENERGY.getStorage(stack)
 
         @JvmStatic
-        fun hasBattery(stack: ItemStack): Boolean = getBattery(stack) != null
+        fun hasStorage(stack: ItemStack): Boolean = getStorage(stack) != null
 
         @JvmStatic
         fun extractEnergy(stack: ItemStack, amount: Int, action: HTStorageAction): Int =
-            getBattery(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAL) ?: 0
+            getStorage(stack)?.extractEnergy(amount, action, HTStorageAccess.INTERNAL) ?: 0
     }
 
     //    Item    //
 
-    override fun isBarVisible(stack: ItemStack): Boolean = hasBattery(stack)
+    override fun isBarVisible(stack: ItemStack): Boolean = hasStorage(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val battery: HTEnergyBattery = getBattery(stack) ?: return 0
-        return (13f * battery.getStoredLevelAsFloat()).roundToInt()
+        val storage: HTEnergyStorage = getStorage(stack) ?: return 0
+        return (13f * storage.getStoredLevelAsFloat()).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int = 0xff003f
@@ -45,11 +45,11 @@ abstract class HTEnergyItem(properties: Properties) : Item(properties) {
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        val battery: HTEnergyBattery = getBattery(stack) ?: return
-        addEnergyTooltip(battery, tooltipComponents::add)
+        val storage: HTEnergyStorage = getStorage(stack) ?: return
+        addEnergyTooltip(storage, tooltipComponents::add)
     }
 
-    override fun isEnchantable(stack: ItemStack): Boolean = stack.maxStackSize == 1 && hasBattery(stack)
+    override fun isEnchantable(stack: ItemStack): Boolean = stack.maxStackSize == 1 && hasStorage(stack)
 
     //    User    //
 

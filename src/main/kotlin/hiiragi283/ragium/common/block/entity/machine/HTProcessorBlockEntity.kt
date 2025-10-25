@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -20,12 +19,7 @@ import net.minecraft.world.level.block.state.BlockState
  */
 abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMachineVariant, pos: BlockPos, state: BlockState) :
     HTConsumerBlockEntity(variant, pos, state) {
-    override fun onUpdateServer(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        battery: HTEnergyBattery,
-    ): Boolean {
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // インプットに一致するレシピを探索する
         val input: INPUT = createRecipeInput(level, pos)
         val recipe: RECIPE = getMatchedRecipe(input, level) ?: return false
@@ -36,7 +30,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMach
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += battery.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            usedEnergy += energyStorage.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         return when {
             usedEnergy < requiredEnergy -> false

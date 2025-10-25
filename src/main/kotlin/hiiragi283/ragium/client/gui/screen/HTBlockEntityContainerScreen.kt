@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.capability.wrapStorage
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
@@ -58,7 +59,7 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
 
     fun createEnergyWidget(x: Int = HTSlotHelper.getSlotPosX(0), y: Int = HTSlotHelper.getSlotPosY(0)): HTEnergyBatteryWidget =
         HTEnergyBatteryWidget(
-            { blockEntity.getEnergyBattery(blockEntity.getItemSideFor()) },
+            { blockEntity.getEnergyStorage(null)?.let(::wrapStorage) },
             startX + x,
             startY + y,
         ).apply(::addRenderableWidget)

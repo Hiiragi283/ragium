@@ -9,15 +9,15 @@ interface HTHandlerProvider {
     /**
      * 指定した[direction]から[IItemHandler]を返します。
      */
-    fun getItemHandler(direction: Direction?): IItemHandler? = null
+    fun getItemHandler(direction: Direction?): IItemHandler?
 
     /**
      * 指定した[direction]から[IFluidHandler]を返します。
      */
-    fun getFluidHandler(direction: Direction?): IFluidHandler? = null
+    fun getFluidHandler(direction: Direction?): IFluidHandler?
 
     /**
      * 指定した[direction]から[IEnergyStorage]を返します。
      */
-    fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
+    fun getEnergyStorage(direction: Direction?): IEnergyStorage?
 }

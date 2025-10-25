@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.function.Consumer
 
 abstract class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -96,6 +98,8 @@ abstract class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     //    Impl    //
 

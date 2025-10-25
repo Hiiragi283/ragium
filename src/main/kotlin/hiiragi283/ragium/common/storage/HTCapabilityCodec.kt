@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -37,15 +36,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
-        val ENERGY: HTCapabilityCodec<HTEnergyBattery> = HTCapabilityCodec(
-            RagiumConst.BATTERIES,
-            RagiumConst.INDEX,
-            HTBlockEntity::getEnergyBatteries,
-            HTBlockEntity::hasEnergyStorage,
-        )
-
-        @JvmField
-        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID, ENERGY)
+        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)
     }
 
     //    Save & Read    //

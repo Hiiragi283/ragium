@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -155,7 +155,7 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =
         server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
-    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = when (level) {
+    override fun getEnergyNetwork(level: Level?): HTEnergyStorage? = when (level) {
         is ServerLevel -> level
         else -> level?.dimension()?.let(::getLevel)
     }?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
