@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
@@ -50,17 +49,32 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.AZURE_CLUSTER)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICE_CASING)
         builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.THERMAL_GENERATOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
-
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumModTags.Blocks.LED_BLOCKS)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.THERMAL_GENERATOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COMBUSTION_GENERATOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ENCHANTMENT_GENERATOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.NUCLEAR_REACTOR)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICE_CASING)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ITEM_BUFFER)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MILK_COLLECTOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.WATER_COLLECTOR)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.EXP_COLLECTOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.LAVA_COLLECTOR)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DIM_ANCHOR)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ENI)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MOB_CAPTURER)
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.TELEPAD)
+
+        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CEU)
 
         for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
             // Slab
@@ -78,7 +92,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COILS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CRATES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICES.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
@@ -155,7 +168,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
 
         // WIP
-        builder.add(RagiumModTags.Blocks.WIP, HTDeviceVariant.TELEPAD.blockHolder)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
         builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)

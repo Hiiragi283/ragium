@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
 
@@ -53,9 +52,6 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val washerTankCapacity: HTIntConfigValue
 
     // Device
-    @JvmField
-    val deviceTickRate: Map<HTDeviceVariant, HTIntConfigValue>
-
     @JvmField
     val deviceCollectorTankCapacity: HTIntConfigValue
 
@@ -165,13 +161,6 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Device
         builder.push("device")
-        deviceTickRate = HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
-            val name: String = variant.variantName()
-            builder.push(name)
-            val value: HTIntConfigValue = builder.definePositiveInt("tickRate", 20)
-            builder.pop()
-            value
-        }
         builder.push("collector")
         deviceCollectorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         deviceCollectorEntityRange = builder.definePositiveDouble("entityRange", 5.0, 1, 16)

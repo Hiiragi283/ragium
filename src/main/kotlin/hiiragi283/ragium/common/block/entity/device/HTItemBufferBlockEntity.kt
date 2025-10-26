@@ -11,8 +11,8 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.ITEM_BUFFER, pos, state) {
+class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.ITEM_BUFFER, pos, state) {
     private lateinit var slots: List<HTItemSlot>
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

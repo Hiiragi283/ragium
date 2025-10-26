@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -10,19 +9,12 @@ import net.minecraft.util.Mth
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
-import java.util.function.IntSupplier
 
 /**
  * 電力を消費しない設備に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
-    constructor(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) : this(
-        variant.blockHolder,
-        pos,
-        state,
-    )
-
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     //    Tickable    //
@@ -30,20 +22,8 @@ abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, st
     /**
      * 周期的にtick処理を行う[HTDeviceBlockEntity]の拡張クラス
      */
-    abstract class Tickable(
-        private val tickRate: IntSupplier,
-        blockHolder: Holder<Block>,
-        pos: BlockPos,
-        state: BlockState,
-    ) : HTDeviceBlockEntity(blockHolder, pos, state) {
-        constructor(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) : this(
-            variant.tickRate,
-            variant.blockHolder,
-            pos,
-            state,
-        )
-
-        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= tickRate.asInt) {
+    abstract class Tickable(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(blockHolder, pos, state) {
+        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= 20) {
             ticks = 0
             actionServer(level, pos, state)
         } else {

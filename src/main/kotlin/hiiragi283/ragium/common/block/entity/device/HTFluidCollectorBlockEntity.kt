@@ -11,22 +11,25 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-abstract class HTFluidCollectorBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity.Tickable(variant, pos, state),
+abstract class HTFluidCollectorBlockEntity :
+    HTDeviceBlockEntity.Tickable,
     HTFluidInteractable {
+    constructor(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) : super(blockHolder, pos, state)
+
     private lateinit var tank: HTVariableFluidStackTank
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {

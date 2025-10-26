@@ -16,8 +16,8 @@ import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
@@ -27,7 +27,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(HTDeviceVariant.MOB_CAPTURER, pos, state) {
+class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.MOB_CAPTURER, pos, state) {
     private lateinit var inputSlot: HTItemSlot.Mutable
     private lateinit var outputSlots: List<HTItemSlot>
 

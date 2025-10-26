@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -124,11 +123,28 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
+
         add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
-        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
 
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "Solar Panel Controller")
+
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
+        // Devices
+        add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
+        add(RagiumBlocks.MILK_COLLECTOR, "Milk Collector")
+        add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
+
+        add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
+        add(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
+
+        add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
+        add(RagiumBlocks.ENI, "E.N.I.")
+
+        add(RagiumBlocks.MOB_CAPTURER, "Mob Capturer")
+        add(RagiumBlocks.TELEPAD, "Telepad")
+
+        add(RagiumBlocks.CEU, "C.E.U.")
     }
 
     private fun enchantment() {
@@ -466,25 +482,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun information() {
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
         addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
-
-        addInfo(HTDeviceVariant.CEU, "Unlimited Power")
-        addInfo(HTDeviceVariant.DIM_ANCHOR, "Always load chunk which placed in.")
-        addInfo(HTDeviceVariant.ENI, "Enabled to access Energy Network.")
-        addInfo(HTDeviceVariant.EXP_COLLECTOR, "Collects around Exp Orbs.")
-        addInfo(HTDeviceVariant.ITEM_BUFFER, "Item buffer with 9 slots.")
-        addInfo(
-            HTDeviceVariant.LAVA_COLLECTOR,
-            "Generates Lava when ALL below conditions are met.",
-            "- Placed in the Nether",
-            "- Surrounded by 4 Lava sources",
-        )
-        addInfo(HTDeviceVariant.MILK_COLLECTOR, "Milking a cow on this.")
-        addInfo(
-            HTDeviceVariant.WATER_COLLECTOR,
-            "Generates Lava when ANY below conditions are met.",
-            "- Placed in Ocean-like or River-like biomes",
-            "- Surrounded by 2 or more Water Sources",
-        )
 
         val nonSilkTouch = "Can be harvested without Silk Touch."
         addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")

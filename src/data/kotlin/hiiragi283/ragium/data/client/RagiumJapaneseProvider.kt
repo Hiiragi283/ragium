@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -120,11 +119,28 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "火力発電機")
+
         add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
-        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
 
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "太陽光パネルコントローラー")
+
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
+        // Devices
+        add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
+        add(RagiumBlocks.MILK_COLLECTOR, "搾乳機")
+        add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
+
+        add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
+        add(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
+
+        add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
+        add(RagiumBlocks.ENI, "E.N.I.")
+
+        add(RagiumBlocks.MOB_CAPTURER, "モブ捕獲機")
+        add(RagiumBlocks.TELEPAD, "テレパッド")
+
+        add(RagiumBlocks.CEU, "C.E.U.")
     }
 
     private fun enchantment() {
@@ -472,25 +488,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun information() {
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
         addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
-
-        addInfo(HTDeviceVariant.CEU, "無限のパワー")
-        addInfo(HTDeviceVariant.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
-        addInfo(HTDeviceVariant.ENI, "エネルギーネットワークにアクセスできます。")
-        addInfo(HTDeviceVariant.EXP_COLLECTOR, "周囲の経験値オーブを回収します。")
-        addInfo(HTDeviceVariant.ITEM_BUFFER, "9スロットのアイテムバッファとして機能します。")
-        addInfo(
-            HTDeviceVariant.LAVA_COLLECTOR,
-            "次の条件のうち全てを満たすとき，溶岩を生産します。",
-            "- ネザーに設置されている",
-            "- 周囲4ブロックが溶岩源で囲われている",
-        )
-        addInfo(HTDeviceVariant.MILK_COLLECTOR, "牛を乗せると牛乳を搾り取ります。")
-        addInfo(
-            HTDeviceVariant.WATER_COLLECTOR,
-            "次の条件のうちいずれかを満たすとき，水を生産します。",
-            "- 海洋または河川系バイオームに設置されている",
-            "- 周囲2ブロック以上が水源で囲われている",
-        )
 
         val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
         addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")

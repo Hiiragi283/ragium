@@ -27,7 +27,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
@@ -66,8 +65,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromTable(RagiumItems.TOOLS)
 
         addVariants(HTMachineVariant.entries)
-
-        addVariants(HTDeviceVariant.entries)
 
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)

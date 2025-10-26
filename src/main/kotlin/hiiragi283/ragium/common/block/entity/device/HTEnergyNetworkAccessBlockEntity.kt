@@ -17,18 +17,20 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import kotlin.math.min
 
-sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity.Tickable(variant, pos, state) {
+sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTDeviceBlockEntity.Tickable(blockHolder, pos, state) {
     private val energyStorage: HTEnergyStorage = createEnergyStorage(::setOnlySave)
 
     protected abstract fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage
@@ -126,7 +128,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     //    Creative    //
 
-    class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.CEU, pos, state) {
+    class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.CEU, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
             object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
                 override fun getAmountAsInt(): Int = 0
@@ -143,7 +145,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(variant: HTDeviceVariant, pos: Blo
 
     //    Simple    //
 
-    class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(HTDeviceVariant.ENI, pos, state) {
+    class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
             HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
 

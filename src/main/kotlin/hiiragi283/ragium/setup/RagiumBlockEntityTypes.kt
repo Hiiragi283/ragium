@@ -1,9 +1,11 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTTypedEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -14,7 +16,6 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -45,10 +46,10 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -72,6 +73,7 @@ object RagiumBlockEntityTypes {
 
     //    Generator    //
 
+    // Basic
     @JvmField
     val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
         "thermal_generator",
@@ -83,6 +85,7 @@ object RagiumBlockEntityTypes {
         ),
     )
 
+    // Advanced
     @JvmField
     val COMBUSTION_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
         "combustion_generator",
@@ -99,16 +102,18 @@ object RagiumBlockEntityTypes {
         ),
     )
 
-    @JvmField
-    val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
-        "enchantment_generator",
-        ::HTEnchGeneratorBlockEntity,
-    )
-
+    // Elite
     @JvmField
     val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = registerTick(
         "solar_panel_controller",
         ::HTSolarGeneratorBlockEntity,
+    )
+
+    // Ultimate
+    @JvmField
+    val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
+        "enchantment_generator",
+        ::HTEnchGeneratorBlockEntity,
     )
 
     @JvmField
@@ -165,32 +170,70 @@ object RagiumBlockEntityTypes {
 
     //    Device    //
 
+    // Basic
     @JvmField
-    val DEVICES: Map<HTDeviceVariant, HTDeferredBlockEntityType<HTDeviceBlockEntity>> =
-        HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
-            val factory = when (variant) {
-                // Basic
-                HTDeviceVariant.ITEM_BUFFER -> ::HTItemBufferBlockEntity
-                HTDeviceVariant.MILK_COLLECTOR -> ::HTMilkCollectorBlockEntity
-                HTDeviceVariant.WATER_COLLECTOR -> ::HTWaterCollectorBlockEntity
+    val ITEM_BUFFER: HTDeferredBlockEntityType<HTItemBufferBlockEntity> = registerTick(
+        "item_buffer", 
+        ::HTItemBufferBlockEntity,
+    )
 
-                // Advanced
-                HTDeviceVariant.ENI -> HTEnergyNetworkAccessBlockEntity::Simple
-                HTDeviceVariant.EXP_COLLECTOR -> ::HTExpCollectorBlockEntity
-                HTDeviceVariant.LAVA_COLLECTOR -> ::HTLavaCollectorBlockEntity
+    @JvmField
+    val MILK_COLLECTOR: HTDeferredBlockEntityType<HTMilkCollectorBlockEntity> = registerTick(
+        "milk_collector", 
+        ::HTMilkCollectorBlockEntity,
+    )
 
-                // Elite
-                HTDeviceVariant.DIM_ANCHOR -> ::HTDimensionalAnchorBlockEntity
-                HTDeviceVariant.MOB_CAPTURER -> ::HTMobCapturerBlockEntity
+    @JvmField
+    val WATER_COLLECTOR: HTDeferredBlockEntityType<HTWaterCollectorBlockEntity> = registerTick(
+        "water_collector",
+        ::HTWaterCollectorBlockEntity,
+    )
 
-                // Ultimate
-                HTDeviceVariant.TELEPAD -> ::HTTelepadBlockentity
+    // Advanced
+    @JvmField
+    val EXP_COLLECTOR: HTDeferredBlockEntityType<HTExpCollectorBlockEntity> = registerTick(
+        "exp_collector",
+        ::HTExpCollectorBlockEntity,
+    )
 
-                // Creative
-                HTDeviceVariant.CEU -> HTEnergyNetworkAccessBlockEntity::Creative
-            }
-            registerTick(variant.variantName(), factory)
-        }
+    @JvmField
+    val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
+        "lava_collector",
+        ::HTLavaCollectorBlockEntity,
+    )
+
+    // Elite
+    @JvmField
+    val DIM_ANCHOR: HTDeferredBlockEntityType<HTDimensionalAnchorBlockEntity> = REGISTER.registerType(
+        "dimensional_anchor",
+        ::HTDimensionalAnchorBlockEntity,
+    )
+
+    @JvmField
+    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
+        "energy_network_interface",
+        HTEnergyNetworkAccessBlockEntity::Simple,
+    )
+
+    // Ultimate
+    @JvmField
+    val MOB_CAPTURER: HTDeferredBlockEntityType<HTMobCapturerBlockEntity> = registerTick(
+        "mob_capturer",
+        ::HTMobCapturerBlockEntity,
+        )
+
+    @JvmField
+    val TELEPAD: HTDeferredBlockEntityType<HTTelepadBlockentity> = REGISTER.registerType(
+        "telepad",
+        ::HTTelepadBlockentity,
+    )
+
+    // Creative
+    @JvmField
+    val CEU: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
+        "creative_energy_unit",
+        HTEnergyNetworkAccessBlockEntity::Creative,
+    )
 
     //    Storage    //
 
@@ -223,22 +266,13 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        addSupportedBlock(event, THERMAL_GENERATOR, RagiumBlocks.THERMAL_GENERATOR)
-        addSupportedBlock(event, COMBUSTION_GENERATOR, RagiumBlocks.COMBUSTION_GENERATOR)
-        addSupportedBlock(event, ENCHANTMENT_GENERATOR, RagiumBlocks.ENCHANTMENT_GENERATOR)
-        addSupportedBlock(event, SOLAR_PANEL_CONTROLLER, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
-        addSupportedBlock(event, NUCLEAR_REACTOR, RagiumBlocks.NUCLEAR_REACTOR)
-
         addAll(event, HTMachineVariant.entries)
 
-        addAll(event, HTDeviceVariant.entries)
-
-        // Storage
-        for ((tier: HTCrateTier, type: HTDeferredBlockEntityType<HTCrateBlockEntity>) in CRATES) {
-            addSupportedBlock(event, type, tier.getBlock())
-        }
-        for ((tier: HTDrumTier, type: HTDeferredBlockEntityType<HTDrumBlockEntity>) in DRUMS) {
-            addSupportedBlock(event, type, tier.getBlock())
+        for (holder: HTDeferredHolder<Block, *> in RagiumBlocks.REGISTER.firstEntries) {
+            val block: Block? = holder.get()
+            if (block is HTTypedEntityBlock<*>) {
+                event.modify(block.getBlockEntityType().get(), block)
+            }
         }
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
@@ -259,16 +293,32 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
+
         registerHandler(event, COMBUSTION_GENERATOR.get())
-        registerHandler(event, ENCHANTMENT_GENERATOR.get())
+
         registerHandler(event, SOLAR_PANEL_CONTROLLER.get())
+
+        registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
-
+        // Consumer
         registerHandlers(event, MACHINES.values)
+        // Devices
+        registerHandler(event, ITEM_BUFFER.get())
+        registerHandler(event, MILK_COLLECTOR.get())
+        registerHandler(event, WATER_COLLECTOR.get())
 
-        registerHandlers(event, DEVICES.values)
+        registerHandler(event, EXP_COLLECTOR.get())
+        registerHandler(event, LAVA_COLLECTOR.get())
 
+        registerHandler(event, ENI.get())
+
+        registerHandler(event, MOB_CAPTURER.get())
+        registerHandler(event, TELEPAD.get())
+
+        registerHandler(event, CEU.get())
+        // Storage
         registerHandlers(event, CRATES.values)
         registerHandlers(event, DRUMS.values)
 

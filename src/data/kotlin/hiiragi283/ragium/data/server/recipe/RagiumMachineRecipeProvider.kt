@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -206,30 +205,42 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
             .saveSuffixed(output, "_with_obsidian")
 
-        val storage = HTBlockMaterialVariant.STORAGE_BLOCK
-        for (variant: HTDeviceVariant in HTDeviceVariant.entries) {
-            val ingredient: Ingredient = when (variant) {
-                // Basic
-                HTDeviceVariant.ITEM_BUFFER -> Ingredient.of(Tags.Items.CHESTS)
-                HTDeviceVariant.MILK_COLLECTOR -> Ingredient.of(Tags.Items.BUCKETS_MILK)
-                HTDeviceVariant.WATER_COLLECTOR -> Ingredient.of(Tags.Items.BUCKETS_WATER)
-                // Advanced
-                HTDeviceVariant.ENI -> HTItemMaterialVariant.GEM.toIngredient(HTVanillaMaterialType.DIAMOND)
-                HTDeviceVariant.EXP_COLLECTOR -> Ingredient.of(Items.HOPPER)
-                HTDeviceVariant.LAVA_COLLECTOR -> Ingredient.of(Tags.Items.BUCKETS_LAVA)
-                // Elite
-                HTDeviceVariant.DIM_ANCHOR -> HTItemMaterialVariant.GEM.toIngredient(RagiumMaterialType.WARPED_CRYSTAL)
-                HTDeviceVariant.MOB_CAPTURER -> storage.toIngredient(RagiumMaterialType.ELDRITCH_PEARL)
-                // Ultimate
-                HTDeviceVariant.TELEPAD -> storage.toIngredient(RagiumMaterialType.WARPED_CRYSTAL)
-                // Creative
-                HTDeviceVariant.CEU -> continue
-            }
-            val tier: HTComponentTier = HTComponentTier.from(variant.tier) ?: continue
-            createComponentUpgrade(tier, variant, RagiumBlocks.DEVICE_CASING)
-                .addIngredient(ingredient)
-                .save(output)
-        }
+        // Basic
+        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.CHESTS)
+            .save(output)
+
+        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.MILK_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_MILK)
+            .save(output)
+
+        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.WATER_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_WATER)
+            .save(output)
+        // Advanced
+        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Items.HOPPER)
+            .save(output)
+
+        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.LAVA_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_LAVA)
+            .save(output)
+        // Elite
+        createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+            .save(output)
+
+        createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.ENI, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.DIAMOND)
+            .save(output)
+        // Ultimate
+        createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.MOB_CAPTURER, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.ELDRITCH_PEARL)
+            .save(output)
+
+        createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.TELEPAD, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
+            .save(output)
     }
 
     //    Storage    //

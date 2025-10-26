@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTSimpleTypedEntityBlock
 import hiiragi283.ragium.api.block.HTTypedEntityBlock
+import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.function.BlockWithContextFactory
@@ -42,9 +43,9 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
@@ -55,6 +56,7 @@ import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
+import java.util.function.UnaryOperator
 
 object RagiumBlocks {
     @JvmField
@@ -92,6 +94,20 @@ object RagiumBlocks {
         properties: BlockBehaviour.Properties,
         blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
     ): HTBasicDeferredBlock<BLOCK> = registerEntity(variant, properties, blockFactory, ::HTBlockItem)
+
+    @JvmStatic
+    fun registerSimpleEntity(
+        name: String,
+        blockType: HTEntityBlockType,
+        properties: BlockBehaviour.Properties,
+    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, properties) })
+
+    @JvmStatic
+    fun registerSimpleEntity(
+        name: String,
+        blockType: HTEntityBlockType,
+        operator: UnaryOperator<BlockBehaviour.Properties>,
+    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, operator) })
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -369,41 +385,52 @@ object RagiumBlocks {
 
     //    Generators    //
 
+    // Basic
     @JvmField
-    val THERMAL_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+    val THERMAL_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "thermal_generator",
-        { HTTypedEntityBlock(RagiumBlockTypes.THERMAL_GENERATOR, machineProperty().noOcclusion()) },
+        RagiumBlockTypes.THERMAL_GENERATOR,
+        machineProperty().noOcclusion(),
     )
 
+    // Advanced
     @JvmField
-    val COMBUSTION_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+    val COMBUSTION_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "combustion_generator",
-        { HTTypedEntityBlock(RagiumBlockTypes.COMBUSTION_GENERATOR, machineProperty().noOcclusion()) },
+        RagiumBlockTypes.COMBUSTION_GENERATOR,
+        machineProperty().noOcclusion(),
     )
 
+    // Elite
     @JvmField
-    val ENCHANTMENT_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
-        "enchantment_generator",
-        { HTTypedEntityBlock(RagiumBlockTypes.ENCHANTMENT_GENERATOR, machineProperty().noOcclusion()) },
-    )
-
-    @JvmField
-    val SOLAR_PANEL_CONTROLLER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+    val SOLAR_PANEL_CONTROLLER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "solar_panel_controller",
-        { HTTypedEntityBlock(RagiumBlockTypes.SOLAR_PANEL_CONTROLLER, machineProperty().noOcclusion()) },
+        RagiumBlockTypes.SOLAR_PANEL_CONTROLLER,
+        machineProperty().noOcclusion(),
+    )
+
+    // Ultimate
+    @JvmField
+    val ENCHANTMENT_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
+        "enchantment_generator",
+        RagiumBlockTypes.ENCHANTMENT_GENERATOR,
+        machineProperty().noOcclusion(),
     )
 
     @JvmField
-    val NUCLEAR_REACTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+    val NUCLEAR_REACTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "nuclear_reactor",
-        { HTTypedEntityBlock(RagiumBlockTypes.NUCLEAR_REACTOR, machineProperty().noOcclusion()) },
+        RagiumBlockTypes.NUCLEAR_REACTOR,
+        machineProperty().noOcclusion(),
     )
 
     //    Machines    //
 
     @JvmField
     val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTHorizontalEntityBlock>> =
-        createVariantMap(HTMachineVariant.entries, machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
+        HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
+            registerSimpleEntity(variant, machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
+        }
 
     //    Parts    //
 
@@ -426,22 +453,61 @@ object RagiumBlocks {
         REINFORCED_STONE_CASING,
     )
 
+    //    Device    //
+
     @JvmField
     val DEVICE_CASING: HTSimpleDeferredBlock =
         REGISTER.registerSimple("device_casing", machineProperty())
 
+    // Basic
     @JvmField
-    val DEVICES: Map<HTDeviceVariant, HTBasicDeferredBlock<HTEntityBlock>> =
-        createVariantMap(HTDeviceVariant.entries, machineProperty(), HTEntityBlock::Simple)
+    val ITEM_BUFFER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
 
-    @JvmStatic
-    private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock> createVariantMap(
-        entries: Iterable<V>,
-        properties: BlockBehaviour.Properties,
-        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
-    ): Map<V, HTBasicDeferredBlock<BLOCK>> = entries.associateWith { variant: V ->
-        registerSimpleEntity(variant, properties, blockFactory)
-    }
+    @JvmField
+    val MILK_COLLECTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("milk_collector", RagiumBlockTypes.MILK_COLLECTOR, machineProperty())
+
+    @JvmField
+    val WATER_COLLECTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("water_collector", RagiumBlockTypes.WATER_COLLECTOR, machineProperty())
+
+    // Advanced
+    @JvmField
+    val EXP_COLLECTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
+
+    @JvmField
+    val LAVA_COLLECTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("lava_collector", RagiumBlockTypes.LAVA_COLLECTOR, machineProperty())
+
+    // Elite
+    @JvmField
+    val DIM_ANCHOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("dimensional_anchor", RagiumBlockTypes.DIM_ANCHOR, machineProperty())
+
+    @JvmField
+    val ENI: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("energy_network_interface", RagiumBlockTypes.ENI, machineProperty())
+
+    // Ultimate
+    @JvmField
+    val MOB_CAPTURER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("mob_capturer", RagiumBlockTypes.MOB_CAPTURER, machineProperty())
+
+    @JvmField
+    val TELEPAD: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("telepad", RagiumBlockTypes.TELEPAD, machineProperty())
+
+    // Creative
+    @JvmField
+    val CEU: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        REGISTER.register(
+            "creative_energy_unit",
+            { HTTypedEntityBlock(RagiumBlockTypes.CEU, machineProperty()) },
+            ::HTBlockItem,
+            Item.Properties().rarity(Rarity.EPIC),
+        )
 
     //    Storages    //
 

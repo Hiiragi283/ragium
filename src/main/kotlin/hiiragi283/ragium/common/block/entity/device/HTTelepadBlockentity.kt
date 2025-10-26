@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -28,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState
 import kotlin.streams.asSequence
 
 class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(HTDeviceVariant.TELEPAD, pos, state),
+    HTDeviceBlockEntity(RagiumBlocks.TELEPAD, pos, state),
     HTFluidInteractable {
     companion object {
         @JvmStatic

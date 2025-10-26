@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMilkCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFluidCollectorBlockEntity(HTDeviceVariant.MILK_COLLECTOR, pos, state) {
+    HTFluidCollectorBlockEntity(RagiumBlocks.MILK_COLLECTOR, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         val area = AABB(pos.above())
         val multiplier: Int = RagiumConfig.COMMON.milkCollectorMultiplier.asInt

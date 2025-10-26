@@ -9,7 +9,6 @@ import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
@@ -218,14 +217,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         child(RagiumAdvancements.DIM_ANCHOR, RagiumAdvancements.WARPED_CRYSTAL) {
             display {
-                setIcon(HTDeviceVariant.DIM_ANCHOR)
+                setIcon(RagiumBlocks.DIM_ANCHOR)
                 setTitleFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setDescFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setGoal()
             }
             addCriterion(
                 "place_dim_anchor",
-                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.getBlock()),
+                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(RagiumBlocks.DIM_ANCHOR.get()),
             )
         }
         child(RagiumAdvancements.TELEPORT_KEY, RagiumAdvancements.WARPED_CRYSTAL) {

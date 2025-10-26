@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -120,7 +119,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     else -> -1
                 }
             },
-            HTDeviceVariant.WATER_COLLECTOR.getBlock(),
+            RagiumBlocks.WATER_COLLECTOR.get(),
         )
         // LED Blocks
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
@@ -159,7 +158,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
         // Water Collector
-        event.register({ _: ItemStack, tint: Int -> if (tint == 0) 0x3f76e4 else -1 }, HTDeviceVariant.WATER_COLLECTOR)
+        event.register({ _: ItemStack, tint: Int -> if (tint == 0) 0x3f76e4 else -1 }, RagiumBlocks.WATER_COLLECTOR)
         // LED Blocks
         for ((variant: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             event.register(

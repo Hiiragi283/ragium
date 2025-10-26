@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -47,6 +46,18 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         buildSet {
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
+
+            add(RagiumBlocks.ITEM_BUFFER)
+
+            add(RagiumBlocks.EXP_COLLECTOR)
+
+            add(RagiumBlocks.DIM_ANCHOR)
+            add(RagiumBlocks.ENI)
+
+            add(RagiumBlocks.MOB_CAPTURER)
+            add(RagiumBlocks.TELEPAD)
+
+            add(RagiumBlocks.CEU)
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
             addAll(RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.STORAGE_BLOCK))
@@ -194,32 +205,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device
-        for ((variant: HTDeviceVariant, block: HTDeferredBlock<*, *>) in RagiumBlocks.DEVICES) {
-            when (variant) {
-                HTDeviceVariant.WATER_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        vanillaId("block", "water_still"),
-                        RagiumAPI.id("block", "device_overlay"),
-                    )
-                }
-                HTDeviceVariant.LAVA_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        vanillaId("block", "lava_still"),
-                        RagiumAPI.id("block", "device_overlay"),
-                    )
-                }
-                HTDeviceVariant.MILK_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        RagiumConst.NEOFORGE.toId("block", "milk_still"),
-                        RagiumAPI.id("block", "device_overlay"),
-                    )
-                }
-                else -> simpleBlockAndItem(block)
-            }
+        fun addFluidCollector(block: HTDeferredBlock<*, *>, fluid: ResourceLocation) {
+            layeredBlock(block, fluid, RagiumAPI.id("block", "device_overlay"))
         }
+        addFluidCollector(RagiumBlocks.LAVA_COLLECTOR, vanillaId("block", "lava_still"))
+        addFluidCollector(RagiumBlocks.MILK_COLLECTOR, RagiumConst.NEOFORGE.toId("block", "milk_still"))
+        addFluidCollector(RagiumBlocks.WATER_COLLECTOR, vanillaId("block", "water_still"))
 
         // Storages
         for (drum: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {

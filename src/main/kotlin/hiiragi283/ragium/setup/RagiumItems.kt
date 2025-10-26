@@ -49,7 +49,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.component.DataComponentPatch
@@ -599,10 +598,6 @@ object RagiumItems {
         }
         event.modify(getIngot(RagiumMaterialType.COOKED_MEAT)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.COOKED_BEEF)
-        }
-
-        event.modify(HTDeviceVariant.CEU) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
         RagiumAPI.LOGGER.info("Modified default item components!")

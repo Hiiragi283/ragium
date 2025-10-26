@@ -44,7 +44,6 @@ import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -222,22 +221,22 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addInteractions(registry: EmiRegistry) {
         // Water Well
         registry.addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(HTDeviceVariant.WATER_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
         registry.addInteraction(HTFluidContent.LAVA.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(HTDeviceVariant.LAVA_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.LAVA_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
         registry.addInteraction(HTFluidContent.MILK.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(HTDeviceVariant.MILK_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.MILK_COLLECTOR.toEmi())
             rightInput(Items.COW_SPAWN_EGG.toEmi(), true)
         }
         // Exp Collector
         registry.addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
-            leftInput(HTDeviceVariant.EXP_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.EXP_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
 

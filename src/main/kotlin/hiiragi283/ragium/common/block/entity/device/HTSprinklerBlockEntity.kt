@@ -4,15 +4,16 @@ import hiiragi283.ragium.api.extension.randomKt
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(TODO() as HTDeviceVariant, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(TODO() as Holder<Block>, pos, state) {
     private val tank: HTFluidStackTank = TODO()
 
     //    Ticking    //
