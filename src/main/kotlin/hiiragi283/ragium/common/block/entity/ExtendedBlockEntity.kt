@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.Position
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.Connection
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -17,7 +17,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -128,7 +127,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * ブロックが右クリックされたときに呼ばれます。
      *
-     * [onRightClicked]より先に呼び出されます。
+     * [Block.useWithoutItem]より先に呼び出されます。
      */
     open fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult =
         when (this) {
@@ -138,12 +137,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         }
 
     /**
-     * ブロックが右クリックされたときに呼ばれます。
-     */
-    open fun onRightClicked(context: HTBlockInteractContext): InteractionResult = InteractionResult.PASS
-
-    /**
-     * [onRightClicked]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
+     * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
      * @see [mekanism.common.tile.base.TileEntityMekanism.encodeExtraContainerData]
      */
     open fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
@@ -178,7 +172,9 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      */
     open fun dropInventory(consumer: Consumer<ItemStack>) {}
 
-    open fun onRemove(level: Level, pos: Position) {}
+    open fun onRemove(level: Level, pos: BlockPos) {
+        dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
+    }
 
     /**
      * ブロックのコンパレータ出力を返します。

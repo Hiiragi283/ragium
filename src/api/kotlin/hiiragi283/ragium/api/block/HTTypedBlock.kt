@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.Property
 import java.util.function.UnaryOperator
 
 /**
@@ -26,6 +25,9 @@ open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties
         @JvmStatic
         private lateinit var cacheType: HTBlockType
 
+        /**
+         * @see mekanism.common.block.prefab.BlockBase.hack
+         */
         @JvmStatic
         private fun <TYPE : HTBlockType> hack(type: TYPE, properties: Properties): Properties {
             cacheType = type
@@ -44,23 +46,18 @@ open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties
 
     final override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
-        val properties: List<Property<*>> = buildList {
-            for (attribute: HTBlockAttribute in this@HTTypedBlock.getAllAttributes()) {
-                if (attribute is HTDirectionalBlockAttribute) {
-                    attribute.buildBlockState(this@HTTypedBlock, this)
-                }
+        for (attribute: HTBlockAttribute in this@HTTypedBlock.getAllAttributes()) {
+            if (attribute is HTDirectionalBlockAttribute) {
+                attribute.buildBlockState(this@HTTypedBlock, builder)
             }
-        }
-        if (!properties.isEmpty()) {
-            builder.add(*properties.toTypedArray())
         }
     }
 
     final override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
-        var state: BlockState? = super.getStateForPlacement(context)
-        for (attribute: HTBlockAttribute in this@HTTypedBlock.getAllAttributes()) {
+        var state: BlockState = super.getStateForPlacement(context) ?: return null
+        for (attribute: HTBlockAttribute in state.getAllAttributes()) {
             if (attribute is HTDirectionalBlockAttribute) {
-                state = attribute.getStateForPlacement(this, context)
+                state = attribute.getStateForPlacement(state, context)
             }
         }
         return state

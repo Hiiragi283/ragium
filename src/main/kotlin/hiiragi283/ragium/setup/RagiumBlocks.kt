@@ -1,8 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTSimpleTypedEntityBlock
-import hiiragi283.ragium.api.block.HTTypedEntityBlock
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
@@ -22,9 +20,11 @@ import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
+import hiiragi283.ragium.common.block.HTSimpleTypedEntityBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
+import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem

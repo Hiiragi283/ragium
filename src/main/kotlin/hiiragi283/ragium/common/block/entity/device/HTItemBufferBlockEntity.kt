@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -13,10 +12,8 @@ import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntitySelector
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
@@ -37,9 +34,6 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
         }
         return builder.build()
     }
-
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
-        RagiumMenuTypes.ITEM_BUFFER.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))

@@ -69,7 +69,6 @@ abstract class HTMinecart<BE : HTBlockEntity> :
             }
             this.spawnAtLocation(result)
             bindBlockEntity().dropInventory(this::spawnAtLocation)
-            bindBlockEntity().onRemove(this.level(), this.position())
         }
     }
 

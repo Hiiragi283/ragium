@@ -4,26 +4,29 @@ import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
-import net.minecraft.world.level.block.state.properties.Property
 
+/**
+ * @see mekanism.common.block.attribute.AttributeState
+ */
 enum class HTDirectionalBlockAttribute(val property: DirectionProperty) : HTBlockAttribute {
     HORIZONTAL(BlockStateProperties.HORIZONTAL_FACING),
     FACING(BlockStateProperties.FACING),
     ;
 
-    fun buildBlockState(block: Block, properties: MutableList<Property<*>>) {
-        properties.add(property)
+    fun buildBlockState(block: Block, builder: StateDefinition.Builder<Block, BlockState>) {
+        builder.add(property)
     }
 
-    fun getStateForPlacement(block: Block, context: BlockPlaceContext): BlockState {
-        val state: BlockState = block.defaultBlockState()
+    fun getStateForPlacement(defaultState: BlockState, context: BlockPlaceContext): BlockState {
+        var state: BlockState = defaultState
         val direction: Direction = when (this) {
             HORIZONTAL -> context.horizontalDirection
             FACING -> context.nearestLookingDirection
         }.opposite
-        state.setValue(property, direction)
+        state = setDirection(state, direction)
         return state
     }
 

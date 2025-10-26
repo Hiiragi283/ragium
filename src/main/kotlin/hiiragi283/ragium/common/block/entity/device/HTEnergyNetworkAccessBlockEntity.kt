@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -18,12 +17,10 @@ import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -70,9 +67,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
         )
         return builder.build()
     }
-
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
-        RagiumMenuTypes.ENERGY_NETWORK_ACCESS.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 左のスロットから電力を吸い取る

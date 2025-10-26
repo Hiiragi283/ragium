@@ -7,6 +7,13 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 // getter
+inline fun <reified T : HTBlockAttribute> BlockState.hasAttribute(): Boolean = this.blockHolder.hasAttribute<T>()
+
+inline fun <reified T : HTBlockAttribute> Holder<Block>.hasAttribute(): Boolean = this.value().hasAttribute<T>()
+
+inline fun <reified T : HTBlockAttribute> Block.hasAttribute(): Boolean =
+    (this as? HTBlockWithType)?.type()?.contains(T::class.java) ?: false
+
 inline fun <reified T : HTBlockAttribute> BlockState.getAttribute(): T? = this.blockHolder.getAttribute<T>()
 
 inline fun <reified T : HTBlockAttribute> Holder<Block>.getAttribute(): T? = this.value().getAttribute<T>()
@@ -19,6 +26,10 @@ inline fun <reified T : HTBlockAttribute> Holder<Block>.getAttributeOrThrow(): T
 
 inline fun <reified T : HTBlockAttribute> Block.getAttributeOrThrow(): T =
     this.getAttribute<T>() ?: error("Expected $this to have an attribute of type ${T::class.java.simpleName}")
+
+fun BlockState.getAllAttributes(): Collection<HTBlockAttribute> = this.blockHolder.getAllAttributes()
+
+fun Holder<Block>.getAllAttributes(): Collection<HTBlockAttribute> = this.value().getAllAttributes()
 
 fun Block.getAllAttributes(): Collection<HTBlockAttribute> = (this as? HTBlockWithType)?.type()?.getAll() ?: listOf()
 

@@ -3,9 +3,6 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
-import hiiragi283.ragium.api.block.attribute.getAttribute
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -34,7 +31,6 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.Nameable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -161,13 +157,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
             }
         }
     }
-
-    //    ExtendedBlockEntity    //
-
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = blockHolder
-        .getAttribute<HTMenuBlockAttribute<*>>()
-        ?.openMenu(context.player, this.name, this, ::writeExtraContainerData)
-        ?: super.onRightClicked(context)
 
     //    Nameable    //
 

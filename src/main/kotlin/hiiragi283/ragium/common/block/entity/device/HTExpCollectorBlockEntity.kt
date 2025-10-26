@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Position
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -35,13 +34,13 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return builder.build()
     }
 
-    override fun onRemove(level: Level, pos: Position) {
+    override fun onRemove(level: Level, pos: BlockPos) {
         super.onRemove(level, pos)
         ExperienceOrb(
             level,
-            pos.x(),
-            pos.y(),
-            pos.z(),
+            pos.x.toDouble(),
+            pos.y.toDouble(),
+            pos.z.toDouble(),
             fluidAmountToExpValue(tank.getAmountAsInt()),
         )
     }

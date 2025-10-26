@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -12,12 +11,10 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
@@ -40,9 +37,6 @@ abstract class HTFluidCollectorBlockEntity :
         )
         return builder.build()
     }
-
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
-        RagiumMenuTypes.FLUID_COLLECTOR.openMenu(context.player, name, this, ::writeExtraContainerData)
 
     //    Ticking    //
 

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -14,12 +13,9 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
@@ -77,7 +73,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
         teleportPos = input.read("teleport_pos", HTTeleportPos.CODEC)
     }
 
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = when {
+    /*override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = when {
         validateStructure(
             context.level,
             context.pos,
@@ -87,7 +83,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
             context.player.displayClientMessage(Component.literal("Telepad must be surrounded by Device Casing!"), true)
             InteractionResult.FAIL
         }
-    }
+    }*/
 
     //    HTFluidInteractable    //
 

@@ -45,10 +45,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
             fuelContent: HTFluidContent<*, *, *>,
             fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
             blockHolder: Holder<Block>,
-        ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory {
-            pos: BlockPos,
-            state: BlockState,
-            ->
+        ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory { pos: BlockPos, state: BlockState ->
             Simple(itemValueGetter, fuelContent, fluidAmountGetter, blockHolder, pos, state)
         }
     }
