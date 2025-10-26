@@ -13,12 +13,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
@@ -151,12 +149,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Machine
         fun machine(
-            variant: HTVariantKey.WithBlock<*>,
+            block: HTDeferredBlock<*, *>,
             top: ResourceLocation,
             bottom: ResourceLocation,
-            front: ResourceLocation = variant.blockHolder.id.withPath { "block/${it}_front" },
+            front: ResourceLocation = block.id.withPath { "block/${it}_front" },
         ) {
-            val block: HTDeferredBlock<*, *> = variant.blockHolder
             horizontalBlock(
                 block,
                 models()
@@ -187,22 +184,22 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Processor
         val smelterFront: ResourceLocation = RagiumAPI.id("block", "smelter_front")
         // Basic
-        machine(HTMachineVariant.ALLOY_SMELTER, basicCasing, bricks, smelterFront)
-        machine(HTMachineVariant.BLOCK_BREAKER, basicCasing, bricks)
-        machine(HTMachineVariant.COMPRESSOR, basicCasing, bricks)
-        machine(HTMachineVariant.CUTTING_MACHINE, basicCasing, bricks)
-        machine(HTMachineVariant.EXTRACTOR, basicCasing, bricks)
-        machine(HTMachineVariant.PULVERIZER, basicCasing, bricks)
+        machine(RagiumBlocks.ALLOY_SMELTER, basicCasing, bricks, smelterFront)
+        machine(RagiumBlocks.BLOCK_BREAKER, basicCasing, bricks)
+        machine(RagiumBlocks.COMPRESSOR, basicCasing, bricks)
+        machine(RagiumBlocks.CUTTING_MACHINE, basicCasing, bricks)
+        machine(RagiumBlocks.EXTRACTOR, basicCasing, bricks)
+        machine(RagiumBlocks.PULVERIZER, basicCasing, bricks)
         // Advanced
-        machine(HTMachineVariant.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
-        machine(HTMachineVariant.MELTER, advancedFrame, blackstone)
-        altModelBlock(HTMachineVariant.REFINERY.blockHolder, factory = ::horizontalBlock)
-        machine(HTMachineVariant.WASHER, advancedFrame, blackstone)
+        machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
+        machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
+        altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
+        machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
-        machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
-        machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
-        machine(HTMachineVariant.PLANTER, eliteMachine, deepslateTiles)
-        machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
+        machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device
         fun addFluidCollector(block: HTDeferredBlock<*, *>, fluid: ResourceLocation) {

@@ -29,7 +29,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey
@@ -64,8 +63,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromMapWithColumn(RagiumMaterialType.DEEP_STEEL, RagiumItems.DEEP_ARMORS)
         fromTable(RagiumItems.TOOLS)
 
-        addVariants(HTMachineVariant.entries)
-
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
 
@@ -95,10 +92,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         for (entry: T in entries) {
             add(blockGetter(entry), entry.translate(type, "%s"))
         }
-    }
-
-    private fun <V : HTVariantKey.WithBlock<*>> addVariants(entries: Iterable<V>) {
-        addTranslations(entries, HTVariantKey.WithBlock<*>::blockHolder)
     }
 
     private fun fromMapWithRow(variant: HTVariantKey, map: Map<out HTMaterialType, HTHasTranslationKey>) {

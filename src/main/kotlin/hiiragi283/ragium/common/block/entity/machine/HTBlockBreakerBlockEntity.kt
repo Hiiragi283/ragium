@@ -11,16 +11,12 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
 import net.minecraft.world.level.block.Block
@@ -31,7 +27,7 @@ import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
-class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntity(HTMachineVariant.BLOCK_BREAKER, pos, state) {
+class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntity(RagiumBlocks.BLOCK_BREAKER, pos, state) {
     lateinit var toolSlot: HTItemSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -42,9 +38,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBl
         )
         return builder.build()
     }
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.SINGLE_ITEM.openMenu(player, title, this, ::writeExtraContainerData)
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 採掘用のFake Playerを用意する

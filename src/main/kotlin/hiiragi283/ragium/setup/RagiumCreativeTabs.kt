@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -48,7 +47,7 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.translatable(id.toDescriptionKey("itemGroup")))
-                .icon { ItemStack(HTMachineVariant.PULVERIZER.asItem()) }
+                .icon { RagiumBlocks.PULVERIZER.toStack() }
                 .displayItems(RagiumBlocks.REGISTER.firstEntries)
                 .build()
         }

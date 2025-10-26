@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
@@ -130,23 +129,23 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
             value
         }
 
-        builder.push(HTMachineVariant.BREWERY.variantName())
+        builder.push("brewery")
         breweryTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
-        builder.push(HTMachineVariant.CRUSHER.variantName())
+        builder.push("crusher")
         crusherTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
-        builder.push(HTMachineVariant.MELTER.variantName())
+        builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
-        builder.push(HTMachineVariant.PLANTER.variantName())
+        builder.push("planter")
         planterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
-        builder.push(HTMachineVariant.REFINERY.variantName())
+        builder.push("refinery")
         builder.push("input")
         refineryInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
@@ -154,7 +153,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop(2)
 
-        builder.push(HTMachineVariant.WASHER.variantName())
+        builder.push("washer")
         washerTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 

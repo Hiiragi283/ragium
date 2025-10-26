@@ -21,25 +21,23 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedItemRecipe<INPUT>>(
-    variant: HTMachineVariant,
+    blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTProcessorBlockEntity<INPUT, RECIPE>(variant, pos, state),
+) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state),
     HTFluidInteractable {
     protected lateinit var inputTank: HTFluidTank
         private set
@@ -77,9 +75,6 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         return builder.build()
     }
 
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.CHANCED_ITEM_OUTPUT.openMenu(player, title, this, ::writeExtraContainerData)
-
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
@@ -115,16 +110,16 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
 
     abstract class Cached<INPUT : RecipeInput, RECIPE : HTChancedItemRecipe<INPUT>>(
         private val cache: HTRecipeCache<INPUT, RECIPE>,
-        variant: HTMachineVariant,
+        blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTChancedItemOutputBlockEntity<INPUT, RECIPE>(variant, pos, state) {
+    ) : HTChancedItemOutputBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
         constructor(
             finder: HTRecipeFinder<INPUT, RECIPE>,
-            variant: HTMachineVariant,
+            blockHolder: Holder<Block>,
             pos: BlockPos,
             state: BlockState,
-        ) : this(finder.createCache(), variant, pos, state)
+        ) : this(finder.createCache(), blockHolder, pos, state)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = cache.getFirstRecipe(input, level)
     }

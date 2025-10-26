@@ -16,15 +16,11 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SingleItemRecipe
@@ -34,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, SingleItemRecipe>(
-        HTMachineVariant.CUTTING_MACHINE,
+        RagiumBlocks.CUTTING_MACHINE,
         pos,
         state,
     ) {
@@ -65,9 +61,6 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return builder.build()
     }
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.CUTTING_MACHINE.openMenu(player, title, this, ::writeExtraContainerData)
 
     //    Ticking    //
 

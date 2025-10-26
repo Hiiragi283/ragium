@@ -19,16 +19,13 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -39,7 +36,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(
         RagiumRecipeTypes.MELTING,
-        HTMachineVariant.MELTER,
+        RagiumBlocks.MELTER,
         pos,
         state,
     ),
@@ -69,9 +66,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             builder.addSlot(HTAccessConfig.OUTPUT_ONLY, HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity))
         return builder.build()
     }
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.MELTER.openMenu(player, title, this, ::writeExtraContainerData)
 
     //    Ticking    //
 

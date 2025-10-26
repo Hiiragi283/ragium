@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -278,9 +277,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(HTMachineVariant.MELTER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
-        event.registerBlockEntityRenderer(HTMachineVariant.REFINERY.getBlockEntityType(), ::HTRefineryRenderer)
-        event.registerBlockEntityRenderer(HTMachineVariant.WASHER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.MELTER.get(), ::HTSingleFluidMachineRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.REFINERY.get(), ::HTRefineryRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.WASHER.get(), ::HTSingleFluidMachineRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL_GENERATOR.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)

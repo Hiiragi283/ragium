@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -48,33 +47,55 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Hoe
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.AZURE_CLUSTER)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.RESONANT_DEBRIS)
+        buildList {
+            add(RagiumBlocks.AZURE_CLUSTER)
+            add(RagiumBlocks.RESONANT_DEBRIS)
+            // Generators
+            add(RagiumBlocks.THERMAL_GENERATOR)
+            
+            add(RagiumBlocks.COMBUSTION_GENERATOR)
+            
+            add(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            
+            add(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            add(RagiumBlocks.NUCLEAR_REACTOR)
+            // Consumers
+            add(RagiumBlocks.ALLOY_SMELTER)
+            add(RagiumBlocks.BLOCK_BREAKER)
+            add(RagiumBlocks.COMPRESSOR)
+            add(RagiumBlocks.CUTTING_MACHINE)
+            add(RagiumBlocks.EXTRACTOR)
+            add(RagiumBlocks.PULVERIZER)
+
+            add(RagiumBlocks.CRUSHER)
+            add(RagiumBlocks.MELTER)
+            add(RagiumBlocks.REFINERY)
+            add(RagiumBlocks.WASHER)
+
+            add(RagiumBlocks.BREWERY)
+            add(RagiumBlocks.MULTI_SMELTER)
+            add(RagiumBlocks.PLANTER)
+            add(RagiumBlocks.SIMULATOR)
+            // Devices
+            add(RagiumBlocks.DEVICE_CASING)
+            
+            add(RagiumBlocks.ITEM_BUFFER)
+            add(RagiumBlocks.MILK_COLLECTOR)
+            add(RagiumBlocks.WATER_COLLECTOR)
+            
+            add(RagiumBlocks.EXP_COLLECTOR)
+            add(RagiumBlocks.LAVA_COLLECTOR)
+            
+            add(RagiumBlocks.DIM_ANCHOR)
+            add(RagiumBlocks.ENI)
+            
+            add(RagiumBlocks.MOB_CAPTURER)
+            add(RagiumBlocks.TELEPAD)
+            
+            add(RagiumBlocks.CEU)
+        }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumModTags.Blocks.LED_BLOCKS)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.THERMAL_GENERATOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COMBUSTION_GENERATOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ENCHANTMENT_GENERATOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.NUCLEAR_REACTOR)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DEVICE_CASING)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ITEM_BUFFER)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MILK_COLLECTOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.WATER_COLLECTOR)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.EXP_COLLECTOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.LAVA_COLLECTOR)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DIM_ANCHOR)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ENI)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MOB_CAPTURER)
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.TELEPAD)
-
-        builder.add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CEU)
 
         for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
             // Slab
@@ -93,7 +114,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CRATES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MACHINES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
         // Shovel
@@ -168,11 +188,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
 
         // WIP
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
-        builder.add(RagiumModTags.Blocks.WIP, HTMachineVariant.BREWERY.blockHolder)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.BREWERY)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
         builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }

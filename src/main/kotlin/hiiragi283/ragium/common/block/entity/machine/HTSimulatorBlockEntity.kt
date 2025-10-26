@@ -15,21 +15,17 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
         RagiumRecipeTypes.SIMULATING,
-        HTMachineVariant.SIMULATOR,
+        RagiumBlocks.SIMULATOR,
         pos,
         state,
     ) {
@@ -56,9 +52,6 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         )
         return builder.build()
     }
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.SIMULATOR.openMenu(player, name, this, ::writeExtraContainerData)
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
         HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)

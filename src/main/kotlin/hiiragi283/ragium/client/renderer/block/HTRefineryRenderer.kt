@@ -6,14 +6,14 @@ import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.stack.isLighterThanAir
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 
-class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTConsumerBlockEntity>(context) {
+class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTRefineryBlockEntity>(context) {
     override fun render(
-        blockEntity: HTConsumerBlockEntity,
+        blockEntity: HTRefineryBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
         bufferSource: MultiBufferSource,

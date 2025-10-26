@@ -17,10 +17,6 @@ import net.minecraft.world.level.block.state.BlockState
  */
 abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
-    //    Ticking    //
-
-    override val energyUsage: Int = blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
-
     //    Energy Storage    //
 
     protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.output(

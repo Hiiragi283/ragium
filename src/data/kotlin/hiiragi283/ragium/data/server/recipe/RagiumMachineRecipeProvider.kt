@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -80,26 +79,26 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun processors() {
         // Basic
         basicMachine(
-            HTMachineVariant.ALLOY_SMELTER,
+            RagiumBlocks.ALLOY_SMELTER,
             Ingredient.of(Items.FURNACE),
             Ingredient.of(RagiumBlocks.getCoilBlock(RagiumMaterialType.RAGI_ALLOY)),
         )
-        basicMachine(HTMachineVariant.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
-        basicMachine(HTMachineVariant.COMPRESSOR, Ingredient.of(Items.PISTON))
-        basicMachine(HTMachineVariant.CUTTING_MACHINE, Ingredient.of(Items.STONECUTTER))
-        basicMachine(HTMachineVariant.EXTRACTOR, Ingredient.of(Items.HOPPER))
-        basicMachine(HTMachineVariant.PULVERIZER, Ingredient.of(Items.FLINT))
+        basicMachine(RagiumBlocks.BLOCK_BREAKER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        basicMachine(RagiumBlocks.COMPRESSOR, Ingredient.of(Items.PISTON))
+        basicMachine(RagiumBlocks.CUTTING_MACHINE, Ingredient.of(Items.STONECUTTER))
+        basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.HOPPER))
+        basicMachine(RagiumBlocks.PULVERIZER, Ingredient.of(Items.FLINT))
         // Advanced
-        advMachine(HTMachineVariant.CRUSHER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        advMachine(RagiumBlocks.CRUSHER, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         advMachine(
-            HTMachineVariant.MELTER,
+            RagiumBlocks.MELTER,
             Ingredient.of(RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY)),
             Ingredient.of(Items.BLAST_FURNACE),
         )
-        advMachine(HTMachineVariant.WASHER, Ingredient.of(Items.IRON_TRAPDOOR))
+        advMachine(RagiumBlocks.WASHER, Ingredient.of(Items.IRON_TRAPDOOR))
 
         HTShapedRecipeBuilder
-            .misc(HTMachineVariant.REFINERY)
+            .misc(RagiumBlocks.REFINERY)
             .pattern(
                 " A ",
                 "ABA",
@@ -111,31 +110,31 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         mapOf(
-            HTMachineVariant.CRUSHER to HTMachineVariant.PULVERIZER,
-            HTMachineVariant.MELTER to HTMachineVariant.EXTRACTOR,
-        ).forEach { (adv: HTMachineVariant, basic: HTMachineVariant) ->
+            RagiumBlocks.CRUSHER to RagiumBlocks.PULVERIZER,
+            RagiumBlocks.MELTER to RagiumBlocks.EXTRACTOR,
+        ).forEach { (adv: ItemLike, basic: ItemLike) ->
             createComponentUpgrade(HTComponentTier.ADVANCED, adv, basic).save(output)
         }
         // Elite
-        eliteMachine(HTMachineVariant.BREWERY, Ingredient.of(Items.BREWING_STAND))
-        eliteMachine(HTMachineVariant.PLANTER, Ingredient.of(Items.FLOWER_POT))
-        eliteMachine(HTMachineVariant.SIMULATOR, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.OBSIDIAN))
+        eliteMachine(RagiumBlocks.BREWERY, Ingredient.of(Items.BREWING_STAND))
+        eliteMachine(RagiumBlocks.PLANTER, Ingredient.of(Items.FLOWER_POT))
+        eliteMachine(RagiumBlocks.SIMULATOR, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.OBSIDIAN))
 
         mapOf(
-            HTMachineVariant.MULTI_SMELTER to HTMachineVariant.ALLOY_SMELTER,
-        ).forEach { (elite: HTMachineVariant, adv: HTMachineVariant) ->
+            RagiumBlocks.MULTI_SMELTER to RagiumBlocks.ALLOY_SMELTER,
+        ).forEach { (elite, adv) ->
             createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
         }
     }
 
     @JvmStatic
     private fun basicMachine(
-        variant: HTMachineVariant,
+        machine: ItemLike,
         side: Ingredient,
         core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.BASIC),
     ) {
         HTShapedRecipeBuilder
-            .misc(variant)
+            .misc(machine)
             .pattern(
                 "AAA",
                 "BCB",
@@ -149,12 +148,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun advMachine(
-        variant: HTMachineVariant,
+        machine: ItemLike,
         side: Ingredient,
         core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.ADVANCED),
     ) {
         HTShapedRecipeBuilder
-            .misc(variant)
+            .misc(machine)
             .pattern(
                 "AAA",
                 "BCB",
@@ -168,12 +167,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun eliteMachine(
-        variant: HTMachineVariant,
+        machine: ItemLike,
         side: Ingredient,
         core: Ingredient = HTItemMaterialVariant.CIRCUIT.toIngredient(HTCircuitTier.ELITE),
     ) {
         HTShapedRecipeBuilder
-            .misc(variant)
+            .misc(machine)
             .pattern(
                 "AAA",
                 "BCB",

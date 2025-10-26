@@ -4,17 +4,17 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTTypedEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -32,7 +32,6 @@ import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEnti
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
@@ -46,7 +45,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
@@ -122,64 +120,91 @@ object RagiumBlockEntityTypes {
         ::HTNuclearReactorBlockEntity,
     )
 
-    //    Machine    //
+    //    Consumer    //
+
+    // Basic
+    @JvmField
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick("alloy_smelter", ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val MACHINES: Map<HTMachineVariant, HTDeferredBlockEntityType<HTConsumerBlockEntity>> =
-        HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            val factory = when (variant) {
-                // Basic
-                HTMachineVariant.ALLOY_SMELTER -> ::HTAlloySmelterBlockEntity
-                HTMachineVariant.BLOCK_BREAKER -> ::HTBlockBreakerBlockEntity
-                HTMachineVariant.COMPRESSOR -> HTSingleItemInputBlockEntity.createSimple(
-                    RagiumMenuTypes.COMPRESSOR,
-                    SoundEvents.ANVIL_PLACE,
-                    0.25f to 0.5f,
-                    RagiumRecipeTypes.COMPRESSING,
-                    variant,
-                )
-                HTMachineVariant.CUTTING_MACHINE -> ::HTCuttingMachineBlockEntity
-                HTMachineVariant.EXTRACTOR -> HTSingleItemInputBlockEntity.createSimple(
-                    RagiumMenuTypes.EXTRACTOR,
-                    SoundEvents.SPONGE_ABSORB,
-                    1f to 0.5f,
-                    RagiumRecipeTypes.EXTRACTING,
-                    variant,
-                )
-                HTMachineVariant.PULVERIZER -> HTSingleItemInputBlockEntity.createSimple(
-                    RagiumMenuTypes.PULVERIZER,
-                    SoundEvents.GRINDSTONE_USE,
-                    0.25f to 1f,
-                    RagiumRecipeTypes.CRUSHING,
-                    variant,
-                )
+    val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTick("block_breaker", ::HTBlockBreakerBlockEntity)
 
-                // Advanced
-                HTMachineVariant.CRUSHER -> ::HTCrusherBlockEntity
-                HTMachineVariant.MELTER -> ::HTMelterBlockEntity
-                HTMachineVariant.REFINERY -> ::HTRefineryBlockEntity
-                HTMachineVariant.WASHER -> ::HTWasherBlockEntity
-                // Elite
-                HTMachineVariant.BREWERY -> ::HTBreweryBlockEntity
-                HTMachineVariant.MULTI_SMELTER -> ::HTMultiSmelterBlockEntity
-                HTMachineVariant.PLANTER -> ::HTPlanterBlockEntity
-                HTMachineVariant.SIMULATOR -> ::HTSimulatorBlockEntity
-            }
-            registerTick(variant.variantName(), factory)
-        }
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTSingleInputRecipe>> = registerTick(
+        "compressor",
+        HTSingleItemInputBlockEntity.createSimple(
+            SoundEvents.ANVIL_PLACE,
+            0.25f to 0.5f,
+            RagiumRecipeTypes.COMPRESSING,
+        ),
+    )
+
+    @JvmField
+    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(
+        "cutting_machine",
+        ::HTCuttingMachineBlockEntity,
+    )
+
+    @JvmField
+    val EXTRACTOR: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTSingleInputRecipe>> = registerTick(
+        "extractor",
+        HTSingleItemInputBlockEntity.createSimple(
+            SoundEvents.SPONGE_ABSORB,
+            1f to 0.5f,
+            RagiumRecipeTypes.EXTRACTING,
+        ),
+    )
+
+    @JvmField
+    val PULVERIZER: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTItemToChancedItemRecipe>> = registerTick(
+        "pulverizer",
+        HTSingleItemInputBlockEntity.createSimple(
+            SoundEvents.GRINDSTONE_USE,
+            0.25f to 1f,
+            RagiumRecipeTypes.CRUSHING,
+        ),
+    )
+
+    // Advanced
+    @JvmField
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
+
+    @JvmField
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
+
+    @JvmField
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
+
+    @JvmField
+    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = registerTick("washer", ::HTWasherBlockEntity)
+
+    // Elite
+    @JvmField
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick("brewery", ::HTBreweryBlockEntity)
+
+    @JvmField
+    val MULTI_SMELTER: HTDeferredBlockEntityType<HTMultiSmelterBlockEntity> = registerTick("multi_smelter", ::HTMultiSmelterBlockEntity)
+
+    @JvmField
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick("planter", ::HTPlanterBlockEntity)
+
+    @JvmField
+    val SIMULATOR: HTDeferredBlockEntityType<HTSimulatorBlockEntity> = registerTick("simulator", ::HTSimulatorBlockEntity)
+
+    // Ultimate
 
     //    Device    //
 
     // Basic
     @JvmField
     val ITEM_BUFFER: HTDeferredBlockEntityType<HTItemBufferBlockEntity> = registerTick(
-        "item_buffer", 
+        "item_buffer",
         ::HTItemBufferBlockEntity,
     )
 
     @JvmField
     val MILK_COLLECTOR: HTDeferredBlockEntityType<HTMilkCollectorBlockEntity> = registerTick(
-        "milk_collector", 
+        "milk_collector",
         ::HTMilkCollectorBlockEntity,
     )
 
@@ -220,7 +245,7 @@ object RagiumBlockEntityTypes {
     val MOB_CAPTURER: HTDeferredBlockEntityType<HTMobCapturerBlockEntity> = registerTick(
         "mob_capturer",
         ::HTMobCapturerBlockEntity,
-        )
+    )
 
     @JvmField
     val TELEPAD: HTDeferredBlockEntityType<HTTelepadBlockentity> = REGISTER.registerType(
@@ -266,8 +291,6 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        addAll(event, HTMachineVariant.entries)
-
         for (holder: HTDeferredHolder<Block, *> in RagiumBlocks.REGISTER.firstEntries) {
             val block: Block? = holder.get()
             if (block is HTTypedEntityBlock<*>) {
@@ -276,18 +299,6 @@ object RagiumBlockEntityTypes {
         }
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
-    }
-
-    @JvmStatic
-    fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent, type: HTDeferredBlockEntityType<*>, block: HTDeferredBlock<*, *>) {
-        event.modify(type.get(), block.get())
-    }
-
-    @JvmStatic
-    private fun <V : HTVariantKey.WithBlockAndBE<*, *>> addAll(event: BlockEntityTypeAddBlocksEvent, entries: Iterable<V>) {
-        for (variant: V in entries) {
-            addSupportedBlock(event, variant.blockEntityHolder, variant.blockHolder)
-        }
     }
 
     // Capabilities
@@ -303,7 +314,22 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Consumer
-        registerHandlers(event, MACHINES.values)
+        registerHandler(event, ALLOY_SMELTER.get())
+        registerHandler(event, BLOCK_BREAKER.get())
+        registerHandler(event, COMPRESSOR.get())
+        registerHandler(event, CUTTING_MACHINE.get())
+        registerHandler(event, EXTRACTOR.get())
+        registerHandler(event, PULVERIZER.get())
+
+        registerHandler(event, CRUSHER.get())
+        registerHandler(event, MELTER.get())
+        registerHandler(event, REFINERY.get())
+        registerHandler(event, WASHER.get())
+
+        registerHandler(event, BREWERY.get())
+        registerHandler(event, MULTI_SMELTER.get())
+        registerHandler(event, PLANTER.get())
+        registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, ITEM_BUFFER.get())
         registerHandler(event, MILK_COLLECTOR.get())
@@ -319,17 +345,14 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, CEU.get())
         // Storage
-        registerHandlers(event, CRATES.values)
-        registerHandlers(event, DRUMS.values)
-
-        RagiumAPI.LOGGER.info("Registered Block Capabilities!")
-    }
-
-    @JvmStatic
-    private fun registerHandlers(event: RegisterCapabilitiesEvent, types: Iterable<HTDeferredBlockEntityType<out HTBlockEntity>>) {
-        for (type: HTDeferredBlockEntityType<out HTBlockEntity> in types) {
+        for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
             registerHandler(event, type.get())
         }
+        for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
+            registerHandler(event, type.get())
+        }
+
+        RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic

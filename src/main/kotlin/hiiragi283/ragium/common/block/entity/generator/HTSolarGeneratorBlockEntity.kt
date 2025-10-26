@@ -7,17 +7,12 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.roundToInt
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(RagiumBlocks.SOLAR_PANEL_CONTROLLER, pos, state) {
-    override fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
-
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false

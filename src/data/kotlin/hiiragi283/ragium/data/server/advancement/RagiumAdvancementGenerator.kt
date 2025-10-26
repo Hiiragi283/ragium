@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -75,7 +74,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ALLOY_SMELTER,
             RagiumAdvancements.RAGI_ALLOY,
-            HTMachineVariant.ALLOY_SMELTER.blockHolder,
+            RagiumBlocks.ALLOY_SMELTER,
         ) { setGoal() }
 
         createSimple(
@@ -104,7 +103,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.MELTER,
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            HTMachineVariant.MELTER.blockHolder,
+            RagiumBlocks.MELTER,
         ) { setGoal() }
 
         // Elite
@@ -156,7 +155,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.SIMULATOR,
             RagiumAdvancements.AZURE_STEEL,
-            HTMachineVariant.SIMULATOR.blockHolder,
+            RagiumBlocks.SIMULATOR,
         ) { setGoal() }
     }
 

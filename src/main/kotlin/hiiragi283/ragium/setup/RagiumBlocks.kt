@@ -6,27 +6,21 @@ import hiiragi283.ragium.api.block.HTTypedEntityBlock
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
-import hiiragi283.ragium.api.function.BlockWithContextFactory
-import hiiragi283.ragium.api.function.ItemWithContextFactory
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.AzureClusterBlock
 import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
-import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
-import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
@@ -43,7 +37,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
@@ -75,25 +68,6 @@ object RagiumBlocks {
             REGISTER.addFirstAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
         }
     }
-
-    @JvmStatic
-    private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock, ITEM : Item> registerEntity(
-        variant: V,
-        properties: BlockBehaviour.Properties,
-        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
-        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
-    ): HTDeferredBlock<BLOCK, ITEM> = REGISTER.register(
-        variant.blockEntityHolder.getPath(),
-        { blockFactory(variant.blockEntityHolder, properties) },
-        itemFactory,
-    )
-
-    @JvmStatic
-    private fun <V : HTVariantKey.WithBE<*>, BLOCK : HTEntityBlock> registerSimpleEntity(
-        variant: V,
-        properties: BlockBehaviour.Properties,
-        blockFactory: BlockWithContextFactory<HTDeferredBlockEntityType<*>, BLOCK>,
-    ): HTBasicDeferredBlock<BLOCK> = registerEntity(variant, properties, blockFactory, ::HTBlockItem)
 
     @JvmStatic
     fun registerSimpleEntity(
@@ -424,13 +398,68 @@ object RagiumBlocks {
         machineProperty().noOcclusion(),
     )
 
-    //    Machines    //
+    //    Consumer    //
+
+    // Basic
+    @JvmField
+    val ALLOY_SMELTER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("alloy_smelter", RagiumBlockTypes.ALLOY_SMELTER, machineProperty())
 
     @JvmField
-    val MACHINES: Map<HTMachineVariant, HTBasicDeferredBlock<HTHorizontalEntityBlock>> =
-        HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            registerSimpleEntity(variant, machineProperty().noOcclusion(), ::HTHorizontalEntityBlock)
-        }
+    val BLOCK_BREAKER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machineProperty())
+
+    @JvmField
+    val CUTTING_MACHINE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machineProperty())
+
+    @JvmField
+    val COMPRESSOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
+
+    @JvmField
+    val EXTRACTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("extractor", RagiumBlockTypes.EXTRACTOR, machineProperty())
+
+    @JvmField
+    val PULVERIZER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("pulverizer", RagiumBlockTypes.PULVERIZER, machineProperty())
+
+    // Advanced
+    @JvmField
+    val CRUSHER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("crusher", RagiumBlockTypes.CRUSHER, machineProperty())
+
+    @JvmField
+    val MELTER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("melter", RagiumBlockTypes.MELTER, machineProperty().noOcclusion())
+
+    @JvmField
+    val REFINERY: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("refinery", RagiumBlockTypes.REFINERY, machineProperty().noOcclusion())
+
+    @JvmField
+    val WASHER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
+
+    // Elite
+    @JvmField
+    val BREWERY: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("brewery", RagiumBlockTypes.BREWERY, machineProperty())
+
+    @JvmField
+    val MULTI_SMELTER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("multi_smelter", RagiumBlockTypes.MULTI_SMELTER, machineProperty())
+
+    @JvmField
+    val PLANTER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
+
+    @JvmField
+    val SIMULATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> =
+        registerSimpleEntity("simulator", RagiumBlockTypes.SIMULATOR, machineProperty().noOcclusion())
+
+    // Ultimate
 
     //    Parts    //
 

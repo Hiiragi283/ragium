@@ -18,16 +18,12 @@ import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
@@ -41,7 +37,7 @@ import kotlin.math.min
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTMultiSmelterBlockEntity.MultiSmeltingRecipe>(
-        HTMachineVariant.MULTI_SMELTER,
+        RagiumBlocks.MULTI_SMELTER,
         pos,
         state,
     ) {
@@ -68,9 +64,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         )
         return builder.build()
     }
-
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.SMELTER.openMenu(player, title, this, ::writeExtraContainerData)
 
     private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> = RecipeType.SMELTING.createCache()
     private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> = RecipeType.BLASTING.createCache()

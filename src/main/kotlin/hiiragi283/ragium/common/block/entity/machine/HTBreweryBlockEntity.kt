@@ -12,8 +12,8 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
-        HTMachineVariant.BREWERY,
+        RagiumBlocks.BREWERY,
         pos,
         state,
     ) {

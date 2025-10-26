@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedItemOutputBlockEntity.Cached<SingleRecipeInput, HTItemToChancedItemRecipe>(
         RagiumRecipeTypes.CRUSHING,
-        HTMachineVariant.CRUSHER,
+        RagiumBlocks.CRUSHER,
         pos,
         state,
     ) {

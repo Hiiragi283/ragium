@@ -5,11 +5,12 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
@@ -17,8 +18,8 @@ import net.minecraft.world.level.block.state.BlockState
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */
-abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMachineVariant, pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntity(variant, pos, state) {
+abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTConsumerBlockEntity(blockHolder, pos, state) {
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // インプットに一致するレシピを探索する
         val input: INPUT = createRecipeInput(level, pos)
@@ -50,7 +51,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMach
 
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
-    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(variant.energyUsage * getRecipeTime(recipe))
+    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(energyUsage * getRecipeTime(recipe))
 
     protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 
@@ -71,16 +72,16 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(variant: HTMach
      */
     abstract class Cached<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
         private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
-        variant: HTMachineVariant,
+        blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTProcessorBlockEntity<INPUT, RECIPE>(variant, pos, state) {
+    ) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
         constructor(
             finder: HTRecipeFinder<INPUT, RECIPE>,
-            variant: HTMachineVariant,
+            blockHolder: Holder<Block>,
             pos: BlockPos,
             state: BlockState,
-        ) : this(finder.createCache(), variant, pos, state)
+        ) : this(finder.createCache(), blockHolder, pos, state)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }

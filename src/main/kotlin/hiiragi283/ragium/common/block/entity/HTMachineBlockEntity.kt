@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
+import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -9,10 +10,7 @@ import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -35,10 +33,6 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         this.isActive = input.getBoolean("is_active", false)
     }
 
-    override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = openGui(context.player, name)
-
-    protected open fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
-
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)
         upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
@@ -49,7 +43,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     /**
      * このブロックエンティティがtick当たりで生産する電力の値
      */
-    protected abstract val energyUsage: Int
+    val energyUsage: Int = blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
 
     var isActive: Boolean = false
         protected set

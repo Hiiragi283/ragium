@@ -130,6 +130,23 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
+        // Consumers
+        add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.BLOCK_BREAKER, "Block Breaker")
+        add(RagiumBlocks.COMPRESSOR, "Compressor")
+        add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.EXTRACTOR, "Extractor")
+        add(RagiumBlocks.PULVERIZER, "Pulverizer")
+
+        add(RagiumBlocks.CRUSHER, "Crusher")
+        add(RagiumBlocks.MELTER, "Melter")
+        add(RagiumBlocks.REFINERY, "Refinery")
+        add(RagiumBlocks.WASHER, "Washer")
+
+        add(RagiumBlocks.BREWERY, "Brewery")
+        add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
+        add(RagiumBlocks.PLANTER, "Planting Chamber")
+        add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
         add(RagiumBlocks.MILK_COLLECTOR, "Milk Collector")
