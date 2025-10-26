@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.recipe.ingredient
 
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey

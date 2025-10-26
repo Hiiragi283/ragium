@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -17,6 +16,7 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.entity.vehicle.HTMinecart
@@ -35,7 +35,6 @@ import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
@@ -50,6 +49,7 @@ import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents

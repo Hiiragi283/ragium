@@ -4,15 +4,15 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
@@ -52,11 +52,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.RESONANT_DEBRIS)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
-            
+
             add(RagiumBlocks.COMBUSTION_GENERATOR)
-            
+
             add(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
-            
+
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             add(RagiumBlocks.NUCLEAR_REACTOR)
             // Consumers
@@ -78,20 +78,20 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.SIMULATOR)
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
-            
+
             add(RagiumBlocks.ITEM_BUFFER)
             add(RagiumBlocks.MILK_COLLECTOR)
             add(RagiumBlocks.WATER_COLLECTOR)
-            
+
             add(RagiumBlocks.EXP_COLLECTOR)
             add(RagiumBlocks.LAVA_COLLECTOR)
-            
+
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
-            
+
             add(RagiumBlocks.MOB_CAPTURER)
             add(RagiumBlocks.TELEPAD)
-            
+
             add(RagiumBlocks.CEU)
         }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)

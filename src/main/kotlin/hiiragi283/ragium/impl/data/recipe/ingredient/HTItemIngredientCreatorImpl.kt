@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.recipe.ingredient.HTItemIngredientImpl
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet

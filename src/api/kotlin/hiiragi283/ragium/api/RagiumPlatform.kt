@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder

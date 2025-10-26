@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks

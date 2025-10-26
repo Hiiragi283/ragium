@@ -1,16 +1,18 @@
-package hiiragi283.ragium.common.material
+package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 enum class HTBlockMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String?) :
-    HTMaterialVariant.BlockTag {
+    HTMaterialVariant.BlockTag,
+    HTTranslationProvider {
     ORE("%s Ore", "%s鉱石", RagiumConst.ORES),
     DEEP_ORE("Deepslate %s Ore", "深層%s鉱石", null),
     NETHER_ORE("Nether %s Ore", "ネザー%s鉱石", null),

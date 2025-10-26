@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -14,7 +15,7 @@ import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 
-object HTKnifeToolVariant : HTToolVariant {
+object HTKnifeToolVariant : HTToolVariant, HTTranslationProvider {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
         register.register("${material.materialName()}_knife") { _: ResourceLocation ->
             KnifeItem(

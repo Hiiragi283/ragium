@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.variant
 import com.github.ysbbbbbb.kaleidoscopecookery.init.tag.TagMod
 import com.github.ysbbbbbb.kaleidoscopecookery.item.KitchenKnifeItem
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -11,7 +12,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
 
-object HTKitchenKnifeToolVariant : HTToolVariant {
+object HTKitchenKnifeToolVariant : HTToolVariant, HTTranslationProvider {
     override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
         register.registerItemWith("${material.materialName()}_kitchen_knife", tier, ::KitchenKnifeItem)
 

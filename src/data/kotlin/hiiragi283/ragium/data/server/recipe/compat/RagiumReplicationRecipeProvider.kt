@@ -5,12 +5,12 @@ import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.setup.DefaultMatterTypes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

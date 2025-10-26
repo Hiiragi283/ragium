@@ -9,11 +9,11 @@ import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.block.AzureClusterBlock
 import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
@@ -30,12 +30,12 @@ import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity

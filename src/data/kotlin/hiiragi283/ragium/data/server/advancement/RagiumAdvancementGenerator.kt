@@ -6,10 +6,10 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems

@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.function.negate
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.fluid.HTFluidType
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items

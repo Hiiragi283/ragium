@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
@@ -16,17 +15,18 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -108,7 +108,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     private fun fromTriples(triples: Iterable<Triple<HTVariantKey, HTMaterialType, HTHasTranslationKey>>) {
         triples.forEach { (variant: HTVariantKey, material: HTMaterialType, key: HTHasTranslationKey) ->
-            if (material is HTMaterialType.Translatable) {
+            if (variant is HTTranslationProvider && material is HTMaterialType.Translatable) {
                 add(key, material.translate(type, variant))
             }
         }
@@ -186,7 +186,9 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     //    Misc    //
 
-    private enum class MiscVariants(private val enPattern: String, private val jaPattern: String) : HTMaterialVariant {
+    private enum class MiscVariants(private val enPattern: String, private val jaPattern: String) :
+        HTMaterialVariant,
+        HTTranslationProvider {
         // Block
         COIL_BLOCK("%s Coil Block", "%sコイルブロック"),
         LED_BLOCK("%s LED Block", "%sのLEDブロック"),

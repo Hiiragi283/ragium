@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.blockId
@@ -13,9 +12,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents

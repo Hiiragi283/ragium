@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import java.awt.Color
 
 enum class RagiumEssenceType(override val color: Color, private val enName: String, private val jpName: String) :

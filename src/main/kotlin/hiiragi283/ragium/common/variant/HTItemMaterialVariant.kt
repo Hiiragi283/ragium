@@ -1,15 +1,17 @@
-package hiiragi283.ragium.common.material
+package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 enum class HTItemMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String) :
-    HTMaterialVariant.ItemTag {
+    HTMaterialVariant.ItemTag,
+    HTTranslationProvider {
     // Item - Common
     DUST("%s Dust", "%sの粉", RagiumConst.DUSTS),
     GEM("%s", "%s", RagiumConst.GEMS),

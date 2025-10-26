@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
-import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import java.awt.Color
 
 /**
@@ -17,7 +17,7 @@ interface HTMaterialType {
     interface Translatable :
         HTMaterialType,
         HTTranslatedNameProvider {
-        fun translate(type: HTLanguageType, variant: HTVariantKey): String = variant.translate(type, getTranslatedName(type))
+        fun translate(type: HTLanguageType, provider: HTTranslationProvider): String = provider.translate(type, getTranslatedName(type))
     }
 
     /**

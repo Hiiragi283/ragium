@@ -3,12 +3,12 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.core.RegistrySetBuilder

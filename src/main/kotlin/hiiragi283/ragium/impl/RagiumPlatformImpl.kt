@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
@@ -14,10 +13,11 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeType
 import hiiragi283.ragium.impl.util.RandomSourceWrapper

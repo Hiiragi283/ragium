@@ -1,18 +1,19 @@
-package hiiragi283.ragium.common.material
+package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.api.tag.createTagKey
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 enum class HTMekMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String) :
-    HTMaterialVariant.ItemTag {
+    HTMaterialVariant.ItemTag, HTTranslationProvider {
     // Common
     DIRTY_DUST("Dirty %s Dust", "汚れた%sの粉", "dirty_dusts"),
     CLUMP("%s Clump", "%sの塊", "clumps"),

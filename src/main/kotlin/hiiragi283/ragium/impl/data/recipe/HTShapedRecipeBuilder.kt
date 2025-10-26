@@ -2,8 +2,8 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack

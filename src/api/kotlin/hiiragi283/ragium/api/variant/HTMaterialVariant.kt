@@ -1,6 +1,6 @@
-package hiiragi283.ragium.api.material
+package hiiragi283.ragium.api.variant
 
-import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.api.material.HTMaterialType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient

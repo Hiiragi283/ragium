@@ -3,8 +3,8 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
