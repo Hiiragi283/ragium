@@ -18,25 +18,22 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 
-abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*>, pos: BlockPos, state: BlockState) :
+abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(
-        variant,
+        blockHolder,
         pos,
         state,
     ),
@@ -47,12 +44,12 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*>, pos: B
             itemValueGetter: (ImmutableItemStack) -> Int,
             fuelContent: HTFluidContent<*, *, *>,
             fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
-            variant: HTGeneratorVariant<*>,
+            blockHolder: Holder<Block>,
         ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory {
             pos: BlockPos,
             state: BlockState,
             ->
-            Simple(itemValueGetter, fuelContent, fluidAmountGetter, variant, pos, state)
+            Simple(itemValueGetter, fuelContent, fluidAmountGetter, blockHolder, pos, state)
         }
     }
 
@@ -100,9 +97,6 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*>, pos: B
         return builder.build()
     }
 
-    override fun openGui(player: Player, title: Component): InteractionResult =
-        RagiumMenuTypes.FUEL_GENERATOR.openMenu(player, title, this, ::writeExtraContainerData)
-
     //    Ticking    //
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -139,10 +133,10 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*>, pos: B
         private val itemValueGetter: (ImmutableItemStack) -> Int,
         private val fuelContent: HTFluidContent<*, *, *>,
         private val fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
-        variant: HTGeneratorVariant<*>,
+        blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTFuelGeneratorBlockEntity(variant, pos, state) {
+    ) : HTFuelGeneratorBlockEntity(blockHolder, pos, state) {
         override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
         override fun getFuelStack(value: Int): ImmutableFluidStack = fuelContent.toStorageStack(value)

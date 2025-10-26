@@ -20,20 +20,13 @@ enum class HTArmorVariant(
     private val armorType: ArmorItem.Type,
     private val enUsPattern: String,
     private val jaJpPattern: String,
-    override val tagKeys: Iterable<TagKey<Item>>,
-) : HTVariantKey.WithTag<Item> {
+    val tagKey: TagKey<Item>,
+) : HTVariantKey {
     HELMET(ArmorItem.Type.HELMET, "%s Helmet", "%sのヘルメット", ItemTags.HEAD_ARMOR),
     CHESTPLATE(ArmorItem.Type.CHESTPLATE, "%s Chestplate", "%sのチェストプレート", ItemTags.CHEST_ARMOR),
     LEGGINGS(ArmorItem.Type.LEGGINGS, "%s Leggings", "%sのレギンス", ItemTags.LEG_ARMOR),
     BOOTS(ArmorItem.Type.BOOTS, "%s Boots", "%sのブーツ", ItemTags.FOOT_ARMOR),
     ;
-
-    constructor(
-        armorType: ArmorItem.Type,
-        enUsPattern: String,
-        jaJpPattern: String,
-        tagKey: TagKey<Item>,
-    ) : this(armorType, enUsPattern, jaJpPattern, listOf(tagKey))
 
     companion object {
         val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTVanillaMaterialType, Item> = buildTable {

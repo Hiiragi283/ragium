@@ -1,26 +1,32 @@
 package hiiragi283.ragium.common.block.entity.generator
 
+import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.energy.HTBasicEnergyStorage
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
  * 電力を生産する設備に使用される[HTMachineBlockEntity]の拡張クラス
  */
-abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant<*>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(variant.blockHolder, pos, state) {
+abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(blockHolder, pos, state) {
     //    Ticking    //
 
-    override val energyUsage: Int = variant.energyRate
+    override val energyUsage: Int = blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
 
     //    Energy Storage    //
 
-    protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.output(::setOnlySave, 16_000)
+    protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.output(
+        ::setOnlySave,
+        blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getCapacity(),
+    )
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

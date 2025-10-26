@@ -37,7 +37,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = openGui(context.player, name)
 
-    protected abstract fun openGui(player: Player, title: Component): InteractionResult
+    protected open fun openGui(player: Player, title: Component): InteractionResult = InteractionResult.PASS
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {
         super.dropInventory(consumer)

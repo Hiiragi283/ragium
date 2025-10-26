@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -25,7 +26,6 @@ import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
@@ -46,7 +46,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
@@ -63,7 +62,7 @@ object RagiumBlockEntityTypes {
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
 
-        eventBus.addListener(::addSupportedBlock)
+        eventBus.addListener(::addSupportedBlocks)
         eventBus.addListener(::registerBlockCapabilities)
     }
 
@@ -74,19 +73,19 @@ object RagiumBlockEntityTypes {
     //    Generator    //
 
     @JvmField
-    val THERMAL: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Fuel.THERMAL,
+    val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
+        "thermal_generator",
         HTFuelGeneratorBlockEntity.createSimple(
             { stack: ImmutableItemStack -> stack.stack.getBurnTime(null) / 10 },
             HTFluidContent.LAVA,
             RagiumDataMaps.INSTANCE::getThermalFuel,
-            HTGeneratorVariant.Fuel.THERMAL,
+            RagiumBlocks.THERMAL_GENERATOR,
         ),
     )
 
     @JvmField
-    val COMBUSTION: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Fuel.COMBUSTION,
+    val COMBUSTION_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
+        "combustion_generator",
         HTFuelGeneratorBlockEntity.createSimple(
             { stack: ImmutableItemStack ->
                 when {
@@ -96,46 +95,27 @@ object RagiumBlockEntityTypes {
             },
             RagiumFluidContents.CRUDE_OIL,
             RagiumDataMaps.INSTANCE::getCombustionFuel,
-            HTGeneratorVariant.Fuel.COMBUSTION,
+            RagiumBlocks.COMBUSTION_GENERATOR,
         ),
     )
 
     @JvmField
-    val ENCHANTMENT: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Fuel.ENCHANTMENT,
+    val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
+        "enchantment_generator",
         ::HTEnchGeneratorBlockEntity,
     )
 
     @JvmField
-    val SOLAR: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = generator(
-        HTGeneratorVariant.Solar,
+    val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = registerTick(
+        "solar_panel_controller",
         ::HTSolarGeneratorBlockEntity,
     )
 
     @JvmField
-    val NUCLEAR: HTDeferredBlockEntityType<HTNuclearReactorBlockEntity> = generator(
-        HTGeneratorVariant.Nuclear,
+    val NUCLEAR_REACTOR: HTDeferredBlockEntityType<HTNuclearReactorBlockEntity> = registerTick(
+        "nuclear_reactor",
         ::HTNuclearReactorBlockEntity,
     )
-
-    @JvmField
-    val GENERATORS: List<HTDeferredBlockEntityType<out HTGeneratorBlockEntity>> = listOf(
-        // Basic
-        THERMAL,
-        // Advanced
-        COMBUSTION,
-        SOLAR,
-        // Elite
-        NUCLEAR,
-        // Ultimate
-        ENCHANTMENT,
-    )
-
-    @JvmStatic
-    private fun <BE : HTGeneratorBlockEntity> generator(
-        variant: HTGeneratorVariant<BE>,
-        factory: HTBlockEntityFactory<BE>,
-    ): HTDeferredBlockEntityType<BE> = registerTick(variant.variantName(), factory)
 
     //    Machine    //
 
@@ -242,34 +222,49 @@ object RagiumBlockEntityTypes {
 
     // Supported Blocks
     @JvmStatic
-    private fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
-        addAll(event, HTGeneratorVariant.entries)
+    private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
+        addSupportedBlock(event, THERMAL_GENERATOR, RagiumBlocks.THERMAL_GENERATOR)
+        addSupportedBlock(event, COMBUSTION_GENERATOR, RagiumBlocks.COMBUSTION_GENERATOR)
+        addSupportedBlock(event, ENCHANTMENT_GENERATOR, RagiumBlocks.ENCHANTMENT_GENERATOR)
+        addSupportedBlock(event, SOLAR_PANEL_CONTROLLER, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+        addSupportedBlock(event, NUCLEAR_REACTOR, RagiumBlocks.NUCLEAR_REACTOR)
+
         addAll(event, HTMachineVariant.entries)
 
         addAll(event, HTDeviceVariant.entries)
 
         // Storage
-        for (tier: HTCrateTier in HTCrateTier.entries) {
-            event.modify(tier.getBlockEntityType().get(), tier.getBlock().get())
+        for ((tier: HTCrateTier, type: HTDeferredBlockEntityType<HTCrateBlockEntity>) in CRATES) {
+            addSupportedBlock(event, type, tier.getBlock())
         }
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            event.modify(tier.getBlockEntityType().get(), tier.getBlock().get())
+        for ((tier: HTDrumTier, type: HTDeferredBlockEntityType<HTDrumBlockEntity>) in DRUMS) {
+            addSupportedBlock(event, type, tier.getBlock())
         }
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @JvmStatic
+    fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent, type: HTDeferredBlockEntityType<*>, block: HTDeferredBlock<*, *>) {
+        event.modify(type.get(), block.get())
+    }
+
+    @JvmStatic
     private fun <V : HTVariantKey.WithBlockAndBE<*, *>> addAll(event: BlockEntityTypeAddBlocksEvent, entries: Iterable<V>) {
         for (variant: V in entries) {
-            event.modify(variant.getBlockEntityType(), variant.getBlock())
+            addSupportedBlock(event, variant.blockEntityHolder, variant.blockHolder)
         }
     }
 
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        registerHandlers(event, GENERATORS)
+        registerHandler(event, THERMAL_GENERATOR.get())
+        registerHandler(event, COMBUSTION_GENERATOR.get())
+        registerHandler(event, ENCHANTMENT_GENERATOR.get())
+        registerHandler(event, SOLAR_PANEL_CONTROLLER.get())
+        registerHandler(event, NUCLEAR_REACTOR.get())
+
         registerHandlers(event, MACHINES.values)
 
         registerHandlers(event, DEVICES.values)
@@ -283,22 +278,26 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerHandlers(event: RegisterCapabilitiesEvent, types: Iterable<HTDeferredBlockEntityType<out HTBlockEntity>>) {
         for (type: HTDeferredBlockEntityType<out HTBlockEntity> in types) {
-            val type1: BlockEntityType<out HTBlockEntity> = type.get()
-            event.registerBlockEntity(
-                RagiumCapabilities.ITEM.blockCapability(),
-                type1,
-                HTHandlerProvider::getItemHandler,
-            )
-            event.registerBlockEntity(
-                RagiumCapabilities.FLUID.blockCapability(),
-                type1,
-                HTHandlerProvider::getFluidHandler,
-            )
-            event.registerBlockEntity(
-                RagiumCapabilities.ENERGY.blockCapability(),
-                type1,
-                HTHandlerProvider::getEnergyStorage,
-            )
+            registerHandler(event, type.get())
         }
+    }
+
+    @JvmStatic
+    private fun registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<out HTBlockEntity>) {
+        event.registerBlockEntity(
+            RagiumCapabilities.ITEM.blockCapability(),
+            type,
+            HTHandlerProvider::getItemHandler,
+        )
+        event.registerBlockEntity(
+            RagiumCapabilities.FLUID.blockCapability(),
+            type,
+            HTHandlerProvider::getFluidHandler,
+        )
+        event.registerBlockEntity(
+            RagiumCapabilities.ENERGY.blockCapability(),
+            type,
+            HTHandlerProvider::getEnergyStorage,
+        )
     }
 }

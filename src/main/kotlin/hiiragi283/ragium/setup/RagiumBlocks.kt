@@ -1,6 +1,8 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTSimpleTypedEntityBlock
+import hiiragi283.ragium.api.block.HTTypedEntityBlock
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.function.BlockWithContextFactory
@@ -41,7 +43,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -369,51 +370,33 @@ object RagiumBlocks {
     //    Generators    //
 
     @JvmField
-    val THERMAL_GENERATOR: HTBasicDeferredBlock<HTEntityBlock> = registerSimpleEntity(
-        HTGeneratorVariant.Fuel.THERMAL,
-        machineProperty().noOcclusion(),
-        ::HTHorizontalEntityBlock,
+    val THERMAL_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+        "thermal_generator",
+        { HTTypedEntityBlock(RagiumBlockTypes.THERMAL_GENERATOR, machineProperty().noOcclusion()) },
     )
 
     @JvmField
-    val COMBUSTION_GENERATOR: HTBasicDeferredBlock<HTEntityBlock> = registerSimpleEntity(
-        HTGeneratorVariant.Fuel.COMBUSTION,
-        machineProperty().noOcclusion(),
-        ::HTHorizontalEntityBlock,
+    val COMBUSTION_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+        "combustion_generator",
+        { HTTypedEntityBlock(RagiumBlockTypes.COMBUSTION_GENERATOR, machineProperty().noOcclusion()) },
     )
 
     @JvmField
-    val ENCHANTMENT_GENERATOR: HTBasicDeferredBlock<HTEntityBlock> = registerSimpleEntity(
-        HTGeneratorVariant.Fuel.ENCHANTMENT,
-        machineProperty().noOcclusion(),
-        ::HTHorizontalEntityBlock,
+    val ENCHANTMENT_GENERATOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+        "enchantment_generator",
+        { HTTypedEntityBlock(RagiumBlockTypes.ENCHANTMENT_GENERATOR, machineProperty().noOcclusion()) },
     )
 
     @JvmField
-    val SOLAR_PANEL_CONTROLLER: HTBasicDeferredBlock<HTEntityBlock> = registerSimpleEntity(
-        HTGeneratorVariant.Solar,
-        machineProperty().noOcclusion(),
-        HTEntityBlock::Simple,
+    val SOLAR_PANEL_CONTROLLER: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+        "solar_panel_controller",
+        { HTTypedEntityBlock(RagiumBlockTypes.SOLAR_PANEL_CONTROLLER, machineProperty().noOcclusion()) },
     )
 
     @JvmField
-    val NUCLEAR_REACTOR: HTBasicDeferredBlock<HTEntityBlock> = registerSimpleEntity(
-        HTGeneratorVariant.Nuclear,
-        machineProperty().noOcclusion(),
-        HTEntityBlock::Simple,
-    )
-
-    @JvmField
-    val GENERATORS: List<HTBasicDeferredBlock<HTEntityBlock>> = listOf(
-        // Basic
-        THERMAL_GENERATOR,
-        // Advanced
-        COMBUSTION_GENERATOR,
-        SOLAR_PANEL_CONTROLLER,
-        // Elite
-        NUCLEAR_REACTOR,
-        // Ultimate
-        ENCHANTMENT_GENERATOR,
+    val NUCLEAR_REACTOR: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(
+        "nuclear_reactor",
+        { HTTypedEntityBlock(RagiumBlockTypes.NUCLEAR_REACTOR, machineProperty().noOcclusion()) },
     )
 
     //    Machines    //

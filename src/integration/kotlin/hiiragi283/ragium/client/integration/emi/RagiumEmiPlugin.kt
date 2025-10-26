@@ -13,6 +13,8 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
@@ -43,7 +45,6 @@ import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -143,10 +144,21 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
-        val thermalCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.Fuel.THERMAL, RagiumDataMaps.THERMAL_FUEL)
-        val combustionCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.Fuel.COMBUSTION, RagiumDataMaps.COMBUSTION_FUEL)
+        val thermalUsage: Int = RagiumBlocks.THERMAL_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
+        val combustionUsage: Int = RagiumBlocks.COMBUSTION_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
+
+        val thermalCategory: HTEmiRecipeCategory = addFuelRecipes(
+            registry,
+            RagiumRecipeViewerTypes.THERMAL,
+            RagiumDataMaps.THERMAL_FUEL,
+            thermalUsage,
+        )
+        val combustionCategory: HTEmiRecipeCategory = addFuelRecipes(
+            registry,
+            RagiumRecipeViewerTypes.COMBUSTION,
+            RagiumDataMaps.COMBUSTION_FUEL,
+            combustionUsage,
+        )
 
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
 
@@ -162,7 +174,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
                     key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
                         HTEmiFluidFuelData(
-                            (HTGeneratorVariant.Fuel.THERMAL.energyRate * lavaLevel).toInt(),
+                            (thermalUsage * lavaLevel).toInt(),
                             itemRegistry.getOrThrow(key).toEmi(),
                             lavaInput,
                         )
@@ -174,11 +186,7 @@ class RagiumEmiPlugin : EmiPlugin {
             HTFuelGeneratorEmiRecipe(
                 combustionCategory,
                 id,
-                HTEmiFluidFuelData(
-                    HTGeneratorVariant.Fuel.COMBUSTION.energyRate,
-                    ItemTags.COALS.toEmi(),
-                    RagiumFluidContents.CRUDE_OIL.toFluidEmi(100),
-                ),
+                HTEmiFluidFuelData(combustionUsage, ItemTags.COALS.toEmi(), RagiumFluidContents.CRUDE_OIL.toFluidEmi(100)),
             )
         }
     }
@@ -321,10 +329,10 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addFuelRecipes(
         registry: EmiRegistry,
-        variant: HTGeneratorVariant<*>,
+        viewerType: HTRecipeViewerType<HTEmiFluidFuelData>,
         dataMapType: DataMapType<Fluid, HTFluidFuelData>,
+        energyRate: Int,
     ): HTEmiRecipeCategory {
-        val viewerType: HTRecipeViewerType<HTEmiFluidFuelData> = RagiumRecipeViewerTypes.getGenerator(variant)
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
         return addCategoryAndRecipes(
             registry,
@@ -334,7 +342,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 .map { (key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) ->
                     key.location().withPrefix("/${dataMapType.id().path}/") to
                         HTEmiFluidFuelData(
-                            variant.energyRate,
+                            energyRate,
                             EmiStack.EMPTY,
                             fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
                         )

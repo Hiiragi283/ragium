@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFuelGeneratorBlockEntity(
-        HTGeneratorVariant.Nuclear,
+        RagiumBlocks.NUCLEAR_REACTOR,
         pos,
         state,
     ) {

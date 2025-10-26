@@ -1,8 +1,14 @@
 package hiiragi283.ragium.api.block.type
 
+import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTTierBlockAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType.Builder.Impl
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.api.tier.HTTierProvider
 import java.util.function.BiFunction
+import java.util.function.IntSupplier
 import java.util.function.Supplier
 
 /**
@@ -24,6 +30,14 @@ open class HTEntityBlockType(private val blockEntityTypeGetter: Supplier<HTDefer
         private val blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>,
         factory: BiFunction<Supplier<HTDeferredBlockEntityType<*>>, BlockAttributeMap, TYPE>,
     ) : HTBlockType.Builder<TYPE, BUILDER>({ map: BlockAttributeMap -> factory.apply(blockEntityTypeGetter, map) }) {
+        fun <C> addMenu(type: Supplier<HTDeferredMenuType.WithContext<*, C>>): BUILDER = add(HTMenuBlockAttribute(type))
+
+        fun addEnergy(capacity: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(capacity))
+
+        fun addEnergy(capacity: IntSupplier, usage: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(capacity, usage))
+
+        fun <TIER : HTTierProvider> addTier(tier: TIER): BUILDER = add(HTTierBlockAttribute(tier))
+
         //    Impl    //
 
         class Impl<TYPE : HTEntityBlockType>(

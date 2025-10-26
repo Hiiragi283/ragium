@@ -10,26 +10,27 @@ import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
-    // Generator
+    // Machine
     @JvmField
-    val generatorEnergyRate: Map<HTGeneratorVariant<*>, HTIntConfigValue>
+    val energyCapacity: Map<HTMachineTier, HTIntConfigValue>
 
+    @JvmField
+    val energyRate: Map<HTMachineTier, HTIntConfigValue>
+
+    @JvmField
+    val energyUsage: Map<HTMachineTier, HTIntConfigValue>
+
+    // Generator
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
 
-    // Machine
-    @JvmField
-    val machineEnergyCapacity: Map<HTMachineVariant, HTIntConfigValue>
-
-    @JvmField
-    val machineEnergyUsage: Map<HTMachineVariant, HTIntConfigValue>
-
+    // Consumer
     @JvmField
     val breweryTankCapacity: HTIntConfigValue
 
@@ -104,31 +105,31 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     init {
         // Generator
         builder.push("generator")
-        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant<*> ->
-            val name: String = variant.variantName()
-            builder.push(name)
-            // Energy Rate
-            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", variant.tier.generatorRate)
-            builder.pop()
-            value
-        }
         generatorInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
         // Machine
         builder.push("machine")
-        machineEnergyCapacity = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            val name: String = variant.variantName()
+        energyCapacity = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
             builder.push(name)
             // Energy Capacity
-            val value: HTIntConfigValue = builder.definePositiveInt("energyCapacity", variant.tier.batteryCapacity)
+            val value: HTIntConfigValue = builder.definePositiveInt("energyCapacity", tier.batteryCapacity)
             builder.pop()
             value
         }
-        machineEnergyUsage = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            val name: String = variant.variantName()
+        energyRate = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
             builder.push(name)
-            // Energy Usage
-            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", variant.tier.processorRate)
+            // Energy Rate
+            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", tier.generatorRate)
+            builder.pop()
+            value
+        }
+        energyUsage = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
+            builder.push(name)
+            // Energy Rate
+            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", tier.processorRate)
             builder.pop()
             value
         }

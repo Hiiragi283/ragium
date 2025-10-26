@@ -54,7 +54,10 @@ sealed class HTDeferredMenuType<MENU : AbstractContainerMenu, TYPE : MenuType<ME
          * @param title このGUIのタイトル
          * @return [get]の戻り値が[HTContainerFactory]を継承していない場合は`null`
          */
-        fun getProvider(title: Component, context: C): MenuProvider = SimpleMenuProvider(get().create(context), title)
+        fun getProvider(title: Component, obj: Any): MenuProvider? {
+            val constructor: MenuConstructor = get().createUnchecked(obj) ?: return null
+            return SimpleMenuProvider(constructor, title)
+        }
 
         /**
          * 指定された[player], [title], [context]からGUIを開きます。
@@ -67,14 +70,15 @@ sealed class HTDeferredMenuType<MENU : AbstractContainerMenu, TYPE : MenuType<ME
         fun openMenu(
             player: Player,
             title: Component,
-            context: C,
+            obj: Any,
             writer: (RegistryFriendlyByteBuf) -> Unit,
-        ): InteractionResult = when {
-            player.level().isClientSide -> InteractionResult.SUCCESS
-            else -> {
-                val provider: MenuProvider = getProvider(title, context)
+        ): InteractionResult {
+            if (player.level().isClientSide) {
+                return InteractionResult.SUCCESS
+            } else {
+                val provider: MenuProvider = getProvider(title, obj) ?: return InteractionResult.FAIL
                 player.openMenu(provider, writer)
-                InteractionResult.CONSUME
+                return InteractionResult.CONSUME
             }
         }
     }

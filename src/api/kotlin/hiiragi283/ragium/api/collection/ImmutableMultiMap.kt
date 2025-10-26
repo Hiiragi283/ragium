@@ -53,6 +53,11 @@ value class ImmutableMultiMap<K : Any, V : Any>(private val multimap: Multimap<K
             return this
         }
 
+        fun putAll(map: Map<K, V>): Builder<K, V> {
+            map.forEach { (key: K, value: V) -> this.values.put(key, value) }
+            return this
+        }
+
         fun putAll(multiMap: ImmutableMultiMap<K, V>): Builder<K, V> {
             multiMap.forEach { (key: K, value: V) -> this.values.put(key, value) }
             return this

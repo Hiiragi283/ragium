@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import java.util.function.UnaryOperator
 
+typealias HTSimpleTypedEntityBlock = HTTypedEntityBlock<HTEntityBlockType>
+
 /**
  * @see mekanism.common.block.prefab.BlockTile
  */

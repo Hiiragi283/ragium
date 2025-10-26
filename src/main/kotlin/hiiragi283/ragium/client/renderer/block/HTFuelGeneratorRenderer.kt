@@ -23,7 +23,7 @@ class HTFuelGeneratorRenderer(context: BlockEntityRendererProvider.Context) :
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        val renderType: RenderType = model.renderType(blockEntity.variant) ?: return
+        val renderType: RenderType = model.renderType(blockEntity.blockHolder)
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
         poseStack.scale(-1f, -1f, 1f)

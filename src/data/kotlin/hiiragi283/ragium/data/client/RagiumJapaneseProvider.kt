@@ -118,6 +118,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.STONE_CASING, "石材筐体")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "強化石材筐体")
         add(RagiumBlocks.WOODEN_CASING, "木材筐体")
+        // Generators
+        add(RagiumBlocks.THERMAL_GENERATOR, "火力発電機")
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
+
+        add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "太陽光パネルコントローラー")
+        add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
     }
 
     private fun enchantment() {

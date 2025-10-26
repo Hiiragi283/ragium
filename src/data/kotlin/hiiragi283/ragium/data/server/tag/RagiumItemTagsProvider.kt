@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
@@ -237,16 +238,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.STRIKE_ENCHANTABLE)
         // Armors
-        for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.AZURE_ARMORS) {
-            for (tagKey: TagKey<Item> in variant.tagKeys) {
-                builder.add(tagKey, armor)
-            }
-        }
-        for ((variant: HTArmorVariant, armor: HTHolderLike) in RagiumItems.DEEP_ARMORS) {
-            for (tagKey: TagKey<Item> in variant.tagKeys) {
-                builder.add(tagKey, armor)
-            }
-        }
+        buildMultiMap {
+            putAll(RagiumItems.AZURE_ARMORS)
+            putAll(RagiumItems.DEEP_ARMORS)
+        }.forEach { (variant: HTArmorVariant, armor: HTHolderLike) -> builder.add(variant.tagKey, armor) }
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
             for (tagKey: TagKey<Item> in variant.tagKeys) {

@@ -37,8 +37,8 @@ import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -221,14 +221,14 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         // Item
-        for ((fuel: HTGeneratorVariant.Fuel, renderer: HTFuelGeneratorItemRenderer) in HTFuelGeneratorItemRenderer.RENDERERS) {
-            event.registerItem(
-                object : IClientItemExtensions {
-                    override fun getCustomRenderer(): HTFuelGeneratorItemRenderer = renderer
-                },
-                fuel.asItem(),
-            )
-        }
+        event.registerItem(
+            object : IClientItemExtensions {
+                override fun getCustomRenderer(): HTFuelGeneratorItemRenderer = HTFuelGeneratorItemRenderer
+            },
+            RagiumBlocks.THERMAL_GENERATOR.asItem(),
+            RagiumBlocks.COMBUSTION_GENERATOR.asItem(),
+            RagiumBlocks.ENCHANTMENT_GENERATOR.asItem(),
+        )
 
         RagiumAPI.LOGGER.info("Registered client extensions!")
     }
@@ -272,7 +272,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerClientReloadListeners(event: RegisterClientReloadListenersEvent) {
-        HTFuelGeneratorItemRenderer.RENDERERS.values.forEach(event::registerReloadListener)
+        event.registerReloadListener(HTFuelGeneratorItemRenderer)
 
         RagiumAPI.LOGGER.info("Registered Client Reload Listeners!")
     }
@@ -283,9 +283,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(HTMachineVariant.REFINERY.getBlockEntityType(), ::HTRefineryRenderer)
         event.registerBlockEntityRenderer(HTMachineVariant.WASHER.getBlockEntityType(), ::HTSingleFluidMachineRenderer)
 
-        for (fuel: HTGeneratorVariant.Fuel in HTGeneratorVariant.Fuel.entries) {
-            event.registerBlockEntityRenderer(fuel.getBlockEntityType(), ::HTFuelGeneratorRenderer)
-        }
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL_GENERATOR.get(), ::HTFuelGeneratorRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 
         for (tier: HTCrateTier in HTCrateTier.entries) {
             event.registerBlockEntityRenderer(tier.getBlockEntityType().get(), ::HTCrateRenderer)

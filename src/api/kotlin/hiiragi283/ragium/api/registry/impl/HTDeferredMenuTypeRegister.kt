@@ -27,14 +27,28 @@ class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuTyp
      * @param decoder [RegistryFriendlyByteBuf]から[C]に変換するブロック
      * @return 登録された[MenuType]の[HTDeferredMenuType.WithContext]
      */
+    inline fun <MENU : AbstractContainerMenu, reified C : Any> registerType(
+        name: String,
+        factory: HTContainerFactory<MENU, C>,
+        decoder: Function<RegistryFriendlyByteBuf?, C>,
+    ): HTDeferredMenuType.WithContext<MENU, C> = registerType(C::class.java, name, factory, decoder)
+
+    /**
+     * 指定された引数から[HTMenuTypeWithContext]を登録します。
+     * @param MENU メニューのクラス
+     * @param C コンテキストのクラス
+     * @param decoder [RegistryFriendlyByteBuf]から[C]に変換するブロック
+     * @return 登録された[MenuType]の[HTDeferredMenuType.WithContext]
+     */
     fun <MENU : AbstractContainerMenu, C : Any> registerType(
+        clazz: Class<C>,
         name: String,
         factory: HTContainerFactory<MENU, C>,
         decoder: Function<RegistryFriendlyByteBuf?, C>,
     ): HTDeferredMenuType.WithContext<MENU, C> {
         val holder = HTDeferredMenuType.WithContext<MENU, C>(createId(name))
         register(name) { _: ResourceLocation ->
-            HTMenuTypeWithContext(factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
+            HTMenuTypeWithContext(clazz, factory) { containerId: Int, inventory: Inventory, buf: RegistryFriendlyByteBuf? ->
                 factory.create(containerId, inventory, decoder.apply(buf))
             }
         }

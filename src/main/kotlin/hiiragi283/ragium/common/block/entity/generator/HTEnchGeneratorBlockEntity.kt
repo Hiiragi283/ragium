@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -15,7 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFuelGeneratorBlockEntity(HTGeneratorVariant.Fuel.ENCHANTMENT, pos, state) {
+    HTFuelGeneratorBlockEntity(RagiumBlocks.ENCHANTMENT_GENERATOR, pos, state) {
     override fun getFuelValue(stack: ImmutableItemStack): Int {
         if (!stack.isOf(Items.ENCHANTED_BOOK)) return 0
         return EnchantmentHelper

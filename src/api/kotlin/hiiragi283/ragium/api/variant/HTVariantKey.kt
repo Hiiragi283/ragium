@@ -3,9 +3,6 @@ package hiiragi283.ragium.api.variant
 import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
-import net.minecraft.tags.TagKey
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -18,13 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType
  */
 interface HTVariantKey : HTTranslationProvider {
     fun variantName(): String
-
-    /**
-     * [TagKey]を保持する[HTVariantKey]の拡張インターフェース
-     */
-    interface WithTag<TYPE : Any> : HTVariantKey {
-        val tagKeys: Iterable<TagKey<TYPE>>
-    }
 
     /**
      * [Block]を保持する[HTVariantKey]の拡張インターフェース
@@ -55,12 +45,4 @@ interface HTVariantKey : HTTranslationProvider {
     interface WithBlockAndBE<BLOCK : Block, BE : BlockEntity> :
         WithBlock<BLOCK>,
         WithBE<BE>
-
-    /**
-     * [Entity]を保持する[HTVariantKey]の拡張インターフェース
-     * @param ENTITY [Entity]のクラス
-     */
-    interface WithEntity<ENTITY : Entity> : HTVariantKey {
-        val entityHolder: HTDeferredEntityType<out ENTITY>
-    }
 }

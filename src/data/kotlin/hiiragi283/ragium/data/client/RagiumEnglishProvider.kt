@@ -122,6 +122,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.STONE_CASING, "Stone Casing")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
         add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
+        // Generators
+        add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
+
+        add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "Solar Panel Controller")
+        add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
     }
 
     private fun enchantment() {

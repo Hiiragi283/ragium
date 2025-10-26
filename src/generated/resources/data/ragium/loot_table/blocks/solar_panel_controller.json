@@ -22,11 +22,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:solar_generator"
+          "name": "ragium:solar_panel_controller"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/solar_generator"
+  "random_sequence": "ragium:blocks/solar_panel_controller"
 }

@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.resources.ResourceLocation
@@ -42,13 +41,6 @@ object RagiumRecipeViewerTypes {
 
     @JvmField
     val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
-
-    @JvmStatic
-    fun getGenerator(variant: HTGeneratorVariant<*>): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
-        HTGeneratorVariant.Fuel.THERMAL -> THERMAL
-        HTGeneratorVariant.Fuel.COMBUSTION -> COMBUSTION
-        else -> error("Unsupported variant: ${variant.variantName()}")
-    }
 
     //    Machines    //
 

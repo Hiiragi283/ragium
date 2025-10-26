@@ -34,8 +34,8 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
     SIMULATOR(HTMachineTier.ELITE, "Simulation Chamber", "シミュレーション室"),
     ;
 
-    val energyCapacity: Int get() = RagiumConfig.COMMON.machineEnergyCapacity[this]!!.asInt
-    val energyUsage: Int get() = RagiumConfig.COMMON.machineEnergyUsage[this]!!.asInt
+    val energyCapacity: Int get() = RagiumConfig.COMMON.energyCapacity[this.tier]!!.asInt
+    val energyUsage: Int get() = RagiumConfig.COMMON.energyUsage[this.tier]!!.asInt
 
     override val blockHolder: HTBasicDeferredBlock<HTHorizontalEntityBlock> by lazy { RagiumBlocks.MACHINES[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTConsumerBlockEntity> by lazy { RagiumBlockEntityTypes.MACHINES[this]!! }

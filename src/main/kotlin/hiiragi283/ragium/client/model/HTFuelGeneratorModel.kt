@@ -3,14 +3,15 @@ package hiiragi283.ragium.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.renderer.RenderType
+import net.minecraft.core.Holder
 import net.minecraft.util.Mth
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -73,10 +74,9 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
         bellow = BELLOW.getChild(root)
     }
 
-    fun renderType(variant: HTGeneratorVariant<*>): RenderType? = when (variant) {
-        is HTGeneratorVariant.Fuel -> RagiumAPI.id("textures/entity/${variant.variantName()}.png")
-        else -> null
-    }?.let(this::renderType)
+    fun renderType(holder: Holder<*>): RenderType = renderType(HTHolderLike.fromHolder(holder))
+
+    fun renderType(holder: HTHolderLike): RenderType = renderType(RagiumAPI.id("textures/entity/${holder.getPath()}.png"))
 
     override fun renderToBuffer(
         poseStack: PoseStack,
