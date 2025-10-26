@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.block.HTTypedEntityBlock
+import hiiragi283.ragium.api.block.type.HTEntityBlockType
+import hiiragi283.ragium.common.tier.HTCrateTier
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -9,7 +10,7 @@ import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.HitResult
 
-class HTCrateBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTHorizontalEntityBlock(type, properties) {
+class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlock<HTEntityBlockType>(tier.getBlockType(), properties) {
     override fun getCloneItemStack(
         state: BlockState,
         target: HitResult,

@@ -43,9 +43,9 @@ import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntit
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.variant.HTCrateVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.minecraft.sounds.SoundEvents
@@ -133,7 +133,7 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun <BE : HTGeneratorBlockEntity> generator(
-        variant: HTGeneratorVariant<*, BE>,
+        variant: HTGeneratorVariant<BE>,
         factory: HTBlockEntityFactory<BE>,
     ): HTDeferredBlockEntityType<BE> = registerTick(variant.variantName(), factory)
 
@@ -215,27 +215,27 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateVariant, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
-        HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
-            val factory = when (variant) {
-                HTCrateVariant.SMALL -> HTCrateBlockEntity::Small
-                HTCrateVariant.MEDIUM -> HTCrateBlockEntity::Medium
-                HTCrateVariant.LARGE -> HTCrateBlockEntity::Large
-                HTCrateVariant.HUGE -> HTCrateBlockEntity::Huge
+    val CRATES: Map<HTCrateTier, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
+        HTCrateTier.entries.associateWith { tier: HTCrateTier ->
+            val factory = when (tier) {
+                HTCrateTier.SMALL -> HTCrateBlockEntity::Small
+                HTCrateTier.MEDIUM -> HTCrateBlockEntity::Medium
+                HTCrateTier.LARGE -> HTCrateBlockEntity::Large
+                HTCrateTier.HUGE -> HTCrateBlockEntity::Huge
             }
-            registerTick("${variant.variantName()}_crate", factory)
+            registerTick(tier.path, factory)
         }
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
-        HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
-            val factory = when (variant) {
-                HTDrumVariant.SMALL -> HTDrumBlockEntity::Small
-                HTDrumVariant.MEDIUM -> HTDrumBlockEntity::Medium
-                HTDrumVariant.LARGE -> HTDrumBlockEntity::Large
-                HTDrumVariant.HUGE -> HTDrumBlockEntity::Huge
+    val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
+        HTDrumTier.entries.associateWith { tier: HTDrumTier ->
+            val factory = when (tier) {
+                HTDrumTier.SMALL -> HTDrumBlockEntity::Small
+                HTDrumTier.MEDIUM -> HTDrumBlockEntity::Medium
+                HTDrumTier.LARGE -> HTDrumBlockEntity::Large
+                HTDrumTier.HUGE -> HTDrumBlockEntity::Huge
             }
-            registerTick("${variant.variantName()}_drum", factory)
+            registerTick(tier.path, factory)
         }
 
     //    Event    //
@@ -248,8 +248,13 @@ object RagiumBlockEntityTypes {
 
         addAll(event, HTDeviceVariant.entries)
 
-        addAll(event, HTCrateVariant.entries)
-        addAll(event, HTDrumVariant.entries)
+        // Storage
+        for (tier: HTCrateTier in HTCrateTier.entries) {
+            event.modify(tier.getBlockEntityType().get(), tier.getBlock().get())
+        }
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            event.modify(tier.getBlockEntityType().get(), tier.getBlock().get())
+        }
 
         RagiumAPI.LOGGER.info("Added supported blocks to BlockEntityType!")
     }

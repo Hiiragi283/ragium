@@ -25,9 +25,9 @@ import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTCrateVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
@@ -71,8 +71,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         addVariants(HTDeviceVariant.entries)
 
-        addVariants(HTCrateVariant.entries)
-        addVariants(HTDrumVariant.entries)
+        addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
+        addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
 
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
@@ -96,10 +96,14 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun <V : HTVariantKey.WithBlock<*>> addVariants(entries: Iterable<V>) {
-        for (variant: V in entries) {
-            add(variant.blockHolder, variant.translate(type, "%s"))
+    private fun <T : HTTranslationProvider> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
+        for (entry: T in entries) {
+            add(blockGetter(entry), entry.translate(type, "%s"))
         }
+    }
+
+    private fun <V : HTVariantKey.WithBlock<*>> addVariants(entries: Iterable<V>) {
+        addTranslations(entries, HTVariantKey.WithBlock<*>::blockHolder)
     }
 
     private fun fromMapWithRow(variant: HTVariantKey, map: Map<out HTMaterialType, HTHasTranslationKey>) {

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -18,12 +18,13 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -31,13 +32,14 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(type, pos, state),
+abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTConfigurableBlockEntity(blockHolder, pos, state),
     HTFluidInteractable {
-    constructor(variant: HTDrumVariant, pos: BlockPos, state: BlockState) : this(variant.blockEntityHolder, pos, state)
+    constructor(tier: HTDrumTier, pos: BlockPos, state: BlockState) : this(tier.getBlock(), pos, state)
 
     private lateinit var tank: HTFluidTank.Mutable
 
@@ -46,7 +48,11 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         tank = builder.addSlot(
             HTAccessConfig.BOTH,
             HTVariableFluidStackTank.create(listener) {
-                HTItemHelper.processStorageCapacity(level?.random, this, getDefaultTankCapacity())
+                HTItemHelper.processStorageCapacity(
+                    level?.random,
+                    this,
+                    this.blockHolder.getAttributeTier<HTDrumTier>().getDefaultCapacity(),
+                )
             },
         )
         return builder.build()
@@ -67,8 +73,6 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
         )
         return builder.build()
     }
-
-    protected abstract fun getDefaultTankCapacity(): Int
 
     override fun onRightClicked(context: HTBlockInteractContext): InteractionResult =
         RagiumMenuTypes.DRUM.openMenu(context.player, name, this, ::writeExtraContainerData)
@@ -101,19 +105,11 @@ abstract class HTDrumBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockP
 
     //    Impl    //
 
-    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.SMALL, pos, state) {
-        override fun getDefaultTankCapacity(): Int = HTDrumVariant.SMALL.capacity
-    }
+    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.SMALL, pos, state)
 
-    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.MEDIUM, pos, state) {
-        override fun getDefaultTankCapacity(): Int = HTDrumVariant.MEDIUM.capacity
-    }
+    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.MEDIUM, pos, state)
 
-    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.LARGE, pos, state) {
-        override fun getDefaultTankCapacity(): Int = HTDrumVariant.LARGE.capacity
-    }
+    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.LARGE, pos, state)
 
-    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumVariant.HUGE, pos, state) {
-        override fun getDefaultTankCapacity(): Int = HTDrumVariant.HUGE.capacity
-    }
+    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.HUGE, pos, state)
 }

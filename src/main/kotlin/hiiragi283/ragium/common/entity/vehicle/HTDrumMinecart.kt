@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.entity.vehicle
 
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -22,17 +21,15 @@ sealed class HTDrumMinecart :
     OwnableEntity {
     constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
-    constructor(variant: HTDrumVariant, level: Level, x: Double, y: Double, z: Double) : super(
-        variant.entityHolder.get(),
+    constructor(tier: HTDrumTier, level: Level, x: Double, y: Double, z: Double) : super(
+        tier.getEntityType().get(),
         level,
         x,
         y,
         z,
     )
 
-    protected abstract fun getDrumVariant(): HTDrumVariant
-
-    protected fun getDrumBlockEntityType(): HTDeferredBlockEntityType<HTDrumBlockEntity> = getDrumVariant().blockEntityHolder
+    protected abstract fun getDrumTier(): HTDrumTier
 
     /*override fun tick() {
         super.tick()
@@ -41,16 +38,15 @@ sealed class HTDrumMinecart :
             ?.tick(this.level(), this.blockPosition(), this.displayBlockState, bindBlockEntity())
     }*/
 
-    override fun createBlockEntity(): HTDrumBlockEntity =
-        getDrumBlockEntityType().create(BlockPos.ZERO, getDrumVariant().getBlock().defaultBlockState())
+    override fun createBlockEntity(): HTDrumBlockEntity = getDrumTier().getBlockEntityType().create(BlockPos.ZERO, defaultDisplayBlockState)
 
     //    HTMinecart    //
 
     override fun extraInteract(player: Player, hand: InteractionHand): InteractionResult = interactWith(this.level(), player, hand).result()
 
-    override fun getPickResult(): ItemStack = getDrumVariant().minecartItem.toStack()
+    override fun getPickResult(): ItemStack = getDrumTier().getMinecartItem().toStack()
 
-    override fun getDefaultDisplayBlockState(): BlockState = getDrumVariant().getBlock().defaultBlockState()
+    override fun getDefaultDisplayBlockState(): BlockState = getDrumTier().getBlock().get().defaultBlockState()
 
     //    HTFluidInteractable    //
 
@@ -66,32 +62,32 @@ sealed class HTDrumMinecart :
     class Small : HTDrumMinecart {
         constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
-        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumVariant.SMALL, level, x, y, z)
+        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumTier.SMALL, level, x, y, z)
 
-        override fun getDrumVariant(): HTDrumVariant = HTDrumVariant.SMALL
+        override fun getDrumTier(): HTDrumTier = HTDrumTier.SMALL
     }
 
     class Medium : HTDrumMinecart {
         constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
-        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumVariant.MEDIUM, level, x, y, z)
+        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumTier.MEDIUM, level, x, y, z)
 
-        override fun getDrumVariant(): HTDrumVariant = HTDrumVariant.MEDIUM
+        override fun getDrumTier(): HTDrumTier = HTDrumTier.MEDIUM
     }
 
     class Large : HTDrumMinecart {
         constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
-        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumVariant.LARGE, level, x, y, z)
+        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumTier.LARGE, level, x, y, z)
 
-        override fun getDrumVariant(): HTDrumVariant = HTDrumVariant.LARGE
+        override fun getDrumTier(): HTDrumTier = HTDrumTier.LARGE
     }
 
     class Huge : HTDrumMinecart {
         constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
-        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumVariant.HUGE, level, x, y, z)
+        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumTier.HUGE, level, x, y, z)
 
-        override fun getDrumVariant(): HTDrumVariant = HTDrumVariant.HUGE
+        override fun getDrumTier(): HTDrumTier = HTDrumTier.HUGE
     }
 }

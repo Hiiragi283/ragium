@@ -321,7 +321,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addFuelRecipes(
         registry: EmiRegistry,
-        variant: HTGeneratorVariant<*, *>,
+        variant: HTGeneratorVariant<*>,
         dataMapType: DataMapType<Fluid, HTFluidFuelData>,
     ): HTEmiRecipeCategory {
         val viewerType: HTRecipeViewerType<HTEmiFluidFuelData> = RagiumRecipeViewerTypes.getGenerator(variant)

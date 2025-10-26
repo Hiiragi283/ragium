@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
  * 電力を消費する設備に使用される[HTMachineBlockEntity]の拡張クラス
  */
 abstract class HTConsumerBlockEntity(protected val variant: HTMachineVariant, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
+    HTMachineBlockEntity(variant.blockHolder, pos, state) {
     //    Ticking    //
 
     override val energyUsage: Int = variant.energyUsage

@@ -11,8 +11,8 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -134,10 +134,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
         add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
 
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val value: String = variant.translate(type, "%s付きトロッコ")
-            add(variant.entityHolder, value)
-            add(variant.minecartItem, value)
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val value: String = tier.translate(type, "%s付きトロッコ")
+            add(tier.getEntityType(), value)
+            add(tier.getMinecartItem(), value)
         }
 
         // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")

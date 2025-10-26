@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import net.minecraft.core.Direction

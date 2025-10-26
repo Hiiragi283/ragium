@@ -11,8 +11,8 @@ import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
@@ -269,8 +269,8 @@ object RagiumCreativeTabs {
         }
 
         if (BLOCKS.`is`(key)) {
-            for (variant: HTDrumVariant in HTDrumVariant.entries) {
-                insertAfter(variant.blockHolder, variant.minecartItem)
+            for (tier: HTDrumTier in HTDrumTier.entries) {
+                insertAfter(tier.getBlock(), tier.getMinecartItem())
             }
         }
 

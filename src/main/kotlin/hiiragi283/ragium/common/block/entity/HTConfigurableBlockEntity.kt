@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -15,10 +14,12 @@ import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 
@@ -26,9 +27,9 @@ import net.neoforged.neoforge.common.Tags
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
  * @see mekanism.common.tile.prefab.TileEntityConfigurableMachine
  */
-abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(
-        type,
+        blockHolder,
         pos,
         state,
     ),

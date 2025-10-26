@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
-import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -38,7 +37,7 @@ enum class HTMachineVariant(val tier: HTMachineTier, private val enPattern: Stri
     val energyCapacity: Int get() = RagiumConfig.COMMON.machineEnergyCapacity[this]!!.asInt
     val energyUsage: Int get() = RagiumConfig.COMMON.machineEnergyUsage[this]!!.asInt
 
-    override val blockHolder: HTDeferredBlock<HTHorizontalEntityBlock, HTMachineBlockItem> by lazy { RagiumBlocks.MACHINES[this]!! }
+    override val blockHolder: HTBasicDeferredBlock<HTHorizontalEntityBlock> by lazy { RagiumBlocks.MACHINES[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTConsumerBlockEntity> by lazy { RagiumBlockEntityTypes.MACHINES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

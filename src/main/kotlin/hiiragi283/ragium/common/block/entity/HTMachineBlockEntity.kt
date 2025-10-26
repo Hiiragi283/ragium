@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -9,19 +8,21 @@ import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Consumer
 
 /**
  * 電力を扱う設備に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
-abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(type, pos, state) {
+abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTConfigurableBlockEntity(blockHolder, pos, state) {
     val upgradeHandler: HTMachineUpgradeItemHandler get() = getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
     override fun writeValue(output: HTValueOutput) {

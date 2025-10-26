@@ -1,10 +1,10 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.entity.ExtendedBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -37,7 +37,7 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
      */
     protected abstract fun initDefaultState(): BlockState
 
-    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntityExtension? = getBlockEntity(pos) as? HTBlockEntityExtension
+    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): ExtendedBlockEntity? = getBlockEntity(pos) as? ExtendedBlockEntity
 
     //    Block    //
 
@@ -98,9 +98,9 @@ abstract class HTEntityBlock(val type: HTDeferredBlockEntityType<*>, properties:
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.let { extension: HTBlockEntityExtension ->
-                extension.onRemove(level, Vec3.atCenterOf(pos))
-                extension.dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
+            level.getHTBlockEntity(pos)?.let { blockEntity: ExtendedBlockEntity ->
+                blockEntity.onRemove(level, Vec3.atCenterOf(pos))
+                blockEntity.dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston)

@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
@@ -34,6 +35,7 @@ import net.minecraft.world.Nameable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
@@ -44,9 +46,9 @@ import java.util.function.Consumer
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
  * @see mekanism.common.tile.base.TileEntityMekanism
  */
-abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTBlockEntity(protected val blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(
-        type,
+        (blockHolder.value() as HTBlockWithEntity).getBlockEntityType(),
         pos,
         state,
     ),

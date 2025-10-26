@@ -34,9 +34,9 @@ import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTCrateVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -70,6 +70,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
@@ -220,8 +221,13 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         // Item
-        for (fuel: HTGeneratorVariant.Fuel in HTGeneratorVariant.Fuel.entries) {
-            event.registerItem(HTFuelGeneratorItemRenderer.ITEM_EXTENSION, fuel.asItem())
+        for ((fuel: HTGeneratorVariant.Fuel, renderer: HTFuelGeneratorItemRenderer) in HTFuelGeneratorItemRenderer.RENDERERS) {
+            event.registerItem(
+                object : IClientItemExtensions {
+                    override fun getCustomRenderer(): HTFuelGeneratorItemRenderer = renderer
+                },
+                fuel.asItem(),
+            )
         }
 
         RagiumAPI.LOGGER.info("Registered client extensions!")
@@ -266,7 +272,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerClientReloadListeners(event: RegisterClientReloadListenersEvent) {
-        event.registerReloadListener(HTFuelGeneratorItemRenderer)
+        HTFuelGeneratorItemRenderer.RENDERERS.values.forEach(event::registerReloadListener)
 
         RagiumAPI.LOGGER.info("Registered Client Reload Listeners!")
     }
@@ -281,17 +287,17 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             event.registerBlockEntityRenderer(fuel.getBlockEntityType(), ::HTFuelGeneratorRenderer)
         }
 
-        for (variant: HTCrateVariant in HTCrateVariant.entries) {
-            event.registerBlockEntityRenderer(variant.getBlockEntityType(), ::HTCrateRenderer)
+        for (tier: HTCrateTier in HTCrateTier.entries) {
+            event.registerBlockEntityRenderer(tier.getBlockEntityType().get(), ::HTCrateRenderer)
         }
         // Entity
         event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
 
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val layerDefinition: ModelLayerLocation = RagiumModelLayers.DRUM_MINECARTS[variant] ?: continue
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val layerDefinition: ModelLayerLocation = RagiumModelLayers.DRUM_MINECARTS[tier] ?: continue
             event.registerEntityRenderer(
-                variant.entityHolder.get(),
+                tier.getEntityType().get(),
             ) { context: EntityRendererProvider.Context -> MinecartRenderer(context, layerDefinition) }
         }
 

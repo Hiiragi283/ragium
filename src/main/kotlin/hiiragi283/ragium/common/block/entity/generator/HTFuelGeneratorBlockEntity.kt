@@ -34,7 +34,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 
-abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos: BlockPos, state: BlockState) :
+abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*>, pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(
         variant,
         pos,
@@ -47,7 +47,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
             itemValueGetter: (ImmutableItemStack) -> Int,
             fuelContent: HTFluidContent<*, *, *>,
             fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
-            variant: HTGeneratorVariant<*, *>,
+            variant: HTGeneratorVariant<*>,
         ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory {
             pos: BlockPos,
             state: BlockState,
@@ -139,7 +139,7 @@ abstract class HTFuelGeneratorBlockEntity(variant: HTGeneratorVariant<*, *>, pos
         private val itemValueGetter: (ImmutableItemStack) -> Int,
         private val fuelContent: HTFluidContent<*, *, *>,
         private val fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
-        variant: HTGeneratorVariant<*, *>,
+        variant: HTGeneratorVariant<*>,
         pos: BlockPos,
         state: BlockState,
     ) : HTFuelGeneratorBlockEntity(variant, pos, state) {

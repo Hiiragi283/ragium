@@ -44,7 +44,7 @@ object RagiumRecipeViewerTypes {
     val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
     @JvmStatic
-    fun getGenerator(variant: HTGeneratorVariant<*, *>): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
+    fun getGenerator(variant: HTGeneratorVariant<*>): HTRecipeViewerType<HTEmiFluidFuelData> = when (variant) {
         HTGeneratorVariant.Fuel.THERMAL -> THERMAL
         HTGeneratorVariant.Fuel.COMBUSTION -> COMBUSTION
         else -> error("Unsupported variant: ${variant.variantName()}")

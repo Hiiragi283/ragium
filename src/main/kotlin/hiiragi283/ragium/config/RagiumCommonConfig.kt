@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
-import hiiragi283.ragium.common.variant.HTCrateVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTGeneratorVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import net.neoforged.neoforge.common.ModConfigSpec
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.common.ModConfigSpec
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     // Generator
     @JvmField
-    val generatorEnergyRate: Map<HTGeneratorVariant<*, *>, HTIntConfigValue>
+    val generatorEnergyRate: Map<HTGeneratorVariant<*>, HTIntConfigValue>
 
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
@@ -69,11 +69,11 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Crate
     @JvmField
-    val crateCapacity: Map<HTCrateVariant, HTIntConfigValue>
+    val crateCapacity: Map<HTCrateTier, HTIntConfigValue>
 
     // Drum
     @JvmField
-    val drumCapacity: Map<HTDrumVariant, HTIntConfigValue>
+    val drumCapacity: Map<HTDrumTier, HTIntConfigValue>
 
     // Block
     @JvmField
@@ -104,7 +104,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     init {
         // Generator
         builder.push("generator")
-        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant<*, *> ->
+        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant<*> ->
             val name: String = variant.variantName()
             builder.push(name)
             // Energy Rate
@@ -187,17 +187,17 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Crate
         builder.push("crate")
-        crateCapacity = HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
-            val name: String = variant.variantName()
+        crateCapacity = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
+            val name: String = tier.name.lowercase()
             builder.push(name)
             // Capacity
             val value: HTIntConfigValue = builder.definePositiveInt(
                 "multiplier",
-                when (variant) {
-                    HTCrateVariant.SMALL -> 32
-                    HTCrateVariant.MEDIUM -> 128
-                    HTCrateVariant.LARGE -> 512
-                    HTCrateVariant.HUGE -> 2048
+                when (tier) {
+                    HTCrateTier.SMALL -> 32
+                    HTCrateTier.MEDIUM -> 128
+                    HTCrateTier.LARGE -> 512
+                    HTCrateTier.HUGE -> 2048
                 },
             )
             builder.pop()
@@ -206,17 +206,17 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Drum
         builder.push("drum")
-        drumCapacity = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
-            val name: String = variant.variantName()
+        drumCapacity = HTDrumTier.entries.associateWith { variant: HTDrumTier ->
+            val name: String = variant.name.lowercase()
             builder.push(name)
             // Capacity
             val value: HTIntConfigValue = builder.definePositiveInt(
                 "capacity",
                 when (variant) {
-                    HTDrumVariant.SMALL -> 16_000
-                    HTDrumVariant.MEDIUM -> 32_000
-                    HTDrumVariant.LARGE -> 64_000
-                    HTDrumVariant.HUGE -> 256_000
+                    HTDrumTier.SMALL -> 16_000
+                    HTDrumTier.MEDIUM -> 32_000
+                    HTDrumTier.LARGE -> 64_000
+                    HTDrumTier.HUGE -> 256_000
                 },
             )
             builder.pop()

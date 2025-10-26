@@ -45,11 +45,11 @@ import hiiragi283.ragium.common.storage.item.HTCrateItemHandler
 import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTCrateVariant
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.component.DataComponentPatch
@@ -477,14 +477,14 @@ object RagiumItems {
     //    Vehicles    //
 
     @JvmField
-    val DRUM_MINECARTS: Map<HTDrumVariant, HTSimpleDeferredItem> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
-        val factory: HTMinecart.Factory = when (variant) {
-            HTDrumVariant.SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
-            HTDrumVariant.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
-            HTDrumVariant.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
-            HTDrumVariant.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
+    val DRUM_MINECARTS: Map<HTDrumTier, HTSimpleDeferredItem> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
+        val factory: HTMinecart.Factory = when (tier) {
+            HTDrumTier.SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
+            HTDrumTier.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
+            HTDrumTier.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
+            HTDrumTier.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
         }
-        REGISTER.registerItemWith(variant.entityHolder.getPath(), factory, ::HTMinecartItem)
+        REGISTER.registerItemWith(tier.entityPath, factory, ::HTMinecartItem)
     }
 
     //    Extensions    //
@@ -498,11 +498,11 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        for (variant: HTCrateVariant in HTCrateVariant.entries) {
+        for ((tier: HTCrateTier, block: ItemLike) in RagiumBlocks.CRATES) {
             event.registerItem(
                 RagiumCapabilities.ITEM.itemCapability(),
-                { stack: ItemStack, _: Void? -> HTCrateItemHandler(variant.multiplier, stack) },
-                variant,
+                { stack: ItemStack, _: Void? -> HTCrateItemHandler(tier.getMultiplier(), stack) },
+                block,
             )
         }
         event.registerItem(
@@ -512,8 +512,8 @@ object RagiumItems {
         )
 
         // Fluid
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            registerFluid(event, providerEnch(variant.capacity, ::HTComponentFluidHandler), variant)
+        for ((tier: HTDrumTier, block: ItemLike) in RagiumBlocks.DRUMS) {
+            registerFluid(event, providerEnch(tier.getDefaultCapacity(), ::HTComponentFluidHandler), block)
         }
         registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
 
@@ -525,11 +525,6 @@ object RagiumItems {
 
     @JvmStatic
     private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
-    }
-
-    @JvmStatic
-    private fun <T : Any> providerEnch(capacity: Long, factory: (ItemStack, Long) -> T): (ItemStack) -> T? = { stack: ItemStack ->
         factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
     }
 

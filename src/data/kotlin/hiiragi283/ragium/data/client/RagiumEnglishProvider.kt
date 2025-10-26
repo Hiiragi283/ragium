@@ -11,8 +11,8 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -138,10 +138,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
 
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val value: String = variant.translate(type, "Minecart with %s")
-            add(variant.entityHolder, value)
-            add(variant.minecartItem, value)
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val value: String = tier.translate(type, "Minecart with %s")
+            add(tier.getEntityType(), value)
+            add(tier.getMinecartItem(), value)
         }
 
         // add(RagiumEntityTypes.DYNAMITE, "Dynamite")

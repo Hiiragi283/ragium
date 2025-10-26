@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -28,10 +28,10 @@ abstract class HTDrumUpgradeItem(
     properties: Properties,
 ) : Item(properties) {
     constructor(
-        filter: List<HTDrumVariant>,
-        newDrum: HTDrumVariant,
+        filter: List<HTDrumTier>,
+        newDrum: HTDrumTier,
         properties: Properties,
-    ) : this(filter.map(HTDrumVariant::blockHolder), newDrum.blockHolder, properties)
+    ) : this(filter.map(HTDrumTier::getBlock), newDrum.getBlock(), properties)
 
     @Suppress("DEPRECATION")
     override fun useOn(context: UseOnContext): InteractionResult {
@@ -64,22 +64,22 @@ abstract class HTDrumUpgradeItem(
 
     class Medium(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(HTDrumVariant.SMALL),
-            HTDrumVariant.MEDIUM,
+            listOf(HTDrumTier.SMALL),
+            HTDrumTier.MEDIUM,
             properties,
         )
 
     class Large(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(HTDrumVariant.SMALL, HTDrumVariant.MEDIUM),
-            HTDrumVariant.LARGE,
+            listOf(HTDrumTier.SMALL, HTDrumTier.MEDIUM),
+            HTDrumTier.LARGE,
             properties,
         )
 
     class Huge(properties: Properties) :
         HTDrumUpgradeItem(
-            listOf(HTDrumVariant.SMALL, HTDrumVariant.MEDIUM, HTDrumVariant.LARGE),
-            HTDrumVariant.HUGE,
+            listOf(HTDrumTier.SMALL, HTDrumTier.MEDIUM, HTDrumTier.LARGE),
+            HTDrumTier.HUGE,
             properties,
         )
 }

@@ -11,9 +11,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-typealias HTSimpleDeferredBlock = HTDeferredBlock<Block, HTBlockItem<Block>>
-
 typealias HTBasicDeferredBlock<BLOCK> = HTDeferredBlock<BLOCK, HTBlockItem<BLOCK>>
+
+typealias HTSimpleDeferredBlock = HTBasicDeferredBlock<Block>
 
 class HTDeferredBlock<BLOCK : Block, ITEM : Item>(first: HTDeferredOnlyBlock<BLOCK>, second: HTDeferredItem<ITEM>) :
     HTDoubleDeferredHolder<Block, BLOCK, Item, ITEM>(

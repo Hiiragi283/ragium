@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.entity.device.HTDeviceBlockEntity
-import hiiragi283.ragium.common.item.block.HTDeviceBlockItem
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -42,7 +41,7 @@ enum class HTDeviceVariant(
 
     val tickRate: IntSupplier get() = RagiumConfig.COMMON.deviceTickRate[this]!!
 
-    override val blockHolder: HTDeferredBlock<HTEntityBlock, HTDeviceBlockItem> by lazy { RagiumBlocks.DEVICES[this]!! }
+    override val blockHolder: HTBasicDeferredBlock<HTEntityBlock> by lazy { RagiumBlocks.DEVICES[this]!! }
     override val blockEntityHolder: HTDeferredBlockEntityType<HTDeviceBlockEntity> by lazy { RagiumBlockEntityTypes.DEVICES[this]!! }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

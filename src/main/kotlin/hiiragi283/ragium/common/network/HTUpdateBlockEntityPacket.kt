@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.network
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.network.HTCustomPayload
+import hiiragi283.ragium.common.block.entity.ExtendedBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.BlockPos
@@ -33,7 +33,7 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
         )
 
         @JvmStatic
-        fun create(blockEntity: HTBlockEntityExtension): HTUpdateBlockEntityPacket? {
+        fun create(blockEntity: ExtendedBlockEntity): HTUpdateBlockEntityPacket? {
             val level: Level = blockEntity.getLevel() ?: return null
             return HTUpdateBlockEntityPacket(
                 blockEntity.getBlockPos(),

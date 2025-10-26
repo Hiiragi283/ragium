@@ -1,12 +1,13 @@
 package hiiragi283.ragium.data.server.loot
 
-import hiiragi283.ragium.api.block.HTEntityBlock
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.block.HTDrumBlock
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -46,7 +47,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             .forEach { block: Block ->
                 add(
                     block,
-                    if (block is HTEntityBlock) {
+                    if (block is HTEntityBlock || block is HTBlockWithEntity) {
                         copyComponent(block) {
                             include(DataComponents.CUSTOM_NAME)
                             include(DataComponents.ENCHANTMENTS)

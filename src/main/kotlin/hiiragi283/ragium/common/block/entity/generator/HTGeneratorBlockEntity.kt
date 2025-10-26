@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.BlockState
 /**
  * 電力を生産する設備に使用される[HTMachineBlockEntity]の拡張クラス
  */
-abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant<*, *>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(variant.blockEntityHolder, pos, state) {
+abstract class HTGeneratorBlockEntity(val variant: HTGeneratorVariant<*>, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(variant.blockHolder, pos, state) {
     //    Ticking    //
 
     override val energyUsage: Int = variant.energyRate

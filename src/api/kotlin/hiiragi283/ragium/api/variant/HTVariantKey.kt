@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.variant
 
-import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
@@ -16,9 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 /**
  * さまざまな要素のキーとなるインターフェース
  */
-interface HTVariantKey {
-    fun translate(type: HTLanguageType, value: String): String
-
+interface HTVariantKey : HTTranslationProvider {
     fun variantName(): String
 
     /**

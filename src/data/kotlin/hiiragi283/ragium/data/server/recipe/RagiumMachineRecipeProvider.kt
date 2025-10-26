@@ -8,9 +8,9 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTCrateVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTDrumVariant
 import hiiragi283.ragium.common.variant.HTMachineVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -236,14 +236,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun crate() {
-        for ((variant: HTCrateVariant, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
+        for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
             resetComponent(crate)
 
-            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
-                HTCrateVariant.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.IRON
-                HTCrateVariant.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
-                HTCrateVariant.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
-                HTCrateVariant.HUGE -> continue
+            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (tier) {
+                HTCrateTier.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.IRON
+                HTCrateTier.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTCrateTier.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
+                HTCrateTier.HUGE -> continue
             }
 
             HTShapedRecipeBuilder
@@ -258,19 +258,19 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
         // Huge
-        createNetheriteUpgrade(HTCrateVariant.HUGE, HTCrateVariant.LARGE).save(output)
+        createNetheriteUpgrade(HTCrateTier.HUGE.getBlock(), HTCrateTier.LARGE.getBlock()).save(output)
     }
 
     @JvmStatic
     private fun drums() {
-        for ((variant: HTDrumVariant, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
+        for ((tier: HTDrumTier, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
             resetComponent(drum, RagiumDataComponents.FLUID_CONTENT)
 
-            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
-                HTDrumVariant.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
-                HTDrumVariant.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
-                HTDrumVariant.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
-                HTDrumVariant.HUGE -> continue
+            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (tier) {
+                HTDrumTier.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
+                HTDrumTier.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTDrumTier.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
+                HTDrumTier.HUGE -> continue
             }
 
             HTShapedRecipeBuilder
@@ -285,20 +285,20 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
         // Huge
-        createNetheriteUpgrade(HTDrumVariant.HUGE, HTDrumVariant.LARGE).save(output)
+        createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
         // Upgrades
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            val upgrade: ItemLike = when (variant) {
-                HTDrumVariant.SMALL -> continue
-                HTDrumVariant.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
-                HTDrumVariant.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
-                HTDrumVariant.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val upgrade: ItemLike = when (tier) {
+                HTDrumTier.SMALL -> continue
+                HTDrumTier.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
+                HTDrumTier.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
+                HTDrumTier.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
             }
-            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (variant) {
-                HTDrumVariant.SMALL -> continue
-                HTDrumVariant.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
-                HTDrumVariant.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
-                HTDrumVariant.HUGE -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.NETHERITE
+            val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (tier) {
+                HTDrumTier.SMALL -> continue
+                HTDrumTier.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
+                HTDrumTier.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
+                HTDrumTier.HUGE -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.NETHERITE
             }
 
             HTShapedRecipeBuilder
@@ -314,10 +314,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         // Minecarts
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
+        for (tier: HTDrumTier in HTDrumTier.entries) {
             HTShapelessRecipeBuilder
-                .misc(variant.minecartItem)
-                .addIngredient(variant.blockHolder)
+                .misc(tier.getMinecartItem())
+                .addIngredient(tier.getBlock())
                 .addIngredient(Items.MINECART)
                 .save(output)
         }

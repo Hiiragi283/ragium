@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.common.entity.HTBlastCharge
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
-import hiiragi283.ragium.common.variant.HTDrumVariant
+import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
@@ -48,15 +48,15 @@ object RagiumEntityTypes {
     //    Minecart    //
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, HTDeferredEntityType<HTDrumMinecart>> = HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
-        val factory: (EntityType<*>, Level) -> HTDrumMinecart = when (variant) {
-            HTDrumVariant.SMALL -> HTDrumMinecart::Small
-            HTDrumVariant.MEDIUM -> HTDrumMinecart::Medium
-            HTDrumVariant.LARGE -> HTDrumMinecart::Large
-            HTDrumVariant.HUGE -> HTDrumMinecart::Huge
+    val DRUMS: Map<HTDrumTier, HTDeferredEntityType<HTDrumMinecart>> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
+        val factory: (EntityType<*>, Level) -> HTDrumMinecart = when (tier) {
+            HTDrumTier.SMALL -> HTDrumMinecart::Small
+            HTDrumTier.MEDIUM -> HTDrumMinecart::Medium
+            HTDrumTier.LARGE -> HTDrumMinecart::Large
+            HTDrumTier.HUGE -> HTDrumMinecart::Huge
         }
         REGISTER.registerType(
-            "${variant.variantName()}_drum_minecart",
+            tier.entityPath,
             factory,
             MobCategory.MISC,
         ) { builder: EntityType.Builder<HTDrumMinecart> -> builder.sized(0.98f, 0.7f) }
@@ -67,8 +67,8 @@ object RagiumEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerEntityCapabilities(event: RegisterCapabilitiesEvent) {
-        for (variant: HTDrumVariant in HTDrumVariant.entries) {
-            registerCapability(event, variant.entityHolder)
+        for (type: HTDeferredEntityType<HTDrumMinecart> in DRUMS.values) {
+            registerCapability(event, type)
         }
     }
 
