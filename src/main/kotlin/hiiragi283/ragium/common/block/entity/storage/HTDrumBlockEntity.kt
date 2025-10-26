@@ -3,6 +3,9 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -12,13 +15,12 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -33,32 +35,27 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state),
     HTFluidInteractable {
-    constructor(tier: HTDrumTier, pos: BlockPos, state: BlockState) : this(tier.getBlock(), pos, state)
+    private lateinit var tier: HTDrumTier
+
+    override fun initializeVariables() {
+        tier = blockHolder.getAttributeTier()
+    }
 
     private lateinit var tank: HTFluidTank.Mutable
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        tank = builder.addSlot(
-            HTAccessConfig.BOTH,
-            HTVariableFluidStackTank.create(listener) {
-                HTItemHelper.processStorageCapacity(
-                    level?.random,
-                    this,
-                    this.blockHolder.getAttributeTier<HTDrumTier>().getDefaultCapacity(),
-                )
-            },
-        )
+        tank = builder.addSlot(HTAccessConfig.BOTH, DrumTank(tier, listener))
         return builder.build()
     }
 
     private lateinit var fillSlot: HTFluidItemSlot
     private lateinit var outputSlot: HTItemSlot.Mutable
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         fillSlot = builder.addSlot(
             HTAccessConfig.INPUT_ONLY,
@@ -91,19 +88,43 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
         return false
     }
 
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     //    HTFluidInteractable    //
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
 
-    //    Impl    //
+    //    DrumTank    //
 
-    class Small(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.SMALL, pos, state)
+    /**
+     * @see mekanism.common.capabilities.fluid.FluidTankFluidTank
+     */
+    private class DrumTank(tier: HTDrumTier, listener: HTContentListener) :
+        HTFluidStackTank(
+            tier.getDefaultCapacity(),
+            ALWAYS_TRUE,
+            ALWAYS_TRUE,
+            ImmutableStack.alwaysTrue(),
+            listener,
+        ) {
+        val isCreative: Boolean = tier == HTDrumTier.CREATIVE
 
-    class Medium(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.MEDIUM, pos, state)
+        override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack {
+            var remainder: ImmutableFluidStack
+            if (isCreative && isEmpty() && action.execute && access != HTStorageAccess.EXTERNAL) {
+                remainder = super.insert(stack, HTStorageAction.SIMULATE, access)
+                if (remainder.isEmpty()) {
+                    setStackUnchecked(stack.copyWithAmount(getCapacityAsInt(stack)))
+                }
+            } else {
+                remainder = super.insert(stack, action.combine(!isCreative), access)
+            }
+            return remainder
+        }
 
-    class Large(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.LARGE, pos, state)
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
+            super.extract(amount, action.combine(!isCreative), access)
 
-    class Huge(pos: BlockPos, state: BlockState) : HTDrumBlockEntity(HTDrumTier.HUGE, pos, state)
+        override fun setStackSize(amount: Int, action: HTStorageAction): Int = super.setStackSize(amount, action.combine(!isCreative))
+    }
 }

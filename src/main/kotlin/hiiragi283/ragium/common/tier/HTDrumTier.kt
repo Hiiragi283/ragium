@@ -27,6 +27,7 @@ enum class HTDrumTier(private val enPattern: String, private val jaPattern: Stri
     MEDIUM("Medium Drum", "中型ドラム"),
     LARGE("Large Drum", "大型ドラム"),
     HUGE("Huge Drum", "特大型ドラム"),
+    CREATIVE("Creative Drum", "クリエイティブ用ドラム"),
     ;
 
     val path = "${name.lowercase()}_drum"
@@ -52,6 +53,7 @@ enum class HTDrumTier(private val enPattern: String, private val jaPattern: Stri
         MEDIUM -> HTBaseTier.ADVANCED
         LARGE -> HTBaseTier.ELITE
         HUGE -> HTBaseTier.ULTIMATE
+        CREATIVE -> HTBaseTier.CREATIVE
     }
 
     //    HTTranslationProvider    //

@@ -2,8 +2,8 @@ package hiiragi283.ragium.client.event
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.registry.idOrThrow
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
@@ -80,8 +80,12 @@ object RagiumTooltipHandler {
     @SubscribeEvent
     fun gatherClientComponents(event: RenderTooltipEvent.GatherComponents) {
         val stack: ItemStack = event.itemStack
-        val stackIn: ImmutableItemStack = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
-        val content: HTItemTooltipContent = HTItemTooltipContent.of(stackIn) ?: return
-        event.tooltipElements.add(Either.right(content))
+        val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
+        contents.indices
+            .map(contents::get)
+            .mapNotNull(HTItemTooltipContent::of)
+            .forEach { content: HTItemTooltipContent ->
+                event.tooltipElements.add(Either.right(content))
+            }
     }
 }

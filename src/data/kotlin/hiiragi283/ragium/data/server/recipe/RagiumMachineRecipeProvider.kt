@@ -281,7 +281,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDrumTier.SMALL -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.COPPER
                 HTDrumTier.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
                 HTDrumTier.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
-                HTDrumTier.HUGE -> continue
+                else -> continue
             }
 
             HTShapedRecipeBuilder
@@ -300,16 +300,16 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Upgrades
         for (tier: HTDrumTier in HTDrumTier.entries) {
             val upgrade: ItemLike = when (tier) {
-                HTDrumTier.SMALL -> continue
                 HTDrumTier.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
                 HTDrumTier.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
                 HTDrumTier.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
+                else -> continue
             }
             val pair: Pair<HTItemMaterialVariant, HTVanillaMaterialType> = when (tier) {
-                HTDrumTier.SMALL -> continue
                 HTDrumTier.MEDIUM -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.GOLD
                 HTDrumTier.LARGE -> HTItemMaterialVariant.GEM to HTVanillaMaterialType.DIAMOND
                 HTDrumTier.HUGE -> HTItemMaterialVariant.INGOT to HTVanillaMaterialType.NETHERITE
+                else -> continue
             }
 
             HTShapedRecipeBuilder

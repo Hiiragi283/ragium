@@ -34,5 +34,7 @@ fun Holder<Block>.getAllAttributes(): Collection<HTBlockAttribute> = this.value(
 fun Block.getAllAttributes(): Collection<HTBlockAttribute> = (this as? HTBlockWithType)?.type()?.getAll() ?: listOf()
 
 // tier
+inline fun <reified TIER : HTTierProvider> Block.getAttributeTier(): TIER = getAttributeOrThrow<HTTierBlockAttribute<TIER>>().provider
+
 inline fun <reified TIER : HTTierProvider> Holder<Block>.getAttributeTier(): TIER =
     getAttributeOrThrow<HTTierBlockAttribute<TIER>>().provider

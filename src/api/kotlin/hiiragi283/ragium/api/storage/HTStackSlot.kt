@@ -98,7 +98,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             setStack(stack.copyWithAmount(amount))
         }
 
-        final override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
+        override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
             if (stack.isEmpty()) return stack
 
             val needed: Int = getNeededAsInt(stack)
@@ -125,7 +125,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             else -> getEmptyStack()
         }
 
-        final override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
             val stack: STACK = this.getStack()
             if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) return getEmptyStack()
             val fixedAmount: Int = min(amount, getAmountAsInt())

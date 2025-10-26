@@ -45,10 +45,12 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
@@ -265,25 +267,13 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CRATES: Map<HTCrateTier, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
         HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            val factory = when (tier) {
-                HTCrateTier.SMALL -> HTCrateBlockEntity::Small
-                HTCrateTier.MEDIUM -> HTCrateBlockEntity::Medium
-                HTCrateTier.LARGE -> HTCrateBlockEntity::Large
-                HTCrateTier.HUGE -> HTCrateBlockEntity::Huge
-            }
-            registerTick(tier.path, factory)
+            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTCrateBlockEntity(tier.getBlock(), pos, state) }
         }
 
     @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            val factory = when (tier) {
-                HTDrumTier.SMALL -> HTDrumBlockEntity::Small
-                HTDrumTier.MEDIUM -> HTDrumBlockEntity::Medium
-                HTDrumTier.LARGE -> HTDrumBlockEntity::Large
-                HTDrumTier.HUGE -> HTDrumBlockEntity::Huge
-            }
-            registerTick(tier.path, factory)
+            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTDrumBlockEntity(tier.getBlock(), pos, state) }
         }
 
     //    Event    //

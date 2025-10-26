@@ -90,4 +90,12 @@ sealed class HTDrumMinecart :
 
         override fun getDrumTier(): HTDrumTier = HTDrumTier.HUGE
     }
+
+    class Creative : HTDrumMinecart {
+        constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
+
+        constructor(level: Level, x: Double, y: Double, z: Double) : super(HTDrumTier.CREATIVE, level, x, y, z)
+
+        override fun getDrumTier(): HTDrumTier = HTDrumTier.CREATIVE
+    }
 }

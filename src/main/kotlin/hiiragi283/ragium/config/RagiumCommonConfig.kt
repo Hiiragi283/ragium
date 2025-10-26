@@ -206,6 +206,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
                     HTDrumTier.MEDIUM -> 32_000
                     HTDrumTier.LARGE -> 64_000
                     HTDrumTier.HUGE -> 256_000
+                    HTDrumTier.CREATIVE -> 1_000
                 },
             )
             builder.pop()

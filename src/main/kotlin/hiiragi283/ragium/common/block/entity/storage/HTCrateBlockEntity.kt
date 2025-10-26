@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.giveStackTo
+import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -33,18 +34,22 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.function.Consumer
 
-abstract class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
-    constructor(tier: HTCrateTier, pos: BlockPos, state: BlockState) : this(tier.getBlock(), pos, state)
+    private lateinit var tier: HTCrateTier
+
+    override fun initializeVariables() {
+        tier = blockHolder.getAttributeTier()
+    }
 
     private lateinit var slot: HTItemSlot.Mutable
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         slot = builder.addSlot(
             HTAccessConfig.BOTH,
             HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack ->
-                val capacity: Int = HTItemSlot.getMaxStackSize(stack) * this.blockHolder.getAttributeTier<HTCrateTier>().getMultiplier()
+                val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
                 HTItemHelper.processStorageCapacity(level?.random, this, capacity)
             }, 0, 0),
         )
@@ -89,25 +94,15 @@ abstract class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, sta
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
-        componentInput.get(RagiumDataComponents.ITEM_CONTENT)?.let(slot::setStack)
+        componentInput.get(RagiumDataComponents.ITEM_CONTENT)?.getOrNull(0)?.let(slot::setStack)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.ITEM_CONTENT, slot.getStack())
+        components.set(RagiumDataComponents.ITEM_CONTENT, HTItemContents.of(slot.getStack()))
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
-
-    //    Impl    //
-
-    class Small(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateTier.SMALL, pos, state)
-
-    class Medium(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateTier.MEDIUM, pos, state)
-
-    class Large(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateTier.LARGE, pos, state)
-
-    class Huge(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(HTCrateTier.HUGE, pos, state)
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 }

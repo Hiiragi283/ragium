@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.entity.vehicle.HTMinecart
+import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
@@ -39,9 +40,9 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
-import hiiragi283.ragium.common.storage.fluid.HTTeleportKeyFluidHandler
-import hiiragi283.ragium.common.storage.item.HTCrateItemHandler
-import hiiragi283.ragium.common.storage.item.HTPotionBundleItemHandler
+import hiiragi283.ragium.common.storage.fluid.tank.HTComponentFluidTank
+import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
+import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
@@ -72,6 +73,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
+import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.UnaryOperator
 
 object RagiumItems {
@@ -420,16 +422,14 @@ object RagiumItems {
     val RAGI_CHERRY: HTSimpleDeferredItem = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
 
     @JvmField
-    val FEVER_CHERRY: HTSimpleDeferredItem =
-        register("fever_cherry") { it.food(RagiumFoods.FEVER_CHERRY).rarity(Rarity.RARE) }
+    val FEVER_CHERRY: HTSimpleDeferredItem = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY)
 
     // Other
     @JvmField
     val BOTTLED_BEE: HTSimpleDeferredItem = register("bottled_bee")
 
     @JvmField
-    val AMBROSIA: HTSimpleDeferredItem =
-        register("ambrosia") { it.food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC) }
+    val AMBROSIA: HTSimpleDeferredItem = registerFood("ambrosia", RagiumFoods.AMBROSIA)
 
     //    Machine Parts    //
 
@@ -482,6 +482,7 @@ object RagiumItems {
             HTDrumTier.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
             HTDrumTier.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
             HTDrumTier.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
+            HTDrumTier.CREATIVE -> HTMinecart.Factory(HTDrumMinecart::Creative)
         }
         REGISTER.registerItemWith(tier.entityPath, factory, ::HTMinecartItem)
     }
@@ -498,33 +499,64 @@ object RagiumItems {
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
         for ((tier: HTCrateTier, block: ItemLike) in RagiumBlocks.CRATES) {
-            event.registerItem(
-                RagiumCapabilities.ITEM.itemCapability(),
-                { stack: ItemStack, _: Void? -> HTCrateItemHandler(tier.getMultiplier(), stack) },
+            registerItem(
+                event,
+                { stack: ItemStack -> HTComponentItemHandler(HTComponentItemSlot.create(stack, 1)) },
                 block,
             )
         }
-        event.registerItem(
-            RagiumCapabilities.ITEM.itemCapability(),
-            { stack: ItemStack, _: Void? -> HTPotionBundleItemHandler(stack, 9) },
+        registerItem(
+            event,
+            { stack: ItemStack ->
+                HTComponentItemHandler(9) { slot: Int ->
+                    HTComponentItemSlot.create(stack, slot, filter = HTPotionBundleContainerMenu::filterPotion)
+                }
+            },
             POTION_BUNDLE,
         )
 
         // Fluid
         for ((tier: HTDrumTier, block: ItemLike) in RagiumBlocks.DRUMS) {
-            registerFluid(event, providerEnch(tier.getDefaultCapacity(), ::HTComponentFluidHandler), block)
+            registerFluid(
+                event,
+                { stack: ItemStack ->
+                    val capacity: Int = HTItemHelper.processStorageCapacity(null, stack, tier.getDefaultCapacity())
+                    HTComponentFluidHandler(stack, HTComponentFluidTank.create(stack, capacity))
+                },
+                block,
+            )
         }
-        registerFluid(event, providerEnch(8000, ::HTTeleportKeyFluidHandler), TELEPORT_KEY)
+        registerFluid(
+            event,
+            { stack: ItemStack ->
+                val capacity: Int = HTItemHelper.processStorageCapacity(null, stack, 8000)
+                HTComponentFluidHandler(
+                    stack,
+                    HTComponentFluidTank.create(stack, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf),
+                )
+            },
+            TELEPORT_KEY,
+        )
 
         // Energy
-        registerEnergy(event, providerEnch(160000, ::HTComponentEnergyStorage), DRILL)
+        registerEnergy(
+            event,
+            { stack: ItemStack ->
+                HTComponentEnergyStorage(stack, HTItemHelper.processStorageCapacity(null, stack, 160000))
+            },
+            DRILL,
+        )
 
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
 
     @JvmStatic
-    private fun <T : Any> providerEnch(capacity: Int, factory: (ItemStack, Int) -> T): (ItemStack) -> T? = { stack: ItemStack ->
-        factory(stack, HTItemHelper.processStorageCapacity(null, stack, capacity))
+    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
+        event.registerItem(
+            RagiumCapabilities.ITEM.itemCapability(),
+            { stack: ItemStack, _: Void? -> getter(stack) },
+            *items,
+        )
     }
 
     @JvmStatic
@@ -561,6 +593,13 @@ object RagiumItems {
         setEnch(getDeepTool(HTVanillaToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
         setEnch(getDeepTool(HTVanillaToolVariant.AXE), RagiumEnchantments.STRIKE)
         setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
+        // Foods
+        event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
+        event.modify(AMBROSIA) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
         // Other
         event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)

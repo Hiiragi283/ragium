@@ -189,9 +189,12 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
+        initializeVariables()
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
+
+    protected open fun initializeVariables() {}
 
     // Fluid
 

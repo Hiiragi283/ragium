@@ -54,6 +54,7 @@ object RagiumEntityTypes {
             HTDrumTier.MEDIUM -> HTDrumMinecart::Medium
             HTDrumTier.LARGE -> HTDrumMinecart::Large
             HTDrumTier.HUGE -> HTDrumMinecart::Huge
+            HTDrumTier.CREATIVE -> HTDrumMinecart::Creative
         }
         REGISTER.registerType(
             tier.entityPath,
