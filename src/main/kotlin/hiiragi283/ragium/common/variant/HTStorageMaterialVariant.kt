@@ -11,21 +11,21 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 
-object HTRawStorageMaterialVariant : HTMaterialVariant.BlockTag, HTTranslationProvider {
+object HTStorageMaterialVariant : HTMaterialVariant.BlockTag, HTTranslationProvider {
     override val blockCommonTag: TagKey<Block> = Tags.Blocks.STORAGE_BLOCKS
 
-    override fun blockTagKey(path: String): TagKey<Block> = Registries.BLOCK.createCommonTag("${RagiumConst.STORAGE_BLOCKS}/raw_$path")
+    override fun blockTagKey(path: String): TagKey<Block> = Registries.BLOCK.createCommonTag(RagiumConst.STORAGE_BLOCKS, path)
 
     override val itemCommonTag: TagKey<Item> = Tags.Items.STORAGE_BLOCKS
 
-    override fun canGenerateTag(): Boolean = false
+    override fun canGenerateTag(): Boolean = true
 
-    override fun itemTagKey(path: String): TagKey<Item> = Registries.ITEM.createCommonTag("${RagiumConst.STORAGE_BLOCKS}/raw_$path")
+    override fun itemTagKey(path: String): TagKey<Item> = Registries.ITEM.createCommonTag(RagiumConst.STORAGE_BLOCKS, path)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> "Block of Raw $value"
-        HTLanguageType.JA_JP -> "${value}の原石ブロック"
+        HTLanguageType.EN_US -> "Block of $value"
+        HTLanguageType.JA_JP -> "${value}ブロック"
     }
 
-    override fun variantName(): String = "raw_storage_block"
+    override fun variantName(): String = "storage_block"
 }

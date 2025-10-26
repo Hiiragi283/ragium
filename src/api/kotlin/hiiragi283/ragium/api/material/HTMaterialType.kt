@@ -17,7 +17,7 @@ interface HTMaterialType {
     interface Translatable :
         HTMaterialType,
         HTTranslatedNameProvider {
-        fun translate(type: HTLanguageType, provider: HTTranslationProvider): String = provider.translate(type, getTranslatedName(type))
+        fun translate(type: HTLanguageType, provider: HTTranslationProvider): String = provider.translate(type, this)
     }
 
     /**

@@ -21,10 +21,11 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -69,21 +70,17 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, Tags.Items.ORES_IN_GROUND_NETHERRACK)
         copy(RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE, RagiumCommonTags.Items.ORES_IN_GROUND_END_STONE)
 
-        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE)
-        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGI_CRYSTAL)
-        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.CRIMSON_CRYSTAL)
-        copy(HTBlockMaterialVariant.ORE, RagiumMaterialType.WARPED_CRYSTAL)
+        for (type: HTMaterialType in RagiumBlocks.ORES.columnKeys) {
+            copy(HTOreVariant.Default, type)
+        }
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
-
-        copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
-        copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
 
         RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
         RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, _) ->
             copy(variant, material)
         }
         for (material: HTMaterialType in RagiumBlockTagsProvider.VANILLA_STORAGE_BLOCKS.keys) {
-            copy(HTBlockMaterialVariant.STORAGE_BLOCK, material)
+            copy(HTStorageMaterialVariant, material)
         }
 
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)

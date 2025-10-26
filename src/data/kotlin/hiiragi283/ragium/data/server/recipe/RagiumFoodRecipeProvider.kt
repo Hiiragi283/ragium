@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
@@ -81,7 +81,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.AMBROSIA),
-                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CHOCOLATE, 64),
+                itemCreator.fromTagKey(HTStorageMaterialVariant, RagiumMaterialType.CHOCOLATE, 64),
                 itemCreator.fromItem(Items.HONEY_BLOCK, 64),
             ).save(output)
 
@@ -104,7 +104,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .misc(RagiumItems.FEVER_CHERRY)
             .hollow8()
-            .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GOLD)
+            .define('A', HTStorageMaterialVariant, HTVanillaMaterialType.GOLD)
             .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .save(output)
     }

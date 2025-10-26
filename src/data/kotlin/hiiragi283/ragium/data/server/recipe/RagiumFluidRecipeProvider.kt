@@ -10,8 +10,8 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -125,13 +125,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {

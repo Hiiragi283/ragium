@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -210,7 +210,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Budding Amethyst
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.AMETHYST),
+                itemCreator.fromTagKey(HTStorageMaterialVariant, HTVanillaMaterialType.AMETHYST),
                 fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)

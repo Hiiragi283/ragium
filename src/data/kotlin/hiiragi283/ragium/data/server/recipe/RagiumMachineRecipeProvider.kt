@@ -8,8 +8,9 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -54,7 +55,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 " B ",
                 "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.ADVANCED_RAGI_ALLOY)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            .define('B', HTGlassVariant.COLORLESS, HTVanillaMaterialType.QUARTZ)
             .define('C', RagiumItems.getCoil(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
             .define('D', Items.BLAST_FURNACE)
             .save(output)
@@ -67,7 +68,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 " B ",
                 "CDC",
             ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
-            .define('B', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.OBSIDIAN)
+            .define('B', HTGlassVariant.COLORLESS, HTVanillaMaterialType.OBSIDIAN)
             .define('C', HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL)
             .define('D', Items.GRINDSTONE)
             .save(output)
@@ -103,7 +104,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 " A ",
                 "ABA",
                 "CDC",
-            ).define('A', HTBlockMaterialVariant.GLASS_BLOCK, HTVanillaMaterialType.QUARTZ)
+            ).define('A', HTGlassVariant.COLORLESS, HTVanillaMaterialType.QUARTZ)
             .define('B', RagiumItems.getComponent(HTComponentTier.ADVANCED))
             .define('C', HTItemMaterialVariant.INGOT, RagiumMaterialType.AZURE_STEEL)
             .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
@@ -118,7 +119,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Elite
         eliteMachine(RagiumBlocks.BREWERY, Ingredient.of(Items.BREWING_STAND))
         eliteMachine(RagiumBlocks.PLANTER, Ingredient.of(Items.FLOWER_POT))
-        eliteMachine(RagiumBlocks.SIMULATOR, HTBlockMaterialVariant.GLASS_BLOCK.toIngredient(HTVanillaMaterialType.OBSIDIAN))
+        eliteMachine(RagiumBlocks.SIMULATOR, HTGlassVariant.COLORLESS.toIngredient(HTVanillaMaterialType.OBSIDIAN))
 
         mapOf(
             RagiumBlocks.MULTI_SMELTER to RagiumBlocks.ALLOY_SMELTER,
@@ -230,15 +231,15 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.ENI, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.DIAMOND)
+            .addIngredient(HTStorageMaterialVariant, HTVanillaMaterialType.DIAMOND)
             .save(output)
         // Ultimate
         createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.MOB_CAPTURER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.ELDRITCH_PEARL)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.ELDRITCH_PEARL)
             .save(output)
 
         createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.TELEPAD, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.WARPED_CRYSTAL)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.WARPED_CRYSTAL)
             .save(output)
     }
 

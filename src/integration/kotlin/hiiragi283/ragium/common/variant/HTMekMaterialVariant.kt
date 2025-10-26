@@ -13,7 +13,8 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 enum class HTMekMaterialVariant(private val enPattern: String, private val jaPattern: String, private val tagPrefix: String) :
-    HTMaterialVariant.ItemTag, HTTranslationProvider {
+    HTMaterialVariant.ItemTag,
+    HTTranslationProvider {
     // Common
     DIRTY_DUST("Dirty %s Dust", "汚れた%sの粉", "dirty_dusts"),
     CLUMP("%s Clump", "%sの塊", "clumps"),

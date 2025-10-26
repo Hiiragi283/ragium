@@ -15,10 +15,10 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -70,7 +70,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .cross8()
             .define('A', HTItemMaterialVariant.DUST, HTVanillaMaterialType.ECHO)
             .define('B', HTItemMaterialVariant.GEM, HTVanillaMaterialType.ECHO)
-            .define('C', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.DEEP_STEEL)
+            .define('C', HTStorageMaterialVariant, RagiumMaterialType.DEEP_STEEL)
             .save(output)
 
         raginite()

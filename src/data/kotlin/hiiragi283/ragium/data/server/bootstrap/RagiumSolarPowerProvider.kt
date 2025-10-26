@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.core.RegistrySetBuilder
@@ -22,8 +22,8 @@ object RagiumSolarPowerProvider : RegistrySetBuilder.RegistryBootstrap<HTSolarPo
     override fun run(context: BootstrapContext<HTSolarPower>) {
         register(context, Blocks.BEACON, 4f)
         register(context, Blocks.SHROOMLIGHT, 1f)
-        register(context, HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.GLOWSTONE, 1f)
-        register(context, HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.GILDIUM, 4f)
+        register(context, HTStorageMaterialVariant, HTVanillaMaterialType.GLOWSTONE, 1f)
+        register(context, HTStorageMaterialVariant, RagiumMaterialType.GILDIUM, 4f)
         register(context, Tags.Blocks.CLUSTERS, 2f)
     }
 

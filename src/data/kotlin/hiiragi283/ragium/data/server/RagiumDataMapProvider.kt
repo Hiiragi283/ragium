@@ -14,8 +14,8 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -61,7 +61,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun furnaceFuels() {
         builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
+            .add(HTStorageMaterialVariant, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
             .add(HTItemMaterialVariant.FUEL, RagiumMaterialType.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6))
             .add(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)

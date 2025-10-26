@@ -6,9 +6,10 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -60,12 +61,12 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.PLASTIC_BRICKS, 4)
             .storage4()
-            .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .define('A', HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_BRICKS)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -76,7 +77,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_TILES)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder
@@ -108,7 +109,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
-                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
+                itemCreator.fromTagKey(HTStorageMaterialVariant, HTVanillaMaterialType.QUARTZ),
                 itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
@@ -136,7 +137,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 .building(RagiumBlocks.getTintedGlass(material))
                 .hollow4()
                 .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
-                .define('B', HTBlockMaterialVariant.GLASS_BLOCK, material)
+                .define('B', HTGlassVariant.COLORLESS, material)
                 .save(output)
         }
     }
@@ -194,7 +195,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
-            return HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)
+            return HTStorageMaterialVariant.toIngredient(RagiumMaterialType.PLASTIC)
         }
         return buildList {
             add(variant.base)

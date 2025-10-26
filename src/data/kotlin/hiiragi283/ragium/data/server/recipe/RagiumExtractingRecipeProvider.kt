@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.DyeItem
@@ -40,7 +40,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Ragium
         HTItemToObjRecipeBuilder
             .extracting(
-                itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromTagKey(HTStorageMaterialVariant, HTVanillaMaterialType.REDSTONE),
                 resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 

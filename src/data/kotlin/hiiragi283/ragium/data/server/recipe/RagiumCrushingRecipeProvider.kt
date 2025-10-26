@@ -7,8 +7,8 @@ import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTCommonMaterialTypes
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -45,7 +45,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (material: HTMaterialType, result: Item) ->
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(HTBlockMaterialVariant.STORAGE_BLOCK, material),
+                    itemCreator.fromTagKey(HTStorageMaterialVariant, material),
                     resultHelper.item(result, 4),
                 ).saveSuffixed(output, "_from_block")
         }

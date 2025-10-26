@@ -11,9 +11,9 @@ import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTMekMaterialVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
@@ -79,7 +79,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ore -> Dust
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE),
+                itemHelper.from(HTOreVariant.Default, RagiumMaterialType.RAGINITE),
                 RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(12),
             ).build(output, id("processing/raginite/from_ore"))
 
@@ -256,7 +256,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private fun oreToGem(material: HTMaterialType) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTBlockMaterialVariant.ORE, material),
+                itemHelper.from(HTOreVariant.Default, material),
                 RagiumItems.getGem(material).toStack(2),
             ).build(output, id("processing/${material.materialName()}/from_ore"))
     }

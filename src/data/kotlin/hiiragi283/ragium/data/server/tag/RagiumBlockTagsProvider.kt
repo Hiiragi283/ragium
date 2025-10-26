@@ -12,8 +12,9 @@ import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -136,36 +137,34 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
     private fun category(builder: HTTagBuilder<Block>) {
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTHolderLike) ->
-            builder.addMaterial(HTBlockMaterialVariant.ORE, material, ore)
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, material: HTMaterialType, ore: HTHolderLike) ->
+            builder.addMaterial(HTOreVariant.Default, material, ore)
             val groundTag: TagKey<Block> = when (variant) {
-                HTBlockMaterialVariant.ORE -> Tags.Blocks.ORES_IN_GROUND_STONE
-                HTBlockMaterialVariant.DEEP_ORE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
-                HTBlockMaterialVariant.NETHER_ORE -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
-                HTBlockMaterialVariant.END_ORE -> RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE
-                else -> return@forEach
+                HTOreVariant.Default -> Tags.Blocks.ORES_IN_GROUND_STONE
+                HTOreVariant.Others.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                HTOreVariant.Others.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                HTOreVariant.Others.END -> RagiumCommonTags.Blocks.ORES_IN_GROUND_END_STONE
             }
             builder.add(groundTag, ore)
 
-            if (variant == HTBlockMaterialVariant.END_ORE) {
+            if (variant == HTOreVariant.Others.END) {
                 builder.add(BlockTags.DRAGON_IMMUNE, ore)
             }
         }
         builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
-        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, block: HTHolderLike) ->
-            if (variant == HTBlockMaterialVariant.STORAGE_BLOCK) {
-                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
-            }
-            builder.addMaterial(variant, material, block)
-            if (variant == HTBlockMaterialVariant.TINTED_GLASS_BLOCK) {
-                builder.addMaterial(HTBlockMaterialVariant.GLASS_BLOCK, material, block)
+        RagiumBlocks.MATERIALS.forEach { (variant: HTMaterialVariant, material: HTMaterialType, block: HTHolderLike) ->
+            if (variant is HTMaterialVariant.BlockTag) {
+                builder.addMaterial(variant, material, block)
+                when (variant) {
+                    HTStorageMaterialVariant -> builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+                }
             }
         }
 
         for ((material: HTVanillaMaterialType, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
-            builder.addMaterial(HTBlockMaterialVariant.STORAGE_BLOCK, material, holder)
+            builder.addMaterial(HTStorageMaterialVariant, material, holder)
         }
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)

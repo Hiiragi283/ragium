@@ -22,9 +22,9 @@ object HTHammerToolVariant : HTToolVariant, HTTranslationProvider {
     override val tagKeys: Iterable<TagKey<Item>> = listOf(RagiumModTags.Items.TOOLS_HAMMER)
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> "%s Hammer"
-        HTLanguageType.JA_JP -> "%sのハンマー"
-    }.replace("%s", value)
+        HTLanguageType.EN_US -> "$value Hammer"
+        HTLanguageType.JA_JP -> "${value}のハンマー"
+    }
 
     override fun variantName(): String = "hammer"
 }

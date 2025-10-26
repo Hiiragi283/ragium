@@ -234,7 +234,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .misc(basic)
             .crossLayered()
             .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
-            .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .define('B', Tags.Items.GLASS_BLOCKS)
             .define('C', HTItemMaterialVariant.CIRCUIT, HTCircuitTier.BASIC)
             .define('D', HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE)
             .save(output)

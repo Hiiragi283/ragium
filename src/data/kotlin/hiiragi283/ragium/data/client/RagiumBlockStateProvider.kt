@@ -12,11 +12,12 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.variant.HTBlockMaterialVariant
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
@@ -58,7 +59,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.CEU)
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.STORAGE_BLOCK))
+            addAll(RagiumBlocks.MATERIALS.rowValues(HTStorageMaterialVariant))
 
             add(RagiumBlocks.DEVICE_CASING)
         }.forEach(::simpleBlockAndItem)
@@ -82,20 +83,19 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
-        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
-        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTGlassVariant.COLORLESS).forEach(::cutoutSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTGlassVariant.TINTED).forEach(::translucentSimpleBlock)
 
         RagiumBlocks.COILS.values.forEach(::cubeColumn)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
             val textureId: ResourceLocation = RagiumAPI.id("block/${material.materialName()}")
             val stoneTex: String = when (variant) {
-                HTBlockMaterialVariant.ORE -> "block/stone"
-                HTBlockMaterialVariant.DEEP_ORE -> "block/deepslate"
-                HTBlockMaterialVariant.NETHER_ORE -> "block/netherrack"
-                HTBlockMaterialVariant.END_ORE -> "block/end_stone"
-                else -> null
+                HTOreVariant.Default -> "block/stone"
+                HTOreVariant.Others.DEEP -> "block/deepslate"
+                HTOreVariant.Others.NETHER -> "block/netherrack"
+                HTOreVariant.Others.END -> "block/end_stone"
             } ?: return@forEach
             layeredBlock(
                 ore,

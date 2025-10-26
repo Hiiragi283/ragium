@@ -115,6 +115,7 @@ object RagiumConst {
     const val FUELS = "fuels"
     const val GEMS = "gems"
     const val GLASS_BLOCKS = "glass_blocks"
+    const val GLASS_BLOCKS_TINTED = "glass_blocks/tinted"
     const val INGOTS = "ingots"
     const val MOLDS = "molds"
     const val NUGGETS = "nuggets"
