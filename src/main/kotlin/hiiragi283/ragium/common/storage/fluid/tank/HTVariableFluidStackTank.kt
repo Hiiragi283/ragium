@@ -10,7 +10,7 @@ import java.util.function.IntSupplier
 import java.util.function.Predicate
 
 /**
- * @see [mekanism.common.capabilities.fluid.VariableCapacityFluidTank]
+ * @see mekanism.common.capabilities.fluid.VariableCapacityFluidTank
  */
 class HTVariableFluidStackTank(
     private val capacitySupplier: IntSupplier,

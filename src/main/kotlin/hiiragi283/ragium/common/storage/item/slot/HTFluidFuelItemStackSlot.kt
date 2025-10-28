@@ -16,7 +16,7 @@ import java.util.function.Predicate
 import java.util.function.ToIntFunction
 
 /**
- * @see [mekanism.generators.common.slot.FluidFuelInventorySlot]
+ * @see mekanism.generators.common.slot.FluidFuelInventorySlot
  */
 class HTFluidFuelItemStackSlot private constructor(
     tank: HTFluidTank,

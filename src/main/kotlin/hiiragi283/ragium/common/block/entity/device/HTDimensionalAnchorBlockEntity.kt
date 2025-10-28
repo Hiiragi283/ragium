@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * @see [appeng.blockentity.spatial.SpatialAnchorBlockEntity]
+ * @see appeng.blockentity.spatial.SpatialAnchorBlockEntity
  */
 class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlocks.DIM_ANCHOR, pos, state) {
     override fun afterLevelInit(level: Level) {

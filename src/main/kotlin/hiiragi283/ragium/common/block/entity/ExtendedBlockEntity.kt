@@ -80,7 +80,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     private var lastSaveTime: Long = 0
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityUpdateable.setChanged]
+     * @see mekanism.common.tile.base.TileEntityUpdateable.setChanged
      */
     protected open fun setChanged(updateComparator: Boolean) {
         val level: Level = this.level ?: return
@@ -110,7 +110,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     }
 
     /**
-     * @see [mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag]
+     * @see mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag
      */
     fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
 
@@ -138,7 +138,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     /**
      * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
-     * @see [mekanism.common.tile.base.TileEntityMekanism.encodeExtraContainerData]
+     * @see mekanism.common.tile.base.TileEntityMekanism.encodeExtraContainerData
      */
     open fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
         buf.writeBlockPos(getBlockPos())

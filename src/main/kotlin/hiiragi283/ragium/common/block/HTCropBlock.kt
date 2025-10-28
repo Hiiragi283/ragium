@@ -52,7 +52,7 @@ abstract class HTCropBlock(properties: Properties) : CropBlock(properties) {
     ): VoxelShape = SHAPE_BY_AGE[getAge(state)]
 
     /**
-     * @see [de.ellpeck.actuallyadditions.mod.blocks.base.AACrops.useItemOn]
+     * @see de.ellpeck.actuallyadditions.mod.blocks.base.AACrops.useItemOn
      */
     override fun useItemOn(
         stack: ItemStack,

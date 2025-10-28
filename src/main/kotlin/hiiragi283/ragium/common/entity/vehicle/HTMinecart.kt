@@ -26,7 +26,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
 /**
- * @see [blusunrize.immersiveengineering.common.entities.IEMinecartEntity]
+ * @see blusunrize.immersiveengineering.common.entities.IEMinecartEntity
  */
 abstract class HTMinecart<BE : HTBlockEntity> :
     AbstractMinecart,

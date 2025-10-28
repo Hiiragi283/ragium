@@ -14,7 +14,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * @see [mekanism.common.capabilities.fluid.BasicFluidTank]
+ * @see mekanism.common.capabilities.fluid.BasicFluidTank
  */
 open class HTFluidStackTank protected constructor(
     private val capacity: Int,

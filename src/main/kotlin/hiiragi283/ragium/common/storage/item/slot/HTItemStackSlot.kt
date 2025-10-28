@@ -16,7 +16,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * @see [mekanism.common.inventory.slot.BasicInventorySlot]
+ * @see mekanism.common.inventory.slot.BasicInventorySlot
  */
 open class HTItemStackSlot protected constructor(
     private val limit: Int,

@@ -15,25 +15,30 @@ import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
 
+/**
+ * @see mekanism.common.capabilities.Capabilities
+ */
 class RagiumCapabilitiesImpl : RagiumCapabilities {
     override val energy: HTMultiCapability<IEnergyStorage, IEnergyStorage> = HTMultiCapabilityBase(
         Capabilities.EnergyStorage.BLOCK,
+        Capabilities.EnergyStorage.ENTITY,
         Capabilities.EnergyStorage.ITEM,
     )
 
-    override val experience: HTMultiCapability<IExperienceStorage, IExperienceStorageItem> = HTMultiCapabilityBase(
-        RagiumAPI.EXPERIENCE_BLOCK_CAPABILITY,
-        RagiumAPI.EXPERIENCE_ITEM_CAPABILITY,
+    override val experience: HTMultiCapability<IExperienceStorage, IExperienceStorageItem> = HTMultiCapabilityBase.create(
+        RagiumAPI.id("experience"),
     )
 
     override val fluid: HTViewCapability<IFluidHandler, IFluidHandlerItem, ImmutableFluidStack> = HTViewCapabilityBase(
         Capabilities.FluidHandler.BLOCK,
+        Capabilities.FluidHandler.ENTITY,
         Capabilities.FluidHandler.ITEM,
     ) { handler: IFluidHandler, side: Direction? ->
         if (handler is HTFluidHandler) {
@@ -49,20 +54,32 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
         }
     }
 
-    override val item: HTViewCapability<IItemHandler, IItemHandler, ImmutableItemStack> = HTViewCapabilityBase(
-        Capabilities.ItemHandler.BLOCK,
-        Capabilities.ItemHandler.ITEM,
-    ) { handler: IItemHandler, side: Direction? ->
-        if (handler is HTItemHandler) {
-            handler.getItemSlots(side)
-        } else {
-            handler.slotRange.map { slot: Int ->
-                object : HTStackView<ImmutableItemStack> {
-                    override fun getStack(): ImmutableItemStack? = handler.getStackInSlot(slot).toImmutable()
+    override val item: HTViewCapability<IItemHandler, IItemHandler, ImmutableItemStack> = ItemCapability
 
-                    override fun getCapacity(stack: ImmutableItemStack?): Int = handler.getSlotLimit(slot)
+    private data object ItemCapability : HTViewCapabilityBase<IItemHandler, IItemHandler, ImmutableItemStack>(
+        Capabilities.ItemHandler.BLOCK,
+        Capabilities.ItemHandler.ENTITY_AUTOMATION,
+        Capabilities.ItemHandler.ITEM,
+        { handler: IItemHandler, side: Direction? ->
+            if (handler is HTItemHandler) {
+                handler.getItemSlots(side)
+            } else {
+                handler.slotRange.map { slot: Int ->
+                    object : HTStackView<ImmutableItemStack> {
+                        override fun getStack(): ImmutableItemStack? = handler.getStackInSlot(slot).toImmutable()
+
+                        override fun getCapacity(stack: ImmutableItemStack?): Int = handler.getSlotLimit(slot)
+                    }
                 }
             }
+        },
+    ) {
+        override fun getCapability(entity: Entity, side: Direction?): IItemHandler? {
+            if (side == null) {
+                val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
+                if (handler != null) return handler
+            }
+            return super.getCapability(entity, side)
         }
     }
 }

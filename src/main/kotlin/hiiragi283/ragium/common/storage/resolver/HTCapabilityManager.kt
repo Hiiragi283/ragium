@@ -6,8 +6,8 @@ import net.neoforged.neoforge.capabilities.BlockCapability
 /**
  * 向きに応じたCapabilityを取得するインターフェース
  * @param CONTAINER 要素を保持するクラス
- * @see [mekanism.common.capabilities.resolver.ICapabilityResolver]
- * @see [mekanism.common.capabilities.resolver.manager.ICapabilityHandlerManager]
+ * @see mekanism.common.capabilities.resolver.ICapabilityResolver
+ * @see mekanism.common.capabilities.resolver.manager.ICapabilityHandlerManager
  */
 interface HTCapabilityManager<CONTAINER : Any> {
     /**

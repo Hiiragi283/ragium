@@ -4,7 +4,7 @@ import net.neoforged.neoforge.common.UsernameCache
 import java.util.UUID
 
 /**
- * @see [net.minecraft.world.entity.OwnableEntity]
+ * @see net.minecraft.world.entity.OwnableEntity
  */
 fun interface HTOwnedBlockEntity {
     fun getOwner(): UUID?

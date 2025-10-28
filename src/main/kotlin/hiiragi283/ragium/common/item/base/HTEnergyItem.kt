@@ -13,7 +13,7 @@ import net.minecraft.world.item.TooltipFlag
 import kotlin.math.roundToInt
 
 /**
- * @see [de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy]
+ * @see de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy
  */
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {

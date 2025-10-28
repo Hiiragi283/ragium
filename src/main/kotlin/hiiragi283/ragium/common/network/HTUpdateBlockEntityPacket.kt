@@ -14,7 +14,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.world.level.Level
 
 /**
- * @see [mekanism.common.network.to_client.PacketUpdateTile]
+ * @see mekanism.common.network.to_client.PacketUpdateTile
  */
 @ConsistentCopyVisibility
 @JvmRecord

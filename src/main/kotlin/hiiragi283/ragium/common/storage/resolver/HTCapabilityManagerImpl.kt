@@ -6,8 +6,8 @@ import net.minecraft.core.Direction
 import net.neoforged.neoforge.capabilities.BlockCapability
 
 /**
- * @see [mekanism.common.capabilities.resolver.BasicSidedCapabilityResolver]
- * @see [mekanism.common.capabilities.resolver.manager.CapabilityHandlerManager]
+ * @see mekanism.common.capabilities.resolver.BasicSidedCapabilityResolver
+ * @see mekanism.common.capabilities.resolver.manager.CapabilityHandlerManager
  */
 open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any, HANDLER : Any, SIDED_HANDLER : HANDLER>(
     protected val holder: HOLDER?,
@@ -18,7 +18,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any,
     private val handlers: MutableMap<Direction, HANDLER> = mutableMapOf()
     private var readOnlyHandler: HANDLER? = null
 
-    fun <T : Any, U : T> resolve(type: HTMultiCapability<T, U>, context: Direction?): T? = resolve(type.blockCapability(), context)
+    fun <T : Any, U : T> resolve(type: HTMultiCapability<T, U>, context: Direction?): T? = resolve(type.block, context)
 
     override fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, side: Direction?): T? = when {
         getContainers(side).isEmpty() -> null

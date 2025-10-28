@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 
 /**
- * @see [mekanism.common.inventory.slot.OutputInventorySlot]
+ * @see mekanism.common.inventory.slot.OutputInventorySlot
  */
 class HTOutputItemStackSlot private constructor(listener: HTContentListener?, x: Int, y: Int) :
     HTItemStackSlot(

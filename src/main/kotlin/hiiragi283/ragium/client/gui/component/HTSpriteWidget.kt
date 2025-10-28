@@ -47,7 +47,7 @@ abstract class HTSpriteWidget(
     }
 
     /**
-     * @see [de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.draw]
+     * @see de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay.draw
      */
     private fun renderSprite(guiGraphics: GuiGraphics) {
         if (!shouldRender()) return

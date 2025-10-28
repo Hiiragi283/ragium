@@ -17,7 +17,6 @@ import net.neoforged.api.distmarker.OnlyIn
 class HTEnergyBatteryWidget(private val storage: HTEnergyStorage.Mutable, x: Int, y: Int) :
     HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()),
     HTEnergyWidget {
-
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(
             RagiumAPI.id("textures/gui/energy_gauge.png"),

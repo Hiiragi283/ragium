@@ -8,7 +8,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 /**
- * @see [io.wispforest.accessories.api.data.AccessoriesBaseData]
+ * @see io.wispforest.accessories.api.data.AccessoriesBaseData
  */
 enum class HTAccessorySlot {
     ANKLET,

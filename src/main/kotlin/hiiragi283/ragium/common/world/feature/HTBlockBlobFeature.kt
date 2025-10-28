@@ -8,7 +8,7 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 
 /**
- * @see [net.minecraft.world.level.levelgen.feature.BlockBlobFeature]
+ * @see net.minecraft.world.level.levelgen.feature.BlockBlobFeature
  */
 class HTBlockBlobFeature(codec: Codec<HTFilteredBlockConfiguration>) : Feature<HTFilteredBlockConfiguration>(codec) {
     override fun place(context: FeaturePlaceContext<HTFilteredBlockConfiguration>): Boolean {

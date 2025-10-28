@@ -11,7 +11,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
  * @param handler ラップ対象の[HTSidedFluidHandler]
  * @param side 現在の向き
  * @param holder 搬入出の制御
- * @see [mekanism.common.capabilities.proxy.ProxyFluidHandler]
+ * @see mekanism.common.capabilities.proxy.ProxyFluidHandler
  */
 class HTProxyFluidHandler(private val handler: HTSidedFluidHandler, side: Direction?, holder: HTCapabilityHolder?) :
     HTProxyHandler(side, holder),

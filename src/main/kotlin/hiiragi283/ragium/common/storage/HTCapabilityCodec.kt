@@ -10,7 +10,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 
 /**
- * @see [mekanism.common.attachments.containers.ContainerType]
+ * @see mekanism.common.attachments.containers.ContainerType
  */
 class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
     private val containerTag: String,

@@ -4,7 +4,7 @@ import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.Supplier
 
 /**
- * @see [mekanism.common.config.value.CachedBooleanValue]
+ * @see mekanism.common.config.value.CachedBooleanValue
  */
 class HTEnumConfigValue<T : Enum<T>>(value: ModConfigSpec.EnumValue<T>) :
     HTConfigValue<T>(value),

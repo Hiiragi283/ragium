@@ -7,7 +7,7 @@ import hiiragi283.ragium.common.storage.proxy.HTProxyItemHandler
 import net.neoforged.neoforge.items.IItemHandler
 
 /**
- * @see [mekanism.common.capabilities.resolver.manager.ItemHandlerManager]
+ * @see mekanism.common.capabilities.resolver.manager.ItemHandlerManager
  */
 class HTItemHandlerManager(holder: HTItemSlotHolder?, baseHandler: HTSidedItemHandler) :
     HTCapabilityManagerImpl<HTItemSlotHolder, HTItemSlot, IItemHandler, HTSidedItemHandler>(

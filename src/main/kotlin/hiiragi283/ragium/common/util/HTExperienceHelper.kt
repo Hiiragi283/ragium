@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player
 import kotlin.math.max
 
 /**
- * @see [me.desht.pneumaticcraft.common.util.EnchantmentUtils]
+ * @see me.desht.pneumaticcraft.common.util.EnchantmentUtils
  */
 object HTExperienceHelper {
     @JvmStatic

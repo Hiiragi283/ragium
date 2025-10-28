@@ -294,6 +294,8 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        event.setProxyable(RagiumCapabilities.EXPERIENCE.block)
+
         // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
 
@@ -348,22 +350,22 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<out HTBlockEntity>) {
         event.registerBlockEntity(
-            RagiumCapabilities.ITEM.blockCapability(),
+            RagiumCapabilities.ITEM.block,
             type,
             HTHandlerProvider::getItemHandler,
         )
         event.registerBlockEntity(
-            RagiumCapabilities.FLUID.blockCapability(),
+            RagiumCapabilities.FLUID.block,
             type,
             HTHandlerProvider::getFluidHandler,
         )
         event.registerBlockEntity(
-            RagiumCapabilities.ENERGY.blockCapability(),
+            RagiumCapabilities.ENERGY.block,
             type,
             HTHandlerProvider::getEnergyStorage,
         )
         event.registerBlockEntity(
-            RagiumCapabilities.EXPERIENCE.blockCapability(),
+            RagiumCapabilities.EXPERIENCE.block,
             type,
             HTHandlerProvider::getExperienceStorage,
         )

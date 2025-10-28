@@ -557,7 +557,7 @@ object RagiumItems {
     @JvmStatic
     fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.ITEM.itemCapability(),
+            RagiumCapabilities.ITEM.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
@@ -566,7 +566,7 @@ object RagiumItems {
     @JvmStatic
     fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.FLUID.itemCapability(),
+            RagiumCapabilities.FLUID.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
@@ -575,7 +575,7 @@ object RagiumItems {
     @JvmStatic
     fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.ENERGY.itemCapability(),
+            RagiumCapabilities.ENERGY.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
@@ -584,7 +584,7 @@ object RagiumItems {
     @JvmStatic
     fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IExperienceStorageItem?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.EXPERIENCE.itemCapability(),
+            RagiumCapabilities.EXPERIENCE.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )

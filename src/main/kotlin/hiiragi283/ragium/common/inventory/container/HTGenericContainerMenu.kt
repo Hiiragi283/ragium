@@ -8,9 +8,8 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
 /**
- * @see [net.minecraft.world.inventory.ChestMenu]
+ * @see net.minecraft.world.inventory.ChestMenu
  */
-@Suppress("DEPRECATION")
 class HTGenericContainerMenu(
     menuType: HTDeferredMenuType.WithContext<*, HTItemHandler>,
     containerId: Int,
@@ -31,7 +30,7 @@ class HTGenericContainerMenu(
     }
 
     init {
-        check(context.slots >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
+        check(context.getSlots(context.getItemSideFor()) >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
         addSlots(context)

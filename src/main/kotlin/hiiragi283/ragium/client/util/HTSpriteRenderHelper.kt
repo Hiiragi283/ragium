@@ -44,7 +44,7 @@ object HTSpriteRenderHelper {
     //    Renderer    //
 
     /**
-     * @see [me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture]
+     * @see me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture
      */
     fun drawQuad(
         guiGraphics: GuiGraphics,

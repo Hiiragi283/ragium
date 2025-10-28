@@ -8,7 +8,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 /**
- * @see [net.minecraft.client.model.geom.ModelLayers]
+ * @see net.minecraft.client.model.geom.ModelLayers
  */
 @OnlyIn(Dist.CLIENT)
 object RagiumModelLayers {

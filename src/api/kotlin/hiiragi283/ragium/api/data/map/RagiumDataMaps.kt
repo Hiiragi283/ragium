@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
- * @see [mekanism.api.datamaps.IMekanismDataMapTypes]
+ * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 interface RagiumDataMaps {
     companion object {

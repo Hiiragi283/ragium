@@ -17,7 +17,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.function.Predicate
 
 /**
- * @see [mekanism.common.inventory.slot.FluidInventorySlot]
+ * @see mekanism.common.inventory.slot.FluidInventorySlot
  */
 open class HTFluidItemStackSlot protected constructor(
     protected val tank: HTFluidTank,

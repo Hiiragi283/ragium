@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.entity.HTBlastCharge
@@ -81,7 +82,7 @@ object RagiumEntityTypes {
         }
 
         // Exp Storage for Exp Orb
-        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, EntityType.EXPERIENCE_ORB) { orb: ExperienceOrb, _ ->
+        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, EntityType.EXPERIENCE_ORB) { orb: ExperienceOrb, _ ->
             object :
                 HTExperienceStorage.Basic(),
                 HTValueSerializable.Empty {
@@ -94,7 +95,7 @@ object RagiumEntityTypes {
 
                 override fun getAmount(): Long = orb.value.toLong()
 
-                override fun getCapacity(): Long = Int.MAX_VALUE.toLong()
+                override fun getCapacity(): Long = Long.MAX_VALUE
 
                 override fun onContentsChanged() {
                     if (orb.value <= 0) {
@@ -104,7 +105,7 @@ object RagiumEntityTypes {
             }
         }
         // Exp Storage for Player
-        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, EntityType.PLAYER) { player: Player, _ ->
+        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, EntityType.PLAYER) { player: Player, _ ->
             object :
                 HTExperienceStorage.Basic(),
                 HTContentListener.Empty,
@@ -128,10 +129,10 @@ object RagiumEntityTypes {
         type: HTDeferredEntityType<ENTITY>,
     ) where ENTITY : Entity, ENTITY : HTHandlerProvider {
         val type1: EntityType<ENTITY> = type.get()
-        event.registerEntity(Capabilities.ItemHandler.ENTITY, type1) { entity: ENTITY, _ -> entity.getItemHandler(null) }
+        event.registerEntity(RagiumCapabilities.ITEM.entity, type1) { entity: ENTITY, _ -> entity.getItemHandler(null) }
         event.registerEntity(Capabilities.ItemHandler.ENTITY_AUTOMATION, type1, HTHandlerProvider::getItemHandler)
-        event.registerEntity(Capabilities.FluidHandler.ENTITY, type1, HTHandlerProvider::getFluidHandler)
-        event.registerEntity(Capabilities.EnergyStorage.ENTITY, type1, HTHandlerProvider::getEnergyStorage)
-        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, type1, HTHandlerProvider::getExperienceStorage)
+        event.registerEntity(RagiumCapabilities.FLUID.entity, type1, HTHandlerProvider::getFluidHandler)
+        event.registerEntity(RagiumCapabilities.ENERGY.entity, type1, HTHandlerProvider::getEnergyStorage)
+        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, type1, HTHandlerProvider::getExperienceStorage)
     }
 }

@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.capability.wrapStorage
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.storage.experience.IExperienceStorage
@@ -59,7 +59,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         expOrbs
             .asSequence()
             .filter(ExperienceOrb::isAlive)
-            .mapNotNull { it.getCapability(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, null) }
+            .mapNotNull { RagiumCapabilities.EXPERIENCE.getCapability(it, null) }
             .forEach { storage: IExperienceStorage -> HTExperienceHelper.moveExp(wrapStorage(storage), expStorage) }
         return true
     }

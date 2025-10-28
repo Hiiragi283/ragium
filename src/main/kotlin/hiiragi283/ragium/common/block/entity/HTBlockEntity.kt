@@ -62,7 +62,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     companion object {
         /**
-         * @see [mekanism.common.tile.base.TileEntityMekanism.tickClient]
+         * @see mekanism.common.tile.base.TileEntityMekanism.tickClient
          */
         @JvmStatic
         fun tickClient(
@@ -76,7 +76,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
 
         /**
-         * @see [mekanism.common.tile.base.TileEntityMekanism.tickServer]
+         * @see mekanism.common.tile.base.TileEntityMekanism.tickServer
          */
         @JvmStatic
         fun tickServer(

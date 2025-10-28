@@ -11,7 +11,7 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 
 /**
- * @see [net.minecraft.world.item.enchantment.EnchantmentEffectComponents]
+ * @see net.minecraft.world.item.enchantment.EnchantmentEffectComponents
  */
 object RagiumEnchantmentComponents {
     @JvmField

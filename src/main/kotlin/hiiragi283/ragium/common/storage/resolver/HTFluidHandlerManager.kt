@@ -7,7 +7,7 @@ import hiiragi283.ragium.common.storage.proxy.HTProxyFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
- * @see [mekanism.common.capabilities.resolver.manager.FluidHandlerManager]
+ * @see mekanism.common.capabilities.resolver.manager.FluidHandlerManager
  */
 class HTFluidHandlerManager(holder: HTFluidTankHolder?, baseHandler: HTSidedFluidHandler) :
     HTCapabilityManagerImpl<HTFluidTankHolder, HTFluidTank, IFluidHandler, HTSidedFluidHandler>(

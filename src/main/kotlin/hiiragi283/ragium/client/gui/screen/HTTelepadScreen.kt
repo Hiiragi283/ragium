@@ -57,7 +57,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
     }
 
     /**
-     * @see [net.minecraft.client.gui.screens.inventory.AnvilScreen]
+     * @see net.minecraft.client.gui.screens.inventory.AnvilScreen
      */
     private fun setupNumberBox(y: Int): HTNumberEditBox<Int> {
         val editBox: HTNumberEditBox<Int> = addRenderableWidget(
