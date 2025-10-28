@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -29,18 +29,6 @@ open class HTItemStackSlot protected constructor(
     private val slotType: HTContainerItemSlot.Type,
 ) : HTItemSlot.Basic() {
     companion object {
-        @JvmField
-        val ALWAYS_TRUE: BiPredicate<ImmutableItemStack, HTStorageAccess> =
-            BiPredicate { _, _ -> true }
-
-        @JvmField
-        val INTERNAL_ONLY: BiPredicate<ImmutableItemStack, HTStorageAccess> =
-            BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL }
-
-        @JvmField
-        val MANUAL_ONLY: BiPredicate<ImmutableItemStack, HTStorageAccess> =
-            BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.MANUAL }
-
         @JvmStatic
         private fun validateLimit(limit: Int): Int {
             check(limit >= 0) { "Limit must be non negative" }
@@ -53,9 +41,9 @@ open class HTItemStackSlot protected constructor(
             x: Int,
             y: Int,
             limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
-            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
+            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
         ): HTItemStackSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
 
         @JvmStatic
@@ -64,9 +52,9 @@ open class HTItemStackSlot protected constructor(
             x: Int,
             y: Int,
             limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
-            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
+            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
             slotType: HTContainerItemSlot.Type,
         ): HTItemStackSlot = HTItemStackSlot(validateLimit(limit), canExtract, canInsert, filter, listener, x, y, slotType)
 
@@ -76,7 +64,7 @@ open class HTItemStackSlot protected constructor(
             x: Int,
             y: Int,
             limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canInsert: Predicate<ImmutableItemStack> = ImmutableStack.alwaysTrue(),
+            canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableItemStack> = canInsert,
         ): HTItemStackSlot = create(
             listener,

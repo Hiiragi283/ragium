@@ -16,19 +16,18 @@ import java.util.Optional
 @JvmInline
 value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
-        @JvmStatic
-        private val FLUID_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
-
         @JvmField
-        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> = FLUID_STACK_CODEC
-            .xmap(
-                { stack: FluidStack -> Optional.ofNullable(stack.toImmutable()) },
-                { optional: Optional<ImmutableFluidStack> -> optional.map(ImmutableFluidStack::stack).orElse(FluidStack.EMPTY) },
-            )
+        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> =
+            BiCodec
+                .of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
+                .xmap(
+                    { stack: FluidStack -> Optional.ofNullable(stack.toImmutable()) },
+                    { optional: Optional<ImmutableFluidStack> -> optional.map(ImmutableFluidStack::stack).orElse(FluidStack.EMPTY) },
+                )
 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
-            FLUID_STACK_CODEC.comapFlatMap(
+            BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC).comapFlatMap(
                 { stack: FluidStack ->
                     when (val immutable: ImmutableFluidStack? = stack.toImmutable()) {
                         null -> Result.failure(error("FluidStack must not be empty"))
@@ -56,7 +55,7 @@ value class ImmutableFluidStack private constructor(val stack: FluidStack) : Imm
 
     override fun holder(): Holder<Fluid> = stack.fluidHolder
 
-    override fun amountAsInt(): Int = stack.amount
+    override fun amount(): Int = stack.amount
 
     override fun copy(): ImmutableFluidStack = ImmutableFluidStack(stack.copy())
 

@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
@@ -33,7 +32,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state),
@@ -88,8 +86,6 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         return false
     }
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
-
     //    HTFluidInteractable    //
 
     override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
@@ -102,9 +98,9 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
     private class DrumTank(tier: HTDrumTier, listener: HTContentListener) :
         HTFluidStackTank(
             tier.getDefaultCapacity(),
-            ALWAYS_TRUE,
-            ALWAYS_TRUE,
-            ImmutableStack.alwaysTrue(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrue(),
             listener,
         ) {
         val isCreative: Boolean = tier == HTDrumTier.CREATIVE

@@ -46,6 +46,9 @@ object RagiumDataComponents {
     val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
 
     @JvmField
+    val EXPERIENCE: DataComponentType<Long> = REGISTER.registerType("experience", BiCodecs.NON_NEGATIVE_LONG)
+
+    @JvmField
     val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
 
     @JvmField

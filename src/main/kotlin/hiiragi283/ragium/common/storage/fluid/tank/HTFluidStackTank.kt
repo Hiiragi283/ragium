@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -24,10 +24,6 @@ open class HTFluidStackTank protected constructor(
     private val listener: HTContentListener?,
 ) : HTFluidTank.Basic() {
     companion object {
-        @JvmField
-        val ALWAYS_TRUE: BiPredicate<ImmutableFluidStack, HTStorageAccess> =
-            BiPredicate { _, _ -> true }
-
         @JvmStatic
         private fun validateCapacity(capacity: Int): Int {
             check(capacity >= 0) { "Capacity must be non negative" }
@@ -35,18 +31,23 @@ open class HTFluidStackTank protected constructor(
         }
 
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank =
-            HTFluidStackTank(validateCapacity(capacity), ALWAYS_TRUE, ALWAYS_TRUE, ImmutableStack.alwaysTrue(), listener)
+        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
+            validateCapacity(capacity),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrue(),
+            listener,
+        )
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: Int,
-            canInsert: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
+            canInsert: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
         ): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
-            { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
+            HTPredicates.notExternal(),
             { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
             filter,
             listener,
@@ -55,9 +56,9 @@ open class HTFluidStackTank protected constructor(
         @JvmStatic
         fun output(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
-            ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
-            ImmutableStack.alwaysTrue(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.internalOnly(),
+            HTPredicates.alwaysTrue(),
             listener,
         )
     }

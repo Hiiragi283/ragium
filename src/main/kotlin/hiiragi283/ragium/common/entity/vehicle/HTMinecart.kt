@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.entity.vehicle
 
 import hiiragi283.ragium.api.storage.HTHandlerProvider
+import hiiragi283.ragium.api.storage.experience.IExperienceStorage
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
@@ -131,6 +132,8 @@ abstract class HTMinecart<BE : HTBlockEntity> :
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = bindBlockEntity().getFluidHandler(direction)
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = bindBlockEntity().getEnergyStorage(direction)
+
+    final override fun getExperienceStorage(direction: Direction?): IExperienceStorage? = bindBlockEntity().getExperienceStorage(direction)
 
     //    Factory    //
 

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.stack
 
-import com.google.common.base.Predicates
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.text.HTHasText
@@ -8,7 +7,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentHolder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
-import java.util.function.Predicate
 
 /**
  * [hiiragi283.ragium.api.storage.HTStackSlot]で使われるスタックのラッパー
@@ -21,14 +19,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     DataComponentHolder,
     HTHasText,
     HTHolderLike {
-    companion object {
-        @JvmStatic
-        fun <STACK : ImmutableStack<*, *>> alwaysTrue(): Predicate<STACK> = Predicates.alwaysTrue<STACK>()
-
-        @JvmStatic
-        fun <STACK : ImmutableStack<*, *>> alwaysFalse(): Predicate<STACK> = Predicates.alwaysFalse<STACK>()
-    }
-
     /**
      * このスタックの種類を返します。
      */
@@ -42,7 +32,7 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     /**
      * このスタックの量を[Int]値で返します。
      */
-    fun amountAsInt(): Int
+    fun amount(): Int
 
     /**
      * このスタックのコピーを返します。。

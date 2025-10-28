@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
@@ -31,8 +32,8 @@ open class HTComponentItemSlot(
         fun create(
             parent: ItemStack,
             slot: Int,
-            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTItemStackSlot.ALWAYS_TRUE,
-            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTItemStackSlot.ALWAYS_TRUE,
+            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             filter: Predicate<ImmutableItemStack> = Predicate(ImmutableItemStack::stack.andThen(ItemStack::canFitInsideContainerItems)),
         ): HTComponentItemSlot = HTComponentItemSlot(parent, slot, canExtract, canInsert, filter)
     }

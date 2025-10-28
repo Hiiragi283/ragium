@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.storage
 
+import com.google.common.primitives.Ints
+
 /**
  * 個数を保持するインターフェース
  */
@@ -46,6 +48,10 @@ sealed interface HTAmountView<N : Number> {
      * [Long]値を扱う[HTAmountView]の拡張インターフェース
      */
     interface LongSized : HTAmountView<Long> {
+        fun getAmountAsInt(): Int = Ints.saturatedCast(getAmount())
+
+        fun getCapacityAsInt(): Int = Ints.saturatedCast(getCapacity())
+
         override fun getNeeded(): Long = getCapacity() - getAmount()
 
         override fun getStoredLevelAsDouble(): Double = getAmount() / getCapacity().toDouble()

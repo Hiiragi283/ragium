@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.util.HTContentListener
 
 /**
@@ -11,9 +11,9 @@ import hiiragi283.ragium.api.util.HTContentListener
 class HTOutputItemStackSlot private constructor(listener: HTContentListener?, x: Int, y: Int) :
     HTItemStackSlot(
         RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-        ALWAYS_TRUE,
-        INTERNAL_ONLY,
-        ImmutableStack.alwaysTrue(),
+        HTPredicates.alwaysTrueBi(),
+        HTPredicates.internalOnly(),
+        HTPredicates.alwaysTrue(),
         listener,
         x,
         y,

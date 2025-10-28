@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.common.storage.experience
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
@@ -6,44 +6,41 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
 import kotlin.math.min
 
-/**
- * @see mekanism.common.capabilities.energy.BasicEnergyContainer
- */
-open class HTBasicEnergyStorage(
-    private val capacity: Int,
+open class HTBasicExperienceStorage(
+    private val capacity: Long,
     protected val canExtract: Predicate<HTStorageAccess>,
     protected val canInsert: Predicate<HTStorageAccess>,
     private val listener: HTContentListener?,
-) : HTEnergyStorage.Basic() {
+) : HTExperienceStorage.Basic() {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
+        fun input(listener: HTContentListener?, capacity: Long): HTBasicExperienceStorage =
             create(listener, capacity, HTStorageAccess.NOT_EXTERNAL, HTPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
+        fun output(listener: HTContentListener?, capacity: Long): HTBasicExperienceStorage =
             create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
             listener: HTContentListener?,
-            capacity: Int,
+            capacity: Long,
             canExtract: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
             canInsert: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
-        ): HTBasicEnergyStorage = HTBasicEnergyStorage(capacity, canExtract, canInsert, listener)
+        ): HTBasicExperienceStorage = HTBasicExperienceStorage(capacity, canExtract, canInsert, listener)
     }
 
     @JvmField
-    protected var amount: Int = 0
+    protected var amount: Long = 0
 
-    override fun setAmount(amount: Int, action: HTStorageAction) {
+    override fun setAmount(amount: Long, action: HTStorageAction) {
         check(amount >= 0) { "Energy cannot be negative" }
-        val fixedAmount: Int = min(amount, getCapacity())
+        val fixedAmount: Long = min(amount, getCapacity())
         if (this.amount != fixedAmount && action.execute) {
             this.amount = fixedAmount
             onContentsChanged()
@@ -54,16 +51,16 @@ open class HTBasicEnergyStorage(
 
     final override fun canExtract(access: HTStorageAccess): Boolean = this.canExtract.test(access)
 
-    override fun getAmount(): Int = amount
+    override fun getAmount(): Long = amount
 
-    override fun getCapacity(): Int = capacity
+    override fun getCapacity(): Long = capacity
 
     override fun serialize(output: HTValueOutput) {
-        output.putInt(RagiumConst.AMOUNT, getAmount())
+        output.putLong(RagiumConst.AMOUNT, getAmount())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getInt(RagiumConst.AMOUNT)?.let { setAmount(it, HTStorageAction.EXECUTE) }
+        input.getLong(RagiumConst.AMOUNT)?.let { setAmount(it, HTStorageAction.EXECUTE) }
     }
 
     final override fun onContentsChanged() {

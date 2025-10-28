@@ -31,7 +31,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
             // 液体が有効，かつ搬出先が受け入れ可能な場合
             if (!firstStackIn.isEmpty && (moveTo.getStack() == null || moveTo.isSameStack(containerIn))) {
                 // 現在のコンテナの個数が1の場合だけ処理を行う
-                if (stackIn.amountAsInt() != 1) return false
+                if (stackIn.amount() != 1) return false
                 val transferred: ImmutableFluidStack = FluidUtil
                     .tryFluidTransfer(
                         handler,
@@ -40,8 +40,8 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                         false,
                     ).toImmutable() ?: return false
                 // 移動可能な量が最初に取り出した値と同じ場合
-                if (transferred.amountAsInt() == firstStackIn.amount) {
-                    handlerIn.drain(transferred.amountAsInt(), HTStorageAction.EXECUTE.toFluid())
+                if (transferred.amount() == firstStackIn.amount) {
+                    handlerIn.drain(transferred.amount(), HTStorageAction.EXECUTE.toFluid())
                     containerIn = handlerIn.container.toImmutable()
                     if (containerIn != null) {
                         val excessStack: ImmutableItemStack? = moveTo.insert(

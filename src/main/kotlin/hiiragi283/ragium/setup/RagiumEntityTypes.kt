@@ -1,16 +1,24 @@
 package hiiragi283.ragium.setup
 
+import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
+import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTHandlerProvider
+import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.entity.HTBlastCharge
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.util.HTExperienceHelper
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -71,6 +79,47 @@ object RagiumEntityTypes {
         for (type: HTDeferredEntityType<HTDrumMinecart> in DRUMS.values) {
             registerCapability(event, type)
         }
+
+        // Exp Storage for Exp Orb
+        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, EntityType.EXPERIENCE_ORB) { orb: ExperienceOrb, _ ->
+            object :
+                HTExperienceStorage.Basic(),
+                HTValueSerializable.Empty {
+                override fun setAmount(amount: Long, action: HTStorageAction) {
+                    if (action.execute) {
+                        orb.value = Ints.saturatedCast(amount)
+                        onContentsChanged()
+                    }
+                }
+
+                override fun getAmount(): Long = orb.value.toLong()
+
+                override fun getCapacity(): Long = Int.MAX_VALUE.toLong()
+
+                override fun onContentsChanged() {
+                    if (orb.value <= 0) {
+                        orb.discard()
+                    }
+                }
+            }
+        }
+        // Exp Storage for Player
+        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, EntityType.PLAYER) { player: Player, _ ->
+            object :
+                HTExperienceStorage.Basic(),
+                HTContentListener.Empty,
+                HTValueSerializable.Empty {
+                override fun setAmount(amount: Long, action: HTStorageAction) {
+                    if (action.execute) {
+                        HTExperienceHelper.setPlayerExp(player, amount)
+                    }
+                }
+
+                override fun getAmount(): Long = HTExperienceHelper.getPlayerExp(player)
+
+                override fun getCapacity(): Long = Long.MAX_VALUE
+            }
+        }
     }
 
     @JvmStatic
@@ -83,5 +132,6 @@ object RagiumEntityTypes {
         event.registerEntity(Capabilities.ItemHandler.ENTITY_AUTOMATION, type1, HTHandlerProvider::getItemHandler)
         event.registerEntity(Capabilities.FluidHandler.ENTITY, type1, HTHandlerProvider::getFluidHandler)
         event.registerEntity(Capabilities.EnergyStorage.ENTITY, type1, HTHandlerProvider::getEnergyStorage)
+        event.registerEntity(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, type1, HTHandlerProvider::getExperienceStorage)
     }
 }

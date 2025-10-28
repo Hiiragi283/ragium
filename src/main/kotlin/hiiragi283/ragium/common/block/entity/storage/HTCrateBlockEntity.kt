@@ -20,7 +20,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
@@ -31,7 +30,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.function.Consumer
 
 class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
@@ -48,7 +46,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         slot = builder.addSlot(
             HTAccessConfig.BOTH,
-            HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack ->
+            HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack? ->
                 val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
                 HTItemHelper.processStorageCapacity(level?.random, this, capacity)
             }, 0, 0),
@@ -107,6 +105,4 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
-
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 }

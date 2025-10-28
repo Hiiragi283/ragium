@@ -4,9 +4,15 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.storage.experience.IExperienceStorage
+import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
+import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.capabilities.BlockCapability
+import net.neoforged.neoforge.capabilities.EntityCapability
+import net.neoforged.neoforge.capabilities.ItemCapability
 import org.slf4j.Logger
 import java.util.ServiceLoader
 
@@ -49,6 +55,20 @@ object RagiumAPI {
         MOD_ID -> other
         else -> id(other.path)
     }
+
+    //    Capability    //
+
+    @JvmField
+    val EXPERIENCE_BLOCK_CAPABILITY: BlockCapability<IExperienceStorage, Direction?> =
+        BlockCapability.createSided(id("experience"), IExperienceStorage::class.java)
+
+    @JvmField
+    val EXPERIENCE_ENTITY_CAPABILITY: EntityCapability<IExperienceStorage, Direction?> =
+        EntityCapability.createSided(id("experience"), IExperienceStorage::class.java)
+
+    @JvmField
+    val EXPERIENCE_ITEM_CAPABILITY: ItemCapability<IExperienceStorageItem, Void?> =
+        ItemCapability.createVoid(id("experience"), IExperienceStorageItem::class.java)
 
     //    Registry    //
 

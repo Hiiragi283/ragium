@@ -2,21 +2,17 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**
  * 電力を消費しない設備に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
-
     //    Tickable    //
 
     /**

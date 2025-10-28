@@ -37,7 +37,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
-        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amountAsInt()) {
+        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount()) {
             10 -> 18 * 10
             else -> super.getRecipeTime(recipe)
         }

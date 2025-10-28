@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTMaterialVariant
@@ -39,13 +40,13 @@ import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
+import hiiragi283.ragium.common.storage.experience.HTBottleExperienceStorage
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.tank.HTComponentFluidTank
 import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
 import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
@@ -498,7 +499,7 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        for ((tier: HTCrateTier, block: ItemLike) in RagiumBlocks.CRATES) {
+        for ((_, block: ItemLike) in RagiumBlocks.CRATES) {
             registerItem(
                 event,
                 { stack: ItemStack -> HTComponentItemHandler(HTComponentItemSlot.create(stack, 1)) },
@@ -547,6 +548,9 @@ object RagiumItems {
             DRILL,
         )
 
+        // Exp
+        registerExp(event, ::HTBottleExperienceStorage, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE)
+
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
 
@@ -572,6 +576,15 @@ object RagiumItems {
     fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
         event.registerItem(
             RagiumCapabilities.ENERGY.itemCapability(),
+            { stack: ItemStack, _: Void? -> getter(stack) },
+            *items,
+        )
+    }
+
+    @JvmStatic
+    fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IExperienceStorageItem?, vararg items: ItemLike) {
+        event.registerItem(
+            RagiumCapabilities.EXPERIENCE.itemCapability(),
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )

@@ -85,7 +85,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             }
             val maxStackSize: Int = getCapacity(stack)
             val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.amountAsInt() == fixedAmount || action.simulate) {
+            if (stack.amount() == fixedAmount || action.simulate) {
                 return fixedAmount
             }
             updateCount(stack, fixedAmount)
@@ -103,7 +103,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
 
             val sameType: Boolean = isSameStack(stack)
             if (this.getStack() == null || sameType) {
-                val toAdd: Int = min(stack.amountAsInt(), needed)
+                val toAdd: Int = min(stack.amount(), needed)
                 if (action.execute) {
                     if (sameType) {
                         growStack(toAdd, action)
@@ -112,13 +112,13 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                         setStack(stack.copyWithAmount(toAdd))
                     }
                 }
-                return stack.copyWithAmount(stack.amountAsInt() - toAdd)
+                return stack.copyWithAmount(stack.amount() - toAdd)
             }
             return stack
         }
 
         final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
-            this.getStack() != null && isSameStack(stack) -> extract(stack.amountAsInt(), action, access)
+            this.getStack() != null && isSameStack(stack) -> extract(stack.amount(), action, access)
             else -> null
         }
 

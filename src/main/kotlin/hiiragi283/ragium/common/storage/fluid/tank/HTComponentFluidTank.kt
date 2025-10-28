@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.util.HTContentListener
@@ -29,9 +29,9 @@ open class HTComponentFluidTank(
         fun create(
             parent: ItemStack,
             capacity: Int,
-            canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTFluidStackTank.ALWAYS_TRUE,
-            canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTFluidStackTank.ALWAYS_TRUE,
-            filter: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
+            canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
         ): HTComponentFluidTank = HTComponentFluidTank(parent, capacity, canExtract, canInsert, filter)
     }
 

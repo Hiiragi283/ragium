@@ -45,7 +45,7 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
         return getAmount() / capacity.toFloat()
     }
 
-    override fun getAmount(): Int = getStack()?.amountAsInt() ?: 0
+    override fun getAmount(): Int = getStack()?.amount() ?: 0
 
     override fun getCapacity(): Int = getCapacity(getStack())
 

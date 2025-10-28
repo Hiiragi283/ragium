@@ -69,7 +69,7 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
 
     override fun holder(): Holder<Item> = stack.itemHolder
 
-    override fun amountAsInt(): Int = stack.count
+    override fun amount(): Int = stack.count
 
     override fun copy(): ImmutableItemStack = ImmutableItemStack(stack.copy())
 

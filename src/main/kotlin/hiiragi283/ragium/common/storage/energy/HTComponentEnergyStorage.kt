@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -18,9 +19,11 @@ open class HTComponentEnergyStorage(private val parent: ItemStack, private val c
     HTValueSerializable.Empty {
     protected val component: DataComponentType<Int> get() = RagiumDataComponents.ENERGY
 
-    override fun setAmount(amount: Int) {
+    override fun setAmount(amount: Int, action: HTStorageAction) {
         val fixedAmount: Int = Mth.clamp(amount, 0, capacity)
-        parent.setOrRemove(component, fixedAmount) { it <= 0 }
+        if (action.execute) {
+            parent.setOrRemove(component, fixedAmount) { it <= 0 }
+        }
     }
 
     override fun getAmount(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)

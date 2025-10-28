@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.storage.capability
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -9,6 +10,8 @@ import hiiragi283.ragium.api.storage.capability.HTViewCapability
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.capability.slotRange
 import hiiragi283.ragium.api.storage.capability.tankRange
+import hiiragi283.ragium.api.storage.experience.IExperienceStorage
+import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.Direction
@@ -22,6 +25,11 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
     override val energy: HTMultiCapability<IEnergyStorage, IEnergyStorage> = HTMultiCapabilityBase(
         Capabilities.EnergyStorage.BLOCK,
         Capabilities.EnergyStorage.ITEM,
+    )
+
+    override val experience: HTMultiCapability<IExperienceStorage, IExperienceStorageItem> = HTMultiCapabilityBase(
+        RagiumAPI.EXPERIENCE_BLOCK_CAPABILITY,
+        RagiumAPI.EXPERIENCE_ITEM_CAPABILITY,
     )
 
     override val fluid: HTViewCapability<IFluidHandler, IFluidHandlerItem, ImmutableFluidStack> = HTViewCapabilityBase(

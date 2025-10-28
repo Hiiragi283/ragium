@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -38,8 +39,8 @@ class HTMachineUpgradeItemHandler private constructor(listener: HTContentListene
                 listener,
                 HTSlotHelper.getSlotPosX(8),
                 HTSlotHelper.getSlotPosY(i - 0.5),
-                canExtract = HTItemStackSlot.MANUAL_ONLY,
-                canInsert = HTItemStackSlot.MANUAL_ONLY,
+                canExtract = HTPredicates.manualOnly(),
+                canInsert = HTPredicates.manualOnly(),
                 filter = { stack: ImmutableItemStack ->
                     when (i) {
                         3 -> getComponentTier(stack) != null

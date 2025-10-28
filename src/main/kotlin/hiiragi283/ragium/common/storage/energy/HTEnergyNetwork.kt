@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.storage.energy
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.util.Mth
@@ -16,8 +17,10 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
 
     constructor() : this(0, INITIAL_CAPACITY)
 
-    override fun setAmount(amount: Int) {
-        this.amount = Mth.clamp(amount, 0, capacity)
+    override fun setAmount(amount: Int, action: HTStorageAction) {
+        if (action.execute) {
+            this.amount = Mth.clamp(amount, 0, capacity)
+        }
     }
 
     override fun getAmount(): Int = amount

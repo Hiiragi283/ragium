@@ -1,38 +1,38 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getRangedAABB
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
-import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.storage.capability.wrapStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.storage.experience.IExperienceStorage
+import hiiragi283.ragium.common.storage.experience.HTBasicExperienceStorage
+import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.ExperienceOrb
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity.Tickable(RagiumBlocks.EXP_COLLECTOR, pos, state),
-    HTFluidInteractable {
-    private lateinit var tank: HTVariableFluidStackTank
+    HTDeviceBlockEntity.Tickable(RagiumBlocks.EXP_COLLECTOR, pos, state) {
+    private val expStorage: HTExperienceStorage = HTBasicExperienceStorage.output(::setOnlySave, Long.MAX_VALUE)
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        tank = builder.addSlot(
-            HTAccessConfig.OUTPUT_ONLY,
-            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
-        )
-        return builder.build()
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        expStorage.serialize(output)
     }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        expStorage.deserialize(input)
+    }
+
+    override fun getExperienceStorage(direction: Direction?): HTExperienceStorage = expStorage
 
     override fun onRemove(level: Level, pos: BlockPos) {
         super.onRemove(level, pos)
@@ -41,14 +41,13 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             pos.x.toDouble(),
             pos.y.toDouble(),
             pos.z.toDouble(),
-            fluidAmountToExpValue(tank.getAmount()),
+            expStorage.getAmountAsInt(),
         )
     }
 
-    private fun fluidAmountToExpValue(amount: Int): Int = amount / RagiumConfig.COMMON.expCollectorMultiplier.asInt
-
     //    Ticking    //
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 範囲内のExp Orbを取得する
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
@@ -60,12 +59,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         expOrbs
             .asSequence()
             .filter(ExperienceOrb::isAlive)
-            .map(::HTExpOrbTank)
-            .forEach { orbFluidTank: HTExpOrbTank -> HTStackSlotHelper.moveStack(orbFluidTank, tank) }
+            .mapNotNull { it.getCapability(RagiumAPI.EXPERIENCE_ENTITY_CAPABILITY, null) }
+            .forEach { storage: IExperienceStorage -> HTExperienceHelper.moveExp(wrapStorage(storage), expStorage) }
         return true
     }
-
-    //    HTFluidInteractable    //
-
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
 }

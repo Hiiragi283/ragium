@@ -362,5 +362,10 @@ object RagiumBlockEntityTypes {
             type,
             HTHandlerProvider::getEnergyStorage,
         )
+        event.registerBlockEntity(
+            RagiumCapabilities.EXPERIENCE.blockCapability(),
+            type,
+            HTHandlerProvider::getExperienceStorage,
+        )
     }
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -21,18 +21,23 @@ class HTVariableFluidStackTank(
 ) : HTFluidStackTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank =
-            HTVariableFluidStackTank(capacity, ALWAYS_TRUE, ALWAYS_TRUE, ImmutableStack.alwaysTrue(), listener)
+        fun create(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
+            capacity,
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.alwaysTrue(),
+            listener,
+        )
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             capacity: IntSupplier,
-            canInsert: Predicate<ImmutableFluidStack> = ImmutableStack.alwaysTrue(),
+            canInsert: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
         ): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
-            { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
+            HTPredicates.notExternal(),
             { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
             filter,
             listener,
@@ -41,9 +46,9 @@ class HTVariableFluidStackTank(
         @JvmStatic
         fun output(listener: HTContentListener?, capacity: IntSupplier): HTVariableFluidStackTank = HTVariableFluidStackTank(
             capacity,
-            ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
-            ImmutableStack.alwaysTrue(),
+            HTPredicates.alwaysTrueBi(),
+            HTPredicates.internalOnly(),
+            HTPredicates.alwaysTrue(),
             listener,
         )
     }
