@@ -22,7 +22,7 @@ open class HTFluidStackTank protected constructor(
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val filter: Predicate<ImmutableFluidStack>,
     private val listener: HTContentListener?,
-) : HTFluidTank.Mutable() {
+) : HTFluidTank.Basic() {
     companion object {
         @JvmField
         val ALWAYS_TRUE: BiPredicate<ImmutableFluidStack, HTStorageAccess> =

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.energy.battery
+package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 
-class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyStorage?) : HTEnergyStorage {
+class HTEnergyStorageWrapper(private val getter: () -> HTEnergyStorage?) : HTEnergyStorage {
     private val delegate: HTEnergyStorage? get() = getter()
 
     override fun getAmount(): Int = delegate?.getAmount() ?: 0

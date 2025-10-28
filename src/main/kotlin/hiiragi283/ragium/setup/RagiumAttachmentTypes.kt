@@ -3,7 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.impl.HTDeferredAttachmentRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredAttachmentType
-import hiiragi283.ragium.common.storage.energy.battery.HTEnergyNetwork
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
 

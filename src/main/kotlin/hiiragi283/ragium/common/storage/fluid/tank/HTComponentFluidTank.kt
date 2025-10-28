@@ -21,7 +21,7 @@ open class HTComponentFluidTank(
     private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val filter: Predicate<ImmutableFluidStack>,
-) : HTFluidTank.Mutable(),
+) : HTFluidTank.Basic(),
     HTContentListener.Empty,
     HTValueSerializable.Empty {
     companion object {

@@ -52,7 +52,11 @@ interface HTFluidTank :
     /**
      * [ImmutableFluidStack]向けの[HTStackSlot.Mutable]の拡張クラス
      */
-    abstract class Mutable :
-        HTStackSlot.Mutable<ImmutableFluidStack>(),
+    interface Mutable :
+        HTStackSlot.Mutable<ImmutableFluidStack>,
         HTFluidTank
+
+    abstract class Basic :
+        HTStackSlot.Basic<ImmutableFluidStack>(),
+        Mutable
 }

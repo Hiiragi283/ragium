@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getStillTexture
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.HTStackView
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -80,11 +81,13 @@ class HTFluidTankWidget(
 
     //    HTFluidWidgetNew    //
 
-    override fun getStack(): ImmutableFluidStack? = tank.getStack()
-
     override fun setStack(stack: ImmutableFluidStack?) {
         tank.setStack(stack)
     }
+
+    override fun setStackSize(amount: Int, action: HTStorageAction): Int = 0
+
+    override fun getStack(): ImmutableFluidStack? = tank.getStack()
 
     override fun getCapacity(stack: ImmutableFluidStack?): Int = tank.getCapacity(stack)
 }

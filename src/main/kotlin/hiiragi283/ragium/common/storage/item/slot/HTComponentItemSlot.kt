@@ -23,7 +23,7 @@ open class HTComponentItemSlot(
     private val canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     private val filter: Predicate<ImmutableItemStack>,
-) : HTItemSlot.Mutable(),
+) : HTItemSlot.Basic(),
     HTContentListener.Empty,
     HTValueSerializable.Empty {
     companion object {

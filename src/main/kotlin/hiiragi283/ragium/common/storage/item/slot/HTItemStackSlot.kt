@@ -27,7 +27,7 @@ open class HTItemStackSlot protected constructor(
     private val x: Int,
     private val y: Int,
     private val slotType: HTContainerItemSlot.Type,
-) : HTItemSlot.Mutable() {
+) : HTItemSlot.Basic() {
     companion object {
         @JvmField
         val ALWAYS_TRUE: BiPredicate<ImmutableItemStack, HTStorageAccess> =

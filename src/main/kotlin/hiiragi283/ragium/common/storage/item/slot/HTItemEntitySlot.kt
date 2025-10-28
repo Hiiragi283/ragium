@@ -8,7 +8,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 
 class HTItemEntitySlot(private val entity: ItemEntity) :
-    HTItemSlot.Mutable(),
+    HTItemSlot.Basic(),
     HTValueSerializable.Empty {
     override fun getStack(): ImmutableItemStack? = entity.item.toImmutable()
 

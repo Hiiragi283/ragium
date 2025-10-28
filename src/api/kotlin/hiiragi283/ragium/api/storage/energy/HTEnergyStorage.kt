@@ -64,19 +64,23 @@ interface HTEnergyStorage :
 
     //    Mutable    //
 
-    abstract class Mutable : HTEnergyStorage {
+    interface Mutable : HTEnergyStorage {
         /**
          * 指定された電気量を代入します。
          */
-        abstract fun setAmountAsInt(amount: Int)
+        fun setAmount(amount: Int)
+    }
 
+    //    Basic    //
+
+    abstract class Basic : Mutable {
         override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (amount <= 0 || !canInsert(access)) return 0
             val needed: Int = min(getInsertRate(access), getNeeded())
             if (needed <= 0) return 0
             val toAdd: Int = min(amount, needed)
             if (action.execute) {
-                setAmountAsInt(getAmount() + toAdd)
+                setAmount(getAmount() + toAdd)
                 onContentsChanged()
             }
             return toAdd
@@ -86,7 +90,7 @@ interface HTEnergyStorage :
             if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
             val toRemove: Int = min(min(getExtractRate(access), getAmount()), amount)
             if (toRemove > 0 && action.execute) {
-                setAmountAsInt(getAmount() - toRemove)
+                setAmount(getAmount() - toRemove)
                 onContentsChanged()
             }
             return toRemove

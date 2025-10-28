@@ -18,24 +18,15 @@ open class HTBasicEnergyStorage(
     protected val canExtract: Predicate<HTStorageAccess>,
     protected val canInsert: Predicate<HTStorageAccess>,
     private val listener: HTContentListener?,
-) : HTEnergyStorage.Mutable() {
+) : HTEnergyStorage.Basic() {
     companion object {
-        @JvmField
-        val INTERNAL_ONLY: Predicate<HTStorageAccess> = Predicate { it == HTStorageAccess.INTERNAL }
-
-        @JvmField
-        val MANUAL_ONLY: Predicate<HTStorageAccess> = Predicate { it == HTStorageAccess.MANUAL }
-
-        @JvmField
-        val NOT_EXTERNAL: Predicate<HTStorageAccess> = Predicate { it != HTStorageAccess.EXTERNAL }
-
         @JvmStatic
         fun input(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
-            create(listener, capacity, NOT_EXTERNAL, Predicates.alwaysTrue())
+            create(listener, capacity, HTStorageAccess.NOT_EXTERNAL, Predicates.alwaysTrue())
 
         @JvmStatic
         fun output(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
-            create(listener, capacity, Predicates.alwaysTrue(), INTERNAL_ONLY)
+            create(listener, capacity, Predicates.alwaysTrue(), HTStorageAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
@@ -49,7 +40,7 @@ open class HTBasicEnergyStorage(
     @JvmField
     protected var amount: Int = 0
 
-    override fun setAmountAsInt(amount: Int) {
+    override fun setAmount(amount: Int) {
         check(amount >= 0) { "Energy cannot be negative" }
         val fixedAmount: Int = min(amount, getCapacity())
         if (this.amount != fixedAmount) {
@@ -71,7 +62,7 @@ open class HTBasicEnergyStorage(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getInt(RagiumConst.AMOUNT)?.let(::setAmountAsInt)
+        input.getInt(RagiumConst.AMOUNT)?.let(::setAmount)
     }
 
     final override fun onContentsChanged() {

@@ -7,7 +7,7 @@ import hiiragi283.ragium.client.integration.emi.addTank
 import hiiragi283.ragium.client.integration.emi.addWidget
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
-import hiiragi283.ragium.common.storage.energy.battery.HTEnergyNetwork
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import net.minecraft.resources.ResourceLocation
 
 class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiFluidFuelData) :

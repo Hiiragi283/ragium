@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 
 class HTPlayerHandSlot(private val player: Player, private val hand: InteractionHand) :
-    HTItemSlot.Mutable(),
+    HTItemSlot.Basic(),
     HTContentListener.Empty,
     HTValueSerializable.Empty {
     override fun isValid(stack: ImmutableItemStack): Boolean {

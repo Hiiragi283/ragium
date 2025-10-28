@@ -11,10 +11,10 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
  * [HTFluidHandler]に基づいたコンポーネント向けの実装
  * @see mekanism.common.attachments.containers.fluid.ComponentBackedFluidHandler
  */
-class HTComponentFluidHandler(private val stack: ItemStack, private val tank: HTComponentFluidTank) :
+class HTComponentFluidHandler(private val parent: ItemStack, private val tank: HTComponentFluidTank) :
     IFluidHandlerItem,
     HTFluidHandler {
-    override fun getContainer(): ItemStack = stack
+    override fun getContainer(): ItemStack = parent
 
     override fun getFluidTanks(side: Direction?): List<HTFluidTank> = listOf(tank)
 }

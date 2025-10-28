@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.storage.item
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
-import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
@@ -17,17 +16,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
  * @see [mekanism.common.inventory.slot.IFluidHandlerSlot]
  * @see [me.desht.pneumaticcraft.common.block.entity.AbstractPneumaticCraftBlockEntity.processFluidItem]
  */
-interface HTFluidItemSlot :
-    HTItemSlot,
-    HTStackView.Mutable<ImmutableItemStack> {
+interface HTFluidItemSlot : HTItemSlot.Mutable {
     fun getFluidTank(): HTFluidTank
 
     companion object {
-        fun <INPUT> moveFluid(
-            tank: HTFluidTank,
-            moveFrom: INPUT,
-            moveTo: HTItemSlot.Mutable,
-        ): Boolean where INPUT : HTItemSlot, INPUT : HTStackView.Mutable<ImmutableItemStack> {
+        fun moveFluid(tank: HTFluidTank, moveFrom: HTItemSlot.Mutable, moveTo: HTItemSlot.Mutable): Boolean {
             val stackIn: ImmutableItemStack = moveFrom.getStack() ?: return false
             val handler: HTFluidHandler = tank.toSingleHandler()
 

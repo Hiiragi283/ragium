@@ -56,7 +56,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
     /**
      * 中身が可変な[HTStackSlot]の拡張クラス
      */
-    abstract class Mutable<STACK : ImmutableStack<*, STACK>> :
+    interface Mutable<STACK : ImmutableStack<*, STACK>> :
         HTStackSlot<STACK>,
         HTStackView.Mutable<STACK> {
         /**
@@ -65,7 +65,11 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
         fun setEmpty() {
             setStack(null)
         }
+    }
 
+    //    Basic    //
+
+    abstract class Basic<STACK : ImmutableStack<*, STACK>> : Mutable<STACK> {
         /**
          * 指定された[amount]から，現在の個数を置換します。
          * @param amount 置換する個数の最大値

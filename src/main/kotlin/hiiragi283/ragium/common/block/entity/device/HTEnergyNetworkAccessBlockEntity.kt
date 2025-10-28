@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
-import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
+import hiiragi283.ragium.common.storage.energy.HTEnergyStorageWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -141,7 +141,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
-            HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
+            HTEnergyStorageWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
 
         override val transferRate: Int = 1000
     }

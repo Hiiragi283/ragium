@@ -8,7 +8,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.entity.ExperienceOrb
 
 class HTExpOrbTank(private val expOrb: ExperienceOrb) :
-    HTFluidTank.Mutable(),
+    HTFluidTank.Basic(),
     HTValueSerializable.Empty {
     private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
 

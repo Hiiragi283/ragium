@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storage.energy.battery
+package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.util.Mth
 
 class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
-    HTEnergyStorage.Mutable(),
+    HTEnergyStorage.Basic(),
     HTContentListener.Empty {
     companion object {
         const val INITIAL_CAPACITY = 1_000_000
@@ -16,7 +16,7 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
 
     constructor() : this(0, INITIAL_CAPACITY)
 
-    override fun setAmountAsInt(amount: Int) {
+    override fun setAmount(amount: Int) {
         this.amount = Mth.clamp(amount, 0, capacity)
     }
 

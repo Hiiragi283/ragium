@@ -13,12 +13,12 @@ import net.minecraft.world.item.ItemStack
  * [HTEnergyStorage]に基づいたコンポーネント向けの実装
  */
 open class HTComponentEnergyStorage(private val parent: ItemStack, private val capacity: Int) :
-    HTEnergyStorage.Mutable(),
+    HTEnergyStorage.Basic(),
     HTContentListener.Empty,
     HTValueSerializable.Empty {
     protected val component: DataComponentType<Int> get() = RagiumDataComponents.ENERGY
 
-    override fun setAmountAsInt(amount: Int) {
+    override fun setAmount(amount: Int) {
         val fixedAmount: Int = Mth.clamp(amount, 0, capacity)
         parent.setOrRemove(component, fixedAmount) { it <= 0 }
     }

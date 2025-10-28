@@ -45,7 +45,7 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExpTank    //
 
     private inner class ExpTank :
-        HTFluidTank.Mutable(),
+        HTFluidTank.Basic(),
         HTContentListener.Empty,
         HTValueSerializable.Empty {
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
