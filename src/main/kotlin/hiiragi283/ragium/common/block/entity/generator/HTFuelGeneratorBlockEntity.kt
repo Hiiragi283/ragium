@@ -102,7 +102,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
-        if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return false
+        if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return false
         val usage: Int = getModifiedEnergy(energyUsage)
         return if (energyStorage.insertEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -115,9 +115,9 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     protected abstract fun getFuelValue(stack: ImmutableItemStack): Int
 
-    protected abstract fun getFuelStack(value: Int): ImmutableFluidStack
+    protected abstract fun getFuelStack(value: Int): ImmutableFluidStack?
 
-    protected abstract fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int
+    protected abstract fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int
 
     //    HTFluidInteractable    //
 
@@ -136,8 +136,11 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     ) : HTFuelGeneratorBlockEntity(blockHolder, pos, state) {
         override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
-        override fun getFuelStack(value: Int): ImmutableFluidStack = fuelContent.toStorageStack(value)
+        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toStorageStack(value)
 
-        override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int = fluidAmountGetter(access, stack.holder())
+        override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
+            null -> 0
+            else -> fluidAmountGetter(access, stack.holder())
+        }
     }
 }

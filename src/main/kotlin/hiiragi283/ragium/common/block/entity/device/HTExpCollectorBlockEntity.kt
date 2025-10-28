@@ -41,7 +41,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             pos.x.toDouble(),
             pos.y.toDouble(),
             pos.z.toDouble(),
-            fluidAmountToExpValue(tank.getAmountAsInt()),
+            fluidAmountToExpValue(tank.getAmount()),
         )
     }
 

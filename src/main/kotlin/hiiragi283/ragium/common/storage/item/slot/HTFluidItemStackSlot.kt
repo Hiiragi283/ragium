@@ -61,7 +61,7 @@ open class HTFluidItemStackSlot protected constructor(
             val stack1: ImmutableItemStack = when (stack.amountAsInt()) {
                 1 -> stack.copyWithAmount(1)
                 else -> stack
-            }
+            } ?: return null
             return RagiumCapabilities.FLUID.getCapability(stack1)
         }
 

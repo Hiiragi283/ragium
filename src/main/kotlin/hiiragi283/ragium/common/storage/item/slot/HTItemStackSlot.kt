@@ -113,9 +113,9 @@ open class HTItemStackSlot protected constructor(
     @JvmField
     protected var stack: ItemStack = ItemStack.EMPTY
 
-    override fun getStack(): ImmutableItemStack = stack.toImmutable()
+    override fun getStack(): ImmutableItemStack? = stack.toImmutable()
 
-    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = HTItemSlot.getMaxStackSize(stack, limit)
+    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack, limit)
 
     final override fun isValid(stack: ImmutableItemStack): Boolean = filter.test(stack)
 
@@ -128,18 +128,18 @@ open class HTItemStackSlot protected constructor(
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, slotType)
 
     override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())
+        output.storeOptional(RagiumConst.ITEM, ImmutableItemStack.OPTIONAL_CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.ITEM, ImmutableItemStack.CODEC)?.let(::setStackUnchecked)
+        input.readOptional(RagiumConst.ITEM, ImmutableItemStack.OPTIONAL_CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
         listener?.onContentsChanged()
     }
 
-    override fun setStack(stack: ImmutableItemStack) {
+    override fun setStack(stack: ImmutableItemStack?) {
         setStackUnchecked(stack, true)
     }
 
@@ -147,9 +147,9 @@ open class HTItemStackSlot protected constructor(
         setStackUnchecked(stack.toImmutable(), validate)
     }
 
-    fun setStackUnchecked(stack: ImmutableItemStack, validate: Boolean = false) {
-        if (stack.isEmpty()) {
-            if (this.isEmpty()) return
+    fun setStackUnchecked(stack: ImmutableItemStack?, validate: Boolean = false) {
+        if (stack == null) {
+            if (this.getStack() == null) return
             this.stack = ItemStack.EMPTY
         } else if (!validate || isValid(stack)) {
             this.stack = stack.copy().stack
@@ -159,7 +159,7 @@ open class HTItemStackSlot protected constructor(
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+    override fun updateCount(stack: ImmutableItemStack?, amount: Int) {
         this.stack.count = amount
     }
 }

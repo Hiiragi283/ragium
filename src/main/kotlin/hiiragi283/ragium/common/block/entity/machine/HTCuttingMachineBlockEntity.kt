@@ -76,7 +76,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
             outputSlots,
             recipe.assemble(input, level.registryAccess()).toImmutable(),
             HTStorageAction.SIMULATE,
-        ).isEmpty()
+        ) == null
 
     override fun completeRecipe(
         level: ServerLevel,

@@ -49,11 +49,11 @@ open class HTComponentItemSlot(
     final override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    final override fun getStack(): ImmutableItemStack = getContents()?.getOrNull(slot) ?: ImmutableItemStack.EMPTY
+    final override fun getStack(): ImmutableItemStack? = getContents()?.getOrNull(slot)
 
-    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
+    override fun getCapacity(stack: ImmutableItemStack?): Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 
-    final override fun setStack(stack: ImmutableItemStack) {
+    final override fun setStack(stack: ImmutableItemStack?) {
         val contents: HTItemContents? = getContents()?.copy()
         if (contents == null || contents.isEmpty()) {
             parent.remove(component)

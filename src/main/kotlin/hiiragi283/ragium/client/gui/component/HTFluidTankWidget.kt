@@ -40,7 +40,7 @@ class HTFluidTankWidget(
 
         @JvmStatic
         fun createTank(view: HTStackView.Mutable<ImmutableFluidStack>, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
-            { widget: HTFluidWidget -> widget.getStoredLevelAsFloat(widget.getStack()) },
+            HTFluidWidget::getStoredLevelAsFloat,
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
                     HTFluidWidget.TANK_ID,
@@ -62,16 +62,16 @@ class HTFluidTankWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = getStack().isNotEmpty()
+    override fun shouldRender(): Boolean = getStack() != null
 
-    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack().getStillTexture(), InventoryMenu.BLOCK_ATLAS)
+    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack()?.getStillTexture(), InventoryMenu.BLOCK_ATLAS)
 
-    override fun getColor(): Int = getStack().getTintColor()
+    override fun getColor(): Int = getStack()?.getTintColor() ?: -1
 
     override fun getLevel(): Float = levelGetter(this)
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addFluidTooltip(tank.getStack(), consumer, flag, true)
+        addFluidTooltip(getStack(), consumer, flag, true)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
@@ -80,11 +80,11 @@ class HTFluidTankWidget(
 
     //    HTFluidWidgetNew    //
 
-    override fun getStack(): ImmutableFluidStack = tank.getStack()
+    override fun getStack(): ImmutableFluidStack? = tank.getStack()
 
-    override fun setStack(stack: ImmutableFluidStack) {
+    override fun setStack(stack: ImmutableFluidStack?) {
         tank.setStack(stack)
     }
 
-    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = tank.getCapacityAsInt(stack)
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = tank.getCapacity(stack)
 }

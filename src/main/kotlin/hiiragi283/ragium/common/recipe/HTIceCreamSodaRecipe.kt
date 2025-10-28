@@ -24,8 +24,8 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
         var isCherry = false
         var isPotion = false
         var isDye = false
-        for (stack: ImmutableItemStack in ImmutableRecipeInput(input)) {
-            if (stack.isEmpty()) continue
+        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+            if (stack == null) continue
             if (stack.isOf(RagiumItems.ICE_CREAM) && !isIceCream) {
                 isIceCream = true
             } else if (stack.isOf(RagiumCommonTags.Items.FOODS_CHERRY) && !isCherry) {
@@ -41,8 +41,8 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (stack: ImmutableItemStack in ImmutableRecipeInput(input)) {
-            if (stack.isEmpty()) continue
+        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+            if (stack == null) continue
             if (stack.has(DataComponents.POTION_CONTENTS)) {
                 potion = stack.get(DataComponents.POTION_CONTENTS)!!
             }

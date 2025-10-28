@@ -19,16 +19,15 @@ import java.util.function.ToIntFunction
 object HTStackSlotHelper {
     fun <STACK : ImmutableStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?, amount: Int): STACK? {
         if (from == null || to == null || amount <= 0) return null
-        val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
-        val simulatedRemain: STACK = to.insert(simulatedExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
-        val simulatedAccepted: Int = amount - simulatedRemain.amountAsInt()
+        val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) ?: return null
+        val simulatedRemain: STACK? = to.insert(simulatedExtract, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+        val simulatedAccepted: Int = amount - (simulatedRemain?.amountAsInt() ?: 0)
 
-        val extracted: STACK = from.extract(simulatedAccepted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        val remainder: STACK = to.insert(extracted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-
-        if (remainder.isNotEmpty()) {
-            val leftover: STACK = from.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            if (leftover.isNotEmpty()) {
+        val extracted: STACK = from.extract(simulatedAccepted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) ?: return null
+        val remainder: STACK? = to.insert(extracted, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        if (remainder != null) {
+            val leftover: STACK? = from.insert(remainder, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            if (leftover != null) {
                 RagiumAPI.LOGGER.error("Stack slot $from did not accept leftover stack from $to! Voiding it.")
             }
         }
@@ -36,14 +35,14 @@ object HTStackSlotHelper {
     }
 
     fun <STACK : ImmutableStack<*, STACK>, SLOT : HTStackSlot<STACK>> moveStack(from: SLOT?, to: SLOT?): STACK? =
-        moveStack(from, to, from?.getAmountAsInt() ?: 0)
+        moveStack(from, to, from?.getAmount() ?: 0)
 
     //    Item    //
 
     @JvmStatic
     fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ImmutableItemStack>, action: HTStorageAction): Int {
-        val stackIn: ImmutableItemStack = slot.getStack()
-        if (stackIn.hasCraftingRemainingItem() && stackIn.amountAsInt() == 1) {
+        val stackIn: ImmutableItemStack? = slot.getStack()
+        if (stackIn != null && stackIn.hasCraftingRemainingItem() && stackIn.amountAsInt() == 1) {
             if (action.execute) {
                 slot.setStack(stackIn.getCraftingRemainingItem())
             }
@@ -76,18 +75,19 @@ object HTStackSlotHelper {
     @JvmStatic
     fun insertStacks(
         slots: Iterable<HTItemSlot>,
-        stack: ImmutableItemStack,
+        stack: ImmutableItemStack?,
         action: HTStorageAction,
         filter: (HTItemSlot, ImmutableItemStack) -> Boolean = HTItemSlot::isValid,
         onBreak: () -> Unit = {},
-    ): ImmutableItemStack {
-        var remainder: ImmutableItemStack = stack
+    ): ImmutableItemStack? {
+        var remainder: ImmutableItemStack? = stack
         for (slot: HTItemSlot in slots) {
-            if (!filter(slot, remainder)) continue
-            remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAL)
-            if (remainder.isEmpty()) {
-                onBreak()
-                break
+            if (remainder != null && filter(slot, remainder)) {
+                remainder = slot.insert(remainder, action, HTStorageAccess.INTERNAL)
+                if (remainder == null) {
+                    onBreak()
+                    break
+                }
             }
         }
         return remainder
@@ -97,7 +97,7 @@ object HTStackSlotHelper {
 
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<ImmutableFluidStack>, action: HTStorageAction): Int =
-        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAL).amountAsInt()
+        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAL)?.amountAsInt() ?: 0
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。

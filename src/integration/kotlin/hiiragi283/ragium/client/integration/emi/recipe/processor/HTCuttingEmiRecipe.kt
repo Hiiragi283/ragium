@@ -23,7 +23,7 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<Sin
         addInput(
             object : HTItemIngredient {
                 override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> =
-                    Either.right(ingredient.items.map(ItemStack::toImmutable))
+                    Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
 
                 override fun test(stack: ItemStack): Boolean = ingredient.test(stack)
 

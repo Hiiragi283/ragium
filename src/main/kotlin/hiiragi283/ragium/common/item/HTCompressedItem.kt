@@ -11,7 +11,10 @@ class HTCompressedItem(properties: Properties) : Item(properties) {
     override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
         ItemUtils.onContainerDestroyed(
             itemEntity,
-            RagiumCapabilities.ITEM.getCapabilityStacks(itemEntity.item).map(ImmutableItemStack::stack),
+            RagiumCapabilities.ITEM
+                .getCapabilityStacks(itemEntity.item)
+                .filterNotNull()
+                .map(ImmutableItemStack::stack),
         )
     }
 }

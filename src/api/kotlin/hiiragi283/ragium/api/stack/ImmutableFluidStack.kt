@@ -1,12 +1,9 @@
 package hiiragi283.ragium.api.stack
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.serialization.codec.BiCodecs
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
@@ -19,45 +16,41 @@ import java.util.Optional
 @JvmInline
 value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
+        @JvmStatic
+        private val FLUID_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
+
         @JvmField
-        val CODEC_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> = BiCodec.composite(
-            VanillaBiCodecs.holder(Registries.FLUID).fieldOf("id"),
-            ImmutableFluidStack::holder,
-            BiCodecs.POSITIVE_INT.fieldOf("amount"),
-            ImmutableFluidStack::amountAsInt,
-            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
-            ImmutableFluidStack::componentsPatch,
-        ) { holder: Holder<Fluid>, amount: Int, components: DataComponentPatch ->
-            FluidStack(holder, amount, components).toImmutable()
-        }
+        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> = FLUID_STACK_CODEC
+            .xmap(
+                { stack: FluidStack -> Optional.ofNullable(stack.toImmutable()) },
+                { optional: Optional<ImmutableFluidStack> -> optional.map(ImmutableFluidStack::stack).orElse(FluidStack.EMPTY) },
+            )
 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
-            CODEC_NON_EMPTY.toOptional().xmap(
-                { optional: Optional<ImmutableFluidStack> -> optional.orElse(EMPTY) },
-                { stack: ImmutableFluidStack -> Optional.of(stack).filter(ImmutableFluidStack::isNotEmpty) },
+            FLUID_STACK_CODEC.comapFlatMap(
+                { stack: FluidStack ->
+                    when (val immutable: ImmutableFluidStack? = stack.toImmutable()) {
+                        null -> Result.failure(error("FluidStack must not be empty"))
+                        else -> Result.success(immutable)
+                    }
+                },
+                ImmutableFluidStack::stack,
             )
 
-        /**
-         * 空の[ImmutableFluidStack]
-         */
-        val EMPTY = ImmutableFluidStack(FluidStack.EMPTY)
-
         @JvmStatic
-        fun of(fluid: Fluid, amount: Int): ImmutableFluidStack = of(FluidStack(fluid, amount))
+        fun of(fluid: Fluid, amount: Int): ImmutableFluidStack = of(FluidStack(fluid, amount)) ?: error("FluidStack must not be empty")
 
         /**
          * [FluidStack]を[ImmutableFluidStack]に変換します。
-         * @return [FluidStack.isEmpty]が`true`の場合は[EMPTY]を返します。
+         * @return [FluidStack.isEmpty]が`true`の場合は`null`を返します。
          */
         @JvmStatic
-        fun of(stack: FluidStack): ImmutableFluidStack = when (stack.isEmpty) {
-            true -> EMPTY
+        fun of(stack: FluidStack): ImmutableFluidStack? = when (stack.isEmpty) {
+            true -> null
             false -> ImmutableFluidStack(stack)
         }
     }
-
-    override fun isEmpty(): Boolean = stack.isEmpty
 
     override fun value(): Fluid = stack.fluid
 
@@ -65,9 +58,9 @@ value class ImmutableFluidStack private constructor(val stack: FluidStack) : Imm
 
     override fun amountAsInt(): Int = stack.amount
 
-    override fun copy(): ImmutableFluidStack = of(stack.copy())
+    override fun copy(): ImmutableFluidStack = ImmutableFluidStack(stack.copy())
 
-    override fun copyWithAmount(amount: Int): ImmutableFluidStack = of(stack.copyWithAmount(amount))
+    override fun copyWithAmount(amount: Int): ImmutableFluidStack? = of(stack.copyWithAmount(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 

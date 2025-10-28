@@ -62,10 +62,10 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         val level: Level = context.level
         val handSlot = HTPlayerHandSlot(context.player, hand)
         // プレイヤーがアイテムを持っている場合
-        if (handSlot.isNotEmpty()) {
+        val stackInHand: ImmutableItemStack? = handSlot.getStack()
+        if (stackInHand != null) {
             if (!level.isClientSide) {
-                val stackInHand: ImmutableItemStack = handSlot.getStack()
-                var remainder: ImmutableItemStack = slot.insert(stackInHand, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+                var remainder: ImmutableItemStack? = slot.insert(stackInHand, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
                 if (remainder != stackInHand) {
                     remainder = slot.insert(stackInHand, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     handSlot.setStack(remainder)
@@ -83,9 +83,13 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         player: Player,
     ) {
         super.onLeftClicked(state, level, pos, player)
-        val toExtract: Int = if (player.isShiftKeyDown) slot.getStack().maxStackSize() else 1
-        val extracted: ImmutableItemStack = slot.extract(toExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        giveStackTo(player, extracted.stack)
+        val toExtract: Int = if (player.isShiftKeyDown) {
+            slot.getStack()?.maxStackSize() ?: return
+        } else {
+            1
+        }
+        val extracted: ImmutableItemStack? = slot.extract(toExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        giveStackTo(player, extracted?.stack)
     }
 
     override fun dropInventory(consumer: Consumer<ItemStack>) {}

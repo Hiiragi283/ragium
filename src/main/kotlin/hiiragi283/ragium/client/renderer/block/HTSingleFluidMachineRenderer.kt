@@ -23,12 +23,12 @@ class HTSingleFluidMachineRenderer(context: BlockEntityRendererProvider.Context)
         packedOverlay: Int,
     ) {
         val tank: HTFluidTank = blockEntity.getFluidTank(0, blockEntity.getFluidSideFor()) ?: return
-        val stack: ImmutableFluidStack = tank.getStack()
+        val stack: ImmutableFluidStack = tank.getStack() ?: return
         val sprite: TextureAtlasSprite = HTSpriteRenderHelper.getFluidSprite(stack) ?: return
 
         poseStack.pushPose()
         poseStack.translate(0.05f, 0.5f, 0.05f)
-        val level: Float = tank.getStoredLevelAsFloat(stack)
+        val level: Float = tank.getStoredLevelAsFloat()
         if (stack.isLighterThanAir()) {
             poseStack.translate(0f, 1f - (level / 2f), 0f)
         }

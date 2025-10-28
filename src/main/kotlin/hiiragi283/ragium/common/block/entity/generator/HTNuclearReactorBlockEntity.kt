@@ -18,12 +18,14 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override fun getFuelValue(stack: ImmutableItemStack): Int = when {
-        stack.isOf(RagiumModTags.Items.IS_NUCLEAR_FUEL) -> (tank.getCapacityAsInt(tank.getStack()) * 0.9).toInt()
+        stack.isOf(RagiumModTags.Items.IS_NUCLEAR_FUEL) -> (tank.capacity * 0.9).toInt()
         else -> 0
     }
 
-    override fun getFuelStack(value: Int): ImmutableFluidStack = RagiumFluidContents.GREEN_FUEL.toStorageStack(value)
+    override fun getFuelStack(value: Int): ImmutableFluidStack? = RagiumFluidContents.GREEN_FUEL.toStorageStack(value)
 
-    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int =
-        RagiumDataMaps.INSTANCE.getNuclearFuel(access, stack.holder())
+    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
+        null -> 0
+        else -> RagiumDataMaps.INSTANCE.getNuclearFuel(access, stack.holder())
+    }
 }

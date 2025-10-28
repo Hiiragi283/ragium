@@ -16,7 +16,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
 
     override fun getBarWidth(stack: ItemStack): Int {
         val view: HTStackView<ImmutableFluidStack> = RagiumCapabilities.FLUID.getCapabilityView(stack, 0) ?: return 0
-        return (13f * view.getStoredLevelAsFloat(view.getStack())).roundToInt()
+        return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int = RagiumCapabilities.FLUID.getCapabilityStack(stack, 0)?.getTintColor() ?: 0

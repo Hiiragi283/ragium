@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.OnlyIn
 interface HTFluidWidget :
     HTStackView<ImmutableFluidStack>,
     HTWidget {
-    fun setStack(stack: ImmutableFluidStack)
+    fun setStack(stack: ImmutableFluidStack?)
 
     companion object {
         @JvmField

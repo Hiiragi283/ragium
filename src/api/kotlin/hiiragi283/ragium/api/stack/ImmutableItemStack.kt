@@ -20,46 +20,50 @@ import java.util.Optional
 @JvmInline
 value class ImmutableItemStack private constructor(val stack: ItemStack) : ImmutableStack<Item, ImmutableItemStack> {
     companion object {
-        @JvmField
-        val CODEC_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
+        @JvmStatic
+        private val ITEM_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, ItemStack> =
             BiCodec.composite(
                 VanillaBiCodecs.holder(Registries.ITEM).fieldOf("id"),
-                ImmutableItemStack::holder,
+                ItemStack::getItemHolder,
                 BiCodecs.POSITIVE_INT.optionalFieldOf("count") { 1 },
-                ImmutableItemStack::amountAsInt,
+                ItemStack::getCount,
                 VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
-                ImmutableItemStack::componentsPatch,
-            ) { holder: Holder<Item>, count: Int, components: DataComponentPatch ->
-                ItemStack(holder, count, components).toImmutable()
-            }
+                ItemStack::getComponentsPatch,
+                ::ItemStack,
+            )
+
+        @JvmField
+        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableItemStack>> = ITEM_STACK_CODEC
+            .xmap(
+                { stack: ItemStack -> Optional.ofNullable(stack.toImmutable()) },
+                { optional: Optional<ImmutableItemStack> -> optional.map(ImmutableItemStack::stack).orElse(ItemStack.EMPTY) },
+            )
 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
-            CODEC_NON_EMPTY.toOptional().xmap(
-                { optional: Optional<ImmutableItemStack> -> optional.orElse(EMPTY) },
-                { stack: ImmutableItemStack -> Optional.of(stack).filter(ImmutableItemStack::isNotEmpty) },
+            ITEM_STACK_CODEC.comapFlatMap(
+                { stack: ItemStack ->
+                    when (val immutable: ImmutableItemStack? = stack.toImmutable()) {
+                        null -> Result.failure(error("ItemStack must not be empty"))
+                        else -> Result.success(immutable)
+                    }
+                },
+                ImmutableItemStack::stack,
             )
 
-        /**
-         * 空の[ImmutableItemStack]
-         */
-        val EMPTY = ImmutableItemStack(ItemStack.EMPTY)
-
         @JvmStatic
-        fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = of(ItemStack(item, count))
+        fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = of(ItemStack(item, count)) ?: error("ItemStack must not be empty")
 
         /**
          * [ItemStack]を[ImmutableItemStack]に変換します。
-         * @return [ItemStack.isEmpty]が`true`の場合は[EMPTY]を返します。
+         * @return [ItemStack.isEmpty]が`true`の場合は`null`を返します。
          */
         @JvmStatic
-        fun of(stack: ItemStack): ImmutableItemStack = when (stack.isEmpty) {
-            true -> EMPTY
+        fun of(stack: ItemStack): ImmutableItemStack? = when (stack.isEmpty) {
+            true -> null
             false -> ImmutableItemStack(stack)
         }
     }
-
-    override fun isEmpty(): Boolean = stack.isEmpty
 
     override fun value(): Item = stack.item
 
@@ -67,9 +71,9 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
 
     override fun amountAsInt(): Int = stack.count
 
-    override fun copy(): ImmutableItemStack = of(stack.copy())
+    override fun copy(): ImmutableItemStack = ImmutableItemStack(stack.copy())
 
-    override fun copyWithAmount(amount: Int): ImmutableItemStack = of(stack.copyWithCount(amount))
+    override fun copyWithAmount(amount: Int): ImmutableItemStack? = of(stack.copyWithCount(amount))
 
     override fun componentsPatch(): DataComponentPatch = stack.componentsPatch
 

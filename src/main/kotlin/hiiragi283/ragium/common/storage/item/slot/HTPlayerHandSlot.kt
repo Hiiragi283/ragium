@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 
 class HTPlayerHandSlot(private val player: Player, private val hand: InteractionHand) :
     HTItemSlot.Mutable(),
@@ -21,15 +22,15 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
         return stack.stack.canEquip(equipmentSlot, player)
     }
 
-    override fun getStack(): ImmutableItemStack = player.getItemInHand(hand).toImmutable()
+    override fun getStack(): ImmutableItemStack? = player.getItemInHand(hand).toImmutable()
 
-    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = HTItemSlot.getMaxStackSize(stack)
+    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack)
 
-    override fun setStack(stack: ImmutableItemStack) {
-        player.setItemInHand(hand, stack.stack)
+    override fun setStack(stack: ImmutableItemStack?) {
+        player.setItemInHand(hand, stack?.stack ?: ItemStack.EMPTY)
     }
 
-    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+    override fun updateCount(stack: ImmutableItemStack?, amount: Int) {
         if (isSameStack(stack)) {
             player.getItemInHand(hand).count = amount
         }

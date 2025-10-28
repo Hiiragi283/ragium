@@ -72,7 +72,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): MultiSmeltingRecipe? {
-        val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack().value()) {
+        val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack()?.value()) {
             Items.BLAST_FURNACE -> blastingCache
             Items.SMOKER -> smokingCache
             else -> smeltingCache
@@ -82,7 +82,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         if (result.isEmpty) return null
         val resultMaxSize: Int = result.maxStackSize
 
-        var inputCount: Int = min(inputSlot.getAmountAsInt(), getMaxParallel())
+        var inputCount: Int = min(inputSlot.getAmount(), getMaxParallel())
         val maxParallel: Int = min(inputCount, getMaxParallel())
         var outputCount: Int = result.count * maxParallel
         if (outputCount > resultMaxSize) {
@@ -98,7 +98,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTComponentTier.ADVANCED -> 4
         HTComponentTier.ELITE -> 8
         HTComponentTier.ULTIMATE -> 16
-        HTComponentTier.ETERNAL -> inputSlot.getStack().maxStackSize()
+        HTComponentTier.ETERNAL -> inputSlot.getStack()?.maxStackSize() ?: -1
         null -> 1
     }
 

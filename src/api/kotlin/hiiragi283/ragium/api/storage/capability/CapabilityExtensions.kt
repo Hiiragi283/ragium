@@ -34,9 +34,9 @@ fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getStorage(stack: Immutabl
 fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
     is HTEnergyStorage -> storage
     else -> object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
-        override fun getAmountAsInt(): Int = storage.energyStored
+        override fun getAmount(): Int = storage.energyStored
 
-        override fun getCapacityAsInt(): Int = storage.maxEnergyStored
+        override fun getCapacity(): Int = storage.maxEnergyStored
 
         override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
             storage.receiveEnergy(amount, action.simulate)

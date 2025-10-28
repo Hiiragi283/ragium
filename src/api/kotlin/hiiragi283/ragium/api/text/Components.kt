@@ -66,7 +66,7 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 private fun energyText(amount: Int, capacity: Int): MutableComponent =
     RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
 
-fun energyText(storage: HTEnergyStorage): MutableComponent = energyText(storage.getAmountAsInt(), storage.getCapacityAsInt())
+fun energyText(storage: HTEnergyStorage): MutableComponent = energyText(storage.getAmount(), storage.getCapacity())
 
 fun addEnergyTooltip(storage: HTEnergyStorage, consumer: Consumer<Component>) {
     storage.let(::energyText).let(consumer::accept)
@@ -77,13 +77,13 @@ fun addEnergyTooltip(storage: HTEnergyStorage, consumer: Consumer<Component>) {
  * @param consumer 生成したツールチップを受けとるブロック
  */
 fun addFluidTooltip(
-    stack: ImmutableFluidStack,
+    stack: ImmutableFluidStack?,
     consumer: Consumer<Component>,
     flag: TooltipFlag,
     inGui: Boolean,
 ) {
     // Empty name if stack is empty
-    if (stack.isEmpty()) {
+    if (stack == null) {
         consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY.getComponent())
         return
     }
@@ -103,8 +103,8 @@ fun addFluidTooltip(
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-fun addFluidTooltip(stacks: Iterable<ImmutableFluidStack>, consumer: Consumer<Component>, flag: TooltipFlag) {
-    for (stack: ImmutableFluidStack in stacks) {
+fun addFluidTooltip(stacks: Iterable<ImmutableFluidStack?>, consumer: Consumer<Component>, flag: TooltipFlag) {
+    for (stack: ImmutableFluidStack? in stacks) {
         addFluidTooltip(stack, consumer, flag, false)
     }
 }

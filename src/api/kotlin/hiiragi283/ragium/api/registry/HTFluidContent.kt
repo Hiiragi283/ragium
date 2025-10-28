@@ -99,11 +99,11 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
 
     fun isOf(stack: FluidStack): Boolean = stack.`is`(commonTag)
 
-    fun isOf(stack: ImmutableFluidStack): Boolean = stack.isOf(commonTag)
+    fun isOf(stack: ImmutableFluidStack?): Boolean = stack?.isOf(commonTag) ?: false
 
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 
-    fun toStorageStack(amount: Int): ImmutableFluidStack = toStack(amount).toImmutable()
+    fun toStorageStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
 
     fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)
 

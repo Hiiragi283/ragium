@@ -16,9 +16,13 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
 
     constructor() : this(0, INITIAL_CAPACITY)
 
-    override fun getAmountAsInt(): Int = amount
+    override fun setAmountAsInt(amount: Int) {
+        this.amount = Mth.clamp(amount, 0, capacity)
+    }
 
-    override fun getCapacityAsInt(): Int = capacity
+    override fun getAmount(): Int = amount
+
+    override fun getCapacity(): Int = capacity
 
     override fun serialize(output: HTValueOutput) {
         output.putInt(RagiumConst.AMOUNT, this.amount)
@@ -28,9 +32,5 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     override fun deserialize(input: HTValueInput) {
         this.amount = input.getInt(RagiumConst.AMOUNT, 0)
         this.capacity = input.getInt("capacity", INITIAL_CAPACITY)
-    }
-
-    override fun setAmountAsInt(amount: Int) {
-        this.amount = Mth.clamp(amount, 0, capacity)
     }
 }

@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 class HTEnergyBatteryWrapper(private val getter: () -> HTEnergyStorage?) : HTEnergyStorage {
     private val delegate: HTEnergyStorage? get() = getter()
 
-    override fun getAmountAsInt(): Int = delegate?.getAmountAsInt() ?: 0
+    override fun getAmount(): Int = delegate?.getAmount() ?: 0
 
-    override fun getCapacityAsInt(): Int = delegate?.getCapacityAsInt() ?: 0
+    override fun getCapacity(): Int = delegate?.getCapacity() ?: 0
 
     override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
         delegate?.insertEnergy(amount, action, access) ?: 0

@@ -42,10 +42,9 @@ abstract class HTFluidCollectorBlockEntity :
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 液体を生成できるかチェック
-        val stack: ImmutableFluidStack = getGeneratedFluid(level, pos).toImmutable()
-        if (stack.isEmpty()) return false
+        val stack: ImmutableFluidStack = getGeneratedFluid(level, pos).toImmutable() ?: return false
         // 液体を搬入できるかチェック
-        if (tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isNotEmpty()) return false
+        if (tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) != null) return false
         tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         playSound(level, pos)
         return true

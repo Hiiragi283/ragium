@@ -33,9 +33,9 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
         } else {
             handler.tankRange.map { tank: Int ->
                 object : HTStackView<ImmutableFluidStack> {
-                    override fun getStack(): ImmutableFluidStack = handler.getFluidInTank(tank).toImmutable()
+                    override fun getStack(): ImmutableFluidStack? = handler.getFluidInTank(tank).toImmutable()
 
-                    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = handler.getTankCapacity(tank)
+                    override fun getCapacity(stack: ImmutableFluidStack?): Int = handler.getTankCapacity(tank)
                 }
             }
         }
@@ -50,9 +50,9 @@ class RagiumCapabilitiesImpl : RagiumCapabilities {
         } else {
             handler.slotRange.map { slot: Int ->
                 object : HTStackView<ImmutableItemStack> {
-                    override fun getStack(): ImmutableItemStack = handler.getStackInSlot(slot).toImmutable()
+                    override fun getStack(): ImmutableItemStack? = handler.getStackInSlot(slot).toImmutable()
 
-                    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = handler.getSlotLimit(slot)
+                    override fun getCapacity(stack: ImmutableItemStack?): Int = handler.getSlotLimit(slot)
                 }
             }
         }

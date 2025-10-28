@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-fun FluidStack.toImmutable(): ImmutableFluidStack = ImmutableFluidStack.of(this)
+fun FluidStack.toImmutable(): ImmutableFluidStack? = ImmutableFluidStack.of(this)
 
 fun ImmutableFluidStack.isOf(fluid: Fluid): Boolean = this.stack.`is`(fluid)
 

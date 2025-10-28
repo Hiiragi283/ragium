@@ -34,7 +34,6 @@ object HTSpriteRenderHelper {
 
     @JvmStatic
     fun getFluidSprite(stack: ImmutableFluidStack): TextureAtlasSprite? {
-        if (stack.isEmpty()) return null
         val texture: ResourceLocation = stack.getStillTexture() ?: return null
         return Minecraft
             .getInstance()

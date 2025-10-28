@@ -73,8 +73,8 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
         componentInput
-            .getOrDefault(RagiumDataComponents.FLUID_CONTENT, ImmutableFluidStack.EMPTY)
-            .copy()
+            .get(RagiumDataComponents.FLUID_CONTENT)
+            ?.copy()
             .let(tank::setStack)
     }
 
@@ -109,12 +109,12 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         ) {
         val isCreative: Boolean = tier == HTDrumTier.CREATIVE
 
-        override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack {
-            var remainder: ImmutableFluidStack
-            if (isCreative && isEmpty() && action.execute && access != HTStorageAccess.EXTERNAL) {
+        override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
+            var remainder: ImmutableFluidStack?
+            if (isCreative && this.getStack() == null && action.execute && access != HTStorageAccess.EXTERNAL) {
                 remainder = super.insert(stack, HTStorageAction.SIMULATE, access)
-                if (remainder.isEmpty()) {
-                    setStackUnchecked(stack.copyWithAmount(getCapacityAsInt(stack)))
+                if (remainder == null) {
+                    setStackUnchecked(stack.copyWithAmount(getCapacity(stack)))
                 }
             } else {
                 remainder = super.insert(stack, action.combine(!isCreative), access)
@@ -122,7 +122,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
             return remainder
         }
 
-        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack =
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
             super.extract(amount, action.combine(!isCreative), access)
 
         override fun setStackSize(amount: Int, action: HTStorageAction): Int = super.setStackSize(amount, action.combine(!isCreative))

@@ -3,7 +3,6 @@ package hiiragi283.ragium.impl.data.recipe
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.core.NonNullList
 import net.minecraft.sounds.SoundEvent
@@ -21,11 +20,8 @@ class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
     HTIngredientRecipeBuilder<HTCuttingBoardRecipeBuilder> {
     companion object {
         @JvmStatic
-        fun create(stack: ItemStack, chance: Float = 1f): HTCuttingBoardRecipeBuilder =
-            HTCuttingBoardRecipeBuilder(stack.toImmutable(), chance)
-
-        @JvmStatic
-        fun create(item: ItemLike, count: Int = 1, chance: Float = 1f): HTCuttingBoardRecipeBuilder = create(ItemStack(item, count), chance)
+        fun create(item: ItemLike, count: Int = 1, chance: Float = 1f): HTCuttingBoardRecipeBuilder =
+            HTCuttingBoardRecipeBuilder(ImmutableItemStack.of(item, count), chance)
     }
 
     private val results: MutableList<ChanceResult> = mutableListOf(ChanceResult(stack.stack, chance))

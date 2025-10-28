@@ -51,20 +51,20 @@ class HTExpInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
         val player: Player? get() = RagiumPlatform.INSTANCE.getPlayer(this@HTExpInterfaceBlockEntity.getOwner())
 
-        override fun getStack(): ImmutableFluidStack {
-            val amount: Int = player?.let(HTExperienceHelper::getPlayerExp) ?: return ImmutableFluidStack.EMPTY
+        override fun getStack(): ImmutableFluidStack? {
+            val amount: Int = player?.let(HTExperienceHelper::getPlayerExp) ?: return null
             return RagiumFluidContents.EXPERIENCE.toStorageStack(amount * multiplier)
         }
 
-        override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = when (isValid(stack)) {
-            true -> Int.MAX_VALUE
-            false -> 0
+        override fun getCapacity(stack: ImmutableFluidStack?): Int = when {
+            stack == null || !isValid(stack) -> 0
+            else -> Int.MAX_VALUE
         }
 
         override fun isValid(stack: ImmutableFluidStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
 
-        override fun setStack(stack: ImmutableFluidStack) {
-            if (isValid(stack) && player != null) {
+        override fun setStack(stack: ImmutableFluidStack?) {
+            if (stack != null && isValid(stack) && player != null) {
                 HTExperienceHelper.setPlayerExp(player!!, stack.amountAsInt() / multiplier)
             }
         }

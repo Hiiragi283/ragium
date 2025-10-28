@@ -38,7 +38,8 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
 /**
  * 指定した[stack]を[player]のインベントリに入れます。
  */
-fun giveStackTo(player: Player, stack: ItemStack) {
+fun giveStackTo(player: Player, stack: ItemStack?) {
+    if (stack == null || stack.isEmpty) return
     if (player.isFakePlayer) {
         player.spawnAtLocation(stack)
     } else {

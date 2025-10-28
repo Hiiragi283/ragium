@@ -61,7 +61,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
                 HTSlotHelper.getSlotPosY(1),
                 filter = { stack: ImmutableItemStack ->
                     val storage: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stack) ?: return@create false
-                    storage.getNeededAsInt() > 0
+                    storage.getNeeded() > 0
                 },
             ),
         )
@@ -77,7 +77,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     }
 
     private fun extractFromItem(): TriState {
-        val stackIn: ImmutableItemStack = extractSlot.getStack()
+        val stackIn: ImmutableItemStack = extractSlot.getStack() ?: return TriState.FALSE
         val energyIn: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stackIn)
             ?: return TriState.FALSE
         var toExtract: Int = transferRate
@@ -98,7 +98,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     }
 
     private fun receiveToItem(): TriState {
-        val stackIn: ImmutableItemStack = insertSlot.getStack()
+        val stackIn: ImmutableItemStack = insertSlot.getStack() ?: return TriState.FALSE
         val energyIn: HTEnergyStorage = RagiumCapabilities.ENERGY.getStorage(stackIn)
             ?: return TriState.FALSE
         var toReceive: Int = transferRate
@@ -125,9 +125,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.CEU, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
             object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
-                override fun getAmountAsInt(): Int = 0
+                override fun getAmount(): Int = 0
 
-                override fun getCapacityAsInt(): Int = Int.MAX_VALUE
+                override fun getCapacity(): Int = Int.MAX_VALUE
 
                 override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
 

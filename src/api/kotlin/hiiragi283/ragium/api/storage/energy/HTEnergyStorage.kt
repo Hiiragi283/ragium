@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage.energy
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -12,45 +13,16 @@ import kotlin.math.min
  */
 interface HTEnergyStorage :
     IEnergyStorage,
+    HTAmountView.IntSized,
     HTValueSerializable,
     HTContentListener {
-    /**
-     * このストレージが保持している電気量を返します。
-     * @return [Int]値での電気量
-     */
-    fun getAmountAsInt(): Int
-
     /**
      * このストレージが空かどうか判定します。
      * @return 空の場合は`true`
      */
-    fun isEmpty(): Boolean = getAmountAsInt() <= 0
+    fun isEmpty(): Boolean = getAmount() <= 0
 
     fun isNotEmpty(): Boolean = !isEmpty()
-
-    /**
-     * このストレージの容量を返します。
-     * @return [Int]値での容量
-     */
-    fun getCapacityAsInt(): Int
-
-    /**
-     * このストレージの空き容量を返します。
-     * @return [Int]値での空き容量
-     */
-    fun getNeededAsInt(): Int = getCapacityAsInt() - getAmountAsInt()
-
-    /**
-     * このストレージの占有率を返します。
-     * @return [Double]値での占有率
-     */
-    fun getStoredLevelAsDouble(): Double = getAmountAsInt() / getCapacityAsInt().toDouble()
-
-    /**
-     * このストレージの占有率を返します。
-     * @return [Float]値での占有率
-     */
-    fun getStoredLevelAsFloat(): Float = getAmountAsInt() / getCapacityAsInt().toFloat()
 
     /**
      * 指定された引数から[amount]を搬入します。
@@ -78,11 +50,11 @@ interface HTEnergyStorage :
     override fun extractEnergy(toExtract: Int, simulate: Boolean): Int =
         extractEnergy(toExtract, HTStorageAction.of(simulate), HTStorageAccess.EXTERNAL)
 
-    @Deprecated("Use 'getAmountAsInt()' instead", ReplaceWith("this.getAmountAsInt()"), DeprecationLevel.ERROR)
-    override fun getEnergyStored(): Int = getAmountAsInt()
+    @Deprecated("Use 'getAmount()' instead", ReplaceWith("this.getAmount()"), DeprecationLevel.ERROR)
+    override fun getEnergyStored(): Int = getAmount()
 
-    @Deprecated("Use 'getCapacityAsInt()' instead", ReplaceWith("this.getCapacityAsInt()"), DeprecationLevel.ERROR)
-    override fun getMaxEnergyStored(): Int = getCapacityAsInt()
+    @Deprecated("Use 'getCapacity()' instead", ReplaceWith("this.getCapacity()"), DeprecationLevel.ERROR)
+    override fun getMaxEnergyStored(): Int = getCapacity()
 
     @Deprecated("Not used", level = DeprecationLevel.ERROR)
     override fun canExtract(): Boolean = true
@@ -100,11 +72,11 @@ interface HTEnergyStorage :
 
         override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (amount <= 0 || !canInsert(access)) return 0
-            val needed: Int = min(getInsertRate(access), getNeededAsInt())
+            val needed: Int = min(getInsertRate(access), getNeeded())
             if (needed <= 0) return 0
             val toAdd: Int = min(amount, needed)
             if (action.execute) {
-                setAmountAsInt(getAmountAsInt() + toAdd)
+                setAmountAsInt(getAmount() + toAdd)
                 onContentsChanged()
             }
             return toAdd
@@ -112,9 +84,9 @@ interface HTEnergyStorage :
 
         override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
-            val toRemove: Int = min(min(getExtractRate(access), getAmountAsInt()), amount)
+            val toRemove: Int = min(min(getExtractRate(access), getAmount()), amount)
             if (toRemove > 0 && action.execute) {
-                setAmountAsInt(getAmountAsInt() - toRemove)
+                setAmountAsInt(getAmount() - toRemove)
                 onContentsChanged()
             }
             return toRemove

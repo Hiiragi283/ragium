@@ -17,18 +17,20 @@ interface HTFluidTank :
     IFluidTank {
     fun toSingleHandler(): HTFluidHandler = HTFluidHandler { listOf(this) }
 
-    override fun isSameStack(other: ImmutableFluidStack): Boolean = FluidStack.isSameFluidSameComponents(this.getFluidStack(), other.stack)
+    override fun isSameStack(other: ImmutableFluidStack?): Boolean = FluidStack.isSameFluidSameComponents(
+        this.getFluidStack(),
+        other?.stack ?: FluidStack.EMPTY,
+    )
 
     //    IFluidTank    //
 
     @Deprecated("Use `getStack()` instead", ReplaceWith("this.getStack()"), DeprecationLevel.ERROR)
     override fun getFluid(): FluidStack = getFluidStack()
 
-    @Deprecated("Use `getAmountAsInt()` instead", ReplaceWith("this.getAmountAsInt()"), DeprecationLevel.ERROR)
-    override fun getFluidAmount(): Int = getAmountAsInt()
+    @Deprecated("Use `getAmount()` instead", ReplaceWith("this.getAmount()"), DeprecationLevel.ERROR)
+    override fun getFluidAmount(): Int = getAmount()
 
-    @Deprecated("Use `getCapacityAsInt(FluidStack)` instead", level = DeprecationLevel.ERROR)
-    override fun getCapacity(): Int = getCapacityAsInt(getStack())
+    override fun getCapacity(): Int = super.getCapacity()
 
     @Deprecated("Use `isValid(FluidStack)` instead", ReplaceWith("this.isValid(stack)"), DeprecationLevel.ERROR)
     override fun isFluidValid(stack: FluidStack): Boolean = isValid(stack)
@@ -52,7 +54,5 @@ interface HTFluidTank :
      */
     abstract class Mutable :
         HTStackSlot.Mutable<ImmutableFluidStack>(),
-        HTFluidTank {
-        final override fun getEmptyStack(): ImmutableFluidStack = ImmutableFluidStack.EMPTY
-    }
+        HTFluidTank
 }

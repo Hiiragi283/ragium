@@ -12,11 +12,11 @@ class HTExpOrbTank(private val expOrb: ExperienceOrb) :
     HTValueSerializable.Empty {
     private val multiplier: Int get() = RagiumConfig.COMMON.expCollectorMultiplier.asInt
 
-    override fun getStack(): ImmutableFluidStack = RagiumFluidContents.EXPERIENCE.toStorageStack(expOrb.value * multiplier)
+    override fun getStack(): ImmutableFluidStack? = RagiumFluidContents.EXPERIENCE.toStorageStack(expOrb.value * multiplier)
 
-    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = when (isValid(stack)) {
-        true -> Int.MAX_VALUE
-        false -> 0
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = when {
+        stack == null || !isValid(stack) -> 0
+        else -> Int.MAX_VALUE
     }
 
     override fun isValid(stack: ImmutableFluidStack): Boolean = RagiumFluidContents.EXPERIENCE.isOf(stack)
@@ -27,7 +27,10 @@ class HTExpOrbTank(private val expOrb: ExperienceOrb) :
         }
     }
 
-    override fun setStack(stack: ImmutableFluidStack) {
-        expOrb.value = stack.amountAsInt() / multiplier
+    override fun setStack(stack: ImmutableFluidStack?) {
+        expOrb.value = when (stack) {
+            null -> 0
+            else -> stack.amountAsInt() / multiplier
+        }
     }
 }

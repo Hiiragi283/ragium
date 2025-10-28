@@ -82,7 +82,7 @@ class HTTeleportKeyItem(properties: Properties) : HTFluidItem(properties.rarity(
         val tank: HTFluidTank = RagiumCapabilities.FLUID.getCapabilityView(stack, 0) as? HTFluidTank ?: return false
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
         val toDrain: Int = HTItemHelper.getFixedUsage(player.serverLevel(), stack, usage)
-        if (tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amountAsInt() < toDrain) {
+        if ((tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amountAsInt() ?: 0) < toDrain) {
             player.displayClientMessage(
                 Component.translatable("Required fuel: $toDrain mb").withStyle(ChatFormatting.RED),
                 true,

@@ -23,8 +23,8 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         for (slot: HTStackView<ImmutableItemStack> in RagiumCapabilities.ITEM.getCapabilityViews(stack)) {
             if (slot !is HTItemSlot) continue
-            if (slot.isEmpty()) continue
             val stackIn: ItemStack = slot.getItemStack()
+            if (stackIn.isEmpty) continue
             val result: ItemStack = stackIn.finishUsingItem(level, livingEntity)
             if (!livingEntity.hasInfiniteMaterials()) {
                 slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

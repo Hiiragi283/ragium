@@ -11,15 +11,17 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import java.util.function.IntFunction
 import java.util.function.Predicate
+import java.util.function.ToIntFunction
 
 /**
  * @see [mekanism.generators.common.slot.FluidFuelInventorySlot]
  */
 class HTFluidFuelItemStackSlot private constructor(
     tank: HTFluidTank,
-    private val stackToAmount: (ImmutableItemStack) -> Int,
-    private val amountToFuel: (Int) -> ImmutableFluidStack,
+    private val stackToAmount: ToIntFunction<ImmutableItemStack>,
+    private val amountToFuel: IntFunction<ImmutableFluidStack?>,
     canExtract: Predicate<ImmutableItemStack>,
     canInsert: Predicate<ImmutableItemStack>,
     listener: HTContentListener?,
@@ -30,8 +32,8 @@ class HTFluidFuelItemStackSlot private constructor(
         @JvmStatic
         fun create(
             tank: HTFluidTank,
-            stackToAmount: (ImmutableItemStack) -> Int,
-            amountToFuel: (Int) -> ImmutableFluidStack,
+            stackToAmount: ToIntFunction<ImmutableItemStack>,
+            amountToFuel: IntFunction<ImmutableFluidStack?>,
             listener: HTContentListener?,
             x: Int,
             y: Int,
@@ -41,13 +43,13 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ImmutableItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                for (stack: ImmutableFluidStack in RagiumCapabilities.FLUID.getCapabilityStacks(stack)) {
-                    if (tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
+                for (stack: ImmutableFluidStack? in RagiumCapabilities.FLUID.getCapabilityStacks(stack)) {
+                    if (stack != null && tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
                 }
                 // stackを燃料に変換できない場合はtrue
-                stackToAmount(stack) == 0
+                stackToAmount.applyAsInt(stack) == 0
             },
-            { stack: ImmutableItemStack -> stackToAmount(stack) > 0 || fillPredicate(tank).test(stack) },
+            { stack: ImmutableItemStack -> stackToAmount.applyAsInt(stack) > 0 || fillPredicate(tank).test(stack) },
             listener,
             x,
             y,
@@ -55,16 +57,17 @@ class HTFluidFuelItemStackSlot private constructor(
     }
 
     fun fillOrBurn(moveTo: HTItemSlot.Mutable) {
-        if (isEmpty()) return
+        val stack: ImmutableItemStack = this.getStack() ?: return
         val needed: Int = tank.getNeededAsInt(tank.getStack())
         if (needed > 0 && !HTFluidItemSlot.moveFluid(tank, this, moveTo)) {
-            val amount: Int = stackToAmount(getStack())
+            val amount: Int = stackToAmount.applyAsInt(stack)
             if (amount in 1..needed) {
-                val hasContainer: Boolean = getStack().hasCraftingRemainingItem()
-                if (hasContainer && getStack().amountAsInt() > 1) return
-                tank.insert(amountToFuel(amount), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                val hasContainer: Boolean = stack.hasCraftingRemainingItem()
+                if (hasContainer && stack.amountAsInt() > 1) return
+                val fuel: ImmutableFluidStack = amountToFuel.apply(amount) ?: return
+                tank.insert(fuel, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 if (hasContainer) {
-                    setStack(getStack().getCraftingRemainingItem())
+                    setStack(stack.getCraftingRemainingItem())
                 } else {
                     shrinkStack(1, HTStorageAction.EXECUTE)
                 }

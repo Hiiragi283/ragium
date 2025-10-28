@@ -82,8 +82,8 @@ object RagiumTooltipHandler {
         val stack: ItemStack = event.itemStack
         val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
         contents.indices
-            .map(contents::get)
-            .mapNotNull(HTItemTooltipContent::of)
+            .mapNotNull(contents::get)
+            .map(::HTItemTooltipContent)
             .forEach { content: HTItemTooltipContent ->
                 event.tooltipElements.add(Either.right(content))
             }

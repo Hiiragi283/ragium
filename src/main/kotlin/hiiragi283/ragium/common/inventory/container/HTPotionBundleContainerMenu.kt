@@ -24,7 +24,7 @@ class HTPotionBundleContainerMenu(
     ) {
     companion object {
         @JvmStatic
-        fun filterPotion(stack: ImmutableItemStack): Boolean = stack.isEmpty() || stack.isOf(Items.POTION)
+        fun filterPotion(stack: ImmutableItemStack): Boolean = stack.isOf(Items.POTION)
     }
 
     override fun createHandler(rows: Int): HTItemHandler = HTGenericContainerRows.createHandler(

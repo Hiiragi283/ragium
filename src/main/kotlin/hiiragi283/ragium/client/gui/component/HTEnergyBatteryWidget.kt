@@ -28,10 +28,7 @@ class HTEnergyBatteryWidget(private val getter: () -> HTEnergyStorage?, x: Int, 
         )
     }
 
-    override fun shouldRender(): Boolean {
-        val storage: HTEnergyStorage = getter() ?: return false
-        return storage.getAmountAsInt() > 0
-    }
+    override fun shouldRender(): Boolean = getter()?.isNotEmpty() ?: false
 
     override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
 

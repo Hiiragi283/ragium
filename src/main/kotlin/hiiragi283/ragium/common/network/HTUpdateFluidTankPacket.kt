@@ -13,10 +13,12 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val index: Int, val stack: ImmutableFluidStack) :
+data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val index: Int, val stack: Optional<ImmutableFluidStack>) :
     HTCustomPayload.S2C {
         companion object {
             @JvmField
@@ -29,7 +31,7 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
                 HTUpdateFluidTankPacket::pos,
                 ByteBufCodecs.VAR_INT,
                 HTUpdateFluidTankPacket::index,
-                ImmutableFluidStack.CODEC.streamCodec,
+                ImmutableFluidStack.OPTIONAL_CODEC.streamCodec,
                 HTUpdateFluidTankPacket::stack,
                 ::HTUpdateFluidTankPacket,
             )
@@ -41,11 +43,13 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
             }
         }
 
+        constructor(pos: BlockPos, index: Int, stack: ImmutableFluidStack?) : this(pos, index, Optional.ofNullable(stack))
+
         override fun type(): CustomPacketPayload.Type<HTUpdateFluidTankPacket> = TYPE
 
         override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
             val screen: HTFluidScreen = minecraft.screen as? HTFluidScreen ?: return
             if (!screen.checkPosition(pos)) return
-            screen.getFluidWidgets().getOrNull(index)?.setStack(stack)
+            screen.getFluidWidgets().getOrNull(index)?.setStack(stack.getOrNull())
         }
     }

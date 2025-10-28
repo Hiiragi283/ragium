@@ -29,8 +29,8 @@ class HTEnchGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             }
     }
 
-    override fun getFuelStack(value: Int): ImmutableFluidStack = RagiumFluidContents.EXPERIENCE.toStorageStack(value)
+    override fun getFuelStack(value: Int): ImmutableFluidStack? = RagiumFluidContents.EXPERIENCE.toStorageStack(value)
 
-    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack): Int =
+    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int =
         if (RagiumFluidContents.EXPERIENCE.isOf(stack)) 10 else 0
 }

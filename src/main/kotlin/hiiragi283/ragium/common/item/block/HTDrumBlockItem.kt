@@ -18,7 +18,7 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<
 
     override fun getBarWidth(stack: ItemStack): Int {
         val view: HTStackView<ImmutableFluidStack> = RagiumCapabilities.FLUID.getCapabilityView(stack, 0) ?: return 0
-        return (13f * view.getStoredLevelAsFloat(view.getStack())).roundToInt()
+        return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {

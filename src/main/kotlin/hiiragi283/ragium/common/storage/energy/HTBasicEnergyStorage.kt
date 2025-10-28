@@ -51,7 +51,7 @@ open class HTBasicEnergyStorage(
 
     override fun setAmountAsInt(amount: Int) {
         check(amount >= 0) { "Energy cannot be negative" }
-        val fixedAmount: Int = min(amount, getCapacityAsInt())
+        val fixedAmount: Int = min(amount, getCapacity())
         if (this.amount != fixedAmount) {
             this.amount = fixedAmount
             onContentsChanged()
@@ -62,12 +62,12 @@ open class HTBasicEnergyStorage(
 
     final override fun canExtract(access: HTStorageAccess): Boolean = this.canExtract.test(access)
 
-    override fun getAmountAsInt(): Int = amount
+    override fun getAmount(): Int = amount
 
-    override fun getCapacityAsInt(): Int = capacity
+    override fun getCapacity(): Int = capacity
 
     override fun serialize(output: HTValueOutput) {
-        output.putInt(RagiumConst.AMOUNT, getAmountAsInt())
+        output.putInt(RagiumConst.AMOUNT, getAmount())
     }
 
     override fun deserialize(input: HTValueInput) {

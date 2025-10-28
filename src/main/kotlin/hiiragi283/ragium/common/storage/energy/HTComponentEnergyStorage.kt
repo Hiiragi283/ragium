@@ -23,7 +23,7 @@ open class HTComponentEnergyStorage(private val parent: ItemStack, private val c
         parent.setOrRemove(component, fixedAmount) { it <= 0 }
     }
 
-    override fun getAmountAsInt(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
+    override fun getAmount(): Int = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
 
-    override fun getCapacityAsInt(): Int = capacity
+    override fun getCapacity(): Int = capacity
 }

@@ -12,8 +12,10 @@ import java.util.function.Predicate
 
 /**
  * [hiiragi283.ragium.api.storage.HTStackSlot]で使われるスタックのラッパー
+ *
+ * EMPTYなんか大っ嫌い！
  * @param T スタックが保持する種類のクラス
- * @param STACK [hiiragi283.ragium.api.storage.HTStackSlot]を実装したクラス
+ * @param STACK [ImmutableStack]を実装したクラス
  */
 interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     DataComponentHolder,
@@ -26,13 +28,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
         @JvmStatic
         fun <STACK : ImmutableStack<*, *>> alwaysFalse(): Predicate<STACK> = Predicates.alwaysFalse<STACK>()
     }
-
-    /**
-     * このスタックが空からどうか判定します。
-     */
-    fun isEmpty(): Boolean
-
-    fun isNotEmpty(): Boolean = !isEmpty()
 
     /**
      * このスタックの種類を返します。
@@ -57,8 +52,9 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     /**
      * このスタックのコピーを指定した個数で返します。
      * @param amount コピー後の個数
+     * @return 新しいスタックが無効の場合は`null`
      */
-    fun copyWithAmount(amount: Int): STACK
+    fun copyWithAmount(amount: Int): STACK?
 
     /**
      * このスタックの[DataComponentPatch]を返します。

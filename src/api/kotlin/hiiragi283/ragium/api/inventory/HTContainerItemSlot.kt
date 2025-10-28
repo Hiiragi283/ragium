@@ -34,14 +34,15 @@ open class HTContainerItemSlot(
 
     override fun mayPlace(stack: ItemStack): Boolean {
         if (stack.isEmpty) return false
-        if (slot.isEmpty()) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
-        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isEmpty()) return false
-        return manualFilter(stack.toImmutable(), HTStorageAccess.MANUAL)
+        if (slot.getStack() == null) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
+        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) == null) return false
+        val immutable: ImmutableItemStack = stack.toImmutable() ?: return false
+        return manualFilter(immutable, HTStorageAccess.MANUAL)
     }
 
     override fun getItem(): ItemStack = slot.getItemStack()
 
-    override fun hasItem(): Boolean = slot.isNotEmpty()
+    override fun hasItem(): Boolean = slot.getStack() != null
 
     override fun set(stack: ItemStack) {
         uncheckedSetter.accept(stack)
@@ -53,13 +54,14 @@ open class HTContainerItemSlot(
         slot.onContentsChanged()
     }
 
-    override fun getMaxStackSize(): Int = slot.getCapacityAsInt(ImmutableItemStack.EMPTY)
+    override fun getMaxStackSize(): Int = slot.getCapacity(null)
 
     override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeededAsInt(stack.toImmutable())
 
-    override fun mayPickup(player: Player): Boolean = slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).isNotEmpty()
+    override fun mayPickup(player: Player): Boolean = slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) != null
 
-    override fun remove(amount: Int): ItemStack = slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL).stack
+    override fun remove(amount: Int): ItemStack =
+        slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)?.stack ?: ItemStack.EMPTY
 
     override fun tryRemove(count: Int, decrement: Int, player: Player): Optional<ItemStack> {
         if (allowPartialRemoval()) {

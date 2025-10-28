@@ -41,9 +41,9 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         light: Int,
         overlay: Int,
     ) {
-        val stack: ImmutableFluidStack = tank.getStack()
+        val stack: ImmutableFluidStack = tank.getStack() ?: return
         val sprite: TextureAtlasSprite = HTSpriteRenderHelper.getFluidSprite(stack) ?: return
-        val level: Float = tank.getStoredLevelAsFloat(stack)
+        val level: Float = tank.getStoredLevelAsFloat()
         if (stack.isLighterThanAir()) {
             poseStack.translate(0f, 1f - level, 0f)
         }

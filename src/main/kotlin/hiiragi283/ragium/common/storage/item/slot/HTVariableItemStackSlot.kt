@@ -20,7 +20,7 @@ class HTVariableItemStackSlot(
     y: Int,
     slotType: HTContainerItemSlot.Type,
 ) : HTItemStackSlot(
-        capacityFunction.applyAsInt(ImmutableItemStack.EMPTY),
+        capacityFunction.applyAsInt(null),
         canExtract,
         canInsert,
         filter,
@@ -84,10 +84,10 @@ class HTVariableItemStackSlot(
         )
     }
 
-    override fun getCapacityAsInt(stack: ImmutableItemStack): Int = capacityFunction.applyAsInt(stack)
+    override fun getCapacity(stack: ImmutableItemStack?): Int = stack?.let(capacityFunction::applyAsInt) ?: 0
 
     override fun setStackSize(amount: Int, action: HTStorageAction): Int {
-        if (isEmpty()) {
+        if (this.getStack() == null) {
             return 0
         } else if (amount <= 0) {
             if (action.execute) {
@@ -95,13 +95,13 @@ class HTVariableItemStackSlot(
             }
             return 0
         }
-        val maxStackSize: Int = getCapacityAsInt(getStack())
+        val maxStackSize: Int = getCapacity()
         val fixedAmount: Int = if (maxStackSize in 1..<amount) {
             maxStackSize
         } else {
             amount
         }
-        if (getAmountAsInt() == fixedAmount || action.simulate) {
+        if (getAmount() == fixedAmount || action.simulate) {
             return fixedAmount
         }
         this.stack.count = fixedAmount

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.serialization.value
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import java.util.Optional
 
 /**
  * NBTやJSONの書き込み専用のラッパー
@@ -14,6 +15,10 @@ interface HTValueOutput {
      * @param value 書き込む値
      */
     fun <T : Any> store(key: String, codec: BiCodec<*, T>, value: T?)
+
+    fun <T : Any> storeOptional(key: String, codec: BiCodec<*, Optional<T>>, value: T?) {
+        store(key, codec, Optional.ofNullable(value))
+    }
 
     // Compound
 

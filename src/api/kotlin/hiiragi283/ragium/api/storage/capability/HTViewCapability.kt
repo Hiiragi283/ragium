@@ -46,7 +46,7 @@ interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : Immuta
      */
     fun getCapabilityView(stack: IItemStackExtension, index: Int): HTStackView<STACK>? = getCapabilityViews(stack).getOrNull(index)
 
-    fun getCapabilityStacks(stack: IItemStackExtension): List<STACK> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
+    fun getCapabilityStacks(stack: IItemStackExtension): List<STACK?> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
 
     fun getCapabilityStack(stack: IItemStackExtension, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
 
@@ -56,7 +56,7 @@ interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : Immuta
 
     fun getCapabilityView(stack: ImmutableItemStack, index: Int): HTStackView<STACK>? = getCapabilityView(stack.stack, index)
 
-    fun getCapabilityStacks(stack: ImmutableItemStack): List<STACK> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
+    fun getCapabilityStacks(stack: ImmutableItemStack): List<STACK?> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
 
     fun getCapabilityStack(stack: ImmutableItemStack, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
 }

@@ -7,57 +7,47 @@ import kotlin.math.min
  * 単一の[STACK]を保持するインターフェース
  * @param STACK 保持するスタックのクラス
  */
-interface HTStackView<STACK : ImmutableStack<*, STACK>> {
+interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized {
     /**
      * 保持している[STACK]を返します。
      */
-    fun getStack(): STACK
-
-    /**
-     * このスロットが空かどうか判定します。
-     * @return 空の場合は`true`
-     */
-    fun isEmpty(): Boolean = getStack().isEmpty()
-
-    fun isNotEmpty(): Boolean = getStack().isNotEmpty()
-
-    /**
-     * このスロットが保持している個数を返します。
-     * @return [Int]値での個数
-     */
-    fun getAmountAsInt(): Int = getStack().amountAsInt()
+    fun getStack(): STACK?
 
     /**
      * このスロットの容量を返します。
      * @return [Int]値での容量
      */
-    fun getCapacityAsInt(stack: STACK): Int
+    fun getCapacity(stack: STACK?): Int
 
     /**
      * このスロットの空き容量を返します。
      * @return [Int]値での空き容量
      */
-    fun getNeededAsInt(stack: STACK): Int = getCapacityAsInt(stack) - getAmountAsInt()
+    fun getNeededAsInt(stack: STACK?): Int = getCapacity(stack) - getAmount()
 
     /**
      * このスロットの占有率を返します。
      * @return [Double]値での占有率
      */
-    fun getStoredLevelAsDouble(stack: STACK): Double {
-        val capacity: Int = getCapacityAsInt(stack)
+    fun getStoredLevelAsDouble(stack: STACK?): Double {
+        val capacity: Int = getCapacity(stack)
         if (capacity <= 0) return 0.0
-        return getAmountAsInt() / capacity.toDouble()
+        return getAmount() / capacity.toDouble()
     }
 
     /**
      * このスロットの占有率を返します。
      * @return [Float]値での占有率
      */
-    fun getStoredLevelAsFloat(stack: STACK): Float {
-        val capacity: Int = getCapacityAsInt(stack)
+    fun getStoredLevelAsFloat(stack: STACK?): Float {
+        val capacity: Int = getCapacity(stack)
         if (capacity <= 0) return 0f
-        return getAmountAsInt() / capacity.toFloat()
+        return getAmount() / capacity.toFloat()
     }
+
+    override fun getAmount(): Int = getStack()?.amountAsInt() ?: 0
+
+    override fun getCapacity(): Int = getCapacity(getStack())
 
     //    Mutable    //
 
@@ -65,7 +55,7 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
         /**
          * 指定された[stack]を保持します。
          */
-        fun setStack(stack: STACK)
+        fun setStack(stack: STACK?)
 
         /**
          * 指定された[amount]から，現在の個数を置換します。
@@ -82,10 +72,10 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> {
          * @return 実際に追加された個数
          */
         fun growStack(amount: Int, action: HTStorageAction): Int {
-            val current: Int = getAmountAsInt()
+            val current: Int = getAmount()
             if (current == 0) return 0
             val fixedAmount: Int = if (amount > 0) {
-                min(amount, getCapacityAsInt(getStack()))
+                min(amount, getCapacity())
             } else {
                 amount
             }

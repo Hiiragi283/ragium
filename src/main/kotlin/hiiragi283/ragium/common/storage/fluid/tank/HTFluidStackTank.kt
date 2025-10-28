@@ -65,9 +65,9 @@ open class HTFluidStackTank protected constructor(
     @JvmField
     protected var stack: FluidStack = FluidStack.EMPTY
 
-    override fun getStack(): ImmutableFluidStack = stack.toImmutable()
+    override fun getStack(): ImmutableFluidStack? = stack.toImmutable()
 
-    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacity
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = capacity
 
     final override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
 
@@ -78,34 +78,34 @@ open class HTFluidStackTank protected constructor(
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, getStack())
+        output.storeOptional(RagiumConst.FLUID, ImmutableFluidStack.OPTIONAL_CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC)?.let(::setStackUnchecked)
+        input.readOptional(RagiumConst.FLUID, ImmutableFluidStack.OPTIONAL_CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
         listener?.onContentsChanged()
     }
 
-    override fun setStack(stack: ImmutableFluidStack) {
+    override fun setStack(stack: ImmutableFluidStack?) {
         setStackUnchecked(stack, true)
     }
 
-    fun setStackUnchecked(stack: ImmutableFluidStack, validate: Boolean = false) {
-        if (stack.isEmpty()) {
-            if (this.isEmpty()) return
+    fun setStackUnchecked(stack: ImmutableFluidStack?, validate: Boolean = false) {
+        if (stack == null) {
+            if (this.getStack() == null) return
             this.stack = FluidStack.EMPTY
         } else if (!validate || isValid(stack)) {
-            this.stack = stack.copy().stack
+            this.stack = stack.copy()!!.stack
         } else {
             error("Invalid stack for tank: $stack ${stack.componentsPatch()}")
         }
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableFluidStack, amount: Int) {
+    override fun updateCount(stack: ImmutableFluidStack?, amount: Int) {
         this.stack.amount = amount
     }
 }

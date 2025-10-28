@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
-import hiiragi283.ragium.api.extension.setOrRemove
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableStack
@@ -46,11 +45,11 @@ open class HTComponentFluidTank(
     final override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    final override fun getStack(): ImmutableFluidStack = parent.getOrDefault(component, ImmutableFluidStack.EMPTY)
+    final override fun getStack(): ImmutableFluidStack? = parent.get(component)
 
-    override fun getCapacityAsInt(stack: ImmutableFluidStack): Int = capacity
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = capacity
 
-    final override fun setStack(stack: ImmutableFluidStack) {
-        parent.setOrRemove(component, stack, ImmutableFluidStack::isEmpty)
+    final override fun setStack(stack: ImmutableFluidStack?) {
+        parent.set(component, stack)
     }
 }

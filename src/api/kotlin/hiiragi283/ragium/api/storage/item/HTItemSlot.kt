@@ -15,8 +15,8 @@ import kotlin.math.min
 interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
     companion object {
         @JvmStatic
-        fun getMaxStackSize(stack: ImmutableItemStack, limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE): Int =
-            if (stack.isEmpty()) limit else min(limit, stack.maxStackSize())
+        fun getMaxStackSize(stack: ImmutableItemStack?, limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE): Int =
+            if (stack == null) limit else min(limit, stack.maxStackSize())
     }
 
     /**
@@ -24,7 +24,10 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
      */
     fun createContainerSlot(): Slot? = null
 
-    override fun isSameStack(other: ImmutableItemStack): Boolean = ItemStack.isSameItemSameComponents(this.getItemStack(), other.stack)
+    override fun isSameStack(other: ImmutableItemStack?): Boolean = ItemStack.isSameItemSameComponents(
+        this.getItemStack(),
+        other?.stack ?: ItemStack.EMPTY,
+    )
 
     //    Mutable    //
 
@@ -33,7 +36,5 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
      */
     abstract class Mutable :
         HTStackSlot.Mutable<ImmutableItemStack>(),
-        HTItemSlot {
-        final override fun getEmptyStack(): ImmutableItemStack = ImmutableItemStack.EMPTY
-    }
+        HTItemSlot
 }
