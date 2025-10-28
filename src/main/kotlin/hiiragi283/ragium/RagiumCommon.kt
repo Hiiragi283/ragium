@@ -14,6 +14,7 @@ import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
@@ -174,6 +175,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         with(HTPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
             // Server -> Client
             registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
+            registerS2C(HTUpdateEnergyStoragePacket.TYPE, HTUpdateEnergyStoragePacket.STREAM_CODEC)
             registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
             // Client -> Server
             registerC2S(HTOpenPotionBundlePacket.TYPE, HTOpenPotionBundlePacket.STREAM_CODEC)

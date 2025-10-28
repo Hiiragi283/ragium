@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.capability.wrapStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
@@ -49,7 +49,7 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
 
     private fun getTank(index: Int): HTFluidTank.Mutable =
         blockEntity.getFluidTank(index, blockEntity.getFluidSideFor()) as? HTFluidTank.Mutable
-            ?: error("Fluid tank at $index is not mutable.")
+            ?: error("Fluid tank at $index is not mutable")
 
     fun createFluidTank(index: Int, x: Int, y: Int): HTFluidTankWidget =
         HTFluidTankWidget.createTank(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)
@@ -57,9 +57,12 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     fun createFluidSlot(index: Int, x: Int, y: Int): HTFluidTankWidget =
         HTFluidTankWidget.createSlot(getTank(index), startX + x, startY + y).apply(::addRenderableWidget)
 
+    private fun getEnergyStorage(): HTEnergyStorage.Mutable =
+        blockEntity.getEnergyStorage(null) as? HTEnergyStorage.Mutable ?: error("Energy storage is not mutable")
+
     fun createEnergyWidget(x: Int = HTSlotHelper.getSlotPosX(0), y: Int = HTSlotHelper.getSlotPosY(0)): HTEnergyBatteryWidget =
         HTEnergyBatteryWidget(
-            { blockEntity.getEnergyStorage(null)?.let(::wrapStorage) },
+            getEnergyStorage(),
             startX + x,
             startY + y,
         ).apply(::addRenderableWidget)

@@ -25,7 +25,7 @@ class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocati
         // energy tank
         val energyRate: Int = recipe.energyRate
         HTEnergyBatteryWidget(
-            { HTEnergyNetwork(energyRate, energyRate) },
+            HTEnergyNetwork(energyRate, energyRate),
             getPosition(5),
             getPosition(0) + 1,
         ).let(widgets::addWidget)

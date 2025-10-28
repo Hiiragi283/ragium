@@ -1,10 +1,11 @@
 package hiiragi283.ragium.client.gui.screen
 
+import hiiragi283.ragium.api.gui.component.HTEnergyWidget
+import hiiragi283.ragium.api.gui.screen.HTEnergyScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -18,7 +19,8 @@ open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTBlockEntityContainerScreen<BE>(menu, inventory, title) {
+) : HTBlockEntityContainerScreen<BE>(menu, inventory, title),
+    HTEnergyScreen {
     companion object {
         @JvmStatic
         fun <BE : HTConsumerBlockEntity> create(
@@ -29,8 +31,7 @@ open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
             }
     }
 
-    protected lateinit var energyWidget: AbstractWidget
-        private set
+    private lateinit var energyWidget: HTEnergyWidget
 
     override fun init() {
         super.init()
@@ -49,4 +50,8 @@ open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
             ),
         )
     }
+
+    //    HTEnergyScreen    //
+
+    override fun getEnergyWidget(): HTEnergyWidget = energyWidget
 }
