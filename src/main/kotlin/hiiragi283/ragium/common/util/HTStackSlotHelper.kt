@@ -11,8 +11,16 @@ import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.getFluidStack
+import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.Optional
 import java.util.function.ToIntFunction
 
@@ -120,4 +128,78 @@ object HTStackSlotHelper {
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: Optional<HTFluidIngredient>, action: HTStorageAction): Int =
         ingredient.map { ingredient1 -> shrinkStack(tank, ingredient1, action) }.orElse(0)
+
+    /**
+     * @see net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler
+     * @see mekanism.common.util.FluidUtils.handleTankInteraction
+     */
+    @JvmStatic
+    fun interact(
+        player: Player,
+        hand: InteractionHand,
+        stack: ItemStack,
+        tank: HTFluidTank,
+    ): Boolean {
+        if (!RagiumCapabilities.FLUID.hasCapability(stack)) return false
+        val handler: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(stack.copyWithCount(1)) ?: return false
+        val firstFluid: FluidStack = when (tank.getStack() == null) {
+            true -> handler.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid())
+            false -> handler.drain(tank.getFluidStack().copyWithAmount(Int.MAX_VALUE), HTStorageAction.SIMULATE.toFluid())
+        }
+        if (firstFluid.isEmpty) {
+            val stackIn: ImmutableFluidStack? = tank.getStack()
+            if (stackIn != null) {
+                val filled: Int = handler.fill(stackIn.stack, HTStorageAction.of(player.isCreative).toFluid())
+                val container: ItemStack = handler.container
+                if (filled > 0) {
+                    if (stack.count == 1) {
+                        player.setItemInHand(hand, container)
+                    } else if (stack.count > 1 && player.inventory.add(container)) {
+                        stack.shrink(1)
+                    } else {
+                        player.drop(container, false, true)
+                        stack.shrink(1)
+                    }
+                    tank.extract(filled, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
+                    return true
+                }
+            }
+        } else {
+            val remainder: FluidStack = tank.insertFluid(firstFluid, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)
+            val remainderAmount: Int = remainder.amount
+            val storedAmount: Int = firstFluid.amount
+            if (remainderAmount < storedAmount) {
+                var filled = false
+                val drained: FluidStack = handler.drain(
+                    firstFluid.copyWithAmount(storedAmount - remainderAmount),
+                    HTStorageAction.of(player.isCreative).toFluid(),
+                )
+                if (!drained.isEmpty) {
+                    val container: ItemStack = handler.container
+                    if (player.isCreative) {
+                        filled = true
+                    } else if (!container.isEmpty) {
+                        if (stack.count == 1) {
+                            player.setItemInHand(hand, container)
+                            filled = true
+                        } else if (player.inventory.add(container)) {
+                            stack.shrink(1)
+                            filled = true
+                        }
+                    } else {
+                        stack.shrink(1)
+                        if (stack.isEmpty) {
+                            player.setItemInHand(hand, ItemStack.EMPTY)
+                        }
+                        filled = true
+                    }
+                    if (filled) {
+                        tank.insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
 }

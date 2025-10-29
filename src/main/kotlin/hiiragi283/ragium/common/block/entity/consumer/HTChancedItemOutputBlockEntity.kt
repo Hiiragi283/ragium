@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -24,12 +23,8 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -37,9 +32,8 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state),
-    HTFluidInteractable {
-    protected lateinit var inputTank: HTFluidTank
+) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+    lateinit var inputTank: HTFluidTank
         private set
 
     final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
@@ -51,9 +45,9 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
 
     protected abstract fun createTank(listener: HTContentListener): HTFluidTank
 
-    protected lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemSlot.Mutable
         private set
-    protected lateinit var outputSlots: List<HTItemSlot>
+    lateinit var outputSlots: List<HTItemSlot>
         private set
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -100,11 +94,6 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
             }
         }
     }
-
-    //    HTFluidInteractable    //
-
-    final override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
-        interactWith(player, hand, inputTank)
 
     //    Cached    //
 

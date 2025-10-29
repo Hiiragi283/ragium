@@ -22,7 +22,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
     companion object {
         fun moveFluid(tank: HTFluidTank, moveFrom: HTItemSlot.Mutable, moveTo: HTItemSlot.Mutable): Boolean {
             val stackIn: ImmutableItemStack = moveFrom.getStack() ?: return false
-            val handler: HTFluidHandler = tank.toSingleHandler()
+            val handler = HTFluidHandler { listOf(tank) }
 
             val handlerIn: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(stackIn) ?: return false
             var containerIn: ImmutableItemStack? = handlerIn.container.toImmutable()

@@ -29,6 +29,7 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntity(RagiumBlocks.BLOCK_BREAKER, pos, state) {
     lateinit var toolSlot: HTItemSlot
+        private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)

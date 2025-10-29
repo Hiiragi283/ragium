@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
@@ -18,14 +17,11 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
 import java.util.function.Consumer
 
 /**
@@ -89,7 +85,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
             level.blockEntityChanged(blockPos)
             lastSaveTime = time
         }
-        if (updateComparator && !isClientSide.isTrue) {
+        if (updateComparator && !level.isClientSide) {
             markDirtyComparator()
         }
         (level as? ServerLevel)?.let(::sendPassivePacket)
@@ -100,14 +96,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     protected open fun sendPassivePacket(level: ServerLevel) {}
 
     //    Extensions    //
-
-    val isClientSide: TriState get() {
-        val level: Level = this.level ?: return TriState.DEFAULT
-        return when (level.isClientSide) {
-            true -> TriState.TRUE
-            false -> TriState.FALSE
-        }
-    }
 
     /**
      * @see mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag
@@ -130,11 +118,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      * [Block.useWithoutItem]より先に呼び出されます。
      */
     open fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult =
-        when (this) {
-            // 液体コンテナで触ると搬出入を行う
-            is HTFluidInteractable -> interactWith(context.level, context.player, hand)
-            else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-        }
+        ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
     /**
      * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
@@ -142,29 +126,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      */
     open fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
         buf.writeBlockPos(getBlockPos())
-    }
-
-    /**
-     * ブロックが左クリックされたときに呼ばれます。
-     */
-    open fun onLeftClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-    ) {
-    }
-
-    /**
-     * ブロックが設置されたときに呼ばれます。
-     */
-    open fun setPlacedBy(
-        level: Level,
-        pos: BlockPos,
-        state: BlockState,
-        placer: LivingEntity?,
-        stack: ItemStack,
-    ) {
     }
 
     /**

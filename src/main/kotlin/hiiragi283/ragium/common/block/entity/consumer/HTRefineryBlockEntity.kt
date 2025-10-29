@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -27,10 +27,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
@@ -39,10 +35,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlocks.REFINERY,
         pos,
         state,
-    ),
-    HTFluidInteractable {
-    private lateinit var inputSlot: HTItemSlot.Mutable
-    private lateinit var outputSlot: HTItemSlot
+    ) {
+    lateinit var inputSlot: HTItemSlot.Mutable
+        private set
+    lateinit var outputSlot: HTItemSlot
+        private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
@@ -59,8 +56,10 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         return builder.build()
     }
 
-    private lateinit var inputTank: HTVariableFluidStackTank
-    private lateinit var outputTank: HTVariableFluidStackTank
+    lateinit var inputTank: HTFluidTank
+        private set
+    lateinit var outputTank: HTFluidTank
+        private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
@@ -114,15 +113,5 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
-    }
-
-    //    HTFluidInteractable    //
-
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult {
-        // 初めにアウトプットからの取り出しを試みる
-        val result: ItemInteractionResult = interactWith(player, hand, outputTank)
-        if (result.consumesAction()) return result
-        // 次にインプットとのやり取りを試みる
-        return interactWith(player, hand, inputTank)
     }
 }

@@ -71,7 +71,7 @@ open class HTItemStackSlot protected constructor(
             x,
             y,
             limit,
-            { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
+            HTPredicates.notExternal(),
             { stack: ImmutableItemStack, _ -> canInsert.test(stack) },
             filter,
             HTContainerItemSlot.Type.INPUT,

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
@@ -29,7 +30,7 @@ class HTUpdateTelepadPacket(val pos: BlockPos, val teleportPos: HTTeleportPos) :
     override fun type(): CustomPacketPayload.Type<HTUpdateTelepadPacket> = TYPE
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val telepad: HTTelepadBlockentity = player.level().getBlockEntity(pos) as? HTTelepadBlockentity ?: return
+        val telepad: HTTelepadBlockentity = player.level().getTypedBlockEntity(pos) ?: return
         telepad.updateDestination(teleportPos)
     }
 }

@@ -34,9 +34,12 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    private lateinit var inputSlot: HTItemSlot.Mutable
-    private lateinit var catalystSlot: HTItemSlot
-    private lateinit var outputSlots: List<HTItemSlot>
+    lateinit var inputSlot: HTItemSlot.Mutable
+        private set
+    lateinit var catalystSlot: HTItemSlot
+        private set
+    lateinit var outputSlots: List<HTItemSlot>
+        private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)

@@ -52,7 +52,8 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         state: BlockState,
     ) : super(finder, blockHolder, pos, state)
 
-    protected lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemSlot.Mutable
+        protected set
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
@@ -71,7 +72,8 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             pos,
             state,
         ) {
-        private lateinit var outputSlot: HTItemSlot
+        lateinit var outputSlot: HTItemSlot
+            private set
 
         override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
             val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)

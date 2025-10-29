@@ -58,14 +58,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      */
     interface Mutable<STACK : ImmutableStack<*, STACK>> :
         HTStackSlot<STACK>,
-        HTStackView.Mutable<STACK> {
-        /**
-         * 現在の[STACK]を空にします。
-         */
-        fun setEmpty() {
-            setStack(null)
-        }
-    }
+        HTStackView.Mutable<STACK>
 
     //    Basic    //
 
@@ -77,8 +70,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          * @return 実際に置換された個数
          */
         override fun setStackSize(amount: Int, action: HTStorageAction): Int {
-            val stack: STACK? = getStack()
-            if (stack == null) return 0
+            val stack: STACK = getStack() ?: return 0
             if (amount <= 0) {
                 if (action.execute) setEmpty()
                 return 0

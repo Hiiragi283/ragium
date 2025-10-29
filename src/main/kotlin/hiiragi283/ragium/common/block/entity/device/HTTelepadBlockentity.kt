@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
@@ -15,16 +14,11 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.streams.asSequence
 
-class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(RagiumBlocks.TELEPAD, pos, state),
-    HTFluidInteractable {
+class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlocks.TELEPAD, pos, state) {
     companion object {
         @JvmStatic
         fun validateStructure(level: Level, pos: BlockPos): Boolean = BlockPos
@@ -84,8 +78,4 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) :
             InteractionResult.FAIL
         }
     }*/
-
-    //    HTFluidInteractable    //
-
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult = interactWith(player, hand, tank)
 }

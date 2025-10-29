@@ -23,18 +23,16 @@ class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) : HTDevic
     }
 
     private fun forceChunk(): Boolean {
-        if (!this.isClientSide.isTrue) return false
+        val level: ServerLevel = this.level as? ServerLevel ?: return false
         if (this.isRemoved) return false
-        val level: ServerLevel = this.level as ServerLevel
         val forced: Boolean = RagiumChunkLoader.forceChunk(level, blockPos, ChunkPos(blockPos))
         if (forced) setChanged()
         return forced
     }
 
     private fun releaseChunk(): Boolean {
-        if (!this.isClientSide.isTrue) return false
+        val level: ServerLevel = this.level as? ServerLevel ?: return false
         if (this.isRemoved) return false
-        val level: ServerLevel = this.level as ServerLevel
         val released: Boolean = RagiumChunkLoader.releaseChunk(level, blockPos, ChunkPos(blockPos))
         if (released) setChanged()
         return released

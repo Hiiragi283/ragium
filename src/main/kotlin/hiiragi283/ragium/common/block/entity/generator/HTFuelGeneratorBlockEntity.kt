@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -23,21 +22,12 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 
 abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTGeneratorBlockEntity(
-        blockHolder,
-        pos,
-        state,
-    ),
-    HTFluidInteractable {
+    HTGeneratorBlockEntity(blockHolder, pos, state) {
     companion object {
         @JvmStatic
         fun createSimple(
@@ -118,11 +108,6 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     protected abstract fun getFuelStack(value: Int): ImmutableFluidStack?
 
     protected abstract fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int
-
-    //    HTFluidInteractable    //
-
-    final override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
-        interactWith(player, hand, tank)
 
     //    Simple    //
 

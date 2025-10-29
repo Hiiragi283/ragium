@@ -58,6 +58,13 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
         fun setStack(stack: STACK?)
 
         /**
+         * 現在の[STACK]を空にします。
+         */
+        fun setEmpty() {
+            setStack(null)
+        }
+
+        /**
          * 指定された[amount]から，現在の個数を置換します。
          * @param amount 置換する個数の最大値
          * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。

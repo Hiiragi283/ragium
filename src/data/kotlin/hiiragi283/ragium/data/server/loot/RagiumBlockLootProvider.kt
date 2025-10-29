@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCropBlock
-import hiiragi283.ragium.common.block.HTDrumBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents

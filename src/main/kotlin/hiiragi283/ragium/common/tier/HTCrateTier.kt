@@ -7,8 +7,8 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.tier.HTTierProvider
-import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes

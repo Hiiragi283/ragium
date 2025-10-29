@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -134,8 +135,7 @@ object RagiumMenuTypes {
         check(FMLEnvironment.dist.isClient) { "Only supported on client side" }
         val level: Level = checkNotNull(Minecraft.getInstance().level) { "Failed to find client level" }
         val pos: BlockPos = buf.readBlockPos()
-        val blockEntity: BlockEntity = checkNotNull(level.getBlockEntity(pos)) { "No block entity is present at $pos" }
-        return blockEntity as BE
+        return checkNotNull(level.getTypedBlockEntity<BE>(pos)) { "No block entity is present at $pos" }
     }
 
     @JvmStatic

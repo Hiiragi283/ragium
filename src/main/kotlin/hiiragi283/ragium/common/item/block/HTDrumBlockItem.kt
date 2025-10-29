@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.common.block.HTDrumBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.world.item.ItemStack
 import kotlin.math.roundToInt

@@ -8,7 +8,9 @@ import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.items.IItemHandler
@@ -53,6 +55,8 @@ fun giveStackTo(player: Player, stack: ItemStack?) {
 fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
     Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
 }
+
+inline fun <reified BE : BlockEntity> BlockGetter.getTypedBlockEntity(pos: BlockPos): BE? = this.getBlockEntity(pos) as? BE
 
 //    RandomSource    //
 

@@ -12,9 +12,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.block.AzureClusterBlock
-import hiiragi283.ragium.common.block.HTCrateBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
-import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
@@ -25,6 +23,9 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
+import hiiragi283.ragium.common.block.consumer.HTRefineryBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
@@ -71,13 +72,18 @@ object RagiumBlocks {
     }
 
     @JvmStatic
+    fun <BLOCK : HTTypedEntityBlock<*>> registerMachineTier(
+        name: String,
+        blockGetter: () -> BLOCK,
+    ): HTDeferredBlock<BLOCK, HTMachineBlockItem> = REGISTER.register(name, blockGetter, ::HTMachineBlockItem)
+
+    @JvmStatic
     fun registerMachineTier(
         name: String,
         blockType: HTEntityBlockType,
         properties: BlockBehaviour.Properties,
-    ): HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = REGISTER.register(name, {
-        HTTypedEntityBlock(blockType, properties)
-    }, ::HTMachineBlockItem)
+    ): HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier(name) { HTTypedEntityBlock(blockType, properties) }
 
     @JvmStatic
     fun registerSimpleEntity(
@@ -432,7 +438,7 @@ object RagiumBlocks {
 
     @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("refinery", RagiumBlockTypes.REFINERY, machineProperty().noOcclusion())
+        registerMachineTier("refinery") { HTRefineryBlock(RagiumBlockTypes.REFINERY, machineProperty().noOcclusion()) }
 
     @JvmField
     val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

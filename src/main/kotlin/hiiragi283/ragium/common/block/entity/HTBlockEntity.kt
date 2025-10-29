@@ -34,7 +34,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -176,18 +175,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     //    HTOwnedBlockEntity    //
 
-    private var ownerId: UUID? = null
-
-    override fun setPlacedBy(
-        level: Level,
-        pos: BlockPos,
-        state: BlockState,
-        placer: LivingEntity?,
-        stack: ItemStack,
-    ) {
-        super.setPlacedBy(level, pos, state, placer, stack)
-        this.ownerId = placer?.uuid
-    }
+    var ownerId: UUID? = null
 
     override fun getOwner(): UUID? = ownerId
 

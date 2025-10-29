@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.block.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.world.damagesource.DamageSource

@@ -5,18 +5,16 @@ import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.HTTypedBlock
 import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttribute
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
+import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
+import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
@@ -46,8 +44,6 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
 
     override fun getRenderShape(state: BlockState): RenderShape = RenderShape.MODEL
 
-    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
-
     /**
      * @see mekanism.common.block.prefab.BlockTile.useWithoutItem
      */
@@ -58,35 +54,17 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        val blockEntity: HTBlockEntity = level.getHTBlockEntity(pos) ?: return InteractionResult.PASS
-        val attribute: HTMenuBlockAttribute<*> = this.getAttribute<HTMenuBlockAttribute<*>>() ?: return InteractionResult.PASS
-        return when {
-            level.isClientSide -> InteractionResult.SUCCESS
-            else -> attribute.openMenu(player, blockEntity.name, blockEntity, blockEntity::writeExtraContainerData)
+        val blockEntity: HTBlockEntity = level.getTypedBlockEntity(pos) ?: return InteractionResult.PASS
+        if (level.isClientSide) {
+            return when (this.hasAttribute<HTMenuBlockAttribute<*>>()) {
+                true -> InteractionResult.SUCCESS
+                false -> InteractionResult.PASS
+            }
         }
-    }
-
-    override fun useItemOn(
-        stack: ItemStack,
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
-    ): ItemInteractionResult = level
-        .getHTBlockEntity(pos)
-        ?.onRightClickedWithItem(HTBlockInteractContext(level, pos, state, player, hitResult), stack, hand)
-        ?: super.useItemOn(stack, state, level, pos, player, hand, hitResult)
-
-    override fun attack(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-    ) {
-        super.attack(state, level, pos, player)
-        level.getHTBlockEntity(pos)?.onLeftClicked(state, level, pos, player)
+        return this
+            .getAttribute<HTMenuBlockAttribute<*>>()
+            ?.openMenu(player, blockEntity.name, blockEntity, blockEntity::writeExtraContainerData)
+            ?: InteractionResult.PASS
     }
 
     override fun setPlacedBy(
@@ -97,7 +75,7 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         stack: ItemStack,
     ) {
         super.setPlacedBy(level, pos, state, placer, stack)
-        level.getHTBlockEntity(pos)?.setPlacedBy(level, pos, state, placer, stack)
+        level.getTypedBlockEntity<HTBlockEntity>(pos)?.ownerId = placer?.uuid
     }
 
     final override fun onRemove(
@@ -108,7 +86,7 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.let { blockEntity: HTBlockEntity ->
+            level.getTypedBlockEntity<HTBlockEntity>(pos)?.let { blockEntity: HTBlockEntity ->
                 blockEntity.onRemove(level, pos)
             }
         }
@@ -123,14 +101,8 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         param: Int,
     ): Boolean {
         super.triggerEvent(state, level, pos, id, param)
-        return level.getHTBlockEntity(pos)?.triggerEvent(id, param) ?: false
+        return level.getTypedBlockEntity<HTBlockEntity>(pos)?.triggerEvent(id, param) ?: false
     }
-
-    final override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
-
-    final override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int =
-        level.getHTBlockEntity(pos)?.getComparatorOutput(state, level, pos)
-            ?: super.getAnalogOutputSignal(state, level, pos)
 
     final override fun neighborChanged(
         state: BlockState,
@@ -141,6 +113,6 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         movedByPiston: Boolean,
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
-        level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+        level.getTypedBlockEntity<HTBlockEntity>(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
     }
 }

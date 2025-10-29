@@ -45,7 +45,7 @@ value class HTStorageAction private constructor(val execute: Boolean) {
      */
     val simulate: Boolean get() = !execute
 
-    fun combine(execute: Boolean): HTStorageAction = of(this.execute && execute)
+    fun combine(simulate: Boolean): HTStorageAction = of(this.simulate && simulate)
 
     /**
      * このフラグを[IFluidHandler.FluidAction]に変換します。

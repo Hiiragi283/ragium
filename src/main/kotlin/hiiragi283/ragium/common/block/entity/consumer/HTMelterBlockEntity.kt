@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -25,23 +25,14 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(
-        RagiumRecipeTypes.MELTING,
-        RagiumBlocks.MELTER,
-        pos,
-        state,
-    ),
-    HTFluidInteractable {
-    private lateinit var outputSlot: HTItemSlot
+    HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
+    lateinit var outputSlot: HTItemSlot
+        private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
@@ -58,7 +49,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         return builder.build()
     }
 
-    private lateinit var outputTank: HTVariableFluidStackTank
+    lateinit var outputTank: HTFluidTank
+        private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
@@ -95,9 +87,4 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
     }
-
-    //    HTFluidInteractable    //
-
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
-        interactWith(player, hand, outputTank)
 }

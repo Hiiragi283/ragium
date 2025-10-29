@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.tier.HTTierProvider
-import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.config.RagiumConfig

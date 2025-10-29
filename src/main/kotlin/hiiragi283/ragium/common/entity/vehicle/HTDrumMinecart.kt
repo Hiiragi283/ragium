@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.entity.vehicle
 
-import hiiragi283.ragium.api.storage.fluid.HTFluidInteractable
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.OwnableEntity
 import net.minecraft.world.entity.player.Player
@@ -17,7 +16,6 @@ import java.util.UUID
 
 sealed class HTDrumMinecart :
     HTMinecart<HTDrumBlockEntity>,
-    HTFluidInteractable,
     OwnableEntity {
     constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
 
@@ -42,16 +40,16 @@ sealed class HTDrumMinecart :
 
     //    HTMinecart    //
 
-    override fun extraInteract(player: Player, hand: InteractionHand): InteractionResult = interactWith(this.level(), player, hand).result()
+    override fun extraInteract(player: Player, hand: InteractionHand): InteractionResult =
+        if (HTStackSlotHelper.interact(player, hand, player.getItemInHand(hand), bindBlockEntity().tank)) {
+            InteractionResult.sidedSuccess(player.level().isClientSide)
+        } else {
+            InteractionResult.PASS
+        }
 
     override fun getPickResult(): ItemStack = getDrumTier().getMinecartItem().toStack()
 
     override fun getDefaultDisplayBlockState(): BlockState = getDrumTier().getBlock().get().defaultBlockState()
-
-    //    HTFluidInteractable    //
-
-    override fun interactWith(level: Level, player: Player, hand: InteractionHand): ItemInteractionResult =
-        bindBlockEntity().interactWith(level, player, hand)
 
     //    OwnableEntity    //
 
