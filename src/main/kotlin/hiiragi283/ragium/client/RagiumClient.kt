@@ -31,7 +31,7 @@ import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
 import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
 import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
-import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData

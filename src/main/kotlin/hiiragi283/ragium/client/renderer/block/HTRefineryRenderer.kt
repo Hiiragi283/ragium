@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.stack.isLighterThanAir
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.texture.TextureAtlasSprite

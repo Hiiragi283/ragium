@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.gui.component.HTEnergyWidget
 import hiiragi283.ragium.api.gui.screen.HTEnergyScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.machine.HTConsumerBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.network.chat.Component

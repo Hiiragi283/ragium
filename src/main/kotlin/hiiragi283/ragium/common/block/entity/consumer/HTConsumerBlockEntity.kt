@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
