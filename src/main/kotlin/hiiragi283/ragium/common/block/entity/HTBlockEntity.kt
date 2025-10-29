@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
+import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
@@ -159,6 +160,9 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
         if (this.getEnergyStorage(null) != null) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
+        }
+        if (this.getExperienceStorage(null) != null) {
+            HTPacketHelper.sendToClient(level, blockPos, HTUpdateExperienceStoragePacket.create(this))
         }
     }
 

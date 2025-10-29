@@ -4,8 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
+import hiiragi283.ragium.client.gui.component.HTEnergyStorageWidget
+import hiiragi283.ragium.client.gui.component.HTExperienceStorageWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -60,12 +62,21 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     private fun getEnergyStorage(): HTEnergyStorage.Mutable =
         blockEntity.getEnergyStorage(null) as? HTEnergyStorage.Mutable ?: error("Energy storage is not mutable")
 
-    fun createEnergyWidget(x: Int = HTSlotHelper.getSlotPosX(0), y: Int = HTSlotHelper.getSlotPosY(0)): HTEnergyBatteryWidget =
-        HTEnergyBatteryWidget(
+    fun createEnergyWidget(x: Int = HTSlotHelper.getSlotPosX(0), y: Int = HTSlotHelper.getSlotPosY(0)): HTEnergyStorageWidget =
+        HTEnergyStorageWidget(
             getEnergyStorage(),
             startX + x,
             startY + y,
         ).apply(::addRenderableWidget)
+
+    private fun getExperienceStorage(): HTExperienceStorage.Mutable =
+        blockEntity.getExperienceStorage(null) as? HTExperienceStorage.Mutable ?: error("Experience storage is not mutable")
+
+    fun createExperienceTank(x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createTank(getExperienceStorage(), startX + x, startY + y).apply(::addRenderableWidget)
+
+    fun createExperienceSlot(x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createSlot(getExperienceStorage(), startX + x, startY + y).apply(::addRenderableWidget)
 
     //    Impl    //
 

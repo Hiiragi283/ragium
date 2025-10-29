@@ -199,7 +199,7 @@ object RagiumBlockTypes {
     @JvmField
     val EXP_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.EXP_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
+        .addMenu { RagiumMenuTypes.EXP_COLLECTOR }
         .addTier(HTMachineTier.ADVANCED)
         .build()
 

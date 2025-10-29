@@ -481,6 +481,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.ITEM_POTION, "Potion of %s")
 
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")

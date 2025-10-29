@@ -32,6 +32,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Item Description
     TOOLTIP_EFFECT_RANGE("tooltip", RagiumAPI.MOD_ID, "effect_range"),
     TOOLTIP_ENERGY_PERCENTAGE("tooltip", RagiumAPI.MOD_ID, "energy_percentage"),
+    TOOLTIP_EXP_PERCENTAGE("tooltip", RagiumAPI.MOD_ID, "experience_percentage"),
     TOOLTIP_FLUID_NAME("tooltip", RagiumAPI.MOD_ID, "fluid_name"),
     TOOLTIP_FLUID_NAME_EMPTY("tooltip", RagiumAPI.MOD_ID, "fluid_name", "empty"),
     TOOLTIP_INTRINSIC_ENCHANTMENT("tooltip", RagiumAPI.MOD_ID, "intrinsic_enchantment"),

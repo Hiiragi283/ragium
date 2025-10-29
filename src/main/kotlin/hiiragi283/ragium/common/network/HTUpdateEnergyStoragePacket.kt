@@ -32,7 +32,7 @@ data class HTUpdateEnergyStoragePacket private constructor(val pos: BlockPos, va
 
         @JvmStatic
         fun create(blockEntity: HTBlockEntity): HTUpdateEnergyStoragePacket? {
-            val storage: IEnergyStorage = blockEntity.getEnergyStorage(blockEntity.getFluidSideFor()) ?: return null
+            val storage: IEnergyStorage = blockEntity.getEnergyStorage(null) ?: return null
             return HTUpdateEnergyStoragePacket(blockEntity.blockPos, storage.energyStored)
         }
     }

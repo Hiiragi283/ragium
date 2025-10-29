@@ -487,6 +487,7 @@
   "tag.item.ragium.work_in_progress": "Work In Progress",
   "tooltip.ragium.effect_range": "Effect Radius: %s blocks",
   "tooltip.ragium.energy_percentage": "%s / %s FE",
+  "tooltip.ragium.experience_percentage": "%s / %s Exp",
   "tooltip.ragium.experience_storage": "Experience: %s",
   "tooltip.ragium.fluid_name": "%s : %s mb",
   "tooltip.ragium.fluid_name.empty": "Empty",

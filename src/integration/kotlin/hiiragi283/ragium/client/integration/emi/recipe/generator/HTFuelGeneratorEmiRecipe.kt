@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.emi.recipe.generator
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
+import hiiragi283.ragium.client.gui.component.HTEnergyStorageWidget
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addTank
 import hiiragi283.ragium.client.integration.emi.addWidget
@@ -24,7 +24,7 @@ class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocati
         widgets.addTank(input(1), getPosition(3), getPosition(0))
         // energy tank
         val energyRate: Int = recipe.energyRate
-        HTEnergyBatteryWidget(
+        HTEnergyStorageWidget(
             HTEnergyNetwork(energyRate, energyRate),
             getPosition(5),
             getPosition(0) + 1,

@@ -488,6 +488,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "空")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")

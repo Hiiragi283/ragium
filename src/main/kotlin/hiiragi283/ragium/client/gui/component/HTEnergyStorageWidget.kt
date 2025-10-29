@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTEnergyWidget
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
-import hiiragi283.ragium.api.text.energyText
+import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergyBatteryWidget(private val storage: HTEnergyStorage.Mutable, x: Int, y: Int) :
+class HTEnergyStorageWidget(private val storage: HTEnergyStorage.Mutable, x: Int, y: Int) :
     HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()),
     HTEnergyWidget {
     override fun renderBackground(guiGraphics: GuiGraphics) {
@@ -40,7 +40,7 @@ class HTEnergyBatteryWidget(private val storage: HTEnergyStorage.Mutable, x: Int
     override fun getLevel(): Float = storage.getStoredLevelAsFloat()
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        storage.let(::energyText).let(consumer)
+        addEnergyTooltip(storage, consumer)
     }
 
     //    HTEnergyWidget    //
