@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -298,8 +299,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun keyMapping() {
         add(RagiumTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
-
         add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "ポーションバンドルを開く")
         add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
     }
@@ -496,6 +495,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
         add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
 
+        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
+
         add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
         add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
         add(HTAccessConfig.BOTH, "モード：双方")
@@ -544,6 +545,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
+        add(HTExperienceStorageProvider.ForBlocks, "経験値ストレージ")
         add(HTBlockOwnerProvider, "ブロックの所有者")
+
+        add(RagiumTranslation.JADE_EXP_STORAGE, "経験値: %s")
     }
 }

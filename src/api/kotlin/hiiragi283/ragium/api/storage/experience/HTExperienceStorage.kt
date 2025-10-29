@@ -18,8 +18,6 @@ interface HTExperienceStorage :
      */
     fun isEmpty(): Boolean = getAmount() <= 0
 
-    fun isNotEmpty(): Boolean = !isEmpty()
-
     /**
      * 指定された引数から[amount]を搬入します。
      * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬入を行います。

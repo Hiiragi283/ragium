@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -292,8 +293,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun keyMapping() {
         add(RagiumTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
-
         add(RagiumKeyMappings.OPEN_POTION_BUNDLE, "Open Potion Bundle")
         add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
     }
@@ -490,6 +489,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "Press Shift to show info")
         add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
 
+        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
+
         add(HTAccessConfig.INPUT_ONLY, "Mode: Input")
         add(HTAccessConfig.OUTPUT_ONLY, "Mode: Output")
         add(HTAccessConfig.BOTH, "Mode: Both")
@@ -538,6 +539,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
+        add(HTExperienceStorageProvider.ForBlocks, "Experience Storage")
         add(HTBlockOwnerProvider, "Block Owner")
+
+        add(RagiumTranslation.JADE_EXP_STORAGE, "Experience: %s")
     }
 }

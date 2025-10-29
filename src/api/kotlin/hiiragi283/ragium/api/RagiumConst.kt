@@ -83,6 +83,7 @@ object RagiumConst {
     const val FLUIDS = "fluids"
 
     const val AMOUNT = "amount"
+    const val CAPACITY = "capacity"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 

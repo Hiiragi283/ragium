@@ -70,10 +70,9 @@ object HTExperienceHelper {
     ): Long {
         if (from == null || to == null || amount <= 0) return 0
         val simulatedExtracted: Long = from.extractExp(amount, HTStorageAction.SIMULATE, access)
-        val simulatedRemain: Long = to.insertExp(simulatedExtracted, HTStorageAction.SIMULATE, access)
-        val simulatedAccepted: Long = amount - simulatedRemain
+        val simulatedInserted: Long = to.insertExp(simulatedExtracted, HTStorageAction.SIMULATE, access)
 
-        val extracted: Long = from.extractExp(simulatedAccepted, HTStorageAction.EXECUTE, access)
+        val extracted: Long = from.extractExp(simulatedInserted, HTStorageAction.EXECUTE, access)
         val remainder: Long = to.insertExp(extracted, HTStorageAction.EXECUTE, access)
         if (remainder > 0) {
             val leftover: Long = from.insertExp(remainder, HTStorageAction.EXECUTE, access)

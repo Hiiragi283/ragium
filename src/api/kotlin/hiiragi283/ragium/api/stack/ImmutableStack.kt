@@ -9,7 +9,7 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 
 /**
- * [hiiragi283.ragium.api.storage.HTStackSlot]で使われるスタックのラッパー
+ * 不変なスタックのラッパー
  *
  * EMPTYなんか大っ嫌い！
  * @param T スタックが保持する種類のクラス

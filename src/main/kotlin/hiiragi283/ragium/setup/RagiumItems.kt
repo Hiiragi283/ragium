@@ -15,6 +15,8 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
 import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTMaterialVariant
@@ -73,8 +75,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.UnaryOperator
 
 object RagiumItems {
@@ -502,14 +502,14 @@ object RagiumItems {
         for ((_, block: ItemLike) in RagiumBlocks.CRATES) {
             registerItem(
                 event,
-                { stack: ItemStack -> HTComponentItemHandler(HTComponentItemSlot.create(stack, 1)) },
+                { stack: ItemStack -> listOf(HTComponentItemSlot.create(stack, 1)) },
                 block,
             )
         }
         registerItem(
             event,
             { stack: ItemStack ->
-                HTComponentItemHandler(9) { slot: Int ->
+                (0..<9).map { slot: Int ->
                     HTComponentItemSlot.create(stack, slot, filter = HTPotionBundleContainerMenu::filterPotion)
                 }
             },
@@ -522,7 +522,7 @@ object RagiumItems {
                 event,
                 { stack: ItemStack ->
                     val capacity: Int = HTItemHelper.processStorageCapacity(null, stack, tier.getDefaultCapacity())
-                    HTComponentFluidHandler(stack, HTComponentFluidTank.create(stack, capacity))
+                    HTComponentFluidTank.create(stack, capacity)
                 },
                 block,
             )
@@ -531,10 +531,7 @@ object RagiumItems {
             event,
             { stack: ItemStack ->
                 val capacity: Int = HTItemHelper.processStorageCapacity(null, stack, 8000)
-                HTComponentFluidHandler(
-                    stack,
-                    HTComponentFluidTank.create(stack, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf),
-                )
+                HTComponentFluidTank.create(stack, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,
         )
@@ -555,19 +552,19 @@ object RagiumItems {
     }
 
     @JvmStatic
-    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IItemHandler?, vararg items: ItemLike) {
+    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> List<HTItemSlot>, vararg items: ItemLike) {
         event.registerItem(
             RagiumCapabilities.ITEM.item,
-            { stack: ItemStack, _: Void? -> getter(stack) },
+            { stack: ItemStack, _: Void? -> HTComponentItemHandler(getter(stack)) },
             *items,
         )
     }
 
     @JvmStatic
-    fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IFluidHandlerItem?, vararg items: ItemLike) {
+    fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTFluidTank, vararg items: ItemLike) {
         event.registerItem(
             RagiumCapabilities.FLUID.item,
-            { stack: ItemStack, _: Void? -> getter(stack) },
+            { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, getter(stack)) },
             *items,
         )
     }

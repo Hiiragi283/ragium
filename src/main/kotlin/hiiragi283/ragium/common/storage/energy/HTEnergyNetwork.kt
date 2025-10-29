@@ -29,11 +29,11 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
 
     override fun serialize(output: HTValueOutput) {
         output.putInt(RagiumConst.AMOUNT, this.amount)
-        output.putInt("capacity", this.capacity)
+        output.putInt(RagiumConst.CAPACITY, this.capacity)
     }
 
     override fun deserialize(input: HTValueInput) {
         this.amount = input.getInt(RagiumConst.AMOUNT, 0)
-        this.capacity = input.getInt("capacity", INITIAL_CAPACITY)
+        this.capacity = input.getInt(RagiumConst.CAPACITY, INITIAL_CAPACITY)
     }
 }

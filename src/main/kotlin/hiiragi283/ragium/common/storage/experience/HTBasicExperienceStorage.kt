@@ -39,7 +39,7 @@ open class HTBasicExperienceStorage(
     protected var amount: Long = 0
 
     override fun setAmount(amount: Long, action: HTStorageAction) {
-        check(amount >= 0) { "Energy cannot be negative" }
+        check(amount >= 0) { "Experience cannot be negative" }
         val fixedAmount: Long = min(amount, getCapacity())
         if (this.amount != fixedAmount && action.execute) {
             this.amount = fixedAmount

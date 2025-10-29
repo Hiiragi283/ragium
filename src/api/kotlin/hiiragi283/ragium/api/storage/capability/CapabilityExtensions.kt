@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.storage.experience.IExperienceStorage
-import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -23,18 +23,18 @@ val IFluidHandler.tankRange: IntRange get() = (0..<this.tanks)
 
 //    Energy    //
 
-fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getStorage(
-    level: ILevelExtension,
-    pos: BlockPos,
-    side: Direction?,
-): HTEnergyStorage? = this.getCapability(level, pos, side)?.let(::wrapStorage)
+fun HTMultiCapability<IEnergyStorage, *>.getStorage(level: ILevelExtension, pos: BlockPos, side: Direction?): HTEnergyStorage? =
+    this.getCapability(level, pos, side)?.let(::wrapStorage)
 
-fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getStorage(stack: IItemStackExtension): HTEnergyStorage? =
+fun HTMultiCapability<IEnergyStorage, *>.getStorage(entity: Entity, side: Direction?): HTEnergyStorage? =
+    this.getCapability(entity, side)?.let(::wrapStorage)
+
+fun HTMultiCapability<IEnergyStorage, *>.getStorage(stack: IItemStackExtension): HTEnergyStorage? =
     this.getCapability(stack)?.let(::wrapStorage)
 
-fun HTMultiCapability<IEnergyStorage, IEnergyStorage>.getStorage(stack: ImmutableItemStack): HTEnergyStorage? = this.getStorage(stack.stack)
+fun HTMultiCapability<IEnergyStorage, *>.getStorage(stack: ImmutableItemStack): HTEnergyStorage? = this.getStorage(stack.stack)
 
-fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
+private fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
     is HTEnergyStorage -> storage
     else -> object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
         override fun getAmount(): Int = storage.energyStored
@@ -51,19 +51,18 @@ fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
 
 //    Experience    //
 
-fun HTMultiCapability<IExperienceStorage, IExperienceStorageItem>.getStorage(
-    level: ILevelExtension,
-    pos: BlockPos,
-    side: Direction?,
-): HTExperienceStorage? = this.getCapability(level, pos, side)?.let(::wrapStorage)
+fun HTMultiCapability<IExperienceStorage, *>.getStorage(level: ILevelExtension, pos: BlockPos, side: Direction?): HTExperienceStorage? =
+    this.getCapability(level, pos, side)?.let(::wrapStorage)
 
-fun HTMultiCapability<IExperienceStorage, IExperienceStorageItem>.getStorage(stack: IItemStackExtension): HTExperienceStorage? =
+fun HTMultiCapability<IExperienceStorage, *>.getStorage(stack: IItemStackExtension): HTExperienceStorage? =
     this.getCapability(stack)?.let(::wrapStorage)
 
-fun HTMultiCapability<IExperienceStorage, IExperienceStorageItem>.getStorage(stack: ImmutableItemStack): HTExperienceStorage? =
-    this.getStorage(stack.stack)
+fun HTMultiCapability<IExperienceStorage, *>.getStorage(entity: Entity, side: Direction?): HTExperienceStorage? =
+    this.getCapability(entity, side)?.let(::wrapStorage)
 
-fun wrapStorage(storage: IExperienceStorage): HTExperienceStorage? = when (storage) {
+fun HTMultiCapability<IExperienceStorage, *>.getStorage(stack: ImmutableItemStack): HTExperienceStorage? = this.getStorage(stack.stack)
+
+private fun wrapStorage(storage: IExperienceStorage): HTExperienceStorage? = when (storage) {
     is HTExperienceStorage -> storage
     else -> object : HTExperienceStorage, HTContentListener.Empty, HTValueSerializable.Empty {
         override fun getAmount(): Long = storage.getExpStored()

@@ -46,6 +46,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Recipe
     RECIPE_CUTTING("recipe_type", RagiumAPI.MOD_ID, "cutting"),
+
+    // Jade
+    JADE_EXP_STORAGE("tooltip", RagiumAPI.MOD_ID, "experience_storage"),
     ;
 
     override val translationKey: String = type + "." + path.joinToString(separator = ".")

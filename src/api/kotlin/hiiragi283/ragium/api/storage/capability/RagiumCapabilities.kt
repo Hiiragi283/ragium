@@ -10,6 +10,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.items.IItemHandler
 
+/**
+ * @see mekanism.common.capabilities.Capabilities
+ */
 interface RagiumCapabilities {
     companion object {
         @JvmField
