@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -43,7 +43,7 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ImmutableItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                for (stack: ImmutableFluidStack? in RagiumCapabilities.FLUID.getCapabilityStacks(stack)) {
+                for (stack: ImmutableFluidStack? in HTFluidCapabilities.getCapabilityStacks(stack)) {
                     if (stack != null && tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
                 }
                 // stackを燃料に変換できない場合はtrue
@@ -58,7 +58,7 @@ class HTFluidFuelItemStackSlot private constructor(
 
     fun fillOrBurn(moveTo: HTItemSlot.Mutable) {
         val stack: ImmutableItemStack = this.getStack() ?: return
-        val needed: Int = tank.getNeededAsInt(tank.getStack())
+        val needed: Int = tank.getNeeded(tank.getStack())
         if (needed > 0 && !HTFluidItemSlot.moveFluid(tank, this, moveTo)) {
             val amount: Int = stackToAmount.applyAsInt(stack)
             if (amount in 1..needed) {

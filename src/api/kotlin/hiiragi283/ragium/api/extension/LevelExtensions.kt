@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.Containers
@@ -30,7 +30,7 @@ fun giveOrDropStack(entity: Entity, stack: ItemStack, offset: Float = 0f) {
     if (entity is Player) {
         giveStackTo(entity, stack)
     } else {
-        val remainStack: ItemStack = RagiumCapabilities.ITEM.getCapability(entity, null)?.let { handler: IItemHandler ->
+        val remainStack: ItemStack = HTItemCapabilities.getCapability(entity, null)?.let { handler: IItemHandler ->
             ItemHandlerHelper.insertItem(handler, stack, false)
         } ?: stack
         entity.spawnAtLocation(remainStack, offset)

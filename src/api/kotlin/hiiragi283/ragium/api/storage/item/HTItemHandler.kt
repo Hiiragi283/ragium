@@ -34,7 +34,7 @@ fun interface HTItemHandler : HTSidedItemHandler {
         side: Direction?,
     ): ItemStack = getItemSlot(slot, side)?.extractItem(amount, action, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
 
-    override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacityAsInt(ItemStack.EMPTY) ?: 0
+    override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacity(ItemStack.EMPTY) ?: 0
 
     override fun isItemValid(slot: Int, stack: ItemStack, side: Direction?): Boolean = getItemSlot(slot, side)?.isValid(stack) ?: false
 }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -40,7 +40,7 @@ abstract class HTDrumUpgradeItem(
         val state: BlockState = level.getBlockState(pos)
         if (filter.any(state::`is`)) {
             if (!level.isClientSide) {
-                val fluid: FluidStack = RagiumCapabilities.FLUID
+                val fluid: FluidStack = HTFluidCapabilities
                     .getCapability(level, pos, null)
                     ?.getFluidInTank(0)
                     ?: return InteractionResult.FAIL
@@ -52,7 +52,7 @@ abstract class HTDrumUpgradeItem(
                     level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state))
                 }
 
-                RagiumCapabilities.FLUID.getCapability(level, pos, null)?.fill(fluid, HTStorageAction.EXECUTE.toFluid())
+                HTFluidCapabilities.getCapability(level, pos, null)?.fill(fluid, HTStorageAction.EXECUTE.toFluid())
                 context.itemInHand.shrink(1)
             }
             return InteractionResult.sidedSuccess(level.isClientSide)

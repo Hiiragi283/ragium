@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level
 
 class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
-        for (slot: HTStackView<ImmutableItemStack> in RagiumCapabilities.ITEM.getCapabilityViews(stack)) {
+        for (slot: HTStackView<ImmutableItemStack> in HTItemCapabilities.getCapabilityViews(stack)) {
             if (slot !is HTItemSlot) continue
             val stackIn: ItemStack = slot.getItemStack()
             if (stackIn.isEmpty) continue

@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.entity.HTBlastCharge
@@ -22,7 +25,6 @@ import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 
 object RagiumEntityTypes {
@@ -82,7 +84,7 @@ object RagiumEntityTypes {
         }
 
         // Exp Storage for Exp Orb
-        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, EntityType.EXPERIENCE_ORB) { orb: ExperienceOrb, _ ->
+        event.registerEntity(HTExperienceCapabilities.entity, EntityType.EXPERIENCE_ORB) { orb: ExperienceOrb, _ ->
             object :
                 HTExperienceStorage.Basic(),
                 HTValueSerializable.Empty {
@@ -105,7 +107,7 @@ object RagiumEntityTypes {
             }
         }
         // Exp Storage for Player
-        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, EntityType.PLAYER) { player: Player, _ ->
+        event.registerEntity(HTExperienceCapabilities.entity, EntityType.PLAYER) { player: Player, _ ->
             object :
                 HTExperienceStorage.Basic(),
                 HTContentListener.Empty,
@@ -129,10 +131,10 @@ object RagiumEntityTypes {
         type: HTDeferredEntityType<ENTITY>,
     ) where ENTITY : Entity, ENTITY : HTHandlerProvider {
         val type1: EntityType<ENTITY> = type.get()
-        event.registerEntity(RagiumCapabilities.ITEM.entity, type1) { entity: ENTITY, _ -> entity.getItemHandler(null) }
-        event.registerEntity(Capabilities.ItemHandler.ENTITY_AUTOMATION, type1, HTHandlerProvider::getItemHandler)
-        event.registerEntity(RagiumCapabilities.FLUID.entity, type1, HTHandlerProvider::getFluidHandler)
-        event.registerEntity(RagiumCapabilities.ENERGY.entity, type1, HTHandlerProvider::getEnergyStorage)
-        event.registerEntity(RagiumCapabilities.EXPERIENCE.entity, type1, HTHandlerProvider::getExperienceStorage)
+        event.registerEntity(HTItemCapabilities.entityAlt, type1) { entity: ENTITY, _ -> entity.getItemHandler(null) }
+        event.registerEntity(HTItemCapabilities.entity, type1, HTHandlerProvider::getItemHandler)
+        event.registerEntity(HTFluidCapabilities.entity, type1, HTHandlerProvider::getFluidHandler)
+        event.registerEntity(HTEnergyCapabilities.entity, type1, HTHandlerProvider::getEnergyStorage)
+        event.registerEntity(HTExperienceCapabilities.entity, type1, HTHandlerProvider::getExperienceStorage)
     }
 }

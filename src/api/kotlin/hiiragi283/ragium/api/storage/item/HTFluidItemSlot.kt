@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.neoforged.neoforge.fluids.FluidStack
@@ -24,7 +24,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
             val stackIn: ImmutableItemStack = moveFrom.getStack() ?: return false
             val handler = HTFluidHandler { listOf(tank) }
 
-            val handlerIn: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(stackIn) ?: return false
+            val handlerIn: IFluidHandlerItem = HTFluidCapabilities.getCapability(stackIn) ?: return false
             var containerIn: ImmutableItemStack? = handlerIn.container.toImmutable()
             // 最初に移動できる液体を取得
             val firstStackIn: FluidStack = handlerIn.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid())
@@ -66,7 +66,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                 }
             } else if (moveTo.getStack() == null) {
                 val stackInCopied: ImmutableItemStack = stackIn.copyWithAmount(1) ?: return false
-                RagiumCapabilities.FLUID.getCapability(stackInCopied)?.let { handlerItem: IFluidHandlerItem ->
+                HTFluidCapabilities.getCapability(stackInCopied)?.let { handlerItem: IFluidHandlerItem ->
                     val transferred: FluidStack = FluidUtil.tryFluidTransfer(handlerItem, handler, Int.MAX_VALUE, true)
                     if (!transferred.isEmpty) {
                         moveFrom.shrinkStack(1, HTStorageAction.EXECUTE)

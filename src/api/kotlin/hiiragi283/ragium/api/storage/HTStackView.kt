@@ -23,7 +23,7 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
      * このスロットの空き容量を返します。
      * @return [Int]値での空き容量
      */
-    fun getNeededAsInt(stack: STACK?): Int = getCapacity(stack) - getAmount()
+    fun getNeeded(stack: STACK?): Int = getCapacity(stack) - getAmount()
 
     /**
      * このスロットの占有率を返します。

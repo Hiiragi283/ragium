@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -27,7 +27,7 @@ abstract class HTGenericItemContainerMenu(
     HTGenericContainerRows {
     protected val handler: HTItemHandler = when (isClientSide) {
         Dist.CLIENT -> null
-        Dist.DEDICATED_SERVER -> RagiumCapabilities.ITEM.getCapability(stack) as? HTItemHandler
+        Dist.DEDICATED_SERVER -> HTItemCapabilities.getCapability(stack) as? HTItemHandler
     } ?: createHandler(rows)
 
     protected abstract fun createHandler(rows: Int): HTItemHandler

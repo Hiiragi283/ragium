@@ -2,8 +2,7 @@ package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
-import hiiragi283.ragium.api.storage.capability.getStorage
+import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.network.chat.Component
@@ -18,7 +17,7 @@ import kotlin.math.roundToInt
 abstract class HTEnergyItem(properties: Properties) : Item(properties) {
     companion object {
         @JvmStatic
-        fun getStorage(stack: ItemStack): HTEnergyStorage? = RagiumCapabilities.ENERGY.getStorage(stack)
+        fun getStorage(stack: ItemStack): HTEnergyStorage? = HTEnergyCapabilities.getStorage(stack)
 
         @JvmStatic
         fun hasStorage(stack: ItemStack): Boolean = getStorage(stack) != null

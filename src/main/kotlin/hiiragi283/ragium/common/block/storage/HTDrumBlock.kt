@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.extension.getTypedBlockEntity
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.text.addFluidTooltip
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
@@ -71,6 +71,6 @@ class HTDrumBlock(tier: HTDrumTier, properties: Properties) : HTTypedEntityBlock
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        addFluidTooltip(RagiumCapabilities.FLUID.getCapabilityStacks(stack), tooltips::add, flag)
+        addFluidTooltip(HTFluidCapabilities.getCapabilityStacks(stack), tooltips::add, flag)
     }
 }

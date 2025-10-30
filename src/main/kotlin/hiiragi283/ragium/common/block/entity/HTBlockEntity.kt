@@ -8,7 +8,8 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -206,8 +207,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
-    final override fun getFluidHandler(direction: Direction?): IFluidHandler? =
-        fluidHandlerManager?.resolve(RagiumCapabilities.FLUID, direction)
+    final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(HTFluidCapabilities, direction)
 
     // Item
 
@@ -228,6 +228,5 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         getItemSlots(getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? =
-        itemHandlerManager?.resolve(RagiumCapabilities.ITEM, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTItemCapabilities, direction)
 }

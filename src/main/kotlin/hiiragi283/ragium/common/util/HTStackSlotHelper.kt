@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.api.storage.fluid.insertFluid
@@ -140,8 +140,8 @@ object HTStackSlotHelper {
         stack: ItemStack,
         tank: HTFluidTank,
     ): Boolean {
-        if (!RagiumCapabilities.FLUID.hasCapability(stack)) return false
-        val handler: IFluidHandlerItem = RagiumCapabilities.FLUID.getCapability(stack.copyWithCount(1)) ?: return false
+        if (!HTFluidCapabilities.hasCapability(stack)) return false
+        val handler: IFluidHandlerItem = HTFluidCapabilities.getCapability(stack.copyWithCount(1)) ?: return false
         val firstFluid: FluidStack = when (tank.getStack() == null) {
             true -> handler.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid())
             false -> handler.drain(tank.getFluidStack().copyWithAmount(Int.MAX_VALUE), HTStorageAction.SIMULATE.toFluid())

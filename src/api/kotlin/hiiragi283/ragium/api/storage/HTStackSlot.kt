@@ -90,7 +90,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
         }
 
         override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? {
-            val needed: Int = getNeededAsInt(stack)
+            val needed: Int = getNeeded(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
             val sameType: Boolean = isSameStack(stack)

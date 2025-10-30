@@ -13,7 +13,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
@@ -294,7 +297,7 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        event.setProxyable(RagiumCapabilities.EXPERIENCE.block)
+        event.setProxyable(HTExperienceCapabilities.block)
 
         // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
@@ -349,25 +352,9 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<out HTBlockEntity>) {
-        event.registerBlockEntity(
-            RagiumCapabilities.ITEM.block,
-            type,
-            HTHandlerProvider::getItemHandler,
-        )
-        event.registerBlockEntity(
-            RagiumCapabilities.FLUID.block,
-            type,
-            HTHandlerProvider::getFluidHandler,
-        )
-        event.registerBlockEntity(
-            RagiumCapabilities.ENERGY.block,
-            type,
-            HTHandlerProvider::getEnergyStorage,
-        )
-        event.registerBlockEntity(
-            RagiumCapabilities.EXPERIENCE.block,
-            type,
-            HTHandlerProvider::getExperienceStorage,
-        )
+        event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
+        event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
+        event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
+        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceStorage)
     }
 }

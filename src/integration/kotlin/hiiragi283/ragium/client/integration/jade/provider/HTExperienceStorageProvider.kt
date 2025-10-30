@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.jade.provider
 
 import hiiragi283.ragium.api.integration.jade.HTBasicJadeDataProvider
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.text.longText
 import net.minecraft.ChatFormatting
@@ -27,11 +27,11 @@ sealed class HTExperienceStorageProvider<ACCESSOR : Accessor<*>> :
 
     data object ForBlocks : HTExperienceStorageProvider<BlockAccessor>() {
         override fun streamData(accessor: BlockAccessor): HTExperienceView? =
-            RagiumCapabilities.EXPERIENCE.getCapability(accessor.level, accessor.position, accessor.side)?.let(::HTExperienceView)
+            HTExperienceCapabilities.getCapability(accessor.level, accessor.position, accessor.side)?.let(::HTExperienceView)
     }
 
     data object ForEntity : HTExperienceStorageProvider<EntityAccessor>() {
         override fun streamData(accessor: EntityAccessor): HTExperienceView? =
-            RagiumCapabilities.EXPERIENCE.getCapability(accessor.entity, null)?.let(::HTExperienceView)
+            HTExperienceCapabilities.getCapability(accessor.entity, null)?.let(::HTExperienceView)
     }
 }

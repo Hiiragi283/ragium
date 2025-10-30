@@ -31,20 +31,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    /*val itemHandler: HTBasicItemHandler = object : HTBasicItemHandler(4, ::setOnlySave) {
-        override fun isStackValidForInsert(index: Int, stack: ImmutableItemStack, access: HTStorageAccess): Boolean = 
-            when(index) {
-                0 -> true
-                else -> access == HTStorageAccess.INTERNAL
-            }
-
-        override fun canStackExtract(index: Int, stack: ImmutableItemStack, access: HTStorageAccess): Boolean = 
-            when (index) {
-                0 -> access != HTStorageAccess.EXTERNAL
-                else -> true
-            }
-    }*/
-    
     lateinit var inputSlots: List<HTItemSlot.Mutable>
         private set
     lateinit var outputSlot: HTItemSlot

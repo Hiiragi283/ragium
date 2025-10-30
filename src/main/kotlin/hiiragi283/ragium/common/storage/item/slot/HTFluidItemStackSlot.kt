@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.insertFluid
@@ -55,14 +55,14 @@ open class HTFluidItemStackSlot protected constructor(
 
         @JvmStatic
         fun tryGetHandler(stack: ImmutableItemStack): IFluidHandlerItem? {
-            if (stack.amount() > 1 && RagiumCapabilities.FLUID.getCapability(stack) == null) {
+            if (stack.amount() > 1 && HTFluidCapabilities.getCapability(stack) == null) {
                 return null
             }
             val stack1: ImmutableItemStack = when (stack.amount()) {
                 1 -> stack.copyWithAmount(1)
                 else -> stack
             } ?: return null
-            return RagiumCapabilities.FLUID.getCapability(stack1)
+            return HTFluidCapabilities.getCapability(stack1)
         }
 
         @JvmStatic
@@ -71,7 +71,7 @@ open class HTFluidItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTFluidItemStackSlot = create(tank, listener, x, y, HTPredicates.alwaysFalse(), RagiumCapabilities.FLUID::hasCapability)
+        ): HTFluidItemStackSlot = create(tank, listener, x, y, HTPredicates.alwaysFalse(), HTFluidCapabilities::hasCapability)
 
         @JvmStatic
         private fun create(

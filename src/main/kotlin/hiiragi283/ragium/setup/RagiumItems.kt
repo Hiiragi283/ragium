@@ -13,7 +13,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.storage.capability.RagiumCapabilities
+import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
+import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -554,7 +557,7 @@ object RagiumItems {
     @JvmStatic
     fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> List<HTItemSlot>, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.ITEM.item,
+            HTItemCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentItemHandler(getter(stack)) },
             *items,
         )
@@ -563,7 +566,7 @@ object RagiumItems {
     @JvmStatic
     fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTFluidTank, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.FLUID.item,
+            HTFluidCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, getter(stack)) },
             *items,
         )
@@ -572,7 +575,7 @@ object RagiumItems {
     @JvmStatic
     fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IEnergyStorage?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.ENERGY.item,
+            HTEnergyCapabilities.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
@@ -581,7 +584,7 @@ object RagiumItems {
     @JvmStatic
     fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IExperienceStorageItem?, vararg items: ItemLike) {
         event.registerItem(
-            RagiumCapabilities.EXPERIENCE.item,
+            HTExperienceCapabilities.item,
             { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
