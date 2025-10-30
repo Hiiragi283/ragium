@@ -50,26 +50,21 @@ interface HTExperienceStorage :
     @Deprecated("Use `getCapacity()` instead", ReplaceWith("this.getCapacity()"), DeprecationLevel.ERROR)
     override fun getMaxExpStored(): Long = getCapacity()
 
-    //    Mutable    //
-
-    interface Mutable : HTExperienceStorage {
-        /**
-         * 指定された経験値量を代入します。
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に代入を行います。
-         */
-        fun setAmount(amount: Long, action: HTStorageAction)
-    }
-
     //    Basic    //
 
-    abstract class Basic : Mutable {
+    abstract class Basic : HTExperienceStorage {
+        /**
+         * 指定された経験値量を代入します。
+         */
+        protected abstract fun setAmount(amount: Long)
+
         override fun insertExp(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long {
             if (amount <= 0 || !canInsert(access)) return 0
             val needed: Long = min(getInsertRate(access), getNeeded())
             if (needed <= 0) return 0
             val toAdd: Long = min(amount, needed)
-            setAmount(getAmount() + toAdd, action)
             if (action.execute) {
+                setAmount(getAmount() + toAdd)
                 onContentsChanged()
             }
             return toAdd
@@ -78,11 +73,9 @@ interface HTExperienceStorage :
         override fun extractExp(amount: Long, action: HTStorageAction, access: HTStorageAccess): Long {
             if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
             val toRemove: Long = min(min(getExtractRate(access), getAmount()), amount)
-            if (toRemove > 0) {
-                setAmount(getAmount() - toRemove, action)
-                if (action.execute) {
-                    onContentsChanged()
-                }
+            if (toRemove > 0 && action.execute) {
+                setAmount(getAmount() - toRemove)
+                onContentsChanged()
             }
             return toRemove
         }

@@ -17,7 +17,7 @@ import java.util.function.Function
 
 /**
  * Ragiumで使用する[MenuType]向けの[HTDeferredRegister]
- * @see [mekanism.common.registration.impl.ContainerTypeDeferredRegister]
+ * @see mekanism.common.registration.impl.ContainerTypeDeferredRegister
  */
 class HTDeferredMenuTypeRegister(namespace: String) : HTDeferredRegister<MenuType<*>>(Registries.MENU, namespace) {
     /**

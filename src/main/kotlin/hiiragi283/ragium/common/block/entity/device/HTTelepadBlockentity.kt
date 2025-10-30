@@ -30,7 +30,8 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
             .all(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
-    private lateinit var tank: HTVariableFluidStackTank
+    lateinit var tank: HTVariableFluidStackTank
+        private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)

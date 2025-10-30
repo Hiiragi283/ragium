@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -23,7 +22,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override fun createTank(listener: HTContentListener): HTFluidTank =
+    override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
         HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.washerTankCapacity)
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =

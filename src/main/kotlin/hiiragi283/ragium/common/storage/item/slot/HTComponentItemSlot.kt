@@ -62,4 +62,8 @@ open class HTComponentItemSlot(
             parent.set(component, contents)
         }
     }
+
+    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+        setStack(stack.copyWithAmount(amount))
+    }
 }

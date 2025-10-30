@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTEnergyWidget
-import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.client.Minecraft
@@ -14,8 +14,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergyStorageWidget(private val storage: HTEnergyStorage.Mutable, x: Int, y: Int) :
-    HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()),
+class HTEnergyStorageWidget(
+    private val storage: HTEnergyStorage,
+    private val amountSetter: HTAmountSetter.IntSized,
+    x: Int,
+    y: Int,
+) : HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()),
     HTEnergyWidget {
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(
@@ -46,7 +50,7 @@ class HTEnergyStorageWidget(private val storage: HTEnergyStorage.Mutable, x: Int
     //    HTEnergyWidget    //
 
     override fun setAmount(amount: Int) {
-        storage.setAmount(amount, HTStorageAction.EXECUTE)
+        amountSetter.setAmount(amount)
     }
 
     override fun getAmount(): Int = storage.getAmount()

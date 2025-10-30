@@ -10,7 +10,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [ImmutableFluidStack]向けの[HTStackSlot]の拡張インターフェース
- * @see [mekanism.api.fluid.IExtendedFluidTank]
+ * @see mekanism.api.fluid.IExtendedFluidTank
  */
 interface HTFluidTank :
     HTStackSlot<ImmutableFluidStack>,
@@ -45,16 +45,12 @@ interface HTFluidTank :
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack =
         extractFluid(resource, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
 
-    //    Mutable    //
+    //    Basic    //
 
     /**
-     * [ImmutableFluidStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     * [ImmutableFluidStack]向けの[HTStackSlot.Basic]の拡張クラス
      */
-    interface Mutable :
-        HTStackSlot.Mutable<ImmutableFluidStack>,
-        HTFluidTank
-
     abstract class Basic :
         HTStackSlot.Basic<ImmutableFluidStack>(),
-        Mutable
+        HTFluidTank
 }

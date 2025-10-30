@@ -30,7 +30,8 @@ class HTGenericContainerMenu(
     }
 
     init {
-        check(context.getSlots(context.getItemSideFor()) >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
+        val slots: Int = context.getSlots(context.getItemSideFor())
+        check(slots >= rows) { "Item context size $slots is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
         addSlots(context)

@@ -28,7 +28,3 @@ fun HTItemSlot.extractItem(stack: ItemStack, action: HTStorageAction, access: HT
 
 fun HTItemSlot.extractItem(amount: Int, action: HTStorageAction, access: HTStorageAccess): ItemStack =
     this.extract(amount, action, access)?.stack ?: ItemStack.EMPTY
-
-fun HTStackView.Mutable<ImmutableItemStack>.setItemStack(stack: ItemStack) {
-    setStack(stack.toImmutable())
-}

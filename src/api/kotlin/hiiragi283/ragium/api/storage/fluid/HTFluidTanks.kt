@@ -19,13 +19,9 @@ fun HTFluidTank.insertFluid(stack: FluidStack, action: HTStorageAction, access: 
 }
 
 fun HTFluidTank.extractFluid(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack {
-    val immutable: ImmutableFluidStack = stack.toImmutable() ?: return stack
-    return this.extract(immutable, action, access)?.stack ?: stack
+    val immutable: ImmutableFluidStack = stack.toImmutable() ?: return FluidStack.EMPTY
+    return this.extract(immutable, action, access)?.stack ?: FluidStack.EMPTY
 }
 
 fun HTFluidTank.extractFluid(amount: Int, action: HTStorageAction, access: HTStorageAccess): FluidStack =
     this.extract(amount, action, access)?.stack ?: FluidStack.EMPTY
-
-fun HTStackView.Mutable<ImmutableFluidStack>.setFluidStack(stack: FluidStack) {
-    setStack(stack.toImmutable())
-}

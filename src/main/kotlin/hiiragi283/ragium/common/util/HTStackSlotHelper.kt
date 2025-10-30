@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
+import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -47,18 +48,30 @@ object HTStackSlotHelper {
         return remainder
     }
 
+    @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>> shrinkStack(
+        slot: HTStackSlot<STACK>,
+        ingredient: ToIntFunction<STACK>,
+        action: HTStorageAction,
+    ): Int = slot.extract(ingredient.applyAsInt(slot.getStack()), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+
     //    Item    //
 
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: ToIntFunction<ImmutableItemStack>, action: HTStorageAction): Int {
+    fun shrinkItemStack(
+        slot: HTItemSlot,
+        stackSetter: HTStackSetter<ImmutableItemStack>,
+        ingredient: ToIntFunction<ImmutableItemStack>,
+        action: HTStorageAction,
+    ): Int {
         val stackIn: ImmutableItemStack? = slot.getStack()
         if (stackIn != null && stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
             if (action.execute) {
-                slot.setStack(stackIn.getCraftingRemainingItem())
+                stackSetter.setStack(stackIn.getCraftingRemainingItem())
             }
             return 0
         } else {
-            return slot.shrinkStack(ingredient.applyAsInt(stackIn), action)
+            return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
         }
     }
 
@@ -69,7 +82,7 @@ object HTStackSlotHelper {
      * @return 実際に削除された個数
      */
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: HTItemIngredient, action: HTStorageAction): Int =
+    fun shrinkStack(slot: HTItemSlot, ingredient: HTItemIngredient, action: HTStorageAction): Int =
         shrinkStack(slot, ingredient::getRequiredAmount, action)
 
     /**
@@ -79,7 +92,7 @@ object HTStackSlotHelper {
      * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された個数
      */
     @JvmStatic
-    fun shrinkStack(slot: HTItemSlot.Mutable, ingredient: Optional<HTItemIngredient>, action: HTStorageAction): Int =
+    fun shrinkStack(slot: HTItemSlot, ingredient: Optional<HTItemIngredient>, action: HTStorageAction): Int =
         ingredient.map { ingredient1 -> shrinkStack(slot, ingredient1, action) }.orElse(0)
 
     @JvmStatic
@@ -104,10 +117,6 @@ object HTStackSlotHelper {
     }
 
     //    Fluid    //
-
-    @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: ToIntFunction<ImmutableFluidStack>, action: HTStorageAction): Int =
-        tank.extract(ingredient.applyAsInt(tank.getStack()), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
 
     /**
      * 指定された[ingredient]から，現在の数量を削除します。

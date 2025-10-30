@@ -51,54 +51,35 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      */
     fun isSameStack(other: STACK?): Boolean
 
-    //    Mutable    //
-
-    /**
-     * 中身が可変な[HTStackSlot]の拡張クラス
-     */
-    interface Mutable<STACK : ImmutableStack<*, STACK>> :
-        HTStackSlot<STACK>,
-        HTStackView.Mutable<STACK>
-
     //    Basic    //
 
-    abstract class Basic<STACK : ImmutableStack<*, STACK>> : Mutable<STACK> {
+    /**
+     * [HTStackSlot]の基本的な実装
+     */
+    abstract class Basic<STACK : ImmutableStack<*, STACK>> : HTStackSlot<STACK> {
         /**
-         * 指定された[amount]から，現在の個数を置換します。
-         * @param amount 置換する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
-         * @return 実際に置換された個数
+         * 指定された[stack]を代入します。
          */
-        override fun setStackSize(amount: Int, action: HTStorageAction): Int {
-            val stack: STACK = getStack() ?: return 0
-            if (amount <= 0) {
-                if (action.execute) setEmpty()
-                return 0
-            }
-            val maxStackSize: Int = getCapacity(stack)
-            val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.amount() == fixedAmount || action.simulate) {
-                return fixedAmount
-            }
-            updateCount(stack, fixedAmount)
-            onContentsChanged()
-            return fixedAmount
-        }
+        protected abstract fun setStack(stack: STACK?)
 
-        protected open fun updateCount(stack: STACK?, amount: Int) {
-            setStack(stack?.copyWithAmount(amount))
-        }
+        /**
+         * 指定された引数をもとに，現在保持しているスタックの個数を変更します。
+         * @param stack 現在のスタック
+         * @param amount 新しい数量
+         */
+        protected abstract fun updateCount(stack: STACK, amount: Int)
 
         override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? {
             val needed: Int = getNeeded(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
+            val stackIn: STACK? = this.getStack()
             val sameType: Boolean = isSameStack(stack)
-            if (this.getStack() == null || sameType) {
+            if (stackIn == null || sameType) {
                 val toAdd: Int = min(stack.amount(), needed)
                 if (action.execute) {
-                    if (sameType) {
-                        growStack(toAdd, action)
+                    if (sameType && stackIn != null) {
+                        updateCount(stackIn, stackIn.amount() + toAdd)
                         onContentsChanged()
                     } else {
                         setStack(stack.copyWithAmount(toAdd))
@@ -120,7 +101,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             val fixedAmount: Int = min(amount, getAmount())
             val result: STACK? = stack.copyWithAmount(fixedAmount)
             if (result != null && action.execute) {
-                shrinkStack(fixedAmount, action)
+                updateCount(stack, stack.amount() - fixedAmount)
                 onContentsChanged()
             }
             return result

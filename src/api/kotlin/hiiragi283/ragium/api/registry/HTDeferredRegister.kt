@@ -6,7 +6,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
 /**
- * @see [mekanism.common.registration.MekanismDeferredRegister]
+ * @see mekanism.common.registration.MekanismDeferredRegister
  */
 open class HTDeferredRegister<T : Any>(registryKey: RegistryKey<T>, namespace: String) : DeferredRegister<T>(registryKey, namespace) {
     fun createId(path: String): ResourceLocation = namespace.toId(path)

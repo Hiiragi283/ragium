@@ -17,7 +17,7 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
-    private val factory: HTSingleFluidConsumerScreen<BE>.(Int) -> HTFluidTankWidget,
+    private val factory: HTSingleFluidConsumerScreen<BE>.() -> HTFluidTankWidget,
     texture: ResourceLocation,
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
@@ -31,7 +31,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             inventory: Inventory,
             title: Component,
         ): HTSingleFluidConsumerScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidConsumerScreen(
-            { index: Int -> createFluidSlot(index, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
+            { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             RagiumAPI.id("textures/gui/container/crusher.png"),
             menu,
             inventory,
@@ -44,7 +44,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             inventory: Inventory,
             title: Component,
         ): HTSingleFluidConsumerScreen<HTMelterBlockEntity> = HTSingleFluidConsumerScreen(
-            { index: Int -> createFluidTank(index, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
+            { createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             RagiumAPI.id("textures/gui/container/melter.png"),
             menu,
             inventory,
@@ -56,7 +56,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
 
     override fun init() {
         super.init()
-        fluidWidget = this.factory(0)
+        fluidWidget = this.factory()
     }
 
     //    HTFluidScreen    //

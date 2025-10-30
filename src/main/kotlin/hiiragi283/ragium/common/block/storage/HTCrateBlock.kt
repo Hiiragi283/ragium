@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTPlayerHandSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
 import net.minecraft.core.BlockPos
@@ -34,7 +34,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         val crate: HTCrateBlockEntity = level.getTypedBlockEntity(pos) ?: return ItemInteractionResult.FAIL
-        val slot: HTItemSlot.Mutable = crate.slot
+        val slot: HTItemStackSlot = crate.slot
         val handSlot = HTPlayerHandSlot(player, hand)
         // プレイヤーがアイテムを持っている場合
         val stackInHand: ImmutableItemStack? = handSlot.getStack()
@@ -43,7 +43,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
                 var remainder: ImmutableItemStack? = slot.insert(stackInHand, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
                 if (remainder != stackInHand) {
                     remainder = slot.insert(stackInHand, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                    handSlot.setStack(remainder)
+                    handSlot.setStackUnchecked(remainder)
                 }
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
@@ -71,7 +71,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
     ) {
         super.attack(state, level, pos, player)
         val crate: HTCrateBlockEntity = level.getTypedBlockEntity(pos) ?: return
-        val slot: HTItemSlot.Mutable = crate.slot
+        val slot: HTItemStackSlot = crate.slot
         val toExtract: Int = if (player.isShiftKeyDown) {
             slot.getStack()?.maxStackSize() ?: return
         } else {

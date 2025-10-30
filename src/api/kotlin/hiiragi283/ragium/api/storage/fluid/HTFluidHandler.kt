@@ -6,7 +6,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [HTFluidTank]に基づいた[HTSidedFluidHandler]の拡張インターフェース
- * @see [mekanism.api.fluid.IMekanismFluidHandler]
+ * @see mekanism.api.fluid.IMekanismFluidHandler
  */
 fun interface HTFluidHandler : HTSidedFluidHandler {
     fun hasFluidHandler(): Boolean = true

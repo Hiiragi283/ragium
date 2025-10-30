@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -41,11 +40,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemStackSlot
         private set
-    lateinit var catalystSlot: HTItemSlot
+    lateinit var catalystSlot: HTItemStackSlot
         private set
-    lateinit var outputSlot: HTItemSlot
+    lateinit var outputSlot: HTItemStackSlot
         private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

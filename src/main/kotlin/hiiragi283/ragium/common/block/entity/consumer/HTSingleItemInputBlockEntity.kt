@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -52,7 +51,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         state: BlockState,
     ) : super(finder, blockHolder, pos, state)
 
-    lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemStackSlot
         protected set
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
@@ -72,7 +71,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             pos,
             state,
         ) {
-        lateinit var outputSlot: HTItemSlot
+        lateinit var outputSlot: HTItemStackSlot
             private set
 
         override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

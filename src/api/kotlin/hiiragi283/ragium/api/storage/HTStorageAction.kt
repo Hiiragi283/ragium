@@ -5,7 +5,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 /**
  * [HTStackSlot]へのIOを識別するフラグ
  * @param execute 実際に処理を行うかどうか
- * @see [mekanism.api.Action]
+ * @see mekanism.api.Action
  */
 @JvmInline
 value class HTStorageAction private constructor(val execute: Boolean) {

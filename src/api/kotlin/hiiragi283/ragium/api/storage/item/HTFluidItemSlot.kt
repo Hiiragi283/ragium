@@ -13,14 +13,14 @@ import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
 /**
- * @see [mekanism.common.inventory.slot.IFluidHandlerSlot]
- * @see [me.desht.pneumaticcraft.common.block.entity.AbstractPneumaticCraftBlockEntity.processFluidItem]
+ * @see mekanism.common.inventory.slot.IFluidHandlerSlot
+ * @see me.desht.pneumaticcraft.common.block.entity.AbstractPneumaticCraftBlockEntity.processFluidItem
  */
-interface HTFluidItemSlot : HTItemSlot.Mutable {
+interface HTFluidItemSlot : HTItemSlot {
     fun getFluidTank(): HTFluidTank
 
     companion object {
-        fun moveFluid(tank: HTFluidTank, moveFrom: HTItemSlot.Mutable, moveTo: HTItemSlot.Mutable): Boolean {
+        fun moveFluid(tank: HTFluidTank, moveFrom: HTItemSlot, moveTo: HTItemSlot): Boolean {
             val stackIn: ImmutableItemStack = moveFrom.getStack() ?: return false
             val handler = HTFluidHandler { listOf(tank) }
 
@@ -50,7 +50,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                             HTStorageAccess.INTERNAL,
                         )
                         if (excessStack == null) {
-                            moveFrom.shrinkStack(1, HTStorageAction.EXECUTE)
+                            moveFrom.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                             moveTo.insert(containerIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                             tank.insert(transferred, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                             return true
@@ -59,7 +59,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                 } else {
                     containerIn = handlerIn.container.toImmutable()?.copy()
                     if (containerIn != null) {
-                        moveFrom.shrinkStack(1, HTStorageAction.EXECUTE)
+                        moveFrom.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                         moveTo.insert(containerIn, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                         return true
                     }
@@ -69,7 +69,7 @@ interface HTFluidItemSlot : HTItemSlot.Mutable {
                 HTFluidCapabilities.getCapability(stackInCopied)?.let { handlerItem: IFluidHandlerItem ->
                     val transferred: FluidStack = FluidUtil.tryFluidTransfer(handlerItem, handler, Int.MAX_VALUE, true)
                     if (!transferred.isEmpty) {
-                        moveFrom.shrinkStack(1, HTStorageAction.EXECUTE)
+                        moveFrom.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                         moveTo.insertItem(handlerItem.container, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     }
                 }

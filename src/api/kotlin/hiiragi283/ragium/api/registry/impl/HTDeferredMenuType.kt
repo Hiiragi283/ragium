@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack
 
 /**
  * Ragiumで使用する[MenuType]向けの[HTDeferredHolder]
- * @see [mekanism.common.registration.impl.ContainerTypeRegistryObject]
+ * @see mekanism.common.registration.impl.ContainerTypeRegistryObject
  */
 sealed class HTDeferredMenuType<MENU : AbstractContainerMenu, TYPE : MenuType<MENU>> : HTDeferredHolder<MenuType<*>, TYPE> {
     constructor(key: ResourceKey<MenuType<*>>) : super(key)

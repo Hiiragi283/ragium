@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(RagiumBlocks.EXP_COLLECTOR, pos, state) {
-    private val expStorage: HTExperienceStorage = HTBasicExperienceStorage.output(::setOnlySave, Long.MAX_VALUE)
+    val expStorage: HTBasicExperienceStorage = HTBasicExperienceStorage.output(::setOnlySave, Long.MAX_VALUE)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

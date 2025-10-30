@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-object HTEnergyCapabilities : HTMultiCapability<IEnergyStorage, IEnergyStorage> {
+object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
     override val block: BlockCapability<IEnergyStorage, Direction?> = Capabilities.EnergyStorage.BLOCK
     override val entity: EntityCapability<IEnergyStorage, Direction?> = Capabilities.EnergyStorage.ENTITY
     override val item: ItemCapability<IEnergyStorage, Void?> = Capabilities.EnergyStorage.ITEM

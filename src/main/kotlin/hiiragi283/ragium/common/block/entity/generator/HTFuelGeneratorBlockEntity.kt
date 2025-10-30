@@ -9,13 +9,13 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
@@ -40,7 +40,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         }
     }
 
-    protected lateinit var tank: HTVariableFluidStackTank
+    lateinit var tank: HTVariableFluidStackTank
         private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
@@ -61,7 +61,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     protected lateinit var fuelSlot: HTFluidFuelItemStackSlot
         private set
-    private lateinit var outputSlot: HTItemSlot.Mutable
+    private lateinit var outputSlot: HTItemStackSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)

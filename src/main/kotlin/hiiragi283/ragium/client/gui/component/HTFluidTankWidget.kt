@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getStillTexture
 import hiiragi283.ragium.api.stack.getTintColor
+import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackView
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -20,7 +20,8 @@ import net.neoforged.api.distmarker.OnlyIn
 class HTFluidTankWidget(
     private val levelGetter: (HTFluidWidget) -> Float,
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val tank: HTStackView.Mutable<ImmutableFluidStack>,
+    private val view: HTStackView<ImmutableFluidStack>,
+    private val stackSetter: HTStackSetter<ImmutableFluidStack>,
     x: Int,
     y: Int,
     width: Int,
@@ -29,10 +30,16 @@ class HTFluidTankWidget(
     HTFluidWidget {
     companion object {
         @JvmStatic
-        fun createSlot(view: HTStackView.Mutable<ImmutableFluidStack>, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createSlot(
+            view: HTStackView<ImmutableFluidStack>,
+            stackSetter: HTStackSetter<ImmutableFluidStack>,
+            x: Int,
+            y: Int,
+        ): HTFluidTankWidget = HTFluidTankWidget(
             { 1f },
             { _, _ -> },
             view,
+            stackSetter,
             x,
             y,
             16,
@@ -40,7 +47,12 @@ class HTFluidTankWidget(
         )
 
         @JvmStatic
-        fun createTank(view: HTStackView.Mutable<ImmutableFluidStack>, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createTank(
+            view: HTStackView<ImmutableFluidStack>,
+            stackSetter: HTStackSetter<ImmutableFluidStack>,
+            x: Int,
+            y: Int,
+        ): HTFluidTankWidget = HTFluidTankWidget(
             HTFluidWidget::getStoredLevelAsFloat,
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
@@ -56,6 +68,7 @@ class HTFluidTankWidget(
                 )
             },
             view,
+            stackSetter,
             x,
             y,
             16,
@@ -82,12 +95,10 @@ class HTFluidTankWidget(
     //    HTFluidWidgetNew    //
 
     override fun setStack(stack: ImmutableFluidStack?) {
-        tank.setStack(stack)
+        stackSetter.setStack(stack)
     }
 
-    override fun setStackSize(amount: Int, action: HTStorageAction): Int = 0
+    override fun getStack(): ImmutableFluidStack? = view.getStack()
 
-    override fun getStack(): ImmutableFluidStack? = tank.getStack()
-
-    override fun getCapacity(stack: ImmutableFluidStack?): Int = tank.getCapacity(stack)
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = view.getCapacity(stack)
 }

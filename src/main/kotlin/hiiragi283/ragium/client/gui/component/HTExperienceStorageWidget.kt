@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.gui.component.HTExperienceWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.text.addExperienceTooltip
 import net.minecraft.client.gui.GuiGraphics
@@ -18,7 +18,8 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTExperienceStorageWidget(
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val storage: HTExperienceStorage.Mutable,
+    private val storage: HTExperienceStorage,
+    private val amountSetter: HTAmountSetter.LongSized,
     x: Int,
     y: Int,
     width: Int,
@@ -27,9 +28,15 @@ class HTExperienceStorageWidget(
     HTExperienceWidget {
     companion object {
         @JvmStatic
-        fun createSlot(storage: HTExperienceStorage.Mutable, x: Int, y: Int): HTExperienceStorageWidget = HTExperienceStorageWidget(
+        fun createSlot(
+            storage: HTExperienceStorage,
+            amountSetter: HTAmountSetter.LongSized,
+            x: Int,
+            y: Int,
+        ): HTExperienceStorageWidget = HTExperienceStorageWidget(
             { _, _ -> },
             storage,
+            amountSetter,
             x,
             y,
             16,
@@ -37,7 +44,12 @@ class HTExperienceStorageWidget(
         )
 
         @JvmStatic
-        fun createTank(storage: HTExperienceStorage.Mutable, x: Int, y: Int): HTExperienceStorageWidget = HTExperienceStorageWidget(
+        fun createTank(
+            storage: HTExperienceStorage,
+            amountSetter: HTAmountSetter.LongSized,
+            x: Int,
+            y: Int,
+        ): HTExperienceStorageWidget = HTExperienceStorageWidget(
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
                     HTFluidWidget.TANK_ID,
@@ -52,6 +64,7 @@ class HTExperienceStorageWidget(
                 )
             },
             storage,
+            amountSetter,
             x,
             y,
             16,
@@ -78,7 +91,7 @@ class HTExperienceStorageWidget(
     //    HTExperienceWidget    //
 
     override fun setAmount(amount: Long) {
-        storage.setAmount(amount, HTStorageAction.EXECUTE)
+        amountSetter.setAmount(amount)
     }
 
     override fun getAmount(): Long = storage.getAmount()

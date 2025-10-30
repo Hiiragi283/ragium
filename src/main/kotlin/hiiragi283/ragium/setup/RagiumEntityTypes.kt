@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
@@ -26,6 +25,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import kotlin.math.min
 
 object RagiumEntityTypes {
     @JvmField
@@ -88,11 +88,14 @@ object RagiumEntityTypes {
             object :
                 HTExperienceStorage.Basic(),
                 HTValueSerializable.Empty {
-                override fun setAmount(amount: Long, action: HTStorageAction) {
-                    if (action.execute) {
-                        orb.value = Ints.saturatedCast(amount)
-                        onContentsChanged()
+                override fun setAmount(amount: Long) {
+                    if (amount == 0L) {
+                        if (orb.value == 0) return
+                        orb.value = 0
+                    } else {
+                        orb.value = Ints.saturatedCast(min(amount, getCapacity()))
                     }
+                    onContentsChanged()
                 }
 
                 override fun getAmount(): Long = orb.value.toLong()
@@ -112,10 +115,8 @@ object RagiumEntityTypes {
                 HTExperienceStorage.Basic(),
                 HTContentListener.Empty,
                 HTValueSerializable.Empty {
-                override fun setAmount(amount: Long, action: HTStorageAction) {
-                    if (action.execute) {
-                        HTExperienceHelper.setPlayerExp(player, amount)
-                    }
+                override fun setAmount(amount: Long) {
+                    HTExperienceHelper.setPlayerExp(player, amount)
                 }
 
                 override fun getAmount(): Long = HTExperienceHelper.getPlayerExp(player)

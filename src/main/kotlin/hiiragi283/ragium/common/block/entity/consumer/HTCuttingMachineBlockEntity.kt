@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.castRecipe
 import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -34,11 +34,11 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemStackSlot
         private set
-    lateinit var catalystSlot: HTItemSlot
+    lateinit var catalystSlot: HTItemStackSlot
         private set
-    lateinit var outputSlots: List<HTItemSlot>
+    lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -95,7 +95,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
             HTStorageAction.EXECUTE,
         )
         // インプットを減らす
-        inputSlot.shrinkStack(1, HTStorageAction.EXECUTE)
+        inputSlot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1f, 1f)
     }

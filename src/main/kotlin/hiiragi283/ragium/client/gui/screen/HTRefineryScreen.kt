@@ -26,8 +26,8 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
 
     override fun init() {
         super.init()
-        fluidWidget = createFluidTank(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        fluidWidget1 = createFluidTank(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        fluidWidget1 = createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0))
     }
 
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

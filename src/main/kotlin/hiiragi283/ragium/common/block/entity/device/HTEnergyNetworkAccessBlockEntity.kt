@@ -27,7 +27,7 @@ import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(blockHolder, pos, state) {
-    private val energyStorage: HTEnergyStorage = createEnergyStorage(::setOnlySave)
+    val energyStorage: HTEnergyStorage = createEnergyStorage(::setOnlySave)
 
     protected abstract fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage
 

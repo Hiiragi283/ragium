@@ -56,7 +56,7 @@ class HTFluidFuelItemStackSlot private constructor(
         )
     }
 
-    fun fillOrBurn(moveTo: HTItemSlot.Mutable) {
+    fun fillOrBurn(moveTo: HTItemSlot) {
         val stack: ImmutableItemStack = this.getStack() ?: return
         val needed: Int = tank.getNeeded(tank.getStack())
         if (needed > 0 && !HTFluidItemSlot.moveFluid(tank, this, moveTo)) {
@@ -69,7 +69,7 @@ class HTFluidFuelItemStackSlot private constructor(
                 if (hasContainer) {
                     setStack(stack.getCraftingRemainingItem())
                 } else {
-                    shrinkStack(1, HTStorageAction.EXECUTE)
+                    extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 }
             }
         }

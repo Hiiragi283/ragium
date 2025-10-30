@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -85,27 +84,4 @@ class HTVariableItemStackSlot(
     }
 
     override fun getCapacity(stack: ImmutableItemStack?): Int = capacityFunction.applyAsInt(stack)
-
-    override fun setStackSize(amount: Int, action: HTStorageAction): Int {
-        if (this.getStack() == null) {
-            return 0
-        } else if (amount <= 0) {
-            if (action.execute) {
-                setEmpty()
-            }
-            return 0
-        }
-        val maxStackSize: Int = getCapacity()
-        val fixedAmount: Int = if (maxStackSize in 1..<amount) {
-            maxStackSize
-        } else {
-            amount
-        }
-        if (getAmount() == fixedAmount || action.simulate) {
-            return fixedAmount
-        }
-        this.stack.count = fixedAmount
-        onContentsChanged()
-        return fixedAmount
-    }
 }

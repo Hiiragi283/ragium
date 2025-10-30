@@ -6,7 +6,7 @@ import net.neoforged.bus.api.IEventBus
 import java.util.function.Supplier
 
 /**
- * @see [mekanism.common.registration.DoubleDeferredRegister]
+ * @see mekanism.common.registration.DoubleDeferredRegister
  */
 open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constructor(
     protected val firstRegister: HTDeferredRegister<FIRST>,

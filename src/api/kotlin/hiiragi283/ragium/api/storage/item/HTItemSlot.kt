@@ -10,7 +10,7 @@ import kotlin.math.min
 
 /**
  * [ImmutableItemStack]向けの[HTStackSlot]の拡張インターフェース
- * @see [mekanism.api.inventory.IInventorySlot]
+ * @see mekanism.api.inventory.IInventorySlot
  */
 interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
     companion object {
@@ -29,16 +29,12 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
         other?.stack ?: ItemStack.EMPTY,
     )
 
-    //    Mutable    //
+    //    Basic    //
 
     /**
-     * [ImmutableItemStack]向けの[HTStackSlot.Mutable]の拡張クラス
+     * [ImmutableItemStack]向けの[HTStackSlot.Basic]の拡張クラス
      */
-    interface Mutable :
-        HTStackSlot.Mutable<ImmutableItemStack>,
-        HTItemSlot
-
     abstract class Basic :
         HTStackSlot.Basic<ImmutableItemStack>(),
-        Mutable
+        HTItemSlot
 }

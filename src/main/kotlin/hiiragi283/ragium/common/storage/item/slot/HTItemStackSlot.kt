@@ -116,11 +116,11 @@ open class HTItemStackSlot protected constructor(
     override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, slotType)
 
     override fun serialize(output: HTValueOutput) {
-        output.storeOptional(RagiumConst.ITEM, ImmutableItemStack.OPTIONAL_CODEC, getStack())
+        output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.readOptional(RagiumConst.ITEM, ImmutableItemStack.OPTIONAL_CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.ITEM, ImmutableItemStack.CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
@@ -129,10 +129,6 @@ open class HTItemStackSlot protected constructor(
 
     override fun setStack(stack: ImmutableItemStack?) {
         setStackUnchecked(stack, true)
-    }
-
-    fun setStackUnchecked(stack: ItemStack, validate: Boolean = false) {
-        setStackUnchecked(stack.toImmutable(), validate)
     }
 
     fun setStackUnchecked(stack: ImmutableItemStack?, validate: Boolean = false) {
@@ -147,7 +143,7 @@ open class HTItemStackSlot protected constructor(
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableItemStack?, amount: Int) {
+    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
         this.stack.count = amount
     }
 }

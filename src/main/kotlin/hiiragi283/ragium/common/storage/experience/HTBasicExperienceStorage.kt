@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
@@ -38,13 +37,20 @@ open class HTBasicExperienceStorage(
     @JvmField
     protected var amount: Long = 0
 
-    override fun setAmount(amount: Long, action: HTStorageAction) {
-        check(amount >= 0) { "Experience cannot be negative" }
-        val fixedAmount: Long = min(amount, getCapacity())
-        if (this.amount != fixedAmount && action.execute) {
-            this.amount = fixedAmount
-            onContentsChanged()
+    override fun setAmount(amount: Long) {
+        setAmountUnchecked(amount, true)
+    }
+
+    fun setAmountUnchecked(amount: Long, validate: Boolean = false) {
+        if (amount == 0L) {
+            if (this.amount == 0L) return
+            this.amount = 0
+        } else if (!validate) {
+            this.amount = min(amount, getCapacity())
+        } else {
+            error("Invalid amount for storage: $amount")
         }
+        onContentsChanged()
     }
 
     final override fun canInsert(access: HTStorageAccess): Boolean = this.canInsert.test(access)
@@ -60,7 +66,7 @@ open class HTBasicExperienceStorage(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getLong(RagiumConst.AMOUNT)?.let { setAmount(it, HTStorageAction.EXECUTE) }
+        input.getLong(RagiumConst.AMOUNT)?.let(::setAmountUnchecked)
     }
 
     final override fun onContentsChanged() {

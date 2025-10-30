@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.storage.fluid.tank
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.BiPredicate
 import java.util.function.IntSupplier
@@ -54,27 +53,4 @@ class HTVariableFluidStackTank(
     }
 
     override fun getCapacity(stack: ImmutableFluidStack?): Int = capacitySupplier.asInt
-
-    override fun setStackSize(amount: Int, action: HTStorageAction): Int {
-        if (this.getStack() == null) {
-            return 0
-        } else if (amount <= 0) {
-            if (action.execute) {
-                setEmpty()
-            }
-            return 0
-        }
-        val maxStackSize: Int = capacity
-        val fixedAmount: Int = if (maxStackSize in 1..<amount) {
-            maxStackSize
-        } else {
-            amount
-        }
-        if (getAmount() == fixedAmount || action.simulate) {
-            return fixedAmount
-        }
-        this.stack.amount = fixedAmount
-        onContentsChanged()
-        return fixedAmount
-    }
 }

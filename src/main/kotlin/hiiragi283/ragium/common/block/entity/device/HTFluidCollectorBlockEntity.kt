@@ -19,7 +19,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTFluidCollectorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(blockHolder, pos, state) {
-    private lateinit var tank: HTVariableFluidStackTank
+    lateinit var tank: HTVariableFluidStackTank
+        private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)

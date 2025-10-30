@@ -18,7 +18,7 @@ import java.util.function.BooleanSupplier
  * 複数のキャパビリティを束ねるインターフェース
  * @param HANDLER キャパビリティのインターフェース
  * @param ITEM_HANDLER アイテムにおけるキャパビリティのインターフェース
- * @see [mekanism.common.capabilities.IMultiTypeCapability]
+ * @see mekanism.common.capabilities.IMultiTypeCapability
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
@@ -67,4 +67,6 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
     fun getCapability(stack: ImmutableItemStack): ITEM_HANDLER? = getCapability(stack.stack)
 
     fun hasCapability(stack: ImmutableItemStack): Boolean = hasCapability(stack.stack)
+
+    interface Simple<HANDLER : Any> : HTMultiCapability<HANDLER, HANDLER>
 }

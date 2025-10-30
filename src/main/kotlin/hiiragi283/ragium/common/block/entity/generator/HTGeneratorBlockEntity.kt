@@ -19,7 +19,7 @@ abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos,
     HTMachineBlockEntity(blockHolder, pos, state) {
     //    Energy Storage    //
 
-    protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.output(
+    val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.output(
         ::setOnlySave,
         blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getCapacity(),
     )

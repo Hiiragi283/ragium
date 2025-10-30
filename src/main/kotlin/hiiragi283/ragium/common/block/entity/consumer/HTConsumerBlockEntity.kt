@@ -35,7 +35,7 @@ abstract class HTConsumerBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, 
 
     //    Energy Storage    //
 
-    protected val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.input(
+    val energyStorage: HTBasicEnergyStorage = HTBasicEnergyStorage.input(
         ::setOnlySave,
         blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getCapacity(),
     )

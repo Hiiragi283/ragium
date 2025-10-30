@@ -6,11 +6,9 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
@@ -36,9 +34,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemStackSlot
         private set
-    lateinit var outputSlot: HTItemSlot
+    lateinit var outputSlot: HTItemStackSlot
         private set
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
@@ -56,9 +54,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         return builder.build()
     }
 
-    lateinit var inputTank: HTFluidTank
+    lateinit var inputTank: HTVariableFluidStackTank
         private set
-    lateinit var outputTank: HTFluidTank
+    lateinit var outputTank: HTVariableFluidStackTank
         private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {

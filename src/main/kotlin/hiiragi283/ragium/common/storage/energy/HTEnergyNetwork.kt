@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.storage.energy
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.util.HTContentListener
-import net.minecraft.util.Mth
+import kotlin.math.min
 
 class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     HTEnergyStorage.Basic(),
@@ -17,10 +16,20 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
 
     constructor() : this(0, INITIAL_CAPACITY)
 
-    override fun setAmount(amount: Int, action: HTStorageAction) {
-        if (action.execute) {
-            this.amount = Mth.clamp(amount, 0, capacity)
+    override fun setAmount(amount: Int) {
+        setAmountUnchecked(amount, true)
+    }
+
+    fun setAmountUnchecked(amount: Int, validate: Boolean = false) {
+        if (amount == 0) {
+            if (this.amount == 0) return
+            this.amount = 0
+        } else if (!validate || amount > 0) {
+            this.amount = min(amount, getCapacity())
+        } else {
+            error("Invalid amount for storage: $amount")
         }
+        onContentsChanged()
     }
 
     override fun getAmount(): Int = amount

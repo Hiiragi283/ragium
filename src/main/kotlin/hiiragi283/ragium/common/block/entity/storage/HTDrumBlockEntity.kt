@@ -6,11 +6,9 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
@@ -18,6 +16,7 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -37,7 +36,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         tier = blockHolder.getAttributeTier()
     }
 
-    lateinit var tank: HTFluidTank.Mutable
+    lateinit var tank: HTFluidStackTank
         private set
 
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
@@ -47,7 +46,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
     }
 
     private lateinit var fillSlot: HTFluidItemSlot
-    private lateinit var outputSlot: HTItemSlot.Mutable
+    private lateinit var outputSlot: HTItemStackSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
@@ -69,7 +68,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         componentInput
             .get(RagiumDataComponents.FLUID_CONTENT)
             ?.copy()
-            .let(tank::setStack)
+            .let(tank::setStackUnchecked)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
@@ -112,7 +111,5 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
 
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
             super.extract(amount, action.combine(isCreative), access)
-
-        override fun setStackSize(amount: Int, action: HTStorageAction): Int = super.setStackSize(amount, action.combine(isCreative))
     }
 }

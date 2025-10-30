@@ -12,7 +12,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import java.util.Optional
 
 /**
  * [ItemStack]向けの[ImmutableStack]の実装
@@ -30,13 +29,6 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
                 VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
                 ItemStack::getComponentsPatch,
                 ::ItemStack,
-            )
-
-        @JvmField
-        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableItemStack>> = ITEM_STACK_CODEC
-            .xmap(
-                { stack: ItemStack -> Optional.ofNullable(stack.toImmutable()) },
-                { optional: Optional<ImmutableItemStack> -> optional.map(ImmutableItemStack::stack).orElse(ItemStack.EMPTY) },
             )
 
         @JvmField

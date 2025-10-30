@@ -13,7 +13,8 @@ import net.minecraft.world.item.Item
 typealias HTSimpleDeferredItem = HTDeferredItem<Item>
 
 /**
- * @see [net.neoforged.neoforge.registries.DeferredItem]
+ * @see net.neoforged.neoforge.registries.DeferredItem
+ * @see mekanism.common.registration.impl.ItemRegistryObject
  */
 class HTDeferredItem<ITEM : Item> :
     HTDeferredHolder<Item, ITEM>,

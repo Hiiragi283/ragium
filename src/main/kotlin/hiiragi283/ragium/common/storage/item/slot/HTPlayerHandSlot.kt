@@ -27,10 +27,21 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
     override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack)
 
     override fun setStack(stack: ImmutableItemStack?) {
-        player.setItemInHand(hand, stack?.stack ?: ItemStack.EMPTY)
+        setStackUnchecked(stack, true)
     }
 
-    override fun updateCount(stack: ImmutableItemStack?, amount: Int) {
+    fun setStackUnchecked(stack: ImmutableItemStack?, validate: Boolean = false) {
+        if (stack == null) {
+            if (this.getStack() == null) return
+            player.setItemInHand(hand, ItemStack.EMPTY)
+        } else if (!validate || isValid(stack)) {
+            player.setItemInHand(hand, stack.copy().stack)
+        } else {
+            error("Invalid stack for slot: $stack ${stack.componentsPatch()}")
+        }
+    }
+
+    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
         if (isSameStack(stack)) {
             player.getItemInHand(hand).count = amount
         }

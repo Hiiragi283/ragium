@@ -9,12 +9,11 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -33,7 +32,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     pos: BlockPos,
     state: BlockState,
 ) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
-    lateinit var inputTank: HTFluidTank
+    lateinit var inputTank: HTFluidStackTank
         private set
 
     final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
@@ -43,11 +42,11 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         return builder.build()
     }
 
-    protected abstract fun createTank(listener: HTContentListener): HTFluidTank
+    protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
 
-    lateinit var inputSlot: HTItemSlot.Mutable
+    lateinit var inputSlot: HTItemStackSlot
         private set
-    lateinit var outputSlots: List<HTItemSlot>
+    lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {

@@ -79,11 +79,11 @@ open class HTFluidStackTank protected constructor(
         super.canStackExtract(stack, access) && canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {
-        output.storeOptional(RagiumConst.FLUID, ImmutableFluidStack.OPTIONAL_CODEC, getStack())
+        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.readOptional(RagiumConst.FLUID, ImmutableFluidStack.OPTIONAL_CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
@@ -99,14 +99,14 @@ open class HTFluidStackTank protected constructor(
             if (this.getStack() == null) return
             this.stack = FluidStack.EMPTY
         } else if (!validate || isValid(stack)) {
-            this.stack = stack.copy()!!.stack
+            this.stack = stack.copy().stack
         } else {
             error("Invalid stack for tank: $stack ${stack.componentsPatch()}")
         }
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableFluidStack?, amount: Int) {
+    override fun updateCount(stack: ImmutableFluidStack, amount: Int) {
         this.stack.amount = amount
     }
 }

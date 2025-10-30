@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -26,7 +25,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override fun createTank(listener: HTContentListener): HTFluidTank = HTVariableFluidStackTank.input(
+    override fun createTank(listener: HTContentListener): HTVariableFluidStackTank = HTVariableFluidStackTank.input(
         listener,
         RagiumConfig.COMMON.crusherTankCapacity,
         canInsert = RagiumFluidContents.LUBRICANT::isOf,

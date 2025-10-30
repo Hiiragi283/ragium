@@ -87,4 +87,6 @@ interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : Immuta
     fun getCapabilityStacks(stack: ImmutableItemStack): List<STACK?> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
 
     fun getCapabilityStack(stack: ImmutableItemStack, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
+
+    interface Simple<HANDLER : Any, STACK : ImmutableStack<*, STACK>> : HTViewCapability<HANDLER, HANDLER, STACK>
 }

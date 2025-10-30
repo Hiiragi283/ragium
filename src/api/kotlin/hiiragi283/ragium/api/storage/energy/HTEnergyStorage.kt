@@ -60,26 +60,21 @@ interface HTEnergyStorage :
     @Deprecated("Not used", level = DeprecationLevel.ERROR)
     override fun canReceive(): Boolean = true
 
-    //    Mutable    //
-
-    interface Mutable : HTEnergyStorage {
-        /**
-         * 指定された電気量を代入します。
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に代入を行います。
-         */
-        fun setAmount(amount: Int, action: HTStorageAction)
-    }
-
     //    Basic    //
 
-    abstract class Basic : Mutable {
+    abstract class Basic : HTEnergyStorage {
+        /**
+         * 指定された電気量を代入します。
+         */
+        protected abstract fun setAmount(amount: Int)
+
         override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (amount <= 0 || !canInsert(access)) return 0
             val needed: Int = min(getInsertRate(access), getNeeded())
             if (needed <= 0) return 0
             val toAdd: Int = min(amount, needed)
-            setAmount(getAmount() + toAdd, action)
             if (action.execute) {
+                setAmount(getAmount() + toAdd)
                 onContentsChanged()
             }
             return toAdd
@@ -88,11 +83,9 @@ interface HTEnergyStorage :
         override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
             val toRemove: Int = min(min(getExtractRate(access), getAmount()), amount)
-            if (toRemove > 0) {
-                setAmount(getAmount() - toRemove, action)
-                if (action.execute) {
-                    onContentsChanged()
-                }
+            if (toRemove > 0 && action.execute) {
+                setAmount(getAmount() - toRemove)
+                onContentsChanged()
             }
             return toRemove
         }

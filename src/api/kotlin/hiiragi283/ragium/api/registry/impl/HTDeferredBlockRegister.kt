@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 
 /**
- * @see [mekanism.common.registration.impl.BlockDeferredRegister]
+ * @see mekanism.common.registration.impl.BlockDeferredRegister
  */
 class HTDeferredBlockRegister(namespace: String) :
     HTDoubleDeferredRegister<Block, Item>(HTDeferredOnlyBlockRegister(namespace), HTDeferredItemRegister(namespace)) {

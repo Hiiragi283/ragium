@@ -8,7 +8,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 /**
  * [FluidStack]向けの[ImmutableStack]の実装
@@ -16,15 +15,6 @@ import java.util.Optional
 @JvmInline
 value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
-        @JvmField
-        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> =
-            BiCodec
-                .of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
-                .xmap(
-                    { stack: FluidStack -> Optional.ofNullable(stack.toImmutable()) },
-                    { optional: Optional<ImmutableFluidStack> -> optional.map(ImmutableFluidStack::stack).orElse(FluidStack.EMPTY) },
-                )
-
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
             BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC).comapFlatMap(

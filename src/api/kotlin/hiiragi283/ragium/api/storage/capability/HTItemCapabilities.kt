@@ -12,7 +12,7 @@ import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.items.IItemHandler
 
-data object HTItemCapabilities : HTViewCapability<IItemHandler, IItemHandler, ImmutableItemStack> {
+data object HTItemCapabilities : HTViewCapability.Simple<IItemHandler, ImmutableItemStack> {
     override val block: BlockCapability<IItemHandler, Direction?> = Capabilities.ItemHandler.BLOCK
     override val entity: EntityCapability<IItemHandler, Direction?> = Capabilities.ItemHandler.ENTITY_AUTOMATION
     override val item: ItemCapability<IItemHandler, Void?> = Capabilities.ItemHandler.ITEM

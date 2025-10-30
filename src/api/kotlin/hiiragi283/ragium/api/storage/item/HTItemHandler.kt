@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack
 
 /**
  * [HTItemSlot]に基づいた[HTSidedItemHandler]の拡張インターフェース
- * @see [mekanism.api.inventory.IMekanismInventory]
+ * @see mekanism.api.inventory.IMekanismInventory
  */
 fun interface HTItemHandler : HTSidedItemHandler {
     fun hasItemHandler(): Boolean = true

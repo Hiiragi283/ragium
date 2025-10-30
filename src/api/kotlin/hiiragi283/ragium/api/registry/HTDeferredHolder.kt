@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
- * @see [mekanism.common.registration.MekanismDeferredHolder]
+ * @see mekanism.common.registration.MekanismDeferredHolder
  */
 open class HTDeferredHolder<R : Any, T : R> :
     DeferredHolder<R, T>,

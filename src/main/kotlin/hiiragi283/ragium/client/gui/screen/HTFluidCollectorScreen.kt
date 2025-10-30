@@ -31,7 +31,7 @@ class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBl
             ),
         )
 
-        fluidWidget = createFluidTank(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
 
     //    HTFluidScreen    //

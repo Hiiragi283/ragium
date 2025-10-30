@@ -5,7 +5,7 @@ import java.util.function.Predicate
 
 /**
  * スロットへのアクセスの種類を表すクラス
- * @see [mekanism.api.AutomationType]
+ * @see mekanism.api.AutomationType
  */
 enum class HTStorageAccess {
     /**

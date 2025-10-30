@@ -6,7 +6,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * 向きに応じて制御された[IFluidHandler]の拡張インターフェース
- * @see [mekanism.api.fluid.ISidedFluidHandler]
+ * @see mekanism.api.fluid.ISidedFluidHandler
  */
 interface HTSidedFluidHandler : IFluidHandler {
     fun getFluidSideFor(): Direction? = null

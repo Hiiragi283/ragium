@@ -1,15 +1,14 @@
 package hiiragi283.ragium.common.storage.experience
 
-import hiiragi283.ragium.api.extension.setOrRemove
+import hiiragi283.ragium.api.function.clamp
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
 import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
+import kotlin.math.min
 
 /**
  * [HTExperienceStorage]に基づいたコンポーネント向けの実装
@@ -21,14 +20,23 @@ open class HTComponentExperienceStorage(private val parent: ItemStack, private v
     HTValueSerializable.Empty {
     protected val component: DataComponentType<Long> get() = RagiumDataComponents.EXPERIENCE
 
-    override fun setAmount(amount: Long, action: HTStorageAction) {
-        val fixedAmount: Long = Mth.clamp(amount, 0, capacity)
-        if (action.execute) {
-            parent.setOrRemove(component, fixedAmount) { it <= 0 }
-        }
+    override fun setAmount(amount: Long) {
+        setAmountUnchecked(amount, true)
     }
 
-    override fun getAmount(): Long = Mth.clamp(parent.getOrDefault(component, 0), 0, capacity)
+    fun setAmountUnchecked(amount: Long, validate: Boolean = false) {
+        if (amount == 0L) {
+            if (parent.getOrDefault(component, 0) == 0L) return
+            parent.remove(component)
+        } else if (!validate) {
+            parent.set(component, min(amount, getCapacity()))
+        } else {
+            error("Invalid amount for storage: $amount")
+        }
+        onContentsChanged()
+    }
+
+    override fun getAmount(): Long = parent.getOrDefault(component, 0).clamp(0..capacity)
 
     override fun getCapacity(): Long = capacity
 

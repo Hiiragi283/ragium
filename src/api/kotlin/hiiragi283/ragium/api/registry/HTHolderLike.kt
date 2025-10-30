@@ -9,7 +9,7 @@ import net.minecraft.world.level.material.Fluid
 
 /**
  * IDを取得可能できるインターフェース
- * @see [mekanism.common.registration.INamedEntry]
+ * @see mekanism.common.registration.INamedEntry
  */
 fun interface HTHolderLike {
     fun getId(): ResourceLocation

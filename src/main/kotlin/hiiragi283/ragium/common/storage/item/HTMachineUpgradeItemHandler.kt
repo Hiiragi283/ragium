@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -19,13 +18,12 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.attachment.IAttachmentHolder
 
-class HTMachineUpgradeItemHandler private constructor(listener: HTContentListener?) :
+class HTMachineUpgradeItemHandler private constructor(private val blockEntity: BlockEntity) :
     HTItemHandler,
     HTValueSerializable {
         companion object {
             @JvmStatic
-            fun fromHolder(holder: IAttachmentHolder): HTMachineUpgradeItemHandler =
-                HTMachineUpgradeItemHandler(checkNotNull(holder as? BlockEntity)::setChanged)
+            fun fromHolder(holder: IAttachmentHolder): HTMachineUpgradeItemHandler = HTMachineUpgradeItemHandler(holder as BlockEntity)
 
             @JvmStatic
             fun getComponentTier(stack: ImmutableItemStack): HTComponentTier? = RagiumItems.COMPONENTS
@@ -36,7 +34,7 @@ class HTMachineUpgradeItemHandler private constructor(listener: HTContentListene
 
         private val slots: List<HTItemSlot> = (0..3).map { i ->
             HTItemStackSlot.create(
-                listener,
+                blockEntity::setChanged,
                 HTSlotHelper.getSlotPosX(8),
                 HTSlotHelper.getSlotPosY(i - 0.5),
                 canExtract = HTPredicates.manualOnly(),

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
@@ -25,8 +24,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.MOB_CAPTURER, pos, state) {
-    private lateinit var inputSlot: HTItemSlot.Mutable
-    private lateinit var outputSlots: List<HTItemSlot>
+    private lateinit var inputSlot: HTItemStackSlot
+    private lateinit var outputSlots: List<HTItemStackSlot>
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
@@ -64,14 +63,14 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         // それぞれのエンティティについて捕獲を行う
         for (entity: LivingEntity in entities) {
             val eggStack: ItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
-            for (slot: HTItemSlot in outputSlots) {
+            for (slot: HTItemStackSlot in outputSlots) {
                 if (slot.insertItem(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty) {
                     // スポーンエッグをスロットに入れる
                     slot.insertItem(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     // 対象を消す
                     entity.discard()
                     // Capture Eggを減らす
-                    inputSlot.shrinkStack(1, HTStorageAction.EXECUTE)
+                    inputSlot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     return true
                 }
             }

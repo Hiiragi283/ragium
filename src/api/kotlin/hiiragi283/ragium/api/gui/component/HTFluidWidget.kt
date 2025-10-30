@@ -9,8 +9,10 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 interface HTFluidWidget :
-    HTStackView.Mutable<ImmutableFluidStack>,
+    HTStackView<ImmutableFluidStack>,
     HTWidget {
+    fun setStack(stack: ImmutableFluidStack?)
+
     companion object {
         @JvmField
         val TANK_ID: ResourceLocation = RagiumAPI.id("textures/gui/tank.png")
