@@ -2,7 +2,6 @@ package hiiragi283.ragium.api
 
 import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.asKotlinRandom
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
@@ -23,7 +22,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
@@ -36,7 +34,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
-import kotlin.random.Random
 
 interface RagiumPlatform {
     companion object {
@@ -51,11 +48,6 @@ interface RagiumPlatform {
     fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag>
 
     fun getBaseVariant(material: HTMaterialType): HTMaterialVariant.ItemTag? = getMaterialMap()[material]
-
-    /**
-     * @see [asKotlinRandom]
-     */
-    fun wrapRandom(random: RandomSource): Random
 
     //    Item    //
 

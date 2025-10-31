@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.recipe.result
 
-import net.minecraft.world.item.ItemStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 
 /**
- * [ItemStack]向けの[HTRecipeResult]の実装
+ * [ImmutableItemStack]向けの[HTRecipeResult]の実装
  */
-interface HTItemResult : HTRecipeResult<ItemStack> {
+interface HTItemResult : HTRecipeResult<ImmutableItemStack> {
     fun copyWithCount(count: Int): HTItemResult
 }

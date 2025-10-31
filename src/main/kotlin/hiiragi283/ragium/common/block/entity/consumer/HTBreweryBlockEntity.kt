@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -52,7 +53,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 .let(::listOf)
         }
 
-        override fun getRequiredCount(stack: ItemStack): Int = 1
+        override fun getRequiredCount(stack: ImmutableItemStack): Int = 1
 
         override fun test(input: SingleRecipeInput): Boolean = !findFirstPotion(input.item()).isEmpty
 
@@ -64,8 +65,8 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun isIncomplete(): Boolean = false
 
-        override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
-            getResultItems(input).getOrNull(0)?.getStackOrNull(registries) ?: ItemStack.EMPTY
+        override fun assembleItem(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
+            getResultItems(input).getOrNull(0)?.getStackOrNull(registries)
 
         override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
 

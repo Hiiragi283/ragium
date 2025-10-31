@@ -20,7 +20,6 @@ import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeType
-import hiiragi283.ragium.impl.util.RandomSourceWrapper
 import hiiragi283.ragium.impl.value.HTJsonValueInput
 import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
@@ -32,7 +31,6 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.RandomSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
@@ -42,7 +40,6 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
-import kotlin.random.Random
 
 class RagiumPlatformImpl : RagiumPlatform {
     //    Addon    //
@@ -128,10 +125,6 @@ class RagiumPlatformImpl : RagiumPlatform {
         consumer(RagiumMaterialType.COAL_COKE, HTItemMaterialVariant.FUEL)
         consumer(RagiumMaterialType.PLASTIC, HTItemMaterialVariant.PLATE)
     }
-
-    //    Collection    //
-
-    override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
 
     //    Item    //
 

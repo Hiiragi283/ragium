@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
-import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -19,6 +18,7 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
@@ -86,7 +86,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
                 if (stack == null) return@interact
                 val remainder: ImmutableItemStack =
                     outputSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) ?: return@interact
-                dropStackAt(level, pos, remainder.stack)
+                HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
         )
         return false
@@ -107,12 +107,12 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         ) {
         val isCreative: Boolean = tier == HTDrumTier.CREATIVE
 
-        override fun insert(stack: ImmutableFluidStack, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
+        override fun insert(stack: ImmutableFluidStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
             var remainder: ImmutableFluidStack?
             if (isCreative && this.getStack() == null && action.execute && access != HTStorageAccess.EXTERNAL) {
                 remainder = super.insert(stack, HTStorageAction.SIMULATE, access)
                 if (remainder == null) {
-                    setStackUnchecked(stack.copyWithAmount(getCapacity()))
+                    setStackUnchecked(stack?.copyWithAmount(getCapacity()))
                 }
             } else {
                 remainder = super.insert(stack, action.combine(isCreative), access)

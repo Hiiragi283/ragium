@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
+import hiiragi283.ragium.api.stack.ImmutableStack
 import java.util.function.Predicate
 
 /**
@@ -9,7 +10,7 @@ import java.util.function.Predicate
  * @see [HTFluidIngredient]
  * @see [mekanism.api.recipes.ingredients.InputIngredient]
  */
-interface HTIngredient<STACK : Any> : Predicate<STACK> {
+interface HTIngredient<STACK : ImmutableStack<*, STACK>> : Predicate<STACK> {
     /**
      * 指定された[stack]が条件を満たしているか判定します。
      */

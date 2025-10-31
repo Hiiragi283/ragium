@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.extension.getTypedBlockEntity
-import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -12,6 +11,7 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTPlayerHandSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -78,7 +78,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
             1
         }
         val extracted: ImmutableItemStack? = slot.extract(toExtract, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        giveStackTo(player, extracted?.stack)
+        HTItemDropHelper.giveStackTo(player, extracted)
     }
 
     /*override fun appendHoverText(

@@ -13,6 +13,8 @@ import net.neoforged.neoforge.fluids.FluidType
 
 fun FluidStack.toImmutable(): ImmutableFluidStack? = ImmutableFluidStack.of(this)
 
+fun FluidStack.toImmutableOrThrow(): ImmutableFluidStack = this.toImmutable() ?: error("FluidStack must not be empty")
+
 fun ImmutableFluidStack.isOf(fluid: Fluid): Boolean = this.stack.`is`(fluid)
 
 fun ImmutableFluidStack.isOf(tagKey: TagKey<Fluid>): Boolean = this.stack.`is`(tagKey)

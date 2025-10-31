@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -8,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -30,7 +30,7 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
                 slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             }
             if (result != stackIn && livingEntity is Player) {
-                giveStackTo(livingEntity, result)
+                HTItemDropHelper.giveStackTo(livingEntity, result)
             }
             return stack
         }

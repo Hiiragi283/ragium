@@ -27,17 +27,12 @@ value class ImmutableFluidStack private constructor(val stack: FluidStack) : Imm
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
             VanillaBiCodecs.FLUID_STACK.comapFlatMap(
-                { stack: FluidStack ->
-                    when (val immutable: ImmutableFluidStack? = stack.toImmutable()) {
-                        null -> Result.failure(error("FluidStack must not be empty"))
-                        else -> Result.success(immutable)
-                    }
-                },
+                { stack: FluidStack -> runCatching(stack::toImmutableOrThrow) },
                 ImmutableFluidStack::stack,
             )
 
         @JvmStatic
-        fun of(fluid: Fluid, amount: Int): ImmutableFluidStack = of(FluidStack(fluid, amount)) ?: error("FluidStack must not be empty")
+        fun of(fluid: Fluid, amount: Int): ImmutableFluidStack = FluidStack(fluid, amount).toImmutableOrThrow()
 
         /**
          * [FluidStack]を[ImmutableFluidStack]に変換します。

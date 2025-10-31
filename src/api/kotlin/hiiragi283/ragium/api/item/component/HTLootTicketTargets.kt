@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
+import hiiragi283.ragium.api.collection.randomOrNull
 import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -10,10 +11,10 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.storage.loot.LootTable
-import kotlin.random.Random
 
 @ConsistentCopyVisibility
 data class HTLootTicketTargets private constructor(private val lootTables: List<ResourceKey<LootTable>>) : HTTooltipProvider {
@@ -35,7 +36,7 @@ data class HTLootTicketTargets private constructor(private val lootTables: List<
         fun create(vararg lootTables: ResourceKey<LootTable>): HTLootTicketTargets = create(lootTables.toList())
     }
 
-    fun getRandomLoot(random: Random): ResourceKey<LootTable>? = lootTables.randomOrNull(random)
+    fun getRandomLoot(random: RandomSource): ResourceKey<LootTable>? = lootTables.randomOrNull(random)
 
     override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
         lootTables

@@ -25,11 +25,11 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<Sin
                 override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> =
                     Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
 
-                override fun test(stack: ItemStack): Boolean = ingredient.test(stack)
+                override fun test(stack: ImmutableItemStack): Boolean = ingredient.test(stack.stack)
 
-                override fun testOnlyType(stack: ItemStack): Boolean = ingredient.test(stack)
+                override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.stack)
 
-                override fun getRequiredAmount(stack: ItemStack): Int = if (test(stack)) 1 else 0
+                override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (test(stack)) 1 else 0
 
                 override fun hasNoMatchingStacks(): Boolean = ingredient.hasNoItems()
             },

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -59,7 +58,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -69,7 +68,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe.ingredient, HTStorageAction.EXECUTE)
         // SEを鳴らす

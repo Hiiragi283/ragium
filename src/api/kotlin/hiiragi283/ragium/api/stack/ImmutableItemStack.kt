@@ -34,17 +34,12 @@ value class ImmutableItemStack private constructor(val stack: ItemStack) : Immut
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
             ITEM_STACK_CODEC.comapFlatMap(
-                { stack: ItemStack ->
-                    when (val immutable: ImmutableItemStack? = stack.toImmutable()) {
-                        null -> Result.failure(error("ItemStack must not be empty"))
-                        else -> Result.success(immutable)
-                    }
-                },
+                { stack: ItemStack -> runCatching(stack::toImmutableOrThrow) },
                 ImmutableItemStack::stack,
             )
 
         @JvmStatic
-        fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = of(ItemStack(item, count)) ?: error("ItemStack must not be empty")
+        fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = ItemStack(item, count).toImmutableOrThrow()
 
         /**
          * [ItemStack]を[ImmutableItemStack]に変換します。

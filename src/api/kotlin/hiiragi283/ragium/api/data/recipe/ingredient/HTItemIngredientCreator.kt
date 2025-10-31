@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
 /**
+ * [HTItemIngredient]を返す[HTIngredientCreator]の拡張インターフェース
  * @see mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
  */
 interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> {

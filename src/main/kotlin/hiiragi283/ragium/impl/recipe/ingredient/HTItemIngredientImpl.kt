@@ -7,16 +7,16 @@ import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.isOf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 
 internal class HTItemIngredientImpl(holderSet: HolderSet<Item>, amount: Int = 1) :
-    HTIngredientBase<Item, ItemStack>(holderSet, amount),
+    HTIngredientBase<Item, ImmutableItemStack>(holderSet, amount),
     HTItemIngredient {
     companion object {
         @JvmStatic
@@ -58,7 +58,7 @@ internal class HTItemIngredientImpl(holderSet: HolderSet<Item>, amount: Int = 1)
         },
     )
 
-    override fun test(stack: ItemStack): Boolean = testOnlyType(stack) && stack.count >= this.amount
+    override fun test(stack: ImmutableItemStack): Boolean = testOnlyType(stack) && stack.amount() >= this.amount
 
-    override fun testOnlyType(stack: ItemStack): Boolean = stack.`is`(holderSet)
+    override fun testOnlyType(stack: ImmutableItemStack): Boolean = stack.isOf(holderSet)
 }

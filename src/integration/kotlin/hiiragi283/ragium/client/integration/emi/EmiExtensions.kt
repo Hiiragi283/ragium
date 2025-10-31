@@ -52,9 +52,9 @@ fun TagKey<*>.toEmi(amount: Int = 1): EmiIngredient = EmiIngredient
     ?: createErrorStack("Empty Tag: ${this.location}")
 
 // Result
-fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(ItemStack::toEmi, ::createErrorStack)
+fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableItemStack::toEmi, ::createErrorStack)
 
-fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).fold(FluidStack::toEmi, ::createErrorStack)
+fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableFluidStack::toEmi, ::createErrorStack)
 
 // Fluid Content
 fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(this.get())

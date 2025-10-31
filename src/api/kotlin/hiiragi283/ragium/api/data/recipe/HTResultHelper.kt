@@ -4,8 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -19,7 +22,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Supplier
 
 /**
- * 各種[hiiragi283.ragium.api.recipe.result.HTRecipeResult]を生成するヘルパー
+ * 各種[HTRecipeResult]を生成するヘルパー
  */
 interface HTResultHelper {
     companion object {
@@ -41,13 +44,19 @@ interface HTResultHelper {
      * @param item アイテムのインスタンス
      * @param count アイテムの量
      */
-    fun item(item: ItemLike, count: Int = 1): HTItemResult = item(ItemStack(item, count))
+    fun item(item: ItemLike, count: Int = 1): HTItemResult = item(ImmutableItemStack.of(item, count))
 
     /**
      * 指定した引数から[HTItemResult]を返します。
      * @param stack ベースとなる[ItemStack]
      */
-    fun item(stack: ItemStack): HTItemResult = item(stack.itemHolder.idOrThrow, stack.count, stack.componentsPatch)
+    fun item(stack: ItemStack): HTItemResult = item(stack.toImmutableOrThrow())
+
+    /**
+     * 指定した引数から[HTItemResult]を返します。
+     * @param stack ベースとなる[ImmutableItemStack]
+     */
+    fun item(stack: ImmutableItemStack): HTItemResult = item(stack.getId(), stack.amount(), stack.componentsPatch())
 
     /**
      * 指定した引数から[HTItemResult]を返します。
@@ -84,13 +93,19 @@ interface HTResultHelper {
      * @param fluid 液体のインスタンス
      * @param amount　液体の量
      */
-    fun fluid(fluid: Fluid, amount: Int): HTFluidResult = fluid(FluidStack(fluid, amount))
+    fun fluid(fluid: Fluid, amount: Int): HTFluidResult = fluid(ImmutableFluidStack.of(fluid, amount))
 
     /**
      * 指定した引数から[HTFluidResult]を返します。
      * @param stack ベースとなる[FluidStack]
      */
-    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.fluidHolder.idOrThrow, stack.amount, stack.componentsPatch)
+    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.toImmutableOrThrow())
+
+    /**
+     * 指定した引数から[HTFluidResult]を返します。
+     * @param stack ベースとなる[ImmutableFluidStack]
+     */
+    fun fluid(stack: ImmutableFluidStack): HTFluidResult = fluid(stack.getId(), stack.amount(), stack.componentsPatch())
 
     /**
      * 指定した引数から[HTFluidResult]を返します。

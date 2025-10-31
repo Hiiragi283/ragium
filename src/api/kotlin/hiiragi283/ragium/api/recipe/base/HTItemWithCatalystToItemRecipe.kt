@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
@@ -22,7 +23,7 @@ interface HTItemWithCatalystToItemRecipe : HTMultiItemToObjRecipe {
         return bool1 && bool2
     }
 
-    override fun assemble(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ItemStack =
+    override fun assembleItem(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
         getItemResult(input, registries, result)
 
     override fun isIncomplete(): Boolean {

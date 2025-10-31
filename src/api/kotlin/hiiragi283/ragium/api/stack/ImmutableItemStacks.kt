@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack
 
 fun ItemStack.toImmutable(): ImmutableItemStack? = ImmutableItemStack.of(this)
 
+fun ItemStack.toImmutableOrThrow(): ImmutableItemStack = this.toImmutable() ?: error("ItemStack must not be empty")
+
 fun ImmutableItemStack.isOf(item: Item): Boolean = this.stack.`is`(item)
 
 fun ImmutableItemStack.isOf(tagKey: TagKey<Item>): Boolean = this.stack.`is`(tagKey)

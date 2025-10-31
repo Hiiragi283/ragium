@@ -2,9 +2,10 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
-import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -131,10 +132,10 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * ブロックが破壊されたときにインベントリの中身をドロップします。
      */
-    open fun dropInventory(consumer: Consumer<ItemStack>) {}
+    open fun dropInventory(consumer: Consumer<ImmutableItemStack>) {}
 
     open fun onRemove(level: Level, pos: BlockPos) {
-        dropInventory { stack: ItemStack -> dropStackAt(level, pos, stack) }
+        dropInventory { stack: ImmutableItemStack -> HTItemDropHelper.dropStackAt(level, pos, stack) }
     }
 
     /**

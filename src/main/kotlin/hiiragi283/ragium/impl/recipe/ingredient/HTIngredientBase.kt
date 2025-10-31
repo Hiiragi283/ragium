@@ -1,10 +1,13 @@
 package hiiragi283.ragium.impl.recipe.ingredient
 
 import hiiragi283.ragium.api.recipe.ingredient.HTIngredient
+import hiiragi283.ragium.api.stack.ImmutableStack
 import net.minecraft.core.HolderSet
 
-abstract class HTIngredientBase<TYPE : Any, STACK : Any>(protected val holderSet: HolderSet<TYPE>, protected val amount: Int) :
-    HTIngredient<STACK> {
+abstract class HTIngredientBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>>(
+    protected val holderSet: HolderSet<TYPE>,
+    protected val amount: Int,
+) : HTIngredient<STACK> {
     init {
         require(amount >= 1)
     }

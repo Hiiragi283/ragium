@@ -9,6 +9,10 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
+/**
+ * [EntityBlock]の拡張インターフェース
+ * @see mekanism.common.block.interfaces.IHasTileEntity
+ */
 interface HTBlockWithEntity : EntityBlock {
     fun getBlockEntityType(): HTDeferredBlockEntityType<*>
 

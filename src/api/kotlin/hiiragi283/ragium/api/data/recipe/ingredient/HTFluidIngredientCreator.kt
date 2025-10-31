@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.world.level.material.Fluid
 
 /**
+ * [HTFluidIngredient]を返す[HTIngredientCreator]の拡張インターフェース
  * @see mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
  */
 interface HTFluidIngredientCreator : HTIngredientCreator<Fluid, HTFluidIngredient> {

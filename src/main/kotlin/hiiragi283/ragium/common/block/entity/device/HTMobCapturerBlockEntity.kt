@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
@@ -20,7 +19,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.MOB_CAPTURER, pos, state) {
@@ -62,11 +60,11 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         if (entities.isEmpty()) return false
         // それぞれのエンティティについて捕獲を行う
         for (entity: LivingEntity in entities) {
-            val eggStack: ItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
+            val eggStack: ImmutableItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
             for (slot: HTItemStackSlot in outputSlots) {
-                if (slot.insertItem(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty) {
+                if (slot.insert(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) {
                     // スポーンエッグをスロットに入れる
-                    slot.insertItem(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                    slot.insert(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                     // 対象を消す
                     entity.discard()
                     // Capture Eggを減らす

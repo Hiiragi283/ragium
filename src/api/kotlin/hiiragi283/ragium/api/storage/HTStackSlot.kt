@@ -26,7 +26,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬入されなかった[STACK]
      */
-    fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK?
+    fun insert(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK?
 
     /**
      * 指定された引数から[STACK]を搬出します。
@@ -35,7 +35,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK?
+    fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK?
 
     /**
      * 指定された引数から[STACK]を搬出します。
@@ -82,7 +82,8 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          * @see mekanism.common.inventory.slot.BasicInventorySlot.insertItem
          * @see mekanism.common.capabilities.fluid.BasicFluidTank.insert
          */
-        override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? {
+        override fun insert(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? {
+            if (stack == null) return null
             val needed: Int = getNeeded(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
@@ -103,7 +104,8 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             return stack
         }
 
-        final override fun extract(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
+        final override fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
+            stack == null -> null
             this.getStack() != null && isSameStack(stack) -> extract(stack.amount(), action, access)
             else -> null
         }

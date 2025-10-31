@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
@@ -22,7 +21,6 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -70,8 +68,8 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
 
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
-        for (stackIn: ItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
-            if (HTStackSlotHelper.insertStacks(outputSlots, stackIn.toImmutable(), HTStorageAction.SIMULATE) != null) {
+        for (stackIn: ImmutableItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
+            if (HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.SIMULATE) != null) {
                 return false
             }
         }
@@ -88,7 +86,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         // 実際にアウトプットに搬出する
         for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
             if (chance > level.random.nextFloat()) {
-                val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess())?.toImmutable() ?: continue
+                val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
                 HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
             }
         }

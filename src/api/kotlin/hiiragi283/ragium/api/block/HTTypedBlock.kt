@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.state.StateDefinition
 import java.util.function.UnaryOperator
 
 /**
+ * [HTBlockWithType]を実装した[Block]の拡張クラス
+ * @param TYPE このブロックのタイプのクラス
  * @see mekanism.common.block.prefab.BlockBase
  */
 open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties: Properties) :
@@ -26,6 +28,7 @@ open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties
         private lateinit var cacheType: HTBlockType
 
         /**
+         * [BlockState]の初期化は[HTTypedBlock.type]が初期化される前に行われてしまうため，一度[cacheType]に保存することで回避する。
          * @see mekanism.common.block.prefab.BlockBase.hack
          */
         @JvmStatic

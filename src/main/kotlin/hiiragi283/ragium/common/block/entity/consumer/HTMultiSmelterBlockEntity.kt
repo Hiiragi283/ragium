@@ -4,11 +4,12 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.createCache
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
-import hiiragi283.ragium.api.storage.item.insertItem
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
@@ -107,7 +108,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRecipeTime(recipe: MultiSmeltingRecipe): Int = recipe.recipe.cookingTime
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: MultiSmeltingRecipe): Boolean =
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -117,7 +118,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: MultiSmeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insertItem(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // SEを鳴らす
@@ -126,11 +127,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     @JvmRecord
     data class MultiSmeltingRecipe(val recipe: AbstractCookingRecipe, val count: Int) : HTItemIngredient.CountGetter {
-        fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack =
-            recipe.assemble(input, registries).copyWithCount(count)
+        fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
+            recipe.assemble(input, registries).toImmutable()?.copyWithAmount(count)
 
-        override fun getRequiredCount(stack: ItemStack): Int = when {
-            recipe.ingredients[0].test(stack) -> count
+        override fun getRequiredCount(stack: ImmutableItemStack): Int = when {
+            recipe.ingredients[0].test(stack.stack) -> count
             else -> 0
         }
     }

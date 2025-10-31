@@ -7,16 +7,16 @@ import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.isOf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.fluids.FluidStack
 
 internal class HTFluidIngredientImpl(holderSet: HolderSet<Fluid>, amount: Int) :
-    HTIngredientBase<Fluid, FluidStack>(holderSet, amount),
+    HTIngredientBase<Fluid, ImmutableFluidStack>(holderSet, amount),
     HTFluidIngredient {
     companion object {
         @JvmField
@@ -42,7 +42,7 @@ internal class HTFluidIngredientImpl(holderSet: HolderSet<Fluid>, amount: Int) :
         },
     )
 
-    override fun test(stack: FluidStack): Boolean = testOnlyType(stack) && stack.amount >= this.amount
+    override fun test(stack: ImmutableFluidStack): Boolean = testOnlyType(stack) && stack.amount() >= this.amount
 
-    override fun testOnlyType(stack: FluidStack): Boolean = stack.`is`(holderSet)
+    override fun testOnlyType(stack: ImmutableFluidStack): Boolean = stack.isOf(holderSet)
 }

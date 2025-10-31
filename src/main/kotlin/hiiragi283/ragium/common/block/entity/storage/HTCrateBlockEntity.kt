@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Consumer
@@ -46,7 +45,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         return builder.build()
     }
 
-    override fun dropInventory(consumer: Consumer<ItemStack>) {}
+    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {}
 
     //    Save & Read    //
 

@@ -4,14 +4,13 @@ import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Consumer
@@ -33,9 +32,9 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         this.isActive = input.getBoolean("is_active", false)
     }
 
-    override fun dropInventory(consumer: Consumer<ItemStack>) {
+    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {
         super.dropInventory(consumer)
-        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
+        upgradeHandler.getItemSlots(upgradeHandler.getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
     }
 
     //    Ticking    //

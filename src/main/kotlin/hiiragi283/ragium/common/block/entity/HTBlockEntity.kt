@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
@@ -16,7 +17,6 @@ import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
@@ -35,7 +35,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -223,9 +222,9 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    override fun dropInventory(consumer: Consumer<ItemStack>) {
+    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {
         super.dropInventory(consumer)
-        getItemSlots(getItemSideFor()).map(HTItemSlot::getItemStack).forEach(consumer)
+        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
     }
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTItemCapabilities, direction)

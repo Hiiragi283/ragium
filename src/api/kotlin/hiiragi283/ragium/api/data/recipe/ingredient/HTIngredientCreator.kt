@@ -8,6 +8,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 
 /**
+ * [HTIngredient]を作成するヘルパーのインターフェース
+ * @param TYPE タイプのクラス
+ * @param INGREDIENT [HTIngredient]の実装
  * @see mekanism.api.recipes.ingredients.creator.IIngredientCreator
  */
 interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<*>> {

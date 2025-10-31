@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -63,12 +62,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean = outputTank
-        .insertFluid(
-            recipe.assembleFluid(input, level.registryAccess()),
-            HTStorageAction.SIMULATE,
-            HTStorageAccess.INTERNAL,
-        ).isEmpty
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -78,7 +73,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSingleInputFluidRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputTank.insertFluid(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         val stack: ItemStack = input.item()
         if (stack.hasCraftingRemainingItem()) {
             outputSlot.insertItem(stack.craftingRemainingItem, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

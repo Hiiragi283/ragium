@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.api.storage.item.insertItem
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -33,10 +32,12 @@ open class HTContainerItemSlot(
     }
 
     override fun mayPlace(stack: ItemStack): Boolean {
-        if (stack.isEmpty) return false
-        if (slot.getStack() == null) return slot.insertItem(stack, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL).count < stack.count
-        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) == null) return false
         val immutable: ImmutableItemStack = stack.toImmutable() ?: return false
+        if (slot.getStack() == null) {
+            val remainder: Int = slot.insert(immutable, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)?.amount() ?: 0
+            return remainder < stack.count
+        }
+        if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) == null) return false
         return manualFilter(immutable, HTStorageAccess.MANUAL)
     }
 

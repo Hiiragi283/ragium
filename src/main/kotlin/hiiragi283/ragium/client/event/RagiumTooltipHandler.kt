@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.event
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
@@ -46,7 +46,7 @@ object RagiumTooltipHandler {
 
     @JvmStatic
     private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        if (stack.itemHolder.idOrThrow.namespace == RagiumAPI.MOD_ID) {
+        if (stack.toImmutable()?.getId()?.namespace == RagiumAPI.MOD_ID) {
             val text: Component = RagiumTranslation.getTooltipText(stack) ?: return
             if (flag.hasShiftDown()) {
                 consumer(text)
