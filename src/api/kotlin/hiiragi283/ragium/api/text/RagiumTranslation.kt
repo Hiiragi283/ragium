@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.util.ItemStackMap
 
 /**
- * @see [mekanism.api.text.APILang]
+ * @see mekanism.api.text.APILang
  */
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Azure Upgrade
@@ -59,7 +59,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
         private val tooltipCache: MutableMap<ItemStack, String> = ItemStackMap.createTypeAndTagMap<String>()
 
         /**
-         * @see [ICustomTooltipName.getTranslationKey]
+         * @see ICustomTooltipName.getTranslationKey
          */
         @JvmStatic
         fun getTooltipKey(stack: ItemStack): String =

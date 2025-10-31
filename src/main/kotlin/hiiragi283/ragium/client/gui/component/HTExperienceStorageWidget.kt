@@ -76,7 +76,7 @@ class HTExperienceStorageWidget(
 
     override fun getSprite(): TextureAtlasSprite? = getSprite(vanillaId("block", "water_still"), InventoryMenu.BLOCK_ATLAS)
 
-    override fun getColor(): Int = 0x66ff3300
+    override fun getColor(): Int = 0x66ff33
 
     override fun getLevel(): Float = 1f
 

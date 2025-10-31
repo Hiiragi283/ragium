@@ -80,13 +80,13 @@ interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : Immuta
 
     // HTItemStorageStack
 
-    fun getCapabilityViews(stack: ImmutableItemStack): List<HTStackView<STACK>> = getCapabilityViews(stack.stack)
+    fun getCapabilityViews(stack: ImmutableItemStack?): List<HTStackView<STACK>> = getCapability(stack)?.let { apply(it, null) } ?: listOf()
 
-    fun getCapabilityView(stack: ImmutableItemStack, index: Int): HTStackView<STACK>? = getCapabilityView(stack.stack, index)
+    fun getCapabilityView(stack: ImmutableItemStack?, index: Int): HTStackView<STACK>? = getCapabilityViews(stack).getOrNull(index)
 
-    fun getCapabilityStacks(stack: ImmutableItemStack): List<STACK?> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
+    fun getCapabilityStacks(stack: ImmutableItemStack?): List<STACK?> = getCapabilityViews(stack).map(HTStackView<STACK>::getStack)
 
-    fun getCapabilityStack(stack: ImmutableItemStack, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
+    fun getCapabilityStack(stack: ImmutableItemStack?, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
 
     interface Simple<HANDLER : Any, STACK : ImmutableStack<*, STACK>> : HTViewCapability<HANDLER, HANDLER, STACK>
 }

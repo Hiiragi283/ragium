@@ -28,7 +28,7 @@ open class HTComponentExperienceStorage(private val parent: ItemStack, private v
         if (amount == 0L) {
             if (parent.getOrDefault(component, 0) == 0L) return
             parent.remove(component)
-        } else if (!validate) {
+        } else if (!validate || amount > 0) {
             parent.set(component, min(amount, getCapacity()))
         } else {
             error("Invalid amount for storage: $amount")

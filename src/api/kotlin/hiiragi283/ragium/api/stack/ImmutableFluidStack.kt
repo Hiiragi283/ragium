@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.stack
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
@@ -8,6 +9,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
 /**
  * [FluidStack]向けの[ImmutableStack]の実装
@@ -16,8 +18,15 @@ import net.neoforged.neoforge.fluids.FluidStack
 value class ImmutableFluidStack private constructor(val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
     companion object {
         @JvmField
+        val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> =
+            VanillaBiCodecs.FLUID_STACK_NON_EMPTY.xmap(
+                { stack: FluidStack -> Optional.ofNullable(stack.toImmutable()) },
+                { optional: Optional<ImmutableFluidStack> -> optional.map(ImmutableFluidStack::stack).orElse(FluidStack.EMPTY) },
+            )
+
+        @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableFluidStack> =
-            BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC).comapFlatMap(
+            VanillaBiCodecs.FLUID_STACK.comapFlatMap(
                 { stack: FluidStack ->
                     when (val immutable: ImmutableFluidStack? = stack.toImmutable()) {
                         null -> Result.failure(error("FluidStack must not be empty"))

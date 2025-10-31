@@ -64,7 +64,7 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
     fun hasCapability(stack: IItemStackExtension): Boolean = getCapability(stack) != null
 
     // HTItemStorageStack
-    fun getCapability(stack: ImmutableItemStack): ITEM_HANDLER? = getCapability(stack.stack)
+    fun getCapability(stack: ImmutableItemStack?): ITEM_HANDLER? = stack?.stack?.let(::getCapability)
 
     fun hasCapability(stack: ImmutableItemStack): Boolean = hasCapability(stack.stack)
 

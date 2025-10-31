@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import java.util.function.IntFunction
 import java.util.function.Predicate
 import java.util.function.ToIntFunction
@@ -59,7 +59,17 @@ class HTFluidFuelItemStackSlot private constructor(
     fun fillOrBurn(moveTo: HTItemSlot) {
         val stack: ImmutableItemStack = this.getStack() ?: return
         val needed: Int = tank.getNeeded(tank.getStack())
-        if (needed > 0 && !HTFluidItemSlot.moveFluid(tank, this, moveTo)) {
+        val fluidInteracted: Boolean = HTStackSlotHelper.interact(
+            this,
+            this::setStackUnchecked,
+            this.tank,
+            { stack: ImmutableItemStack? ->
+                if (stack == null) return@interact
+                moveTo.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            },
+            HTStorageAccess.MANUAL,
+        )
+        if (needed > 0 && !fluidInteracted) {
             val amount: Int = stackToAmount.applyAsInt(stack)
             if (amount in 1..needed) {
                 val hasContainer: Boolean = stack.hasCraftingRemainingItem()
@@ -69,7 +79,7 @@ class HTFluidFuelItemStackSlot private constructor(
                 if (hasContainer) {
                     setStack(stack.getCraftingRemainingItem())
                 } else {
-                    extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                    shrinkAmount(stack, 1)
                 }
             }
         }

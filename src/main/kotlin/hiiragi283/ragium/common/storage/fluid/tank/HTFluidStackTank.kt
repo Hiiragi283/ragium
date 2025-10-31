@@ -66,17 +66,17 @@ open class HTFluidStackTank protected constructor(
     @JvmField
     protected var stack: FluidStack = FluidStack.EMPTY
 
-    override fun getStack(): ImmutableFluidStack? = stack.toImmutable()
+    override fun getStack(): ImmutableFluidStack? = this.stack.toImmutable()
 
-    override fun getCapacity(stack: ImmutableFluidStack?): Int = capacity
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = this.capacity
 
-    final override fun isValid(stack: ImmutableFluidStack): Boolean = filter.test(stack)
+    final override fun isValid(stack: ImmutableFluidStack): Boolean = this.filter.test(stack)
 
     final override fun isStackValidForInsert(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
-        super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
+        super.isStackValidForInsert(stack, access) && this.canInsert.test(stack, access)
 
     final override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
-        super.canStackExtract(stack, access) && canExtract.test(stack, access)
+        super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, getStack())
@@ -106,7 +106,7 @@ open class HTFluidStackTank protected constructor(
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableFluidStack, amount: Int) {
+    override fun updateAmount(stack: ImmutableFluidStack, amount: Int) {
         this.stack.amount = amount
     }
 }

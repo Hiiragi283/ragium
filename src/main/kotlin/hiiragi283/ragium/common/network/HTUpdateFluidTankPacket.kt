@@ -31,7 +31,7 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
                 HTUpdateFluidTankPacket::pos,
                 ByteBufCodecs.VAR_INT,
                 HTUpdateFluidTankPacket::index,
-                ImmutableFluidStack.CODEC.toOptional().streamCodec,
+                ImmutableFluidStack.OPTIONAL_CODEC.streamCodec,
                 HTUpdateFluidTankPacket::stack,
                 ::HTUpdateFluidTankPacket,
             )

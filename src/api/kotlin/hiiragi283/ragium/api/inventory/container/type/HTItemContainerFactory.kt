@@ -10,7 +10,7 @@ import net.neoforged.api.distmarker.Dist
 
 /**
  * [InteractionHand]と[ItemStack]を引数にとる[MenuConstructor]の代替インターフェース
- * @see [mekanism.common.inventory.container.type.MekanismItemContainerType.IMekanismItemContainerFactory]
+ * @see mekanism.common.inventory.container.type.MekanismItemContainerType.IMekanismItemContainerFactory
  */
 fun interface HTItemContainerFactory<MENU : AbstractContainerMenu> {
     fun create(

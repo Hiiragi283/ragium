@@ -26,7 +26,7 @@ open class HTComponentEnergyStorage(private val parent: ItemStack, private val c
         if (amount == 0) {
             if (parent.getOrDefault(component, 0) == 0) return
             parent.remove(component)
-        } else if (!validate) {
+        } else if (!validate || amount > 0) {
             parent.set(component, min(amount, getCapacity()))
         } else {
             error("Invalid amount for storage: $amount")

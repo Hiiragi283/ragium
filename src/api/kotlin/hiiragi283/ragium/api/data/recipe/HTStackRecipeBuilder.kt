@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Recipe
 
 /**
  * 単一の[ItemStack]を完成品にとるレシピのための[HTRecipeBuilder]の拡張クラス
- * @see [Single]
+ * @see HTStackRecipeBuilder.Single
  */
 abstract class HTStackRecipeBuilder<BUILDER : HTStackRecipeBuilder<BUILDER>>(prefix: String, protected val stack: ImmutableItemStack) :
     HTRecipeBuilder.Prefixed(prefix) {

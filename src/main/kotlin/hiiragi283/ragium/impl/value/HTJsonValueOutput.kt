@@ -21,6 +21,8 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
             .onSuccess { jsonObject.add(key, it) }
     }
 
+    override fun isEmpty(): Boolean = jsonObject.isEmpty
+
     override fun putBoolean(key: String, value: Boolean) {
         jsonObject.addProperty(key, value)
     }

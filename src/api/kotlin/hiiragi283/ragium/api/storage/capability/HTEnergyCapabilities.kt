@@ -29,7 +29,7 @@ object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
 
     fun getStorage(stack: IItemStackExtension): HTEnergyStorage? = this.getCapability(stack)?.let(::wrapStorage)
 
-    fun getStorage(stack: ImmutableItemStack): HTEnergyStorage? = this.getStorage(stack.stack)
+    fun getStorage(stack: ImmutableItemStack?): HTEnergyStorage? = stack?.stack?.let(this::getStorage)
 
     private fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
         is HTEnergyStorage -> storage

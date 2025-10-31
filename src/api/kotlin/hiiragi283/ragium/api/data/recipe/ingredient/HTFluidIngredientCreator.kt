@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.world.level.material.Fluid
 
 /**
- * @see [mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator]
+ * @see mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
  */
 interface HTFluidIngredientCreator : HTIngredientCreator<Fluid, HTFluidIngredient> {
     fun fromContent(content: HTFluidContent<*, *, *>, amount: Int): HTFluidIngredient = fromTagKey(content.commonTag, amount)

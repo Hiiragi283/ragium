@@ -37,11 +37,11 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
         } else if (!validate || isValid(stack)) {
             player.setItemInHand(hand, stack.copy().stack)
         } else {
-            error("Invalid stack for slot: $stack ${stack.componentsPatch()}")
+            error("Invalid stack for hand: $stack ${stack.componentsPatch()}")
         }
     }
 
-    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+    override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
         if (isSameStack(stack)) {
             player.getItemInHand(hand).count = amount
         }

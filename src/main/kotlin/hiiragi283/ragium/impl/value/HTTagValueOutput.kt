@@ -21,6 +21,8 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
             .onSuccess { compoundTag.put(key, it) }
     }
 
+    override fun isEmpty(): Boolean = compoundTag.isEmpty
+
     override fun putBoolean(key: String, value: Boolean) {
         compoundTag.putBoolean(key, value)
     }

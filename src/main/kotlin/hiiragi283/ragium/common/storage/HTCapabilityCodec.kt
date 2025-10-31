@@ -53,6 +53,10 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         containers.forEachIndexed { slot: Int, container: CONTAINER ->
             val output: HTValueOutput = list.addChild()
             container.serialize(output)
+            if (output.isEmpty()) {
+                list.discardLast()
+                return@forEachIndexed
+            }
             output.putInt(containerKey, slot)
         }
     }

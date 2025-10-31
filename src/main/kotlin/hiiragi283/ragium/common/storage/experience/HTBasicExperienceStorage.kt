@@ -45,7 +45,7 @@ open class HTBasicExperienceStorage(
         if (amount == 0L) {
             if (this.amount == 0L) return
             this.amount = 0
-        } else if (!validate) {
+        } else if (!validate || amount > 0) {
             this.amount = min(amount, getCapacity())
         } else {
             error("Invalid amount for storage: $amount")

@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.insertFluid
-import hiiragi283.ragium.api.storage.item.HTFluidItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
@@ -18,6 +17,8 @@ import java.util.function.Predicate
 
 /**
  * @see mekanism.common.inventory.slot.FluidInventorySlot
+ * @see mekanism.common.inventory.slot.IFluidHandlerSlot
+ * @see me.desht.pneumaticcraft.common.block.entity.AbstractPneumaticCraftBlockEntity.processFluidItem
  */
 open class HTFluidItemStackSlot protected constructor(
     protected val tank: HTFluidTank,
@@ -35,8 +36,7 @@ open class HTFluidItemStackSlot protected constructor(
         x,
         y,
         HTContainerItemSlot.Type.BOTH,
-    ),
-    HTFluidItemSlot {
+    ) {
     companion object {
         @JvmStatic
         fun fillPredicate(tank: HTFluidTank): Predicate<ImmutableItemStack> = Predicate { stack: ImmutableItemStack ->
@@ -83,6 +83,4 @@ open class HTFluidItemStackSlot protected constructor(
             canInsert: Predicate<ImmutableItemStack>,
         ): HTFluidItemStackSlot = HTFluidItemStackSlot(tank, canExtract, canInsert, listener, x, y)
     }
-
-    final override fun getFluidTank(): HTFluidTank = tank
 }

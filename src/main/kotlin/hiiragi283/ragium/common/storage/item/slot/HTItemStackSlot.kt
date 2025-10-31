@@ -101,19 +101,19 @@ open class HTItemStackSlot protected constructor(
     @JvmField
     protected var stack: ItemStack = ItemStack.EMPTY
 
-    override fun getStack(): ImmutableItemStack? = stack.toImmutable()
+    override fun getStack(): ImmutableItemStack? = this.stack.toImmutable()
 
-    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack, limit)
+    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack, this.limit)
 
-    final override fun isValid(stack: ImmutableItemStack): Boolean = filter.test(stack)
+    final override fun isValid(stack: ImmutableItemStack): Boolean = this.filter.test(stack)
 
     final override fun isStackValidForInsert(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
-        super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
+        super.isStackValidForInsert(stack, access) && this.canInsert.test(stack, access)
 
     final override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
-        super.canStackExtract(stack, access) && canExtract.test(stack, access)
+        super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, slotType)
+    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, this.slotType)
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())
@@ -124,7 +124,7 @@ open class HTItemStackSlot protected constructor(
     }
 
     final override fun onContentsChanged() {
-        listener?.onContentsChanged()
+        this.listener?.onContentsChanged()
     }
 
     override fun setStack(stack: ImmutableItemStack?) {
@@ -143,7 +143,7 @@ open class HTItemStackSlot protected constructor(
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+    override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
         this.stack.count = amount
     }
 }

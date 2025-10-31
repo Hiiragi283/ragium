@@ -27,7 +27,7 @@ class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
         } else if (!validate || amount > 0) {
             this.amount = min(amount, getCapacity())
         } else {
-            error("Invalid amount for storage: $amount")
+            error("Invalid amount for network: $amount")
         }
         onContentsChanged()
     }

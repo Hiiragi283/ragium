@@ -20,6 +20,8 @@ interface HTValueOutput {
         store(key, codec, Optional.ofNullable(value))
     }
 
+    fun isEmpty(): Boolean
+
     // Compound
 
     /**

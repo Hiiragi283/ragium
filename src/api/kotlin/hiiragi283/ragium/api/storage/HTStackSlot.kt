@@ -59,6 +59,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
     abstract class Basic<STACK : ImmutableStack<*, STACK>> : HTStackSlot<STACK> {
         /**
          * 指定された[stack]を代入します。
+         * @param stack 新しいスタック
          */
         protected abstract fun setStack(stack: STACK?)
 
@@ -67,8 +68,20 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          * @param stack 現在のスタック
          * @param amount 新しい数量
          */
-        protected abstract fun updateCount(stack: STACK, amount: Int)
+        protected abstract fun updateAmount(stack: STACK, amount: Int)
 
+        protected fun growAmount(stack: STACK, amount: Int) {
+            updateAmount(stack, stack.amount() + amount)
+        }
+
+        protected fun shrinkAmount(stack: STACK, amount: Int) {
+            updateAmount(stack, stack.amount() - amount)
+        }
+
+        /**
+         * @see mekanism.common.inventory.slot.BasicInventorySlot.insertItem
+         * @see mekanism.common.capabilities.fluid.BasicFluidTank.insert
+         */
         override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK? {
             val needed: Int = getNeeded(stack)
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
@@ -79,7 +92,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                 val toAdd: Int = min(stack.amount(), needed)
                 if (action.execute) {
                     if (sameType && stackIn != null) {
-                        updateCount(stackIn, stackIn.amount() + toAdd)
+                        growAmount(stackIn, toAdd)
                         onContentsChanged()
                     } else {
                         setStack(stack.copyWithAmount(toAdd))
@@ -95,13 +108,17 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
             else -> null
         }
 
+        /**
+         * @see mekanism.common.inventory.slot.BasicInventorySlot.extractItem
+         * @see mekanism.common.capabilities.fluid.BasicFluidTank.extract
+         */
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK? {
             val stack: STACK? = this.getStack()
             if (stack == null || amount < 1 || !canStackExtract(stack, access)) return null
             val fixedAmount: Int = min(amount, getAmount())
             val result: STACK? = stack.copyWithAmount(fixedAmount)
             if (result != null && action.execute) {
-                updateCount(stack, stack.amount() - fixedAmount)
+                shrinkAmount(stack, fixedAmount)
                 onContentsChanged()
             }
             return result

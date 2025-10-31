@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 
 /**
- * @see [mekanism.api.recipes.ingredients.creator.IIngredientCreator]
+ * @see mekanism.api.recipes.ingredients.creator.IIngredientCreator
  */
 interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<*>> {
     // Type

@@ -17,7 +17,7 @@ import kotlin.math.min
 
 /**
  * [HTItemSlot]に基づいた[Slot]の実装
- * @see [mekanism.common.inventory.container.slot.InventoryContainerSlot]
+ * @see mekanism.common.inventory.container.slot.InventoryContainerSlot
  */
 open class HTContainerItemSlot(
     val slot: HTItemSlot,

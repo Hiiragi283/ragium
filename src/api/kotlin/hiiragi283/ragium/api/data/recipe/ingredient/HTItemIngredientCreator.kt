@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
 /**
- * @see [mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator]
+ * @see mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
  */
 interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> {
     // Default Count

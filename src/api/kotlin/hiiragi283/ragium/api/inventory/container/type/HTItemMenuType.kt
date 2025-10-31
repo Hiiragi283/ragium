@@ -11,7 +11,7 @@ import net.neoforged.neoforge.network.IContainerFactory
 
 /**
  * [HTItemContainerFactory]を受け取る[HTMenuType]の拡張クラス
- * @see [mekanism.common.inventory.container.type.MekanismItemContainerType]
+ * @see mekanism.common.inventory.container.type.MekanismItemContainerType
  */
 class HTItemMenuType<MENU : AbstractContainerMenu>(factory: HTItemContainerFactory<MENU>, constructor: IContainerFactory<MENU>) :
     HTMenuType<MENU, HTItemContainerFactory<MENU>>(factory, constructor) {

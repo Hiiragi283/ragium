@@ -53,7 +53,7 @@ open class HTComponentFluidTank(
         parent.set(component, stack)
     }
 
-    override fun updateCount(stack: ImmutableFluidStack, amount: Int) {
+    override fun updateAmount(stack: ImmutableFluidStack, amount: Int) {
         setStack(stack.copyWithAmount(amount))
     }
 }

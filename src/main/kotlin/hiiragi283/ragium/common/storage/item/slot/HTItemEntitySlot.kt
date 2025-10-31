@@ -27,7 +27,7 @@ class HTItemEntitySlot(private val entity: ItemEntity) :
         onContentsChanged()
     }
 
-    override fun updateCount(stack: ImmutableItemStack, amount: Int) {
+    override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
         entity.item.count = amount
     }
 }
