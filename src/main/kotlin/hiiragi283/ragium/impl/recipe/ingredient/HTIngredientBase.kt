@@ -7,12 +7,12 @@ import net.minecraft.core.HolderSet
 abstract class HTIngredientBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>>(
     protected val holderSet: HolderSet<TYPE>,
     protected val amount: Int,
-) : HTIngredient<STACK> {
+) : HTIngredient<TYPE, STACK> {
     init {
         require(amount >= 1)
     }
 
     final override fun getRequiredAmount(stack: STACK): Int = if (test(stack)) this.amount else 0
 
-    final override fun hasNoMatchingStacks(): Boolean = holderSet.toList().isEmpty()
+    final override fun hasNoMatchingStacks(): Boolean = holderSet.none()
 }

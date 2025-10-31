@@ -7,7 +7,7 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
-abstract class HTIngredientCreatorBase<TYPE : Any, INGREDIENT : HTIngredient<*>>(
+abstract class HTIngredientCreatorBase<TYPE : Any, INGREDIENT : HTIngredient<TYPE, *>>(
     protected val getter: HolderGetter<TYPE>,
     protected val holderFactory: (TYPE) -> Holder<TYPE>,
 ) : HTIngredientCreator<TYPE, INGREDIENT> {

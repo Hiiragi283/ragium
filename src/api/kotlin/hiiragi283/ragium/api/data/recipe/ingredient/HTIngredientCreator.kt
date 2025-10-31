@@ -13,7 +13,7 @@ import net.minecraft.tags.TagKey
  * @param INGREDIENT [HTIngredient]の実装
  * @see mekanism.api.recipes.ingredients.creator.IIngredientCreator
  */
-interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<*>> {
+interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<TYPE, *>> {
     // Type
     fun from(type: TYPE, amount: Int): INGREDIENT
 
