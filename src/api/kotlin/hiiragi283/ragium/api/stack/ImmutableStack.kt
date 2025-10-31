@@ -35,11 +35,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
     fun amount(): Int
 
     /**
-     * このスタックのコピーを返します。。
-     */
-    fun copy(): STACK
-
-    /**
      * このスタックのコピーを指定した個数で返します。
      * @param amount コピー後の個数
      * @return 新しいスタックが無効の場合は`null`

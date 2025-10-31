@@ -16,7 +16,7 @@ abstract class HTStackRecipeBuilder<BUILDER : HTStackRecipeBuilder<BUILDER>>(pre
 
     final override fun getPrimalId(): ResourceLocation = stack.getId()
 
-    final override fun createRecipe(): Recipe<*> = createRecipe(stack.stack)
+    final override fun createRecipe(): Recipe<*> = createRecipe(stack.unwrap())
 
     //    Single    //
 

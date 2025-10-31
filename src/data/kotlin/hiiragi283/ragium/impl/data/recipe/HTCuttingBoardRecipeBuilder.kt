@@ -24,7 +24,7 @@ class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
             HTCuttingBoardRecipeBuilder(ImmutableItemStack.of(item, count), chance)
     }
 
-    private val results: MutableList<ChanceResult> = mutableListOf(ChanceResult(stack.stack, chance))
+    private val results: MutableList<ChanceResult> = mutableListOf(ChanceResult(stack.unwrap(), chance))
     private val ingredients: MutableList<Ingredient> = mutableListOf()
     private var sound: SoundEvent? = null
 

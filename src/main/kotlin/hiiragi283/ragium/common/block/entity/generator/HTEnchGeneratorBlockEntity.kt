@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -19,10 +18,10 @@ class HTEnchGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getFuelValue(stack: ImmutableItemStack): Int {
         if (!stack.isOf(Items.ENCHANTED_BOOK)) return 0
         return EnchantmentHelper
-            .getEnchantmentsForCrafting(stack.stack)
+            .getEnchantmentsForCrafting(stack.unwrap())
             .entrySet()
             .sumOf { (holder: Holder<Enchantment>, level: Int) ->
-                val amount: Int = this.level?.registryAccess()?.let { access: RegistryAccess ->
+                val amount: Int = this.getRegistryAccess()?.let { access: RegistryAccess ->
                     RagiumDataMaps.INSTANCE.getEnchBasedValue(access, holder, level)
                 } ?: level
                 amount * 100

@@ -28,11 +28,11 @@ object HTExperienceCapabilities : HTMultiCapability<IExperienceStorage, IExperie
     fun getStorage(level: ILevelExtension, pos: BlockPos, side: Direction?): HTExperienceStorage? =
         this.getCapability(level, pos, side)?.let(::wrapStorage)
 
-    fun getStorage(stack: IItemStackExtension): HTExperienceStorage? = this.getCapability(stack)?.let(::wrapStorage)
-
     fun getStorage(entity: Entity, side: Direction?): HTExperienceStorage? = this.getCapability(entity, side)?.let(::wrapStorage)
 
-    fun getStorage(stack: ImmutableItemStack?): HTExperienceStorage? = stack?.stack?.let(this::getStorage)
+    fun getStorage(stack: IItemStackExtension): HTExperienceStorage? = this.getCapability(stack)?.let(::wrapStorage)
+
+    fun getStorage(stack: ImmutableItemStack?): HTExperienceStorage? = this.getCapability(stack)?.let(::wrapStorage)
 
     private fun wrapStorage(storage: IExperienceStorage): HTExperienceStorage? = when (storage) {
         is HTExperienceStorage -> storage

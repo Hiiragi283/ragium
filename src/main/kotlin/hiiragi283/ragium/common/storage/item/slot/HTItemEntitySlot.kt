@@ -23,7 +23,7 @@ class HTItemEntitySlot(private val entity: ItemEntity) :
     }
 
     override fun setStack(stack: ImmutableItemStack?) {
-        entity.item = stack?.stack ?: ItemStack.EMPTY
+        entity.item = stack?.unwrap() ?: ItemStack.EMPTY
         onContentsChanged()
     }
 

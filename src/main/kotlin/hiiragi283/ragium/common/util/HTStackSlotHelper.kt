@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -18,6 +17,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.getFluidStack
 import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidHandlerItemWrapper
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -32,13 +32,13 @@ object HTStackSlotHelper {
         to: SLOT?,
         amount: Int = from?.getAmount() ?: 0,
         access: HTStorageAccess = HTStorageAccess.INTERNAL,
-    ): STACK? {
-        if (from == null || to == null || amount <= 0) return null
-        val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, access) ?: return null
+    ): HTStackMoveResult<STACK> {
+        if (from == null || to == null || amount <= 0) return HTStackMoveResult.failed()
+        val simulatedExtract: STACK = from.extract(amount, HTStorageAction.SIMULATE, access) ?: return HTStackMoveResult.failed()
         val simulatedRemain: STACK? = to.insert(simulatedExtract, HTStorageAction.SIMULATE, access)
         val simulatedAccepted: Int = amount - (simulatedRemain?.amount() ?: 0)
-
-        val extracted: STACK = from.extract(simulatedAccepted, HTStorageAction.EXECUTE, access) ?: return null
+        if (simulatedAccepted == 0) return HTStackMoveResult.failed()
+        val extracted: STACK = from.extract(simulatedAccepted, HTStorageAction.EXECUTE, access) ?: return HTStackMoveResult.failed()
         val remainder: STACK? = to.insert(extracted, HTStorageAction.EXECUTE, access)
         if (remainder != null) {
             val leftover: STACK? = from.insert(remainder, HTStorageAction.EXECUTE, access)
@@ -46,7 +46,7 @@ object HTStackSlotHelper {
                 RagiumAPI.LOGGER.error("Stack slot $from did not accept leftover stack from $to! Voiding it.")
             }
         }
-        return remainder
+        return HTStackMoveResult.succeeded(remainder)
     }
 
     @JvmStatic
@@ -54,7 +54,10 @@ object HTStackSlotHelper {
         slot: HTStackSlot<STACK>,
         ingredient: ToIntFunction<STACK>,
         action: HTStorageAction,
-    ): Int = slot.extract(ingredient.applyAsInt(slot.getStack()), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+    ): Int {
+        val stackIn: STACK = slot.getStack() ?: return 0
+        return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+    }
 
     //    Item    //
 
@@ -159,7 +162,7 @@ object HTStackSlotHelper {
         if (firstFluid.isEmpty) {
             val stackIn: ImmutableFluidStack? = tank.getStack()
             if (stackIn != null) {
-                val filled: Int = handler.fill(stackIn.stack, HTStorageAction.of(player.isCreative).toFluid())
+                val filled: Int = handler.fill(stackIn.unwrap(), HTStorageAction.of(player.isCreative).toFluid())
                 val container: ItemStack = handler.container
                 if (filled > 0) {
                     if (stack.count == 1) {
@@ -214,64 +217,31 @@ object HTStackSlotHelper {
     }
 
     @JvmStatic
-    fun interact(
-        slot: HTItemSlot,
-        stackSetter: HTStackSetter<ImmutableItemStack>,
-        tank: HTFluidTank,
-        dropContainer: (ImmutableItemStack?) -> Unit,
-        access: HTStorageAccess = HTStorageAccess.INTERNAL,
-    ): Boolean {
-        val stack: ImmutableItemStack = slot.getStack() ?: return false
+    fun moveFluid(from: HTItemSlot, containerSetter: HTStackSetter<ImmutableItemStack>, to: HTFluidTank): Boolean {
+        val stack: ImmutableItemStack = from.getStack() ?: return false
         if (!HTFluidCapabilities.hasCapability(stack)) return false
-        val handler: IFluidHandlerItem = HTFluidCapabilities.getCapability(stack.copyWithAmount(1)) ?: return false
-        val firstFluid: FluidStack = when (tank.getStack() == null) {
-            true -> handler.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid())
-            false -> handler.drain(tank.getFluidStack().copyWithAmount(Int.MAX_VALUE), HTStorageAction.SIMULATE.toFluid())
-        }
-        if (firstFluid.isEmpty) {
-            val stackIn: ImmutableFluidStack? = tank.getStack()
-            if (stackIn != null) {
-                val filled: Int = handler.fill(stackIn.stack, HTStorageAction.SIMULATE.toFluid())
-                val container: ImmutableItemStack? = handler.container.toImmutable()
-                if (filled > 0) {
-                    if (stack.amount() == 1) {
-                        stackSetter.setStack(container)
-                    } else {
-                        dropContainer(container)
-                        slot.extract(1, HTStorageAction.EXECUTE, access)
-                    }
-                    tank.extract(filled, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
-                    return true
-                }
-            }
-        } else {
-            val remainder: FluidStack = tank.insertFluid(firstFluid, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)
-            val remainderAmount: Int = remainder.amount
-            val storedAmount: Int = firstFluid.amount
-            if (remainderAmount < storedAmount) {
-                var filled = false
-                val drained: FluidStack = handler.drain(
-                    firstFluid.copyWithAmount(storedAmount - remainderAmount),
-                    HTStorageAction.SIMULATE.toFluid(),
-                )
-                if (!drained.isEmpty) {
-                    val container: ImmutableItemStack? = handler.container.toImmutable()
-                    if (container != null) {
-                        if (stack.amount() == 1) {
-                            stackSetter.setStack(container)
-                            filled = true
-                        }
-                    } else {
-                        slot.extract(1, HTStorageAction.EXECUTE, access)
-                        filled = true
-                    }
-                    if (filled) {
-                        tank.insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
-                        return true
-                    }
+        val wrapper: HTFluidHandlerItemWrapper = HTFluidHandlerItemWrapper.create(stack.copyWithAmount(1)) ?: return false
+        return moveFluid(from, containerSetter, wrapper, to)
+    }
+
+    @JvmStatic
+    fun moveFluid(
+        slot: HTItemSlot,
+        containerSetter: HTStackSetter<ImmutableItemStack>,
+        from: HTFluidHandlerItemWrapper,
+        to: HTFluidTank,
+    ): Boolean {
+        val result: HTStackMoveResult<ImmutableFluidStack> = moveStack(from, to)
+        if (result.succeeded) {
+            val container: ImmutableItemStack? = from.container
+            if (container != null) {
+                if (container.amount() == 1) {
+                    containerSetter.setStack(container)
+                } else {
+                    slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
                 }
             }
         }
-        return false
+        return result.succeeded
     }
 }

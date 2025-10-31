@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -16,9 +15,6 @@ import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -80,7 +76,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      * @see mekanism.common.tile.base.TileEntityUpdateable.setChanged
      */
     protected open fun setChanged(updateComparator: Boolean) {
-        val level: Level = this.level ?: return
+        val level: Level = this.getLevel() ?: return
         val time: Long = level.gameTime
         if (lastSaveTime != time) {
             level.blockEntityChanged(blockPos)
@@ -112,14 +108,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      * [BlockEntity.setLevel]の後で呼び出されます。
      */
     open fun afterLevelInit(level: Level) {}
-
-    /**
-     * ブロックが右クリックされたときに呼ばれます。
-     *
-     * [Block.useWithoutItem]より先に呼び出されます。
-     */
-    open fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult =
-        ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
     /**
      * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。

@@ -136,7 +136,7 @@ open class HTItemStackSlot protected constructor(
             if (this.getStack() == null) return
             this.stack = ItemStack.EMPTY
         } else if (!validate || isValid(stack)) {
-            this.stack = stack.copy().stack
+            this.stack = stack.unwrap()
         } else {
             error("Invalid stack for slot: $stack ${stack.componentsPatch()}")
         }

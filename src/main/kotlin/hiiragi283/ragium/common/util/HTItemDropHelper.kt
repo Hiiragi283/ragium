@@ -51,7 +51,7 @@ object HTItemDropHelper {
      */
     fun giveOrDropStack(entity: Entity, stack: ImmutableItemStack?, offset: Float = 0f) {
         if (stack == null) return
-        giveOrDropStack(entity, stack.stack, offset)
+        giveOrDropStack(entity, stack.unwrap(), offset)
     }
 
     /**
@@ -59,7 +59,7 @@ object HTItemDropHelper {
      */
     fun giveStackTo(player: Player, stack: ImmutableItemStack?) {
         if (stack == null) return
-        giveStackTo(player, stack.stack)
+        giveStackTo(player, stack.unwrap())
     }
 
     /**
@@ -67,6 +67,6 @@ object HTItemDropHelper {
      */
     fun dropStackAt(level: Level, pos: BlockPos, stack: ImmutableItemStack?) {
         if (stack == null) return
-        dropStackAt(level, pos, stack.stack)
+        dropStackAt(level, pos, stack.unwrap())
     }
 }

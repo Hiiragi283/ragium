@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
+import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -35,6 +36,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -57,6 +59,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     HTItemHandler,
     HTFluidHandler,
     HTHandlerProvider,
+    HTMenuCallback,
     HTOwnedBlockEntity {
     //    Ticking    //
 
@@ -172,6 +175,13 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun getName(): Component = customName ?: blockState.block.name
 
     final override fun getCustomName(): Component? = customName
+
+    //    HTMenuCallback    //
+
+    override fun openMenu(player: Player) {
+        super.openMenu(player)
+        this.getServerLevel()?.let(::sendUpdatePacket)
+    }
 
     //    HTOwnedBlockEntity    //
 

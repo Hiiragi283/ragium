@@ -19,7 +19,7 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
             InteractionHand.MAIN_HAND -> EquipmentSlot.MAINHAND
             InteractionHand.OFF_HAND -> EquipmentSlot.OFFHAND
         }
-        return stack.stack.canEquip(equipmentSlot, player)
+        return stack.unwrap().canEquip(equipmentSlot, player)
     }
 
     override fun getStack(): ImmutableItemStack? = player.getItemInHand(hand).toImmutable()
@@ -35,7 +35,7 @@ class HTPlayerHandSlot(private val player: Player, private val hand: Interaction
             if (this.getStack() == null) return
             player.setItemInHand(hand, ItemStack.EMPTY)
         } else if (!validate || isValid(stack)) {
-            player.setItemInHand(hand, stack.copy().stack)
+            player.setItemInHand(hand, stack.unwrap())
         } else {
             error("Invalid stack for hand: $stack ${stack.componentsPatch()}")
         }

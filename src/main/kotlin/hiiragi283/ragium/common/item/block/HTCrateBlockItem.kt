@@ -17,6 +17,6 @@ class HTCrateBlockItem(block: HTCrateBlock, properties: Properties) : HTBlockIte
     override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
         val stack: ItemStack = itemEntity.item
         val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
-        contents.filterNotNull().map(ImmutableItemStack::stack).forEach(itemEntity::spawnAtLocation)
+        contents.filterNotNull().map(ImmutableItemStack::unwrap).forEach(itemEntity::spawnAtLocation)
     }
 }

@@ -140,7 +140,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
     class Simple(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.ENI, pos, state) {
         override fun createEnergyStorage(listener: HTContentListener): HTEnergyStorage =
-            HTEnergyStorageWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(level) }
+            HTEnergyStorageWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(this.getLevel()) }
 
         override val transferRate: Int = 1000
     }

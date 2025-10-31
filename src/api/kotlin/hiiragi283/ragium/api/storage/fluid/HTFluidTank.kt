@@ -17,7 +17,7 @@ interface HTFluidTank :
     IFluidTank {
     override fun isSameStack(other: ImmutableFluidStack?): Boolean = FluidStack.isSameFluidSameComponents(
         this.getFluidStack(),
-        other?.stack ?: FluidStack.EMPTY,
+        other?.unwrap() ?: FluidStack.EMPTY,
     )
 
     //    IFluidTank    //

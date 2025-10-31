@@ -26,7 +26,7 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
 
     override fun isSameStack(other: ImmutableItemStack?): Boolean = ItemStack.isSameItemSameComponents(
         this.getItemStack(),
-        other?.stack ?: ItemStack.EMPTY,
+        other?.unwrap() ?: ItemStack.EMPTY,
     )
 
     //    Basic    //

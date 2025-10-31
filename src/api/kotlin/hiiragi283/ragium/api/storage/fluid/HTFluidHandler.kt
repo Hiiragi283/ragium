@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.fluid
 
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -26,46 +27,59 @@ fun interface HTFluidHandler : HTSidedFluidHandler {
 
     override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean = getFluidTank(tank, side)?.isValid(stack) ?: false
 
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.fill
+     */
     @Suppress("DEPRECATION")
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): Int {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
-        return when (tanks.size) {
-            1 -> tanks[0].fill(resource, action)
-            2 -> {
-                val resource1: FluidStack = when {
-                    action.simulate() -> resource.copy()
-                    else -> resource
-                }
-                val first: Int = tanks[0].fill(resource1, action)
-                tanks[1].fill(resource1.copyWithAmount(resource1.amount - first), action)
+        if (resource.isEmpty) return 0
+        val remaining: FluidStack = resource.copy()
+        var existing: HTFluidTank? = null
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            if (tank.isSameStack(remaining.toImmutable())) {
+                existing = tank
+                break
             }
-            else -> 0
         }
+        if (existing != null) {
+            remaining.shrink(existing.fill(remaining, action))
+        } else {
+            for (tank: HTFluidTank in getFluidTanks(side)) {
+                val filled: Int = tank.fill(remaining, action)
+                remaining.shrink(filled)
+                if (filled > 0) {
+                    break
+                }
+            }
+        }
+        return resource.amount - remaining.amount
     }
 
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.drain
+     */
     @Suppress("DEPRECATION")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
-        return when (tanks.size) {
-            1 -> tanks[0].drain(resource, action)
-            2 -> {
-                val first: FluidStack = tanks[0].drain(resource, action)
-                tanks[1].drain(first, action)
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            val drained: FluidStack = tank.drain(resource, action)
+            if (!drained.isEmpty) {
+                return drained
             }
-            else -> FluidStack.EMPTY
         }
+        return FluidStack.EMPTY
     }
 
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.drain
+     */
     @Suppress("DEPRECATION")
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
-        return when (tanks.size) {
-            1 -> tanks[0].drain(maxDrain, action)
-            2 -> {
-                val first: FluidStack = tanks[0].drain(maxDrain, action)
-                tanks[1].drain(first, action)
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            val drained: FluidStack = tank.drain(maxDrain, action)
+            if (!drained.isEmpty) {
+                return drained
             }
-            else -> FluidStack.EMPTY
         }
+        return FluidStack.EMPTY
     }
 }

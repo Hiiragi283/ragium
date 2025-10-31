@@ -248,6 +248,6 @@ object RagiumRuntimeEvents {
         val result: ItemStack = event.crafting
         if (result.isEmpty) return
         val stackIn: ImmutableItemStack = result.remove(RagiumDataComponents.ITEM_CONTENT)?.getOrNull(0) ?: return
-        HTItemDropHelper.giveStackTo(event.entity, stackIn.stack)
+        HTItemDropHelper.giveStackTo(event.entity, stackIn.unwrap())
     }
 }

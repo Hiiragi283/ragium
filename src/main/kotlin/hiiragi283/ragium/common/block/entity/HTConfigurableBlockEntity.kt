@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.block.entity.HTBlockInteractContext
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -11,17 +10,12 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.Tags
 
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
@@ -51,14 +45,6 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
         input.read(RagiumConst.ACCESS_CONFIG, CONFIG_CODEC)?.forEach(accessConfigCache::put)
-    }
-
-    override fun onRightClickedWithItem(context: HTBlockInteractContext, stack: ItemStack, hand: InteractionHand): ItemInteractionResult {
-        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            RagiumMenuTypes.ACCESS_CONFIG.openMenu(context.player, name, this, ::writeExtraContainerData)
-            return ItemInteractionResult.sidedSuccess(context.level.isClientSide)
-        }
-        return super.onRightClickedWithItem(context, stack, hand)
     }
 
     //    HTAccessConfiguration    //

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -16,9 +15,7 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
@@ -46,18 +43,19 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         return builder.build()
     }
 
-    private lateinit var fillSlot: HTItemStackSlot
-    private lateinit var outputSlot: HTItemStackSlot
+    private lateinit var slot: HTItemStackSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        fillSlot = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-        )
-        outputSlot = builder.addSlot(
-            HTAccessConfig.OUTPUT_ONLY,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
+        slot = builder.addSlot(
+            HTAccessConfig.NONE,
+            HTItemStackSlot.create(
+                listener,
+                HTSlotHelper.getSlotPosX(2),
+                HTSlotHelper.getSlotPosY(1),
+                canExtract = HTPredicates.manualOnly(),
+                canInsert = HTPredicates.manualOnly(),
+            ),
         )
         return builder.build()
     }
@@ -68,7 +66,6 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         super.applyImplicitComponents(componentInput)
         componentInput
             .get(RagiumDataComponents.FLUID_CONTENT)
-            ?.copy()
             .let(tank::setStackUnchecked)
     }
 
@@ -78,17 +75,7 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        HTStackSlotHelper.interact(
-            fillSlot,
-            fillSlot::setStackUnchecked,
-            tank,
-            { stack: ImmutableItemStack? ->
-                if (stack == null) return@interact
-                val remainder: ImmutableItemStack =
-                    outputSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) ?: return@interact
-                HTItemDropHelper.dropStackAt(level, pos, remainder)
-            },
-        )
+        HTStackSlotHelper.moveFluid(slot, slot::setStackUnchecked, tank)
         return false
     }
 

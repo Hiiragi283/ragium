@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.block.entity.ExtendedBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.BlockPos
+import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -34,19 +35,15 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
 
         @JvmStatic
         fun create(blockEntity: ExtendedBlockEntity): HTUpdateBlockEntityPacket? {
-            val level: Level = blockEntity.getLevel() ?: return null
-            return HTUpdateBlockEntityPacket(
-                blockEntity.getBlockPos(),
-                blockEntity.getReducedUpdateTag(level.registryAccess()),
-            )
+            val access: RegistryAccess = blockEntity.getRegistryAccess() ?: return null
+            return HTUpdateBlockEntityPacket(blockEntity.getBlockPos(), blockEntity.getReducedUpdateTag(access))
         }
     }
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
 
     override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
-        with(player.level()) {
-            getBlockEntity(pos)?.handleUpdateTag(updateTag, registryAccess())
-        }
+        val level: Level = player.level()
+        level.getBlockEntity(pos)?.handleUpdateTag(updateTag, level.registryAccess())
     }
 }

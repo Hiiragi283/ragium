@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.neoforged.neoforge.fluids.FluidStack
 
-fun HTStackView<ImmutableFluidStack>.getFluidStack(): FluidStack = this.getStack()?.stack ?: FluidStack.EMPTY
+fun HTStackView<ImmutableFluidStack>.getFluidStack(): FluidStack = this.getStack()?.unwrap() ?: FluidStack.EMPTY
 
 fun HTStackView<ImmutableFluidStack>.getCapacity(stack: FluidStack): Int = this.getCapacity(stack.toImmutable())
 
@@ -15,13 +15,13 @@ fun HTFluidTank.isValid(stack: FluidStack): Boolean = stack.toImmutable()?.let(t
 
 fun HTFluidTank.insertFluid(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack {
     val immutable: ImmutableFluidStack = stack.toImmutable() ?: return stack
-    return this.insert(immutable, action, access)?.stack ?: stack
+    return this.insert(immutable, action, access)?.unwrap() ?: stack
 }
 
 fun HTFluidTank.extractFluid(stack: FluidStack, action: HTStorageAction, access: HTStorageAccess): FluidStack {
     val immutable: ImmutableFluidStack = stack.toImmutable() ?: return FluidStack.EMPTY
-    return this.extract(immutable, action, access)?.stack ?: FluidStack.EMPTY
+    return this.extract(immutable, action, access)?.unwrap() ?: FluidStack.EMPTY
 }
 
 fun HTFluidTank.extractFluid(amount: Int, action: HTStorageAction, access: HTStorageAccess): FluidStack =
-    this.extract(amount, action, access)?.stack ?: FluidStack.EMPTY
+    this.extract(amount, action, access)?.unwrap() ?: FluidStack.EMPTY

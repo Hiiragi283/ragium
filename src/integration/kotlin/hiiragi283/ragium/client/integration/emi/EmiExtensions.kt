@@ -40,9 +40,9 @@ fun ItemStack.toEmi(): EmiStack = EmiStack.of(this)
 fun FluidStack.toEmi(): EmiStack = NeoForgeEmiStack.of(this)
 
 // Immutable Stack
-fun ImmutableItemStack?.toEmi(): EmiStack = this?.stack?.toEmi() ?: EmiStack.EMPTY
+fun ImmutableItemStack?.toEmi(): EmiStack = this?.unwrap()?.toEmi() ?: EmiStack.EMPTY
 
-fun ImmutableFluidStack?.toEmi(): EmiStack = this?.stack?.toEmi() ?: EmiStack.EMPTY
+fun ImmutableFluidStack?.toEmi(): EmiStack = this?.unwrap()?.toEmi() ?: EmiStack.EMPTY
 
 // TagKey
 

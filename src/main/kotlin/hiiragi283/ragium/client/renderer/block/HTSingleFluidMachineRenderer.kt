@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.extension.scale
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
-import hiiragi283.ragium.api.stack.isLighterThanAir
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
@@ -29,7 +28,7 @@ class HTSingleFluidMachineRenderer(context: BlockEntityRendererProvider.Context)
         poseStack.pushPose()
         poseStack.translate(0.05f, 0.5f, 0.05f)
         val level: Float = tank.getStoredLevelAsFloat()
-        if (stack.isLighterThanAir()) {
+        if (stack.fluidType().isLighterThanAir()) {
             poseStack.translate(0f, 1f - (level / 2f), 0f)
         }
         poseStack.scale(1f, level / 2f, 1f)

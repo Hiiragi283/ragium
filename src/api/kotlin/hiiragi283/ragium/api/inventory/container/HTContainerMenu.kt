@@ -17,6 +17,15 @@ import kotlin.math.min
 
 abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId) {
+    init {
+        onOpen(inventory.player)
+    }
+
+    override fun removed(player: Player) {
+        super.removed(player)
+        onClose(player)
+    }
+
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
         val slotIn: Slot = slots.getOrNull(index) ?: return result

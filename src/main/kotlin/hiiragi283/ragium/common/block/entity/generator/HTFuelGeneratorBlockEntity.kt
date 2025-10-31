@@ -15,8 +15,6 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -51,7 +49,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
                 listener,
                 RagiumConfig.COMMON.generatorInputTankCapacity,
                 filter = { stack: ImmutableFluidStack ->
-                    val access: RegistryAccess = level?.registryAccess() ?: return@input false
+                    val access: RegistryAccess = this.getRegistryAccess() ?: return@input false
                     getRequiredAmount(access, stack) > 0
                 },
             ),
@@ -61,25 +59,20 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     protected lateinit var fuelSlot: HTFluidFuelItemStackSlot
         private set
-    private lateinit var outputSlot: HTItemStackSlot
 
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // fuel
         fuelSlot = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
+            HTAccessConfig.NONE,
             HTFluidFuelItemStackSlot.create(
                 tank,
                 ::getFuelValue,
                 ::getFuelStack,
                 listener,
                 HTSlotHelper.getSlotPosX(2),
-                HTSlotHelper.getSlotPosY(0),
+                HTSlotHelper.getSlotPosY(1),
             ),
-        )
-        outputSlot = builder.addSlot(
-            HTAccessConfig.OUTPUT_ONLY,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
         return builder.build()
     }
@@ -88,7 +81,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // スロット内のアイテムを液体に変換する
-        fuelSlot.fillOrBurn(outputSlot)
+        fuelSlot.fillOrBurn()
         // 燃料を消費して発電する
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false

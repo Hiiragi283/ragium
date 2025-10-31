@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
@@ -81,7 +80,7 @@ object RagiumBlockEntityTypes {
     val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
         "thermal_generator",
         HTFuelGeneratorBlockEntity.createSimple(
-            { stack: ImmutableItemStack -> stack.stack.getBurnTime(null) / 10 },
+            { stack: ImmutableItemStack -> stack.unwrap().getBurnTime(null) / 10 },
             HTFluidContent.LAVA,
             RagiumDataMaps.INSTANCE::getThermalFuel,
             RagiumBlocks.THERMAL_GENERATOR,

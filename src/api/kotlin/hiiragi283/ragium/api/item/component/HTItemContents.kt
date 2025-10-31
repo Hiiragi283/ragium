@@ -48,10 +48,7 @@ value class HTItemContents private constructor(private val items: Array<Immutabl
 
     fun getOrNull(slot: Int): ImmutableItemStack? = items.getOrNull(slot)
 
-    fun copy(): HTItemContents = when {
-        this.items.isEmpty() -> EMPTY
-        else -> HTItemContents(items.map { it?.copy() }.toTypedArray())
-    }
-
     override fun iterator(): Iterator<ImmutableItemStack?> = items.iterator()
+
+    fun unwrap(): Array<ImmutableItemStack?> = items.copyOf()
 }

@@ -37,7 +37,7 @@ interface HTRecipe<INPUT : RecipeInput> :
         DeprecationLevel.ERROR,
     )
     override fun assemble(input: INPUT, registries: HolderLookup.Provider): ItemStack =
-        assembleItem(input, registries)?.stack ?: ItemStack.EMPTY
+        assembleItem(input, registries)?.unwrap() ?: ItemStack.EMPTY
 
     @Deprecated("Use `assemble(INPUT, HolderLookup.Provider) `instead", level = DeprecationLevel.ERROR)
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY

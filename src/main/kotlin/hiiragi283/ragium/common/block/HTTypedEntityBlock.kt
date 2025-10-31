@@ -10,8 +10,11 @@ import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -21,6 +24,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.Tags
 import java.util.function.UnaryOperator
 
 typealias HTSimpleTypedEntityBlock = HTTypedEntityBlock<HTEntityBlockType>
@@ -43,6 +47,25 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     override fun codec(): MapCodec<out BaseEntityBlock> = throw UnsupportedOperationException()
 
     override fun getRenderShape(state: BlockState): RenderShape = RenderShape.MODEL
+
+    override fun useItemOn(
+        stack: ItemStack,
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): ItemInteractionResult {
+        val result: ItemInteractionResult = super.useItemOn(stack, state, level, pos, player, hand, hitResult)
+        if (stack.isEmpty) return result
+        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
+            val blockEntity: HTBlockEntity = level.getTypedBlockEntity(pos) ?: return result
+            RagiumMenuTypes.ACCESS_CONFIG.openMenu(player, blockEntity.name, blockEntity, blockEntity::writeExtraContainerData)
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        }
+        return result
+    }
 
     /**
      * @see mekanism.common.block.prefab.BlockTile.useWithoutItem

@@ -39,7 +39,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
             HTAccessConfig.BOTH,
             HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack? ->
                 val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
-                HTItemHelper.processStorageCapacity(level?.random, this, capacity)
+                HTItemHelper.processStorageCapacity(this.getLevel()?.random, this, capacity)
             }, 0, 0),
         )
         return builder.build()

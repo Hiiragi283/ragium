@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory

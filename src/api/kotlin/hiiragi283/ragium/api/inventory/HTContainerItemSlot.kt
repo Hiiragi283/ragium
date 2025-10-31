@@ -62,7 +62,7 @@ open class HTContainerItemSlot(
     override fun mayPickup(player: Player): Boolean = slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) != null
 
     override fun remove(amount: Int): ItemStack =
-        slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)?.stack ?: ItemStack.EMPTY
+        slot.extract(amount, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)?.unwrap() ?: ItemStack.EMPTY
 
     override fun tryRemove(count: Int, decrement: Int, player: Player): Optional<ItemStack> {
         if (allowPartialRemoval()) {

@@ -131,7 +131,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             recipe.assemble(input, registries).toImmutable()?.copyWithAmount(count)
 
         override fun getRequiredCount(stack: ImmutableItemStack): Int = when {
-            recipe.ingredients[0].test(stack.stack) -> count
+            recipe.ingredients[0].test(stack.unwrap()) -> count
             else -> 0
         }
     }

@@ -14,7 +14,7 @@ class HTCompressedItem(properties: Properties) : Item(properties) {
             HTItemCapabilities
                 .getCapabilityStacks(itemEntity.item)
                 .filterNotNull()
-                .map(ImmutableItemStack::stack),
+                .map(ImmutableItemStack::unwrap),
         )
     }
 }

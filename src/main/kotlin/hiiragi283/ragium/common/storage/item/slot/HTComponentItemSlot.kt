@@ -34,7 +34,7 @@ open class HTComponentItemSlot(
             slot: Int,
             canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
-            filter: Predicate<ImmutableItemStack> = Predicate(ImmutableItemStack::stack.andThen(ItemStack::canFitInsideContainerItems)),
+            filter: Predicate<ImmutableItemStack> = Predicate(ImmutableItemStack::unwrap.andThen(ItemStack::canFitInsideContainerItems)),
         ): HTComponentItemSlot = HTComponentItemSlot(parent, slot, canExtract, canInsert, filter)
     }
 
@@ -55,11 +55,13 @@ open class HTComponentItemSlot(
     override fun getCapacity(stack: ImmutableItemStack?): Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
 
     final override fun setStack(stack: ImmutableItemStack?) {
-        val contents: HTItemContents? = getContents()?.copy()
+        val contents: HTItemContents? = getContents() // TODO
         if (contents == null || contents.isEmpty()) {
             parent.remove(component)
         } else {
-            parent.set(component, contents)
+            val items: Array<ImmutableItemStack?> = contents.unwrap()
+            items[slot] = stack
+            parent.set(component, HTItemContents.of(items))
         }
     }
 

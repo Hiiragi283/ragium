@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import java.util.function.IntFunction
@@ -56,19 +55,10 @@ class HTFluidFuelItemStackSlot private constructor(
         )
     }
 
-    fun fillOrBurn(moveTo: HTItemSlot) {
+    fun fillOrBurn() {
         val stack: ImmutableItemStack = this.getStack() ?: return
         val needed: Int = tank.getNeeded(tank.getStack())
-        val fluidInteracted: Boolean = HTStackSlotHelper.interact(
-            this,
-            this::setStackUnchecked,
-            this.tank,
-            { stack: ImmutableItemStack? ->
-                if (stack == null) return@interact
-                moveTo.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            },
-            HTStorageAccess.MANUAL,
-        )
+        val fluidInteracted: Boolean = HTStackSlotHelper.moveFluid(this, this::setStackUnchecked, this.tank)
         if (needed > 0 && !fluidInteracted) {
             val amount: Int = stackToAmount.applyAsInt(stack)
             if (amount in 1..needed) {

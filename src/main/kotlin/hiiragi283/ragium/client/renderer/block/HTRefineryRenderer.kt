@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.renderer.block
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
-import hiiragi283.ragium.api.stack.isLighterThanAir
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
@@ -44,7 +43,7 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         val stack: ImmutableFluidStack = tank.getStack() ?: return
         val sprite: TextureAtlasSprite = HTSpriteRenderHelper.getFluidSprite(stack) ?: return
         val level: Float = tank.getStoredLevelAsFloat()
-        if (stack.isLighterThanAir()) {
+        if (stack.fluidType().isLighterThanAir()) {
             poseStack.translate(0f, 1f - level, 0f)
         }
         poseStack.scale(0.48f, level, 0.48f)

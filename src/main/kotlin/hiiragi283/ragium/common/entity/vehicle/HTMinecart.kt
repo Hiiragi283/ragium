@@ -71,13 +71,13 @@ abstract class HTMinecart<BE : HTBlockEntity> :
             }
             this.spawnAtLocation(result)
             bindBlockEntity().dropInventory { stack: ImmutableItemStack ->
-                this.spawnAtLocation(stack.stack)
+                this.spawnAtLocation(stack.unwrap())
             }
         }
     }
 
     protected fun saveToDrop(stack: ItemStack) {
-        bindBlockEntity().saveToItem(stack, this.level().registryAccess())
+        bindBlockEntity().saveToItem(stack, this.registryAccess())
     }
 
     override fun interact(player: Player, hand: InteractionHand): InteractionResult =
@@ -112,10 +112,10 @@ abstract class HTMinecart<BE : HTBlockEntity> :
         }
     }
 
-    private fun saveBlockEntity(): CompoundTag = bindBlockEntity().saveWithoutMetadata(this.level().registryAccess())
+    private fun saveBlockEntity(): CompoundTag = bindBlockEntity().saveWithoutMetadata(this.registryAccess())
 
     private fun loadBlockEntity(compound: CompoundTag) {
-        bindBlockEntity().loadCustomOnly(compound, this.level().registryAccess())
+        bindBlockEntity().loadCustomOnly(compound, this.registryAccess())
     }
 
     //    AbstractMinecart    //

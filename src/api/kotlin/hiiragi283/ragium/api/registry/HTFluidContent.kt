@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.isOf
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey

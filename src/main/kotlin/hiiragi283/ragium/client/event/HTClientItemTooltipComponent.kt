@@ -19,7 +19,7 @@ class HTClientItemTooltipComponent(val content: HTItemTooltipContent) : ClientTo
         y: Int,
         guiGraphics: GuiGraphics,
     ) {
-        val stack: ItemStack = content.stack.stack
+        val stack: ItemStack = content.stack.unwrap()
         guiGraphics.renderFakeItem(stack, x, y)
         guiGraphics.renderItemDecorations(font, stack, x, y)
     }

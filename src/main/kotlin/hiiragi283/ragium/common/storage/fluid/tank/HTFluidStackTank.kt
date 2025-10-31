@@ -99,7 +99,7 @@ open class HTFluidStackTank protected constructor(
             if (this.getStack() == null) return
             this.stack = FluidStack.EMPTY
         } else if (!validate || isValid(stack)) {
-            this.stack = stack.copy().stack
+            this.stack = stack.unwrap()
         } else {
             error("Invalid stack for tank: $stack ${stack.componentsPatch()}")
         }
