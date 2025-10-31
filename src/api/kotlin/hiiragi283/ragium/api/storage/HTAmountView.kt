@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import com.google.common.primitives.Ints
+import kotlin.math.max
 
 /**
  * 個数を保持するインターフェース
@@ -37,7 +38,7 @@ sealed interface HTAmountView<N : Number> {
      * [Int]値を扱う[HTAmountView]の拡張インターフェース
      */
     interface IntSized : HTAmountView<Int> {
-        override fun getNeeded(): Int = getCapacity() - getAmount()
+        override fun getNeeded(): Int = max(0, getCapacity() - getAmount())
 
         override fun getStoredLevelAsDouble(): Double = getAmount() / getCapacity().toDouble()
 
@@ -52,7 +53,7 @@ sealed interface HTAmountView<N : Number> {
 
         fun getCapacityAsInt(): Int = Ints.saturatedCast(getCapacity())
 
-        override fun getNeeded(): Long = getCapacity() - getAmount()
+        override fun getNeeded(): Long = max(0, getCapacity() - getAmount())
 
         override fun getStoredLevelAsDouble(): Double = getAmount() / getCapacity().toDouble()
 

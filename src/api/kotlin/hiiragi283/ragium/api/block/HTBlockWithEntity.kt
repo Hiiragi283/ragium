@@ -22,7 +22,7 @@ interface HTBlockWithEntity : EntityBlock {
     override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
         val type: HTDeferredBlockEntityType<*> = getBlockEntityType()
         return when (blockEntityType) {
-            type.get() -> type.getTicker(level.isClientSide) as BlockEntityTicker<T>
+            type.get() -> type.getTicker(level.isClientSide) as? BlockEntityTicker<T>
             else -> null
         }
     }

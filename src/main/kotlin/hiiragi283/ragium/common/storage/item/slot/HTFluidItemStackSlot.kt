@@ -3,15 +3,15 @@ package hiiragi283.ragium.common.storage.item.slot
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.util.HTContentListener
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.function.Predicate
 
@@ -42,12 +42,13 @@ open class HTFluidItemStackSlot protected constructor(
         fun fillPredicate(tank: HTFluidTank): Predicate<ImmutableItemStack> = Predicate { stack: ImmutableItemStack ->
             val handler: IFluidHandlerItem = tryGetHandler(stack) ?: return@Predicate false
             for (i: Int in handler.tankRange) {
-                val stackIn: FluidStack = handler.getFluidInTank(i)
-                val bool1: Boolean = !stackIn.isEmpty
-                val bool2: Boolean =
-                    tank.insertFluid(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).amount < stackIn.amount
-                if (bool1 && bool2) {
-                    return@Predicate true
+                val stackIn: ImmutableFluidStack? = handler.getFluidInTank(i).toImmutable()
+                if (stackIn != null) {
+                    val remainder: Int =
+                        tank.insert(stackIn, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() ?: 0
+                    if (remainder < stackIn.amount()) {
+                        return@Predicate true
+                    }
                 }
             }
             false

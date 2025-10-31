@@ -22,7 +22,7 @@ fun interface HTFluidHandler : HTSidedFluidHandler {
 
     override fun getTankCapacity(tank: Int, side: Direction?): Int {
         val tank: HTFluidTank = getFluidTank(tank, side) ?: return 0
-        return tank.getCapacity(tank.getStack())
+        return tank.getCapacity()
     }
 
     override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean = getFluidTank(tank, side)?.isValid(stack) ?: false

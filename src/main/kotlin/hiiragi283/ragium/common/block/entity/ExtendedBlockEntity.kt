@@ -64,6 +64,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     protected fun setOnlySave() {
         setChanged(false)
+        requestModelDataUpdate()
     }
 
     override fun setChanged() {

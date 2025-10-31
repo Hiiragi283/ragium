@@ -8,20 +8,18 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getFluidStack
-import hiiragi283.ragium.api.storage.fluid.insertFluid
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidHandlerItemWrapper
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.Optional
 import java.util.function.ToIntFunction
@@ -155,12 +153,12 @@ object HTStackSlotHelper {
     ): Boolean {
         if (!HTFluidCapabilities.hasCapability(stack)) return false
         val handler: IFluidHandlerItem = HTFluidCapabilities.getCapability(stack.copyWithCount(1)) ?: return false
-        val firstFluid: FluidStack = when (tank.getStack() == null) {
+        val stackIn: ImmutableFluidStack? = tank.getStack()
+        val firstFluid: ImmutableFluidStack? = when (stackIn == null) {
             true -> handler.drain(Int.MAX_VALUE, HTStorageAction.SIMULATE.toFluid())
-            false -> handler.drain(tank.getFluidStack().copyWithAmount(Int.MAX_VALUE), HTStorageAction.SIMULATE.toFluid())
-        }
-        if (firstFluid.isEmpty) {
-            val stackIn: ImmutableFluidStack? = tank.getStack()
+            false -> handler.drain(stackIn.unwrap().copyWithAmount(Int.MAX_VALUE), HTStorageAction.SIMULATE.toFluid())
+        }.toImmutable()
+        if (firstFluid == null) {
             if (stackIn != null) {
                 val filled: Int = handler.fill(stackIn.unwrap(), HTStorageAction.of(player.isCreative).toFluid())
                 val container: ItemStack = handler.container
@@ -178,16 +176,17 @@ object HTStackSlotHelper {
                 }
             }
         } else {
-            val remainder: FluidStack = tank.insertFluid(firstFluid, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)
-            val remainderAmount: Int = remainder.amount
-            val storedAmount: Int = firstFluid.amount
+            val remainder: ImmutableFluidStack? = tank.insert(firstFluid, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)
+            val remainderAmount: Int = remainder?.amount() ?: 0
+            val storedAmount: Int = firstFluid.amount()
             if (remainderAmount < storedAmount) {
                 var filled = false
-                val drained: FluidStack = handler.drain(
-                    firstFluid.copyWithAmount(storedAmount - remainderAmount),
-                    HTStorageAction.of(player.isCreative).toFluid(),
-                )
-                if (!drained.isEmpty) {
+                val drained: ImmutableFluidStack? = handler
+                    .drain(
+                        firstFluid.unwrap().copyWithAmount(storedAmount - remainderAmount),
+                        HTStorageAction.of(player.isCreative).toFluid(),
+                    ).toImmutable()
+                if (drained != null) {
                     val container: ItemStack = handler.container
                     if (player.isCreative) {
                         filled = true
@@ -207,7 +206,7 @@ object HTStackSlotHelper {
                         filled = true
                     }
                     if (filled) {
-                        tank.insertFluid(drained, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
+                        tank.insert(drained, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
                         return true
                     }
                 }

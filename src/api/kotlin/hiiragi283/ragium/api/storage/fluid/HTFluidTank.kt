@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -34,16 +35,18 @@ interface HTFluidTank :
     override fun isFluidValid(stack: FluidStack): Boolean = isValid(stack)
 
     @Deprecated("Use `insert(FluidStack, Boolean, HTStorageAccess) `instead")
-    override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int =
-        resource.amount - insertFluid(resource, HTStorageAction.of(action), HTStorageAccess.EXTERNAL).amount
+    override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int {
+        val remainder: Int = insert(resource.toImmutable(), HTStorageAction.of(action), HTStorageAccess.EXTERNAL)?.amount() ?: return 0
+        return resource.amount - remainder
+    }
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack =
-        extractFluid(maxDrain, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
+        extract(maxDrain, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)?.unwrap() ?: FluidStack.EMPTY
 
     @Deprecated("Use `extract(FluidStack, Boolean, HTStorageAccess)` instead")
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack =
-        extractFluid(resource, HTStorageAction.of(action), HTStorageAccess.EXTERNAL)
+        extract(resource.toImmutable(), HTStorageAction.of(action), HTStorageAccess.EXTERNAL)?.unwrap() ?: FluidStack.EMPTY
 
     //    Basic    //
 

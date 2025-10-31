@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.network
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -10,7 +11,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import java.util.Optional
@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val index: Int, val stack: Optional<ImmutableFluidStack>) :
+data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val stacks: List<Optional<ImmutableFluidStack>>) :
     HTCustomPayload.S2C {
         companion object {
             @JvmField
@@ -29,27 +29,30 @@ data class HTUpdateFluidTankPacket private constructor(val pos: BlockPos, val in
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTUpdateFluidTankPacket> = StreamCodec.composite(
                 BlockPos.STREAM_CODEC,
                 HTUpdateFluidTankPacket::pos,
-                ByteBufCodecs.VAR_INT,
-                HTUpdateFluidTankPacket::index,
-                ImmutableFluidStack.OPTIONAL_CODEC.streamCodec,
-                HTUpdateFluidTankPacket::stack,
+                ImmutableFluidStack.OPTIONAL_CODEC.listOf().streamCodec,
+                HTUpdateFluidTankPacket::stacks,
                 ::HTUpdateFluidTankPacket,
             )
 
             @JvmStatic
-            fun create(blockEntity: HTBlockEntity, index: Int): HTUpdateFluidTankPacket? {
-                val tank: HTFluidTank = blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).getOrNull(index) ?: return null
-                return HTUpdateFluidTankPacket(blockEntity.blockPos, index, tank.getStack())
-            }
+            fun create(blockEntity: HTBlockEntity): HTUpdateFluidTankPacket = HTUpdateFluidTankPacket(
+                blockEntity.blockPos,
+                blockEntity
+                    .getFluidTanks(blockEntity.getFluidSideFor())
+                    .map(HTFluidTank::getStack)
+                    .map(Optional<ImmutableFluidStack>::ofNullable),
+            )
         }
-
-        constructor(pos: BlockPos, index: Int, stack: ImmutableFluidStack?) : this(pos, index, Optional.ofNullable(stack))
 
         override fun type(): CustomPacketPayload.Type<HTUpdateFluidTankPacket> = TYPE
 
         override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
             val screen: HTFluidScreen = minecraft.screen as? HTFluidScreen ?: return
             if (!screen.checkPosition(pos)) return
-            screen.getFluidWidgets().getOrNull(index)?.setStack(stack.getOrNull())
+            val widgets: List<HTFluidWidget> = screen.getFluidWidgets()
+            if (widgets.isEmpty()) return
+            for (i: Int in widgets.indices) {
+                widgets[i].setStack(stacks[i].getOrNull())
+            }
         }
     }

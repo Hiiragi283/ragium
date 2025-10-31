@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block.attribute
 
 import hiiragi283.ragium.api.block.HTBlockWithType
 import hiiragi283.ragium.api.tier.HTTierProvider
+import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -32,6 +33,9 @@ fun BlockState.getAllAttributes(): Collection<HTBlockAttribute> = this.blockHold
 fun Holder<Block>.getAllAttributes(): Collection<HTBlockAttribute> = this.value().getAllAttributes()
 
 fun Block.getAllAttributes(): Collection<HTBlockAttribute> = (this as? HTBlockWithType)?.type()?.getAll() ?: listOf()
+
+// direction
+fun BlockState.getAttributeDir(): Direction? = this.getAttribute<HTDirectionalBlockAttribute>()?.getDirection(this)
 
 // tier
 inline fun <reified TIER : HTTierProvider> Block.getAttributeTier(): TIER = getAttributeOrThrow<HTTierBlockAttribute<TIER>>().provider

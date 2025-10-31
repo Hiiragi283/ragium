@@ -57,7 +57,7 @@ class HTFluidFuelItemStackSlot private constructor(
 
     fun fillOrBurn() {
         val stack: ImmutableItemStack = this.getStack() ?: return
-        val needed: Int = tank.getNeeded(tank.getStack())
+        val needed: Int = tank.getNeeded()
         val fluidInteracted: Boolean = HTStackSlotHelper.moveFluid(this, this::setStackUnchecked, this.tank)
         if (needed > 0 && !fluidInteracted) {
             val amount: Int = stackToAmount.applyAsInt(stack)

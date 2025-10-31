@@ -1,6 +1,8 @@
 package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
+import hiiragi283.ragium.api.block.attribute.getAttributeDir
+import hiiragi283.ragium.api.extension.translate
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -9,6 +11,7 @@ import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.core.Direction
 
 class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTRefineryBlockEntity>(context) {
     override fun render(
@@ -19,18 +22,21 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        blockEntity.getFluidTank(0, blockEntity.getFluidSideFor())?.let { tank: HTFluidTank ->
-            poseStack.pushPose()
-            poseStack.translate(0.51f, 0f, 0.51f)
-            drawFluid(tank, poseStack, bufferSource, packedLight, packedOverlay)
-            poseStack.popPose()
-        }
-        blockEntity.getFluidTank(1, blockEntity.getFluidSideFor())?.let { tank: HTFluidTank ->
-            poseStack.pushPose()
-            poseStack.translate(0.01f, 0f, 0.51f)
-            drawFluid(tank, poseStack, bufferSource, packedLight, packedOverlay)
-            poseStack.popPose()
-        }
+        val front: Direction = blockEntity.blockState.getAttributeDir() ?: return
+        // input
+        poseStack.pushPose()
+        poseStack.translate(0.5f)
+        rotate(poseStack, front)
+        poseStack.translate(0.01f, -0.5f, 0.01f)
+        drawFluid(blockEntity.inputTank, poseStack, bufferSource, packedLight, packedOverlay)
+        poseStack.popPose()
+        // output
+        poseStack.pushPose()
+        poseStack.translate(0.5f)
+        rotate(poseStack, front)
+        poseStack.translate(0.01f - 0.5f, -0.5f, 0.01f)
+        drawFluid(blockEntity.outputTank, poseStack, bufferSource, packedLight, packedOverlay)
+        poseStack.popPose()
     }
 
     private fun drawFluid(
@@ -43,7 +49,7 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         val stack: ImmutableFluidStack = tank.getStack() ?: return
         val sprite: TextureAtlasSprite = HTSpriteRenderHelper.getFluidSprite(stack) ?: return
         val level: Float = tank.getStoredLevelAsFloat()
-        if (stack.fluidType().isLighterThanAir()) {
+        if (stack.fluidType().isLighterThanAir) {
             poseStack.translate(0f, 1f - level, 0f)
         }
         poseStack.scale(0.48f, level, 0.48f)

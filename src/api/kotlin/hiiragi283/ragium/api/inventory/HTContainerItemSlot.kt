@@ -55,7 +55,7 @@ open class HTContainerItemSlot(
         slot.onContentsChanged()
     }
 
-    override fun getMaxStackSize(): Int = slot.getCapacity(null)
+    override fun getMaxStackSize(): Int = slot.getCapacity()
 
     override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeeded(stack.toImmutable())
 

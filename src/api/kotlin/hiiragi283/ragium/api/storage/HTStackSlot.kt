@@ -84,7 +84,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          */
         override fun insert(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? {
             if (stack == null) return null
-            val needed: Int = getNeeded(stack)
+            val needed: Int = min(inputRate(access), getNeeded(stack))
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
             val stackIn: STACK? = this.getStack()
@@ -106,7 +106,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
 
         final override fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
             stack == null -> null
-            this.getStack() != null && isSameStack(stack) -> extract(stack.amount(), action, access)
+            isSameStack(stack) -> extract(stack.amount(), action, access)
             else -> null
         }
 
@@ -117,7 +117,7 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK? {
             val stack: STACK? = this.getStack()
             if (stack == null || amount < 1 || !canStackExtract(stack, access)) return null
-            val fixedAmount: Int = min(amount, getAmount())
+            val fixedAmount: Int = min(min(outputRate(access), getAmount()), amount)
             val result: STACK? = stack.copyWithAmount(fixedAmount)
             if (result != null && action.execute) {
                 shrinkAmount(stack, fixedAmount)
@@ -141,5 +141,17 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
          * @return 搬出できる場合は`true`
          */
         protected open fun canStackExtract(stack: STACK, access: HTStorageAccess): Boolean = true
+
+        /**
+         * 一度に搬入される数量の上限を返します。
+         * @param access このスロットへのアクセスの種類
+         */
+        protected open fun inputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
+
+        /**
+         * 一度に搬出される数量の上限を返します。
+         * @param access このスロットへのアクセスの種類
+         */
+        protected open fun outputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
     }
 }

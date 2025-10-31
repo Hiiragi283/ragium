@@ -95,19 +95,19 @@ class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockS
         val isCreative: Boolean = tier == HTDrumTier.CREATIVE
 
         override fun insert(stack: ImmutableFluidStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
-            var remainder: ImmutableFluidStack?
+            val remainder: ImmutableFluidStack?
             if (isCreative && this.getStack() == null && action.execute && access != HTStorageAccess.EXTERNAL) {
                 remainder = super.insert(stack, HTStorageAction.SIMULATE, access)
                 if (remainder == null) {
                     setStackUnchecked(stack?.copyWithAmount(getCapacity()))
                 }
             } else {
-                remainder = super.insert(stack, action.combine(isCreative), access)
+                remainder = super.insert(stack, action.combine(!isCreative), access)
             }
             return remainder
         }
 
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
-            super.extract(amount, action.combine(isCreative), access)
+            super.extract(amount, action.combine(!isCreative), access)
     }
 }

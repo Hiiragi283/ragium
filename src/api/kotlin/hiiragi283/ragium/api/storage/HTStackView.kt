@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.stack.ImmutableStack
+import kotlin.math.max
 
 /**
  * 単一の[STACK]を保持するインターフェース
@@ -22,7 +23,7 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
      * このスロットの空き容量を返します。
      * @return [Int]値での空き容量
      */
-    fun getNeeded(stack: STACK?): Int = getCapacity(stack) - getAmount()
+    fun getNeeded(stack: STACK?): Int = max(0, getCapacity(stack) - getAmount())
 
     /**
      * このスロットの占有率を返します。
@@ -46,5 +47,5 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
 
     override fun getAmount(): Int = getStack()?.amount() ?: 0
 
-    override fun getCapacity(): Int = getCapacity(getStack())
+    override fun getCapacity(): Int = getCapacity(null)
 }

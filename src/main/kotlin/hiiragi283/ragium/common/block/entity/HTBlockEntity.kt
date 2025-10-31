@@ -155,10 +155,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     override fun sendPassivePacket(level: ServerLevel) {
         super.sendPassivePacket(level)
         if (hasFluidHandler()) {
-            val tanks: List<HTFluidTank> = getFluidTanks(getFluidSideFor())
-            for (i: Int in tanks.indices) {
-                HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this, i))
-            }
+            HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this))
         }
         if (this.getEnergyStorage(null) != null) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
