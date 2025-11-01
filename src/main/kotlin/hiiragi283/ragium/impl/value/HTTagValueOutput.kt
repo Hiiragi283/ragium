@@ -1,7 +1,6 @@
 package hiiragi283.ragium.impl.value
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -68,7 +67,7 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
         return ValueOutputList(lookup, list)
     }
 
-    override fun <T : Any> list(key: String, codec: BiCodec<*, T>): HTValueOutput.TypedOutputList<T> {
+    override fun <T : Any> list(key: String, codec: Codec<T>): HTValueOutput.TypedOutputList<T> {
         val list = ListTag()
         compoundTag.put(key, list)
         return TypedOutputList(lookup, list, codec)
@@ -93,7 +92,7 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
 
     //    TypedOutputList    //
 
-    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: BiCodec<*, T>) :
+    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
         HTValueOutput.TypedOutputList<T> {
         private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
 
@@ -102,8 +101,8 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
 
         override fun add(element: T) {
             codec
-                .encode(registryOps, element)
-                .onSuccess(list::add)
+                .encodeStart(registryOps, element)
+                .ifSuccess(list::add)
         }
     }
 }

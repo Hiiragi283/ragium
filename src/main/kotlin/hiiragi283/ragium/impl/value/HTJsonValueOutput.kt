@@ -5,7 +5,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mojang.serialization.Codec
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.RegistryOps
@@ -68,7 +67,7 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
         return ValueOutputList(lookup, list)
     }
 
-    override fun <T : Any> list(key: String, codec: BiCodec<*, T>): HTValueOutput.TypedOutputList<T> {
+    override fun <T : Any> list(key: String, codec: Codec<T>): HTValueOutput.TypedOutputList<T> {
         val list = JsonArray()
         jsonObject.add(key, list)
         return TypedOutputList(lookup, list, codec)
@@ -93,7 +92,7 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
 
     //    TypedOutputList    //
 
-    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: JsonArray, private val codec: BiCodec<*, T>) :
+    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
         HTValueOutput.TypedOutputList<T> {
         private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
 
@@ -102,8 +101,8 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
 
         override fun add(element: T) {
             codec
-                .encode(registryOps, element)
-                .onSuccess(list::add)
+                .encodeStart(registryOps, element)
+                .ifSuccess(list::add)
         }
     }
 }

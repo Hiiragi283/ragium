@@ -63,7 +63,16 @@ interface HTValueOutput {
      * @param codec [T]のコーデック
      * @return [key]に紐づけられた[TypedOutputList]
      */
-    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedOutputList<T>
+    fun <T : Any> list(key: String, codec: Codec<T>): TypedOutputList<T>
+
+    /**
+     * 指定した[key]に[TypedOutputList]を作ります。
+     * @param T [TypedOutputList]の要素のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     * @return [key]に紐づけられた[TypedOutputList]
+     */
+    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedOutputList<T> = list(key, codec.codec)
 
     // Primitives
 
