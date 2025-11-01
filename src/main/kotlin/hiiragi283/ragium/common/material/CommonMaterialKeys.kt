@@ -1,12 +1,24 @@
 package hiiragi283.ragium.common.material
 
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialKey
 
-object HTCommonMaterialTypes {
+object CommonMaterialKeys {
+    @JvmStatic
+    val BASIC: HTMaterialKey = HTMaterialKey.of("basic")
+
+    @JvmStatic
+    val ADVANCED: HTMaterialKey = HTMaterialKey.of("advanced")
+
+    @JvmStatic
+    val ELITE: HTMaterialKey = HTMaterialKey.of("elite")
+
+    @JvmStatic
+    val ULTIMATE: HTMaterialKey = HTMaterialKey.of("ultimate")
+
     //    Common Metal    //
 
     @JvmField
-    val METALS: Map<String, HTMaterialType> = listOf(
+    val METALS: Map<String, HTMaterialKey> = listOf(
         // 3rd
         "aluminum",
         // 4th
@@ -45,13 +57,13 @@ object HTCommonMaterialTypes {
         "ironwood",
         "wrought_iron",
         "knightmetal",
-    ).associateWith(::MaterialImpl)
+    ).associateWith(HTMaterialKey::of)
 
     @JvmStatic
-    fun getMetal(key: String): HTMaterialType = METALS[key] ?: error("Unknown material: $key")
+    fun getMetal(key: String): HTMaterialKey = METALS[key] ?: error("Unknown material: $key")
 
     @JvmField
-    val ALLOYS: Map<String, HTMaterialType> = listOf(
+    val ALLOYS: Map<String, HTMaterialKey> = listOf(
         // Alloys
         "steel",
         "invar",
@@ -75,15 +87,15 @@ object HTCommonMaterialTypes {
         // Twilight Forest
         "steeleaf",
         "fiery",
-    ).associateWith(::MaterialImpl)
+    ).associateWith(HTMaterialKey::of)
 
     @JvmStatic
-    fun getAlloy(key: String): HTMaterialType = ALLOYS[key] ?: error("Unknown material: $key")
+    fun getAlloy(key: String): HTMaterialKey = ALLOYS[key] ?: error("Unknown material: $key")
 
     //    Common Gem    //
 
     @JvmField
-    val GEMS: Map<String, HTMaterialType> = listOf(
+    val GEMS: Map<String, HTMaterialKey> = listOf(
         "fluorite",
         "peridot",
         "ruby",
@@ -107,15 +119,8 @@ object HTCommonMaterialTypes {
         "fluxite",
         // Twilight Forest
         "carminite",
-    ).associateWith(::MaterialImpl)
+    ).associateWith(HTMaterialKey::of)
 
     @JvmStatic
-    fun getGem(key: String): HTMaterialType = GEMS[key] ?: error("Unknown material: $key")
-
-    //    MaterialImpl    //
-
-    @JvmInline
-    private value class MaterialImpl(private val name: String) : HTMaterialType {
-        override fun materialName(): String = name
-    }
+    fun getGem(key: String): HTMaterialKey = GEMS[key] ?: error("Unknown material: $key")
 }

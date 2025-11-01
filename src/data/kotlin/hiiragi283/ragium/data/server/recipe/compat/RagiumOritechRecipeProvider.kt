@@ -2,14 +2,13 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -33,10 +32,10 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
-            .input(gemOrDust(HTVanillaMaterialType.DIAMOND))
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .result(RagiumItems.getGem(RagiumMaterialType.RAGI_CRYSTAL))
+            .input(gemOrDust(VanillaMaterialKeys.DIAMOND))
+            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .result(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .time(20)
             .export(output, RagiumConst.RAGI_CRYSTAL)
     }
@@ -45,7 +44,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun centrifuge() {
         CentrifugeRecipeBuilder
             .build()
-            .input(gemOrDust(RagiumMaterialType.ELDRITCH_PEARL))
+            .input(gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL))
             .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX)
         // .export(output, "eldritch_flux")
     }
@@ -54,37 +53,37 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun foundry() {
         FoundryRecipeBuilder
             .build()
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .input(ingotOrDust(HTVanillaMaterialType.COPPER))
-            .result(RagiumItems.getIngot(RagiumMaterialType.RAGI_ALLOY))
+            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .input(ingotOrDust(VanillaMaterialKeys.COPPER))
+            .result(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY))
             .export(output, RagiumConst.RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
-            .input(HTItemMaterialVariant.DUST, RagiumMaterialType.RAGINITE)
-            .input(ingotOrDust(HTVanillaMaterialType.GOLD))
-            .result(RagiumItems.getIngot(RagiumMaterialType.ADVANCED_RAGI_ALLOY))
+            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .input(ingotOrDust(VanillaMaterialKeys.GOLD))
+            .result(RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
-            .input(gemOrDust(HTVanillaMaterialType.AMETHYST))
-            .input(gemOrDust(HTVanillaMaterialType.LAPIS))
-            .result(RagiumItems.getGem(RagiumMaterialType.AZURE), 2)
+            .input(gemOrDust(VanillaMaterialKeys.AMETHYST))
+            .input(gemOrDust(VanillaMaterialKeys.LAPIS))
+            .result(RagiumItems.getGem(RagiumMaterialKeys.AZURE), 2)
             .export(output, "azure_shard")
 
         FoundryRecipeBuilder
             .build()
-            .input(gemOrDust(RagiumMaterialType.AZURE))
-            .input(ingotOrDust(HTVanillaMaterialType.IRON))
-            .result(RagiumItems.getIngot(RagiumMaterialType.AZURE_STEEL))
+            .input(gemOrDust(RagiumMaterialKeys.AZURE))
+            .input(ingotOrDust(VanillaMaterialKeys.IRON))
+            .result(RagiumItems.getIngot(RagiumMaterialKeys.AZURE_STEEL))
             .export(output, RagiumConst.AZURE_STEEL)
 
         FoundryRecipeBuilder
             .build()
-            .input(HTItemMaterialVariant.SCRAP, RagiumMaterialType.DEEP_STEEL)
-            .input(ingotOrDust(RagiumMaterialType.AZURE_STEEL))
-            .result(RagiumItems.getIngot(RagiumMaterialType.DEEP_STEEL))
+            .input(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
+            .input(ingotOrDust(RagiumMaterialKeys.AZURE_STEEL))
+            .result(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
             .export(output, RagiumConst.DEEP_STEEL)
     }
 
@@ -92,8 +91,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun laser() {
         LaserRecipeBuilder
             .build()
-            .input(HTOreVariant.Default, HTVanillaMaterialType.REDSTONE)
-            .result(RagiumItems.getDust(RagiumMaterialType.RAGINITE))
+            .input(CommonMaterialPrefixes.ORE, VanillaMaterialKeys.REDSTONE)
+            .result(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE))
             .export(output, "raginite")
     }
 
@@ -101,17 +100,17 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun particle() {
         ParticleCollisionRecipeBuilder
             .build()
-            .input(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN)
+            .input(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN)
             .input(Items.DEEPSLATE)
-            .result(RagiumItems.getScrap(RagiumMaterialType.DEEP_STEEL))
+            .result(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL))
             .time(2500)
             .export(output, "deep_scrap")
     }
 
     //    Extension    //
 
-    fun OritechRecipeBuilder.input(variant: HTMaterialVariant.ItemTag, material: HTMaterialType): OritechRecipeBuilder =
-        input(variant.itemTagKey(material))
+    fun OritechRecipeBuilder.input(prefix: HTMaterialPrefix, material: HTMaterialLike): OritechRecipeBuilder =
+        input(prefix.itemTagKey(material))
 
     fun OritechRecipeBuilder.result(item: HTItemHolderLike, count: Int = 1): OritechRecipeBuilder = result(item.toStack(count))
 

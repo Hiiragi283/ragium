@@ -1,18 +1,19 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTCommonMaterialTypes
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -39,13 +40,13 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_web")
 
         mapOf(
-            HTVanillaMaterialType.AMETHYST to Items.AMETHYST_SHARD,
-            HTVanillaMaterialType.GLOWSTONE to Items.GLOWSTONE_DUST,
-            HTVanillaMaterialType.QUARTZ to Items.QUARTZ,
-        ).forEach { (material: HTMaterialType, result: Item) ->
+            VanillaMaterialKeys.AMETHYST to Items.AMETHYST_SHARD,
+            VanillaMaterialKeys.GLOWSTONE to Items.GLOWSTONE_DUST,
+            VanillaMaterialKeys.QUARTZ to Items.QUARTZ,
+        ).forEach { (key: HTMaterialKey, result: Item) ->
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(HTStorageMaterialVariant, material),
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
                     resultHelper.item(result, 4),
                 ).saveSuffixed(output, "_from_block")
         }
@@ -104,7 +105,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
-                resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToChancedItemRecipeBuilder
@@ -132,7 +133,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             HTItemToObjRecipeBuilder
                 .pulverizing(
                     itemCreator.fromTagKey(tagKey, input),
-                    resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, output),
+                    resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, output),
                 ).saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
         }
 
@@ -169,7 +170,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
             .addResult(resultHelper.item(Items.SAND, 4))
-            .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER), 1 / 4f)
+            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SALTPETER), 1 / 4f)
             .saveSuffixed(output, "_from_sandstone")
 
         HTItemToChancedItemRecipeBuilder
@@ -243,41 +244,42 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun material() {
         // Builtin
-        for ((material: HTMaterialType, _) in RagiumItems.MATERIALS.row(HTItemMaterialVariant.DUST)) {
-            val baseVariant: HTMaterialVariant.ItemTag = RagiumPlatform.INSTANCE.getBaseVariant(material) ?: continue
-            if (baseVariant == HTItemMaterialVariant.DUST) continue
+        for ((key: HTMaterialKey, _) in RagiumItems.MATERIALS.row(CommonMaterialPrefixes.DUST)) {
+            val basePrefix: HTMaterialPrefix = RagiumPlatform.INSTANCE.getBaseVariant(key) ?: continue
+            if (basePrefix == CommonMaterialPrefixes.DUST) continue
+            val id: ResourceLocation = RagiumAPI.MATERIAL_PREFIX_REGISTRY.getKey(basePrefix) ?: continue
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(baseVariant, material),
-                    resultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).saveSuffixed(output, "_from_${baseVariant.variantName()}")
+                    itemCreator.fromTagKey(basePrefix, key),
+                    resultHelper.item(CommonMaterialPrefixes.DUST, key),
+                ).saveSuffixed(output, "_from_${id.path}")
         }
 
         // Common
-        for (material: HTMaterialType in HTCommonMaterialTypes.METALS.values) {
+        for (material: HTMaterialKey in CommonMaterialKeys.METALS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(HTItemMaterialVariant.INGOT, material),
-                    resultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, material),
+                    resultHelper.item(CommonMaterialPrefixes.DUST, material),
+                ).tagCondition(CommonMaterialPrefixes.DUST, material)
                 .saveSuffixed(output, "_from_ingot")
         }
 
-        for (material: HTMaterialType in HTCommonMaterialTypes.ALLOYS.values) {
+        for (material: HTMaterialKey in CommonMaterialKeys.ALLOYS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(HTItemMaterialVariant.INGOT, material),
-                    resultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, material),
+                    resultHelper.item(CommonMaterialPrefixes.DUST, material),
+                ).tagCondition(CommonMaterialPrefixes.DUST, material)
                 .saveSuffixed(output, "_from_ingot")
         }
 
-        for (material: HTMaterialType in HTCommonMaterialTypes.GEMS.values) {
+        for (material: HTMaterialKey in CommonMaterialKeys.GEMS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    itemCreator.fromTagKey(HTItemMaterialVariant.GEM, material),
-                    resultHelper.item(HTItemMaterialVariant.DUST, material),
-                ).tagCondition(HTItemMaterialVariant.DUST, material)
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, material),
+                    resultHelper.item(CommonMaterialPrefixes.DUST, material),
+                ).tagCondition(CommonMaterialPrefixes.DUST, material)
                 .saveSuffixed(output, "_from_gem")
         }
     }

@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api.tier
 
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
+import hiiragi283.ragium.api.material.HTMaterialLike
 
-/**
- * [HTMaterialType]と[HTTierProvider]を継承した拡張インターフェース
- */
 interface HTMaterialTier :
-    HTMaterialType.Translatable,
-    HTTierProvider
+    HTMaterialLike,
+    HTTierProvider,
+    HTTranslatedNameProvider

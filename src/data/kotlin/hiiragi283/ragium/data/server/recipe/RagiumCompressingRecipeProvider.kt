@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -72,14 +72,14 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Sawdust -> Compressed
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, 8),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 8),
                 resultHelper.item(RagiumItems.COMPRESSED_SAWDUST),
             ).save(output)
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fuelOrDust(HTVanillaMaterialType.COAL, 64),
-                resultHelper.item(HTItemMaterialVariant.GEM, HTVanillaMaterialType.DIAMOND),
+                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL, 64),
+                resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
             ).saveSuffixed(output, "_from_coal")
 
         // Basalt Mesh

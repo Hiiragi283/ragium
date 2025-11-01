@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.addon
 
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.variant.HTMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
@@ -49,7 +49,7 @@ interface RagiumAddon {
 
     //    Extension    //
 
-    fun registerMaterial(consumer: BiConsumer<HTMaterialType, HTMaterialVariant.ItemTag>) {}
+    fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialPrefix>) {}
 
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {}
 

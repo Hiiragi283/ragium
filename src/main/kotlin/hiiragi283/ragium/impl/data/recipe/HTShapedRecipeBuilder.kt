@@ -1,9 +1,9 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -36,8 +36,7 @@ class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: I
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
 
-    fun define(symbol: Char, variant: HTMaterialVariant.ItemTag, material: HTMaterialType): HTShapedRecipeBuilder =
-        define(symbol, variant.itemTagKey(material))
+    fun define(symbol: Char, prefix: HTMaterialPrefix, key: HTMaterialLike): HTShapedRecipeBuilder = define(symbol, prefix.itemTagKey(key))
 
     fun define(symbol: Char, tagKey: TagKey<Item>): HTShapedRecipeBuilder = define(symbol, Ingredient.of(tagKey))
 

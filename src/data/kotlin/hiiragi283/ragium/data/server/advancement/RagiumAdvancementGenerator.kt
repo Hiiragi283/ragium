@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
@@ -23,7 +23,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun generate(registries: HolderLookup.Provider) {
         root(RagiumAdvancements.ROOT) {
             display {
-                setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_ALLOY))
+                setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY))
                 title = Component.literal(RagiumAPI.MOD_NAME)
                 setDescFromKey(RagiumAdvancements.ROOT)
                 backGround = RagiumAPI.id("textures/block/${RagiumConst.IRIDESCENTIUM}_block.png")
@@ -61,15 +61,15 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.RAGINITE,
             RagiumAdvancements.ROOT,
-            HTItemMaterialVariant.DUST,
-            RagiumMaterialType.RAGINITE,
+            CommonMaterialPrefixes.DUST,
+            RagiumMaterialKeys.RAGINITE,
         )
         // Basic
         createSimple(
             RagiumAdvancements.RAGI_ALLOY,
             RagiumAdvancements.RAGINITE,
-            HTItemMaterialVariant.INGOT,
-            RagiumMaterialType.RAGI_ALLOY,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.RAGI_ALLOY,
         )
         createSimple(
             RagiumAdvancements.ALLOY_SMELTER,
@@ -97,8 +97,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
             RagiumAdvancements.RAGI_ALLOY,
-            HTItemMaterialVariant.INGOT,
-            RagiumMaterialType.ADVANCED_RAGI_ALLOY,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
         )
         createSimple(
             RagiumAdvancements.MELTER,
@@ -110,13 +110,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.RAGI_CRYSTAL,
             RagiumAdvancements.RAGINITE,
-            HTItemMaterialVariant.GEM,
-            RagiumMaterialType.RAGI_CRYSTAL,
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.RAGI_CRYSTAL,
         )
         createSimple(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
             RagiumAdvancements.RAGI_CRYSTAL,
-            RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialType.RAGI_CRYSTAL),
+            RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL),
         ) { setGoal() }
         child(RagiumAdvancements.RAGI_TICKET, RagiumAdvancements.RAGI_CRYSTAL) {
             display {
@@ -133,23 +133,23 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
             RagiumAdvancements.ALLOY_SMELTER,
-            HTItemMaterialVariant.GEM,
-            RagiumMaterialType.AZURE,
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.AZURE,
         )
         createSimple(
             RagiumAdvancements.AZURE_STEEL,
             RagiumAdvancements.AZURE_SHARD,
-            HTItemMaterialVariant.INGOT,
-            RagiumMaterialType.AZURE_STEEL,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.AZURE_STEEL,
         )
         child(RagiumAdvancements.AZURE_GEARS, RagiumAdvancements.AZURE_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialType.AZURE_STEEL))
+                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialType.AZURE_STEEL))
+            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.AZURE_STEEL))
         }
 
         createSimple(
@@ -169,17 +169,17 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.DEEP_STEEL,
             RagiumAdvancements.RESONANT_DEBRIS,
-            HTItemMaterialVariant.INGOT,
-            RagiumMaterialType.DEEP_STEEL,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.DEEP_STEEL,
         )
         child(RagiumAdvancements.DEEP_GEARS, RagiumAdvancements.DEEP_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialType.DEEP_STEEL))
+                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL))
                 setTitleFromKey(RagiumAdvancements.DEEP_GEARS)
                 setDescFromKey(RagiumAdvancements.DEEP_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialType.DEEP_STEEL))
+            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.DEEP_STEEL))
         }
 
         createSimple(
@@ -193,8 +193,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.CRIMSON_CRYSTAL,
             RagiumAdvancements.MELTER,
-            HTItemMaterialVariant.GEM,
-            RagiumMaterialType.CRIMSON_CRYSTAL,
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.CRIMSON_CRYSTAL,
         )
         child(RagiumAdvancements.CRIMSON_SOIL, RagiumAdvancements.CRIMSON_CRYSTAL) {
             display {
@@ -211,8 +211,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.WARPED_CRYSTAL,
             RagiumAdvancements.MELTER,
-            HTItemMaterialVariant.GEM,
-            RagiumMaterialType.WARPED_CRYSTAL,
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.WARPED_CRYSTAL,
         )
         child(RagiumAdvancements.DIM_ANCHOR, RagiumAdvancements.WARPED_CRYSTAL) {
             display {
@@ -241,8 +241,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
             RagiumAdvancements.MELTER,
-            HTItemMaterialVariant.GEM,
-            RagiumMaterialType.ELDRITCH_PEARL,
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.ELDRITCH_PEARL,
         )
         child(RagiumAdvancements.ELDRITCH_EGG, RagiumAdvancements.ELDRITCH_PEARL) {
             display {
@@ -268,8 +268,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.IRIDESCENTIUM,
             RagiumAdvancements.ELDRITCH_PEARL,
-            HTItemMaterialVariant.INGOT,
-            RagiumMaterialType.IRIDESCENTIUM,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.IRIDESCENTIUM,
         )
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,

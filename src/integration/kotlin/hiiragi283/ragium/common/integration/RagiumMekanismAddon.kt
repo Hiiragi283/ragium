@@ -4,19 +4,19 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTMekMaterialVariant
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.setup.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
-import mekanism.api.chemical.Chemical
 import mekanism.common.registration.impl.ChemicalDeferredRegister
 import mekanism.common.registration.impl.DeferredChemical
 import mekanism.common.registries.MekanismItems
@@ -36,45 +36,46 @@ object RagiumMekanismAddon : RagiumAddon {
     val CHEMICAL_REGISTER = ChemicalDeferredRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val CHEMICAL_MAP: Map<HTMaterialType, DeferredChemical<Chemical>> = buildMap {
+    val CHEMICAL_MAP: Map<HTMaterialKey, DeferredChemical<*>> = buildMap {
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-            this[essenceType] = CHEMICAL_REGISTER.registerInfuse(essenceType.materialName(), essenceType.color.rgb)
+            val key: HTMaterialKey = essenceType.asMaterialKey()
+            this[key] = CHEMICAL_REGISTER.registerInfuse(key.name, essenceType.color.rgb)
         }
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            this[data.material] = CHEMICAL_REGISTER.register(data.molten.getPath(), data.color)
+            this[data.asMaterialKey()] = CHEMICAL_REGISTER.register(data.molten.getPath(), data.color)
         }
     }
 
     @JvmStatic
-    fun getChemical(material: HTMaterialType): DeferredChemical<Chemical> =
-        CHEMICAL_MAP[material] ?: error("Unknown chemical for ${material.materialName()}")
+    fun getChemical(material: HTMaterialLike): DeferredChemical<*> =
+        CHEMICAL_MAP[material.asMaterialKey()] ?: error("Unknown chemical for ${material.asMaterialName()}")
 
     //    Item    //
 
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
-    val MATERIAL_ITEMS: ImmutableTable<HTMaterialVariant.ItemTag, HTMaterialType, HTDeferredItem<*>> = buildTable {
+    val MATERIAL_ITEMS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         // Enriched
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-            this[HTMekMaterialVariant.ENRICHED, essenceType] = ITEM_REGISTER.registerSimpleItem("enriched_${essenceType.materialName()}")
+            val key: HTMaterialKey = essenceType.asMaterialKey()
+            this[MekanismMaterialPrefixes.ENRICHED, key] = ITEM_REGISTER.registerSimpleItem("enriched_${key.name}")
         }
     }
 
     @JvmStatic
-    fun getEnriched(material: HTMaterialType): HTItemHolderLike = when (material) {
-        HTVanillaMaterialType.COAL -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_CARBON)
-        HTVanillaMaterialType.REDSTONE -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_REDSTONE)
-        HTVanillaMaterialType.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
-        HTVanillaMaterialType.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
-        HTVanillaMaterialType.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
-        else -> MATERIAL_ITEMS[HTMekMaterialVariant.ENRICHED, material]
-            ?: error("Unknown enriched item for ${material.materialName()}")
+    fun getEnriched(material: HTMaterialLike): HTItemHolderLike = when (val key: HTMaterialKey = material.asMaterialKey()) {
+        VanillaMaterialKeys.COAL -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_CARBON)
+        VanillaMaterialKeys.REDSTONE -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_REDSTONE)
+        VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
+        VanillaMaterialKeys.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
+        VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
+        else -> MATERIAL_ITEMS[MekanismMaterialPrefixes.ENRICHED, key] ?: error("Unknown enriched item for ${key.name}")
     }
 
     @JvmStatic
-    fun getEnrichedStack(material: HTMaterialType, count: Int = 1): ItemStack = getEnriched(material).toStack(count)
+    fun getEnrichedStack(material: HTMaterialLike, count: Int = 1): ItemStack = getEnriched(material.asMaterialKey()).toStack(count)
 
     //    RagiumAddon    //
 
@@ -83,6 +84,8 @@ object RagiumMekanismAddon : RagiumAddon {
 
         CHEMICAL_REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
+
+        MekanismMaterialPrefixes.REGISTER.register(eventBus)
     }
 
     override fun modifyComponents(event: ModifyDefaultComponentsEvent) {
@@ -95,7 +98,7 @@ object RagiumMekanismAddon : RagiumAddon {
         helper.ifMatchTab(RagiumCreativeTabs.INGREDIENTS) { event: BuildCreativeModeTabContentsEvent ->
             for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
                 event.insertAfter(
-                    RagiumItems.getMaterial(essenceType.baseVariant, essenceType.parent).toStack(),
+                    RagiumItems.getMaterial(essenceType.basePrefix, essenceType.parent).toStack(),
                     getEnrichedStack(essenceType),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
                 )

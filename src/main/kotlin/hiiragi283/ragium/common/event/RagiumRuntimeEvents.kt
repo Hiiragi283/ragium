@@ -1,4 +1,4 @@
-package hiiragi283.ragium
+package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
@@ -44,6 +44,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
+import kotlin.collections.forEach
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeEvents {
@@ -181,7 +182,7 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun beforeEntityDamaged(event: LivingDamageEvent.Pre) {
-        val accessoryCap: AccessoriesCapability = RagiumPlatform.INSTANCE.getAccessoryCap(event.entity) ?: return
+        val accessoryCap: AccessoriesCapability = RagiumPlatform.Companion.INSTANCE.getAccessoryCap(event.entity) ?: return
         val reference: SlotEntryReference = accessoryCap.getFirstEquipped { stack: ItemStack ->
             stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)
         } ?: return
@@ -227,7 +228,7 @@ object RagiumRuntimeEvents {
         val weapon: ItemStack = source.weaponItem ?: return
         if (HTItemHelper.hasStrike(weapon)) {
             // 対象のモブに対応する頭をドロップする
-            RagiumDataMaps.INSTANCE
+            RagiumDataMaps.Companion.INSTANCE
                 .getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
                 .let(entity::spawnAtLocation)
         }
