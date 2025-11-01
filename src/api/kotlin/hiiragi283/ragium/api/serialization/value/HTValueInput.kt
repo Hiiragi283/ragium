@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.serialization.value
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * NBTやJSONの読み取り専用のラッパー
@@ -14,6 +16,8 @@ interface HTValueInput {
      * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
      */
     fun <T : Any> read(key: String, codec: BiCodec<*, T>): T?
+
+    fun <T : Any> readOptional(key: String, codec: BiCodec<*, Optional<T>>): T? = read(key, codec)?.getOrNull()
 
     // Compound
 

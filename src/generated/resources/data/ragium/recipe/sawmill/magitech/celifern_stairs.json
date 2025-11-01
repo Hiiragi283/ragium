@@ -10,7 +10,9 @@
     }
   ],
   "type": "ragium:sawmill",
-  "ingredient": "magitech:celifern_planks",
+  "ingredient": {
+    "item": "magitech:celifern_planks"
+  },
   "result": {
     "count": 1,
     "id": "magitech:celifern_stairs"

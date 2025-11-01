@@ -2,8 +2,9 @@ package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.access.HTAccessConfig
+import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -13,7 +14,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
 @JvmRecord
-data class HTUpdateAccessConfigPayload(val pos: BlockPos, val direction: Direction, val transferIO: HTAccessConfiguration) :
+data class HTUpdateAccessConfigPayload(val pos: BlockPos, val direction: Direction, val transferIO: HTAccessConfig) :
     HTCustomPayload.C2S {
     companion object {
         @JvmField
@@ -25,17 +26,17 @@ data class HTUpdateAccessConfigPayload(val pos: BlockPos, val direction: Directi
             HTUpdateAccessConfigPayload::pos,
             Direction.STREAM_CODEC,
             HTUpdateAccessConfigPayload::direction,
-            HTAccessConfiguration.CODEC.streamCodec,
+            HTAccessConfig.CODEC.streamCodec,
             HTUpdateAccessConfigPayload::transferIO,
             ::HTUpdateAccessConfigPayload,
         )
     }
 
     override fun handle(player: ServerPlayer, server: MinecraftServer) {
-        val receiver: HTAccessConfiguration.Holder = player.serverLevel().getBlockEntity(pos) as? HTAccessConfiguration.Holder ?: return
-        receiver.setAccessConfiguration(direction, transferIO)
-        if (receiver is HTContentListener) {
-            receiver.onContentsChanged()
+        val setter: HTAccessConfigSetter = player.serverLevel().getBlockEntity(pos) as? HTAccessConfigSetter ?: return
+        setter.setAccessConfig(direction, transferIO)
+        if (setter is HTContentListener) {
+            setter.onContentsChanged()
         }
     }
 

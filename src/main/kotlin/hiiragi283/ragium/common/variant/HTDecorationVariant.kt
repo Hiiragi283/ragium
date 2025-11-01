@@ -1,22 +1,22 @@
 package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.registry.blockId
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 
-enum class HTDecorationVariant(private val enPattern: String, private val jaPattern: String) : HTVariantKey {
+enum class HTDecorationVariant(private val enPattern: String, private val jaPattern: String) :
+    HTVariantKey,
+    HTTranslationProvider {
     RAGI_BRICK("Ragi-Brick %s", "らぎレンガの%s"),
     AZURE_TILE("Azure Tile %s", "紺碧のタイルの%s"),
-    ELDRITCH_STONE("Eldritch Stone %s", "異質石の%s"),
-    POLISHED_ELDRITCH_STONE("Polished Eldritch Stone %s", "磨かれた異質石の%s"),
-    POLISHED_ELDRITCH_STONE_BRICK("Polished Eldritch Stone Brick %s", "磨かれた異質石レンガの%s"),
+    ELDRITCH_STONE("Eldritch Stone %s", "エルドリッチストーンの%s"),
+    ELDRITCH_STONE_BRICK("Eldritch Stone Brick %s", "エルドリッチストーンレンガの%s"),
     PLASTIC_BRICK("Plastic Brick %s", "プラスチックレンガの%s"),
     PLASTIC_TILE("Plastic Tile %s", "プラスチックタイルの%s"),
     BLUE_NETHER_BRICK("Blue Nether Brick %s", "青いネザーレンガの%s"),
@@ -27,8 +27,7 @@ enum class HTDecorationVariant(private val enPattern: String, private val jaPatt
         RAGI_BRICK -> RagiumBlocks.RAGI_BRICKS
         AZURE_TILE -> RagiumBlocks.AZURE_TILES
         ELDRITCH_STONE -> RagiumBlocks.ELDRITCH_STONE
-        POLISHED_ELDRITCH_STONE -> RagiumBlocks.POLISHED_ELDRITCH_STONE
-        POLISHED_ELDRITCH_STONE_BRICK -> RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS
+        ELDRITCH_STONE_BRICK -> RagiumBlocks.ELDRITCH_STONE_BRICKS
         PLASTIC_BRICK -> RagiumBlocks.PLASTIC_BRICKS
         PLASTIC_TILE -> RagiumBlocks.PLASTIC_TILES
         BLUE_NETHER_BRICK -> RagiumBlocks.BLUE_NETHER_BRICKS
@@ -37,8 +36,6 @@ enum class HTDecorationVariant(private val enPattern: String, private val jaPatt
     val slab: HTBasicDeferredBlock<SlabBlock> get() = RagiumBlocks.SLABS[this]!!
     val stairs: HTBasicDeferredBlock<StairBlock> get() = RagiumBlocks.STAIRS[this]!!
     val wall: HTBasicDeferredBlock<WallBlock> get() = RagiumBlocks.WALLS[this]!!
-
-    val textureId: ResourceLocation get() = base.blockId
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enPattern

@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 
 enum class RagiumMaterialType(private val enName: String, private val jpName: String) : HTMaterialType.Translatable {
     // Mineral
@@ -29,13 +30,15 @@ enum class RagiumMaterialType(private val enName: String, private val jpName: St
     // Food
     CHOCOLATE("Chocolate", "チョコレート"),
     MEAT("Meat", "生肉") {
-        override fun translate(type: HTLanguageType, variant: HTVariantKey): String = if (variant == HTItemMaterialVariant.DUST) {
+        override fun translate(type: HTLanguageType, provider: HTTranslationProvider): String = if (provider ==
+            HTItemMaterialVariant.DUST
+        ) {
             when (type) {
                 HTLanguageType.EN_US -> "Minced Meat"
                 HTLanguageType.JA_JP -> "ひき肉"
             }
         } else {
-            super.translate(type, variant)
+            super.translate(type, provider)
         }
     },
     COOKED_MEAT("Cooked Meat", "焼肉"),

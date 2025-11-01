@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTDamageResistant
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTRepairable
@@ -13,11 +14,11 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 object RagiumDataComponents {
     @JvmField
@@ -42,14 +43,13 @@ object RagiumDataComponents {
     val EAT_SOUND: DataComponentType<HTItemSoundEvent> = REGISTER.registerType("eating_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
-    val ENERGY: DataComponentType<Long> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_LONG)
+    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
 
     @JvmField
-    val FLUID_CONTENT: DataComponentType<SimpleFluidContent> = REGISTER.registerType(
-        "fluid_content",
-        SimpleFluidContent.CODEC,
-        SimpleFluidContent.STREAM_CODEC,
-    )
+    val EXPERIENCE: DataComponentType<Long> = REGISTER.registerType("experience", BiCodecs.NON_NEGATIVE_LONG)
+
+    @JvmField
+    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
 
     @JvmField
     val IMMUNE_DAMAGE_TYPES: DataComponentType<HTKeyOrTagEntry<DamageType>> = REGISTER.registerType(
@@ -62,6 +62,9 @@ object RagiumDataComponents {
         "intrinsic_enchantment",
         HTIntrinsicEnchantment.CODEC,
     )
+
+    @JvmField
+    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)

@@ -14,11 +14,11 @@ class HTSimpleFluidExtensions(val stillTex: ResourceLocation, val color: Color? 
     companion object {
         @JvmStatic
         fun liquid(color: Color): HTSimpleFluidExtensions =
-            HTSimpleFluidExtensions(vanillaId("block/water_still"), color, vanillaId("block/water_flow"))
+            HTSimpleFluidExtensions(vanillaId("block", "water_still"), color, vanillaId("block", "water_flow"))
 
         @JvmStatic
         fun molten(color: Color): HTSimpleFluidExtensions =
-            HTSimpleFluidExtensions(RagiumAPI.id("block/molten_still"), color, RagiumAPI.id("block/molten_flow"))
+            HTSimpleFluidExtensions(RagiumAPI.id("block", "molten_still"), color, RagiumAPI.id("block", "molten_flow"))
     }
 
     override fun getStillTexture(): ResourceLocation = stillTex

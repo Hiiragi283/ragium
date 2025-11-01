@@ -5,7 +5,7 @@ import net.minecraft.core.Direction
 
 /**
  * [HTItemSlot]向けの[HTCapabilityHolder]の拡張インターフェース
- * @see [mekanism.common.capabilities.holder.slot.IInventorySlotHolder]
+ * @see mekanism.common.capabilities.holder.slot.IInventorySlotHolder
  */
 interface HTItemSlotHolder : HTCapabilityHolder {
     /**

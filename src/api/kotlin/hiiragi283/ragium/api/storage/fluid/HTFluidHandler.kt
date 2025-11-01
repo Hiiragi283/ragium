@@ -1,18 +1,18 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
  * [HTFluidTank]に基づいた[HTSidedFluidHandler]の拡張インターフェース
- * @see [mekanism.api.fluid.IMekanismFluidHandler]
+ * @see mekanism.api.fluid.IMekanismFluidHandler
  */
-interface HTFluidHandler :
-    HTSidedFluidHandler,
-    HTContentListener {
+fun interface HTFluidHandler : HTSidedFluidHandler {
     fun hasFluidHandler(): Boolean = true
 
     fun getFluidTanks(side: Direction?): List<HTFluidTank>
@@ -25,58 +25,68 @@ interface HTFluidHandler :
 
     override fun getTankCapacity(tank: Int, side: Direction?): Int {
         val tank: HTFluidTank = getFluidTank(tank, side) ?: return 0
-        return tank.getCapacityAsInt(tank.getStack())
+        return tank.getCapacity()
     }
 
     override fun isFluidValid(tank: Int, stack: FluidStack, side: Direction?): Boolean = getFluidTank(tank, side)?.isValid(stack) ?: false
 
-    override fun insertFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.fill
+     */
+    override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): Int {
+        if (resource.isEmpty) return 0
+        val action1: HTStorageAction = HTStorageAction.of(action)
         val access: HTStorageAccess = HTStorageAccess.forHandler(side)
-        return when (tanks.size) {
-            1 -> tanks[0].insertFluid(stack, action, access)
-            2 -> {
-                val first: FluidStack = tanks[0].insertFluid(stack, action, access)
-                tanks[1].insertFluid(first, action, access)
+        val remaining: FluidStack = resource.copy()
+        var existing: HTFluidTank? = null
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            if (tank.isSameStack(remaining.toImmutable())) {
+                existing = tank
+                break
             }
-            else -> stack
         }
+        if (existing != null) {
+            val remainder: Int = existing.insert(remaining.toImmutable(), action1, access)?.amount() ?: 0
+            remaining.amount = remainder
+        } else {
+            for (tank: HTFluidTank in getFluidTanks(side)) {
+                val remainder: Int = tank.insert(remaining.toImmutable(), action1, access)?.amount() ?: 0
+                if (remainder < remaining.amount) {
+                    remaining.amount = remainder
+                    break
+                }
+            }
+        }
+        return resource.amount - remaining.amount
     }
 
-    override fun extractFluid(amount: Int, action: HTStorageAction, side: Direction?): FluidStack {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.drain
+     */
+    override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
+        val action1: HTStorageAction = HTStorageAction.of(action)
         val access: HTStorageAccess = HTStorageAccess.forHandler(side)
-        return when (tanks.size) {
-            1 -> tanks[0].extractFluid(amount, action, access)
-            2 -> {
-                val first: FluidStack = tanks[0].extractFluid(amount, action, access)
-                val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
-                tank1.extractFluid(first.amount, action, access)
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            val drained: ImmutableFluidStack? = tank.extract(resource.toImmutable(), action1, access)
+            if (drained != null) {
+                return drained.unwrap()
             }
-            else -> FluidStack.EMPTY
         }
+        return FluidStack.EMPTY
     }
 
-    override fun extractFluid(stack: FluidStack, action: HTStorageAction, side: Direction?): FluidStack {
-        val tanks: List<HTFluidTank> = getFluidTanks(side)
+    /**
+     * @see blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler.drain
+     */
+    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction, side: Direction?): FluidStack {
+        val action1: HTStorageAction = HTStorageAction.of(action)
         val access: HTStorageAccess = HTStorageAccess.forHandler(side)
-        return when (tanks.size) {
-            1 -> {
-                val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
-                tank.extractFluid(stack.amount, action, access)
+        for (tank: HTFluidTank in getFluidTanks(side)) {
+            val drained: ImmutableFluidStack? = tank.extract(maxDrain, action1, access)
+            if (drained != null) {
+                return drained.unwrap()
             }
-            2 -> {
-                val tank: HTFluidTank = tanks[0]
-                if (!FluidStack.isSameFluidSameComponents(stack, tank.getFluidStack())) return FluidStack.EMPTY
-                val first: FluidStack = tank.extractFluid(stack.amount, action, access)
-
-                val tank1: HTFluidTank = tanks[1]
-                if (!FluidStack.isSameFluidSameComponents(first, tank1.getFluidStack())) return first
-                tank1.extractFluid(first.amount, action, access)
-            }
-            else -> FluidStack.EMPTY
         }
+        return FluidStack.EMPTY
     }
 }

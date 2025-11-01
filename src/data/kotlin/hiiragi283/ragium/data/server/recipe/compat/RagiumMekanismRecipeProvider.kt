@@ -3,17 +3,17 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.mekanism.HTMekMaterialVariant
-import hiiragi283.ragium.common.integration.mekanism.RagiumMekanismAddon
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
+import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTMekMaterialVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
@@ -79,7 +79,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ore -> Dust
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTBlockMaterialVariant.ORE, RagiumMaterialType.RAGINITE),
+                itemHelper.from(HTOreVariant.Default, RagiumMaterialType.RAGINITE),
                 RagiumItems.getDust(RagiumMaterialType.RAGINITE).toStack(12),
             ).build(output, id("processing/raginite/from_ore"))
 
@@ -143,8 +143,8 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ethene + Catalyst -> HDPE
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(RagiumItems.POLYMER_CATALYST),
-                ingredientHelper.fluid(MekanismTags.Fluids.ETHENE, 100),
+                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
+                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
             ).addResult(resultHelper.item(MekanismItems.HDPE_PELLET))
             .save(output)
     }
@@ -256,7 +256,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private fun oreToGem(material: HTMaterialType) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(HTBlockMaterialVariant.ORE, material),
+                itemHelper.from(HTOreVariant.Default, material),
                 RagiumItems.getGem(material).toStack(2),
             ).build(output, id("processing/${material.materialName()}/from_ore"))
     }

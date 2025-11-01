@@ -2,9 +2,8 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.api.registry.HTItemHolderLike
-import net.minecraft.core.component.DataComponentPatch
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -15,28 +14,24 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
-class HTShapedRecipeBuilder(
-    private val category: CraftingBookCategory,
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-) : HTStackRecipeBuilder<HTShapedRecipeBuilder>("shaped", item, count, component) {
+class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: ImmutableItemStack) :
+    HTStackRecipeBuilder<HTShapedRecipeBuilder>("shaped", stack) {
     companion object {
         @JvmStatic
-        fun building(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(CraftingBookCategory.BUILDING, HTItemHolderLike.fromItem(item), count, component)
+        fun building(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.BUILDING, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun redstone(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(CraftingBookCategory.REDSTONE, HTItemHolderLike.fromItem(item), count, component)
+        fun redstone(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.REDSTONE, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun equipment(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(CraftingBookCategory.EQUIPMENT, HTItemHolderLike.fromItem(item), count, component)
+        fun equipment(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.EQUIPMENT, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun misc(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapedRecipeBuilder =
-            HTShapedRecipeBuilder(CraftingBookCategory.MISC, HTItemHolderLike.fromItem(item), count, component)
+        fun misc(item: ItemLike, count: Int = 1): HTShapedRecipeBuilder =
+            HTShapedRecipeBuilder(CraftingBookCategory.MISC, ImmutableItemStack.of(item, count))
     }
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()

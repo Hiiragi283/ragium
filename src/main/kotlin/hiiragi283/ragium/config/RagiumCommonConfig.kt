@@ -8,23 +8,27 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
-import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.tier.HTCrateTier
+import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.tier.HTMachineTier
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
-    // Generator
+    // Machine
     @JvmField
-    val generatorEnergyRate: Map<HTGeneratorVariant, HTIntConfigValue>
+    val energyCapacity: Map<HTMachineTier, HTIntConfigValue>
 
+    @JvmField
+    val energyRate: Map<HTMachineTier, HTIntConfigValue>
+
+    @JvmField
+    val energyUsage: Map<HTMachineTier, HTIntConfigValue>
+
+    // Generator
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
 
-    // Machine
-    @JvmField
-    val machineEnergyUsage: Map<HTMachineVariant, HTIntConfigValue>
-
+    // Consumer
     @JvmField
     val breweryTankCapacity: HTIntConfigValue
 
@@ -33,6 +37,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     @JvmField
     val melterTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val planterTankCapacity: HTIntConfigValue
 
     @JvmField
     val refineryInputTankCapacity: HTIntConfigValue
@@ -45,32 +52,21 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Device
     @JvmField
-    val deviceTickRate: Map<HTDeviceVariant, HTIntConfigValue>
-
-    @JvmField
     val deviceCollectorTankCapacity: HTIntConfigValue
 
     @JvmField
     val deviceCollectorEntityRange: HTDoubleConfigValue
 
     @JvmField
-    val expCollectorMultiplier: HTIntConfigValue
-
-    @JvmField
     val milkCollectorMultiplier: HTIntConfigValue
+
+    // Crate
+    @JvmField
+    val crateCapacity: Map<HTCrateTier, HTIntConfigValue>
 
     // Drum
     @JvmField
-    val smallDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val mediumDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val largeDrumCapacity: HTIntConfigValue
-
-    @JvmField
-    val hugeDrumCapacity: HTIntConfigValue
+    val drumCapacity: Map<HTDrumTier, HTIntConfigValue>
 
     // Block
     @JvmField
@@ -101,23 +97,31 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     init {
         // Generator
         builder.push("generator")
-        generatorEnergyRate = HTGeneratorVariant.entries.associateWith { variant: HTGeneratorVariant ->
-            val name: String = variant.variantName()
-            builder.push(name)
-            // Energy Rate
-            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", variant.tier.generatorRate)
-            builder.pop()
-            value
-        }
         generatorInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
         // Machine
         builder.push("machine")
-        machineEnergyUsage = HTMachineVariant.entries.associateWith { variant: HTMachineVariant ->
-            val name: String = variant.variantName()
+        energyCapacity = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
             builder.push(name)
-            // Energy Usage
-            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", variant.tier.processorRate)
+            // Energy Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt("energyCapacity", tier.batteryCapacity)
+            builder.pop()
+            value
+        }
+        energyRate = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
+            builder.push(name)
+            // Energy Rate
+            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", tier.generatorRate)
+            builder.pop()
+            value
+        }
+        energyUsage = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            val name: String = tier.name.lowercase()
+            builder.push(name)
+            // Energy Rate
+            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", tier.processorRate)
             builder.pop()
             value
         }
@@ -132,6 +136,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
         builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
+
+        builder.push("planter")
+        planterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
         builder.push("refinery")
@@ -149,20 +157,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Device
         builder.push("device")
-        deviceTickRate = HTDeviceVariant.entries.associateWith { variant: HTDeviceVariant ->
-            val name: String = variant.variantName()
-            builder.push(name)
-            val value: HTIntConfigValue = builder.definePositiveInt("tickRate", 20)
-            builder.pop()
-            value
-        }
         builder.push("collector")
         deviceCollectorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         deviceCollectorEntityRange = builder.definePositiveDouble("entityRange", 5.0, 1, 16)
-        builder.pop()
-
-        builder.push("exp_collector")
-        expCollectorMultiplier = builder.definePositiveInt("multiplier", 20)
         builder.pop()
 
         builder.push("milk_collector")
@@ -170,23 +167,44 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
 
         builder.pop()
+        // Crate
+        builder.push("crate")
+        crateCapacity = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
+            val name: String = tier.name.lowercase()
+            builder.push(name)
+            // Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt(
+                "multiplier",
+                when (tier) {
+                    HTCrateTier.SMALL -> 32
+                    HTCrateTier.MEDIUM -> 128
+                    HTCrateTier.LARGE -> 512
+                    HTCrateTier.HUGE -> 2048
+                },
+            )
+            builder.pop()
+            value
+        }
+        builder.pop()
         // Drum
         builder.push("drum")
-        builder.push("small")
-        smallDrumCapacity = builder.definePositiveInt("capacity", 16_000)
-        builder.pop()
-
-        builder.push("medium")
-        mediumDrumCapacity = builder.definePositiveInt("capacity", 32_000)
-        builder.pop()
-
-        builder.push("large")
-        largeDrumCapacity = builder.definePositiveInt("capacity", 64_000)
-        builder.pop()
-
-        builder.push("huge")
-        hugeDrumCapacity = builder.definePositiveInt("capacity", 256_000)
-        builder.pop()
+        drumCapacity = HTDrumTier.entries.associateWith { variant: HTDrumTier ->
+            val name: String = variant.name.lowercase()
+            builder.push(name)
+            // Capacity
+            val value: HTIntConfigValue = builder.definePositiveInt(
+                "capacity",
+                when (variant) {
+                    HTDrumTier.SMALL -> 16_000
+                    HTDrumTier.MEDIUM -> 32_000
+                    HTDrumTier.LARGE -> 64_000
+                    HTDrumTier.HUGE -> 256_000
+                    HTDrumTier.CREATIVE -> 1_000
+                },
+            )
+            builder.pop()
+            value
+        }
         builder.pop()
         // Block
         builder.push("block")

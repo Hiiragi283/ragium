@@ -1,0 +1,8 @@
+{
+  "content": {
+    "potion": "minecraft:infested"
+  },
+  "ingredient": {
+    "tag": "c:stones"
+  }
+}

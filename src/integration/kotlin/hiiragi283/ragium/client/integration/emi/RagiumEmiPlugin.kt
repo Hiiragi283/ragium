@@ -13,18 +13,15 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.data.map.HTBrewingEffect
+import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.extension.partially1
-import hiiragi283.ragium.api.recipe.HTRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.manager.castRecipe
-import hiiragi283.ragium.api.recipe.manager.mapPath
-import hiiragi283.ragium.api.recipe.manager.mapRecipe
+import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -38,17 +35,15 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithFluidToChancedItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSimulatingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
-import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -68,7 +63,7 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
-import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -120,19 +115,20 @@ class RagiumEmiPlugin : EmiPlugin {
             ) { id: ResourceLocation ->
                 EmiCraftingRecipe(
                     listOf(
-                        EmiStack.of(RagiumItems.ICE_CREAM),
-                        EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
-                        EmiStack.of(PotionContents.createItemStack(Items.POTION, holder)),
-                        EmiIngredient.of(Tags.Items.DYES_GREEN),
+                        RagiumItems.ICE_CREAM.toEmi(),
+                        RagiumCommonTags.Items.FOODS_CHERRY.toEmi(),
+                        PotionContents.createItemStack(Items.POTION, holder).toEmi(),
+                        Tags.Items.DYES_GREEN.toEmi(),
                     ),
-                    EmiStack.of(RagiumPlatform.INSTANCE.createSoda(holder)),
+                    RagiumPlatform.INSTANCE.createSoda(holder).toEmi(),
                     id,
                     true,
                 )
             }
         }
         // Smithing
-        RagiumRecipeTypes.SMITHING
+        RecipeType.SMITHING
+            .toFindable()
             .getAllRecipes(recipeManager())
             .filterIsInstance<HTSmithingModifyRecipe>()
             .forEach { recipe: HTSmithingModifyRecipe ->
@@ -147,10 +143,21 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
-        val thermalCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.THERMAL, RagiumDataMaps.INSTANCE.thermalFuelType)
-        val combustionCategory: HTEmiRecipeCategory =
-            addFuelRecipes(registry, HTGeneratorVariant.COMBUSTION, RagiumDataMaps.INSTANCE.combustionFuelType)
+        val thermalUsage: Int = RagiumBlocks.THERMAL_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
+        val combustionUsage: Int = RagiumBlocks.COMBUSTION_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
+
+        val thermalCategory: HTEmiRecipeCategory = addFuelRecipes(
+            registry,
+            RagiumRecipeViewerTypes.THERMAL,
+            RagiumDataMaps.THERMAL_FUEL,
+            thermalUsage,
+        )
+        val combustionCategory: HTEmiRecipeCategory = addFuelRecipes(
+            registry,
+            RagiumRecipeViewerTypes.COMBUSTION,
+            RagiumDataMaps.COMBUSTION_FUEL,
+            combustionUsage,
+        )
 
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
 
@@ -164,30 +171,21 @@ class RagiumEmiPlugin : EmiPlugin {
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
                     val lavaInput: EmiStack = HTFluidContent.LAVA.toFluidEmi(fuel.burnTime / 10)
                     val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
-
-                    HTEmiFluidFuelData(
-                        key.location().withPrefix("/${RagiumDataMaps.INSTANCE.thermalFuelType.id().path}/"),
-                        (HTGeneratorVariant.THERMAL.energyRate * lavaLevel).toInt(),
-                        itemRegistry.getOrThrow(key).let(EmiStack::of),
-                        lavaInput,
-                    )
+                    key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
+                        HTEmiFluidFuelData(
+                            (thermalUsage * lavaLevel).toInt(),
+                            itemRegistry.getOrThrow(key).toEmi(),
+                            lavaInput,
+                        )
                 }.asSequence(),
             ::HTFuelGeneratorEmiRecipe,
         )
         // Combustion Generator
-        registry.addRecipeSafe(
-            RagiumDataMaps.INSTANCE.thermalFuelType
-                .id()
-                .withPrefix("/"),
-        ) { id: ResourceLocation ->
+        registry.addRecipeSafe(RagiumDataMaps.THERMAL_FUEL.id().withPrefix("/")) { id: ResourceLocation ->
             HTFuelGeneratorEmiRecipe(
                 combustionCategory,
-                HTEmiFluidFuelData(
-                    id,
-                    HTGeneratorVariant.COMBUSTION.energyRate,
-                    EmiIngredient.of(ItemTags.COALS),
-                    RagiumFluidContents.CRUDE_OIL.toFluidEmi(100),
-                ),
+                id,
+                HTEmiFluidFuelData(combustionUsage, ItemTags.COALS.toEmi(), RagiumFluidContents.CRUDE_OIL.toFluidEmi(100)),
             )
         }
     }
@@ -197,57 +195,48 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ALLOYING, ::HTAlloyingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTItemToItemEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTCrushingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTCuttingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemToItemEmiRecipe)
-        // Cutting
-        val cutting: HTEmiRecipeCategory = addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SAWMILL, ::HTCuttingEmiRecipe)
-        addRecipeHolders(
-            registry,
-            cutting,
-            RagiumRecipeTypes.STONECUTTER.getAllHolders(recipeManager()).map { holder: RecipeHolder<StonecutterRecipe> ->
-                holder
-                    .mapPath { "/$it" }
-                    .mapRecipe(HTItemToItemRecipe::wrapVanilla.partially1(registryAccess))
-            },
-            ::HTCuttingEmiRecipe,
-        )
         // Advanced
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.FLUID_TRANSFORM, ::HTFluidTransformingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTItemWithFluidToChancedItemEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
         addCategoryAndRecipes(
             registry,
             RagiumRecipeViewerTypes.BREWING,
-            EmiPort
-                .getItemRegistry()
-                .getDataMap(RagiumDataMaps.INSTANCE.brewingEffectType)
-                .map { (key: ResourceKey<Item>, value: HTBrewingEffect) -> HTEmiBrewingEffect(HTItemHolderLike.fromKey(key), value) }
-                .asSequence(),
+            registryAccess
+                .registryOrThrow(RagiumAPI.BREWING_EFFECT_KEY)
+                .entrySet()
+                .map { (key: ResourceKey<HTBrewingEffect>, effect: HTBrewingEffect) ->
+                    key.location().withPrefix("/brewing/effect/") to
+                        HTEmiBrewingEffect(EmiIngredient.of(effect.ingredient), effect.toPotion().toEmi())
+                }.asSequence(),
             ::HTBrewingEffectEmiRecipe,
         )
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTItemWithFluidToChancedItemEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTSimulatingEmiRecipe)
     }
 
     private fun addInteractions(registry: EmiRegistry) {
         // Water Well
         registry.addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.WATER_COLLECTOR))
+            leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Lava Well
         registry.addInteraction(HTFluidContent.LAVA.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.LAVA_COLLECTOR))
+            leftInput(RagiumBlocks.LAVA_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Milk Drain
         registry.addInteraction(HTFluidContent.MILK.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.MILK_COLLECTOR))
-            rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
+            leftInput(RagiumBlocks.MILK_COLLECTOR.toEmi())
+            rightInput(Items.COW_SPAWN_EGG.toEmi(), true)
         }
         // Exp Collector
         registry.addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
-            leftInput(EmiStack.of(HTDeviceVariant.EXP_COLLECTOR))
+            leftInput(RagiumBlocks.EXP_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
 
@@ -282,7 +271,7 @@ class RagiumEmiPlugin : EmiPlugin {
     /**
      * @see [mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes]
      */
-    private inline fun <INPUT : RecipeInput, BASE : HTRecipe<INPUT>, reified RECIPE : BASE, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
+    private inline fun <INPUT : RecipeInput, BASE : Recipe<INPUT>, reified RECIPE : BASE, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
         registry: EmiRegistry,
         viewerType: HTRegistryRecipeViewerType<INPUT, BASE>,
         noinline factory: (HTEmiRecipeCategory, RecipeHolder<RECIPE>) -> EMI_RECIPE?,
@@ -303,11 +292,11 @@ class RagiumEmiPlugin : EmiPlugin {
      * @return 渡された[category]
      * @see [mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes]
      */
-    private fun <RECIPE : HTHolderLike, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
+    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
         registry: EmiRegistry,
         viewerType: HTRecipeViewerType<RECIPE>,
-        recipes: Sequence<RECIPE>,
-        factory: (HTEmiRecipeCategory, RECIPE) -> EMI_RECIPE?,
+        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
+        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): HTEmiRecipeCategory = addRecipes(registry, registerCategory(registry, viewerType), recipes, factory)
 
     /**
@@ -317,30 +306,13 @@ class RagiumEmiPlugin : EmiPlugin {
      * @param EMI_RECIPE [factory]で返すレシピのクラス
      * @return 渡された[category]
      */
-    private fun <CATEGORY : EmiRecipeCategory, RECIPE : HTHolderLike, EMI_RECIPE : EmiRecipe> addRecipes(
+    private fun <CATEGORY : EmiRecipeCategory, RECIPE : Any, EMI_RECIPE : EmiRecipe> addRecipes(
         registry: EmiRegistry,
         category: CATEGORY,
-        recipes: Sequence<RECIPE>,
-        factory: (CATEGORY, RECIPE) -> EMI_RECIPE?,
+        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
+        factory: (CATEGORY, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): CATEGORY {
-        recipes.mapNotNull(factory.partially1(category)).forEach(registry::addRecipe)
-        return category
-    }
-
-    /**
-     * 指定された引数からレシピを生成し，登録します。
-     * @param CATEGORY [category]のクラス
-     * @param RECIPE [recipes]で渡す一覧のクラス
-     * @param EMI_RECIPE [factory]で返すレシピのクラス
-     * @return 渡された[category]
-     */
-    private fun <CATEGORY : EmiRecipeCategory, RECIPE : Recipe<*>, EMI_RECIPE : EmiRecipe> addRecipeHolders(
-        registry: EmiRegistry,
-        category: CATEGORY,
-        recipes: Sequence<RecipeHolder<RECIPE>>,
-        factory: (CATEGORY, RecipeHolder<RECIPE>) -> EMI_RECIPE?,
-    ): CATEGORY {
-        recipes.mapNotNull(factory.partially1(category)).forEach(registry::addRecipe)
+        recipes.mapNotNull { (id: ResourceLocation, recipe: RECIPE) -> factory(category, id, recipe) }.forEach(registry::addRecipe)
         return category
     }
 
@@ -350,16 +322,16 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun registerCategory(registry: EmiRegistry, viewerType: HTRecipeViewerType<*>): HTEmiRecipeCategory {
         val category: HTEmiRecipeCategory = HTEmiRecipeCategory.create(viewerType)
         registry.addCategory(category)
-        viewerType.workStations.map(EmiStack::of).forEach(registry::addWorkstation.partially1(category))
+        viewerType.workStations.map(ItemLike::toEmi).forEach(registry::addWorkstation.partially1(category))
         return category
     }
 
     private fun addFuelRecipes(
         registry: EmiRegistry,
-        variant: HTGeneratorVariant,
+        viewerType: HTRecipeViewerType<HTEmiFluidFuelData>,
         dataMapType: DataMapType<Fluid, HTFluidFuelData>,
+        energyRate: Int,
     ): HTEmiRecipeCategory {
-        val viewerType: HTRecipeViewerType<HTEmiFluidFuelData> = RagiumRecipeViewerTypes.getGenerator(variant)
         val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
         return addCategoryAndRecipes(
             registry,
@@ -367,12 +339,12 @@ class RagiumEmiPlugin : EmiPlugin {
             fluidRegistry
                 .getDataMap(dataMapType)
                 .map { (key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) ->
-                    HTEmiFluidFuelData(
-                        key.location().withPrefix("/${dataMapType.id().path}/"),
-                        variant.energyRate,
-                        EmiStack.EMPTY,
-                        fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
-                    )
+                    key.location().withPrefix("/${dataMapType.id().path}/") to
+                        HTEmiFluidFuelData(
+                            energyRate,
+                            EmiStack.EMPTY,
+                            fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
+                        )
                 }.asSequence(),
             ::HTFuelGeneratorEmiRecipe,
         )
@@ -395,14 +367,9 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun EmiRegistry.addFluidInteraction(output: ItemLike, source: HTFluidContent<*, *, *>, flowing: HTFluidContent<*, *, *>) {
-        val outputStack: EmiStack = EmiStack.of(output)
-
-        val sourceStack: EmiStack = source.toFluidEmi(1000)
-        val flowingStack: EmiStack = flowing.toFluidEmi(1000)
-
-        addInteraction(outputStack, prefix = "fluid_interaction") {
-            leftInput(sourceStack.copyAsCatalyst())
-            rightInput(flowingStack.copyAsCatalyst(), false)
+        addInteraction(output.toEmi(), prefix = "fluid_interaction") {
+            leftInput(source.toFluidEmi(1000).copyAsCatalyst())
+            rightInput(flowing.toFluidEmi(1000).copyAsCatalyst(), false)
         }
     }
 }

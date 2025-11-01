@@ -1,52 +1,49 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.item.maxStackSize
+import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate
 import java.util.function.Predicate
-import kotlin.math.min
 
 /**
- * @see [mekanism.common.inventory.slot.BasicInventorySlot]
+ * @see mekanism.common.inventory.slot.BasicInventorySlot
  */
 open class HTItemStackSlot protected constructor(
-    private val limit: Long,
-    private val canExtract: BiPredicate<HTItemStorageStack, HTStorageAccess>,
-    private val canInsert: BiPredicate<HTItemStorageStack, HTStorageAccess>,
-    private val filter: Predicate<HTItemStorageStack>,
+    private val limit: Int,
+    private val canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess>,
+    private val canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess>,
+    private val filter: Predicate<ImmutableItemStack>,
     private val listener: HTContentListener?,
     private val x: Int,
     private val y: Int,
     private val slotType: HTContainerItemSlot.Type,
-) : HTItemSlot.Mutable() {
+) : HTItemSlot.Basic() {
     companion object {
-        @JvmField
-        val ALWAYS_TRUE: BiPredicate<HTItemStorageStack, HTStorageAccess> =
-            BiPredicate { _, _ -> true }
-
-        @JvmField
-        val MANUAL_ONLY: BiPredicate<HTItemStorageStack, HTStorageAccess> =
-            BiPredicate { _, access: HTStorageAccess -> access == HTStorageAccess.MANUAL }
+        @JvmStatic
+        private fun validateLimit(limit: Int): Int {
+            check(limit >= 0) { "Limit must be non negative" }
+            return limit
+        }
 
         @JvmStatic
         fun create(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: BiPredicate<HTItemStorageStack, HTStorageAccess> = ALWAYS_TRUE,
-            canInsert: BiPredicate<HTItemStorageStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),
+            limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
+            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
         ): HTItemStackSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
 
         @JvmStatic
@@ -54,62 +51,46 @@ open class HTItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canExtract: BiPredicate<HTItemStorageStack, HTStorageAccess> = ALWAYS_TRUE,
-            canInsert: BiPredicate<HTItemStorageStack, HTStorageAccess> = ALWAYS_TRUE,
-            filter: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),
+            limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
+            canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
             slotType: HTContainerItemSlot.Type,
-        ): HTItemStackSlot = HTItemStackSlot(limit, canExtract, canInsert, filter, listener, x, y, slotType)
+        ): HTItemStackSlot = HTItemStackSlot(validateLimit(limit), canExtract, canInsert, filter, listener, x, y, slotType)
 
         @JvmStatic
         fun input(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-            canInsert: Predicate<HTItemStorageStack> = HTStorageStack.alwaysTrue(),
-            filter: Predicate<HTItemStorageStack> = canInsert,
+            limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
+            canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
+            filter: Predicate<ImmutableItemStack> = canInsert,
         ): HTItemStackSlot = create(
             listener,
             x,
             y,
             limit,
-            { _, access: HTStorageAccess -> access != HTStorageAccess.EXTERNAL },
-            { stack: HTItemStorageStack, _ -> canInsert.test(stack) },
+            HTPredicates.notExternal(),
+            { stack: ImmutableItemStack, _ -> canInsert.test(stack) },
             filter,
             HTContainerItemSlot.Type.INPUT,
-        )
-
-        @JvmStatic
-        fun output(
-            listener: HTContentListener?,
-            x: Int,
-            y: Int,
-            limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
-        ): HTItemStackSlot = create(
-            listener,
-            x,
-            y,
-            limit,
-            ALWAYS_TRUE,
-            { _, access: HTStorageAccess -> access == HTStorageAccess.INTERNAL },
-            slotType = HTContainerItemSlot.Type.OUTPUT,
         )
     }
 
     protected constructor(
-        limit: Long,
-        canExtract: Predicate<HTItemStorageStack>,
-        canInsert: Predicate<HTItemStorageStack>,
-        filter: Predicate<HTItemStorageStack>,
+        limit: Int,
+        canExtract: Predicate<ImmutableItemStack>,
+        canInsert: Predicate<ImmutableItemStack>,
+        filter: Predicate<ImmutableItemStack>,
         listener: HTContentListener?,
         x: Int,
         y: Int,
         slotType: HTContainerItemSlot.Type,
     ) : this(
         limit,
-        { stack: HTItemStorageStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL || canExtract.test(stack) },
-        { stack: HTItemStorageStack, _: HTStorageAccess -> canInsert.test(stack) },
+        { stack: ImmutableItemStack, access: HTStorageAccess -> access == HTStorageAccess.MANUAL || canExtract.test(stack) },
+        { stack: ImmutableItemStack, _: HTStorageAccess -> canInsert.test(stack) },
         filter,
         listener,
         x,
@@ -117,52 +98,52 @@ open class HTItemStackSlot protected constructor(
         slotType,
     )
 
-    private var stack: ItemStack = ItemStack.EMPTY
+    @JvmField
+    protected var stack: ItemStack = ItemStack.EMPTY
 
-    override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(stack)
+    override fun getStack(): ImmutableItemStack? = this.stack.toImmutable()
 
-    override fun getCapacityAsLong(stack: HTItemStorageStack): Long =
-        if (stack.isEmpty()) limit else min(limit, stack.maxStackSize().toLong())
+    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack, this.limit)
 
-    override fun isValid(stack: HTItemStorageStack): Boolean = filter.test(stack)
+    final override fun isValid(stack: ImmutableItemStack): Boolean = this.filter.test(stack)
 
-    override fun isStackValidForInsert(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
-        super.isStackValidForInsert(stack, access) && canInsert.test(stack, access)
+    final override fun isStackValidForInsert(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
+        super.isStackValidForInsert(stack, access) && this.canInsert.test(stack, access)
 
-    override fun canStackExtract(stack: HTItemStorageStack, access: HTStorageAccess): Boolean =
-        super.canStackExtract(stack, access) && canExtract.test(stack, access)
+    final override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
+        super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, slotType)
+    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, this.slotType)
 
     override fun serialize(output: HTValueOutput) {
-        output.store(RagiumConst.ITEM, HTItemStorageStack.CODEC, getStack())
+        output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.ITEM, HTItemStorageStack.CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.ITEM, ImmutableItemStack.CODEC)?.let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
-        listener?.onContentsChanged()
+        this.listener?.onContentsChanged()
     }
 
-    override fun setStack(stack: HTItemStorageStack) {
+    override fun setStack(stack: ImmutableItemStack?) {
         setStackUnchecked(stack, true)
     }
 
-    fun setStackUnchecked(stack: ItemStack, validate: Boolean = false) {
-        setStackUnchecked(HTItemStorageStack.of(stack), validate)
-    }
-
-    fun setStackUnchecked(stack: HTItemStorageStack, validate: Boolean = false) {
-        if (stack.isEmpty()) {
-            if (this.isEmpty()) return
+    fun setStackUnchecked(stack: ImmutableItemStack?, validate: Boolean = false) {
+        if (stack == null) {
+            if (this.getStack() == null) return
             this.stack = ItemStack.EMPTY
         } else if (!validate || isValid(stack)) {
-            this.stack = stack.copy().stack
+            this.stack = stack.unwrap()
         } else {
             error("Invalid stack for slot: $stack ${stack.componentsPatch()}")
         }
         onContentsChanged()
+    }
+
+    override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
+        this.stack.count = amount
     }
 }

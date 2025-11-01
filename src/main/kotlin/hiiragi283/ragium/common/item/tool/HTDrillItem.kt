@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
 import hiiragi283.ragium.common.util.HTItemHelper
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.common.ItemAbilities
 import net.neoforged.neoforge.common.ItemAbility
 
 /**
- * @see [de.ellpeck.actuallyadditions.mod.items.DrillItem]
+ * @see de.ellpeck.actuallyadditions.mod.items.DrillItem
  */
 class HTDrillItem(properties: Properties) :
     HTEnergyItem.User(
@@ -40,9 +40,9 @@ class HTDrillItem(properties: Properties) :
     override fun canPerformAction(stack: ItemStack, itemAbility: ItemAbility): Boolean = itemAbility in ACTIONS
 
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
-        val battery: HTEnergyBattery = getBattery(stack) ?: return 0f
+        val storage: HTEnergyStorage = getStorage(stack) ?: return 0f
         val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
-        if (battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
+        if (storage.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
             return if (state.`is`(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)) super.getDestroySpeed(stack, state) else 1f
         }
         return 0f
@@ -57,9 +57,9 @@ class HTDrillItem(properties: Properties) :
     ): Boolean {
         if (level.isClientSide) return false
         if (state.getDestroySpeed(level, pos) == 0f) return false
-        val battery: HTEnergyBattery = getBattery(stack) ?: return false
+        val storage: HTEnergyStorage = getStorage(stack) ?: return false
         val usage: Int = HTItemHelper.getFixedUsage(level, stack, energyUsage)
-        if (battery.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
+        if (storage.extractEnergy(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
             extractEnergy(stack, usage, HTStorageAction.EXECUTE)
             return true
         }

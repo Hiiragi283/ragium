@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -56,7 +57,7 @@ object RagiumCommand {
     @JvmStatic
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
-        val amount: Int = getEnergyNetwork(source)?.getAmountAsInt() ?: 0
+        val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
         source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
         return amount
     }
@@ -73,11 +74,11 @@ object RagiumCommand {
     @JvmStatic
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
-        (getEnergyNetwork(source) as? HTEnergyBattery.Mutable)?.setAmountAsInt(value)
+        (getEnergyNetwork(source) as? HTEnergyNetwork)?.setAmountUnchecked(value)
         source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
         return value
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyStorage? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
 }

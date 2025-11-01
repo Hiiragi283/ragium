@@ -1,25 +1,30 @@
 package hiiragi283.ragium.api.storage.capability
 
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
+import com.google.common.util.concurrent.Runnables
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.capabilities.BlockCapability
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache
+import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
+import java.util.function.BooleanSupplier
 
 /**
  * 複数のキャパビリティを束ねるインターフェース
  * @param HANDLER キャパビリティのインターフェース
  * @param ITEM_HANDLER アイテムにおけるキャパビリティのインターフェース
- * @param SLOTTED_HANDLER [SLOT]に基づいた[HANDLER]の拡張インターフェース
- * @param SLOT 単一の値を保持するスロットのインターフェース
- * @see [mekanism.common.capabilities.IMultiTypeCapability]
+ * @see mekanism.common.capabilities.IMultiTypeCapability
  */
-interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDLER : HANDLER, SLOT : Any> {
-    fun blockCapability(): BlockCapability<HANDLER, Direction?>
-
-    fun itemCapability(): ItemCapability<ITEM_HANDLER, Void?>
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
+    val block: BlockCapability<HANDLER, Direction?>
+    val entity: EntityCapability<HANDLER, Direction?>
+    val item: ItemCapability<ITEM_HANDLER, Void?>
 
     //    Block    //
 
@@ -27,31 +32,26 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDL
      * 指定した引数から[HANDLER]を返します。
      * @return [HANDLER]が見つからない場合は`null`
      */
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    fun getCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(blockCapability(), pos, side)
+    fun getCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(block, pos, side)
 
-    /**
-     * 指定した引数から[SLOTTED_HANDLER]を返します。
-     * @return [SLOTTED_HANDLER]が見つからない場合は`null`
-     */
-    fun getSlottedCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): SLOTTED_HANDLER?
-
-    /**
-     * 指定した引数から[SLOT]の一覧を返します。
-     * @return [SLOT]の[List]
-     */
-    fun getCapabilitySlots(level: ILevelExtension, pos: BlockPos, side: Direction?): List<SLOT>
-
-    /**
-     * 指定した引数から[index]に対応する[SLOT]を返します。
-     * @return 見つからない場合は`null`
-     */
-    fun getCapabilitySlot(
-        level: ILevelExtension,
+    fun createCache(
+        level: ServerLevel,
         pos: BlockPos,
         side: Direction?,
-        index: Int,
-    ): SLOT? = getCapabilitySlots(level, pos, side).getOrNull(index)
+        validator: BooleanSupplier = BooleanSupplier { true },
+        listener: Runnable = Runnables.doNothing(),
+    ): BlockCapabilityCache<HANDLER, Direction?> = BlockCapabilityCache.create(
+        block,
+        level,
+        pos,
+        side,
+        validator,
+        listener,
+    )
+
+    //    Entity    //
+
+    fun getCapability(entity: Entity, side: Direction?): HANDLER? = entity.getCapability(this@HTMultiCapability.entity, side)
 
     //    Item    //
 
@@ -59,34 +59,14 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, SLOTTED_HANDL
      * 指定した引数から[HANDLER]を返します。
      * @return [HANDLER]が見つからない場合は`null`
      */
-    fun getCapability(stack: IItemStackExtension): ITEM_HANDLER? = stack.getCapability(itemCapability())
-
-    /**
-     * 指定した引数から[SLOTTED_HANDLER]を返します。
-     * @return [SLOTTED_HANDLER]が見つからない場合は`null`
-     */
-    fun getSlottedCapability(stack: IItemStackExtension): SLOTTED_HANDLER?
-
-    /**
-     * 指定した引数から[SLOT]の一覧を返します。
-     * @return [SLOT]の[List]
-     */
-    fun getCapabilitySlots(stack: IItemStackExtension): List<SLOT>
-
-    /**
-     * 指定した引数から[index]に対応する[SLOT]を返します。
-     * @return 見つからない場合は`null`
-     */
-    fun getCapabilitySlot(stack: IItemStackExtension, index: Int): SLOT? = getCapabilitySlots(stack).getOrNull(index)
+    fun getCapability(stack: IItemStackExtension): ITEM_HANDLER? = stack.getCapability(item)
 
     fun hasCapability(stack: IItemStackExtension): Boolean = getCapability(stack) != null
 
     // HTItemStorageStack
-    fun getCapability(stack: HTItemStorageStack): ITEM_HANDLER? = getCapability(stack.stack)
+    fun getCapability(stack: ImmutableItemStack?): ITEM_HANDLER? = stack?.getCapability(item)
 
-    fun getSlottedCapability(stack: HTItemStorageStack): SLOTTED_HANDLER? = getSlottedCapability(stack.stack)
+    fun hasCapability(stack: ImmutableItemStack): Boolean = getCapability(stack) != null
 
-    fun getCapabilitySlots(stack: HTItemStorageStack): List<SLOT> = getCapabilitySlots(stack.stack)
-
-    fun getCapabilitySlot(stack: HTItemStorageStack, index: Int): SLOT? = getCapabilitySlot(stack.stack, index)
+    interface Simple<HANDLER : Any> : HTMultiCapability<HANDLER, HANDLER>
 }

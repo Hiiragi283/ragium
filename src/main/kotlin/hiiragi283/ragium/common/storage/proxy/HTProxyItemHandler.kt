@@ -12,7 +12,7 @@ import net.neoforged.neoforge.items.IItemHandler
  * @param inventory ラップ対象の[HTSidedItemHandler]
  * @param side 現在の向き
  * @param holder 搬入出の制御
- * @see [mekanism.common.capabilities.proxy.ProxyItemHandler]
+ * @see mekanism.common.capabilities.proxy.ProxyItemHandler
  */
 class HTProxyItemHandler(private val inventory: HTSidedItemHandler, side: Direction?, holder: HTCapabilityHolder?) :
     HTProxyHandler(side, holder),

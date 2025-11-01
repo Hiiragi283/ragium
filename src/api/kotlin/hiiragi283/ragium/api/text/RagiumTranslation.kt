@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.util.ItemStackMap
 
 /**
- * @see [mekanism.api.text.APILang]
+ * @see mekanism.api.text.APILang
  */
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Azure Upgrade
@@ -32,6 +32,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Item Description
     TOOLTIP_EFFECT_RANGE("tooltip", RagiumAPI.MOD_ID, "effect_range"),
     TOOLTIP_ENERGY_PERCENTAGE("tooltip", RagiumAPI.MOD_ID, "energy_percentage"),
+    TOOLTIP_EXP_PERCENTAGE("tooltip", RagiumAPI.MOD_ID, "experience_percentage"),
     TOOLTIP_FLUID_NAME("tooltip", RagiumAPI.MOD_ID, "fluid_name"),
     TOOLTIP_FLUID_NAME_EMPTY("tooltip", RagiumAPI.MOD_ID, "fluid_name", "empty"),
     TOOLTIP_INTRINSIC_ENCHANTMENT("tooltip", RagiumAPI.MOD_ID, "intrinsic_enchantment"),
@@ -41,11 +42,14 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_SHOW_INFO("tooltip", RagiumAPI.MOD_ID, "show_info"),
     TOOLTIP_WIP("tooltip", RagiumAPI.MOD_ID, "work_in_progress"),
 
-    // key Mapping
+    // Key Mapping
     KEY_CATEGORY("key", RagiumAPI.MOD_ID, "category"),
 
+    // Recipe
+    RECIPE_CUTTING("recipe_type", RagiumAPI.MOD_ID, "cutting"),
+
     // Jade
-    JADE_OUTPUT_SIDE("tooltip", RagiumAPI.MOD_ID, "output_side"),
+    JADE_EXP_STORAGE("tooltip", RagiumAPI.MOD_ID, "experience_storage"),
     ;
 
     override val translationKey: String = type + "." + path.joinToString(separator = ".")
@@ -55,7 +59,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
         private val tooltipCache: MutableMap<ItemStack, String> = ItemStackMap.createTypeAndTagMap<String>()
 
         /**
-         * @see [ICustomTooltipName.getTranslationKey]
+         * @see ICustomTooltipName.getTranslationKey
          */
         @JvmStatic
         fun getTooltipKey(stack: ItemStack): String =

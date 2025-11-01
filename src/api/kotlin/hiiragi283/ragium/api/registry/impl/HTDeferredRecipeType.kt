@@ -12,10 +12,12 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
+import kotlin.jvm.optionals.getOrNull
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
-    HTRecipeType<INPUT, RECIPE>,
+    HTRecipeType.Findable<INPUT, RECIPE>,
     HTHasTranslationKey {
     constructor(key: ResourceKey<RecipeType<*>>) : super(key)
 
@@ -25,5 +27,12 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
 
     override fun getText(): Component = Component.translatable(translationKey)
 
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<RECIPE>> = manager.getAllRecipesFor(get()).asSequence()
+    override fun getRecipeFor(
+        manager: RecipeManager,
+        input: INPUT,
+        level: Level,
+        lastRecipe: ResourceLocation?,
+    ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
+
+    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager.getAllRecipesFor(get()).asSequence()
 }

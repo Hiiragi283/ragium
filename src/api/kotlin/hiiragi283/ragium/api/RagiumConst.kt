@@ -15,7 +15,7 @@ object RagiumConst {
 
     //    Item    //
 
-    const val ABSOLUTE_MAX_STACK_SIZE: Long = Item.ABSOLUTE_MAX_STACK_SIZE.toLong()
+    const val ABSOLUTE_MAX_STACK_SIZE: Int = Item.ABSOLUTE_MAX_STACK_SIZE
 
     //    Materials    //
 
@@ -55,6 +55,7 @@ object RagiumConst {
     const val FARMERS_DELIGHT = "farmersdelight"
     const val FOREGOING = "industrialforegoing"
     const val IMMERSIVE = "immersiveengineering"
+    const val KALEIDO_COOKERY = "kaleidoscope_cookery"
     const val MAGITECH = "magitech"
     const val MEKANISM = "mekanism"
     const val MODERN = "modern_industrialization"
@@ -81,6 +82,9 @@ object RagiumConst {
     const val TANK = "tank"
     const val FLUIDS = "fluids"
 
+    const val AMOUNT = "amount"
+    const val CAPACITY = "capacity"
+
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //
@@ -100,6 +104,8 @@ object RagiumConst {
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
 
+    const val SAWMILL = "sawmill"
+
     //    Tag Prefixes    //
 
     const val CHIPS = "chips"
@@ -108,6 +114,7 @@ object RagiumConst {
     const val FUELS = "fuels"
     const val GEMS = "gems"
     const val GLASS_BLOCKS = "glass_blocks"
+    const val GLASS_BLOCKS_TINTED = "glass_blocks/tinted"
     const val INGOTS = "ingots"
     const val MOLDS = "molds"
     const val NUGGETS = "nuggets"

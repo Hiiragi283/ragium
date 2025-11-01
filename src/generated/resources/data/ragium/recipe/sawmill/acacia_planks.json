@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "#minecraft:acacia_logs",
+  "ingredient": {
+    "tag": "minecraft:acacia_logs"
+  },
   "result": {
     "count": 6,
     "id": "minecraft:acacia_planks"

@@ -5,7 +5,7 @@ import java.util.function.IntSupplier
 import java.util.function.LongSupplier
 
 /**
- * @see [mekanism.common.config.value.CachedIntValue]
+ * @see mekanism.common.config.value.CachedIntValue
  */
 class HTIntConfigValue(value: ModConfigSpec.IntValue) :
     HTConfigValue<Int>(value),

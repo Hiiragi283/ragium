@@ -1,7 +1,11 @@
 package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
+import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.registry.toId
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import java.util.ServiceLoader
@@ -23,6 +27,8 @@ object RagiumAPI {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
 
+    //    ResourceLocation    //
+
     /**
      * 名前空間が`ragium`となる[ResourceLocation]を返します。
      */
@@ -43,6 +49,16 @@ object RagiumAPI {
         MOD_ID -> other
         else -> id(other.path)
     }
+
+    //    Registry    //
+
+    @JvmField
+    val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = ResourceKey.createRegistryKey(id("brewing_effect"))
+
+    @JvmField
+    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = ResourceKey.createRegistryKey(id("solar_power"))
+
+    //    Service    //
 
     /**
      * @see [mekanism.api.MekanismAPI.getService]

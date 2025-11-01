@@ -21,15 +21,15 @@ class HTProgressWidget(
     companion object {
         @JvmStatic
         fun arrow(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
-            HTProgressWidget(vanillaId("container/furnace/burn_progress"), levelGetter, x, y, 24, 16)
+            HTProgressWidget(vanillaId("container", "furnace/burn_progress"), levelGetter, x, y, 24, 16)
 
         @JvmStatic
         fun burn(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
-            HTProgressWidget(RagiumAPI.id("container/burn_progress"), levelGetter, x, y, 16, 16)
+            HTProgressWidget(RagiumAPI.id("container", "burn_progress"), levelGetter, x, y, 16, 16)
 
         @JvmStatic
         fun infuse(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
-            HTProgressWidget(RagiumAPI.id("container/infuse_progress"), levelGetter, x, y, 24, 16)
+            HTProgressWidget(RagiumAPI.id("container", "infuse_progress"), levelGetter, x, y, 24, 16)
     }
 
     override fun renderWidget(

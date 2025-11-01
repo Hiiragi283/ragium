@@ -12,13 +12,13 @@ import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.gui.components.EditBox
+import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 import org.lwjgl.glfw.GLFW
 
 class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
@@ -32,15 +32,15 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
 
     private lateinit var fluidWidget: HTFluidWidget
 
-    private lateinit var editBoxX: HTNumberEditBox<Int>
-    private lateinit var editBoxY: HTNumberEditBox<Int>
-    private lateinit var editBoxZ: HTNumberEditBox<Int>
+    private lateinit var editBoxX: HTNumberEditBox.IntRanged
+    private lateinit var editBoxY: HTNumberEditBox.IntRanged
+    private lateinit var editBoxZ: HTNumberEditBox.IntRanged
     private lateinit var editBoxDim: EditBox
 
     override fun init() {
         super.init()
         // fluid
-        fluidWidget = createFluidTank(0, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
         // x
         editBoxX = setupNumberBox(0)
         // y
@@ -50,19 +50,19 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         // dimension
         editBoxDim = setupEditBox()
 
-        val teleportPos: HTTeleportPos = blockEntity.teleportPos ?: return
-        editBoxX.number = teleportPos.x
-        editBoxY.number = teleportPos.y
-        editBoxZ.number = teleportPos.z
-        editBoxDim.value = teleportPos.dimension.location().toString()
+        val (dim: ResourceKey<Level>, pos: BlockPos) = blockEntity.teleportPos ?: return
+        editBoxX.number = pos.x
+        editBoxY.number = pos.y
+        editBoxZ.number = pos.z
+        editBoxDim.value = dim.location().toString()
     }
 
     /**
-     * @see [net.minecraft.client.gui.screens.inventory.AnvilScreen]
+     * @see net.minecraft.client.gui.screens.inventory.AnvilScreen
      */
-    private fun setupNumberBox(y: Int): HTNumberEditBox<Int> {
-        val editBox: HTNumberEditBox<Int> = addRenderableWidget(
-            HTNumberEditBox(
+    private fun setupNumberBox(y: Int): HTNumberEditBox.IntRanged {
+        val editBox: HTNumberEditBox.IntRanged = addRenderableWidget(
+            HTNumberEditBox.IntRanged(
                 { value: String -> value.toIntOrNull() ?: 0 },
                 font,
                 startX + HTSlotHelper.getSlotPosX(3),
@@ -128,9 +128,5 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: FluidStack) {
-        fluidWidget.stack = stack
-    }
-
-    override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)
+    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

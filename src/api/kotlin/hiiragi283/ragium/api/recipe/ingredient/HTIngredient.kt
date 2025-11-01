@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
+import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.stack.ImmutableStack
+import net.minecraft.tags.TagKey
 import java.util.function.Predicate
 
 /**
@@ -9,7 +12,7 @@ import java.util.function.Predicate
  * @see [HTFluidIngredient]
  * @see [mekanism.api.recipes.ingredients.InputIngredient]
  */
-interface HTIngredient<STACK : Any> : Predicate<STACK> {
+interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predicate<STACK> {
     /**
      * 指定された[stack]が条件を満たしているか判定します。
      */
@@ -19,11 +22,6 @@ interface HTIngredient<STACK : Any> : Predicate<STACK> {
      * 指定された[stack]が数量を除いて条件を満たしているか判定します。
      */
     fun testOnlyType(stack: STACK): Boolean
-
-    /**
-     * 指定された[stack]から，この[HTIngredient]に合致する[STACK]を返します。
-     */
-    fun getMatchingStack(stack: STACK): STACK
 
     /**
      * 指定された[stack]から，この[HTIngredient]に合致する数量を返します。
@@ -36,8 +34,5 @@ interface HTIngredient<STACK : Any> : Predicate<STACK> {
      */
     fun hasNoMatchingStacks(): Boolean
 
-    /**
-     * 条件に合致する[STACK]の一覧を返します。
-     */
-    fun getMatchingStacks(): List<STACK>
+    fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>
 }

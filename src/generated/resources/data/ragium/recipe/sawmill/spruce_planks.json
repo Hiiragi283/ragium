@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "#minecraft:spruce_logs",
+  "ingredient": {
+    "tag": "minecraft:spruce_logs"
+  },
   "result": {
     "count": 6,
     "id": "minecraft:spruce_planks"

@@ -4,7 +4,7 @@ import net.minecraft.core.Direction
 
 /**
  * 指定された向きにおいて搬出入を制御するインターフェース
- * @see [mekanism.common.capabilities.holder.IHolder]
+ * @see mekanism.common.capabilities.holder.IHolder
  */
 interface HTCapabilityHolder {
     /**

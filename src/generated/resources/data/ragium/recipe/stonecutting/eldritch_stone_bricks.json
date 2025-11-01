@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ragium:eldritch_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:eldritch_stone_bricks"
+  }
+}

@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
-import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 
 abstract class HTItemWithFluidToChancedItemRecipeBase(
     val ingredient: HTItemIngredient,
@@ -16,9 +16,9 @@ abstract class HTItemWithFluidToChancedItemRecipeBase(
     HTItemWithFluidToChancedItemRecipe {
     final override fun isIncompleteIngredient(): Boolean = ingredient.hasNoMatchingStacks() || fluidIngredient.hasNoMatchingStacks()
 
-    final override fun getRequiredCount(stack: ItemStack): Int = ingredient.getRequiredAmount(stack)
+    final override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
 
-    final override fun getRequiredAmount(stack: FluidStack): Int = fluidIngredient.getRequiredAmount(stack)
+    final override fun getRequiredAmount(stack: ImmutableFluidStack): Int = fluidIngredient.getRequiredAmount(stack)
 
     final override fun test(input: HTItemWithFluidRecipeInput): Boolean = ingredient.test(input.item) && fluidIngredient.test(input.fluid)
 }

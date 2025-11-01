@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.fluid
 
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.giveStackTo
-import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
@@ -31,7 +29,7 @@ class HTFluidType(private val builder: Builder, properties: Properties) : FluidT
                     null,
                     null,
                     null,
-                    pos.toCenterVec3(),
+                    pos.center,
                     power,
                     true,
                     Level.ExplosionInteraction.BLOCK,
@@ -58,11 +56,11 @@ class HTFluidType(private val builder: Builder, properties: Properties) : FluidT
     ) {
         super.onVaporize(player, level, pos, stack)
         builder.interactLevel?.invoke(level, pos)
-        dropItem?.getStackOrNull(level.registryAccess())?.let { stack: ItemStack ->
+        dropItem?.getStackOrNull(level.registryAccess())?.let { stack: ImmutableItemStack ->
             if (player != null) {
-                giveStackTo(player, stack)
+                HTItemDropHelper.giveStackTo(player, stack)
             } else {
-                dropStackAt(level, pos, stack)
+                HTItemDropHelper.dropStackAt(level, pos, stack)
             }
         }
     }

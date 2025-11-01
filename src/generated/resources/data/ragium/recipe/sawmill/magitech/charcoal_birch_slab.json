@@ -10,7 +10,9 @@
     }
   ],
   "type": "ragium:sawmill",
-  "ingredient": "magitech:charcoal_birch_planks",
+  "ingredient": {
+    "item": "magitech:charcoal_birch_planks"
+  },
   "result": {
     "count": 2,
     "id": "magitech:charcoal_birch_slab"

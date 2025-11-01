@@ -11,11 +11,11 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-typealias HTSimpleDeferredBlock = HTDeferredBlock<Block, HTBlockItem<Block>>
-
 typealias HTBasicDeferredBlock<BLOCK> = HTDeferredBlock<BLOCK, HTBlockItem<BLOCK>>
 
-class HTDeferredBlock<BLOCK : Block, ITEM : Item>(first: HTDeferredHolder<Block, BLOCK>, second: HTDeferredItem<ITEM>) :
+typealias HTSimpleDeferredBlock = HTBasicDeferredBlock<Block>
+
+class HTDeferredBlock<BLOCK : Block, ITEM : Item>(first: HTDeferredOnlyBlock<BLOCK>, second: HTDeferredItem<ITEM>) :
     HTDoubleDeferredHolder<Block, BLOCK, Item, ITEM>(
         first,
         second,
@@ -24,7 +24,7 @@ class HTDeferredBlock<BLOCK : Block, ITEM : Item>(first: HTDeferredHolder<Block,
     HTHasText,
     HTItemHolderLike {
     constructor(first: HTDeferredHolder<Block, BLOCK>, second: HTDeferredHolder<Item, ITEM>) : this(
-        first,
+        HTDeferredOnlyBlock(first.id),
         HTDeferredItem(second.id),
     )
 

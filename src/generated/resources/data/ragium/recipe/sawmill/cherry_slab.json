@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "minecraft:cherry_planks",
+  "ingredient": {
+    "item": "minecraft:cherry_planks"
+  },
   "result": {
     "count": 2,
     "id": "minecraft:cherry_slab"

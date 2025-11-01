@@ -30,14 +30,15 @@ class HTClearComponentRecipe(
             BiCodec.STRING.optionalFieldOf("group", ""),
             HTClearComponentRecipe::getGroup,
             BiCodec
-                .of(
-                    CraftingBookCategory.CODEC,
-                    CraftingBookCategory.STREAM_CODEC,
-                ).optionalFieldOf("category", CraftingBookCategory.MISC),
+                .of(CraftingBookCategory.CODEC, CraftingBookCategory.STREAM_CODEC)
+                .optionalFieldOf("category", CraftingBookCategory.MISC),
             HTClearComponentRecipe::category,
             VanillaBiCodecs.registryBased(BuiltInRegistries.ITEM).fieldOf("ingredient"),
             HTClearComponentRecipe::item,
-            VanillaBiCodecs.registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE).listOrElement().fieldOf("targets"),
+            VanillaBiCodecs
+                .registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE)
+                .listOrElement()
+                .optionalFieldOf("targets", listOf()),
             HTClearComponentRecipe::targetTypes,
             ::HTClearComponentRecipe,
         )
@@ -51,7 +52,7 @@ class HTClearComponentRecipe(
     )
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
-        val item: ItemStack = input.items().firstOrNull()?.copy() ?: return ItemStack.EMPTY
+        val item: ItemStack = input.items().firstOrNull()?.copyWithCount(1) ?: return ItemStack.EMPTY
         targetTypes.forEach(item::remove)
         return item
     }

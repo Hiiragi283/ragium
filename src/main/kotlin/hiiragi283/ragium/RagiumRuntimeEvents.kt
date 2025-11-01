@@ -3,10 +3,10 @@ package hiiragi283.ragium
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.giveStackTo
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -42,6 +42,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -92,7 +93,7 @@ object RagiumRuntimeEvents {
         if (stack.`is`(RagiumItems.BOTTLED_BEE)) {
             val result: InteractionResult = Items.BEE_SPAWN_EGG.use(event.level, player, event.hand).result
             if (result.indicateItemUse()) {
-                giveStackTo(player, ItemStack(Items.GLASS_BOTTLE))
+                HTItemDropHelper.giveStackTo(player, ItemStack(Items.GLASS_BOTTLE))
             }
             event.cancellationResult = result
             return
@@ -148,7 +149,7 @@ object RagiumRuntimeEvents {
                 if (!player.level().isClientSide) {
                     target.discard()
                     stack.shrink(1)
-                    giveStackTo(player, RagiumItems.BOTTLED_BEE.toStack())
+                    HTItemDropHelper.giveStackTo(player, RagiumItems.BOTTLED_BEE.toStack())
                 }
                 event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
                 return
@@ -226,9 +227,9 @@ object RagiumRuntimeEvents {
         val weapon: ItemStack = source.weaponItem ?: return
         if (HTItemHelper.hasStrike(weapon)) {
             // 対象のモブに対応する頭をドロップする
-            val head: ItemStack = RagiumDataMaps.INSTANCE.getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
-            if (head.isEmpty) return
-            dropStackAt(entity, head)
+            RagiumDataMaps.INSTANCE
+                .getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
+                .let(entity::spawnAtLocation)
         }
     }
 
@@ -238,5 +239,15 @@ object RagiumRuntimeEvents {
         if (cure == EffectCures.MILK && RagiumConfig.COMMON.disableMilkCure.asBoolean) {
             event.isCanceled = true
         }
+    }
+
+    //    Recipe    //
+
+    @SubscribeEvent
+    fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
+        val result: ItemStack = event.crafting
+        if (result.isEmpty) return
+        val stackIn: ImmutableItemStack = result.remove(RagiumDataComponents.ITEM_CONTENT)?.getOrNull(0) ?: return
+        HTItemDropHelper.giveStackTo(event.entity, stackIn.unwrap())
     }
 }

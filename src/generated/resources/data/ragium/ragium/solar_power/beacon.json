@@ -1,0 +1,8 @@
+{
+  "location": {
+    "block": {
+      "blocks": "minecraft:beacon"
+    }
+  },
+  "power": 4.0
+}

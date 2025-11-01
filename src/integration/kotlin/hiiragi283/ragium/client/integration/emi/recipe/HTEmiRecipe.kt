@@ -1,33 +1,30 @@
 package hiiragi283.ragium.client.integration.emi.recipe
 
-import dev.emi.emi.api.neoforge.NeoForgeEmiStack
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.createErrorStack
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
-import net.minecraft.core.component.DataComponents
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.fluids.FluidStack
 
 /**
  * @see [mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe]
@@ -69,7 +66,11 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     }
 
     protected fun addCatalyst(ingredient: HTItemIngredient) {
-        catalysts.add(ingredient(ingredient))
+        addCatalyst(ingredient(ingredient))
+    }
+
+    protected fun addCatalyst(ingredient: EmiIngredient) {
+        catalysts.add(ingredient)
     }
 
     protected fun addOutputs(result: HTItemResult?) {
@@ -101,21 +102,22 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     protected fun ingredient(ingredient: HTItemIngredient): EmiIngredient = ingredient
         .unwrap()
         .map(
-            { (tagKey: TagKey<Item>, count: Int) ->
-                EmiIngredient.of(tagKey, count.toLong()).takeUnless(EmiIngredient::isEmpty)
-                    ?: createErrorStack("Empty Tag: ${tagKey.location}")
-            },
-            { stacks: List<ItemStack> -> stacks.map(EmiStack::of).let(::ingredient) },
-        )
+            { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
+            { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
+        ).apply {
+            for (stack: EmiStack in emiStacks) {
+                val itemStack: ItemStack = stack.itemStack
+                if (itemStack.hasCraftingRemainingItem()) {
+                    stack.remainder = itemStack.craftingRemainingItem.toEmi()
+                }
+            }
+        }
 
     protected fun ingredient(ingredient: HTFluidIngredient): EmiIngredient = ingredient
         .unwrap()
         .map(
-            { (tagKey: TagKey<Fluid>, count: Int) ->
-                EmiIngredient.of(tagKey, count.toLong()).takeUnless(EmiIngredient::isEmpty)
-                    ?: createErrorStack("Empty Tag: ${tagKey.location}")
-            },
-            { stacks: List<FluidStack> -> stacks.map(NeoForgeEmiStack::of).let(::ingredient) },
+            { (tagKey: TagKey<Fluid>, count: Int) -> tagKey.toEmi(count) },
+            { stacks: List<ImmutableFluidStack> -> stacks.map(ImmutableFluidStack::toEmi).let(::ingredient) },
         )
 
     private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {
@@ -126,9 +128,6 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     protected fun result(result: HTItemResult): EmiStack = result.toEmi()
 
     protected fun result(result: HTFluidResult): EmiStack = result.toEmi()
-
-    private fun createErrorStack(error: String): EmiStack =
-        createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, Component.literal(error)).let(EmiStack::of)
 
     //    EmiRecipe    //
 

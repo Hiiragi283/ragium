@@ -6,19 +6,17 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.neoforged.neoforge.items.IItemHandler
 
 /**
- * @see [net.minecraft.world.inventory.ChestMenu]
+ * @see net.minecraft.world.inventory.ChestMenu
  */
-@Suppress("DEPRECATION")
 class HTGenericContainerMenu(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.WithContext<*, HTItemHandler>,
     containerId: Int,
     inventory: Inventory,
     context: HTItemHandler,
     override val rows: Int,
-) : HTContainerWithContextMenu<IItemHandler>(
+) : HTContainerWithContextMenu<HTItemHandler>(
         menuType,
         containerId,
         inventory,
@@ -32,7 +30,8 @@ class HTGenericContainerMenu(
     }
 
     init {
-        check(context.slots >= rows) { "Item context size ${context.slots} is smaller than expected $rows" }
+        val slots: Int = context.getSlots(context.getItemSideFor())
+        check(slots >= rows) { "Item context size $slots is smaller than expected $rows" }
         val i: Int = (rows - 3) * 18 + 1
 
         addSlots(context)

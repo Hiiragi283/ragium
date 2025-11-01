@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.recipe.result
 
-import net.neoforged.neoforge.fluids.FluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 
 /**
- * [FluidStack]向けの[HTRecipeResult]の実装
+ * [ImmutableFluidStack]向けの[HTRecipeResult]の実装
  */
-interface HTFluidResult : HTRecipeResult<FluidStack> {
+interface HTFluidResult : HTRecipeResult<ImmutableFluidStack> {
     fun copyWithAmount(amount: Int): HTFluidResult
 }

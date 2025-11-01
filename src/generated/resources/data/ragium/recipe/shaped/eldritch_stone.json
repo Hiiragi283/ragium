@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:blackstone"
+      "tag": "c:end_stones"
     },
     "B": [
       {

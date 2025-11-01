@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 500,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "minecraft:seagrass",
+  "results": {
+    "count": 4,
+    "id": "minecraft:seagrass"
+  }
+}

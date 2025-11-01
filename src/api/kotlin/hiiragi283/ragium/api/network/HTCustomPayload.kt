@@ -8,14 +8,14 @@ import net.minecraft.server.level.ServerPlayer
 
 sealed interface HTCustomPayload : CustomPacketPayload {
     /**
-     * @see [appeng.core.network.ClientboundPacket.handleOnClient]
+     * @see appeng.core.network.ClientboundPacket.handleOnClient
      */
     interface S2C : HTCustomPayload {
         fun handle(player: AbstractClientPlayer, minecraft: Minecraft)
     }
 
     /**
-     * @see [appeng.core.network.ServerboundPacket.handleOnServer]
+     * @see appeng.core.network.ServerboundPacket.handleOnServer
      */
     interface C2S : HTCustomPayload {
         fun handle(player: ServerPlayer, server: MinecraftServer)

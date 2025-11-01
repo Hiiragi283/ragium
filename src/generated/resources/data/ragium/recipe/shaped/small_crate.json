@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "C": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ACA",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:small_crate"
+  }
+}

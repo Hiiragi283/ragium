@@ -2,11 +2,10 @@
   "values": [
     "ragium:azure_tile_stairs",
     "ragium:blue_nether_brick_stairs",
+    "ragium:eldritch_stone_brick_stairs",
     "ragium:eldritch_stone_stairs",
     "ragium:plastic_brick_stairs",
     "ragium:plastic_tile_stairs",
-    "ragium:polished_eldritch_stone_brick_stairs",
-    "ragium:polished_eldritch_stone_stairs",
     "ragium:ragi_brick_stairs",
     "ragium:sponge_cake_stairs"
   ]

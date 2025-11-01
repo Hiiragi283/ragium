@@ -1,9 +1,14 @@
 {
   "values": [
+    "ragium:creative_drum",
     "ragium:drill",
+    "ragium:huge_crate",
     "ragium:huge_drum",
+    "ragium:large_crate",
     "ragium:large_drum",
+    "ragium:medium_crate",
     "ragium:medium_drum",
+    "ragium:small_crate",
     "ragium:small_drum",
     "ragium:teleport_key"
   ]

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.giveStackTo
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.resources.ResourceKey
@@ -39,7 +39,7 @@ class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.R
             val lootItems: List<ItemStack> = lootTable.getRandomItems(params)
             if (lootItems.isEmpty()) return InteractionResultHolder.pass(stack)
             for (stackIn: ItemStack in lootItems) {
-                giveStackTo(player, stackIn)
+                HTItemDropHelper.giveStackTo(player, stackIn)
             }
             if (player is ServerPlayer) {
                 CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)

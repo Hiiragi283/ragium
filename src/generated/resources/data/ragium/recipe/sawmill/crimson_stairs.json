@@ -1,6 +1,8 @@
 {
   "type": "ragium:sawmill",
-  "ingredient": "minecraft:crimson_planks",
+  "ingredient": {
+    "item": "minecraft:crimson_planks"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:crimson_stairs"

@@ -2,10 +2,12 @@ package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.network.addFluidTooltip
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.getFluidStack
-import hiiragi283.ragium.api.storage.fluid.setFluidStack
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.getStillTexture
+import hiiragi283.ragium.api.stack.getTintColor
+import hiiragi283.ragium.api.storage.HTStackSetter
+import hiiragi283.ragium.api.storage.HTStackView
+import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
@@ -13,14 +15,13 @@ import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTFluidTankWidget(
     private val levelGetter: (HTFluidWidget) -> Float,
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val tank: HTFluidTank.Mutable,
+    private val view: HTStackView<ImmutableFluidStack>,
+    private val stackSetter: HTStackSetter<ImmutableFluidStack>,
     x: Int,
     y: Int,
     width: Int,
@@ -29,10 +30,16 @@ class HTFluidTankWidget(
     HTFluidWidget {
     companion object {
         @JvmStatic
-        fun createSlot(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
+        fun createSlot(
+            view: HTStackView<ImmutableFluidStack>,
+            stackSetter: HTStackSetter<ImmutableFluidStack>,
+            x: Int,
+            y: Int,
+        ): HTFluidTankWidget = HTFluidTankWidget(
             { 1f },
             { _, _ -> },
-            tank,
+            view,
+            stackSetter,
             x,
             y,
             16,
@@ -40,14 +47,13 @@ class HTFluidTankWidget(
         )
 
         @JvmStatic
-        fun createTank(tank: HTFluidTank.Mutable, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
-            { widget: HTFluidWidget ->
-                val capacity: Int = widget.capacity
-                when {
-                    capacity <= 0 -> 0f
-                    else -> widget.stack.amount / capacity.toFloat()
-                }
-            },
+        fun createTank(
+            view: HTStackView<ImmutableFluidStack>,
+            stackSetter: HTStackSetter<ImmutableFluidStack>,
+            x: Int,
+            y: Int,
+        ): HTFluidTankWidget = HTFluidTankWidget(
+            HTFluidWidget::getStoredLevelAsFloat,
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
                     HTFluidWidget.TANK_ID,
@@ -61,7 +67,8 @@ class HTFluidTankWidget(
                     bounds.height + 2,
                 )
             },
-            tank,
+            view,
+            stackSetter,
             x,
             y,
             16,
@@ -69,30 +76,29 @@ class HTFluidTankWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = !stack.isEmpty
+    override fun shouldRender(): Boolean = getStack() != null
 
-    override fun getSprite(): TextureAtlasSprite? =
-        getSprite(IClientFluidTypeExtensions.of(stack.fluid).getStillTexture(stack), InventoryMenu.BLOCK_ATLAS)
+    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack()?.getStillTexture(), InventoryMenu.BLOCK_ATLAS)
 
-    override fun getColor(): Int = IClientFluidTypeExtensions.of(stack.fluid).getTintColor(stack)
+    override fun getColor(): Int = getStack()?.getTintColor() ?: -1
 
     override fun getLevel(): Float = levelGetter(this)
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addFluidTooltip(tank.getStack(), consumer, flag, true)
+        addFluidTooltip(getStack(), consumer, flag, true)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
         background(guiGraphics, getBounds())
     }
 
-    //    HTFluidWidget    //
+    //    HTFluidWidgetNew    //
 
-    override var stack: FluidStack
-        get() = tank.getFluidStack()
-        set(value) {
-            tank.setFluidStack(value)
-        }
-    override val capacity: Int
-        get() = tank.getCapacityAsInt(tank.getStack())
+    override fun setStack(stack: ImmutableFluidStack?) {
+        stackSetter.setStack(stack)
+    }
+
+    override fun getStack(): ImmutableFluidStack? = view.getStack()
+
+    override fun getCapacity(stack: ImmutableFluidStack?): Int = view.getCapacity(stack)
 }

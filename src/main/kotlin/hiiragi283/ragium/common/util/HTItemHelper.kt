@@ -67,16 +67,26 @@ object HTItemHelper {
     }
 
     @JvmStatic
-    fun processStorageCapacity(random: RandomSource?, blockEntity: BlockEntity, capacity: Long): Long {
+    fun processStorageCapacity(random: RandomSource?, blockEntity: BlockEntity, capacity: Int): Int {
         val float = MutableFloat(capacity)
         runIterationOnComponent(blockEntity.components()) { holder: Holder<Enchantment>, level: Int ->
             modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
         }
-        return max(0, float.toLong())
+        return max(0, float.toInt())
     }
 
     //    ItemStack    //
 
+    @JvmStatic
+    fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Int): Int {
+        val float = MutableFloat(capacity)
+        EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
+            modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
+        }
+        return max(0, float.toInt())
+    }
+
+    @JvmStatic
     fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Long): Long {
         val float = MutableFloat(capacity)
         EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
@@ -85,6 +95,7 @@ object HTItemHelper {
         return max(0, float.toLong())
     }
 
+    @JvmStatic
     fun processCollectorRange(
         serverLevel: ServerLevel,
         stack: ItemStack,

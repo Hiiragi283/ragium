@@ -5,7 +5,7 @@ import net.minecraft.core.Direction
 
 /**
  * [HTFluidTank]向けの[HTCapabilityHolder]の拡張インターフェース
- * @see [mekanism.common.capabilities.holder.fluid.IFluidTankHolder]
+ * @see mekanism.common.capabilities.holder.fluid.IFluidTankHolder
  */
 interface HTFluidTankHolder : HTCapabilityHolder {
     fun getFluidTank(side: Direction?): List<HTFluidTank>

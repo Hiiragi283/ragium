@@ -8,8 +8,9 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import dev.emi.emi.recipe.EmiSmithingRecipe
-import hiiragi283.ragium.api.extension.compose
+import hiiragi283.ragium.api.function.compose
 import hiiragi283.ragium.client.integration.emi.RagiumEmiPlugin
+import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.ItemStack
@@ -25,7 +26,7 @@ class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient
             .asSequence()
             .map(::ItemStack)
             .filter(recipe::isBaseIngredient)
-            .map(EmiStack::of)
+            .map(ItemStack::toEmi)
             .toList()
             .let(EmiIngredient::of),
         addition,
@@ -52,7 +53,7 @@ class HTSmithingModifyEmiRecipe(template: EmiIngredient, addition: EmiIngredient
         val input: EmiStack = this.input.emiStacks.random(random.asKotlinRandom())
         val addition: EmiStack = this.addition.emiStacks.random(random.asKotlinRandom())
         val recipeInput = SmithingRecipeInput(template.emiStacks[0].itemStack, input.itemStack, addition.itemStack)
-        val result: EmiStack = recipe.assemble(recipeInput, RagiumEmiPlugin.registryAccess).let(EmiStack::of)
+        val result: EmiStack = recipe.assemble(recipeInput, RagiumEmiPlugin.registryAccess).toEmi()
         return arrayOf(input, addition, result)[index]
     }
 }

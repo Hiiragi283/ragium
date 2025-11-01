@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.Direction
@@ -8,11 +8,9 @@ import net.minecraft.world.item.ItemStack
 
 /**
  * [HTItemSlot]に基づいた[HTSidedItemHandler]の拡張インターフェース
- * @see [mekanism.api.inventory.IMekanismInventory]
+ * @see mekanism.api.inventory.IMekanismInventory
  */
-interface HTItemHandler :
-    HTSidedItemHandler,
-    HTContentListener {
+fun interface HTItemHandler : HTSidedItemHandler {
     fun hasItemHandler(): Boolean = true
 
     fun getItemSlots(side: Direction?): List<HTItemSlot>
@@ -28,16 +26,22 @@ interface HTItemHandler :
         stack: ItemStack,
         action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.insertItem(stack, action, HTStorageAccess.forHandler(side)) ?: stack
+    ): ItemStack {
+        val slot: HTItemSlot = getItemSlot(slot, side) ?: return stack
+        return slot.insert(stack.toImmutable(), action, HTStorageAccess.forHandler(side))?.unwrap() ?: stack
+    }
 
     override fun extractItem(
         slot: Int,
         amount: Int,
         action: HTStorageAction,
         side: Direction?,
-    ): ItemStack = getItemSlot(slot, side)?.extractItem(amount, action, HTStorageAccess.forHandler(side)) ?: ItemStack.EMPTY
+    ): ItemStack {
+        val slot: HTItemSlot = getItemSlot(slot, side) ?: return ItemStack.EMPTY
+        return slot.extract(amount, action, HTStorageAccess.forHandler(side))?.unwrap() ?: ItemStack.EMPTY
+    }
 
-    override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacityAsInt(ItemStack.EMPTY) ?: 0
+    override fun getSlotLimit(slot: Int, side: Direction?): Int = getItemSlot(slot, side)?.getCapacity() ?: 0
 
     override fun isItemValid(slot: Int, stack: ItemStack, side: Direction?): Boolean = getItemSlot(slot, side)?.isValid(stack) ?: false
 }

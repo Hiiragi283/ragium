@@ -75,42 +75,16 @@ object VanillaBiCodecs {
     val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
 
     @JvmStatic
-    private val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
+    val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
 
     @JvmStatic
-    private val ITEM_STACK: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(
-        ItemStack.OPTIONAL_CODEC,
-        ItemStack.OPTIONAL_STREAM_CODEC,
-    )
-
-    /**
-     * [ItemStack]の[BiCodec]を返します。
-     * @param allowEmpty [ItemStack.EMPTY]を許容するかどうか
-     */
-    @JvmStatic
-    fun itemStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, ItemStack> = when (allowEmpty) {
-        true -> ITEM_STACK
-        false -> ITEM_STACK_NON_EMPTY
-    }
+    val ITEM_STACK: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.OPTIONAL_CODEC, ItemStack.OPTIONAL_STREAM_CODEC)
 
     @JvmStatic
-    private val FLUID_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
+    val FLUID_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
 
     @JvmStatic
-    private val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(
-        FluidStack.OPTIONAL_CODEC,
-        FluidStack.OPTIONAL_STREAM_CODEC,
-    )
-
-    /**
-     * [FluidStack]の[BiCodec]を返します。
-     * @param allowEmpty [FluidStack.EMPTY]を許容するかどうか
-     */
-    @JvmStatic
-    fun fluidStack(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, FluidStack> = when (allowEmpty) {
-        true -> FLUID_STACK
-        false -> FLUID_STACK_NON_EMPTY
-    }
+    val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
 
     @JvmStatic
     fun ingredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(

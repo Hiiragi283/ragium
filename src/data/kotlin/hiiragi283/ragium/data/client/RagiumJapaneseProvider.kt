@@ -2,13 +2,17 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -35,6 +39,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         text()
         information()
 
+        food()
         delight()
         jade()
     }
@@ -81,7 +86,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")
-        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "泣く黒曜石に異質なチケットを使って神秘的な黒曜石を手に入れる")
+        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "")
         // Iridescentium
         addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "虹色の錬金術師", "七色金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "さあ，地獄を楽しみな！", "ツールを不可壊にするためにエターナル構造体を手に入れる")
@@ -89,20 +94,19 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
+        add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
         add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
-        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み")
-        add(RagiumBlocks.EXP_BERRIES.itemHolder, "経験値ベリー")
+        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み", "経験値ベリー")
         add(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
         add(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
         add(RagiumBlocks.AZURE_TILES, "紺碧のタイル")
-        add(RagiumBlocks.ELDRITCH_STONE, "異質石")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE, "磨かれた異質石")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "磨かれた異質石レンガ")
+        add(RagiumBlocks.ELDRITCH_STONE, "エルドリッチストーン")
+        add(RagiumBlocks.ELDRITCH_STONE_BRICKS, "エルドリッチストーンレンガ")
         add(RagiumBlocks.PLASTIC_BRICKS, "プラスチックレンガ")
         add(RagiumBlocks.PLASTIC_TILES, "プラスチックタイル")
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
@@ -114,6 +118,47 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.STONE_CASING, "石材筐体")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "強化石材筐体")
         add(RagiumBlocks.WOODEN_CASING, "木材筐体")
+        // Generators
+        add(RagiumBlocks.THERMAL_GENERATOR, "火力発電機")
+
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
+
+        add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "太陽光パネルコントローラー")
+
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
+        add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
+        // Consumers
+        add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        add(RagiumBlocks.BLOCK_BREAKER, "採掘機")
+        add(RagiumBlocks.COMPRESSOR, "圧縮機")
+        add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
+        add(RagiumBlocks.EXTRACTOR, "抽出機")
+        add(RagiumBlocks.PULVERIZER, "粉砕機")
+
+        add(RagiumBlocks.CRUSHER, "破砕機")
+        add(RagiumBlocks.MELTER, "溶融炉")
+        add(RagiumBlocks.REFINERY, "精製機")
+        add(RagiumBlocks.WASHER, "洗浄機")
+
+        add(RagiumBlocks.BREWERY, "醸造機")
+        add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
+        add(RagiumBlocks.PLANTER, "栽培室")
+        add(RagiumBlocks.SIMULATOR, "シミュレーション室")
+        // Devices
+        add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
+        add(RagiumBlocks.MILK_COLLECTOR, "搾乳機")
+        add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
+
+        add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
+        add(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
+
+        add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
+        add(RagiumBlocks.ENI, "E.N.I.")
+
+        add(RagiumBlocks.MOB_CAPTURER, "モブ捕獲機")
+        add(RagiumBlocks.TELEPAD, "テレパッド")
+
+        add(RagiumBlocks.CEU, "C.E.U.")
     }
 
     private fun enchantment() {
@@ -127,14 +172,20 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun entity() {
-        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
-        addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
+        add(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
+        add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
 
-        // addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
-        // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
-        // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
-        // addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val value: String = tier.translate(type, "%s付きトロッコ")
+            add(tier.getEntityType(), value)
+            add(tier.getMinecartItem(), value)
+        }
+
+        // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
+        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
+        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
+        // add(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
     }
 
     private fun fluid() {
@@ -437,6 +488,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "空")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")
@@ -444,34 +496,17 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
         add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
 
-        add(HTAccessConfiguration.INPUT_ONLY, "モード：搬入")
-        add(HTAccessConfiguration.OUTPUT_ONLY, "モード：搬出")
-        add(HTAccessConfiguration.BOTH, "モード：双方")
-        add(HTAccessConfiguration.NONE, "モード：なし")
+        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
+
+        add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
+        add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
+        add(HTAccessConfig.BOTH, "モード：双方")
+        add(HTAccessConfig.NONE, "モード：なし")
     }
 
     private fun information() {
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
         addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
-
-        addInfo(HTDeviceVariant.CEU, "無限のパワー")
-        addInfo(HTDeviceVariant.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
-        addInfo(HTDeviceVariant.ENI, "エネルギーネットワークにアクセスできます。")
-        addInfo(HTDeviceVariant.EXP_COLLECTOR, "周囲の経験値オーブを回収します。")
-        addInfo(HTDeviceVariant.ITEM_BUFFER, "9スロットのアイテムバッファとして機能します。")
-        addInfo(
-            HTDeviceVariant.LAVA_COLLECTOR,
-            "次の条件のうち全てを満たすとき，溶岩を生産します。",
-            "- ネザーに設置されている",
-            "- 周囲4ブロックが溶岩源で囲われている",
-        )
-        addInfo(HTDeviceVariant.MILK_COLLECTOR, "牛を乗せると牛乳を搾り取ります。")
-        addInfo(
-            HTDeviceVariant.WATER_COLLECTOR,
-            "次の条件のうちいずれかを満たすとき，水を生産します。",
-            "- 海洋または河川系バイオームに設置されている",
-            "- 周囲2ブロック以上が水源で囲われている",
-        )
 
         val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
         addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
@@ -494,19 +529,26 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addInfo(RagiumItems.TRADER_CATALOG, "行商人からドロップします。")
     }
 
+    //    Addon    //
+
+    private fun food() {
+        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
+        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+    }
+
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
 
-        add(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
-        add(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.output_side", "搬出面")
+        add(HTBlockConfigurationDataProvider, "アクセス制御")
+        add(HTExperienceStorageProvider.ForBlocks, "経験値ストレージ")
+        add(HTBlockOwnerProvider, "ブロックの所有者")
 
-        add(RagiumTranslation.JADE_OUTPUT_SIDE, "搬出面: %s")
+        add(RagiumTranslation.JADE_EXP_STORAGE, "経験値: %s")
     }
 }

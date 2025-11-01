@@ -1,17 +1,17 @@
 package hiiragi283.ragium.client.integration.emi.recipe
 
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
+import net.minecraft.resources.ResourceLocation
 
-class HTBrewingEffectEmiRecipe(category: HTEmiRecipeCategory, recipe: HTEmiBrewingEffect) :
-    HTEmiRecipe<HTEmiBrewingEffect>(category, recipe.getId(), recipe) {
+class HTBrewingEffectEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiBrewingEffect) :
+    HTEmiRecipe<HTEmiBrewingEffect>(category, id, recipe) {
     init {
-        addInput(recipe.input.let(EmiStack::of))
+        addInput(recipe.input)
 
-        addOutputs(recipe.effect.toPotion().let(EmiStack::of))
+        addOutputs(recipe.potion)
     }
 
     override fun addWidgets(widgets: WidgetHolder) {

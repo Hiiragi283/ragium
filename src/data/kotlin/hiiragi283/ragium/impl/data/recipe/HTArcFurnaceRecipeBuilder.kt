@@ -7,7 +7,7 @@ import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuil
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
 import blusunrize.immersiveengineering.data.recipes.builder.IERecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 

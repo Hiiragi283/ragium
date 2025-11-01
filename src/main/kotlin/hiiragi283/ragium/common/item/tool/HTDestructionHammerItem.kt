@@ -9,7 +9,7 @@ import net.minecraft.world.item.TieredItem
 import net.neoforged.neoforge.common.ItemAbility
 
 /**
- * @see [mekanism.common.item.gear.ItemAtomicDisassembler]
+ * @see mekanism.common.item.gear.ItemAtomicDisassembler
  */
 class HTDestructionHammerItem(properties: Properties) :
     TieredItem(

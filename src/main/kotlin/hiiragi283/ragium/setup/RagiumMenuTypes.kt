@@ -1,26 +1,30 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuTypeRegister
+import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTChancedItemOutputBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
@@ -35,9 +39,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.loading.FMLEnvironment
 
-typealias DeferredBEMenu<BE> = HTDeferredMenuType<HTBlockEntityContainerMenu<BE>>
+typealias DeferredBEMenu<BE> = HTDeferredMenuType.WithContext<HTBlockEntityContainerMenu<BE>, BE>
 
-typealias DeferredMachineMenu<BE> = HTDeferredMenuType<HTMachineContainerMenu<BE>>
+typealias DeferredMachineMenu<BE> = HTDeferredMenuType.WithContext<HTMachineContainerMenu<BE>, BE>
 
 object RagiumMenuTypes {
     @JvmField
@@ -47,17 +51,17 @@ object RagiumMenuTypes {
     val DRUM: DeferredBEMenu<HTDrumBlockEntity> = registerBE("drum")
 
     @JvmField
-    val ACCESS_CONFIG: HTDeferredMenuType<HTAccessConfigurationMenu> =
+    val ACCESS_CONFIG: HTDeferredMenuType.WithContext<HTAccessConfigurationMenu, HTConfigurableBlockEntity> =
         REGISTER.registerType("access_configuration", ::HTAccessConfigurationMenu, ::getBlockEntityFromBuf)
 
     //    Item    //
 
     @JvmField
-    val POTION_BUNDLE: HTDeferredMenuType<HTPotionBundleContainerMenu> =
+    val POTION_BUNDLE: HTDeferredMenuType.OnHand<HTPotionBundleContainerMenu> =
         REGISTER.registerItemType("potion_bundle", ::HTPotionBundleContainerMenu)
 
     @JvmField
-    val UNIVERSAL_BUNDLE: HTDeferredMenuType<HTGenericContainerMenu> =
+    val UNIVERSAL_BUNDLE: HTDeferredMenuType.WithContext<HTGenericContainerMenu, HTItemHandler> =
         REGISTER.registerType("universal_bundle", HTGenericContainerMenu::threeRow) {
             HTGenericContainerRows.createHandler(3)
         }
@@ -86,6 +90,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val EXTRACTOR: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("extractor")
+
+    @JvmField
+    val EXP_COLLECTOR: DeferredBEMenu<HTExpCollectorBlockEntity> = registerBE("exp_collector")
 
     @JvmField
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
@@ -120,7 +127,7 @@ object RagiumMenuTypes {
     //    Extensions    //
 
     /**
-     * @see [mekanism.common.inventory.container.type.MekanismContainerType.getTileFromBuf]
+     * @see mekanism.common.inventory.container.type.MekanismContainerType.getTileFromBuf
      */
     @JvmStatic
     inline fun <reified BE : BlockEntity> getBlockEntityFromBuf(buf: FriendlyByteBuf?): BE {
@@ -128,13 +135,12 @@ object RagiumMenuTypes {
         check(FMLEnvironment.dist.isClient) { "Only supported on client side" }
         val level: Level = checkNotNull(Minecraft.getInstance().level) { "Failed to find client level" }
         val pos: BlockPos = buf.readBlockPos()
-        val blockEntity: BlockEntity = checkNotNull(level.getBlockEntity(pos)) { "No block entity is present at $pos" }
-        return blockEntity as BE
+        return checkNotNull(level.getTypedBlockEntity<BE>(pos)) { "No block entity is present at $pos" }
     }
 
     @JvmStatic
     inline fun <reified BE : HTBlockEntity> registerBE(name: String): DeferredBEMenu<BE> {
-        val holder: DeferredBEMenu<BE> = HTDeferredMenuType(RagiumAPI.id(name))
+        val holder: DeferredBEMenu<BE> = HTDeferredMenuType.WithContext(RagiumAPI.id(name))
         return REGISTER.registerType(
             name,
             { containerId: Int, inventory: Inventory, context: BE -> HTBlockEntityContainerMenu(holder, containerId, inventory, context) },
@@ -144,7 +150,7 @@ object RagiumMenuTypes {
 
     @JvmStatic
     inline fun <reified BE : HTMachineBlockEntity> registerMachine(name: String): DeferredMachineMenu<BE> {
-        val holder: DeferredMachineMenu<BE> = HTDeferredMenuType(RagiumAPI.id(name))
+        val holder: DeferredMachineMenu<BE> = HTDeferredMenuType.WithContext(RagiumAPI.id(name))
         return REGISTER.registerType(
             name,
             { containerId: Int, inventory: Inventory, context: BE -> HTMachineContainerMenu(holder, containerId, inventory, context) },

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": "#c:ores/lead",
+  "results": [
+    {
+      "count": 2,
+      "id": "#c:raw_materials/lead"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "#c:raw_materials/silver"
+    }
+  ]
+}

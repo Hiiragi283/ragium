@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "kaleidoscope_cookery"
+    }
+  ],
+  "type": "kaleidoscope_cookery:chopping_board",
+  "cut_count": 1,
+  "ingredient": {
+    "tag": "c:foods/ragi_cherry"
+  },
+  "model_id": "ragium:ragi_cherry_pulp",
+  "result": {
+    "count": 2,
+    "id": "ragium:ragi_cherry_pulp"
+  }
+}

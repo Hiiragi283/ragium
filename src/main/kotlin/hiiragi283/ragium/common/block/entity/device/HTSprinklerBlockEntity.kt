@@ -1,18 +1,19 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.extension.asKotlinRandom
+import hiiragi283.ragium.api.collection.random
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(TODO() as HTDeviceVariant, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(TODO() as Holder<Block>, pos, state) {
     private val tank: HTFluidStackTank = TODO()
 
     //    Ticking    //
@@ -26,9 +27,9 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEn
             .map(pos::offset)
             .filter { posIn: BlockPos -> posIn != pos }
             .toList()
-            .random(level.random.asKotlinRandom())
+            .random(level.random)
         // 水を消費できない場合はスキップ
-        if (tank.extract(50, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty()) return TriState.DEFAULT
+        if (tank.extract(50, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return TriState.DEFAULT
         // ランダムチックを呼び出す
         if (BoneMealItem.applyBonemeal(ItemStack.EMPTY, level, targetPos, null)) {
             tank.extract(50, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

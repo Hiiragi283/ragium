@@ -6,8 +6,23 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 
+/**
+ * レシピの一覧を取得するインターフェース
+ * @param INPUT レシピの入力となるクラス
+ * @param RECIPE レシピのクラス
+ */
 interface HTRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : HTHasText {
-    fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<RECIPE>>
+    /**
+     * 指定した[manager]から[RecipeHolder]の一覧を返します。
+     */
+    fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>>
 
-    fun getAllRecipes(manager: RecipeManager): Sequence<RECIPE> = getAllHolders(manager).map(RecipeHolder<RECIPE>::value)
+    /**
+     * 指定した[manager]から[RECIPE]の一覧を返します。
+     */
+    fun getAllRecipes(manager: RecipeManager): Sequence<RECIPE> = getAllHolders(manager).map(RecipeHolder<out RECIPE>::value)
+
+    interface Findable<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
+        HTRecipeFinder<INPUT, RECIPE>,
+        HTRecipeType<INPUT, RECIPE>
 }

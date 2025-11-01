@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.variant
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -20,8 +21,9 @@ enum class HTArmorVariant(
     private val armorType: ArmorItem.Type,
     private val enUsPattern: String,
     private val jaJpPattern: String,
-    override val tagKey: TagKey<Item>,
-) : HTVariantKey.Tagged<Item> {
+    val tagKey: TagKey<Item>,
+) : HTVariantKey,
+    HTTranslationProvider {
     HELMET(ArmorItem.Type.HELMET, "%s Helmet", "%sのヘルメット", ItemTags.HEAD_ARMOR),
     CHESTPLATE(ArmorItem.Type.CHESTPLATE, "%s Chestplate", "%sのチェストプレート", ItemTags.CHEST_ARMOR),
     LEGGINGS(ArmorItem.Type.LEGGINGS, "%s Leggings", "%sのレギンス", ItemTags.LEG_ARMOR),
@@ -60,8 +62,7 @@ enum class HTArmorVariant(
         multiplier: Int,
     ): HTDeferredItem<ArmorItem> = register.registerItem(
         "${material.materialName()}_${variantName()}",
-        { prop: Item.Properties -> ArmorItem(armorMaterial1, armorType, prop) },
-        Item.Properties().durability(armorType.getDurability(multiplier)),
+        { ArmorItem(armorMaterial1, armorType, it.durability(armorType.getDurability(multiplier))) },
     )
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {

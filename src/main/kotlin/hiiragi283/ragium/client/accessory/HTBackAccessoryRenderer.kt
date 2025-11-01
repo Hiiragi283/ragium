@@ -20,7 +20,7 @@ class HTBackAccessoryRenderer : SimpleAccessoryRenderer {
     ) {
         if (model is HumanoidModel<M>) {
             AccessoryRenderer.transformToFace(matrices, model.body, Side.BACK)
-            matrices.scale(2.5)
+            matrices.scale(2.5f)
         }
     }
 }

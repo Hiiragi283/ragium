@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.registry.HTBrewingEffect
+import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.network.HTPayloadRegister
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -12,6 +14,8 @@ import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
+import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
@@ -24,6 +28,7 @@ import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
+import hiiragi283.ragium.setup.RagiumFeatures
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -37,13 +42,17 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -58,6 +67,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
         eventBus.addListener(::registerRegistries)
+        eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
         RagiumDataComponents.REGISTER.register(eventBus)
@@ -72,12 +82,24 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
-        RagiumRecipeSerializers.REGISTER.register(eventBus)
-        RagiumEntityTypes.REGISTER.register(eventBus)
+        RagiumEntityTypes.init(eventBus)
+        RagiumFeatures.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
+        RagiumRecipeSerializers.REGISTER.register(eventBus)
 
-        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
+        val addons: List<RagiumAddon> = RagiumPlatform.INSTANCE.getAddons()
+        for (addon: RagiumAddon in addons) {
             addon.onModConstruct(eventBus, dist)
+        }
+        eventBus.addListener(EventPriority.LOW) { event: ModifyDefaultComponentsEvent ->
+            for (addon: RagiumAddon in addons) {
+                addon.modifyComponents(event)
+            }
+        }
+        eventBus.addListener(EventPriority.LOW) { event: BuildCreativeModeTabContentsEvent ->
+            for (addon: RagiumAddon in addons) {
+                addon.buildCreativeTabs(RagiumAddon.CreativeTabHelper(event))
+            }
         }
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
@@ -88,6 +110,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         RagiumAPI.LOGGER.info("Registered new registries!")
+    }
+
+    private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        event.dataPackRegistry(RagiumAPI.BREWING_EFFECT_KEY, HTBrewingEffect.DIRECT_CODEC, HTBrewingEffect.DIRECT_CODEC)
+        event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
+
+        RagiumAPI.LOGGER.info("Registered new data pack registries!")
     }
 
     private fun onRegister(event: RegisterEvent) {
@@ -133,14 +162,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.INSTANCE.thermalFuelType)
-        event.register(RagiumDataMaps.INSTANCE.combustionFuelType)
-        event.register(RagiumDataMaps.INSTANCE.nuclearFuelType)
-        event.register(RagiumDataMaps.INSTANCE.solarPowerType)
+        event.register(RagiumDataMaps.THERMAL_FUEL)
+        event.register(RagiumDataMaps.COMBUSTION_FUEL)
+        event.register(RagiumDataMaps.NUCLEAR_FUEL)
+        event.register(RagiumDataMaps.ENCHANT_FUEL)
 
-        event.register(RagiumDataMaps.INSTANCE.brewingEffectType)
-
-        event.register(RagiumDataMaps.INSTANCE.mobHeadType)
+        event.register(RagiumDataMaps.MOB_HEAD)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }
@@ -149,6 +176,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         with(HTPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
             // Server -> Client
             registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
+            registerS2C(HTUpdateEnergyStoragePacket.TYPE, HTUpdateEnergyStoragePacket.STREAM_CODEC)
+            registerS2C(HTUpdateExperienceStoragePacket.TYPE, HTUpdateExperienceStoragePacket.STREAM_CODEC)
             registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
             // Client -> Server
             registerC2S(HTOpenPotionBundlePacket.TYPE, HTOpenPotionBundlePacket.STREAM_CODEC)

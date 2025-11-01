@@ -2,10 +2,9 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.core.NonNullList
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
@@ -16,20 +15,16 @@ import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult
 /**
  * @see [vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder]
  */
-class HTCuttingBoardRecipeBuilder(
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-    chance: Float,
-) : HTStackRecipeBuilder<HTCuttingBoardRecipeBuilder>("cutting", item, count, component),
+class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
+    HTStackRecipeBuilder<HTCuttingBoardRecipeBuilder>("cutting", stack),
     HTIngredientRecipeBuilder<HTCuttingBoardRecipeBuilder> {
-    constructor(
-        item: ItemLike,
-        count: Int = 1,
-        chance: Float = 1f,
-    ) : this(HTItemHolderLike.fromItem(item), count, DataComponentPatch.EMPTY, chance)
+    companion object {
+        @JvmStatic
+        fun create(item: ItemLike, count: Int = 1, chance: Float = 1f): HTCuttingBoardRecipeBuilder =
+            HTCuttingBoardRecipeBuilder(ImmutableItemStack.of(item, count), chance)
+    }
 
-    private val results: MutableList<ChanceResult> = mutableListOf(ChanceResult(item.toStack(count, component), chance))
+    private val results: MutableList<ChanceResult> = mutableListOf(ChanceResult(stack.unwrap(), chance))
     private val ingredients: MutableList<Ingredient> = mutableListOf()
     private var sound: SoundEvent? = null
 

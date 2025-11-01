@@ -6,17 +6,18 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.ItemStack
+import net.neoforged.api.distmarker.Dist
 
 /**
  * [InteractionHand]と[ItemStack]を引数にとる[MenuConstructor]の代替インターフェース
- * @see [mekanism.common.inventory.container.type.MekanismItemContainerType.IMekanismItemContainerFactory]
+ * @see mekanism.common.inventory.container.type.MekanismItemContainerType.IMekanismItemContainerFactory
  */
 fun interface HTItemContainerFactory<MENU : AbstractContainerMenu> {
     fun create(
         containerId: Int,
         inventory: Inventory,
         context: HTItemContainerContext,
-        isClientSide: Boolean,
+        isClientSide: Dist,
     ): MENU
 
     fun create(
@@ -24,6 +25,6 @@ fun interface HTItemContainerFactory<MENU : AbstractContainerMenu> {
         inventory: Inventory,
         hand: InteractionHand?,
         stack: ItemStack,
-        isClientSide: Boolean,
+        isClientSide: Dist,
     ): MENU = create(containerId, inventory, HTItemContainerContext(hand, stack), isClientSide)
 }

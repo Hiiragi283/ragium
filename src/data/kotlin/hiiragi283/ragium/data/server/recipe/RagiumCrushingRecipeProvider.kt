@@ -3,12 +3,12 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTCommonMaterialTypes
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -24,17 +24,17 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         // Vanilla
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(ItemTags.WOOL),
+                itemCreator.fromTagKey(ItemTags.WOOL),
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_wool")
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(ItemTags.WOOL_CARPETS))
+            .crushing(itemCreator.fromTagKey(ItemTags.WOOL_CARPETS))
             .addResult(resultHelper.item(Items.STRING, 2))
             .addResult(resultHelper.item(Items.STRING), 1 / 3f)
             .saveSuffixed(output, "_from_carpet")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.COBWEB),
+                itemCreator.fromItem(Items.COBWEB),
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
 
@@ -45,70 +45,70 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (material: HTMaterialType, result: Item) ->
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, material),
+                    itemCreator.fromTagKey(HTStorageMaterialVariant, material),
                     resultHelper.item(result, 4),
                 ).saveSuffixed(output, "_from_block")
         }
 
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.MAGMA_BLOCK),
+                itemCreator.fromItem(Items.MAGMA_BLOCK),
                 resultHelper.item(Items.MAGMA_CREAM, 4),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Items.MUDDY_MANGROVE_ROOTS))
+            .crushing(itemCreator.fromItem(Items.MUDDY_MANGROVE_ROOTS))
             .addResult(resultHelper.item(Items.MUD))
             .addResult(resultHelper.item(Items.MANGROVE_ROOTS), 1 / 4f)
             .saveSuffixed(output, "_from_roots")
 
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Tags.Items.CROPS_SUGAR_CANE),
+                itemCreator.fromTagKey(Tags.Items.CROPS_SUGAR_CANE),
                 resultHelper.item(Items.SUGAR, 3),
             ).saveSuffixed(output, "_from_cane")
 
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Tags.Items.RODS_BLAZE),
+                itemCreator.fromTagKey(Tags.Items.RODS_BLAZE),
                 resultHelper.item(Items.BLAZE_POWDER, 4),
             ).saveSuffixed(output, "_from_rod")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Tags.Items.RODS_BREEZE),
+                itemCreator.fromTagKey(Tags.Items.RODS_BREEZE),
                 resultHelper.item(Items.WIND_CHARGE, 6),
             ).saveSuffixed(output, "_from_rod")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Items.COARSE_DIRT))
+            .crushing(itemCreator.fromItem(Items.COARSE_DIRT))
             .addResult(resultHelper.item(Items.DIRT))
             .addResult(resultHelper.item(Items.FLINT), 1 / 4f)
             .saveSuffixed(output, "_from_coarse")
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Items.ROOTED_DIRT))
+            .crushing(itemCreator.fromItem(Items.ROOTED_DIRT))
             .addResult(resultHelper.item(Items.DIRT))
             .addResult(resultHelper.item(Items.HANGING_ROOTS), 1 / 4f)
             .saveSuffixed(output, "_from_rooted")
 
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.NETHER_WART_BLOCK),
+                itemCreator.fromItem(Items.NETHER_WART_BLOCK),
                 resultHelper.item(Items.NETHER_WART, 3),
             ).saveSuffixed(output, "_from_block")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.WARPED_WART_BLOCK),
+                itemCreator.fromItem(Items.WARPED_WART_BLOCK),
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Tags.Items.OBSIDIANS_NORMAL),
+                itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
                 resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_block")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Items.GLOW_INK_SAC))
+            .crushing(itemCreator.fromItem(Items.GLOW_INK_SAC))
             .addResult(resultHelper.item(RagiumItems.LUMINOUS_PASTE))
             .addResult(resultHelper.item(Items.INK_SAC))
             .save(output)
@@ -131,7 +131,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         ) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(tagKey, input),
+                    itemCreator.fromTagKey(tagKey, input),
                     resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.WOOD, output),
                 ).saveSuffixed(RagiumCrushingRecipeProvider.output, suffix)
         }
@@ -156,29 +156,29 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     private fun sand() {
         // Colorless
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Tags.Items.COBBLESTONES))
+            .crushing(itemCreator.fromTagKey(Tags.Items.COBBLESTONES))
             .addResult(resultHelper.item(Items.GRAVEL))
             .saveSuffixed(output, "_from_cobble")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Tags.Items.GRAVELS))
+            .crushing(itemCreator.fromTagKey(Tags.Items.GRAVELS))
             .addResult(resultHelper.item(Items.SAND))
             .addResult(resultHelper.item(Items.FLINT), 1 / 3f)
             .saveSuffixed(output, "_from_gravel")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
+            .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
             .addResult(resultHelper.item(Items.SAND, 4))
             .addResult(resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SALTPETER), 1 / 4f)
             .saveSuffixed(output, "_from_sandstone")
 
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Tags.Items.SANDS))
+            .crushing(itemCreator.fromTagKey(Tags.Items.SANDS))
             .addResult(resultHelper.item(RagiumBlocks.SILT))
             .saveSuffixed(output, "_from_sand")
         // Red
         HTItemToChancedItemRecipeBuilder
-            .crushing(ingredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS))
+            .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS))
             .addResult(resultHelper.item(Items.RED_SAND, 4))
             .addResult(resultHelper.item(Items.REDSTONE), 1 / 8f)
             .saveSuffixed(output, "_from_sandstone")
@@ -188,28 +188,28 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     private fun prismarine() {
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.SEA_LANTERN),
+                itemCreator.fromItem(Items.SEA_LANTERN),
                 resultHelper.item(Items.PRISMARINE_CRYSTALS, 9),
             ).saveSuffixed(output, "_from_sea_lantern")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.PRISMARINE_SHARD),
+                itemCreator.fromItem(Items.PRISMARINE_SHARD),
                 resultHelper.item(Items.PRISMARINE_CRYSTALS),
             ).saveSuffixed(output, "_from_shard")
 
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.PRISMARINE),
+                itemCreator.fromItem(Items.PRISMARINE),
                 resultHelper.item(Items.PRISMARINE_SHARD, 4),
             ).saveSuffixed(output, "_from_block")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.PRISMARINE_BRICKS),
+                itemCreator.fromItem(Items.PRISMARINE_BRICKS),
                 resultHelper.item(Items.PRISMARINE_SHARD, 9),
             ).saveSuffixed(output, "_from_bricks")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.DARK_PRISMARINE),
+                itemCreator.fromItem(Items.DARK_PRISMARINE),
                 resultHelper.item(Items.PRISMARINE_SHARD, 8),
             ).saveSuffixed(output, "_from_dark")
     }
@@ -219,23 +219,23 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         // Snow
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.SNOW_BLOCK),
+                itemCreator.fromItem(Items.SNOW_BLOCK),
                 resultHelper.item(Items.SNOWBALL, 4),
             ).saveSuffixed(output, "_from_block")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.ICE),
+                itemCreator.fromItem(Items.ICE),
                 resultHelper.item(Items.SNOWBALL, 4),
             ).saveSuffixed(output, "_from_ice")
         // Ice
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.PACKED_ICE),
+                itemCreator.fromItem(Items.PACKED_ICE),
                 resultHelper.item(Items.ICE, 9),
             ).saveSuffixed(output, "_from_packed")
         HTItemToObjRecipeBuilder
             .pulverizing(
-                ingredientHelper.item(Items.BLUE_ICE),
+                itemCreator.fromItem(Items.BLUE_ICE),
                 resultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
     }
@@ -248,7 +248,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             if (baseVariant == HTItemMaterialVariant.DUST) continue
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(baseVariant, material),
+                    itemCreator.fromTagKey(baseVariant, material),
                     resultHelper.item(HTItemMaterialVariant.DUST, material),
                 ).saveSuffixed(output, "_from_${baseVariant.variantName()}")
         }
@@ -257,7 +257,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         for (material: HTMaterialType in HTCommonMaterialTypes.METALS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(HTItemMaterialVariant.INGOT, material),
+                    itemCreator.fromTagKey(HTItemMaterialVariant.INGOT, material),
                     resultHelper.item(HTItemMaterialVariant.DUST, material),
                 ).tagCondition(HTItemMaterialVariant.DUST, material)
                 .saveSuffixed(output, "_from_ingot")
@@ -266,7 +266,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         for (material: HTMaterialType in HTCommonMaterialTypes.ALLOYS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(HTItemMaterialVariant.INGOT, material),
+                    itemCreator.fromTagKey(HTItemMaterialVariant.INGOT, material),
                     resultHelper.item(HTItemMaterialVariant.DUST, material),
                 ).tagCondition(HTItemMaterialVariant.DUST, material)
                 .saveSuffixed(output, "_from_ingot")
@@ -275,7 +275,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         for (material: HTMaterialType in HTCommonMaterialTypes.GEMS.values) {
             HTItemToObjRecipeBuilder
                 .pulverizing(
-                    ingredientHelper.item(HTItemMaterialVariant.GEM, material),
+                    itemCreator.fromTagKey(HTItemMaterialVariant.GEM, material),
                     resultHelper.item(HTItemMaterialVariant.DUST, material),
                 ).tagCondition(HTItemMaterialVariant.DUST, material)
                 .saveSuffixed(output, "_from_gem")

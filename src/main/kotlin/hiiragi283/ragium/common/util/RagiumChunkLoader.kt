@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.world.chunk.LoadingValidationCallback
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
 
 /**
- * @see [appeng.server.services.ChunkLoadingService]
+ * @see appeng.server.services.ChunkLoadingService
  */
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumChunkLoader : LoadingValidationCallback {
@@ -26,8 +26,7 @@ object RagiumChunkLoader : LoadingValidationCallback {
 
     override fun validateTickets(level: ServerLevel, ticketHelper: TicketHelper) {
         ticketHelper.blockTickets.forEach { (pos: BlockPos, _: TicketSet) ->
-            val blockEntity: BlockEntity? = level.getBlockEntity(pos)
-            if (blockEntity !is HTDimensionalAnchorBlockEntity) {
+            if (level.getTypedBlockEntity<HTDimensionalAnchorBlockEntity>(pos) != null) {
                 ticketHelper.removeAllTickets(pos)
             }
         }

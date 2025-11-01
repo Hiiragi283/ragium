@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 /**
- * @see [net.minecraft.client.gui.screens.inventory.ContainerScreen]
+ * @see net.minecraft.client.gui.screens.inventory.ContainerScreen
  */
 class HTGenericScreen<MENU>(menu: MENU, inventory: Inventory, title: Component) :
     HTContainerScreen<MENU>(menu, inventory, title) where MENU : HTContainerMenu, MENU : HTGenericContainerRows {

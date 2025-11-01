@@ -2,53 +2,32 @@
 
 package hiiragi283.ragium.api.extension
 
-import com.mojang.blaze3d.vertex.BufferUploader
-import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.Tesselator
-import com.mojang.blaze3d.vertex.VertexFormat
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.resources.model.BakedModel
-import net.minecraft.core.Vec3i
-import net.minecraft.util.FastColor
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.Vec3
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.model.data.ModelData
-import org.joml.Matrix4f
 import org.joml.Quaternionf
 
 //    PoseStack    //
 
+fun PoseStack.scale(i: Float) {
+    scale(i, i, i)
+}
+
+fun PoseStack.translate(i: Float) {
+    translate(i, i, i)
+}
+
 fun PoseStack.translate(x: Number, y: Number, z: Number) {
     translate(x.toDouble(), y.toDouble(), z.toDouble())
-}
-
-fun PoseStack.translate(pos: Vec3i) {
-    translate(pos.x, pos.y, pos.z)
-}
-
-fun PoseStack.translate(pos: Vec3) {
-    translate(pos.x, pos.y, pos.z)
-}
-
-fun PoseStack.scale(i: Number) {
-    scale(i.toFloat(), i.toFloat(), i.toFloat())
-}
-
-fun PoseStack.scale(x: Number, y: Number, z: Number) {
-    scale(x.toFloat(), y.toFloat(), z.toFloat())
-}
-
-fun PoseStack.scale(pos: Vec3) {
-    scale(pos.x, pos.y, pos.z)
 }
 
 //    Rendering    //
@@ -74,7 +53,7 @@ fun renderItem(
     if (!quads.isEmpty()) {
         poseStack.translate(xOffset, itemY, zOffset)
         poseStack.mulPose(Quaternionf().rotateX(Mth.DEG_TO_RAD * 90))
-        poseStack.scale(0.5, 0.5, 0.5)
+        poseStack.scale(0.5f)
     } else {
         poseStack.translate(xOffset, blockY, zOffset)
     }
@@ -90,43 +69,6 @@ fun renderItem(
         0,
     )
     poseStack.popPose()
-}
-
-inline fun setShaderColor(guiGraphics: GuiGraphics, color: Int, action: () -> Unit) {
-    val red: Float = FastColor.ARGB32.red(color) / 255f
-    val green: Float = FastColor.ARGB32.green(color) / 255f
-    val blue: Float = FastColor.ARGB32.blue(color) / 255f
-    val alpha: Float = FastColor.ARGB32.alpha(color) / 255f
-    guiGraphics.setColor(red, green, blue, alpha)
-    action()
-    guiGraphics.setColor(1f, 1f, 1f, 1f)
-}
-
-/**
- * @see [me.desht.pneumaticcraft.client.util.GuiUtils.drawFluidTexture]
- */
-fun drawQuad(
-    guiGraphics: GuiGraphics,
-    x: Float,
-    y: Float,
-    width: Float,
-    height: Float,
-    minU: Float,
-    minV: Float,
-    maxU: Float,
-    maxV: Float,
-) {
-    val matrix4f: Matrix4f = guiGraphics.pose().last().pose()
-    Tesselator
-        .getInstance()
-        .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
-        .apply {
-            addVertex(matrix4f, x, y + height, 0f).setUv(minU, maxV)
-            addVertex(matrix4f, x + width, y + height, 0f).setUv(maxU, maxV)
-            addVertex(matrix4f, x + width, y, 0f).setUv(maxU, minV)
-            addVertex(matrix4f, x, y, 0f).setUv(minU, minV)
-        }.buildOrThrow()
-        .let(BufferUploader::drawWithShader)
 }
 
 /*fun HTMultiblockController.renderMultiblock(

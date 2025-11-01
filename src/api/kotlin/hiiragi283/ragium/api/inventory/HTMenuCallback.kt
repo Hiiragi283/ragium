@@ -5,8 +5,8 @@ import net.minecraft.world.entity.player.Player
 
 /**
  * GUIが開かれる/閉じられる時に呼び出されるインターフェース
- * @see [HTContainerMenu.onOpen]
- * @see [HTContainerMenu.onClose]
+ * @see HTContainerMenu.onOpen
+ * @see HTContainerMenu.onClose
  */
 interface HTMenuCallback {
     fun openMenu(player: Player) {}

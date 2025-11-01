@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.extension.asKotlinRandom
+import hiiragi283.ragium.api.collection.randomOrNull
 import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -36,7 +36,7 @@ data class HTLootTicketTargets private constructor(private val lootTables: List<
         fun create(vararg lootTables: ResourceKey<LootTable>): HTLootTicketTargets = create(lootTables.toList())
     }
 
-    fun getRandomLoot(random: RandomSource): ResourceKey<LootTable>? = lootTables.randomOrNull(random.asKotlinRandom())
+    fun getRandomLoot(random: RandomSource): ResourceKey<LootTable>? = lootTables.randomOrNull(random)
 
     override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
         lootTables

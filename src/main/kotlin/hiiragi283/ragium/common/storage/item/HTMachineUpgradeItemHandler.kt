@@ -1,14 +1,13 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
-import hiiragi283.ragium.api.storage.HTContentListener
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.item.isOf
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -18,29 +17,28 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.attachment.IAttachmentHolder
 
-class HTMachineUpgradeItemHandler private constructor(private val listener: HTContentListener?) :
+class HTMachineUpgradeItemHandler private constructor(private val blockEntity: BlockEntity) :
     HTItemHandler,
     HTValueSerializable {
         companion object {
             @JvmStatic
-            fun fromHolder(holder: IAttachmentHolder): HTMachineUpgradeItemHandler =
-                HTMachineUpgradeItemHandler(checkNotNull(holder as? BlockEntity)::setChanged)
+            fun fromHolder(holder: IAttachmentHolder): HTMachineUpgradeItemHandler = HTMachineUpgradeItemHandler(holder as BlockEntity)
 
             @JvmStatic
-            fun getComponentTier(stack: HTItemStorageStack): HTComponentTier? = RagiumItems.COMPONENTS
+            fun getComponentTier(stack: ImmutableItemStack): HTComponentTier? = RagiumItems.COMPONENTS
                 .toList()
-                .firstOrNull { (_, item: ItemLike) -> stack.isOf(item) }
+                .firstOrNull { (_, item: ItemLike) -> stack.isOf(item.asItem()) }
                 ?.first
         }
 
         private val slots: List<HTItemSlot> = (0..3).map { i ->
             HTItemStackSlot.create(
-                listener,
+                blockEntity::setChanged,
                 HTSlotHelper.getSlotPosX(8),
                 HTSlotHelper.getSlotPosY(i - 0.5),
-                canExtract = HTItemStackSlot.MANUAL_ONLY,
-                canInsert = HTItemStackSlot.MANUAL_ONLY,
-                filter = { stack: HTItemStorageStack ->
+                canExtract = HTPredicates.manualOnly(),
+                canInsert = HTPredicates.manualOnly(),
+                filter = { stack: ImmutableItemStack ->
                     when (i) {
                         3 -> getComponentTier(stack) != null
                         else -> getComponentTier(stack) == null
@@ -50,10 +48,6 @@ class HTMachineUpgradeItemHandler private constructor(private val listener: HTCo
         }
 
         override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
-
-        override fun onContentsChanged() {
-            listener?.onContentsChanged()
-        }
 
         override fun serialize(output: HTValueOutput) {
             HTCapabilityCodec.ITEM.saveTo(output, getItemSlots(getItemSideFor()))

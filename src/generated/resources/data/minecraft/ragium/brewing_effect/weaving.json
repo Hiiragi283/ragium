@@ -1,0 +1,8 @@
+{
+  "content": {
+    "potion": "minecraft:weaving"
+  },
+  "ingredient": {
+    "item": "minecraft:cobweb"
+  }
+}

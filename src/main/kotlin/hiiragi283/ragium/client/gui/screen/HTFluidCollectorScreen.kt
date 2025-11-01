@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.neoforge.fluids.FluidStack
 
 @OnlyIn(Dist.CLIENT)
 class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBlockEntity>, inventory: Inventory, title: Component) :
@@ -32,14 +31,10 @@ class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBl
             ),
         )
 
-        fluidWidget = createFluidTank(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
 
     //    HTFluidScreen    //
 
-    override fun setFluidStack(index: Int, stack: FluidStack) {
-        fluidWidget.stack = stack
-    }
-
-    override fun getFluidWidgets(): Iterable<HTFluidWidget> = listOf(fluidWidget)
+    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

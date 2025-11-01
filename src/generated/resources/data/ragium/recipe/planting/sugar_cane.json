@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:crops/sugar_cane",
+  "results": {
+    "count": 3,
+    "id": "minecraft:sugar_cane"
+  }
+}

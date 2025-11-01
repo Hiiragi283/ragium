@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.stack.ImmutableStack
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -14,7 +15,7 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 
-abstract class HTRecipeResultBase<TYPE : Any, STACK : Any>(
+abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>>(
     protected val entry: HTKeyOrTagEntry<TYPE>,
     protected val amount: Int,
     protected val components: DataComponentPatch,

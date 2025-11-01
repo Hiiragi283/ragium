@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.extension.giveOrDropStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.client.Minecraft
@@ -12,7 +13,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
@@ -21,12 +21,12 @@ import net.minecraft.world.phys.EntityHitResult
 class HTThrownCaptureEgg : ThrowableItemProjectile {
     companion object {
         @JvmStatic
-        fun getCapturedStack(target: Entity): ItemStack? {
+        fun getCapturedStack(target: Entity): ImmutableItemStack? {
             val targetType: EntityType<*> = target.type
             // 対象がブラックリストに入っていたらパス
             if (targetType.`is`(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST)) return null
             // クリックしたモブのスポーンエッグを取得する
-            return SpawnEggItem.byId(targetType)?.let(::ItemStack)
+            return SpawnEggItem.byId(targetType)?.let(ImmutableItemStack::of)
         }
     }
 
@@ -47,7 +47,7 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
         if (!level().isClientSide) {
             val target: Entity = result.entity
             // クリックしたモブのスポーンエッグを取得する
-            val spawnEgg: ItemStack = getCapturedStack(target) ?: return
+            val spawnEgg: ImmutableItemStack = getCapturedStack(target) ?: return
             // SEを鳴らす
             playSound(SoundEvents.FIREWORK_ROCKET_BLAST)
             // パーティクルを出す
@@ -57,7 +57,7 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
             // 対象を消す
             target.discard()
             // スポーンエッグをプレイヤーに渡す
-            giveOrDropStack(owner ?: this, spawnEgg)
+            HTItemDropHelper.giveOrDropStack(owner ?: this, spawnEgg)
             // 自身を消す
             discard()
         }
@@ -67,7 +67,7 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
         super.onHitBlock(result)
         if (!level().isClientSide) {
             // アイテムに戻る
-            giveOrDropStack(owner ?: this, item)
+            HTItemDropHelper.giveOrDropStack(owner ?: this, item)
             // 自身を消す
             discard()
         }

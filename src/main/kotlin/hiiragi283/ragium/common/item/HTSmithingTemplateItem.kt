@@ -28,5 +28,5 @@ class HTSmithingTemplateItem(
             "item/empty_slot_shovel",
             "item/empty_slot_pickaxe",
         ).map(::vanillaId),
-        listOf(vanillaId("item/empty_slot_ingot")),
+        listOf(vanillaId("item", "empty_slot_ingot")),
     )

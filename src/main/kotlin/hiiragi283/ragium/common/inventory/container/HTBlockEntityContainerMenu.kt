@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
 open class HTBlockEntityContainerMenu<BE : HTBlockEntity>(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,
     context: BE,

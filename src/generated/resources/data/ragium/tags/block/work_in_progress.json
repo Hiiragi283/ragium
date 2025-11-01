@@ -1,10 +1,11 @@
 {
   "values": [
     "#c:obsidians/mysterious",
+    "ragium:azure_cluster",
     "ragium:brewery",
     "ragium:nuclear_reactor",
     "ragium:reinforced_stone_casing",
-    "ragium:solar_generator",
+    "ragium:solar_panel_controller",
     "ragium:stone_casing",
     "ragium:telepad",
     "ragium:wooden_casing"

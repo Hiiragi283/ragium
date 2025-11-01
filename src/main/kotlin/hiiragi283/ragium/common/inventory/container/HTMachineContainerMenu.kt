@@ -2,10 +2,11 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
 import net.minecraft.world.entity.player.Inventory
 
 open class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
-    menuType: HTDeferredMenuType<*>,
+    menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,
     context: BE,
@@ -18,6 +19,8 @@ open class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
     init {
         addSlots(context.upgradeHandler)
 
-        addDataSlots(context.containerData)
+        if (context is HTConsumerBlockEntity) {
+            addDataSlots(context.containerData)
+        }
     }
 }

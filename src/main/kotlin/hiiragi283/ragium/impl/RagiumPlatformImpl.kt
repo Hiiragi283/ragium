@@ -6,16 +6,20 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
+import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
-import hiiragi283.ragium.impl.util.RandomSourceWrapper
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
+import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeType
 import hiiragi283.ragium.impl.value.HTJsonValueInput
 import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
@@ -25,17 +29,17 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.RandomSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
-import kotlin.random.Random
 
 class RagiumPlatformImpl : RagiumPlatform {
     //    Addon    //
@@ -122,14 +126,20 @@ class RagiumPlatformImpl : RagiumPlatform {
         consumer(RagiumMaterialType.PLASTIC, HTItemMaterialVariant.PLATE)
     }
 
-    //    Collection    //
-
-    override fun wrapRandom(random: RandomSource): Random = RandomSourceWrapper(random)
-
     //    Item    //
 
     override fun createSoda(potion: PotionContents, count: Int): ItemStack =
         createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.POTION_CONTENTS, potion, count)
+
+    //    Recipe    //
+
+    override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(
+        finder: HTRecipeFinder<INPUT, RECIPE>,
+    ): HTRecipeCache<INPUT, RECIPE> = HTSimpleRecipeCache(finder)
+
+    override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> wrapRecipeType(
+        recipeType: RecipeType<RECIPE>,
+    ): HTRecipeType.Findable<INPUT, RECIPE> = HTSimpleRecipeType(recipeType)
 
     //    Server    //
 
@@ -138,14 +148,10 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =
         server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
-    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = when (level) {
-        is ServerLevel -> level.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
-        else -> level?.dimension()?.let(::getEnergyNetwork)
-    }
-
-    override fun getEnergyNetwork(key: ResourceKey<Level>): HTEnergyBattery? = RagiumPlatform.INSTANCE
-        .getLevel(key)
-        ?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
+    override fun getEnergyNetwork(level: Level?): HTEnergyStorage? = when (level) {
+        is ServerLevel -> level
+        else -> level?.dimension()?.let(::getLevel)
+    }?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)
 
     //    Storage    //
 

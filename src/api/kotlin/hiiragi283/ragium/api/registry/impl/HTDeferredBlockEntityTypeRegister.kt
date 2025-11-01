@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry.impl
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -14,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HTDeferredBlockEntityTypeRegister(namespace: String) :
     HTDeferredRegister<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE, namespace) {
-    fun <BE : BlockEntity> registerType(name: String, factory: HTBlockEntityFactory<BE>): HTDeferredBlockEntityType<BE> {
+    fun <BE : BlockEntity> registerType(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> {
         val holder = HTDeferredBlockEntityType<BE>(createId(name))
         register(name) { _: ResourceLocation -> BlockEntityType.Builder.of(factory).build(null) }
         return holder
@@ -22,7 +21,7 @@ class HTDeferredBlockEntityTypeRegister(namespace: String) :
 
     fun <BE : BlockEntity> registerType(
         name: String,
-        factory: HTBlockEntityFactory<BE>,
+        factory: BlockEntityType.BlockEntitySupplier<BE>,
         clientTicker: BlockEntityTicker<in BE>,
         serverTicker: BlockEntityTicker<in BE>,
     ): HTDeferredBlockEntityType<BE> {

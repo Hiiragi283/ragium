@@ -10,8 +10,11 @@ import net.neoforged.neoforge.network.IContainerFactory
  * [HTContainerFactory]を受け取る[HTMenuType]の拡張クラス
  * @see [mekanism.common.inventory.container.type.MekanismContainerType]
  */
-class HTMenuTypeWithContext<MENU : AbstractContainerMenu, C>(factory: HTContainerFactory<MENU, C>, constructor: IContainerFactory<MENU>) :
-    HTMenuType<MENU, HTContainerFactory<MENU, C>>(
+class HTMenuTypeWithContext<MENU : AbstractContainerMenu, C>(
+    private val clazz: Class<C>,
+    factory: HTContainerFactory<MENU, C>,
+    constructor: IContainerFactory<MENU>,
+) : HTMenuType<MENU, HTContainerFactory<MENU, C>>(
         factory,
         constructor,
     ),
@@ -21,5 +24,13 @@ class HTMenuTypeWithContext<MENU : AbstractContainerMenu, C>(factory: HTContaine
      */
     fun create(context: C): MenuConstructor = MenuConstructor { containerId: Int, inventory: Inventory, _: Player ->
         factory.create(containerId, inventory, context)
+    }
+
+    fun createUnchecked(obj: Any): MenuConstructor? = when {
+        clazz.isInstance(obj) -> {
+            val context: C = clazz.cast(obj)
+            create(context)
+        }
+        else -> null
     }
 }

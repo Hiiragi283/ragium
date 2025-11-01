@@ -1,14 +1,11 @@
 package hiiragi283.ragium.impl.data.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.registry.HTItemHolderLike
-import net.minecraft.core.component.DataComponentPatch
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.CookingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmokingRecipe
 import net.minecraft.world.level.ItemLike
@@ -19,25 +16,15 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
     prefix: String,
     private val factory: AbstractCookingRecipe.Factory<RECIPE>,
     private val timeOperator: IntUnaryOperator,
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-) : HTStackRecipeBuilder<HTCookingRecipeBuilder<RECIPE>>(
-        prefix,
-        item,
-        count,
-        component,
-    ),
-    HTIngredientRecipeBuilder<HTCookingRecipeBuilder<RECIPE>> {
+    stack: ImmutableItemStack,
+) : HTStackRecipeBuilder.Single<HTCookingRecipeBuilder<RECIPE>>(prefix, stack) {
     companion object {
         @JvmStatic
         fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<SmeltingRecipe> = HTCookingRecipeBuilder(
             "smelting",
             ::SmeltingRecipe,
             IntUnaryOperator.identity(),
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
@@ -45,9 +32,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
             "blasting",
             ::BlastingRecipe,
             { it / 2 },
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
@@ -55,9 +40,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
             "smoking",
             ::SmokingRecipe,
             { it / 2 },
-            HTItemHolderLike.fromItem(item),
-            count,
-            DataComponentPatch.EMPTY,
+            ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
@@ -74,14 +57,8 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
     }
 
     private var group: String? = null
-    private lateinit var ingredient: Ingredient
     private var time: Int = 200
     private var exp: Float = 0f
-
-    override fun addIngredient(ingredient: Ingredient): HTCookingRecipeBuilder<RECIPE> = apply {
-        check(!::ingredient.isInitialized) { "Ingredient has already been initialized!" }
-        this.ingredient = ingredient
-    }
 
     fun setTime(time: Int): HTCookingRecipeBuilder<RECIPE> = apply {
         this.time = max(0, time)

@@ -2,46 +2,34 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
-import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.NonNullList
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 
-class HTShapelessRecipeBuilder(
-    private val category: CraftingBookCategory,
-    item: HTItemHolderLike,
-    count: Int,
-    component: DataComponentPatch,
-) : HTStackRecipeBuilder<HTShapelessRecipeBuilder>("shapeless", item, count, component),
+class HTShapelessRecipeBuilder(private val category: CraftingBookCategory, stack: ImmutableItemStack) :
+    HTStackRecipeBuilder<HTShapelessRecipeBuilder>("shapeless", stack),
     HTIngredientRecipeBuilder<HTShapelessRecipeBuilder> {
     companion object {
         @JvmStatic
-        fun building(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.BUILDING, HTItemHolderLike.fromItem(item), count, component)
+        fun building(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(CraftingBookCategory.BUILDING, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun redstone(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.REDSTONE, HTItemHolderLike.fromItem(item), count, component)
+        fun redstone(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(CraftingBookCategory.REDSTONE, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun equipment(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, HTItemHolderLike.fromItem(item), count, component)
+        fun equipment(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, ImmutableItemStack.of(item, count))
 
         @JvmStatic
-        fun misc(item: ItemLike, count: Int = 1, component: DataComponentPatch = DataComponentPatch.EMPTY): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.MISC, HTItemHolderLike.fromItem(item), count, component)
+        fun misc(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
+            HTShapelessRecipeBuilder(CraftingBookCategory.MISC, ImmutableItemStack.of(item, count))
     }
-
-    constructor(stack: ItemStack, category: CraftingBookCategory) : this(
-        category,
-        HTItemHolderLike.fromStack(stack),
-        stack.count,
-        stack.componentsPatch,
-    )
 
     private val ingredients: NonNullList<Ingredient> = NonNullList.create()
 

@@ -1,51 +1,18 @@
 package hiiragi283.ragium.api.storage
 
-import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.util.HTContentListener
 import kotlin.math.min
 
 /**
- * 単一の[STACK]を保持するスロットのインターフェース
+ * 単一の[STACK]を保持し，出し入れが可能な[HTStackView]の拡張インターフェース
  * @param STACK 保持するスタックのクラス
  */
-interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
+interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
+    HTStackView<STACK>,
     HTValueSerializable,
     HTContentListener {
-    /**
-     * 保持している[STACK]を返します。
-     */
-    fun getStack(): STACK
-
-    /**
-     * このスロットが空かどうか判定します。
-     * @return 空の場合は`true`
-     */
-    fun isEmpty(): Boolean = getStack().isEmpty()
-
-    /**
-     * このスロットが保持している個数を返します。
-     * @return [Long]値での個数
-     */
-    fun getAmountAsLong(): Long = getStack().amountAsLong()
-
-    /**
-     * このスロットが保持している個数を返します。
-     * @return [Int]値での個数
-     */
-    fun getAmountAsInt(): Int = getStack().amountAsInt()
-
-    /**
-     * このスロットの容量を返します。
-     * @return [Long]値での容量
-     */
-    fun getCapacityAsLong(stack: STACK): Long
-
-    /**
-     * このスロットの容量を返します。
-     * @return [Int]値での容量
-     */
-    fun getCapacityAsInt(stack: STACK): Int = Ints.saturatedCast(getCapacityAsLong(stack))
-
     /**
      * 指定した[stack]がスロットに有効かどうか判定します。
      * @return 有効な場合は`true`
@@ -59,7 +26,16 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬入されなかった[STACK]
      */
-    fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK
+    fun insert(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK?
+
+    /**
+     * 指定された引数から[STACK]を搬出します。
+     * @param stack 搬出される[STACK]
+     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に搬出を行います。
+     * @param access このスロットへのアクセスの種類
+     * @return 搬出された[STACK]
+     */
+    fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK?
 
     /**
      * 指定された引数から[STACK]を搬出します。
@@ -68,145 +44,87 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK
+    fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK?
 
     /**
-     * このスロットの空き容量を返します。
-     * @return [Long]値での空き容量
+     * 指定された[other]と[getStack]が等価か判定します。
      */
-    fun getNeededAsLong(stack: STACK): Long = getCapacityAsLong(stack) - getAmountAsLong()
+    fun isSameStack(other: STACK?): Boolean
+
+    //    Basic    //
 
     /**
-     * このスロットの空き容量を返します。
-     * @return [Int]値での空き容量
+     * [HTStackSlot]の基本的な実装
      */
-    fun getNeededAsInt(stack: STACK): Int = getCapacityAsInt(stack) - getAmountAsInt()
-
-    /**
-     * このスロットの占有率を返します。
-     * @return [Double]値での占有率
-     */
-    fun getStoredLevelAsDouble(stack: STACK): Double = getAmountAsLong() / getCapacityAsLong(stack).toDouble()
-
-    /**
-     * このスロットの占有率を返します。
-     * @return [Float]値での占有率
-     */
-    fun getStoredLevelAsFloat(stack: STACK): Float = getAmountAsLong() / getCapacityAsLong(stack).toFloat()
-
-    //    Mutable    //
-
-    /**
-     * 中身が可変な[HTStackSlot]の拡張クラス
-     */
-    abstract class Mutable<STACK : HTStorageStack<*, STACK>> : HTStackSlot<STACK> {
+    abstract class Basic<STACK : ImmutableStack<*, STACK>> : HTStackSlot<STACK> {
         /**
-         * 指定された[stack]を保持します。
+         * 指定された[stack]を代入します。
+         * @param stack 新しいスタック
          */
-        abstract fun setStack(stack: STACK)
+        protected abstract fun setStack(stack: STACK?)
 
         /**
-         * 空の[STACK]を返します。
+         * 指定された引数をもとに，現在保持しているスタックの個数を変更します。
+         * @param stack 現在のスタック
+         * @param amount 新しい数量
          */
-        protected abstract fun getEmptyStack(): STACK
+        protected abstract fun updateAmount(stack: STACK, amount: Int)
 
-        /**
-         * 現在の[STACK]を空にします。
-         */
-        fun setEmpty() {
-            setStack(getEmptyStack())
+        protected fun growAmount(stack: STACK, amount: Int) {
+            updateAmount(stack, stack.amount() + amount)
+        }
+
+        protected fun shrinkAmount(stack: STACK, amount: Int) {
+            updateAmount(stack, stack.amount() - amount)
         }
 
         /**
-         * 指定された[amount]から，現在の個数を置換します。
-         * @param amount 置換する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に置換を行います。
-         * @return 実際に置換された個数
+         * @see mekanism.common.inventory.slot.BasicInventorySlot.insertItem
+         * @see mekanism.common.capabilities.fluid.BasicFluidTank.insert
          */
-        open fun setStackSize(amount: Int, action: HTStorageAction): Int {
-            if (isEmpty()) return 0
-            if (amount <= 0) {
-                if (action.execute) setEmpty()
-                return 0
-            }
-            val stack: STACK = getStack()
-            val maxStackSize: Int = getCapacityAsInt(stack)
-            val fixedAmount: Int = min(amount, maxStackSize)
-            if (stack.amountAsInt() == fixedAmount || !action.execute) {
-                return fixedAmount
-            }
-            setStack(stack.copyWithAmount(fixedAmount))
-            onContentsChanged()
-            return fixedAmount
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数に追加します。
-         * @param amount 追加する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に追加を行います。
-         * @return 実際に追加された個数
-         */
-        fun growStack(amount: Int, action: HTStorageAction): Int {
-            val current: Int = getAmountAsInt()
-            if (current == 0) return 0
-            val fixedAmount: Int = if (amount > 0) {
-                min(amount, getCapacityAsInt(getStack()))
-            } else {
-                amount
-            }
-            val newSize: Int = setStackSize(current + fixedAmount, action)
-            return newSize - current
-        }
-
-        /**
-         * 指定された[amount]から，現在の個数を削除します。
-         * @param amount 削除する個数の最大値
-         * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-         * @return 実際に削除された個数
-         */
-        fun shrinkStack(amount: Int, action: HTStorageAction): Int = -growStack(-amount, action)
-
-        final override fun insert(stack: STACK, action: HTStorageAction, access: HTStorageAccess): STACK {
-            if (stack.isEmpty()) return getEmptyStack()
-
-            val needed: Int = getNeededAsInt(stack)
+        override fun insert(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? {
+            if (stack == null) return null
+            val needed: Int = min(inputRate(access), getNeeded(stack))
             if (needed <= 0 || !isStackValidForInsert(stack, access)) return stack
 
-            val sameType: Boolean = isSameStack(getStack(), stack)
-            if (isEmpty() || sameType) {
-                val toAdd: Int = min(stack.amountAsInt(), needed)
+            val stackIn: STACK? = this.getStack()
+            val sameType: Boolean = isSameStack(stack)
+            if (stackIn == null || sameType) {
+                val toAdd: Int = min(stack.amount(), needed)
                 if (action.execute) {
-                    if (sameType) {
-                        growStack(toAdd, action)
+                    if (sameType && stackIn != null) {
+                        growAmount(stackIn, toAdd)
                         onContentsChanged()
                     } else {
                         setStack(stack.copyWithAmount(toAdd))
                     }
                 }
-                return stack.copyWithAmount(stack.amountAsInt() - toAdd)
+                return stack.copyWithAmount(stack.amount() - toAdd)
             }
             return stack
         }
 
-        final override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK {
-            val stack: STACK = getStack()
-            if (isEmpty() || amount < 1 || !canStackExtract(stack, access)) {
-                return getEmptyStack()
-            }
-            val current: Int = min(stack.amountAsInt(), getCapacityAsInt(stack))
-            val fixedAmount: Int = min(amount, current)
-            val result: STACK = stack.copyWithAmount(fixedAmount)
-            if (action.execute) {
-                shrinkStack(fixedAmount, action)
+        final override fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
+            stack == null -> null
+            isSameStack(stack) -> extract(stack.amount(), action, access)
+            else -> null
+        }
+
+        /**
+         * @see mekanism.common.inventory.slot.BasicInventorySlot.extractItem
+         * @see mekanism.common.capabilities.fluid.BasicFluidTank.extract
+         */
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): STACK? {
+            val stack: STACK? = this.getStack()
+            if (stack == null || amount < 1 || !canStackExtract(stack, access)) return null
+            val fixedAmount: Int = min(min(outputRate(access), getAmount()), amount)
+            val result: STACK? = stack.copyWithAmount(fixedAmount)
+            if (result != null && action.execute) {
+                shrinkAmount(stack, fixedAmount)
                 onContentsChanged()
             }
             return result
         }
-
-        /**
-         * 指定された[first]と[second]が等価か判定します。
-         */
-        protected abstract fun isSameStack(first: STACK, second: STACK): Boolean
 
         /**
          * 指定された[stack]をこのスロットに搬入できるか判定します。
@@ -214,7 +132,7 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
          * @param access このスロットへのアクセスの種類
          * @return 搬入できる場合は`true`
          */
-        open fun isStackValidForInsert(stack: STACK, access: HTStorageAccess): Boolean = isValid(stack)
+        protected open fun isStackValidForInsert(stack: STACK, access: HTStorageAccess): Boolean = isValid(stack)
 
         /**
          * 指定された[stack]をこのスロットに搬出できるか判定します。
@@ -222,6 +140,18 @@ interface HTStackSlot<STACK : HTStorageStack<*, STACK>> :
          * @param access このスロットへのアクセスの種類
          * @return 搬出できる場合は`true`
          */
-        open fun canStackExtract(stack: STACK, access: HTStorageAccess): Boolean = true
+        protected open fun canStackExtract(stack: STACK, access: HTStorageAccess): Boolean = true
+
+        /**
+         * 一度に搬入される数量の上限を返します。
+         * @param access このスロットへのアクセスの種類
+         */
+        protected open fun inputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
+
+        /**
+         * 一度に搬出される数量の上限を返します。
+         * @param access このスロットへのアクセスの種類
+         */
+        protected open fun outputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
     }
 }

@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.server.advancement
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
+import hiiragi283.ragium.api.registry.createKey
+import net.minecraft.core.registries.Registries
 
 object RagiumAdvancements {
     val ROOT: HTAdvancementKey = create("root")
@@ -82,5 +84,5 @@ object RagiumAdvancements {
     val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")
 
     @JvmStatic
-    private fun create(path: String): HTAdvancementKey = HTAdvancementKey(RagiumAPI.id(path))
+    private fun create(path: String): HTAdvancementKey = Registries.ADVANCEMENT.createKey(RagiumAPI.id(path))
 }

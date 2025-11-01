@@ -4,11 +4,12 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -42,41 +43,30 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.ELDRITCH_STONE, 8)
             .hollow8()
-            .define('A', Items.BLACKSTONE)
+            .define('A', Tags.Items.END_STONES)
             .define('B', gemOrDust(RagiumMaterialType.ELDRITCH_PEARL))
             .save(output)
 
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE, 4)
+            .building(RagiumBlocks.ELDRITCH_STONE_BRICKS, 4)
             .storage4()
             .define('A', RagiumBlocks.ELDRITCH_STONE)
             .save(output)
 
         HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE)
+            .stonecutter(RagiumBlocks.ELDRITCH_STONE_BRICKS)
             .addIngredient(RagiumBlocks.ELDRITCH_STONE)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, 4)
-            .storage4()
-            .define('A', RagiumBlocks.POLISHED_ELDRITCH_STONE)
-            .save(output)
-
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS)
-            .addIngredient(RagiumBlocks.ELDRITCH_STONE, RagiumBlocks.POLISHED_ELDRITCH_STONE)
             .save(output)
         // Plastics
         HTShapedRecipeBuilder
             .building(RagiumBlocks.PLASTIC_BRICKS, 4)
             .storage4()
-            .define('A', HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .define('A', HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_BRICKS)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -87,7 +77,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_TILES)
-            .addIngredient(HTBlockMaterialVariant.STORAGE_BLOCK, RagiumMaterialType.PLASTIC)
+            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.PLASTIC)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder
@@ -119,22 +109,22 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ)),
-                ingredientHelper.item(HTBlockMaterialVariant.STORAGE_BLOCK, HTVanillaMaterialType.QUARTZ),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                itemCreator.fromTagKey(HTStorageMaterialVariant, HTVanillaMaterialType.QUARTZ),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Soul Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL)),
-                ingredientHelper.item(Items.SOUL_SAND),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                itemCreator.fromItem(Items.SOUL_SAND),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).save(output)
         // Obsidian Glass
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN)),
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
-                ingredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.OBSIDIAN, 4),
+                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).save(output)
 
         // Normal -> Tinted
@@ -147,7 +137,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 .building(RagiumBlocks.getTintedGlass(material))
                 .hollow4()
                 .define('A', gemOrDust(HTVanillaMaterialType.AMETHYST))
-                .define('B', HTBlockMaterialVariant.GLASS_BLOCK, material)
+                .define('B', HTGlassVariant.COLORLESS, material)
                 .save(output)
         }
     }
@@ -205,17 +195,13 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
-            return HTBlockMaterialVariant.STORAGE_BLOCK.toIngredient(RagiumMaterialType.PLASTIC)
+            return HTStorageMaterialVariant.toIngredient(RagiumMaterialType.PLASTIC)
         }
         return buildList {
             add(variant.base)
             // Eldritch
-            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE) {
+            if (variant == HTDecorationVariant.ELDRITCH_STONE_BRICK) {
                 add(RagiumBlocks.ELDRITCH_STONE)
-            }
-            if (variant == HTDecorationVariant.POLISHED_ELDRITCH_STONE_BRICK) {
-                add(RagiumBlocks.ELDRITCH_STONE)
-                add(RagiumBlocks.POLISHED_ELDRITCH_STONE)
             }
         }.toTypedArray().let { Ingredient.of(*it) }
     }

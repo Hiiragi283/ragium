@@ -4,7 +4,6 @@ import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.render.EmiRenderable
-import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import net.minecraft.client.gui.GuiGraphics
@@ -35,8 +34,8 @@ class HTEmiRecipeCategory private constructor(
                 )
             }
             return when (icon) {
-                null -> HTEmiRecipeCategory(viewerType, EmiStack.of(iconStack))
-                else -> HTEmiRecipeCategory(viewerType, EmiStack.of(iconStack), renderIcon(icon))
+                null -> HTEmiRecipeCategory(viewerType, iconStack.toEmi())
+                else -> HTEmiRecipeCategory(viewerType, iconStack.toEmi(), renderIcon(icon))
             }
         }
 

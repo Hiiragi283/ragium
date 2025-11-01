@@ -2,13 +2,17 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.storage.HTAccessConfiguration
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
-import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.variant.HTDeviceVariant
+import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
@@ -35,6 +39,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         text()
         information()
 
+        food()
         delight()
         jade()
     }
@@ -84,11 +89,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")
-        addAdvancement(
-            RagiumAdvancements.MYSTERIOUS_OBSIDIAN,
-            "Who is Falling Meteorites?",
-            "Get Mysterious Obsidian by right-clicking Crying Obsidian with Eldritch Ticket",
-        )
+        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "Who is Falling Meteorites?", "")
         // Iridescentium
         addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "The sky's the limit", "Get Iridescentium Ingot")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "Eternal Requiem", "Get Eternal Component for making tools unbreakable")
@@ -96,11 +97,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
+        add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
         add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush")
-        add(RagiumBlocks.EXP_BERRIES.itemHolder, "Exp Berries")
+        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
         add(RagiumBlocks.WARPED_WART, "Warped Wart")
 
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
@@ -108,8 +109,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
         add(RagiumBlocks.AZURE_TILES, "Azure Tiles")
         add(RagiumBlocks.ELDRITCH_STONE, "Eldritch Stone")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE, "Polished Eldritch Stone")
-        add(RagiumBlocks.POLISHED_ELDRITCH_STONE_BRICKS, "Polished Eldritch Stone Bricks")
+        add(RagiumBlocks.ELDRITCH_STONE_BRICKS, "Eldritch Stone Bricks")
         add(RagiumBlocks.PLASTIC_BRICKS, "Plastic Bricks")
         add(RagiumBlocks.PLASTIC_TILES, "Plastic Tiles")
         add(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
@@ -122,6 +122,47 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.STONE_CASING, "Stone Casing")
         add(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
         add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
+        // Generators
+        add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
+
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
+
+        add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "Solar Panel Controller")
+
+        add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
+        add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
+        // Consumers
+        add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.BLOCK_BREAKER, "Block Breaker")
+        add(RagiumBlocks.COMPRESSOR, "Compressor")
+        add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.EXTRACTOR, "Extractor")
+        add(RagiumBlocks.PULVERIZER, "Pulverizer")
+
+        add(RagiumBlocks.CRUSHER, "Crusher")
+        add(RagiumBlocks.MELTER, "Melter")
+        add(RagiumBlocks.REFINERY, "Refinery")
+        add(RagiumBlocks.WASHER, "Washer")
+
+        add(RagiumBlocks.BREWERY, "Brewery")
+        add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
+        add(RagiumBlocks.PLANTER, "Planting Chamber")
+        add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
+        // Devices
+        add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
+        add(RagiumBlocks.MILK_COLLECTOR, "Milk Collector")
+        add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
+
+        add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
+        add(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
+
+        add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
+        add(RagiumBlocks.ENI, "E.N.I.")
+
+        add(RagiumBlocks.MOB_CAPTURER, "Mob Capturer")
+        add(RagiumBlocks.TELEPAD, "Telepad")
+
+        add(RagiumBlocks.CEU, "C.E.U.")
     }
 
     private fun enchantment() {
@@ -135,14 +176,20 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun entity() {
-        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
-        addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
+        add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
+        add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
 
-        // addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
-        // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
-        // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
-        // addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
-        // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
+        for (tier: HTDrumTier in HTDrumTier.entries) {
+            val value: String = tier.translate(type, "Minecart with %s")
+            add(tier.getEntityType(), value)
+            add(tier.getMinecartItem(), value)
+        }
+
+        // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
+        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
+        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
+        // add(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
     }
 
     private fun fluid() {
@@ -434,6 +481,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.ITEM_POTION, "Potion of %s")
 
         add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")
@@ -442,34 +490,17 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "Press Shift to show info")
         add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
 
-        add(HTAccessConfiguration.INPUT_ONLY, "Mode: Input")
-        add(HTAccessConfiguration.OUTPUT_ONLY, "Mode: Output")
-        add(HTAccessConfiguration.BOTH, "Mode: Both")
-        add(HTAccessConfiguration.NONE, "Mode: None")
+        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
+
+        add(HTAccessConfig.INPUT_ONLY, "Mode: Input")
+        add(HTAccessConfig.OUTPUT_ONLY, "Mode: Output")
+        add(HTAccessConfig.BOTH, "Mode: Both")
+        add(HTAccessConfig.NONE, "Mode: None")
     }
 
     private fun information() {
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
         addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
-
-        addInfo(HTDeviceVariant.CEU, "Unlimited Power")
-        addInfo(HTDeviceVariant.DIM_ANCHOR, "Always load chunk which placed in.")
-        addInfo(HTDeviceVariant.ENI, "Enabled to access Energy Network.")
-        addInfo(HTDeviceVariant.EXP_COLLECTOR, "Collects around Exp Orbs.")
-        addInfo(HTDeviceVariant.ITEM_BUFFER, "Item buffer with 9 slots.")
-        addInfo(
-            HTDeviceVariant.LAVA_COLLECTOR,
-            "Generates Lava when ALL below conditions are met.",
-            "- Placed in the Nether",
-            "- Surrounded by 4 Lava sources",
-        )
-        addInfo(HTDeviceVariant.MILK_COLLECTOR, "Milking a cow on this.")
-        addInfo(
-            HTDeviceVariant.WATER_COLLECTOR,
-            "Generates Lava when ANY below conditions are met.",
-            "- Placed in Ocean-like or River-like biomes",
-            "- Surrounded by 2 or more Water Sources",
-        )
 
         val nonSilkTouch = "Can be harvested without Silk Touch."
         addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
@@ -492,19 +523,26 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addInfo(RagiumItems.TRADER_CATALOG, "Dropped from Wandering Trader.")
     }
 
+    //    Addon    //
+
+    private fun food() {
+        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+    }
+
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
 
-        add(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-        add(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.output_side", "Output Side")
+        add(HTBlockConfigurationDataProvider, "Access Configuration")
+        add(HTExperienceStorageProvider.ForBlocks, "Experience Storage")
+        add(HTBlockOwnerProvider, "Block Owner")
 
-        add(RagiumTranslation.JADE_OUTPUT_SIDE, "Output Side: %s")
+        add(RagiumTranslation.JADE_EXP_STORAGE, "Experience: %s")
     }
 }

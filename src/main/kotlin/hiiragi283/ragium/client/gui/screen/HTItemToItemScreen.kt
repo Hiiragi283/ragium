@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.machine.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -18,7 +18,7 @@ class HTItemToItemScreen(
     menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
     inventory: Inventory,
     title: Component,
-) : HTMachineScreen<HTSingleItemInputBlockEntity<*>>(texture, menu, inventory, title) {
+) : HTConsumerScreen<HTSingleItemInputBlockEntity<*>>(texture, menu, inventory, title) {
     companion object {
         @JvmStatic
         fun compressor(

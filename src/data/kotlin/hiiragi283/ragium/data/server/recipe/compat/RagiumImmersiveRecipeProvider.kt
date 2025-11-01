@@ -9,13 +9,13 @@ import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilde
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -32,15 +32,15 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         // Treated Planks
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                ingredientHelper.item(ItemTags.PLANKS),
-                ingredientHelper.fluid(IETags.fluidCreosote, 125),
+                itemCreator.fromTagKey(ItemTags.PLANKS),
+                fluidCreator.fromTagKey(IETags.fluidCreosote, 125),
             ).addResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid
         HTFluidTransformRecipeBuilder
             .mixing(
-                ingredientHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
-                ingredientHelper.water(1000),
+                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                fluidCreator.water(1000),
                 resultHelper.fluid(IETags.fluidRedstoneAcid, 1000),
             ).save(output)
 

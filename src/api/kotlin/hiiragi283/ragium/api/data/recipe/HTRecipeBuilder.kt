@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
+import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput

@@ -15,8 +15,17 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import kotlin.math.min
 
-abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int, inventory: Inventory) :
+abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId) {
+    init {
+        onOpen(inventory.player)
+    }
+
+    override fun removed(player: Player) {
+        super.removed(player)
+        onClose(player)
+    }
+
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
         val slotIn: Slot = slots.getOrNull(index) ?: return result
@@ -112,14 +121,17 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
             .forEach(::addSlot)
     }
 
+    /**
+     * @see [AbstractContainerMenu.moveItemStackTo]
+     */
     protected fun moveItemStackTo(stack: ItemStack, slots: Iterable<Int>, reverseDirection: Boolean): Boolean {
         var flag = false
+        // スロットの順番を反転
+        val fixedRange: Iterable<Int> = when (reverseDirection) {
+            true -> slots.reversed()
+            false -> slots
+        }
         if (stack.isStackable) {
-            // スロットの順番を反転
-            val fixedRange: Iterable<Int> = when (reverseDirection) {
-                true -> slots.reversed()
-                false -> slots
-            }
             // 各スロットに対して移動を行う
             for (i: Int in fixedRange) {
                 val slot: Slot = getSlot(i)
@@ -134,36 +146,37 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*>, containerId: Int
                         stackIn.count = sumCount
                         slot.setChanged()
                         flag = true
-                    }
-                    // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
-                    else if (stackIn.count < maxCount) {
-                        stack.shrink(maxCount - stackIn.count)
-                        stackIn.count = maxCount
-                        slot.setChanged()
-                        flag = true
+                    } else {
+                        // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
+                        if (stackIn.count < maxCount) {
+                            stack.shrink(maxCount - stackIn.count)
+                            stackIn.count = maxCount
+                            slot.setChanged()
+                            flag = true
+                        }
                     }
                 }
                 // 現在のスタックが空になったら即座に抜ける
                 if (stack.isEmpty) break
             }
-            // 上の処理で現在のstackが空にならなかった場合
-            if (!stack.isEmpty) {
-                // 再び各スロットに対して移動を行う
-                for (i: Int in fixedRange) {
-                    val slot: Slot = getSlot(i)
-                    val stackIn: ItemStack = slot.item
-                    // スロットが空で現在のstackを配置可能な場合，スロットに入るだけ現在のstackを入れる
-                    if (stackIn.isEmpty && slot.mayPlace(stack)) {
-                        val maxCount: Int = slot.getMaxStackSize(stack)
-                        slot.setByPlayer(stack.split(min(stack.count, maxCount)))
-                        slot.setChanged()
-                        flag = true
-                        break
-                    }
+        }
+        // 上の処理で現在のstackが空にならなかった場合
+        if (!stack.isEmpty) {
+            // 再び各スロットに対して移動を行う
+            for (i: Int in fixedRange) {
+                val slot: Slot = getSlot(i)
+                val stackIn: ItemStack = slot.item
+                // スロットが空で現在のstackを配置可能な場合，スロットに入るだけ現在のstackを入れる
+                if (stackIn.isEmpty && slot.mayPlace(stack)) {
+                    val maxCount: Int = slot.getMaxStackSize(stack)
+                    slot.setByPlayer(stack.split(min(stack.count, maxCount)))
+                    slot.setChanged()
+                    flag = true
+                    break
                 }
             }
-            // 入りきらなかったstackは残る
         }
+        // 入りきらなかったstackは残る
         // 移動処理が一つでも行えればtrue
         return flag
     }

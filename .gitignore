@@ -23,7 +23,8 @@ run
 runs
 run-data
 
-repo
 .kotlin
+repo
+sources
 
 *.cache

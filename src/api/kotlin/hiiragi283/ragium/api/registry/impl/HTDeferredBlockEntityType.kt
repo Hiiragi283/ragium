@@ -15,7 +15,7 @@ class HTDeferredBlockEntityType<BE : BlockEntity> : HTDeferredHolder<BlockEntity
 
     constructor(id: ResourceLocation) : super(Registries.BLOCK_ENTITY_TYPE, id)
 
-    fun create(pos: BlockPos, state: BlockState): BE? = get().create(pos, state)
+    fun create(pos: BlockPos, state: BlockState): BE = get().create(pos, state) ?: error("Failed to create Block Entity at $pos")
 
     internal var clientTicker: BlockEntityTicker<in BE>? = null
     internal var serverTicker: BlockEntityTicker<in BE>? = null

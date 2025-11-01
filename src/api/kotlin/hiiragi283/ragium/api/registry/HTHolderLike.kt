@@ -1,17 +1,15 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.andThen
+import hiiragi283.ragium.api.function.andThen
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 
 /**
  * IDを取得可能できるインターフェース
- * @see [mekanism.common.registration.INamedEntry]
+ * @see mekanism.common.registration.INamedEntry
  */
 fun interface HTHolderLike {
     fun getId(): ResourceLocation
@@ -45,11 +43,5 @@ fun interface HTHolderLike {
          */
         @JvmStatic
         fun fromFluid(fluid: Fluid): HTHolderLike = fluid::builtInRegistryHolder.let(::fromHolder)
-
-        /**
-         * 指定した[ItemLike]を[HTHolderLike]に変換します。
-         */
-        @JvmStatic
-        fun fromItem(item: ItemLike): HTHolderLike = item::asItem.andThen(Item::builtInRegistryHolder).let(::fromHolder)
     }
 }

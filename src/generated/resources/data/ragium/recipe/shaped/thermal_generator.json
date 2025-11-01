@@ -6,16 +6,19 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "tag": "c:glass_blocks"
     },
     "C": {
-      "item": "minecraft:bricks"
+      "item": "ragium:ragi_alloy_coil"
+    },
+    "D": {
+      "item": "minecraft:furnace"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "CCC"
+    " B ",
+    "CDC"
   ],
   "result": {
     "count": 1,

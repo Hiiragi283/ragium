@@ -1,7 +1,9 @@
 package hiiragi283.ragium.client.event
 
+import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.item.component.HTItemContents
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
@@ -17,6 +19,7 @@ import net.minecraft.world.item.component.TooltipProvider
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 
 @EventBusSubscriber(value = [Dist.CLIENT], modid = RagiumAPI.MOD_ID)
@@ -43,7 +46,7 @@ object RagiumTooltipHandler {
 
     @JvmStatic
     private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        if (stack.itemHolder.idOrThrow.namespace == RagiumAPI.MOD_ID) {
+        if (stack.toImmutable()?.getId()?.namespace == RagiumAPI.MOD_ID) {
             val text: Component = RagiumTranslation.getTooltipText(stack) ?: return
             if (flag.hasShiftDown()) {
                 consumer(text)
@@ -72,5 +75,17 @@ object RagiumTooltipHandler {
         if (stack.`is`(RagiumModTags.Items.WIP)) {
             consumer(RagiumTranslation.TOOLTIP_WIP.getColoredComponent(ChatFormatting.DARK_RED))
         }
+    }
+
+    @SubscribeEvent
+    fun gatherClientComponents(event: RenderTooltipEvent.GatherComponents) {
+        val stack: ItemStack = event.itemStack
+        val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
+        contents.indices
+            .mapNotNull(contents::get)
+            .map(::HTItemTooltipContent)
+            .forEach { content: HTItemTooltipContent ->
+                event.tooltipElements.add(Either.right(content))
+            }
     }
 }

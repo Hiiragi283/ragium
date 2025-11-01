@@ -5,13 +5,11 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.common.material.HTItemMaterialVariant
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTDeviceVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -76,7 +74,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ALLOY_SMELTER,
             RagiumAdvancements.RAGI_ALLOY,
-            HTMachineVariant.ALLOY_SMELTER,
+            RagiumBlocks.ALLOY_SMELTER,
         ) { setGoal() }
 
         createSimple(
@@ -105,7 +103,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.MELTER,
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            HTMachineVariant.MELTER,
+            RagiumBlocks.MELTER,
         ) { setGoal() }
 
         // Elite
@@ -157,7 +155,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.SIMULATOR,
             RagiumAdvancements.AZURE_STEEL,
-            HTMachineVariant.SIMULATOR,
+            RagiumBlocks.SIMULATOR,
         ) { setGoal() }
     }
 
@@ -218,14 +216,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         child(RagiumAdvancements.DIM_ANCHOR, RagiumAdvancements.WARPED_CRYSTAL) {
             display {
-                setIcon(HTDeviceVariant.DIM_ANCHOR)
+                setIcon(RagiumBlocks.DIM_ANCHOR)
                 setTitleFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setDescFromKey(RagiumAdvancements.DIM_ANCHOR)
                 setGoal()
             }
             addCriterion(
                 "place_dim_anchor",
-                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(HTDeviceVariant.DIM_ANCHOR.blockHolder.get()),
+                ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(RagiumBlocks.DIM_ANCHOR.get()),
             )
         }
         child(RagiumAdvancements.TELEPORT_KEY, RagiumAdvancements.WARPED_CRYSTAL) {

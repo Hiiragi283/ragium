@@ -1,0 +1,8 @@
+{
+  "content": {
+    "potion": "minecraft:slow_falling"
+  },
+  "ingredient": {
+    "item": "minecraft:phantom_membrane"
+  }
+}

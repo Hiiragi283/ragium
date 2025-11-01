@@ -1,35 +1,33 @@
 package hiiragi283.ragium.common.storage.item.slot
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemStorageStack
-import hiiragi283.ragium.api.storage.item.maxStackSize
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.inventory.Slot
-import kotlin.math.min
+import net.minecraft.world.item.ItemStack
 
 class HTItemEntitySlot(private val entity: ItemEntity) :
-    HTItemSlot.Mutable(),
+    HTItemSlot.Basic(),
     HTValueSerializable.Empty {
-    override fun createContainerSlot(): Slot? = null
+    override fun getStack(): ImmutableItemStack? = entity.item.toImmutable()
 
-    override fun getStack(): HTItemStorageStack = HTItemStorageStack.of(entity.item)
+    override fun getCapacity(stack: ImmutableItemStack?): Int = HTItemSlot.getMaxStackSize(stack)
 
-    override fun getCapacityAsLong(stack: HTItemStorageStack): Long {
-        val limit: Long = RagiumConst.ABSOLUTE_MAX_STACK_SIZE
-        return if (stack.isEmpty()) limit else min(limit, stack.maxStackSize().toLong())
-    }
-
-    override fun isValid(stack: HTItemStorageStack): Boolean = true
+    override fun isValid(stack: ImmutableItemStack): Boolean = true
 
     override fun onContentsChanged() {
-        if (this.isEmpty()) {
+        if (this.getStack() == null) {
             entity.discard()
         }
     }
 
-    override fun setStack(stack: HTItemStorageStack) {
-        entity.item = stack.stack
+    override fun setStack(stack: ImmutableItemStack?) {
+        entity.item = stack?.unwrap() ?: ItemStack.EMPTY
+        onContentsChanged()
+    }
+
+    override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
+        entity.item.count = amount
     }
 }

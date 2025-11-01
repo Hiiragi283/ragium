@@ -7,8 +7,7 @@ import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * 向きに応じて制御された[IItemHandler]の拡張インターフェース
- * @see [HTItemHandler]
- * @see [mekanism.api.inventory.ISidedItemHandler]
+ * @see mekanism.api.inventory.ISidedItemHandler
  */
 interface HTSidedItemHandler : IItemHandler {
     fun getItemSideFor(): Direction? = null

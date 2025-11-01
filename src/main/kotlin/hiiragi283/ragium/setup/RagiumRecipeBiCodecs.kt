@@ -13,6 +13,8 @@ import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
+import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
@@ -20,16 +22,17 @@ import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
-import hiiragi283.ragium.impl.recipe.ingredient.HTFluidIngredientImpl
-import hiiragi283.ragium.impl.recipe.ingredient.HTItemIngredientImpl
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
     @JvmField
-    val ITEM_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = HTItemIngredientImpl.CODEC
+    val ITEM_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
+        HTItemIngredientCreatorImpl(BuiltInRegistries.ITEM.asLookup()).codec()
 
     @JvmField
-    val FLUID_CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidIngredient> = HTFluidIngredientImpl.CODEC
+    val FLUID_CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidIngredient> =
+        HTFluidIngredientCreatorImpl(BuiltInRegistries.FLUID.asLookup()).codec()
 
     @JvmField
     val ALLOYING: MapBiCodec<RegistryFriendlyByteBuf, HTAlloyingRecipe> = MapBiCodec

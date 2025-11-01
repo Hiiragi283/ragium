@@ -4,26 +4,25 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTMaterialVariant
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.blockId
+import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.block.HTCropBlock
-import hiiragi283.ragium.common.integration.delight.RagiumDelightAddon
-import hiiragi283.ragium.common.material.HTBlockMaterialVariant
+import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.variant.HTDecorationVariant
-import hiiragi283.ragium.common.variant.HTDeviceVariant
-import hiiragi283.ragium.common.variant.HTGeneratorVariant
-import hiiragi283.ragium.common.variant.HTMachineVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
+import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -31,10 +30,12 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
+import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.block.PieBlock
-import java.util.function.Supplier
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
     private val fileHelper: ExistingFileHelper = context.fileHelper
@@ -45,62 +46,67 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
+            add(RagiumBlocks.ITEM_BUFFER)
+
+            add(RagiumBlocks.EXP_COLLECTOR)
+
+            add(RagiumBlocks.DIM_ANCHOR)
+            add(RagiumBlocks.ENI)
+
+            add(RagiumBlocks.MOB_CAPTURER)
+            add(RagiumBlocks.TELEPAD)
+
+            add(RagiumBlocks.CEU)
+
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.STORAGE_BLOCK))
+            addAll(RagiumBlocks.MATERIALS.rowValues(HTStorageMaterialVariant))
 
             add(RagiumBlocks.DEVICE_CASING)
-        }.forEach(::simpleBlock)
+        }.forEach(::simpleBlockAndItem)
 
-        layeredBlock(
-            RagiumBlocks.MYSTERIOUS_OBSIDIAN,
-            vanillaId("block/obsidian"),
-            RagiumAPI.id("block/mysterious_obsidian"),
-        )
+        layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
 
         // Decoration
         for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            val textureId: ResourceLocation = variant.textureId
-            val slab: Supplier<SlabBlock> = variant.slab
-            val stair: Supplier<StairBlock> = variant.stairs
-            val wall: Supplier<WallBlock> = variant.wall
+            val textureId: ResourceLocation = variant.base.blockId
+            val slab: HTBasicDeferredBlock<SlabBlock> = variant.slab
+            val stair: HTBasicDeferredBlock<StairBlock> = variant.stairs
+            val wall: HTBasicDeferredBlock<WallBlock> = variant.wall
 
-            slabBlock(slab.get(), textureId, textureId)
-            stairsBlock(stair.get(), textureId)
-            wallBlock(wall.get(), textureId)
+            slabBlock(slab, textureId)
+            stairsBlock(stair, textureId)
+            wallBlock(wall, textureId)
         }
 
         for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
             altModelBlock(block, RagiumAPI.id("block/led_block"))
+            itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
-        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
-        RagiumBlocks.MATERIALS.rowValues(HTBlockMaterialVariant.TINTED_GLASS_BLOCK).forEach(::translucentSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTGlassVariant.COLORLESS).forEach(::cutoutSimpleBlock)
+        RagiumBlocks.MATERIALS.rowValues(HTGlassVariant.TINTED).forEach(::translucentSimpleBlock)
 
         RagiumBlocks.COILS.values.forEach(::cubeColumn)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTMaterialVariant.BlockTag, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
-            val textureId: String = RagiumAPI.id("block/${material.materialName()}").toString()
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, material: HTMaterialType, ore: HTSimpleDeferredBlock) ->
+            val textureId: ResourceLocation = RagiumAPI.id("block/${material.materialName()}")
             val stoneTex: String = when (variant) {
-                HTBlockMaterialVariant.ORE -> "block/stone"
-                HTBlockMaterialVariant.DEEP_ORE -> "block/deepslate"
-                HTBlockMaterialVariant.NETHER_ORE -> "block/netherrack"
-                HTBlockMaterialVariant.END_ORE -> "block/end_stone"
-                else -> null
+                HTOreVariant.Default -> "block/stone"
+                HTOreVariant.Others.DEEP -> "block/deepslate"
+                HTOreVariant.Others.NETHER -> "block/netherrack"
+                HTOreVariant.Others.END -> "block/end_stone"
             } ?: return@forEach
-            simpleBlock(
-                ore.get(),
-                ConfiguredModel(
-                    models()
-                        .withExistingParent(ore.getPath(), RagiumAPI.id("block/layered"))
-                        .texture("layer0", vanillaId(stoneTex))
-                        .texture("layer1", textureId)
-                        .renderType("cutout"),
-                ),
+            layeredBlock(
+                ore,
+                vanillaId(stoneTex),
+                textureId,
             )
         }
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
+
+        crossBlock(RagiumBlocks.AZURE_CLUSTER)
 
         // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRIES.get())
@@ -116,6 +122,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                             .renderType("cutout"),
                     ).build()
             }
+        itemModels().basicItem(RagiumBlocks.EXP_BERRIES.id)
 
         getVariantBuilder(RagiumBlocks.WARPED_WART.get())
             .forAllStates { state: BlockState ->
@@ -135,126 +142,87 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                             .renderType("cutout"),
                     ).build()
             }
+        itemModels().basicItem(RagiumBlocks.WARPED_WART.id)
 
         // Food
         altModelBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
-        // Machine Frame
-        altTextureBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
-
-        cubeColumn(RagiumBlocks.STONE_CASING, vanillaId("block/furnace_side"), vanillaId("block/furnace_top"))
-        cubeColumn(
-            RagiumBlocks.REINFORCED_STONE_CASING,
-            vanillaId("block/blast_furnace_side"),
-            vanillaId("block/blast_furnace_top"),
-        )
-
         // Machine
         fun machine(
-            variant: HTVariantKey.WithBE<*>,
+            block: HTDeferredBlock<*, *>,
             top: ResourceLocation,
             bottom: ResourceLocation,
-            front: ResourceLocation,
+            front: ResourceLocation = block.id.withPath { "block/${it}_front" },
         ) {
-            val holder: HTDeferredBlock<*, *> = variant.blockHolder
             horizontalBlock(
-                holder.get(),
+                block,
                 models()
-                    .withExistingParent("block/" + holder.getPath(), RagiumAPI.id("block/machine_base"))
+                    .withExistingParent("block/" + block.getPath(), RagiumAPI.id("block/machine_base"))
                     .texture("top", top)
                     .texture("bottom", bottom)
                     .texture("front", front),
             )
         }
 
-        fun machine(variant: HTVariantKey.WithBE<*>, top: ResourceLocation, bottom: ResourceLocation) {
-            machine(variant, top, bottom, variant.blockHolder.id.withPath { "block/${it}_front" })
-        }
+        val basicCasing: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        val bricks: ResourceLocation = vanillaId("block", "bricks")
 
-        val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
-        val bricks: ResourceLocation = vanillaId("block/bricks")
+        val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
+        val advancedFrame: ResourceLocation = RagiumAPI.id("block", "advanced_machine_frame")
+        val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
-        val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
-        val blackstone: ResourceLocation = vanillaId("block/polished_blackstone_bricks")
+        val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
+        val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
-        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
-        val deepslateTiles: ResourceLocation = vanillaId("block/deepslate_tiles")
+        val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
 
         // Generator
-        machine(HTGeneratorVariant.THERMAL, basicMachine, bricks)
-        altModelBlock(HTGeneratorVariant.COMBUSTION.blockHolder, factory = ::horizontalBlock)
+        builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
+        builtIn(RagiumBlocks.COMBUSTION_GENERATOR, advancedCasing)
+        builtIn(RagiumBlocks.ENCHANTMENT_GENERATOR, ultimateMachine)
 
         // Processor
-        val smelterFront: ResourceLocation = RagiumAPI.id("block/smelter_front")
+        val smelterFront: ResourceLocation = RagiumAPI.id("block", "smelter_front")
         // Basic
-        machine(HTMachineVariant.ALLOY_SMELTER, basicMachine, bricks, smelterFront)
-        machine(HTMachineVariant.BLOCK_BREAKER, basicMachine, bricks)
-        machine(HTMachineVariant.COMPRESSOR, basicMachine, bricks)
-        machine(HTMachineVariant.CUTTING_MACHINE, basicMachine, bricks)
-        machine(HTMachineVariant.EXTRACTOR, basicMachine, bricks)
-        machine(HTMachineVariant.PULVERIZER, basicMachine, bricks)
+        machine(RagiumBlocks.ALLOY_SMELTER, basicCasing, bricks, smelterFront)
+        machine(RagiumBlocks.BLOCK_BREAKER, basicCasing, bricks)
+        machine(RagiumBlocks.COMPRESSOR, basicCasing, bricks)
+        machine(RagiumBlocks.CUTTING_MACHINE, basicCasing, bricks)
+        machine(RagiumBlocks.EXTRACTOR, basicCasing, bricks)
+        machine(RagiumBlocks.PULVERIZER, basicCasing, bricks)
         // Advanced
-        machine(HTMachineVariant.CRUSHER, advancedMachine, blackstone, RagiumAPI.id("block/pulverizer_front"))
-        machine(HTMachineVariant.MELTER, advancedMachine, blackstone)
-        altModelBlock(HTMachineVariant.REFINERY.blockHolder, factory = ::horizontalBlock)
-        machine(HTMachineVariant.WASHER, advancedMachine, blackstone)
+        machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
+        machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
+        altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
+        machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
-        machine(HTMachineVariant.BREWERY, eliteMachine, deepslateTiles)
-        machine(HTMachineVariant.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
-        machine(HTMachineVariant.PLANTER, eliteMachine, deepslateTiles)
-        machine(HTMachineVariant.SIMULATOR, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
+        machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.SIMULATOR, eliteMachine, deepslateTiles)
 
         // Device
-        for ((variant: HTDeviceVariant, block: HTDeferredBlock<*, *>) in RagiumBlocks.DEVICES) {
-            when (variant) {
-                HTDeviceVariant.WATER_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        vanillaId("block/water_still"),
-                        RagiumAPI.id("block/device_overlay"),
-                    )
-                }
-                HTDeviceVariant.LAVA_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        vanillaId("block/lava_still"),
-                        RagiumAPI.id("block/device_overlay"),
-                    )
-                }
-                HTDeviceVariant.MILK_COLLECTOR -> {
-                    layeredBlock(
-                        block,
-                        RagiumConst.NEOFORGE.toId("block/milk_still"),
-                        RagiumAPI.id("block/device_overlay"),
-                    )
-                }
-                else -> simpleBlock(block.get())
-            }
+        fun addFluidCollector(block: HTDeferredBlock<*, *>, fluid: ResourceLocation) {
+            layeredBlock(block, fluid, RagiumAPI.id("block", "device_overlay"))
         }
+        addFluidCollector(RagiumBlocks.LAVA_COLLECTOR, vanillaId("block", "lava_still"))
+        addFluidCollector(RagiumBlocks.MILK_COLLECTOR, RagiumConst.NEOFORGE.toId("block", "milk_still"))
+        addFluidCollector(RagiumBlocks.WATER_COLLECTOR, vanillaId("block", "water_still"))
 
         // Storages
         for (drum: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
             val id: ResourceLocation = drum.blockId
-            simpleBlock(
-                drum.get(),
-                models().cubeColumn(
-                    id.path,
-                    id.withSuffix("_side"),
-                    id.withSuffix("_top"),
-                ),
-            )
+            simpleBlockAndItem(drum, models().cubeColumn(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }
 
         // Fluids
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            getVariantBuilder(content.getBlock())
-                .partialState()
-                .addModels(
-                    models()
-                        .getBuilder("block/${content.getPath()}")
-                        .texture("particle", vanillaId("block/water_still"))
-                        .let(::ConfiguredModel),
-                )
+            simpleBlock(
+                content.getBlock(),
+                models()
+                    .getBuilder(content.blockId)
+                    .texture("particle", vanillaId("block", "water_still")),
+            )
         }
 
         // Delight
@@ -263,18 +231,117 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
     //    Extensions    //
 
+    private fun <BUILDER : ModelBuilder<BUILDER>, PROVIDER : ModelProvider<BUILDER>> PROVIDER.getBuilder(id: ResourceLocation): BUILDER =
+        this.getBuilder(id.toString())
+
+    private fun <BUILDER : ModelBuilder<BUILDER>, PROVIDER : ModelProvider<BUILDER>> PROVIDER.getBuilder(holder: HTHolderLike): BUILDER =
+        this.getBuilder(holder.getId())
+
+    private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
+
+    // Block
+    private fun simpleBlockAndItem(block: HTDeferredBlock<*, *>, model: ModelFile = cubeAll(block.get())) {
+        simpleBlockWithItem(block.get(), model)
+    }
+
+    private fun layeredBlock(block: HTDeferredBlock<*, *>, layer0: ResourceLocation, layer1: ResourceLocation) {
+        simpleBlockAndItem(
+            block,
+            models()
+                .withExistingParent(block.getPath(), RagiumAPI.id("block/layered"))
+                .texture("layer0", layer0)
+                .texture("layer1", layer1)
+                .renderType("cutout"),
+        )
+    }
+
+    private fun horizontalBlock(block: HTDeferredBlock<*, *>, model: ModelFile) {
+        horizontalBlock(block.get(), model)
+        itemModels().simpleBlockItem(block.get())
+    }
+
+    private fun cubeColumn(
+        block: HTDeferredBlock<*, *>,
+        side: ResourceLocation = block.blockId.withSuffix("_side"),
+        end: ResourceLocation = block.blockId.withSuffix("_top"),
+    ) {
+        simpleBlockAndItem(block, models().cubeColumn(block.blockId.path, side, end))
+    }
+
+    private fun altModelBlock(
+        block: HTDeferredBlock<*, *>,
+        id: ResourceLocation = block.blockId,
+        factory: (HTDeferredBlock<*, *>, ModelFile) -> Unit = ::simpleBlockAndItem,
+    ) {
+        factory(block, ModelFile.ExistingModelFile(id, fileHelper))
+    }
+
+    private fun altTextureBlock(block: HTDeferredBlock<*, *>, all: ResourceLocation) {
+        simpleBlockAndItem(block, models().cubeAll(block.getPath(), all))
+    }
+
+    private fun cutoutSimpleBlock(block: HTDeferredBlock<*, *>, texId: ResourceLocation = block.blockId) {
+        simpleBlockAndItem(block, models().cubeAll(block.getPath(), texId).renderType("cutout"))
+    }
+
+    private fun translucentSimpleBlock(block: HTDeferredBlock<*, *>, texId: ResourceLocation = block.blockId) {
+        simpleBlockAndItem(block, models().cubeAll(block.getPath(), texId).renderType("translucent"))
+    }
+
+    private fun slabBlock(block: HTDeferredBlock<SlabBlock, *>, texture: ResourceLocation) {
+        slabBlock(block.get(), texture, texture)
+        itemModels().simpleBlockItem(block.id)
+    }
+
+    private fun stairsBlock(block: HTDeferredBlock<StairBlock, *>, texture: ResourceLocation) {
+        stairsBlock(block.get(), texture)
+        itemModels().simpleBlockItem(block.id)
+    }
+
+    private fun wallBlock(block: HTDeferredBlock<WallBlock, *>, texture: ResourceLocation) {
+        wallBlock(block.get(), texture)
+        itemModels().wallInventory(block.getPath(), texture)
+    }
+
+    private fun crossBlock(block: HTDeferredBlock<*, *>) {
+        val blockId: ResourceLocation = block.blockId
+        // Block
+        directionalBlock(
+            block.get(),
+            models()
+                .withExistingParent(block.getPath(), "cross")
+                .texture("cross", blockId)
+                .renderType("cutout"),
+        )
+        // Item
+        itemModels()
+            .getBuilder(block)
+            .parent(ModelFile.UncheckedModelFile("item/generated"))
+            .texture("layer0", blockId)
+    }
+
+    private fun builtIn(block: HTDeferredBlock<*, *>, particle: ResourceLocation) {
+        // Block
+        simpleBlock(block.get(), models().getBuilder(block).texture("particle", particle))
+        // Item
+        itemModels()
+            .getBuilder(block)
+            .parent(ModelFile.UncheckedModelFile(vanillaId("builtin", "entity")))
+            .blockTransforms()
+    }
+
     private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
         val blockId: ResourceLocation = block.blockId
 
         getVariantBuilder(block.get()).forAllStates { state: BlockState ->
             val bites: Int = state.getValue(PieBlock.BITES)
             val suffix: String = if (bites > 0) "_slice$bites" else ""
+
             val pieModel: BlockModelBuilder = models()
-                .getBuilder(block.getPath() + suffix)
-                .parent(ModelFile.ExistingModelFile(RagiumConst.FARMERS_DELIGHT.toId("block/pie$suffix"), fileHelper))
+                .withExistingParent(block.getPath() + suffix, RagiumConst.FARMERS_DELIGHT.toId("block", "pie$suffix"))
                 .texture("particle", blockId.withSuffix("_top"))
-                .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block/pie_bottom"))
-                .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block/pie_side"))
+                .texture("bottom", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_bottom"))
+                .texture("side", RagiumConst.FARMERS_DELIGHT.toId("block", "pie_side"))
                 .texture("top", blockId.withSuffix("_top"))
                 .texture("inner", blockId.withSuffix("_inner"))
 
@@ -284,70 +351,38 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .rotationY(state.getValue(PieBlock.FACING).getRotationY())
                 .build()
         }
+        itemModels().basicItem(block.id)
     }
 
-    private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
-
-    private fun simpleBlock(holder: HTDeferredBlock<*, *>) {
-        simpleBlock(holder.get())
+    // Item
+    private fun ItemModelBuilder.blockTransforms(): ItemModelBuilder = this.transforms {
+        transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+            rotation(75f, 45f, 0f).translation(0f, 2.5f, 0f).scale(0.375f)
+        }
+        transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+            rotation(75f, 45f, 0f).translation(0f, 2.5f, 0f).scale(0.375f)
+        }
+        transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) { rotation(0f, 45f, 0f).scale(0.4f) }
+        transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) { rotation(0f, 225f, 0f).scale(0.4f) }
+        transform(ItemDisplayContext.GROUND) { translation(0f, 3f, 0f).scale(0.25f) }
+        transform(ItemDisplayContext.GUI) { rotation(30f, 225f, 0f).scale(0.625f) }
+        transform(ItemDisplayContext.FIXED) { scale(0.5f) }
     }
 
-    private fun layeredBlock(holder: HTDeferredBlock<*, *>, layer0: ResourceLocation, layer1: ResourceLocation) {
-        simpleBlock(
-            holder.get(),
-            ConfiguredModel(
-                models()
-                    .withExistingParent(holder.getPath(), RagiumAPI.id("block/layered"))
-                    .texture("layer0", layer0)
-                    .texture("layer1", layer1)
-                    .renderType("cutout"),
-            ),
-        )
-    }
+    private fun ItemModelBuilder.transforms(builderAction: ModelBuilder<*>.TransformsBuilder.() -> Unit): ItemModelBuilder =
+        this.transforms().apply(builderAction).end()
 
-    private fun cubeColumn(
-        holder: HTDeferredBlock<*, *>,
-        side: ResourceLocation = holder.blockId.withSuffix("_side"),
-        end: ResourceLocation = holder.blockId.withSuffix("_top"),
-    ) {
-        simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, end))
-    }
-
-    private fun altModelBlock(
-        holder: HTDeferredBlock<*, *>,
-        id: ResourceLocation = holder.blockId,
-        factory: (Block, ModelFile) -> Unit = ::simpleBlock,
-    ) {
-        factory(holder.get(), ModelFile.ExistingModelFile(id, fileHelper))
-    }
-
-    private fun altTextureBlock(holder: HTDeferredBlock<*, *>, all: ResourceLocation) {
-        simpleBlock(
-            holder.get(),
-            ConfiguredModel(models().cubeAll(holder.getPath(), all)),
-        )
-    }
-
-    private fun cutoutSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
-        simpleBlock(
-            holder.get(),
-            ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("cutout")),
-        )
-    }
-
-    private fun translucentSimpleBlock(holder: HTDeferredBlock<*, *>, texId: ResourceLocation = holder.blockId) {
-        simpleBlock(
-            holder.get(),
-            ConfiguredModel(models().cubeAll(holder.getPath(), texId).renderType("translucent")),
-        )
-    }
+    private fun ModelBuilder<*>.TransformsBuilder.transform(
+        context: ItemDisplayContext,
+        builderAction: ModelBuilder<*>.TransformsBuilder.TransformVecBuilder.() -> Unit,
+    ): ModelBuilder<*>.TransformsBuilder = this.transform(context).apply(builderAction).end()
 
     /*private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
-    private fun cauldronBlock(holder: DeferredBlock<*>) {
-        if (holder == RagiumBlocks.HONEY_CAULDRON) return
-        getVariantBuilder(holder.get())
+    private fun cauldronBlock(block: DeferredBlock<*>) {
+        if (block == RagiumBlocks.HONEY_CAULDRON) return
+        getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
                 val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)
                 val suffix: String = when (level) {
@@ -360,27 +395,5 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                     .build()
             }
     }
-
-    private fun feastBlock(holder: DeferredBlock<out HTFeastBlock>) {
-        getVariantBuilder(holder.get()).forAllStates { state: BlockState ->
-            val block: HTFeastBlock = holder.get()
-            val property: IntegerProperty = block.getServingsProperty()
-            val servings: Int = state.getValue(property)
-            val suffix: String =
-                if (servings == 0) {
-                    if (block.hasLeftovers) {
-                        "_leftover"
-                    } else {
-                        "_stage${property.possibleValues.size - 2}"
-                    }
-                } else {
-                    "_stage${block.getMaxServings() - servings}"
-                }
-            ConfiguredModel
-                .builder()
-                .modelFile(modelFile(holder.blockId.withSuffix(suffix)))
-                .rotationY(state)
-                .build()
-        }
     }*/
 }

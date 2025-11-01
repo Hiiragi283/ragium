@@ -6,15 +6,15 @@ import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
- * @see [mekanism.api.datamaps.IMekanismDataMapTypes]
+ * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 interface RagiumDataMaps {
     companion object {
@@ -23,14 +23,28 @@ interface RagiumDataMaps {
          */
         @JvmField
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
+
+        @JvmField
+        val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
+
+        @JvmField
+        val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.combustionFuelType
+
+        @JvmField
+        val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
+
+        @JvmField
+        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
+
+        @JvmField
+        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
     }
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
     val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
-    val solarPowerType: DataMapType<Block, HTSolarPower>
 
-    val brewingEffectType: DataMapType<Item, HTBrewingEffect>
+    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
@@ -69,14 +83,8 @@ interface RagiumDataMaps {
     fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
 
-    fun getSolarPower(access: RegistryAccess, holder: Holder<Block>): Float? =
-        getData(access, Registries.BLOCK, holder, solarPowerType)?.multiplier
-
-    /**
-     * 指定した値から醸造機で作成するポーションの効果を取得します。
-     */
-    fun getBrewingEffect(access: RegistryAccess, holder: Holder<Item>): HTBrewingEffect? =
-        getData(access, Registries.ITEM, holder, brewingEffectType)
+    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
+        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
 
     /**
      * 指定した値からエンチャントでドロップするモブの頭を取得します。

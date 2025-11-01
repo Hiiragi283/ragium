@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.world.item.ItemStack
 
 /**
@@ -23,9 +25,10 @@ interface HTMultiItemToObjRecipe : HTRecipe<HTMultiItemRecipeInput> {
 
             ingredients.forEachIndexed { index: Int, ingredient: HTItemIngredient ->
                 stacks1.forEachIndexed stack@{ index1: Int, stack: ItemStack ->
-                    if (ingredient.test(stack)) {
+                    val immutable: ImmutableItemStack = stack.toImmutable() ?: return@stack
+                    if (ingredient.test(immutable)) {
                         result[index] = index1
-                        val count: Int = ingredient.getRequiredAmount(stack)
+                        val count: Int = ingredient.getRequiredAmount(immutable)
                         stack.shrink(count)
                         return@stack
                     }

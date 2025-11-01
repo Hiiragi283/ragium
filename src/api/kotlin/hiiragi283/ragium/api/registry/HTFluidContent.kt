@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.storage.fluid.HTFluidStorageStack
-import hiiragi283.ragium.api.storage.fluid.isOf
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -98,11 +98,11 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
 
     fun isOf(stack: FluidStack): Boolean = stack.`is`(commonTag)
 
-    fun isOf(stack: HTFluidStorageStack): Boolean = stack.isOf(commonTag)
+    fun isOf(stack: ImmutableFluidStack?): Boolean = stack?.isOf(commonTag) ?: false
 
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 
-    fun toStorageStack(amount: Int): HTFluidStorageStack = HTFluidStorageStack.of(toStack(amount))
+    fun toStorageStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
 
     fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)
 
