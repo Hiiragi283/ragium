@@ -44,12 +44,6 @@ class HTFluidHandlerItemWrapper private constructor(private val handler: IFluidH
             return stack.copyWithAmount(stack.amount() - filled)
         }
 
-        override fun extract(stack: ImmutableFluidStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
-            when (stack) {
-                null -> null
-                else -> handler.drain(stack.unwrap(), action.toFluid()).toImmutable()
-            }
-
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
             handler.drain(amount, action.toFluid()).toImmutable()
     }

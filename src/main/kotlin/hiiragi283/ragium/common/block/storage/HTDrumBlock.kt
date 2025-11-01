@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.text.addFluidTooltip
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -23,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 
-class HTDrumBlock(tier: HTDrumTier, properties: Properties) : HTTypedEntityBlock<HTEntityBlockType>(tier.getBlockType(), properties) {
+class HTDrumBlock(type: HTEntityBlockType, properties: Properties) : HTTypedEntityBlock<HTEntityBlockType>(type, properties) {
     /**
      * @see mekanism.common.block.basic.BlockFluidTank.useItemOn
      */

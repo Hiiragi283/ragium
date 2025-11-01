@@ -6,5 +6,5 @@ import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.tier.HTMachineTier
 
 class HTMachineBlockItem(block: HTTypedEntityBlock<*>, properties: Properties) : HTBlockItem<HTTypedEntityBlock<*>>(block, properties) {
-    override fun getTier(): HTMachineTier = block.getAttributeTier<HTMachineTier>()
+    override fun getTier(): HTMachineTier? = block.getAttributeTier<HTMachineTier>()
 }

@@ -265,4 +265,10 @@ object RagiumBlockTypes {
             .addTier(tier)
             .build()
     }
+
+    @JvmField
+    val EXP_DRUM: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.EXP_DRUM }
+        .addMenu { RagiumMenuTypes.DRUM }
+        .build()
 }

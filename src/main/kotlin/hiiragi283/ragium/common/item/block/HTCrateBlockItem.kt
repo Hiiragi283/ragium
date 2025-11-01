@@ -12,7 +12,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 
 class HTCrateBlockItem(block: HTCrateBlock, properties: Properties) : HTBlockItem<HTCrateBlock>(block, properties) {
-    override fun getTier(): HTCrateTier = block.getAttributeTier<HTCrateTier>()
+    override fun getTier(): HTCrateTier? = block.getAttributeTier<HTCrateTier>()
 
     override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
         val stack: ItemStack = itemEntity.item

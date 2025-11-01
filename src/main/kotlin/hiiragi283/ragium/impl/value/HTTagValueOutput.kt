@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.value
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import net.minecraft.core.HolderLookup
@@ -14,11 +15,11 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
 
     //    HTValueOutput    //
 
-    override fun <T : Any> store(key: String, codec: BiCodec<*, T>, value: T?) {
+    override fun <T : Any> store(key: String, codec: Codec<T>, value: T?) {
         if (value == null) return
         codec
-            .encode(registryOps, value)
-            .onSuccess { compoundTag.put(key, it) }
+            .encodeStart(registryOps, value)
+            .ifSuccess { compoundTag.put(key, it) }
     }
 
     override fun isEmpty(): Boolean = compoundTag.isEmpty

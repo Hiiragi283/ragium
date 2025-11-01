@@ -297,6 +297,18 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
         // Huge
         createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
+        // Exp
+        HTShapedRecipeBuilder
+            .misc(RagiumBlocks.EXP_DRUM)
+            .pattern(
+                "ABA",
+                "ACA",
+                "ABA",
+            ).define('A', HTItemMaterialVariant.GEM, HTVanillaMaterialType.EMERALD)
+            .define('B', Items.SMOOTH_STONE_SLAB)
+            .define('C', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+
         // Upgrades
         for (tier: HTDrumTier in HTDrumTier.entries) {
             val upgrade: ItemLike = when (tier) {

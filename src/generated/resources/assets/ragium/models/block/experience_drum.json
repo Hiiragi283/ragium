@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ragium:block/experience_drum_top",
+    "side": "ragium:block/experience_drum_side"
+  }
+}

@@ -45,6 +45,8 @@ import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEnti
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
@@ -275,8 +277,11 @@ object RagiumBlockEntityTypes {
     @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTDrumBlockEntity(tier.getBlock(), pos, state) }
+            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
         }
+
+    @JvmField
+    val EXP_DRUM: HTDeferredBlockEntityType<HTExpDrumBlockEntity> = registerTick("experience_drum", ::HTExpDrumBlockEntity)
 
     //    Event    //
 
@@ -345,6 +350,7 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
             registerHandler(event, type.get())
         }
+        registerHandler(event, EXP_DRUM.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
