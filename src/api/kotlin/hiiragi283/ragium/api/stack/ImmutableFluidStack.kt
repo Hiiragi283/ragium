@@ -18,7 +18,7 @@ import java.util.Optional
  * [FluidStack]向けの[ImmutableStack]の実装
  */
 @JvmInline
-value class ImmutableFluidStack private constructor(private val stack: FluidStack) : ImmutableStack<Fluid, ImmutableFluidStack> {
+value class ImmutableFluidStack private constructor(private val stack: FluidStack) : ImmutableComponentStack<Fluid, ImmutableFluidStack> {
     companion object {
         @JvmField
         val OPTIONAL_CODEC: BiCodec<RegistryFriendlyByteBuf, Optional<ImmutableFluidStack>> =

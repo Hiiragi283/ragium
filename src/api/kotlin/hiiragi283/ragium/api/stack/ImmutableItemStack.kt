@@ -20,7 +20,7 @@ import net.neoforged.neoforge.capabilities.ItemCapability
  * [ItemStack]向けの[ImmutableStack]の実装
  */
 @JvmInline
-value class ImmutableItemStack private constructor(private val stack: ItemStack) : ImmutableStack<Item, ImmutableItemStack> {
+value class ImmutableItemStack private constructor(private val stack: ItemStack) : ImmutableComponentStack<Item, ImmutableItemStack> {
     companion object {
         @JvmStatic
         private val ITEM_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, ItemStack> =

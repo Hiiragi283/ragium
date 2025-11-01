@@ -17,7 +17,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override fun getFuelValue(stack: ImmutableItemStack): Int = when {
-        stack.isOf(RagiumModTags.Items.IS_NUCLEAR_FUEL) -> (tank.capacity * 0.9).toInt()
+        stack.isOf(RagiumModTags.Items.IS_NUCLEAR_FUEL) -> (tank.getCapacity() * 0.9).toInt()
         else -> 0
     }
 

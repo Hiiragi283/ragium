@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.text.HTHasText
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentHolder
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -16,7 +14,6 @@ import net.minecraft.resources.ResourceLocation
  * @param STACK [ImmutableStack]を実装したクラス
  */
 interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
-    DataComponentHolder,
     HTHasText,
     HTHolderLike {
     /**
@@ -40,11 +37,6 @@ interface ImmutableStack<T : Any, STACK : ImmutableStack<T, STACK>> :
      * @return 新しいスタックが無効の場合は`null`
      */
     fun copyWithAmount(amount: Int): STACK?
-
-    /**
-     * このスタックの[DataComponentPatch]を返します。
-     */
-    fun componentsPatch(): DataComponentPatch
 
     override fun getId(): ResourceLocation = holder().idOrThrow
 }
