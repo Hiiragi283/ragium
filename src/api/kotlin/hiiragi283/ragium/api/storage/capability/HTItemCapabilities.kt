@@ -12,15 +12,15 @@ import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.items.IItemHandler
 
-data object HTItemCapabilities : HTViewCapability.Simple<IItemHandler, ImmutableItemStack> {
+data object HTItemCapabilities : HTStackViewCapability.Simple<IItemHandler, ImmutableItemStack> {
     override val block: BlockCapability<IItemHandler, Direction?> = Capabilities.ItemHandler.BLOCK
     override val entity: EntityCapability<IItemHandler, Direction?> = Capabilities.ItemHandler.ENTITY_AUTOMATION
     override val item: ItemCapability<IItemHandler, Void?> = Capabilities.ItemHandler.ITEM
 
-    override fun apply(handler: IItemHandler, context: Direction?): List<HTStackView<ImmutableItemStack>> = if (handler is HTItemHandler) {
-        handler.getItemSlots(context)
-    } else {
-        handler.slotRange.map { slot: Int ->
+    override fun apply(handler: IItemHandler, context: Direction?): List<HTStackView<ImmutableItemStack>> = when (handler) {
+        is HTItemHandler -> handler.getItemSlots(context)
+
+        else -> handler.slotRange.map { slot: Int ->
             object : HTStackView<ImmutableItemStack> {
                 override fun getStack(): ImmutableItemStack? = handler.getStackInSlot(slot).toImmutable()
 

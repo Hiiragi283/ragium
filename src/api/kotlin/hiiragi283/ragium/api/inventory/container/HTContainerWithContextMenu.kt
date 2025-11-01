@@ -19,13 +19,12 @@ abstract class HTContainerWithContextMenu<C : Any>(
         containerId,
         inventory,
     ) {
-    override fun onOpen(player: Player) {
-        super.onOpen(player)
-        (context as? HTMenuCallback)?.openMenu(player)
+    init {
+        (context as? HTMenuCallback)?.openMenu(inventory.player)
     }
 
-    override fun onClose(player: Player) {
-        super.onClose(player)
+    override fun removed(player: Player) {
+        super.removed(player)
         (context as? HTMenuCallback)?.closeMenu(player)
     }
 }

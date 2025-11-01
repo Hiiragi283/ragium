@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -22,26 +23,26 @@ object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
     override val entity: EntityCapability<IEnergyStorage, Direction?> = Capabilities.EnergyStorage.ENTITY
     override val item: ItemCapability<IEnergyStorage, Void?> = Capabilities.EnergyStorage.ITEM
 
-    fun getStorage(level: ILevelExtension, pos: BlockPos, side: Direction?): HTEnergyStorage? =
-        this.getCapability(level, pos, side)?.let(::wrapStorage)
+    fun getBattery(level: ILevelExtension, pos: BlockPos, side: Direction?): HTEnergyBattery? =
+        this.getCapability(level, pos, side)?.let { wrapStorage(it, side) }
 
-    fun getStorage(entity: Entity, side: Direction?): HTEnergyStorage? = this.getCapability(entity, side)?.let(::wrapStorage)
+    fun getBattery(entity: Entity, side: Direction?): HTEnergyBattery? = this.getCapability(entity, side)?.let { wrapStorage(it, side) }
 
-    fun getStorage(stack: IItemStackExtension): HTEnergyStorage? = this.getCapability(stack)?.let(::wrapStorage)
+    fun getBattery(stack: IItemStackExtension): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
 
-    fun getStorage(stack: ImmutableItemStack?): HTEnergyStorage? = this.getCapability(stack)?.let(::wrapStorage)
+    fun getBattery(stack: ImmutableItemStack?): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
 
-    private fun wrapStorage(storage: IEnergyStorage): HTEnergyStorage? = when (storage) {
-        is HTEnergyStorage -> storage
-        else -> object : HTEnergyStorage, HTContentListener.Empty, HTValueSerializable.Empty {
+    private fun wrapStorage(storage: IEnergyStorage, context: Direction?): HTEnergyBattery? = when (storage) {
+        is HTEnergyHandler -> storage.getEnergyBattery(context)
+        else -> object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
             override fun getAmount(): Int = storage.energyStored
 
             override fun getCapacity(): Int = storage.maxEnergyStored
 
-            override fun insertEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
+            override fun insert(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
                 storage.receiveEnergy(amount, action.simulate)
 
-            override fun extractEnergy(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
+            override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
                 storage.extractEnergy(amount, action.simulate)
         }
     }

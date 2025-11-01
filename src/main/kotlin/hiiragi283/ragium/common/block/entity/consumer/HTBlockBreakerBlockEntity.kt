@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.consumer
 
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
@@ -63,8 +61,8 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBl
             return false
         }
         // エネルギーを消費する
-        usedEnergy += energyStorage.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        if (usedEnergy < getModifiedEnergy(energyUsage * 20)) return false
+        usedEnergy += battery.consume()
+        if (usedEnergy < getModifiedEnergy(battery.currentEnergyPerTick * 20)) return false
         usedEnergy = 0
         // ブロックを採掘する
         val blockTo: Block = stateTo.block

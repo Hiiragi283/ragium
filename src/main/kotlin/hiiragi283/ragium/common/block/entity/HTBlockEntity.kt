@@ -9,10 +9,19 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
+import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
+import hiiragi283.ragium.api.storage.experience.HTExperienceHandler
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
+import hiiragi283.ragium.api.storage.experience.IExperienceHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -22,6 +31,8 @@ import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
+import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
+import hiiragi283.ragium.common.storage.resolver.HTExperienceHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import hiiragi283.ragium.common.util.HTPacketHelper
@@ -42,6 +53,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.UUID
@@ -58,9 +70,11 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         state,
     ),
     Nameable,
-    HTItemHandler,
+    HTEnergyHandler,
+    HTExperienceHandler,
     HTFluidHandler,
     HTHandlerProvider,
+    HTItemHandler,
     HTMenuCallback,
     HTOwnedBlockEntity {
     //    Ticking    //
@@ -173,7 +187,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         if (this.getEnergyStorage(null) != null) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
         }
-        if (this.getExperienceStorage(null) != null) {
+        if (this.getExperienceHandler(null) != null) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateExperienceStoragePacket.create(this))
         }
     }
@@ -202,12 +216,16 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     //    Capability    //
 
     protected val fluidHandlerManager: HTFluidHandlerManager?
+    protected val energyHandlerManager: HTEnergyStorageManager?
+    protected val experienceHandlerManager: HTExperienceHandlerManager?
     protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
         initializeVariables()
         enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
+        energyHandlerManager = initializeEnergyHandler(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
+        experienceHandlerManager = initializeExperienceHandler(::setOnlySave)?.let { HTExperienceHandlerManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
 
@@ -228,6 +246,34 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(HTFluidCapabilities, direction)
+
+    // Energy
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.getInitialEnergyContainers
+     */
+    protected open fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? = null
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.canHandleEnergy
+     */
+    final override fun hasEnergyStorage(): Boolean = energyHandlerManager?.canHandle() ?: false
+
+    final override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = energyHandlerManager?.getContainers(side)?.firstOrNull()
+
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
+        energyHandlerManager?.resolve(HTEnergyCapabilities, direction)
+
+    // Experience
+
+    protected open fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder? = null
+
+    final override fun hasExperienceHandler(): Boolean = experienceHandlerManager?.canHandle() ?: false
+
+    final override fun getExpTanks(side: Direction?): List<HTExperienceTank> = experienceHandlerManager?.getContainers(side) ?: listOf()
+
+    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? =
+        experienceHandlerManager?.resolve(HTExperienceCapabilities, direction)
 
     // Item
 

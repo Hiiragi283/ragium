@@ -1,14 +1,14 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.common.storage.energy.battery
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.util.HTContentListener
 import kotlin.math.min
 
 class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
-    HTEnergyStorage.Basic(),
+    HTEnergyBattery.Basic(),
     HTContentListener.Empty {
     companion object {
         const val INITIAL_CAPACITY = 1_000_000

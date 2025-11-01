@@ -9,7 +9,7 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache
 @JvmRecord
 data class HTViewBlockCapabilityCache<T : Any, C : Any, STACK : ImmutableStack<*, STACK>>(
     private val cache: BlockCapabilityCache<T, C?>,
-    private val provider: HTViewProvider<T, C, STACK>,
+    private val provider: HTStackViewProvider<T, C, STACK>,
 ) {
     fun level(): ServerLevel = cache.level()
 

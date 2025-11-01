@@ -1,29 +1,29 @@
-package hiiragi283.ragium.common.storage.experience
+package hiiragi283.ragium.common.storage.experience.tank
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
 import kotlin.math.min
 
-open class HTBasicExperienceStorage(
+open class HTBasicExperienceTank(
     private val capacity: Long,
     protected val canExtract: Predicate<HTStorageAccess>,
     protected val canInsert: Predicate<HTStorageAccess>,
     private val listener: HTContentListener?,
-) : HTExperienceStorage.Basic() {
+) : HTExperienceTank.Basic() {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, capacity: Long): HTBasicExperienceStorage =
-            create(listener, capacity, HTStorageAccess.NOT_EXTERNAL, HTPredicates.alwaysTrue())
+        fun input(listener: HTContentListener?, capacity: Long): HTBasicExperienceTank =
+            create(listener, capacity, HTStorageAccess.Companion.NOT_EXTERNAL, HTPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Long): HTBasicExperienceStorage =
-            create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.INTERNAL_ONLY)
+        fun output(listener: HTContentListener?, capacity: Long): HTBasicExperienceTank =
+            create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.Companion.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
@@ -31,7 +31,7 @@ open class HTBasicExperienceStorage(
             capacity: Long,
             canExtract: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
             canInsert: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
-        ): HTBasicExperienceStorage = HTBasicExperienceStorage(capacity, canExtract, canInsert, listener)
+        ): HTBasicExperienceTank = HTBasicExperienceTank(capacity, canExtract, canInsert, listener)
     }
 
     @JvmField

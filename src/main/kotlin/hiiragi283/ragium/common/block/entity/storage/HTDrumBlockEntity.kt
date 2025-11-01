@@ -65,8 +65,8 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
         components.set(RagiumDataComponents.FLUID_CONTENT, tank.getStack())
     }
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+    //    Ticking    //
+
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
         HTStackSlotHelper.moveFluid(slot, slot::setStackUnchecked, tank)
-        return false
-    }
 }

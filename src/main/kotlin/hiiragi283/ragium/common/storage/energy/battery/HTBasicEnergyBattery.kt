@@ -1,11 +1,11 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.common.storage.energy.battery
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
 import kotlin.math.min
@@ -13,19 +13,19 @@ import kotlin.math.min
 /**
  * @see mekanism.common.capabilities.energy.BasicEnergyContainer
  */
-open class HTBasicEnergyStorage(
+open class HTBasicEnergyBattery(
     private val capacity: Int,
     protected val canExtract: Predicate<HTStorageAccess>,
     protected val canInsert: Predicate<HTStorageAccess>,
     private val listener: HTContentListener?,
-) : HTEnergyStorage.Basic() {
+) : HTEnergyBattery.Basic() {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
+        fun input(listener: HTContentListener?, capacity: Int): HTBasicEnergyBattery =
             create(listener, capacity, HTStorageAccess.NOT_EXTERNAL, HTPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Int): HTBasicEnergyStorage =
+        fun output(listener: HTContentListener?, capacity: Int): HTBasicEnergyBattery =
             create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.INTERNAL_ONLY)
 
         @JvmStatic
@@ -34,7 +34,7 @@ open class HTBasicEnergyStorage(
             capacity: Int,
             canExtract: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
             canInsert: Predicate<HTStorageAccess> = HTPredicates.alwaysTrue(),
-        ): HTBasicEnergyStorage = HTBasicEnergyStorage(capacity, canExtract, canInsert, listener)
+        ): HTBasicEnergyBattery = HTBasicEnergyBattery(capacity, canExtract, canInsert, listener)
     }
 
     @JvmField

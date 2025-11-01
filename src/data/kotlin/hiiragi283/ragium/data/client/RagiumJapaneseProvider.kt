@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -548,7 +548,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
-        add(HTExperienceStorageProvider.ForBlocks, "経験値ストレージ")
+        add(HTExperienceHandlerProvider.ForBlocks, "経験値")
         add(HTBlockOwnerProvider, "ブロックの所有者")
 
         add(RagiumTranslation.JADE_EXP_STORAGE, "経験値: %s")
