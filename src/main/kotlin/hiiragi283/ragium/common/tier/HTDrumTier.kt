@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tier.HTTierProvider
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
+import hiiragi283.ragium.common.entity.vehicle.HTMinecart
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -43,6 +44,14 @@ enum class HTDrumTier(private val enPattern: String, private val jaPattern: Stri
     fun getBlockEntityType(): HTDeferredBlockEntityType<HTDrumBlockEntity> = RagiumBlockEntityTypes.DRUMS[this]!!
 
     fun getEntityType(): HTDeferredEntityType<HTDrumMinecart> = RagiumEntityTypes.DRUMS[this]!!
+
+    fun getMinecartFactory(): HTMinecart.Factory = when (this) {
+        SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
+        MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
+        LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
+        HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
+        CREATIVE -> HTMinecart.Factory(HTDrumMinecart::Creative)
+    }
 
     fun getMinecartItem(): HTSimpleDeferredItem = RagiumItems.DRUM_MINECARTS[this]!!
 
