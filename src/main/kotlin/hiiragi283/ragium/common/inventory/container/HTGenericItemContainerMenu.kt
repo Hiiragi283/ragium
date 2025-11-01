@@ -34,6 +34,7 @@ abstract class HTGenericItemContainerMenu(
 
     init {
         check(handler.slots >= rows) { "Item handler size ${handler.slots} is smaller than expected $rows" }
+        (handler as? HTMenuCallback)?.openMenu(inventory.player)
         val i: Int = (rows - 3) * 18 + 1
 
         addSlots(handler)
@@ -41,13 +42,8 @@ abstract class HTGenericItemContainerMenu(
         addPlayerInv(inventory, i)
     }
 
-    override fun onOpen(player: Player) {
-        super.onOpen(player)
-        (handler as? HTMenuCallback)?.openMenu(player)
-    }
-
-    override fun onClose(player: Player) {
-        super.onClose(player)
+    override fun removed(player: Player) {
+        super.removed(player)
         (handler as? HTMenuCallback)?.closeMenu(player)
     }
 }

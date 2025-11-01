@@ -233,7 +233,7 @@
   "chemical.ragium.ragium": "Ragium",
   "config.jade.plugin_ragium.block_configuration": "Access Configuration",
   "config.jade.plugin_ragium.block_owner": "Block Owner",
-  "config.jade.plugin_ragium.experience_storage": "Experience Storage",
+  "config.jade.plugin_ragium.experience_handler": "Experience Handler",
   "enchantment.ragium.capacity": "Capacity",
   "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages.",
   "enchantment.ragium.noise_canceling": "Noise Canceling",
