@@ -18,6 +18,7 @@ object RagiumMaterialEvents {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun gatherDefinition(event: HTMaterialDefinitionEvent) {
         vanilla(event)
+        common(event)
         ragium(event)
     }
 

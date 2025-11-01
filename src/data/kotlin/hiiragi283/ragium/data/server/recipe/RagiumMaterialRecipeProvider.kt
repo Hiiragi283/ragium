@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -222,7 +223,10 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun material() {
         for (key: HTMaterialKey in RagiumItems.MATERIALS.columnKeys) {
-            val basePrefix: HTMaterialPrefix = RagiumPlatform.INSTANCE.getBaseVariant(key) ?: continue
+            val basePrefix: HTMaterialPrefix = RagiumPlatform.INSTANCE
+                .getMaterialDefinition(key)
+                .getDefaultPrefix()
+                ?: continue
             val base: ItemLike = RagiumItems.MATERIALS[basePrefix, key] ?: continue
 
             RagiumBlocks.MATERIALS[CommonMaterialPrefixes.STORAGE_BLOCK, key]?.let { storage: ItemLike ->
@@ -255,12 +259,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_nugget")
             }
         }
-
-        rawToIngot(VanillaMaterialKeys.COPPER)
-        rawToIngot(VanillaMaterialKeys.IRON)
-        rawToIngot(VanillaMaterialKeys.GOLD)
-
-        CommonMaterialKeys.METALS.values.forEach(::rawToIngot)
     }
 
     @JvmStatic

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.material.HTMaterialPrefix
@@ -62,6 +64,16 @@ object RagiumAPI {
 
     @JvmField
     val MATERIAL_PREFIX_REGISTRY: Registry<HTMaterialPrefix> = RegistryBuilder(MATERIAL_PREFIX_KEY)
+        .sync(true)
+        .create()
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = ResourceKey.createRegistryKey(
+        id("material_recipe_type"),
+    )
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = RegistryBuilder(MATERIAL_RECIPE_TYPE_KEY)
         .sync(true)
         .create()
 

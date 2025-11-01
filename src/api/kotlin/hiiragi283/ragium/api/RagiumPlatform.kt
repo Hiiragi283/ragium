@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
@@ -46,10 +46,6 @@ interface RagiumPlatform {
 
     fun getAddons(): List<RagiumAddon>
 
-    fun getMaterialMap(): Map<HTMaterialKey, HTMaterialPrefix>
-
-    fun getBaseVariant(key: HTMaterialKey): HTMaterialPrefix? = getMaterialMap()[key]
-
     //    Item    //
 
     fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
@@ -60,9 +56,13 @@ interface RagiumPlatform {
 
     fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition>
 
+    fun getAllMaterials(): Set<HTMaterialKey> = getMaterialDefinitions().keys
+
     fun getMaterialDefinition(key: HTMaterialKey): HTMaterialDefinition = getMaterialDefinitions()[key] ?: HTMaterialDefinition.Empty
 
     //    Recipe    //
+
+    fun getMaterialRecipeManager(): HTMaterialRecipeManager
 
     fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(finder: HTRecipeFinder<INPUT, RECIPE>): HTRecipeCache<INPUT, RECIPE>
 

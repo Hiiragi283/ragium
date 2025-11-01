@@ -34,8 +34,8 @@ class HTMachineBlockType(blockEntityTypeGetter: Supplier<HTDeferredBlockEntityTy
          */
         fun addGeneratorTier(tier: HTMachineTier): Builder = addTier(tier)
             .addEnergy(
-                RagiumConfig.COMMON.energyCapacity[tier]!!,
                 RagiumConfig.COMMON.energyRate[tier]!!,
+                RagiumConfig.COMMON.energyCapacity[tier]!!,
             )
 
         /**
@@ -43,8 +43,8 @@ class HTMachineBlockType(blockEntityTypeGetter: Supplier<HTDeferredBlockEntityTy
          */
         fun addConsumerTier(tier: HTMachineTier): Builder = addTier(tier)
             .addEnergy(
-                RagiumConfig.COMMON.energyCapacity[tier]!!,
                 RagiumConfig.COMMON.energyUsage[tier]!!,
+                RagiumConfig.COMMON.energyCapacity[tier]!!,
             )
     }
 }

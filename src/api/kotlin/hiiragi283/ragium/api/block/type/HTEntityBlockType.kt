@@ -51,16 +51,16 @@ open class HTEntityBlockType(
 
         /**
          * エネルギーストレージの基礎情報を追加します。
-         * @param capacity ストレージの容量
+         * @param usage 処理当たりの使用量
          */
-        fun addEnergy(capacity: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(capacity))
+        fun addEnergy(usage: IntSupplier): BUILDER = addEnergy(usage) { usage.asInt * 400 }
 
         /**
          * エネルギーストレージの基礎情報を追加します。
          * @param capacity ストレージの容量
          * @param usage 処理当たりの使用量
          */
-        fun addEnergy(capacity: IntSupplier, usage: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(capacity, usage))
+        fun addEnergy(usage: IntSupplier, capacity: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(usage, capacity))
 
         /**
          * ティアを追加します。

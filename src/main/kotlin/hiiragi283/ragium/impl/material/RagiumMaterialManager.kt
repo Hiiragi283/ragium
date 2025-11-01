@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.material
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.MutableAttributeMap
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialDefinitionEvent
@@ -23,6 +24,7 @@ object RagiumMaterialManager {
         definitions = builderMap
             .filterValues { attributeMap: MutableAttributeMap<HTMaterialAttribute> -> attributeMap.isNotEmpty() }
             .mapValues { (_, map: MutableAttributeMap<HTMaterialAttribute>) -> DefinitionImpl(map) }
+        RagiumAPI.LOGGER.info("Gathered Material Attributes!")
     }
 
     //    DefinitionImpl    //
