@@ -6,11 +6,10 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.mojang.serialization.Codec
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.resultOrNull
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.RegistryOps
-import kotlin.jvm.optionals.getOrNull
 
 internal class HTJsonValueInput private constructor(private val lookup: HolderLookup.Provider, private val jsonObject: JsonObject) :
     HTValueInput {
@@ -33,7 +32,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         override fun <T : Any> read(key: String, codec: Codec<T>): T? {
             val jsonIn: JsonElement = jsonObject.get(key) ?: return null
-            return codec.parse(registryOps, jsonIn).result().getOrNull()
+            return codec.parse(registryOps, jsonIn).resultOrNull()
         }
 
         override fun child(key: String): HTValueInput? {
@@ -53,7 +52,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         override fun childrenListOrEmpty(key: String): HTValueInput.ValueInputList = childrenList(key) ?: HTEmptyValueInput.EmptyInputList
 
-        override fun <T : Any> list(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T>? {
+        override fun <T : Any> list(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T>? {
             val list: JsonArray = jsonObject.get(key) as? JsonArray ?: return null
             return when {
                 list.isEmpty -> null
@@ -61,7 +60,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
             }
         }
 
-        override fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T> =
+        override fun <T : Any> listOrEmpty(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T> =
             list(key, codec) ?: HTEmptyValueInput.emptyTypedList()
 
         override fun getBoolean(key: String, defaultValue: Boolean): Boolean =
@@ -108,11 +107,8 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         //    TypedInputList    //
 
-        private class TypedInputList<T : Any>(
-            lookup: HolderLookup.Provider,
-            private val list: JsonArray,
-            private val codec: BiCodec<*, T>,
-        ) : HTValueInput.TypedInputList<T> {
+        private class TypedInputList<T : Any>(lookup: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
+            HTValueInput.TypedInputList<T> {
             private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
 
             override val isEmpty: Boolean
@@ -120,7 +116,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
             override fun iterator(): Iterator<T> = list
                 .mapNotNull { json: JsonElement ->
-                    codec.decode(registryOps, json).getOrNull()
+                    codec.parse(registryOps, json).resultOrNull()
                 }.iterator()
         }
     }

@@ -68,7 +68,16 @@ interface HTValueInput {
      * @param codec [T]のコーデック
      * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
      */
-    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedInputList<T>?
+    fun <T : Any> list(key: String, codec: Codec<T>): TypedInputList<T>?
+
+    /**
+     * 指定した[key]から[ValueInputList]を返します。
+     * @param T [TypedInputList]の要素のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
+     */
+    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedInputList<T>? = list(key, codec.codec)
 
     /**
      * 指定した[key]から[ValueInputList]を返します。
@@ -76,7 +85,15 @@ interface HTValueInput {
      * @param key 保存先のキー
      * @param codec [T]のコーデック
      */
-    fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): TypedInputList<T>
+    fun <T : Any> listOrEmpty(key: String, codec: Codec<T>): TypedInputList<T>
+
+    /**
+     * 指定した[key]から[ValueInputList]を返します。
+     * @param T [TypedInputList]の要素のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     */
+    fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): TypedInputList<T> = listOrEmpty(key, codec.codec)
 
     // Primitives
 
