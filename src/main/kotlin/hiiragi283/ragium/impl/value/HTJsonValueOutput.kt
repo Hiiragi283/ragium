@@ -3,6 +3,7 @@ package hiiragi283.ragium.impl.value
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.mojang.serialization.Codec
 import com.mojang.serialization.JsonOps
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -14,11 +15,11 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
 
     //    HTValueOutput    //
 
-    override fun <T : Any> store(key: String, codec: BiCodec<*, T>, value: T?) {
+    override fun <T : Any> store(key: String, codec: Codec<T>, value: T?) {
         if (value == null) return
         codec
-            .encode(registryOps, value)
-            .onSuccess { jsonObject.add(key, it) }
+            .encodeStart(registryOps, value)
+            .ifSuccess { jsonObject.add(key, it) }
     }
 
     override fun isEmpty(): Boolean = jsonObject.isEmpty

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuCallback
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -30,13 +29,16 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -106,6 +108,9 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     //    Save & Read    //
 
+    var enchantment: ItemEnchantments
+        private set
+
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         RagiumPlatform.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
@@ -119,9 +124,11 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
             }
         }
         // Custom Name
-        output.store("custom_name", VanillaBiCodecs.TEXT, this.customName)
+        output.store("custom_name", ComponentSerialization.CODEC, this.customName)
+        // Enchantments
+        output.store(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC, enchantment)
         // Owner
-        output.store(RagiumConst.OWNER, VanillaBiCodecs.UUID, ownerId)
+        output.store(RagiumConst.OWNER, UUIDUtil.CODEC, ownerId)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -137,19 +144,25 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
             }
         }
         // Custom Name
-        this.customName = input.read("custom_name", VanillaBiCodecs.TEXT)
+        this.customName = input.read("custom_name", ComponentSerialization.CODEC)
+        // Enchantments
+        enchantment = input.read(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC) ?: ItemEnchantments.EMPTY
         // Owner
-        this.ownerId = input.read(RagiumConst.OWNER, VanillaBiCodecs.UUID)
+        this.ownerId = input.read(RagiumConst.OWNER, UUIDUtil.CODEC)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
         this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
+        enchantment = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
         components.set(DataComponents.CUSTOM_NAME, this.customName)
+        if (!enchantment.isEmpty) {
+            components.set(DataComponents.ENCHANTMENTS, enchantment)
+        }
     }
 
     override fun sendPassivePacket(level: ServerLevel) {
@@ -193,6 +206,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     init {
         initializeVariables()
+        enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }

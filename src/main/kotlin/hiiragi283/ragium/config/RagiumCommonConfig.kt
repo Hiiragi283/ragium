@@ -68,6 +68,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val drumCapacity: Map<HTDrumTier, HTIntConfigValue>
 
+    @JvmField
+    val expConversionRatio: HTIntConfigValue
+
     // Block
     @JvmField
     val crimsonSoilDamage: HTDoubleConfigValue
@@ -205,6 +208,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
             builder.pop()
             value
         }
+        expConversionRatio = builder.definePositiveInt("expConversionRatio", 20)
         builder.pop()
         // Block
         builder.push("block")

@@ -533,6 +533,14 @@ object RagiumItems {
         registerFluid(
             event,
             { stack: ItemStack ->
+                HTComponentFluidTank.create(stack, Int.MAX_VALUE, filter = RagiumFluidContents.EXPERIENCE::isOf)
+            },
+            RagiumBlocks.EXP_DRUM,
+        )
+
+        registerFluid(
+            event,
+            { stack: ItemStack ->
                 val capacity: Int = HTItemHelper.processStorageCapacity(null, stack, 8000)
                 HTComponentFluidTank.create(stack, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },

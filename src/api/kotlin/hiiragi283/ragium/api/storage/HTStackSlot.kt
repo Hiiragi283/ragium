@@ -35,7 +35,11 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出された[STACK]
      */
-    fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK?
+    fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
+        stack == null -> null
+        isSameStack(stack) -> extract(stack.amount(), action, access)
+        else -> null
+    }
 
     /**
      * 指定された引数から[STACK]を搬出します。
@@ -102,12 +106,6 @@ interface HTStackSlot<STACK : ImmutableStack<*, STACK>> :
                 return stack.copyWithAmount(stack.amount() - toAdd)
             }
             return stack
-        }
-
-        final override fun extract(stack: STACK?, action: HTStorageAction, access: HTStorageAccess): STACK? = when {
-            stack == null -> null
-            isSameStack(stack) -> extract(stack.amount(), action, access)
-            else -> null
         }
 
         /**

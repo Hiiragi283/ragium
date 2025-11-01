@@ -4,11 +4,13 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import com.mojang.serialization.Codec
 import com.mojang.serialization.JsonOps
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.RegistryOps
+import kotlin.jvm.optionals.getOrNull
 
 internal class HTJsonValueInput private constructor(private val lookup: HolderLookup.Provider, private val jsonObject: JsonObject) :
     HTValueInput {
@@ -29,9 +31,9 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         //    HTNbtInput    //
 
-        override fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? {
+        override fun <T : Any> read(key: String, codec: Codec<T>): T? {
             val jsonIn: JsonElement = jsonObject.get(key) ?: return null
-            return codec.decode(registryOps, jsonIn).getOrNull()
+            return codec.parse(registryOps, jsonIn).result().getOrNull()
         }
 
         override fun child(key: String): HTValueInput? {

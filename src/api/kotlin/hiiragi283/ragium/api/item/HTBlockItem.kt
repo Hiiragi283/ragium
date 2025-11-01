@@ -15,8 +15,12 @@ open class HTBlockItem<BLOCK : Block>(block: BLOCK, properties: Properties) : Bl
 
     open fun getTier(): HTTierProvider? = null
 
-    override fun getName(stack: ItemStack): Component = when (val tier: HTTierProvider? = getTier()) {
-        null -> super.getName(stack)
-        else -> super.getName(stack).copy().withStyle(tier.getBaseTier().color)
+    override fun getName(stack: ItemStack): Component {
+        var name: Component = super.getName(stack)
+        val tier: HTTierProvider? = getTier()
+        if (tier != null) {
+            name = name.copy().withStyle(tier.getBaseTier().color)
+        }
+        return name
     }
 }

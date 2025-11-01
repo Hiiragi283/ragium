@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentMap
-import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
@@ -13,7 +11,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
 import org.apache.commons.lang3.mutable.MutableFloat
 import kotlin.math.max
 
@@ -59,17 +56,16 @@ object HTItemHelper {
     //    Block Entity    //
 
     @JvmStatic
-    fun runIterationOnComponent(componentMap: DataComponentMap, visitor: EnchantmentHelper.EnchantmentVisitor) {
-        val enchantments: ItemEnchantments = componentMap.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+    fun runIterationOnComponent(enchantments: ItemEnchantments, visitor: EnchantmentHelper.EnchantmentVisitor) {
         for (entry in enchantments.entrySet()) {
             visitor.accept(entry.key, entry.intValue)
         }
     }
 
     @JvmStatic
-    fun processStorageCapacity(random: RandomSource?, blockEntity: BlockEntity, capacity: Int): Int {
+    fun processStorageCapacity(random: RandomSource?, enchantments: ItemEnchantments, capacity: Int): Int {
         val float = MutableFloat(capacity)
-        runIterationOnComponent(blockEntity.components()) { holder: Holder<Enchantment>, level: Int ->
+        runIterationOnComponent(enchantments) { holder: Holder<Enchantment>, level: Int ->
             modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
         }
         return max(0, float.toInt())

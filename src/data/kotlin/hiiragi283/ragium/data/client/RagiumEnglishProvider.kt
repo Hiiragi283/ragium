@@ -163,6 +163,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.TELEPAD, "Telepad")
 
         add(RagiumBlocks.CEU, "C.E.U.")
+        // Storage
+        add(RagiumBlocks.EXP_DRUM, "Experience Drum")
     }
 
     private fun enchantment() {

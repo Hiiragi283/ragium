@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack
 import kotlin.math.roundToInt
 
 class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<HTDrumBlock>(block, properties) {
-    override fun getTier(): HTDrumTier = block.getAttributeTier<HTDrumTier>()
+    override fun getTier(): HTDrumTier? = block.getAttributeTier<HTDrumTier>()
 
     override fun isBarVisible(stack: ItemStack): Boolean = HTFluidCapabilities.hasCapability(stack)
 
