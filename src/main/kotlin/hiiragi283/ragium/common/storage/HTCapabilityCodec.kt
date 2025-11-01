@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -28,6 +29,14 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
+        val EXPERIENCE: HTCapabilityCodec<HTExperienceTank> = HTCapabilityCodec(
+            RagiumConst.EXPERIENCES,
+            RagiumConst.TANK,
+            HTBlockEntity::getExpTanks,
+            HTBlockEntity::hasExperienceHandler,
+        )
+
+        @JvmField
         val FLUID: HTCapabilityCodec<HTFluidTank> = HTCapabilityCodec(
             RagiumConst.FLUIDS,
             RagiumConst.TANK,
@@ -36,7 +45,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
-        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)
+        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, EXPERIENCE, FLUID)
     }
 
     //    Save & Read    //

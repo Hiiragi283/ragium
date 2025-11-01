@@ -11,7 +11,7 @@ import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.storage.energy.HTBasicEnergyStorage
-import hiiragi283.ragium.common.storage.experience.HTBasicExperienceStorage
+import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.core.BlockPos
@@ -75,11 +75,11 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
         y: Int = HTSlotHelper.getSlotPosY(0),
     ): HTEnergyStorageWidget = createEnergyWidget(storage, storage::setAmountUnchecked, x, y)
 
-    fun createExperienceTank(storage: HTBasicExperienceStorage, x: Int, y: Int): HTExperienceStorageWidget =
-        HTExperienceStorageWidget.createTank(storage, storage::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
+    fun createExperienceTank(tank: HTBasicExperienceTank, x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createTank(tank, tank::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
 
-    fun createExperienceSlot(storage: HTBasicExperienceStorage, x: Int, y: Int): HTExperienceStorageWidget =
-        HTExperienceStorageWidget.createSlot(storage, storage::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
+    fun createExperienceSlot(tank: HTBasicExperienceTank, x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createSlot(tank, tank::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
 
     //    Impl    //
 

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
-object HTFluidCapabilities : HTViewCapability<IFluidHandler, IFluidHandlerItem, ImmutableFluidStack> {
+object HTFluidCapabilities : HTStackViewCapability<IFluidHandler, IFluidHandlerItem, ImmutableFluidStack> {
     override val block: BlockCapability<IFluidHandler, Direction?> = Capabilities.FluidHandler.BLOCK
     override val entity: EntityCapability<IFluidHandler, Direction?> = Capabilities.FluidHandler.ENTITY
     override val item: ItemCapability<IFluidHandlerItem, Void?> = Capabilities.FluidHandler.ITEM

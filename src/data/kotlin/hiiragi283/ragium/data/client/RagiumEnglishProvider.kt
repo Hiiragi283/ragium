@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
@@ -542,7 +542,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
-        add(HTExperienceStorageProvider.ForBlocks, "Experience Storage")
+        add(HTExperienceHandlerProvider.ForBlocks, "Experience Handler")
         add(HTBlockOwnerProvider, "Block Owner")
 
         add(RagiumTranslation.JADE_EXP_STORAGE, "Experience: %s")
