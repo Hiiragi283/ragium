@@ -24,15 +24,13 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
-import hiiragi283.ragium.common.entity.vehicle.HTMinecart
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
+import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.item.HTMinecartItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
 import hiiragi283.ragium.common.item.HTSmithingTemplateItem
@@ -481,14 +479,7 @@ object RagiumItems {
 
     @JvmField
     val DRUM_MINECARTS: Map<HTDrumTier, HTSimpleDeferredItem> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-        val factory: HTMinecart.Factory = when (tier) {
-            HTDrumTier.SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
-            HTDrumTier.MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
-            HTDrumTier.LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
-            HTDrumTier.HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
-            HTDrumTier.CREATIVE -> HTMinecart.Factory(HTDrumMinecart::Creative)
-        }
-        REGISTER.registerItemWith(tier.entityPath, factory, ::HTMinecartItem)
+        REGISTER.registerItemWith(tier.entityPath, tier, ::HTDrumWithMinecartItem)
     }
 
     //    Extensions    //
