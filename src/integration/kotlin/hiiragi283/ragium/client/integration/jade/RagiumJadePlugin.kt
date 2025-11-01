@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.integration.jade
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.block.Block
 import snownee.jade.api.IWailaClientRegistration
@@ -19,17 +19,17 @@ class RagiumJadePlugin : IWailaPlugin {
 
     override fun register(registration: IWailaCommonRegistration) {
         registration.registerBlockDataProvider(HTBlockConfigurationDataProvider, Block::class.java)
-        registration.registerBlockDataProvider(HTExperienceStorageProvider.ForBlocks, Block::class.java)
+        registration.registerBlockDataProvider(HTExperienceHandlerProvider.ForBlocks, Block::class.java)
         registration.registerBlockDataProvider(HTBlockOwnerProvider, Block::class.java)
 
-        registration.registerEntityDataProvider(HTExperienceStorageProvider.ForEntity, Entity::class.java)
+        registration.registerEntityDataProvider(HTExperienceHandlerProvider.ForEntity, Entity::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
         registration.registerBlockComponent(HTBlockConfigurationDataProvider, Block::class.java)
-        registration.registerBlockComponent(HTExperienceStorageProvider.ForBlocks, Block::class.java)
+        registration.registerBlockComponent(HTExperienceHandlerProvider.ForBlocks, Block::class.java)
         registration.registerBlockComponent(HTBlockOwnerProvider, Block::class.java)
 
-        registration.registerEntityComponent(HTExperienceStorageProvider.ForEntity, Entity::class.java)
+        registration.registerEntityComponent(HTExperienceHandlerProvider.ForEntity, Entity::class.java)
     }
 }

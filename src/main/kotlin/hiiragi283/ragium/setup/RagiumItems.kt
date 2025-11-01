@@ -17,7 +17,7 @@ import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
-import hiiragi283.ragium.api.storage.experience.IExperienceStorageItem
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -43,7 +43,8 @@ import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyStorage
-import hiiragi283.ragium.common.storage.experience.HTBottleExperienceStorage
+import hiiragi283.ragium.common.storage.experience.HTBottleExperienceHandler
+import hiiragi283.ragium.common.storage.experience.HTComponentExperienceHandler
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.tank.HTComponentFluidTank
 import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
@@ -548,7 +549,12 @@ object RagiumItems {
         )
 
         // Exp
-        registerExp(event, ::HTBottleExperienceStorage, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE)
+        event.registerItem(
+            HTExperienceCapabilities.item,
+            { stack: ItemStack, _: Void? -> HTBottleExperienceHandler(stack) },
+            Items.GLASS_BOTTLE,
+            Items.EXPERIENCE_BOTTLE,
+        )
 
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
@@ -581,10 +587,10 @@ object RagiumItems {
     }
 
     @JvmStatic
-    fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> IExperienceStorageItem?, vararg items: ItemLike) {
+    fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTExperienceTank, vararg items: ItemLike) {
         event.registerItem(
             HTExperienceCapabilities.item,
-            { stack: ItemStack, _: Void? -> getter(stack) },
+            { stack: ItemStack, _: Void? -> HTComponentExperienceHandler(stack, getter(stack)) },
             *items,
         )
     }

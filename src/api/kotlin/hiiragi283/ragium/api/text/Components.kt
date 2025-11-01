@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
-import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -76,10 +76,10 @@ fun addEnergyTooltip(storage: HTEnergyStorage, consumer: Consumer<Component>) {
 private fun experienceText(amount: Long, capacity: Long): MutableComponent =
     RagiumTranslation.TOOLTIP_EXP_PERCENTAGE.getComponent(longText(amount), longText(capacity))
 
-fun experienceText(storage: HTExperienceStorage): MutableComponent = experienceText(storage.getAmount(), storage.getCapacity())
+fun experienceText(tank: HTExperienceTank): MutableComponent = experienceText(tank.getAmount(), tank.getCapacity())
 
-fun addExperienceTooltip(storage: HTExperienceStorage, consumer: Consumer<Component>) {
-    storage.let(::experienceText).let(consumer::accept)
+fun addExperienceTooltip(tank: HTExperienceTank, consumer: Consumer<Component>) {
+    tank.let(::experienceText).let(consumer::accept)
 }
 
 /**

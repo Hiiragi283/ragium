@@ -360,6 +360,6 @@ object RagiumBlockEntityTypes {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
-        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceStorage)
+        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceHandler)
     }
 }

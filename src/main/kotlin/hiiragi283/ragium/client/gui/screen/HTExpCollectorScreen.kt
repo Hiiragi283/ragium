@@ -31,7 +31,7 @@ class HTExpCollectorScreen(menu: HTBlockEntityContainerMenu<HTExpCollectorBlockE
             ),
         )
 
-        expWidget = createExperienceTank(blockEntity.expStorage, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
+        expWidget = createExperienceTank(blockEntity.tank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
 
     //    HTExperienceScreen    //

@@ -15,9 +15,9 @@ import java.util.function.BooleanSupplier
 /**
  * [HTStackView]を取得する[HTMultiCapability]の拡張インターフェース
  */
-interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : ImmutableStack<*, STACK>> :
+interface HTStackViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : ImmutableStack<*, STACK>> :
     HTMultiCapability<HANDLER, ITEM_HANDLER>,
-    HTViewProvider<HANDLER, Direction, STACK> {
+    HTStackViewProvider<HANDLER, Direction, STACK> {
     //    Block    //
 
     /**
@@ -88,5 +88,5 @@ interface HTViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : Immuta
 
     fun getCapabilityStack(stack: ImmutableItemStack?, index: Int): STACK? = getCapabilityView(stack, index)?.getStack()
 
-    interface Simple<HANDLER : Any, STACK : ImmutableStack<*, STACK>> : HTViewCapability<HANDLER, HANDLER, STACK>
+    interface Simple<HANDLER : Any, STACK : ImmutableStack<*, STACK>> : HTStackViewCapability<HANDLER, HANDLER, STACK>
 }

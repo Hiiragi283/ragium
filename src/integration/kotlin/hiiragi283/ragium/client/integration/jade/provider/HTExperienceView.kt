@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.storage.HTAmountView
-import hiiragi283.ragium.api.storage.experience.IExperienceStorage
 import io.netty.buffer.ByteBuf
 
 class HTExperienceView(private val amount: Long, private val capacity: Long) : HTAmountView.LongSized {
@@ -18,7 +17,7 @@ class HTExperienceView(private val amount: Long, private val capacity: Long) : H
             ::HTExperienceView,
         )
     }
-    constructor(storage: IExperienceStorage) : this(storage.getExpStored(), storage.getMaxExpStored())
+    constructor(tank: HTAmountView<Long>) : this(tank.getAmount(), tank.getCapacity())
 
     override fun getAmount(): Long = amount
 
