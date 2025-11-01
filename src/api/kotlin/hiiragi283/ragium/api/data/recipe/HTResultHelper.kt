@@ -1,7 +1,8 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
@@ -9,7 +10,6 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
@@ -69,8 +69,7 @@ interface HTResultHelper {
     /**
      * 指定した引数から[HTItemResult]を返します。
      */
-    fun item(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, count: Int = 1): HTItemResult =
-        item(variant.itemTagKey(material), count)
+    fun item(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTItemResult = item(prefix.itemTagKey(material), count)
 
     /**
      * 指定した引数から[HTItemResult]を返します。

@@ -2,21 +2,19 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -45,7 +43,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
             .melting(
-                itemCreator.fuelOrDust(HTVanillaMaterialType.COAL),
+                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
@@ -81,19 +79,19 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Naphtha -> Fuel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
-            resultHelper.item(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+            resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SULFUR),
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
         // Naphtha + Redstone -> Lubricant
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
-            resultHelper.item(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+            resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
             resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000) to null,
         )
         // Fuel + Crimson Crystal -> Crimson Fuel
         HTFluidTransformRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL),
                 fluidCreator.fromContent(RagiumFluidContents.FUEL, 1000),
                 resultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000),
             ).save(output)
@@ -125,22 +123,21 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
-            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.CRIMSON_CRYSTAL)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
-            .addIngredient(HTStorageMaterialVariant, RagiumMaterialType.WARPED_CRYSTAL)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
             .save(output)
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val molten: HTFluidContent<*, *, *> = data.molten
-            val material: HTMaterialType = data.material
             // molten <-> gem
             meltAndFreeze(
                 null,
-                HTItemMaterialVariant.GEM.itemTagKey(material),
+                CommonMaterialPrefixes.GEM.itemTagKey(data),
                 molten,
                 RagiumConst.MOLTEN_TO_GEM,
             )
@@ -196,7 +193,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             .misc(RagiumItems.GREEN_PELLET, 8)
             .hollow8()
             .define('A', RagiumItems.GREEN_CAKE_DUST)
-            .define('B', HTItemMaterialVariant.INGOT, RagiumMaterialType.DEEP_STEEL)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
             .save(output)
     }
 }

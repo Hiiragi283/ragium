@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.common.material.HTCommonMaterialTypes
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
@@ -32,9 +32,9 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .save(output)
         // Fluix Crystal
         combineWithRedstone(
-            resultHelper.item(HTItemMaterialVariant.GEM, HTCommonMaterialTypes.getGem("fluix"), 2),
-            itemCreator.gemOrDust(HTCommonMaterialTypes.getGem("certus_quartz")),
-            itemCreator.gemOrDust(HTVanillaMaterialType.QUARTZ),
+            resultHelper.item(CommonMaterialPrefixes.GEM, CommonMaterialKeys.getGem("fluix"), 2),
+            itemCreator.gemOrDust(CommonMaterialKeys.getGem("certus_quartz")),
+            itemCreator.gemOrDust(VanillaMaterialKeys.QUARTZ),
         )
         // Sky Stone
         HTItemToObjRecipeBuilder
@@ -77,7 +77,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .alloying(
                 result,
                 left,
-                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, HTVanillaMaterialType.REDSTONE),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
                 right,
             ).save(output)
     }

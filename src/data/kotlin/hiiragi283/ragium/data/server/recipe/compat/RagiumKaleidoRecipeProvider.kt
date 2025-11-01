@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.neoforged.neoforge.common.Tags
@@ -24,19 +24,19 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialType.RAGI_ALLOY))
+            .equipment(RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern(
                 "AA",
                 "AB",
-            ).define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
 
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialType.RAGI_CRYSTAL),
-            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialType.RAGI_ALLOY),
-        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY),
+        ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }
 

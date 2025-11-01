@@ -1,17 +1,15 @@
 package hiiragi283.ragium.api.block.type
 
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
+import hiiragi283.ragium.api.collection.AttributeMap
+import hiiragi283.ragium.api.collection.MutableAttributeMap
 import java.util.function.Function
-
-typealias BlockAttributeMap = Map<Class<out HTBlockAttribute>, HTBlockAttribute>
-
-typealias BlockAttributeMutableMap = MutableMap<Class<out HTBlockAttribute>, HTBlockAttribute>
 
 /**
  * ブロックの属性を保持するクラス
  * @see mekanism.common.content.blocktype.BlockType
  */
-open class HTBlockType(private val attributeMap: BlockAttributeMap) {
+open class HTBlockType(private val attributeMap: AttributeMap<HTBlockAttribute>) {
     companion object {
         @JvmStatic
         fun builder(): Builder.Impl<HTBlockType> = Builder.Impl(::HTBlockType)
@@ -43,13 +41,13 @@ open class HTBlockType(private val attributeMap: BlockAttributeMap) {
      * [HTBlockType]を作成するビルダークラス
      * @param TYPE 出力されるタイプのクラス
      * @param BUILDER ビルダーのクラス
-     * @param factory [BlockAttributeMap]から[TYPE]に変換するブロック
+     * @param factory [AttributeMap]から[TYPE]に変換するブロック
      */
     abstract class Builder<TYPE : HTBlockType, BUILDER : Builder<TYPE, BUILDER>>(
-        protected val factory: Function<BlockAttributeMap, TYPE>,
+        protected val factory: Function<AttributeMap<HTBlockAttribute>, TYPE>,
     ) {
         private var hasBuilt = false
-        private val attributeMap: BlockAttributeMutableMap = hashMapOf()
+        private val attributeMap: MutableAttributeMap<HTBlockAttribute> = hashMapOf()
 
         protected fun checkHasBuilt() {
             check(!hasBuilt) { "Builder has already built" }
@@ -110,6 +108,6 @@ open class HTBlockType(private val attributeMap: BlockAttributeMap) {
         /**
          * [Builder]の簡易的な実装
          */
-        class Impl<TYPE : HTBlockType>(factory: (BlockAttributeMap) -> TYPE) : Builder<TYPE, Impl<TYPE>>(factory)
+        class Impl<TYPE : HTBlockType>(factory: (AttributeMap<HTBlockAttribute>) -> TYPE) : Builder<TYPE, Impl<TYPE>>(factory)
     }
 }

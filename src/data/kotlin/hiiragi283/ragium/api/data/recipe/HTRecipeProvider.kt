@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -13,12 +14,9 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTRawStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -27,6 +25,7 @@ import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -134,19 +133,19 @@ sealed class HTRecipeProvider {
     }
 
     // ingredient
-    protected fun fuelOrDust(material: HTMaterialType): Ingredient =
-        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.FUEL)
+    protected fun fuelOrDust(material: HTMaterialLike): Ingredient =
+        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.FUEL)
 
-    protected fun gemOrDust(material: HTMaterialType): Ingredient =
-        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.GEM)
+    protected fun gemOrDust(material: HTMaterialLike): Ingredient =
+        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM)
 
-    protected fun ingotOrDust(material: HTMaterialType): Ingredient =
-        multiVariants(material, HTItemMaterialVariant.DUST, HTItemMaterialVariant.INGOT)
+    protected fun ingotOrDust(material: HTMaterialLike): Ingredient =
+        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.INGOT)
 
-    protected fun ingotOrRod(material: HTMaterialType): Ingredient =
-        multiVariants(material, HTItemMaterialVariant.INGOT, HTItemMaterialVariant.ROD)
+    protected fun ingotOrRod(material: HTMaterialLike): Ingredient =
+        multiVariants(material, CommonMaterialPrefixes.INGOT, CommonMaterialPrefixes.ROD)
 
-    protected fun multiVariants(material: HTMaterialType, vararg variants: HTMaterialVariant.ItemTag): Ingredient = variants
+    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTMaterialPrefix): Ingredient = prefixes
         .map { it.itemTagKey(material) }
         .map(Ingredient::TagValue)
         .stream()
@@ -236,13 +235,13 @@ sealed class HTRecipeProvider {
      * 原石または原石ブロックをインゴットに製錬する合金レシピを登録します。
      * @param material 単体金属系の素材
      */
-    protected fun rawToIngot(material: HTMaterialType) {
-        val ingot: TagKey<Item> = HTItemMaterialVariant.INGOT.itemTagKey(material)
+    protected fun rawToIngot(material: HTMaterialLike) {
+        val ingot: TagKey<Item> = CommonMaterialPrefixes.INGOT.itemTagKey(material)
         // Basic
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(ingot, 3),
-                itemCreator.fromTagKey(HTItemMaterialVariant.RAW_MATERIAL, material, 2),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL, material, 2),
                 itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
@@ -250,7 +249,7 @@ sealed class HTRecipeProvider {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(ingot, 27),
-                itemCreator.fromTagKey(HTRawStorageMaterialVariant, material, 2),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, material, 2),
                 itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, 6),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_from_block_with_basic_flux")
@@ -258,7 +257,7 @@ sealed class HTRecipeProvider {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(ingot, 2),
-                itemCreator.fromTagKey(HTItemMaterialVariant.RAW_MATERIAL, material),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL, material),
                 itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
@@ -266,7 +265,7 @@ sealed class HTRecipeProvider {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(ingot, 18),
-                itemCreator.fromTagKey(HTRawStorageMaterialVariant, material),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, material),
                 itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, 6),
             ).tagCondition(ingot)
             .saveSuffixed(output, "_from_block_with_advanced_flux")
@@ -298,7 +297,7 @@ sealed class HTRecipeProvider {
         .create(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
-        .addIngredient(HTItemMaterialVariant.INGOT, HTVanillaMaterialType.NETHERITE)
+        .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
 
     /**
      * 指定された引数から鍛冶台での強化レシピのビルダーを返します。

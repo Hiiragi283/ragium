@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.advancement
 
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.TagKey
@@ -32,15 +32,15 @@ abstract class HTAdvancementGenerator {
     protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: HTAdvancementKey,
-        variant: HTMaterialVariant.ItemTag,
-        material: HTMaterialType,
+        prefix: HTMaterialPrefix,
+        material: HTMaterialKey,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
     ) {
         createSimple(
             key,
             parent,
-            RagiumItems.getMaterial(variant, material),
-            variant.itemTagKey(material),
+            RagiumItems.getMaterial(prefix, material),
+            prefix.itemTagKey(material),
             builderAction,
         )
     }
