@@ -38,7 +38,7 @@ open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
         // Progress Widget
         addProgressBar(::addRenderableOnly)
         // Energy Widget
-        energyWidget = createEnergyWidget(blockEntity.energyStorage)
+        energyWidget = createEnergyWidget(blockEntity.battery)
     }
 
     protected open fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

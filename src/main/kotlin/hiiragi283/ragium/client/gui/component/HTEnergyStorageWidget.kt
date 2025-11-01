@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.gui.component
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTEnergyWidget
 import hiiragi283.ragium.api.storage.HTAmountSetter
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.addEnergyTooltip
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -15,7 +15,7 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 class HTEnergyStorageWidget(
-    private val storage: HTEnergyStorage,
+    private val battery: HTEnergyBattery,
     private val amountSetter: HTAmountSetter.IntSized,
     x: Int,
     y: Int,
@@ -35,16 +35,16 @@ class HTEnergyStorageWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = !storage.isEmpty()
+    override fun shouldRender(): Boolean = !battery.isEmpty()
 
     override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
 
     override fun getColor(): Int = -1
 
-    override fun getLevel(): Float = storage.getStoredLevelAsFloat()
+    override fun getLevel(): Float = battery.getStoredLevelAsFloat()
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addEnergyTooltip(storage, consumer)
+        addEnergyTooltip(battery, consumer)
     }
 
     //    HTEnergyWidget    //
@@ -53,7 +53,7 @@ class HTEnergyStorageWidget(
         amountSetter.setAmount(amount)
     }
 
-    override fun getAmount(): Int = storage.getAmount()
+    override fun getAmount(): Int = battery.getAmount()
 
-    override fun getCapacity(): Int = storage.getCapacity()
+    override fun getCapacity(): Int = battery.getCapacity()
 }

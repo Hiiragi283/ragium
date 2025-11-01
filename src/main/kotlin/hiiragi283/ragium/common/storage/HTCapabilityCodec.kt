@@ -29,6 +29,14 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
+        val ENERGY: HTCapabilityCodec<HTExperienceTank> = HTCapabilityCodec(
+            RagiumConst.BATTERIES,
+            RagiumConst.SLOT,
+            HTBlockEntity::getExpTanks,
+            HTBlockEntity::hasExperienceHandler,
+        )
+
+        @JvmField
         val EXPERIENCE: HTCapabilityCodec<HTExperienceTank> = HTCapabilityCodec(
             RagiumConst.EXPERIENCES,
             RagiumConst.TANK,
@@ -45,7 +53,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
-        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, EXPERIENCE, FLUID)
+        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, ENERGY ,EXPERIENCE, FLUID)
     }
 
     //    Save & Read    //

@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.variant.HTMaterialVariant
 import io.wispforest.accessories.api.AccessoriesCapability
@@ -91,7 +91,7 @@ interface RagiumPlatform {
      * 指定した[level]からエネルギーのネットワークを返します。
      * @return 取得できなかった場合は`null`
      */
-    fun getEnergyNetwork(level: Level?): HTEnergyStorage?
+    fun getEnergyNetwork(level: Level?): HTEnergyBattery?
 
     //    Storage    //
 

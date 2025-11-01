@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
-import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
+import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.item.HTMachineUpgradeItemHandler
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.BlockPos
@@ -20,6 +22,20 @@ import java.util.function.Consumer
  */
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
+    lateinit var battery: HTMachineEnergyBattery<*>
+        private set
+
+    override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+        battery = createBattery(builder, listener)
+        return builder.build()
+    }
+
+    protected abstract fun createBattery(
+        builder: HTBasicEnergyBatteryHolder.Builder,
+        listener: HTContentListener,
+    ): HTMachineEnergyBattery<*>
+
     val upgradeHandler: HTMachineUpgradeItemHandler get() = getData(RagiumAttachmentTypes.MACHINE_UPGRADE)
 
     override fun writeValue(output: HTValueOutput) {
@@ -42,7 +58,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     /**
      * このブロックエンティティがtick当たりで生産する電力の値
      */
-    val energyUsage: Int = blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
+    val energyUsage: Int get() = battery.energyPerTick
 
     var isActive: Boolean = false
         protected set
