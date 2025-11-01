@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -17,7 +17,7 @@ import java.awt.Color
 
 enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, private val jpName: String) :
     HTMaterialLike,
-    HTTranslatedNameProvider {
+    HTLangName {
     WHITE(DyeColor.WHITE, "White", "白色"),
     ORANGE(DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(DyeColor.MAGENTA, "Magenta", "赤紫色"),
