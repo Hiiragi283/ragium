@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
@@ -15,7 +16,7 @@ import java.util.function.Predicate
  */
 class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
     capacity: Int,
-    val energyPerTick: Int,
+    val baseEnergyPerTick: Int,
     val blockEntity: BE,
     canExtract: Predicate<HTStorageAccess>,
     canInsert: Predicate<HTStorageAccess>,
@@ -50,6 +51,37 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
                 HTStorageAccess.INTERNAL_ONLY,
                 listener,
             )
+        }
+    }
+
+    var currentCapacity: Int = this.getCapacity()
+        private set
+    var currentEnergyPerTick: Int = this.baseEnergyPerTick
+
+    override fun getCapacity(): Int = currentCapacity
+
+    fun getCapacity(capacity: Int) {
+        this.currentCapacity = capacity
+        setAmount(getAmount())
+    }
+
+    fun getBaseCapacity(): Int = super.getCapacity()
+
+    fun consume(): Int {
+        if (blockEntity !is HTConsumerBlockEntity) return 0
+        val simulated: Int = this.extract(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+        return when {
+            simulated >= currentEnergyPerTick -> this.extract(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            else -> 0
+        }
+    }
+
+    fun generate(): Int {
+        if (blockEntity !is HTGeneratorBlockEntity) return 0
+        val simulated: Int = this.insert(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+        return when {
+            simulated > 0 -> this.insert(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            else -> 0
         }
     }
 }

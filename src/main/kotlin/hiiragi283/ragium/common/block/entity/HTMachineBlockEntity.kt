@@ -55,11 +55,6 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     //    Ticking    //
 
-    /**
-     * このブロックエンティティがtick当たりで生産する電力の値
-     */
-    val energyUsage: Int get() = battery.energyPerTick
-
     var isActive: Boolean = false
         protected set
 

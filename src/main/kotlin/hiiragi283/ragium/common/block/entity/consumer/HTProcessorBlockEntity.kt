@@ -3,8 +3,6 @@ package hiiragi283.ragium.common.block.entity.consumer
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
@@ -31,7 +29,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += battery.extract(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            usedEnergy += battery.consume()
         }
         return when {
             usedEnergy < requiredEnergy -> false
@@ -51,7 +49,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
 
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
-    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(energyUsage * getRecipeTime(recipe))
+    protected fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
 
     protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 

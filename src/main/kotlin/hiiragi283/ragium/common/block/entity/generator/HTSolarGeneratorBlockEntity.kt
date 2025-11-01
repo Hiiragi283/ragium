@@ -2,21 +2,19 @@ package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.storage.HTStorageAccess
-import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
-import kotlin.math.roundToInt
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(RagiumBlocks.SOLAR_PANEL_CONTROLLER, pos, state) {
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false
-        return battery.insert((energyUsage * multiplier).roundToInt(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) > 0
+        battery.currentEnergyPerTick = (battery.currentEnergyPerTick * multiplier).toInt()
+        return battery.generate() > 0
     }
 
     private fun getGenerationMultiplier(level: ServerLevel, pos: BlockPos): Float {
