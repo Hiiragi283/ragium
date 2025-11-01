@@ -53,7 +53,7 @@ class HTCapabilityCodec<CONTAINER : HTValueSerializable>(
         )
 
         @JvmField
-        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, ENERGY ,EXPERIENCE, FLUID)
+        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, ENERGY, EXPERIENCE, FLUID)
     }
 
     //    Save & Read    //
