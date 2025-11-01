@@ -13,11 +13,9 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -229,46 +227,6 @@ sealed class HTRecipeProvider {
                 .refining(ingredient, result, catalyst, itemResult)
                 .saveSuffixed(output, suffix)
         }
-    }
-
-    /**
-     * 原石または原石ブロックをインゴットに製錬する合金レシピを登録します。
-     * @param material 単体金属系の素材
-     */
-    protected fun rawToIngot(material: HTMaterialLike) {
-        val ingot: TagKey<Item> = CommonMaterialPrefixes.INGOT.itemTagKey(material)
-        // Basic
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(ingot, 3),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL, material, 2),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).tagCondition(ingot)
-            .saveSuffixed(output, "_with_basic_flux")
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(ingot, 27),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, material, 2),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, 6),
-            ).tagCondition(ingot)
-            .saveSuffixed(output, "_from_block_with_basic_flux")
-        // Advanced
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(ingot, 2),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL, material),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-            ).tagCondition(ingot)
-            .saveSuffixed(output, "_with_advanced_flux")
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(ingot, 18),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, material),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, 6),
-            ).tagCondition(ingot)
-            .saveSuffixed(output, "_from_block_with_advanced_flux")
     }
 
     /**

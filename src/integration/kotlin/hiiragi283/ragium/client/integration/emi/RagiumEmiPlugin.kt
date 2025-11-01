@@ -279,7 +279,7 @@ class RagiumEmiPlugin : EmiPlugin {
         val category: HTEmiRecipeCategory = registerCategory(registry, viewerType)
         viewerType
             .getAllHolders(recipeManager())
-            .map { it.castRecipe<BASE, RECIPE>() }
+            .mapNotNull { it.castRecipe<BASE, RECIPE>() }
             .mapNotNull(factory.partially1(category))
             .forEach(registry::addRecipe)
         return category

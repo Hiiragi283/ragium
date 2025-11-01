@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
@@ -15,18 +15,15 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.material.CommonMaterialKeys
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
+import hiiragi283.ragium.impl.material.RagiumMaterialRecipeManager
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeType
 import hiiragi283.ragium.impl.value.HTJsonValueInput
 import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
 import hiiragi283.ragium.impl.value.HTTagValueOutput
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -63,82 +60,6 @@ class RagiumPlatformImpl : RagiumPlatform {
         return addonCache
     }
 
-    private lateinit var mapCache: Map<HTMaterialKey, HTMaterialPrefix>
-
-    override fun getMaterialMap(): Map<HTMaterialKey, HTMaterialPrefix> {
-        if (!::mapCache.isInitialized) {
-            mapCache = buildMap {
-                val consumer: (HTMaterialKey, HTMaterialPrefix) -> Unit =
-                    { key: HTMaterialKey, variant: HTMaterialPrefix ->
-                        check(put(key, variant) == null) { "Duplicate base variant for ${key.name}" }
-                    }
-
-                setupMaterials(consumer)
-
-                for (addon: RagiumAddon in getAddons()) {
-                    addon.registerMaterial(consumer)
-                }
-            }
-        }
-        return mapCache
-    }
-
-    private fun setupMaterials(consumer: (HTMaterialKey, HTMaterialPrefix) -> Unit) {
-        // Vanilla
-        consumer(VanillaMaterialKeys.COPPER, CommonMaterialPrefixes.INGOT)
-        consumer(VanillaMaterialKeys.IRON, CommonMaterialPrefixes.INGOT)
-        consumer(VanillaMaterialKeys.GOLD, CommonMaterialPrefixes.INGOT)
-        consumer(VanillaMaterialKeys.NETHERITE, CommonMaterialPrefixes.INGOT)
-
-        consumer(VanillaMaterialKeys.LAPIS, CommonMaterialPrefixes.GEM)
-        consumer(VanillaMaterialKeys.QUARTZ, CommonMaterialPrefixes.GEM)
-        consumer(VanillaMaterialKeys.AMETHYST, CommonMaterialPrefixes.GEM)
-        consumer(VanillaMaterialKeys.DIAMOND, CommonMaterialPrefixes.GEM)
-        consumer(VanillaMaterialKeys.EMERALD, CommonMaterialPrefixes.GEM)
-        consumer(VanillaMaterialKeys.ECHO, CommonMaterialPrefixes.GEM)
-
-        consumer(VanillaMaterialKeys.COAL, CommonMaterialPrefixes.FUEL)
-        consumer(VanillaMaterialKeys.CHARCOAL, CommonMaterialPrefixes.FUEL)
-        consumer(VanillaMaterialKeys.REDSTONE, CommonMaterialPrefixes.DUST)
-        consumer(VanillaMaterialKeys.OBSIDIAN, CommonMaterialPrefixes.DUST)
-        consumer(VanillaMaterialKeys.WOOD, CommonMaterialPrefixes.DUST)
-        // Ragium
-        consumer(RagiumMaterialKeys.RAGINITE, CommonMaterialPrefixes.DUST)
-        consumer(RagiumMaterialKeys.CINNABAR, CommonMaterialPrefixes.GEM)
-        consumer(RagiumMaterialKeys.SALTPETER, CommonMaterialPrefixes.DUST)
-        consumer(RagiumMaterialKeys.SULFUR, CommonMaterialPrefixes.DUST)
-
-        consumer(RagiumMaterialKeys.RAGI_CRYSTAL, CommonMaterialPrefixes.GEM)
-        consumer(RagiumMaterialKeys.AZURE, CommonMaterialPrefixes.GEM)
-        consumer(RagiumMaterialKeys.CRIMSON_CRYSTAL, CommonMaterialPrefixes.GEM)
-        consumer(RagiumMaterialKeys.WARPED_CRYSTAL, CommonMaterialPrefixes.GEM)
-        consumer(RagiumMaterialKeys.ELDRITCH_PEARL, CommonMaterialPrefixes.GEM)
-
-        consumer(RagiumMaterialKeys.RAGI_ALLOY, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.AZURE_STEEL, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.DEEP_STEEL, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.GILDIUM, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.IRIDESCENTIUM, CommonMaterialPrefixes.INGOT)
-
-        consumer(RagiumMaterialKeys.CHOCOLATE, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.MEAT, CommonMaterialPrefixes.INGOT)
-        consumer(RagiumMaterialKeys.COOKED_MEAT, CommonMaterialPrefixes.INGOT)
-
-        consumer(RagiumMaterialKeys.COAL_COKE, CommonMaterialPrefixes.FUEL)
-        consumer(RagiumMaterialKeys.PLASTIC, CommonMaterialPrefixes.PLATE)
-        // Common
-        for (key: HTMaterialKey in CommonMaterialKeys.METALS.values) {
-            consumer(key, CommonMaterialPrefixes.INGOT)
-        }
-        for (key: HTMaterialKey in CommonMaterialKeys.ALLOYS.values) {
-            consumer(key, CommonMaterialPrefixes.INGOT)
-        }
-        for (key: HTMaterialKey in CommonMaterialKeys.GEMS.values) {
-            consumer(key, CommonMaterialPrefixes.GEM)
-        }
-    }
-
     //    Item    //
 
     override fun createSoda(potion: PotionContents, count: Int): ItemStack =
@@ -149,6 +70,8 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition> = RagiumMaterialManager.definitions
 
     //    Recipe    //
+
+    override fun getMaterialRecipeManager(): HTMaterialRecipeManager = RagiumMaterialRecipeManager
 
     override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(
         finder: HTRecipeFinder<INPUT, RECIPE>,

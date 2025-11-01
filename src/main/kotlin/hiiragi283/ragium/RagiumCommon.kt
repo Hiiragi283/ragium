@@ -19,6 +19,8 @@ import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
 import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
+import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
 import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumAccessoryRegister
@@ -113,6 +115,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumAPI.MATERIAL_PREFIX_REGISTRY)
+        event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
     }
@@ -138,6 +141,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             register(helper, RagiumRecipeTypes.PLANTING)
             register(helper, RagiumRecipeTypes.SIMULATING)
             register(helper, RagiumRecipeTypes.WASHING)
+        }
+
+        event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id("crushing"), HTCrushingMaterialRecipeData.CODEC)
+            helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipeData.CODEC)
         }
     }
 
@@ -174,6 +182,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMaps.ENCHANT_FUEL)
 
         event.register(RagiumDataMaps.MOB_HEAD)
+
+        event.register(RagiumDataMaps.MATERIAL_RECIPE)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

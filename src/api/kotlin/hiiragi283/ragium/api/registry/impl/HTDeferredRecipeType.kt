@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.registry.impl
 
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.text.HTHasTranslationKey
@@ -33,6 +34,10 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         level: Level,
         lastRecipe: ResourceLocation?,
     ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
+        ?: RagiumPlatform.INSTANCE.getMaterialRecipeManager().getRecipeFor(get(), input, level, lastRecipe)
 
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager.getAllRecipesFor(get()).asSequence()
+    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = buildList {
+        addAll(manager.getAllRecipesFor(get()))
+        addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(get()))
+    }.asSequence()
 }

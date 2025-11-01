@@ -60,7 +60,7 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     override fun getCapacity(): Int = currentCapacity
 
-    fun getCapacity(capacity: Int) {
+    fun setCapacity(capacity: Int) {
         this.currentCapacity = capacity
         setAmount(getAmount())
     }
