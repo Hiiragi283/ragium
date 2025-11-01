@@ -1,5 +1,82 @@
 # Changelog
 
+## v0.10.0
+
+### API
+
+- Addon: Added `RagiumAddon.CreativeTabHelper` to assist with modifying creative mode tabs
+
+- Block: Added `HTBlockType` to store custom attributes for block
+- Block: Added `HTBlockAttribute` which is used to store custom data in `HTBlockType`
+
+- Data
+  - Lang: Translation method in `HTVariantkey` was split into `HTTranslationProvider`
+  - Data Map: Replaced some data map types into datapack registries
+  - Recipe: `HTStackRecipeBuilder` now uses `ImmutableItemStack` instead of `ItemStack`
+  - Recipe: Replaced `HTIngredientHelper` into `HTIngredientCreator`
+
+- Function: Added `HTPredicates` which holds functions used in this commonly
+
+- Menu: Added `HTEnergyWidget` and `HTEnergyScreen` to sync energy storage
+- Menu: Added `HTExperienceWidget` and `HTExperienceScreen` to sync experience storage
+- Menu: Redesigned `HTFluidWidget` and `HTFluidScreen`
+- Menu: Fixed wrong quick item move in `HTContainerMenu` 
+- Menu: Fixed not calling `HTContainerMenu.onOpen(Player)` and  `HTContainerMenu.onClose(Player)`
+
+- Item
+  - Component: Added `HTItemContents` which is replacement for `ItemContainerContents`
+  - Component: Redesigned `HTTeleportPos`
+
+- Recipe
+  - Ingredient: `HTIngredient` accepts `ImmutableStack` instead of mutable stacks
+  - Result: `HTRecipeResult` returns `ImmutableStack` instead of mutable stacks
+
+- Registry: Added `HTDeferredEntityType` and `HTDeferredEntityTypeRegister` to register entity types
+- Registry: Added `HTDeferredFluid` and `HTDeferredFluidRegister` to register fluids in `HTFluidContentRegister`
+- Registry: Added `HTDeferredFluidType` and `HTDeferredFluidTypeRegister` to register fluid types in `HTFluidContentRegister`
+- Registry: Split implementation of `HTHTDeferredMenuType` into `WithContext` and `OnHand`
+- Registry: Added `HTDeferredOnlyBlock` and `HTDeferredOnlyBlockRegister` to register blocks in `HTFluidContentRegister`
+
+- Storage: **Added new capability type `IExperienceStorage` and `IExperienceStorageItem` to handle exp storage**
+- Storage: **Replaced energy handlers**
+- Storage: **Renamed `HTStorageStack` into `ImmutableStack`**
+  - `HTItemStorageStack` -> `ImmutableItemStack`
+  - `HTFluidStorageStack` -> `ImmutableFluidStack`
+- Storage: **Built a storage system that enables more systematic resource management**
+  - `HTAmountView`: Provides amount and capacity 
+  - `HTStackView`: Provides stored `ImmutableStack` and extended from `HTAmountView`
+  - `HTStackSlot`: Enables insert/extract stacks and extended from `HTStackView`
+    - `HTStackSlot.Basic`: Simple implementation for `HTStackSlot`
+- Storage: Split `RagiumCapabilities` into each `HTXXCapabilities`
+
+- Variant: Removed `HTVariantKey.Tagged` and `HTVariantKey.WithBE`
+
+### Common
+
+- Block: Added Creative Drum
+- Block: **Removed Polished Eldritch Stone**
+- Block: **Renamed Polished Eldritch Stone Bricks into Eldritch Stone Bricks**
+
+- Entity: Added Minecart with Drums
+
+- Machine
+  - General: **Replaced energy storage in all machines from global one into each one**
+  - Generator: Update models for fuel generators
+  - Processor: Melter, Refinery, and Washer render stored fluids
+  - Processor: Planter no longer consume seed/sapling
+
+### Integration
+
+- **Added new support for Kaleido Cookery**
+  - Item: Added new kitchen knives (Ragi-Alloy, Ragi-Crystal)
+
+### Other
+
+- Updated GitHub Actions
+  - thanks for turtton!
+- Added new module `integration` for mod compat
+  - child of `main` module, parent of `data` module
+
 ## v0.9.3b
 
 ### Common
