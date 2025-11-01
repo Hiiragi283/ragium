@@ -210,7 +210,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         addFluidCollector(RagiumBlocks.WATER_COLLECTOR, vanillaId("block", "water_still"))
 
         // Storages
-        for (drum: HTDeferredBlock<*, *> in RagiumBlocks.DRUMS.values) {
+        val drums: List<HTDeferredBlock<*, *>> = buildList {
+            addAll(RagiumBlocks.DRUMS.values)
+            add(RagiumBlocks.EXP_DRUM)
+        }
+        for (drum: HTDeferredBlock<*, *> in drums) {
             val id: ResourceLocation = drum.blockId
             simpleBlockAndItem(drum, models().cubeColumn(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }

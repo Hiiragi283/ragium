@@ -159,6 +159,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.TELEPAD, "テレパッド")
 
         add(RagiumBlocks.CEU, "C.E.U.")
+        // Storage
+        add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
     }
 
     private fun enchantment() {

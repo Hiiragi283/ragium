@@ -564,8 +564,16 @@ object RagiumBlocks {
                     HTDrumTier.HUGE -> Blocks.NETHERITE_BLOCK
                     else -> Blocks.IRON_BLOCK
                 }.let(::copyOf),
-                { HTDrumBlock(tier, it) },
+                { HTDrumBlock(tier.getBlockType(), it) },
                 ::HTDrumBlockItem,
             )
         }
+
+    @JvmField
+    val EXP_DRUM: HTDeferredBlock<HTDrumBlock, HTDrumBlockItem> = REGISTER.register(
+        "experience_drum",
+        copyOf(Blocks.IRON_BLOCK),
+        { HTDrumBlock(RagiumBlockTypes.EXP_DRUM, it) },
+        ::HTDrumBlockItem,
+    )
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.tier.HTTierProvider
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
@@ -15,8 +16,12 @@ open class HTBlockItem<BLOCK : Block>(block: BLOCK, properties: Properties) : Bl
 
     open fun getTier(): HTTierProvider? = null
 
-    override fun getName(stack: ItemStack): Component = when (val tier: HTTierProvider? = getTier()) {
-        null -> super.getName(stack)
-        else -> super.getName(stack).copy().withStyle(tier.getBaseTier().color)
+    override fun getName(stack: ItemStack): Component {
+        var name: MutableComponent = Component.translatable(getDescriptionId(stack))
+        val tier: HTTierProvider? = getTier()
+        if (tier != null) {
+            name = name.withStyle(tier.getBaseTier().color)
+        }
+        return name
     }
 }

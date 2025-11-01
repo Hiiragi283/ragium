@@ -1,10 +1,11 @@
 package hiiragi283.ragium.impl.value
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 
 internal object HTEmptyValueInput : HTValueInput {
-    override fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? = null
+    override fun <T : Any> read(key: String, codec: Codec<T>): T? = null
 
     override fun child(key: String): HTValueInput? = null
 

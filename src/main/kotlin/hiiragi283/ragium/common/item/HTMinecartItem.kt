@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.BaseRailBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.RailShape
 
-class HTMinecartItem(private val factory: HTMinecart.Factory, properties: Properties) : Item(properties.stacksTo(1)) {
+open class HTMinecartItem(private val factory: HTMinecart.Factory, properties: Properties) : Item(properties.stacksTo(1)) {
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos
