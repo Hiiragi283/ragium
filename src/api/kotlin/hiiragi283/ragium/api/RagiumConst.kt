@@ -85,6 +85,7 @@ object RagiumConst {
     const val AMOUNT = "amount"
     const val CAPACITY = "capacity"
 
+    const val BATTERIES = "batteries"
     const val EXPERIENCES = "experiences"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"

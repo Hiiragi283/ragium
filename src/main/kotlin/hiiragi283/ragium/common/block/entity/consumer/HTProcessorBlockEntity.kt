@@ -31,7 +31,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += energyStorage.extractEnergy(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            usedEnergy += battery.extract(energyUsage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         return when {
             usedEnergy < requiredEnergy -> false

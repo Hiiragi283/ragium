@@ -17,10 +17,9 @@ object HTExperienceCapabilities : HTAmountViewCapability<IExperienceHandler, IEx
     override val entity: EntityCapability<IExperienceHandler, Direction?> = EntityCapability.createSided(id, IExperienceHandler::class.java)
     override val item: ItemCapability<IExperienceHandlerItem, Void?> = ItemCapability.createVoid(id, IExperienceHandlerItem::class.java)
 
-    override fun apply(handler: IExperienceHandler, context: Direction?): List<HTAmountView<Long>> = if (handler is HTExperienceHandler) {
-        handler.getExpTanks(context)
-    } else {
-        (0..<handler.getExperienceTanks()).map { tank: Int ->
+    override fun apply(handler: IExperienceHandler, context: Direction?): List<HTAmountView<Long>> = when (handler) {
+        is HTExperienceHandler -> handler.getExpTanks(context)
+        else -> (0..<handler.getExperienceTanks()).map { tank: Int ->
             object : HTAmountView.LongSized {
                 override fun getAmount(): Long = handler.getExperienceAmount(tank)
 

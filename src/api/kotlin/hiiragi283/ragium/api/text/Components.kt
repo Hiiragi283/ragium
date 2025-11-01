@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -67,10 +67,10 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 private fun energyText(amount: Int, capacity: Int): MutableComponent =
     RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
 
-fun energyText(storage: HTEnergyStorage): MutableComponent = energyText(storage.getAmount(), storage.getCapacity())
+fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
 
-fun addEnergyTooltip(storage: HTEnergyStorage, consumer: Consumer<Component>) {
-    storage.let(::energyText).let(consumer::accept)
+fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
+    battery.let(::energyText).let(consumer::accept)
 }
 
 private fun experienceText(amount: Long, capacity: Long): MutableComponent =

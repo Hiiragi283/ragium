@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.common.storage.energy.battery.HTEnergyNetwork
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
@@ -66,7 +66,7 @@ object RagiumCommand {
     private fun addEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
-        val received: Int = getEnergyNetwork(source)?.insertEnergy(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
+        val received: Int = getEnergyNetwork(source)?.insert(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
         source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
         return received
     }
@@ -80,5 +80,5 @@ object RagiumCommand {
     }
 
     @JvmStatic
-    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyStorage? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
+    private fun getEnergyNetwork(source: CommandSourceStack): HTEnergyBattery? = RagiumPlatform.INSTANCE.getEnergyNetwork(source.level)
 }

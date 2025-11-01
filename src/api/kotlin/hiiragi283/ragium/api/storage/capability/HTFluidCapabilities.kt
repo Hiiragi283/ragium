@@ -17,16 +17,15 @@ object HTFluidCapabilities : HTStackViewCapability<IFluidHandler, IFluidHandlerI
     override val entity: EntityCapability<IFluidHandler, Direction?> = Capabilities.FluidHandler.ENTITY
     override val item: ItemCapability<IFluidHandlerItem, Void?> = Capabilities.FluidHandler.ITEM
 
-    override fun apply(handler: IFluidHandler, context: Direction?): List<HTStackView<ImmutableFluidStack>> =
-        if (handler is HTFluidHandler) {
-            handler.getFluidTanks(context)
-        } else {
-            handler.tankRange.map { tank: Int ->
-                object : HTStackView<ImmutableFluidStack> {
-                    override fun getStack(): ImmutableFluidStack? = handler.getFluidInTank(tank).toImmutable()
+    override fun apply(handler: IFluidHandler, context: Direction?): List<HTStackView<ImmutableFluidStack>> = when (handler) {
+        is HTFluidHandler -> handler.getFluidTanks(context)
 
-                    override fun getCapacity(stack: ImmutableFluidStack?): Int = handler.getTankCapacity(tank)
-                }
+        else -> handler.tankRange.map { tank: Int ->
+            object : HTStackView<ImmutableFluidStack> {
+                override fun getStack(): ImmutableFluidStack? = handler.getFluidInTank(tank).toImmutable()
+
+                override fun getCapacity(stack: ImmutableFluidStack?): Int = handler.getTankCapacity(tank)
             }
         }
+    }
 }
