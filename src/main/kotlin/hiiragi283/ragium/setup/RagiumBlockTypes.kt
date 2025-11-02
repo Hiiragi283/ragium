@@ -17,6 +17,7 @@ object RagiumBlockTypes {
     @JvmField
     val THERMAL_GENERATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.THERMAL_GENERATOR }
+        .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.BASIC)
         .build()
@@ -25,6 +26,7 @@ object RagiumBlockTypes {
     @JvmField
     val COMBUSTION_GENERATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.COMBUSTION_GENERATOR }
+        .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.ADVANCED)
         .build()
@@ -40,6 +42,7 @@ object RagiumBlockTypes {
     @JvmField
     val ENCHANTMENT_GENERATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR }
+        .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.ULTIMATE)
         .build()
