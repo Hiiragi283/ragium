@@ -2,7 +2,6 @@ package hiiragi283.ragium.impl.data.map
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
@@ -28,8 +27,8 @@ class HTRawSmeltingMaterialRecipeData(
         val CODEC: MapCodec<HTRawSmeltingMaterialRecipeData> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    RagiumAPI.MATERIAL_PREFIX_REGISTRY
-                        .byNameCodec()
+                    HTMaterialPrefix.CODEC
+                        .codec
                         .fieldOf("prefix")
                         .forGetter(HTRawSmeltingMaterialRecipeData::prefix),
                     ExtraCodecs.POSITIVE_INT.fieldOf("input_count").forGetter(HTRawSmeltingMaterialRecipeData::inputCount),
