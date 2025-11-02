@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -77,7 +76,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .misc(gravityUnit)
             .cross8()
             .define('A', Items.SHULKER_SHELL)
-            .define('B', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.ULTIMATE)
+            .define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
             .define('C', Items.END_CRYSTAL)
             .save(output)
         save(
@@ -173,7 +172,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .define('C', gemOrDust(VanillaMaterialKeys.LAPIS))
-            .define('D', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.BASIC)
+            .define('D', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
             .saveSuffixed(output, "_from_basic")
 
         HTShapedRecipeBuilder
@@ -239,7 +238,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .crossLayered()
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.GLASS_BLOCKS)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.BASIC)
+            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
             .define('D', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
             .save(output)
 
@@ -249,7 +248,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .crossLayered()
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.ADVANCED)
+            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
             .define('D', basic)
             .save(output)
 
@@ -259,7 +258,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .crossLayered()
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.ELITE)
+            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
             .define('D', adv)
             .save(output)
 
@@ -269,7 +268,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .crossLayered()
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.ULTIMATE)
+            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
             .define('D', elite)
             .save(output)
 
