@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -120,7 +121,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, Items.COAL.toHolderLike())
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, Items.CHARCOAL.toHolderLike())
 
-        val coalCoke: TagKey<Item> = CommonMaterialPrefixes.FUEL.itemTagKey(RagiumMaterialKeys.COAL_COKE)
+        val coalCoke: TagKey<Item> = CommonMaterialPrefixes.FUEL.itemTagKey(CommonMaterialKeys.COAL_COKE)
         builder.addTag(CommonMaterialPrefixes.FUEL.itemCommonTag, coalCoke)
         builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
 
@@ -209,7 +210,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.addTag(
             RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-            CommonMaterialPrefixes.DUST.itemTagKey(RagiumMaterialKeys.CINNABAR),
+            CommonMaterialPrefixes.DUST.itemTagKey(CommonMaterialKeys.Gems.CINNABAR),
         )
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
@@ -285,8 +286,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagBuilder.DependType.OPTIONAL)
 
         val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
-        builder.add(plastics, RagiumItems.getPlate(RagiumMaterialKeys.PLASTIC))
-        builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE.itemTagKey(RagiumMaterialKeys.PLASTIC))
+        builder.add(plastics, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
+        builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE.itemTagKey(CommonMaterialKeys.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
@@ -329,7 +330,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
-        builder.add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.getPlate(RagiumMaterialKeys.PLASTIC))
+        builder.add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
     }
 
     //    Extensions    //

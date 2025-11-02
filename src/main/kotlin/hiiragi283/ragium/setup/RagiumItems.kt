@@ -42,6 +42,7 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.base.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
@@ -152,15 +153,15 @@ object RagiumItems {
             // Vanilla - Other
             VanillaMaterialKeys.OBSIDIAN,
             // Common
-            RagiumMaterialKeys.CINNABAR,
-            RagiumMaterialKeys.SALTPETER,
-            RagiumMaterialKeys.SULFUR,
+            CommonMaterialKeys.Gems.CINNABAR,
+            CommonMaterialKeys.Gems.SALTPETER,
+            CommonMaterialKeys.Gems.SULFUR,
             // Ragium
             RagiumMaterialKeys.RAGINITE,
             RagiumMaterialKeys.AZURE,
             RagiumMaterialKeys.RAGI_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
-        ).forEach { this[CommonMaterialPrefixes.DUST, it] = register("${it.name}_dust") }
+        ).forEach { this[CommonMaterialPrefixes.DUST, it.asMaterialKey()] = register("${it.asMaterialName()}_dust") }
         this[CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD] = register("sawdust")
         this[CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT] = register("minced_meat")
         // Gems
@@ -195,7 +196,7 @@ object RagiumItems {
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { this[CommonMaterialPrefixes.NUGGET, it] = register("${it.name}_nugget") }
         // Plates
-        this[CommonMaterialPrefixes.PLATE, RagiumMaterialKeys.PLASTIC] = register("plastic_plate")
+        this[CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC] = register("plastic_plate")
 
         // Fuels
         this[CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL] = register("bamboo_charcoal")

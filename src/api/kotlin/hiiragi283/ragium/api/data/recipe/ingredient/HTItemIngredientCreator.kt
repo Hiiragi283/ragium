@@ -45,8 +45,4 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
     fun gemOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
 
     fun ingotOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
-
-    fun gemOrDust(name: String, count: Int = 1): HTItemIngredient
-
-    fun ingotOrDust(name: String, count: Int = 1): HTItemIngredient
 }

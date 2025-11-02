@@ -10,9 +10,10 @@ class HTMaterialDefinitionEvent(val factory: (HTMaterialKey) -> HTMaterialDefini
         factory(key).apply(builderAction)
     }
 
-    inline fun modify(keys: Iterable<HTMaterialKey>, builderAction: HTMaterialDefinition.Builder.(HTMaterialKey) -> Unit) {
-        for (key: HTMaterialKey in keys) {
-            factory(key).builderAction(key)
+    inline fun <T : HTMaterialLike> modify(keys: Iterable<T>, builderAction: HTMaterialDefinition.Builder.(T) -> Unit) {
+        for (material: T in keys) {
+            val key: HTMaterialKey = material.asMaterialKey()
+            factory(key).builderAction(material)
         }
     }
 }

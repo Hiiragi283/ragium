@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -35,7 +36,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .compressing(
                 itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
-                resultHelper.item(CommonMaterialPrefixes.PLATE, RagiumMaterialKeys.PLASTIC),
+                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
             ).save(output)
         // Synthetic Fiber / Leather
         mapOf(

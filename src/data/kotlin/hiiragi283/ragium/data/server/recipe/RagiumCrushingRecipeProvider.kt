@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -163,7 +163,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
             .addResult(resultHelper.item(Items.SAND, 4))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SALTPETER), 1 / 4f)
+            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER), 1 / 4f)
             .saveSuffixed(output, "_from_sandstone")
 
         HTItemToChancedItemRecipeBuilder

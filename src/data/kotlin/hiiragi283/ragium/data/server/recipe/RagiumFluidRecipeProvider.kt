@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -79,7 +80,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Naphtha -> Fuel + Sulfur
         distillation(
             RagiumFluidContents.NAPHTHA to 1000,
-            resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SULFUR),
+            resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
         // Naphtha + Redstone -> Lubricant

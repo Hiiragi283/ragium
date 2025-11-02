@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -126,7 +127,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Blaze Powder
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SULFUR),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
                 fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 250),
             ).addResult(resultHelper.item(Items.BLAZE_POWDER))
             .save(output)

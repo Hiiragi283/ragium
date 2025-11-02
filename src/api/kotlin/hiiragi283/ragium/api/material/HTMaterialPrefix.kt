@@ -22,10 +22,12 @@ data class HTMaterialPrefix(val name: String, private val commonTagPath: String,
 
     fun blockTagKey(material: HTMaterialLike): TagKey<Block> = createTagKey(Registries.BLOCK, material)
 
+    @Deprecated("Use `blockTagKey(HTMaterialLike) instead`")
     fun blockTagKey(name: String): TagKey<Block> = createTagKey(Registries.BLOCK, name)
 
     fun itemTagKey(material: HTMaterialLike): TagKey<Item> = createTagKey(Registries.ITEM, material)
 
+    @Deprecated("Use `itemTagKey(HTMaterialLike) instead`")
     fun itemTagKey(name: String): TagKey<Item> = createTagKey(Registries.ITEM, name)
 
     fun toIngredient(material: HTMaterialLike): Ingredient = Ingredient.of(itemTagKey(material))

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
@@ -60,12 +61,12 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.PLASTIC_BRICKS, 4)
             .storage4()
-            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.PLASTIC)
+            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
             .save(output)
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_BRICKS)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.PLASTIC)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -76,7 +77,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
         HTSingleItemRecipeBuilder
             .stonecutter(RagiumBlocks.PLASTIC_TILES)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.PLASTIC)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder
@@ -194,7 +195,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
-            return CommonMaterialPrefixes.STORAGE_BLOCK.toIngredient(RagiumMaterialKeys.PLASTIC)
+            return CommonMaterialPrefixes.STORAGE_BLOCK.toIngredient(CommonMaterialKeys.PLASTIC)
         }
         return buildList {
             add(variant.base)
