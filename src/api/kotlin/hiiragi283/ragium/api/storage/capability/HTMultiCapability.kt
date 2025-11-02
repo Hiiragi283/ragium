@@ -34,6 +34,14 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
      */
     fun getCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(block, pos, side)
 
+    fun createCache(level: ServerLevel, pos: BlockPos, side: Direction?): BlockCapabilityCache<HANDLER, Direction?> =
+        BlockCapabilityCache.create(
+            block,
+            level,
+            pos,
+            side,
+        )
+
     fun createCache(
         level: ServerLevel,
         pos: BlockPos,

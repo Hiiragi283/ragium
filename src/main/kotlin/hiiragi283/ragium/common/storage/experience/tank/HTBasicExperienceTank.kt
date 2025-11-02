@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.storage.experience.tank
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.function.clamp
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
-import kotlin.math.min
 
 open class HTBasicExperienceTank(
     private val capacity: Long,
@@ -46,7 +46,7 @@ open class HTBasicExperienceTank(
             if (this.amount == 0L) return
             this.amount = 0
         } else if (!validate || amount > 0) {
-            this.amount = min(amount, getCapacity())
+            this.amount = amount.clamp(0..getCapacity())
         } else {
             error("Invalid amount for storage: $amount")
         }

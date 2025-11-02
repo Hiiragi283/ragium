@@ -1,16 +1,13 @@
 package hiiragi283.ragium.api.storage.capability
 
-import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.storage.HTStackView
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.common.extensions.IItemStackExtension
 import net.neoforged.neoforge.common.extensions.ILevelExtension
-import java.util.function.BooleanSupplier
 
 /**
  * [HTStackView]を取得する[HTMultiCapability]の拡張インターフェース
@@ -37,15 +34,6 @@ interface HTStackViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, STACK : I
         side: Direction?,
         index: Int,
     ): HTStackView<STACK>? = getCapabilityViews(level, pos, side).getOrNull(index)
-
-    fun getViewCache(
-        level: ServerLevel,
-        pos: BlockPos,
-        side: Direction?,
-        validator: BooleanSupplier = BooleanSupplier { true },
-        listener: Runnable = Runnables.doNothing(),
-    ): HTViewBlockCapabilityCache<HANDLER, Direction, STACK> =
-        HTViewBlockCapabilityCache(createCache(level, pos, side, validator, listener), this)
 
     //    Entity    //
 

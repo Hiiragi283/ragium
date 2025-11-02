@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.storage.energy.battery
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.function.clamp
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.util.HTContentListener
 import java.util.function.Predicate
-import kotlin.math.min
 
 /**
  * @see mekanism.common.capabilities.energy.BasicEnergyContainer
@@ -49,7 +49,7 @@ open class HTBasicEnergyBattery(
             if (this.amount == 0) return
             this.amount = 0
         } else if (!validate || amount > 0) {
-            this.amount = min(amount, getCapacity())
+            this.amount = amount.clamp(0..getCapacity())
         } else {
             error("Invalid amount for storage: $amount")
         }

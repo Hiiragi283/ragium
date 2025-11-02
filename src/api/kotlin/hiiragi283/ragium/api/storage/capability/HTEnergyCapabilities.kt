@@ -32,7 +32,7 @@ object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
 
     fun getBattery(stack: ImmutableItemStack?): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
 
-    private fun wrapStorage(storage: IEnergyStorage, context: Direction?): HTEnergyBattery? = when (storage) {
+    fun wrapStorage(storage: IEnergyStorage, context: Direction?): HTEnergyBattery? = when (storage) {
         is HTEnergyHandler -> storage.getEnergyBattery(context)
         else -> object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
             override fun getAmount(): Int = storage.energyStored

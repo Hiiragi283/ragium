@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
  */
 abstract class HTConsumerBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
-    override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
+    final override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
         builder.addSlot(HTAccessConfig.INPUT_ONLY, HTMachineEnergyBattery.input(listener, this))
 
     //    Ticking    //
