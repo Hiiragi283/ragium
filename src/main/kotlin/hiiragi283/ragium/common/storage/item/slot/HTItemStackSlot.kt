@@ -120,7 +120,7 @@ open class HTItemStackSlot protected constructor(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.ITEM, ImmutableItemStack.CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.ITEM, ImmutableItemStack.CODEC).let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {
