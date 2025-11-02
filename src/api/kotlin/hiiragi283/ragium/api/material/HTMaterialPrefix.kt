@@ -1,15 +1,27 @@
 package hiiragi283.ragium.api.material
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.tag.createTagKey
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
+/**
+ * タグのプレフィックスを表すクラス
+ */
 data class HTMaterialPrefix(val name: String, private val commonTagPath: String, private val tagPath: String) {
+    companion object {
+        @JvmField
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTMaterialPrefix> = VanillaBiCodecs.registryBased(RagiumAPI.MATERIAL_PREFIX_REGISTRY)
+    }
+
     fun <T : Any> createCommonTagKey(key: RegistryKey<T>): TagKey<T> = key.createTagKey(ResourceLocation.parse(commonTagPath))
 
     fun <T : Any> createTagKey(key: RegistryKey<T>, material: HTMaterialLike): TagKey<T> = createTagKey(key, material.asMaterialName())
