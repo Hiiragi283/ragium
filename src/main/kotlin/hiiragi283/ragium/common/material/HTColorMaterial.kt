@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.variant.HTColoredVariant
@@ -14,8 +16,8 @@ import net.minecraft.world.item.Item
 import java.awt.Color
 
 enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, private val jpName: String) :
-    HTMaterialType.Colored,
-    HTMaterialType.Translatable {
+    HTMaterialLike,
+    HTLangName {
     WHITE(DyeColor.WHITE, "White", "白色"),
     ORANGE(DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(DyeColor.MAGENTA, "Magenta", "赤紫色"),
@@ -37,7 +39,7 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
     companion object {
         val VANILLA_TABLE: ImmutableTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
             for (color: HTColorMaterial in HTColorMaterial.entries) {
-                val id: ResourceLocation = vanillaId(color.materialName())
+                val id: ResourceLocation = vanillaId(color.asMaterialName())
                 for (variant: HTColoredVariant in HTColoredVariant.entries) {
                     this[variant, color] = HTDeferredItem<Item>(id.withSuffix("_${variant.variantName()}"))
                 }
@@ -46,18 +48,18 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
 
         @JvmStatic
         fun getColoredItem(variant: HTColoredVariant, color: HTColorMaterial): HTDeferredItem<*> =
-            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.materialName()} ${variant.variantName()}")
+            VANILLA_TABLE[variant, color] ?: error("Unknown ${color.asMaterialName()} ${variant.variantName()}")
     }
 
     val dyeTag: TagKey<Item> = dyeColor.tag
     val dyedTag: TagKey<Item> = dyeColor.dyedTag
 
-    override val color: Color = Color(dyeColor.textureDiffuseColor)
+    val color: Color = Color(dyeColor.textureDiffuseColor)
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName
         HTLanguageType.JA_JP -> jpName
     }
 
-    override fun materialName(): String = dyeColor.serializedName
+    override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(dyeColor.serializedName)
 }

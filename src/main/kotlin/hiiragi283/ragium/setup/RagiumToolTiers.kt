@@ -1,8 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.util.wrapOptional
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
@@ -20,7 +19,7 @@ object RagiumToolTiers {
         Tiers.STONE.speed,
         Tiers.STONE.attackDamageBonus,
         Tiers.STONE.enchantmentValue,
-    ) { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.RAGI_ALLOY) }
+    ) { CommonMaterialPrefixes.INGOT.toIngredient(RagiumMaterialKeys.RAGI_ALLOY) }
 
     @JvmField
     val AZURE_STEEL = SimpleTier(
@@ -29,7 +28,7 @@ object RagiumToolTiers {
         Tiers.IRON.speed,
         Tiers.IRON.attackDamageBonus,
         Tiers.IRON.enchantmentValue,
-    ) { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.AZURE_STEEL) }
+    ) { CommonMaterialPrefixes.INGOT.toIngredient(RagiumMaterialKeys.AZURE_STEEL) }
 
     @JvmField
     val RAGI_CRYSTAL: SimpleTier = object : SimpleTier(
@@ -38,7 +37,7 @@ object RagiumToolTiers {
         Tiers.DIAMOND.speed,
         Tiers.DIAMOND.attackDamageBonus,
         Tiers.DIAMOND.enchantmentValue,
-        { HTItemMaterialVariant.GEM.toIngredient(RagiumMaterialType.RAGI_CRYSTAL) },
+        { CommonMaterialPrefixes.GEM.toIngredient(RagiumMaterialKeys.RAGI_CRYSTAL) },
     ) {
         override fun createToolProperties(block: TagKey<Block>): Tool = Tool(
             listOf(
@@ -61,5 +60,5 @@ object RagiumToolTiers {
         Tiers.NETHERITE.speed,
         Tiers.NETHERITE.attackDamageBonus,
         Tiers.NETHERITE.enchantmentValue,
-    ) { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.DEEP_STEEL) }
+    ) { CommonMaterialPrefixes.INGOT.toIngredient(RagiumMaterialKeys.DEEP_STEEL) }
 }

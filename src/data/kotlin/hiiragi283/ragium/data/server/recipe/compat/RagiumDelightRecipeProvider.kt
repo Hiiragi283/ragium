@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -56,17 +56,17 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_ALLOY))
+            .equipment(RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern("A", "B")
-            .define('A', HTItemMaterialVariant.INGOT, RagiumMaterialType.RAGI_ALLOY)
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
 
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_CRYSTAL),
-            RagiumDelightAddon.getKnife(RagiumMaterialType.RAGI_ALLOY),
-        ).addIngredient(HTItemMaterialVariant.GEM, RagiumMaterialType.RAGI_CRYSTAL)
+            RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY),
+        ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }
 

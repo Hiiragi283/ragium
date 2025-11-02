@@ -53,9 +53,6 @@ object RagiumCommonTags {
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
 
         @JvmField
-        val PELLETS: TagKey<Item> = create("pellets")
-
-        @JvmField
         val PLASTIC: TagKey<Item> = create("plastic")
 
         // Crops

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.tier
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
+import hiiragi283.ragium.api.data.lang.HTLangPatternProvider
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
@@ -23,7 +23,7 @@ import hiiragi283.ragium.setup.RagiumItems
 
 enum class HTDrumTier(private val enPattern: String, private val jaPattern: String) :
     HTTierProvider,
-    HTTranslationProvider {
+    HTLangPatternProvider {
     SMALL("Small Drum", "小型ドラム"),
     MEDIUM("Medium Drum", "中型ドラム"),
     LARGE("Large Drum", "大型ドラム"),

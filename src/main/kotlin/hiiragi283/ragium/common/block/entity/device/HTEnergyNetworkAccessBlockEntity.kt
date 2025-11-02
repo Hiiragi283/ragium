@@ -32,7 +32,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
         private set
 
     override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
-        val builder = HTBasicEnergyBatteryHolder.builder(this)
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
         battery = builder.addSlot(HTAccessConfig.BOTH, createBattery(listener))
         return builder.build()
     }

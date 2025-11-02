@@ -66,7 +66,7 @@ open class HTBasicExperienceTank(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getLong(RagiumConst.AMOUNT)?.let(::setAmountUnchecked)
+        input.getLong(RagiumConst.AMOUNT, 0).let(::setAmountUnchecked)
     }
 
     final override fun onContentsChanged() {

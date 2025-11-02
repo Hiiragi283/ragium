@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#c:gems/ragi_crystal",
-  "result": {
-    "count": 1,
-    "id": "#c:dusts/ragi_crystal"
-  }
-}

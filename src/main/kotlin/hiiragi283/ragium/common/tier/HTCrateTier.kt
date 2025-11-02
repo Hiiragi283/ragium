@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.tier
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
+import hiiragi283.ragium.api.data.lang.HTLangPatternProvider
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.tier.HTBaseTier
@@ -17,7 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 
 enum class HTCrateTier(private val enPattern: String, private val jaPattern: String) :
     HTTierProvider,
-    HTTranslationProvider {
+    HTLangPatternProvider {
     SMALL("Small Crate", "小型クレート"),
     MEDIUM("Medium Crate", "中型クレート"),
     LARGE("Large Crate", "大型クレート"),

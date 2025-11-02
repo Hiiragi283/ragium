@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.tier
 
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslatedNameProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.ChatFormatting
@@ -14,7 +14,7 @@ import net.minecraft.util.StringRepresentable
  */
 enum class HTBaseTier(val color: ChatFormatting, private val enName: String, private val jpName: String) :
     StringRepresentable,
-    HTTranslatedNameProvider {
+    HTLangName {
     BASIC(ChatFormatting.GREEN, "Basic", "基本"),
     ADVANCED(ChatFormatting.YELLOW, "Advanced", "発展"),
     ELITE(ChatFormatting.AQUA, "Elite", "精鋭"),

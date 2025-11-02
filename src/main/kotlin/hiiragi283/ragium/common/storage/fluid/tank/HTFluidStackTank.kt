@@ -89,7 +89,7 @@ open class HTFluidStackTank protected constructor(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {

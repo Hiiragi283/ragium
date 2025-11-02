@@ -25,7 +25,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     lateinit var battery: HTMachineEnergyBattery<*>
         private set
 
-    override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+    override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder {
         val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
         battery = createBattery(builder, listener)
         return builder.build()

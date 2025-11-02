@@ -3,8 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -55,7 +54,7 @@ object RagiumArmorMaterials {
         RagiumConst.AZURE_STEEL,
         10,
         SoundEvents.ARMOR_EQUIP_IRON,
-        { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.AZURE_STEEL) },
+        { CommonMaterialPrefixes.INGOT.toIngredient(RagiumMaterialKeys.AZURE_STEEL) },
         1.2f,
         0f,
         ArmorItem.Type.BOOTS to 3,
@@ -70,7 +69,7 @@ object RagiumArmorMaterials {
         RagiumConst.DEEP_STEEL,
         15,
         SoundEvents.ARMOR_EQUIP_NETHERITE,
-        { HTItemMaterialVariant.INGOT.toIngredient(RagiumMaterialType.DEEP_STEEL) },
+        { CommonMaterialPrefixes.INGOT.toIngredient(RagiumMaterialKeys.DEEP_STEEL) },
         3f,
         0.1f,
         ArmorItem.Type.BOOTS to 3,

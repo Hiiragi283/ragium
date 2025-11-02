@@ -1,5 +1,7 @@
 package hiiragi283.ragium.impl.data.recipe
 
+import com.almostreliable.unified.api.AlmostUnified
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -16,6 +18,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.fml.ModList
 
 class HTResultHelperImpl : HTResultHelper {
     companion object {
@@ -43,8 +46,15 @@ class HTResultHelperImpl : HTResultHelper {
     override fun item(id: ResourceLocation, count: Int, component: DataComponentPatch): HTItemResult =
         HTItemResultImpl(HTKeyOrTagHelper.INSTANCE.create(Registries.ITEM, id), count, component)
 
-    override fun item(tagKey: TagKey<Item>, count: Int): HTItemResult =
-        HTItemResultImpl(HTKeyOrTagHelper.INSTANCE.create(tagKey), count, DataComponentPatch.EMPTY)
+    override fun item(tagKey: TagKey<Item>, count: Int): HTItemResult {
+        if (ModList.get().isLoaded(RagiumConst.ALMOST)) {
+            val target: Item? = AlmostUnified.INSTANCE.getTagTargetItem(tagKey)
+            if (target != null) {
+                return item(target, count)
+            }
+        }
+        return HTItemResultImpl(HTKeyOrTagHelper.INSTANCE.create(tagKey), count, DataComponentPatch.EMPTY)
+    }
 
     override fun fluid(id: ResourceLocation, amount: Int, component: DataComponentPatch): HTFluidResult =
         HTFluidResultImpl(HTKeyOrTagHelper.INSTANCE.create(Registries.FLUID, id), amount, component)

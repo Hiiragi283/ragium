@@ -11,7 +11,7 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -505,9 +505,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
 
         val nonSilkTouch = "Can be harvested without Silk Touch."
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ), nonSilkTouch)
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL), "Only passable with Players.", "And $nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.QUARTZ), nonSilkTouch)
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.SOUL), "Only passable with Players.", "And $nonSilkTouch")
 
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")

@@ -54,13 +54,13 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
         }
     }
 
-    var currentCapacity: Int = this.getCapacity()
+    var currentCapacity: Int = capacity
         private set
     var currentEnergyPerTick: Int = this.baseEnergyPerTick
 
     override fun getCapacity(): Int = currentCapacity
 
-    fun getCapacity(capacity: Int) {
+    fun setCapacity(capacity: Int) {
         this.currentCapacity = capacity
         setAmount(getAmount())
     }

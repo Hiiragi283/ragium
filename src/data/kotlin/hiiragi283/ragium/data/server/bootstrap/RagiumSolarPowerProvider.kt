@@ -2,13 +2,13 @@ package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.core.RegistrySetBuilder
@@ -22,8 +22,8 @@ object RagiumSolarPowerProvider : RegistrySetBuilder.RegistryBootstrap<HTSolarPo
     override fun run(context: BootstrapContext<HTSolarPower>) {
         register(context, Blocks.BEACON, 4f)
         register(context, Blocks.SHROOMLIGHT, 1f)
-        register(context, HTStorageMaterialVariant, HTVanillaMaterialType.GLOWSTONE, 1f)
-        register(context, HTStorageMaterialVariant, RagiumMaterialType.GILDIUM, 4f)
+        register(context, CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.GLOWSTONE, 1f)
+        register(context, CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.GILDIUM, 4f)
         register(context, Tags.Blocks.CLUSTERS, 2f)
     }
 
@@ -50,12 +50,12 @@ object RagiumSolarPowerProvider : RegistrySetBuilder.RegistryBootstrap<HTSolarPo
     @JvmStatic
     private fun register(
         context: BootstrapContext<HTSolarPower>,
-        variant: HTMaterialVariant.BlockTag,
-        material: HTMaterialType,
+        prefix: HTMaterialPrefix,
+        material: HTMaterialLike,
         power: Float,
         builderAction: LocationPredicate.Builder.() -> Unit = {},
     ) {
-        register(context, variant.blockTagKey(material), power, builderAction)
+        register(context, prefix.blockTagKey(material), power, builderAction)
     }
 
     @JvmStatic
