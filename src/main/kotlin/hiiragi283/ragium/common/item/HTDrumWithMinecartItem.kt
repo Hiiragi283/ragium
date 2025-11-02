@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.common.item.base.HTMinecartItem
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack

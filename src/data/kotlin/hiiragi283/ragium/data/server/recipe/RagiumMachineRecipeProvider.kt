@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -132,7 +132,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun basicMachine(
         machine: ItemLike,
         side: Ingredient,
-        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(CommonMaterialKeys.BASIC),
+        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(HTCircuitTier.BASIC),
     ) {
         HTShapedRecipeBuilder
             .misc(machine)
@@ -151,7 +151,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun advMachine(
         machine: ItemLike,
         side: Ingredient,
-        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(CommonMaterialKeys.ADVANCED),
+        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(HTCircuitTier.ADVANCED),
     ) {
         HTShapedRecipeBuilder
             .misc(machine)
@@ -170,7 +170,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun eliteMachine(
         machine: ItemLike,
         side: Ingredient,
-        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(CommonMaterialKeys.ELITE),
+        core: Ingredient = CommonMaterialPrefixes.CIRCUIT.toIngredient(HTCircuitTier.ELITE),
     ) {
         HTShapedRecipeBuilder
             .misc(machine)

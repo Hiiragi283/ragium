@@ -3,18 +3,6 @@ package hiiragi283.ragium.common.material
 import hiiragi283.ragium.api.material.HTMaterialKey
 
 object CommonMaterialKeys {
-    @JvmStatic
-    val BASIC: HTMaterialKey = HTMaterialKey.of("basic")
-
-    @JvmStatic
-    val ADVANCED: HTMaterialKey = HTMaterialKey.of("advanced")
-
-    @JvmStatic
-    val ELITE: HTMaterialKey = HTMaterialKey.of("elite")
-
-    @JvmStatic
-    val ULTIMATE: HTMaterialKey = HTMaterialKey.of("ultimate")
-
     //    Common Metal    //
 
     @JvmField

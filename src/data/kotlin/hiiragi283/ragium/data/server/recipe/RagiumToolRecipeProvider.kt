@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
-import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
@@ -43,7 +43,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, CommonMaterialKeys.BASIC)
+            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
             .save(output)
 
         HTShapedRecipeBuilder
