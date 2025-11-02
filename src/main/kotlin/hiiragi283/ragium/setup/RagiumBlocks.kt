@@ -32,6 +32,7 @@ import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -197,7 +198,7 @@ object RagiumBlocks {
             RagiumMaterialKeys.MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
             RagiumMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
             // Misc
-            RagiumMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
+            CommonMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
             this[CommonMaterialPrefixes.STORAGE_BLOCK, key] =
                 REGISTER.registerSimple("${key.name}_block", properties)

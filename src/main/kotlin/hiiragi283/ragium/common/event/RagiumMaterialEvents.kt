@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialDefinitionEvent
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.addDefaultPrefix
 import hiiragi283.ragium.api.material.addName
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -100,20 +99,28 @@ object RagiumMaterialEvents {
 
     @JvmStatic
     private fun common(event: HTMaterialDefinitionEvent) {
-        for (key: HTMaterialKey in CommonMaterialKeys.METALS.values) {
-            event.modify(key) {
-                addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+        event.modify(CommonMaterialKeys.Metals.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
+        event.modify(CommonMaterialKeys.Alloys.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
+        event.modify(CommonMaterialKeys.Gems.entries) { gems ->
+            addDefaultPrefix(CommonMaterialPrefixes.GEM)
+            when (gems) {
+                CommonMaterialKeys.Gems.CINNABAR -> addName("Cinnabar", "辰砂")
+                CommonMaterialKeys.Gems.FLUORITE -> {}
+                CommonMaterialKeys.Gems.PERIDOT -> {}
+                CommonMaterialKeys.Gems.RUBY -> {}
+                CommonMaterialKeys.Gems.SALTPETER -> addName("Saltpeter", "硝石")
+                CommonMaterialKeys.Gems.SAPPHIRE -> {}
+                CommonMaterialKeys.Gems.SULFUR -> addName("Sulfur", "硫黄")
             }
         }
-        for (key: HTMaterialKey in CommonMaterialKeys.ALLOYS.values) {
-            event.modify(key) {
-                addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            }
+
+        event.modify(CommonMaterialKeys.COAL_COKE) {
+            addDefaultPrefix(CommonMaterialPrefixes.FUEL)
+            addName("Coal Coke", "石炭コークス")
         }
-        for (key: HTMaterialKey in CommonMaterialKeys.GEMS.values) {
-            event.modify(key) {
-                addDefaultPrefix(CommonMaterialPrefixes.GEM)
-            }
+        event.modify(CommonMaterialKeys.PLASTIC) {
+            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
+            addName("Plastic", "プラスチック")
         }
     }
 
@@ -123,18 +130,6 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.RAGINITE) {
             addDefaultPrefix(CommonMaterialPrefixes.DUST)
             addName("Raginite", "ラギナイト")
-        }
-        event.modify(RagiumMaterialKeys.CINNABAR) {
-            addDefaultPrefix(CommonMaterialPrefixes.GEM)
-            addName("Cinnabar", "辰砂")
-        }
-        event.modify(RagiumMaterialKeys.SALTPETER) {
-            addDefaultPrefix(CommonMaterialPrefixes.DUST)
-            addName("Saltpeter", "硝石")
-        }
-        event.modify(RagiumMaterialKeys.SULFUR) {
-            addDefaultPrefix(CommonMaterialPrefixes.DUST)
-            addName("Sulfur", "硫黄")
         }
         // Gem
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
@@ -199,14 +194,6 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.BAMBOO_CHARCOAL) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Bamboo Charcoal", "竹炭")
-        }
-        event.modify(RagiumMaterialKeys.COAL_COKE) {
-            addDefaultPrefix(CommonMaterialPrefixes.FUEL)
-            addName("Coal Coke", "石炭コークス")
-        }
-        event.modify(RagiumMaterialKeys.PLASTIC) {
-            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
-            addName("Plastic", "プラスチック")
         }
         RagiumAPI.LOGGER.info("Modified Ragium materials!")
     }

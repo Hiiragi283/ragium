@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.setup.CommonMaterialPrefixes
@@ -40,24 +40,25 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .extracting(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.REDSTONE),
-                resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CINNABAR, 3),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR, 3),
             ).saveSuffixed(output, "_from_redstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SALTPETER),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemToObjRecipeBuilder
             .extracting(
                 itemCreator.fromTagKey(Tags.Items.GUNPOWDERS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.SULFUR),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
 
         dyes()
     }
 
+    @Suppress("DEPRECATION")
     @JvmStatic
     private fun dyes() {
         // Charcoal -> Brown

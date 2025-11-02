@@ -1,114 +1,73 @@
 package hiiragi283.ragium.common.material
 
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialLike
 
 object CommonMaterialKeys {
-    //    Common Metal    //
-
-    @JvmField
-    val METALS: Map<String, HTMaterialKey> = listOf(
+    enum class Metals : HTMaterialLike {
         // 3rd
-        "aluminum",
+        ALUMINUM,
+
         // 4th
-        "titanium",
-        "chrome",
-        "chromium",
-        "manganese",
-        "cobalt",
-        "nickel",
-        "zinc",
+        TITANIUM,
+        CHROME,
+        CHROMIUM,
+        MANGANESE,
+        COBALT,
+        NICKEL,
+        ZINC,
+
         // 5th
-        "palladium",
-        "silver",
-        "tin",
-        "antimony",
+        PALLADIUM,
+        SILVER,
+        TIN,
+        ANTIMONY,
+
         // 6th
-        "tungsten",
-        "osmium",
-        "iridium",
-        "platinum",
-        "lead",
+        TUNGSTEN,
+        OSMIUM,
+        IRIDIUM,
+        PLATINUM,
+        LEAD,
+
         // 7th
-        "uranium",
-        // Draconic Evolution
-        "draconium",
-        "draconium_awakened",
-        // Just Dire Things
-        "ferricore",
-        "blazegold",
-        "eclipsealloy",
-        // Occultism
-        "iesnium",
-        // Replication
-        "replica",
-        // Twilight Forest
-        "ironwood",
-        "wrought_iron",
-        "knightmetal",
-    ).associateWith(HTMaterialKey::of)
+        URANIUM,
+        ;
+
+        override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(name.lowercase())
+    }
+
+    enum class Alloys : HTMaterialLike {
+        STEEL,
+        INVAR,
+        ELECTRUM,
+        BRONZE,
+        BRASS,
+        ENDERIUM,
+        LUMIUM,
+        SIGNALUM,
+        CONSTANTAN,
+        ;
+
+        override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(name.lowercase())
+    }
+
+    enum class Gems : HTMaterialLike {
+        CINNABAR,
+        FLUORITE,
+        PERIDOT,
+        RUBY,
+        SALTPETER,
+        SAPPHIRE,
+        SULFUR,
+        ;
+
+        override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(name.lowercase())
+    }
 
     @JvmStatic
-    fun getMetal(key: String): HTMaterialKey = METALS[key] ?: error("Unknown material: $key")
-
-    @JvmField
-    val ALLOYS: Map<String, HTMaterialKey> = listOf(
-        // Alloys
-        "steel",
-        "invar",
-        "electrum",
-        "bronze",
-        "brass",
-        "enderium",
-        "lumium",
-        "signalum",
-        "constantan",
-        // Immersive Engineering,
-        "hop_graphite",
-        // Mekanism
-        "refined_obsidian",
-        "refined_glowstone",
-        // Oritech
-        "adamant",
-        "duratium",
-        "energite",
-        "prometheum",
-        // Twilight Forest
-        "steeleaf",
-        "fiery",
-    ).associateWith(HTMaterialKey::of)
+    val COAL_COKE: HTMaterialKey = HTMaterialKey.of("coal_coke")
 
     @JvmStatic
-    fun getAlloy(key: String): HTMaterialKey = ALLOYS[key] ?: error("Unknown material: $key")
-
-    //    Common Gem    //
-
-    @JvmField
-    val GEMS: Map<String, HTMaterialKey> = listOf(
-        "fluorite",
-        "peridot",
-        "ruby",
-        "sapphire",
-        // AA,
-        "black_quartz",
-        // AE2
-        "certus_quartz",
-        "fluix",
-        // Ars Nouveau
-        "source",
-        // EvilCraft
-        "dark_gem",
-        "dark_power",
-        // Forbidden
-        "arcane_crystal",
-        "corrupted_arcane_crystal",
-        // Magitech,
-        "tourmaline",
-        // Oritech
-        "fluxite",
-        // Twilight Forest
-        "carminite",
-    ).associateWith(HTMaterialKey::of)
-
-    @JvmStatic
-    fun getGem(key: String): HTMaterialKey = GEMS[key] ?: error("Unknown material: $key")
+    val PLASTIC: HTMaterialKey = HTMaterialKey.of("plastic")
 }

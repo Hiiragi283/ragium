@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -32,8 +32,8 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             .save(output)
         // Fluix Crystal
         combineWithRedstone(
-            resultHelper.item(CommonMaterialPrefixes.GEM, CommonMaterialKeys.getGem("fluix"), 2),
-            itemCreator.gemOrDust(CommonMaterialKeys.getGem("certus_quartz")),
+            resultHelper.item(CommonMaterialPrefixes.GEM, ModMaterialKeys.Gems.FLUIX, 2),
+            itemCreator.gemOrDust(ModMaterialKeys.Gems.CERTUS_QUARTZ),
             itemCreator.gemOrDust(VanillaMaterialKeys.QUARTZ),
         )
         // Sky Stone

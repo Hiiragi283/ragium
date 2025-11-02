@@ -39,16 +39,4 @@ class HTItemIngredientCreatorImpl(getter: HolderGetter<Item>) :
         CommonMaterialPrefixes.INGOT,
         count = count,
     )
-
-    override fun gemOrDust(name: String, count: Int): HTItemIngredient = fromTagKeys(
-        CommonMaterialPrefixes.DUST.itemTagKey(name),
-        CommonMaterialPrefixes.GEM.itemTagKey(name),
-        amount = count,
-    )
-
-    override fun ingotOrDust(name: String, count: Int): HTItemIngredient = fromTagKeys(
-        CommonMaterialPrefixes.DUST.itemTagKey(name),
-        CommonMaterialPrefixes.INGOT.itemTagKey(name),
-        amount = count,
-    )
 }

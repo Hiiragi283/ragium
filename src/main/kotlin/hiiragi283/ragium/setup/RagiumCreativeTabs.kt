@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -120,7 +121,7 @@ object RagiumCreativeTabs {
 
         output.accept(RagiumItems.POLYMER_RESIN)
         output.accept(RagiumItems.POLYMER_CATALYST)
-        output.accept(RagiumItems.getPlate(RagiumMaterialKeys.PLASTIC))
+        output.accept(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
         output.accept(RagiumItems.SYNTHETIC_FIBER)
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 

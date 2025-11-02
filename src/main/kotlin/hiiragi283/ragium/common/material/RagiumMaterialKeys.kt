@@ -7,15 +7,6 @@ object RagiumMaterialKeys {
     @JvmStatic
     val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
 
-    @JvmStatic
-    val CINNABAR: HTMaterialKey = HTMaterialKey.of("cinnabar")
-
-    @JvmStatic
-    val SALTPETER: HTMaterialKey = HTMaterialKey.of("saltpeter")
-
-    @JvmStatic
-    val SULFUR: HTMaterialKey = HTMaterialKey.of("sulfur")
-
     // Gem
     @JvmStatic
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
@@ -64,10 +55,4 @@ object RagiumMaterialKeys {
     // Other
     @JvmStatic
     val BAMBOO_CHARCOAL: HTMaterialKey = HTMaterialKey.of("bamboo_charcoal")
-
-    @JvmStatic
-    val COAL_COKE: HTMaterialKey = HTMaterialKey.of("coal_coke")
-
-    @JvmStatic
-    val PLASTIC: HTMaterialKey = HTMaterialKey.of("plastic")
 }
