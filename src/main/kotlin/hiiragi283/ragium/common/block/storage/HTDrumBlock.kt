@@ -70,6 +70,6 @@ class HTDrumBlock(type: HTEntityBlockType, properties: Properties) : HTTypedEnti
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        addFluidTooltip(HTFluidCapabilities.getCapabilityStacks(stack), tooltips::add, flag)
+        addFluidTooltip(HTFluidCapabilities.getFluidViews(stack), tooltips::add, flag)
     }
 }

@@ -15,11 +15,11 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
     override fun isBarVisible(stack: ItemStack): Boolean = HTFluidCapabilities.hasCapability(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getCapabilityView(stack, 0) ?: return 0
+        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
         return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 
-    override fun getBarColor(stack: ItemStack): Int = HTFluidCapabilities.getCapabilityStack(stack, 0)?.getTintColor() ?: 0
+    override fun getBarColor(stack: ItemStack): Int = HTFluidCapabilities.getFluidView(stack, 0)?.getStack()?.getTintColor() ?: 0
 
     override fun appendHoverText(
         stack: ItemStack,
@@ -27,6 +27,6 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        addFluidTooltip(HTFluidCapabilities.getCapabilityStacks(stack), tooltips::add, flag)
+        addFluidTooltip(HTFluidCapabilities.getFluidViews(stack), tooltips::add, flag)
     }
 }
