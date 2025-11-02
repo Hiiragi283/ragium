@@ -8,8 +8,6 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.DataResultException
-import hiiragi283.ragium.api.function.andThen
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -211,9 +209,9 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     }
 
     // Encode & Decode
-    fun <T : Any> encode(ops: DynamicOps<T>, input: V): Result<T> = codec.encodeStart(ops, input).toResult()
+    fun <T : Any> encode(ops: DynamicOps<T>, input: V): DataResult<T> = codec.encodeStart(ops, input)
 
-    fun <T : Any> decode(ops: DynamicOps<T>, input: T): Result<V> = codec.parse(ops, input).toResult()
+    fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<V> = codec.parse(ops, input)
 
     fun encode(buf: B, input: V) {
         runCatching {
@@ -346,6 +344,3 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
 
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toOptional(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
-
-private fun <T : Any> DataResult<T>.toResult(exceptionSupplier: (String) -> Exception = ::DataResultException): Result<T> =
-    mapOrElse(Result.Companion::success, DataResult.Error<T>::message.andThen(exceptionSupplier).andThen(Result.Companion::failure))
