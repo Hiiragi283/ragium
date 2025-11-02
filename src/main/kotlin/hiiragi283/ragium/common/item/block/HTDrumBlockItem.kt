@@ -17,12 +17,12 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<
     override fun isBarVisible(stack: ItemStack): Boolean = HTFluidCapabilities.hasCapability(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getCapabilityView(stack, 0) ?: return 0
+        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
         return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int {
-        val stack: ImmutableFluidStack = HTFluidCapabilities.getCapabilityStack(stack, 0) ?: return 0
+        val stack: ImmutableFluidStack = HTFluidCapabilities.getFluidView(stack, 0)?.getStack() ?: return 0
         return stack.getTintColor()
     }
 }

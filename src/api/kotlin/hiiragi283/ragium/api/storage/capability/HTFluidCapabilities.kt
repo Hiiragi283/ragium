@@ -1,23 +1,28 @@
 package hiiragi283.ragium.api.storage.capability
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.Entity
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
+import net.neoforged.neoforge.common.extensions.IItemStackExtension
+import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
-object HTFluidCapabilities : HTStackViewCapability<IFluidHandler, IFluidHandlerItem, ImmutableFluidStack> {
+object HTFluidCapabilities : HTMultiCapability<IFluidHandler, IFluidHandlerItem> {
     override val block: BlockCapability<IFluidHandler, Direction?> = Capabilities.FluidHandler.BLOCK
     override val entity: EntityCapability<IFluidHandler, Direction?> = Capabilities.FluidHandler.ENTITY
     override val item: ItemCapability<IFluidHandlerItem, Void?> = Capabilities.FluidHandler.ITEM
 
-    override fun apply(handler: IFluidHandler, context: Direction?): List<HTStackView<ImmutableFluidStack>> = when (handler) {
+    fun wrapHandler(handler: IFluidHandler, context: Direction?): List<HTStackView<ImmutableFluidStack>> = when (handler) {
         is HTFluidHandler -> handler.getFluidTanks(context)
 
         else -> handler.tankRange.map { tank: Int ->
@@ -28,4 +33,38 @@ object HTFluidCapabilities : HTStackViewCapability<IFluidHandler, IFluidHandlerI
             }
         }
     }
+
+    //    Block    //
+
+    fun getFluidViews(level: ILevelExtension, pos: BlockPos, side: Direction?): List<HTStackView<ImmutableFluidStack>> =
+        getCapability(level, pos, side)?.let { wrapHandler(it, side) } ?: listOf()
+
+    fun getFluidView(
+        level: ILevelExtension,
+        pos: BlockPos,
+        side: Direction?,
+        tank: Int,
+    ): HTStackView<ImmutableFluidStack>? = getFluidViews(level, pos, side).getOrNull(tank)
+
+    //    Entity    //
+
+    fun getFluidViews(entity: Entity, side: Direction?): List<HTStackView<ImmutableFluidStack>> =
+        getCapability(entity, side)?.let { wrapHandler(it, side) } ?: listOf()
+
+    fun getFluidView(entity: Entity, side: Direction?, tank: Int): HTStackView<ImmutableFluidStack>? =
+        getFluidViews(entity, side).getOrNull(tank)
+
+    //    Item    //
+
+    fun getFluidViews(stack: IItemStackExtension): List<HTStackView<ImmutableFluidStack>> =
+        getCapability(stack)?.let { wrapHandler(it, null) } ?: listOf()
+
+    fun getFluidView(stack: IItemStackExtension, tank: Int): HTStackView<ImmutableFluidStack>? = getFluidViews(stack).getOrNull(tank)
+
+    // HTItemStorageStack
+
+    fun getFluidViews(stack: ImmutableItemStack?): List<HTStackView<ImmutableFluidStack>> =
+        getCapability(stack)?.let { wrapHandler(it, null) } ?: listOf()
+
+    fun getFluidView(stack: ImmutableItemStack?, tank: Int): HTStackView<ImmutableFluidStack>? = getFluidViews(stack).getOrNull(tank)
 }
