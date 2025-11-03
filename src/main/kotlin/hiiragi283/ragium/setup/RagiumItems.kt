@@ -43,7 +43,6 @@ import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.base.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
-import hiiragi283.ragium.common.item.tool.HTHammerItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -62,6 +61,7 @@ import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.VanillaEquipmentMaterial
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -73,7 +73,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -364,19 +363,19 @@ object RagiumItems {
         }
 
         // Hammer
-        mapOf(
-            VanillaMaterialKeys.IRON to Tiers.IRON,
-            VanillaMaterialKeys.DIAMOND to Tiers.DIAMOND,
-            VanillaMaterialKeys.NETHERITE to Tiers.NETHERITE,
-        ).forEach { (key: HTMaterialKey, tier: Tiers) ->
-            this[HTHammerToolVariant, key] = REGISTER.registerItemWith("${key.name}_hammer", tier, ::HTHammerItem)
-        }
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.IRON)
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.DIAMOND)
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.NETHERITE)
 
         consumer(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
         consumer(HTHammerToolVariant, RagiumEquipmentMaterials.AZURE_STEEL)
         consumer(HTHammerToolVariant, RagiumEquipmentMaterials.DEEP_STEEL)
 
-        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItem("ragi_crystal_hammer", ::HTDestructionHammerItem)
+        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
+            "ragi_crystal_hammer",
+            RagiumEquipmentMaterials.RAGI_CRYSTAL,
+            HTDestructionHammerItem::create,
+        )
         // Tools
         for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
             // Azure
