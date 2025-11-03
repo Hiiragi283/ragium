@@ -1,6 +1,12 @@
 package hiiragi283.ragium.common.material
 
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 
 object VanillaMaterialKeys {
     // Gem
@@ -56,4 +62,63 @@ object VanillaMaterialKeys {
 
     @JvmStatic
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
+
+    //    Item    //
+
+    val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTMaterialKey, Item> = buildTable {
+        // Iron
+        this[HTArmorVariant.HELMET, IRON] = Items.IRON_HELMET
+        this[HTArmorVariant.CHESTPLATE, IRON] = Items.IRON_CHESTPLATE
+        this[HTArmorVariant.LEGGINGS, IRON] = Items.IRON_LEGGINGS
+        this[HTArmorVariant.BOOTS, IRON] = Items.IRON_BOOTS
+        // Gold
+        this[HTArmorVariant.HELMET, GOLD] = Items.GOLDEN_HELMET
+        this[HTArmorVariant.CHESTPLATE, GOLD] = Items.GOLDEN_CHESTPLATE
+        this[HTArmorVariant.LEGGINGS, GOLD] = Items.GOLDEN_LEGGINGS
+        this[HTArmorVariant.BOOTS, GOLD] = Items.GOLDEN_BOOTS
+        // Diamond
+        this[HTArmorVariant.HELMET, DIAMOND] = Items.DIAMOND_HELMET
+        this[HTArmorVariant.CHESTPLATE, DIAMOND] = Items.DIAMOND_CHESTPLATE
+        this[HTArmorVariant.LEGGINGS, DIAMOND] = Items.DIAMOND_LEGGINGS
+        this[HTArmorVariant.BOOTS, DIAMOND] = Items.DIAMOND_BOOTS
+        // Netherite
+        this[HTArmorVariant.HELMET, NETHERITE] = Items.NETHERITE_HELMET
+        this[HTArmorVariant.CHESTPLATE, NETHERITE] = Items.NETHERITE_CHESTPLATE
+        this[HTArmorVariant.LEGGINGS, NETHERITE] = Items.NETHERITE_LEGGINGS
+        this[HTArmorVariant.BOOTS, NETHERITE] = Items.NETHERITE_BOOTS
+    }
+
+    val TOOL_TABLE: ImmutableTable<HTVanillaToolVariant, HTMaterialKey, Item> = buildTable {
+        // Wooden
+        this[HTVanillaToolVariant.SHOVEL, WOOD] = Items.WOODEN_SHOVEL
+        this[HTVanillaToolVariant.PICKAXE, WOOD] = Items.WOODEN_PICKAXE
+        this[HTVanillaToolVariant.AXE, WOOD] = Items.WOODEN_AXE
+        this[HTVanillaToolVariant.HOE, WOOD] = Items.WOODEN_HOE
+        this[HTVanillaToolVariant.SWORD, WOOD] = Items.WOODEN_SWORD
+        // Stone
+        // Iron
+        this[HTVanillaToolVariant.SHOVEL, IRON] = Items.IRON_SHOVEL
+        this[HTVanillaToolVariant.PICKAXE, IRON] = Items.IRON_PICKAXE
+        this[HTVanillaToolVariant.AXE, IRON] = Items.IRON_AXE
+        this[HTVanillaToolVariant.HOE, IRON] = Items.IRON_HOE
+        this[HTVanillaToolVariant.SWORD, IRON] = Items.IRON_SWORD
+        // Golden
+        this[HTVanillaToolVariant.SHOVEL, GOLD] = Items.GOLDEN_SHOVEL
+        this[HTVanillaToolVariant.PICKAXE, GOLD] = Items.GOLDEN_PICKAXE
+        this[HTVanillaToolVariant.AXE, GOLD] = Items.GOLDEN_AXE
+        this[HTVanillaToolVariant.HOE, GOLD] = Items.GOLDEN_HOE
+        this[HTVanillaToolVariant.SWORD, GOLD] = Items.GOLDEN_SWORD
+        // Diamond
+        this[HTVanillaToolVariant.SHOVEL, DIAMOND] = Items.DIAMOND_SHOVEL
+        this[HTVanillaToolVariant.PICKAXE, DIAMOND] = Items.DIAMOND_PICKAXE
+        this[HTVanillaToolVariant.AXE, DIAMOND] = Items.DIAMOND_AXE
+        this[HTVanillaToolVariant.HOE, DIAMOND] = Items.DIAMOND_HOE
+        this[HTVanillaToolVariant.SWORD, DIAMOND] = Items.DIAMOND_SWORD
+        // Netherite
+        this[HTVanillaToolVariant.SHOVEL, NETHERITE] = Items.NETHERITE_SHOVEL
+        this[HTVanillaToolVariant.PICKAXE, NETHERITE] = Items.NETHERITE_PICKAXE
+        this[HTVanillaToolVariant.AXE, NETHERITE] = Items.NETHERITE_AXE
+        this[HTVanillaToolVariant.HOE, NETHERITE] = Items.NETHERITE_HOE
+        this[HTVanillaToolVariant.SWORD, NETHERITE] = Items.NETHERITE_SWORD
+    }
 }

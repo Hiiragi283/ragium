@@ -25,6 +25,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -60,6 +61,7 @@ import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.VanillaEquipmentMaterial
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -71,8 +73,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -256,12 +256,12 @@ object RagiumItems {
 
     @JvmField
     val AZURE_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
-        variant.registerItem(REGISTER, RagiumMaterialKeys.AZURE_STEEL, RagiumArmorMaterials.AZURE_STEEL, 20)
+        variant.registerItem(REGISTER, RagiumEquipmentMaterials.AZURE_STEEL)
     }
 
     @JvmField
     val DEEP_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
-        variant.registerItem(REGISTER, RagiumMaterialKeys.DEEP_STEEL, RagiumArmorMaterials.DEEP_STEEL, 20)
+        variant.registerItem(REGISTER, RagiumEquipmentMaterials.DEEP_STEEL)
     }
 
     @JvmStatic
@@ -358,27 +358,30 @@ object RagiumItems {
     val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
     val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
-        val consumer: (HTToolVariant, HTMaterialKey, Tier) -> Unit = { variant: HTToolVariant, key: HTMaterialKey, tier: Tier ->
-            this[variant, key] = variant.registerItem(REGISTER, key, tier)
+        val consumer: (HTToolVariant, HTEquipmentMaterial) -> Unit = { variant: HTToolVariant, material: HTEquipmentMaterial ->
+            this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
         }
 
         // Hammer
-        consumer(HTHammerToolVariant, VanillaMaterialKeys.IRON, Tiers.IRON)
-        consumer(HTHammerToolVariant, VanillaMaterialKeys.DIAMOND, Tiers.DIAMOND)
-        consumer(HTHammerToolVariant, VanillaMaterialKeys.NETHERITE, Tiers.NETHERITE)
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.IRON)
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.DIAMOND)
+        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.NETHERITE)
 
-        consumer(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY, RagiumToolTiers.RAGI_ALLOY)
-        consumer(HTHammerToolVariant, RagiumMaterialKeys.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
-        consumer(HTHammerToolVariant, RagiumMaterialKeys.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
+        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
+        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.AZURE_STEEL)
+        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.DEEP_STEEL)
 
-        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] =
-            REGISTER.registerItem("ragi_crystal_hammer", ::HTDestructionHammerItem)
+        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
+            "ragi_crystal_hammer",
+            RagiumEquipmentMaterials.RAGI_CRYSTAL,
+            HTDestructionHammerItem::create,
+        )
         // Tools
         for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
             // Azure
-            consumer(variant, RagiumMaterialKeys.AZURE_STEEL, RagiumToolTiers.AZURE_STEEL)
+            consumer(variant, RagiumEquipmentMaterials.AZURE_STEEL)
             // Deep
-            consumer(variant, RagiumMaterialKeys.DEEP_STEEL, RagiumToolTiers.DEEP_STEEL)
+            consumer(variant, RagiumEquipmentMaterials.DEEP_STEEL)
         }
     }
 

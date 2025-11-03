@@ -172,13 +172,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         // Armor
         val beforeKey: HTMaterialKey = beforeMaterial.asMaterialKey()
         for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
-            val beforeArmor: ItemLike = HTArmorVariant.ARMOR_TABLE[variant, beforeKey] ?: continue
+            val beforeArmor: ItemLike = VanillaMaterialKeys.ARMOR_TABLE[variant, beforeKey] ?: continue
             upgradeFactory(armor, beforeArmor)
         }
         // Tool
         for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material.asMaterialKey())) {
             val beforeTool: ItemLike = when (variant) {
-                is HTVanillaToolVariant -> HTVanillaToolVariant.TOOL_TABLE[variant, beforeKey]
+                is HTVanillaToolVariant -> VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey]
                 is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeKey]
                 is HTKnifeToolVariant -> RagiumDelightAddon.KNIFE_MAP[beforeKey]
                 else -> null

@@ -6,10 +6,10 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
+import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
@@ -288,7 +288,7 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        for (holder: HTDeferredHolder<Block, *> in RagiumBlocks.REGISTER.firstEntries) {
+        for (holder: HTDeferredOnlyBlock<*> in RagiumBlocks.REGISTER.blockEntries) {
             val block: Block? = holder.get()
             if (block is HTTypedEntityBlock<*>) {
                 event.modify(block.getBlockEntityType().get(), block)
