@@ -21,6 +21,6 @@
     }
   ],
 	"ignoreDeps": [
-		"com.mojang:minecraft",
+		"com.mojang:minecraft"
 	]
 }
