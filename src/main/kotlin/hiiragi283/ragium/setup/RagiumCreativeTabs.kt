@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDeferredRegister
+import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.variant.HTVariantKey
@@ -44,13 +44,13 @@ object RagiumCreativeTabs {
     }
 
     @JvmField
-    val BLOCKS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
+    val BLOCKS: HTSimpleDeferredHolder<CreativeModeTab> =
         REGISTER.register("blocks") { id: ResourceLocation ->
             CreativeModeTab
                 .builder()
                 .title(Component.translatable(id.toDescriptionKey("itemGroup")))
                 .icon { RagiumBlocks.PULVERIZER.toStack() }
-                .displayItems(RagiumBlocks.REGISTER.firstEntries)
+                .displayItems(RagiumBlocks.REGISTER.blockEntries)
                 .build()
         }
 
@@ -92,7 +92,7 @@ object RagiumCreativeTabs {
     }*/
 
     @JvmField
-    val INGREDIENTS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> = register(
+    val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
         "ingredients",
         "ragi_alloy_ingot",
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
@@ -135,7 +135,7 @@ object RagiumCreativeTabs {
     }
 
     @JvmField
-    val ITEMS: HTDeferredHolder<CreativeModeTab, CreativeModeTab> =
+    val ITEMS: HTSimpleDeferredHolder<CreativeModeTab> =
         register(
             "items",
             "ragi_ticket",
@@ -208,7 +208,7 @@ object RagiumCreativeTabs {
         name: String,
         icon: String,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
             .title(Component.translatable(id.toDescriptionKey("itemGroup")))

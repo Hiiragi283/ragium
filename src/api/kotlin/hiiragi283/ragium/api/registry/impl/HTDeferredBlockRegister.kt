@@ -13,8 +13,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 /**
  * @see mekanism.common.registration.impl.BlockDeferredRegister
  */
-class HTDeferredBlockRegister(namespace: String) :
-    HTDoubleDeferredRegister<Block, Item>(HTDeferredOnlyBlockRegister(namespace), HTDeferredItemRegister(namespace)) {
+class HTDeferredBlockRegister(
+    override val firstRegister: HTDeferredOnlyBlockRegister,
+    override val secondRegister: HTDeferredItemRegister,
+) : HTDoubleDeferredRegister<Block, Item>(firstRegister, secondRegister) {
+    constructor(namespace: String) : this(HTDeferredOnlyBlockRegister(namespace), HTDeferredItemRegister(namespace))
+
     fun registerSimple(
         name: String,
         blockProp: BlockBehaviour.Properties,
@@ -78,4 +82,7 @@ class HTDeferredBlockRegister(namespace: String) :
         { block: HTDeferredHolder<Block, BLOCK> -> itemFactory(block.get(), itemProp) },
         ::HTDeferredBlock,
     )
+
+    val blockEntries: Collection<HTDeferredOnlyBlock<*>> get() = firstRegister.entries
+    val itemEntries: Collection<HTDeferredItem<*>> get() = secondRegister.entries
 }

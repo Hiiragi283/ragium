@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -19,8 +20,8 @@ import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumDelightFoods
+import hiiragi283.ragium.setup.RagiumEquipmentMaterials
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.enchantment.Enchantments
@@ -28,7 +29,6 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.common.SimpleTier
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import vectorwing.farmersdelight.common.block.FeastBlock
@@ -60,12 +60,13 @@ object RagiumDelightAddon : RagiumAddon {
 
     // Knives
     @JvmField
-    val KNIFE_MAP: Map<HTMaterialKey, HTDeferredItem<*>> = mapOf(
-        RagiumMaterialKeys.RAGI_ALLOY to RagiumToolTiers.RAGI_ALLOY,
-        RagiumMaterialKeys.RAGI_CRYSTAL to RagiumToolTiers.RAGI_CRYSTAL,
-    ).mapValues { (key: HTMaterialKey, tier: SimpleTier) ->
-        HTKnifeToolVariant.registerItem(RagiumFoodAddon.ITEM_REGISTER, key, tier)
-    }
+    val KNIFE_MAP: Map<HTMaterialKey, HTDeferredItem<*>> = listOf(
+        RagiumEquipmentMaterials.RAGI_ALLOY,
+        RagiumEquipmentMaterials.RAGI_CRYSTAL,
+    ).associateBy(HTEquipmentMaterial::asMaterialKey)
+        .mapValues { (key: HTMaterialKey, material: HTEquipmentMaterial) ->
+            HTKnifeToolVariant.registerItem(RagiumFoodAddon.ITEM_REGISTER, material)
+        }
 
     @JvmStatic
     fun getKnife(material: HTMaterialLike): HTItemHolderLike = when (val key: HTMaterialKey = material.asMaterialKey()) {

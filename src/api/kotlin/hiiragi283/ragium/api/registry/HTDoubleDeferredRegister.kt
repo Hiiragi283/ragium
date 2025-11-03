@@ -9,8 +9,8 @@ import java.util.function.Supplier
  * @see mekanism.common.registration.DoubleDeferredRegister
  */
 open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constructor(
-    protected val firstRegister: HTDeferredRegister<FIRST>,
-    protected val secondRegister: HTDeferredRegister<SECOND>,
+    protected open val firstRegister: HTDeferredRegister<FIRST>,
+    protected open val secondRegister: HTDeferredRegister<SECOND>,
 ) {
     fun <F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> registerEach(
         name: String,
@@ -47,9 +47,6 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
         firstRegister.register(bus)
         secondRegister.register(bus)
     }
-
-    val firstEntries: Collection<HTDeferredHolder<FIRST, out FIRST>> get() = firstRegister.entries
-    val secondEntries: Collection<HTDeferredHolder<SECOND, out SECOND>> get() = secondRegister.entries
 
     fun addFirstAlias(from: String, to: String) {
         firstRegister.addAlias(firstRegister.createId(from), firstRegister.createId(to))

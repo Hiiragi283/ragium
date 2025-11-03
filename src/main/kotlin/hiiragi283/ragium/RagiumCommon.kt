@@ -83,7 +83,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)
 
-        RagiumArmorMaterials.REGISTER.register(eventBus)
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
@@ -128,6 +127,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun onRegister(event: RegisterEvent) {
+        event.register(Registries.ARMOR_MATERIAL, RagiumArmorMaterials::register)
+
         event.register(Registries.RECIPE_TYPE) { helper ->
             register(helper, RagiumRecipeTypes.SAWMILL)
             // Machine

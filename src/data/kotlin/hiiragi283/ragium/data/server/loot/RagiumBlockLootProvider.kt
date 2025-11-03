@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -40,9 +40,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     override fun generate() {
         RagiumBlocks.REGISTER
-            .firstEntries
+            .blockEntries
             .asSequence()
-            .map(HTDeferredHolder<Block, out Block>::get)
+            .map(HTDeferredOnlyBlock<*>::get)
             .forEach { block: Block ->
                 add(
                     block,

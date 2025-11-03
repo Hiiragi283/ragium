@@ -4,6 +4,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredHolder
 
+typealias HTSimpleDeferredHolder<R> = HTDeferredHolder<R, R>
+
 /**
  * @see mekanism.common.registration.MekanismDeferredHolder
  */
