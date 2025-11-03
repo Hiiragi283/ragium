@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.getStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.util.HTContentListener
@@ -21,15 +21,12 @@ import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
 import hiiragi283.ragium.common.util.HTEnergyHelper
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.capabilities.BlockCapabilityCache
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(blockHolder, pos, state) {
@@ -44,8 +41,6 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
             Simple(itemValueGetter, fuelContent, fluidAmountGetter, blockHolder, pos, state)
         }
     }
-
-    private var cacheMap: MutableMap<Direction, BlockCapabilityCache<IEnergyStorage, Direction?>> = hashMapOf()
 
     lateinit var tank: HTVariableFluidStackTank
         private set
@@ -90,11 +85,8 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // バッテリー内の電力を正面に自動搬出させる
-        val front: Direction = state.getAttributeFront() ?: return false
-        val cache: BlockCapabilityCache<IEnergyStorage, Direction?> = cacheMap.computeIfAbsent(front) {
-            HTEnergyCapabilities.createCache(level, pos.relative(front), front.opposite)
-        }
-        HTEnergyHelper.moveEnergy(this.battery, cache.getStorage())
+        val frontBattery: HTEnergyBattery? = getEnergyCache(level, pos, state.getAttributeFront())?.getStorage()
+        HTEnergyHelper.moveEnergy(this.battery, frontBattery, this.battery::onContentsChanged)
         // スロット内のアイテムを液体に変換する
         fuelSlot.fillOrBurn()
         // 燃料を消費して発電する

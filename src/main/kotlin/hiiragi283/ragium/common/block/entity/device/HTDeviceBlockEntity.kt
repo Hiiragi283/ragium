@@ -19,7 +19,7 @@ abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, st
      * 周期的にtick処理を行う[HTDeviceBlockEntity]の拡張クラス
      */
     abstract class Tickable(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(blockHolder, pos, state) {
-        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= 20) {
+        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = if (ticks >= getTickRate()) {
             ticks = 0
             actionServer(level, pos, state)
         } else {
@@ -27,6 +27,8 @@ abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, st
         }
 
         protected abstract fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
+
+        protected open fun getTickRate(): Int = 20
 
         val progress: Float
             get() {
