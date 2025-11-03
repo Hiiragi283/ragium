@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTGlassBlock
-import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSimpleTypedEntityBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
@@ -43,6 +42,7 @@ import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.ConcretePowderBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
@@ -112,17 +112,21 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val SILT: HTBasicDeferredBlock<HTSiltBlock> = REGISTER.registerSimple("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
+    val SILT: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "silt",
+        copyOf(Blocks.SAND),
+        { ConcretePowderBlock(Blocks.CLAY, it) },
+    )
 
     @JvmField
-    val AZURE_CLUSTER: HTBasicDeferredBlock<AzureClusterBlock> = REGISTER.registerSimple(
+    val AZURE_CLUSTER: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "azure_cluster",
         copyOf(Blocks.AMETHYST_CLUSTER, MapColor.TERRACOTTA_BLUE),
         ::AzureClusterBlock,
     )
 
     @JvmField
-    val CRIMSON_SOIL: HTBasicDeferredBlock<HTCrimsonSoilBlock> = REGISTER.registerSimple(
+    val CRIMSON_SOIL: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
@@ -297,11 +301,11 @@ object RagiumBlocks {
         REGISTER.registerSimple("blue_nether_bricks", copyOf(Blocks.NETHER_BRICKS, MapColor.COLOR_BLUE))
 
     @JvmField
-    val SPONGE_CAKE: HTBasicDeferredBlock<HTSpongeCakeBlock> =
+    val SPONGE_CAKE: HTSimpleDeferredBlock =
         REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL), ::HTSpongeCakeBlock)
 
     @JvmField
-    val DECORATION_MAP: Map<HTDecorationVariant, HTDeferredBlock<*, *>> = mapOf(
+    val DECORATION_MAP: Map<HTDecorationVariant, HTSimpleDeferredBlock> = mapOf(
         HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
         HTDecorationVariant.AZURE_TILE to AZURE_TILES,
         HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
@@ -352,7 +356,7 @@ object RagiumBlocks {
     //    Foods    //
 
     @JvmField
-    val SWEET_BERRIES_CAKE: HTBasicDeferredBlock<HTSweetBerriesCakeBlock> =
+    val SWEET_BERRIES_CAKE: HTSimpleDeferredBlock =
         REGISTER.registerSimple(
             "sweet_berries_cake",
             { copyOf(SPONGE_CAKE.get()).forceSolidOn() },
