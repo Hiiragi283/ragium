@@ -1,6 +1,26 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:base",
+    ":timezone(Asia/Tokyo)"
+  ],
+  "schedule": [
+    "after 9am and before 9pm on Friday"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "dependencies (patch)",
+      "automerge": true,
+      "automergeStrategy": "squash"
+    }
+  ],
+	"ignoreDeps": [
+		"com.mojang:minecraft",
+	]
 }
