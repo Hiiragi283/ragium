@@ -269,7 +269,7 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     /**
-     * @see [mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes]
+     * @see mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes
      */
     private inline fun <INPUT : RecipeInput, BASE : Recipe<INPUT>, reified RECIPE : BASE, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
         registry: EmiRegistry,
@@ -290,7 +290,7 @@ class RagiumEmiPlugin : EmiPlugin {
      * @param RECIPE [recipes]で渡す一覧のクラス
      * @param EMI_RECIPE [factory]で返すレシピのクラス
      * @return 渡された[category]
-     * @see [mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes]
+     * @see mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes
      */
     private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
         registry: EmiRegistry,

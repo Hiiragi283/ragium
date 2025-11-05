@@ -15,7 +15,7 @@ import org.slf4j.Logger
 import java.util.ServiceLoader
 
 /**
- * @see [mekanism.api.MekanismAPI]
+ * @see mekanism.api.MekanismAPI
  */
 object RagiumAPI {
     /**
@@ -83,7 +83,7 @@ object RagiumAPI {
     //    Service    //
 
     /**
-     * @see [mekanism.api.MekanismAPI.getService]
+     * @see mekanism.api.MekanismAPI.getService
      */
     @Suppress("UnstableApiUsage")
     @JvmStatic

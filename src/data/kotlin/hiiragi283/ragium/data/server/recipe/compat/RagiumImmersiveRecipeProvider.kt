@@ -25,7 +25,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 /**
- * @see [blusunrize.immersiveengineering.data.recipes.MultiblockRecipes]
+ * @see blusunrize.immersiveengineering.data.recipes.MultiblockRecipes
  */
 object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.IMMERSIVE) {
     override fun buildRecipeInternal() {

@@ -27,7 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
 
 /**
- * @see [net.minecraft.world.item.enchantment.Enchantments]
+ * @see net.minecraft.world.item.enchantment.Enchantments
  */
 object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
     override fun run(context: BootstrapContext<Enchantment>) {

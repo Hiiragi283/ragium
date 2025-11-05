@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
 /**
- * @see [mekanism.client.recipe_viewer.type.FakeRVRecipeType]
+ * @see mekanism.client.recipe_viewer.type.FakeRVRecipeType
  */
 class HTFakeRecipeViewerType<RECIPE : Any>(
     private val id: ResourceLocation,

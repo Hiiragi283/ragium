@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 
 /**
- * @see [mekanism.client.recipe_viewer.emi.MekanismEmiRecipeCategory]
+ * @see mekanism.client.recipe_viewer.emi.MekanismEmiRecipeCategory
  */
 class HTEmiRecipeCategory private constructor(
     val bounds: HTBounds,

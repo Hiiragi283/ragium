@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
 /**
- * @see [mekanism.common.item.block.ItemBlockMekanism]
+ * @see mekanism.common.item.block.ItemBlockMekanism
  */
 open class HTBlockItem<BLOCK : Block>(block: BLOCK, properties: Properties) : BlockItem(block, properties) {
     @Suppress("UNCHECKED_CAST")

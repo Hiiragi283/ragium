@@ -10,7 +10,7 @@ import java.util.Optional
 
 /**
  * [InteractionHand]と[ImmutableItemStack]を受け取る[HTContainerMenu]の拡張クラス
- * @see [mekanism.common.inventory.container.item.MekanismItemContainer]
+ * @see mekanism.common.inventory.container.item.MekanismItemContainer
  */
 abstract class HTItemContainerMenu(
     menuType: HTDeferredMenuType.OnHand<*>,

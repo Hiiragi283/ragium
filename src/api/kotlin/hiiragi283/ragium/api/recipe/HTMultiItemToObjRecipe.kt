@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack
 
 /**
  * 複数の[ItemStack]から[ItemStack]を生成するレシピのインターフェース
- * @see [HTCombineItemToItemRecipe]
- * @see [HTItemWithCatalystToItemRecipe]
+ * @see HTCombineItemToItemRecipe
+ * @see HTItemWithCatalystToItemRecipe
  */
 interface HTMultiItemToObjRecipe : HTRecipe<HTMultiItemRecipeInput> {
     companion object {

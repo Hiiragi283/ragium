@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
 /**
- * @see [mekanism.client.recipe_viewer.type.IRecipeViewerRecipeType]
+ * @see mekanism.client.recipe_viewer.type.IRecipeViewerRecipeType
  */
 interface HTRecipeViewerType<RECIPE : Any> :
     HTBoundsProvider,

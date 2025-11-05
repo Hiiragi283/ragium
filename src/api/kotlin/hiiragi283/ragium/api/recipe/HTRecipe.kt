@@ -14,7 +14,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Ragiumで使用する[Recipe]の拡張インターフェース
- * @see [mekanism.api.recipes.MekanismRecipe]
+ * @see mekanism.api.recipes.MekanismRecipe
  */
 interface HTRecipe<INPUT : RecipeInput> :
     Recipe<INPUT>,

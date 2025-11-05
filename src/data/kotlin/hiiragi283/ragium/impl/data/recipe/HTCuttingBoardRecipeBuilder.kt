@@ -13,7 +13,7 @@ import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe
 import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult
 
 /**
- * @see [vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder]
+ * @see vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
  */
 class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
     HTStackRecipeBuilder<HTCuttingBoardRecipeBuilder>("cutting", stack),

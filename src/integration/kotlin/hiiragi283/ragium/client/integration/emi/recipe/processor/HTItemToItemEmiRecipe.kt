@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
 /**
- * @see [mekanism.client.recipe_viewer.emi.recipe.ItemStackToItemStackEmiRecipe]
+ * @see mekanism.client.recipe_viewer.emi.recipe.ItemStackToItemStackEmiRecipe
  */
 class HTItemToItemEmiRecipe : HTEmiHolderRecipe<HTItemToItemRecipe> {
     constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTItemToItemRecipe) : super(category, id, recipe)

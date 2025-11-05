@@ -8,9 +8,9 @@ import java.util.function.Predicate
 /**
  * [STACK]を判定するインターフェース
  * @param STACK 判定の対象となるクラス
- * @see [HTItemIngredient]
- * @see [HTFluidIngredient]
- * @see [mekanism.api.recipes.ingredients.InputIngredient]
+ * @see HTItemIngredient
+ * @see HTFluidIngredient
+ * @see mekanism.api.recipes.ingredients.InputIngredient
  */
 interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predicate<STACK> {
     /**

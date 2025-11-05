@@ -27,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
 
 /**
- * @see [mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe]
+ * @see mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe
  */
 abstract class HTEmiRecipe<RECIPE : Any>(
     private val category: EmiRecipeCategory,

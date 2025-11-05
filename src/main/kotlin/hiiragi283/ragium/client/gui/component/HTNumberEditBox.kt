@@ -10,7 +10,7 @@ import net.neoforged.api.distmarker.OnlyIn
 import java.util.function.Function
 
 /**
- * @see [me.desht.pneumaticcraft.client.gui.widget.WidgetTextFieldNumber]
+ * @see me.desht.pneumaticcraft.client.gui.widget.WidgetTextFieldNumber
  */
 @OnlyIn(Dist.CLIENT)
 sealed class HTNumberEditBox<N, RANGE : ClosedRange<N>>(
