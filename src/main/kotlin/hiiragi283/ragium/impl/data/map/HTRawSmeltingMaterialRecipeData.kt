@@ -6,9 +6,10 @@ import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey
@@ -39,6 +40,14 @@ class HTRawSmeltingMaterialRecipeData(
         }
     }
 
+    constructor(
+        prefix: HTPrefixLike,
+        inputCount: Int,
+        outputCount: Int,
+        flux: TagKey<Item>,
+        fluxCount: Int,
+    ) : this(prefix.asMaterialPrefix(), inputCount, outputCount, flux, fluxCount)
+
     override fun type(): MapCodec<out HTMaterialRecipeData> = CODEC
 
     override fun generateRecipes(helper: HTMaterialRecipeData.Helper) {
@@ -55,7 +64,7 @@ class HTRawSmeltingMaterialRecipeData(
                         itemCreator.fromTagKey(prefix, key, inputCount),
                         itemCreator.fromTagKey(flux, fluxCount),
                     ).tagCondition(ingot)
-                    .saveSuffixed(output, "_from_${prefix.getPath()}_with_${flux.location.path}")
+                    .saveSuffixed(output, "_from_${prefix.name}_with_${flux.location.path}")
             }
         }
     }

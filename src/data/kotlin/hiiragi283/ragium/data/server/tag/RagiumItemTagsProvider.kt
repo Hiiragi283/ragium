@@ -5,7 +5,8 @@ import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -19,6 +20,7 @@ import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -27,7 +29,6 @@ import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -95,11 +96,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
-    private fun copy(prefix: HTMaterialPrefix) {
-        copy(prefix.blockCommonTag, prefix.itemCommonTag)
+    private fun copy(prefix: HTPrefixLike) {
+        copy(prefix.createCommonTagKey(Registries.BLOCK), prefix.createCommonTagKey(Registries.ITEM))
     }
 
-    private fun copy(prefix: HTMaterialPrefix, material: HTMaterialLike) {
+    private fun copy(prefix: HTPrefixLike, material: HTMaterialLike) {
         copy(prefix.blockTagKey(material), prefix.itemTagKey(material))
     }
 
@@ -122,7 +123,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, Items.CHARCOAL.toHolderLike())
 
         val coalCoke: TagKey<Item> = CommonMaterialPrefixes.FUEL.itemTagKey(CommonMaterialKeys.COAL_COKE)
-        builder.addTag(CommonMaterialPrefixes.FUEL.itemCommonTag, coalCoke)
+        builder.addTag(CommonMaterialPrefixes.FUEL.createCommonTagKey(Registries.ITEM), coalCoke)
         builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
 
         builder.addMaterial(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO, Items.ECHO_SHARD.toHolderLike())
@@ -138,11 +139,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             CommonMaterialPrefixes.GEM to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.INGOT to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.FUEL to ItemTags.COALS,
-        )
+        ).mapKeys { (prefix: CommonMaterialPrefixes, _) -> prefix.asMaterialPrefix() }
     }
 
-    private fun fromTriples(builder: HTTagBuilder<Item>, triples: Iterable<Triple<HTMaterialPrefix, HTMaterialLike, HTHolderLike>>) {
-        triples.forEach { (prefix: HTMaterialPrefix, key: HTMaterialLike, item: HTHolderLike) ->
+    private fun fromTriples(builder: HTTagBuilder<Item>, triples: Iterable<Triple<HTPrefixLike, HTMaterialLike, HTHolderLike>>) {
+        triples.forEach { (prefix: HTPrefixLike, key: HTMaterialLike, item: HTHolderLike) ->
             builder.addMaterial(prefix, key, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: return@forEach
             builder.addTag(customTag, prefix.itemTagKey(key))
@@ -338,8 +339,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike) =
         this.addTag(parent, child).add(child, holder)
 
-    private fun HTTagBuilder<Item>.addMaterial(prefix: HTMaterialPrefix, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
-        val itemCommonTag: TagKey<Item> = prefix.itemCommonTag
+    private fun HTTagBuilder<Item>.addMaterial(prefix: HTPrefixLike, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
+        val itemCommonTag: TagKey<Item> = prefix.createCommonTagKey(Registries.ITEM)
         val tagKey: TagKey<Item> = prefix.itemTagKey(key)
         return this.add(itemCommonTag, tagKey, holder)
     }

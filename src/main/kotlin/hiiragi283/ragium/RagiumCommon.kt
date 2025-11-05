@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -63,7 +62,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
-        CommonMaterialPrefixes.REGISTER.register(eventBus)
         RagiumDataComponents.REGISTER.register(eventBus)
         RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
@@ -102,7 +100,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumAPI.MATERIAL_PREFIX_REGISTRY)
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")

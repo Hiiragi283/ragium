@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
@@ -112,8 +112,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun fromMaterialTable(table: ImmutableTable<HTMaterialPrefix, HTMaterialKey, out HTHasTranslationKey>) {
-        table.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
+    private fun fromMaterialTable(table: ImmutableTable<out HTPrefixLike, HTMaterialKey, out HTHasTranslationKey>) {
+        table.forEach { (prefix: HTPrefixLike, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
             val translatedName: String = HTMaterialTranslations.translate(type, prefix, key) ?: return@forEach
             add(translationKey, translatedName)
         }

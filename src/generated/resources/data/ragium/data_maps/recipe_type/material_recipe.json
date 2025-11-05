@@ -7,7 +7,7 @@
         "flux_count": 6,
         "input_count": 1,
         "output_count": 18,
-        "prefix": "c:raw_storage_block"
+        "prefix": "raw_storage_block"
       },
       "ragium:raw_block_to_ingot_with_basic": {
         "type": "ragium:raw_smelting",
@@ -15,7 +15,7 @@
         "flux_count": 6,
         "input_count": 2,
         "output_count": 27,
-        "prefix": "c:raw_storage_block"
+        "prefix": "raw_storage_block"
       },
       "ragium:raw_to_ingot_with_advanced": {
         "type": "ragium:raw_smelting",
@@ -23,7 +23,7 @@
         "flux_count": 1,
         "input_count": 1,
         "output_count": 2,
-        "prefix": "c:raw_material"
+        "prefix": "raw_material"
       },
       "ragium:raw_to_ingot_with_basic": {
         "type": "ragium:raw_smelting",
@@ -31,36 +31,36 @@
         "flux_count": 1,
         "input_count": 2,
         "output_count": 3,
-        "prefix": "c:raw_material"
+        "prefix": "raw_material"
       }
     },
     "ragium:crushing": {
       "ragium:fuel_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "c:fuel"
+        "prefix": "fuel"
       },
       "ragium:gem_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "c:gem"
+        "prefix": "gem"
       },
       "ragium:ingot_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "c:ingot"
+        "prefix": "ingot"
       },
       "ragium:plate_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "c:plate"
+        "prefix": "plate"
       },
       "ragium:raw_to_dust": {
         "type": "ragium:crushing",
         "input_count": 3,
         "output_count": 4,
-        "prefix": "c:raw_material"
+        "prefix": "raw_material"
       },
       "ragium:rod_to_dust": {
         "type": "ragium:crushing",
         "input_count": 2,
-        "prefix": "c:rod"
+        "prefix": "rod"
       }
     }
   }

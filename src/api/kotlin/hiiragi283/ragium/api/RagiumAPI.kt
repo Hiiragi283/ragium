@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.toId
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
@@ -58,17 +57,6 @@ object RagiumAPI {
 
     @JvmField
     val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = ResourceKey.createRegistryKey(id("brewing_effect"))
-
-    @JvmField
-    val MATERIAL_PREFIX_KEY: ResourceKey<Registry<HTMaterialPrefix>> = ResourceKey.createRegistryKey(id("material_prefix"))
-
-    @JvmField
-    val MATERIAL_PREFIX_REGISTRY: Registry<HTMaterialPrefix> = RegistryBuilder(MATERIAL_PREFIX_KEY)
-        .sync(true)
-        .onAdd { _, _, key: ResourceKey<HTMaterialPrefix>, prefix: HTMaterialPrefix ->
-            val id: ResourceLocation = key.location()
-            check(id.namespace == RagiumConst.COMMON) { "Only allowed `common` namespace for Material Prefix" }
-        }.create()
 
     @JvmField
     val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = ResourceKey.createRegistryKey(

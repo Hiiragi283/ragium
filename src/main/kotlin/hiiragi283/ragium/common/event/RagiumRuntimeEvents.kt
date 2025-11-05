@@ -9,6 +9,8 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
@@ -26,6 +28,7 @@ import net.neoforged.neoforge.common.EffectCures
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -129,6 +132,25 @@ object RagiumRuntimeEvents {
                 }
                 event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
                 return
+            }
+        }
+    }
+
+    @SubscribeEvent
+    fun onEquipped(event: LivingEquipmentChangeEvent) {
+        val entity: LivingEntity = event.entity
+        val from: ItemStack = event.from
+        val to: ItemStack = event.to
+        // 装着時
+        if (from.isEmpty) {
+            if (to.`is`(RagiumItems.NIGHT_VISION_GOGGLES)) {
+                entity.addEffect(MobEffectInstance(MobEffects.NIGHT_VISION, -1, 0, true, true))
+            }
+        }
+        // 脱着時
+        if (to.isEmpty) {
+            if (from.`is`(RagiumItems.NIGHT_VISION_GOGGLES)) {
+                entity.removeEffect(MobEffects.NIGHT_VISION)
             }
         }
     }

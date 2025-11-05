@@ -5,17 +5,18 @@ import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -159,8 +160,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Material
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
             builder.addMaterial(prefix, key, block)
-            when (prefix) {
-                CommonMaterialPrefixes.STORAGE_BLOCK -> builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+            if (prefix == CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix()) {
+                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
             }
         }
 
@@ -204,8 +205,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         add(child, block)
     }
 
-    private fun HTTagBuilder<Block>.addMaterial(prefix: HTMaterialPrefix, material: HTMaterialLike, block: HTHolderLike) {
-        val blockCommonTag: TagKey<Block> = prefix.blockCommonTag
+    private fun HTTagBuilder<Block>.addMaterial(prefix: HTPrefixLike, material: HTMaterialLike, block: HTHolderLike) {
+        val blockCommonTag: TagKey<Block> = prefix.createCommonTagKey(Registries.BLOCK)
         val tagKey: TagKey<Block> = prefix.blockTagKey(material)
         add(blockCommonTag, tagKey, block)
     }

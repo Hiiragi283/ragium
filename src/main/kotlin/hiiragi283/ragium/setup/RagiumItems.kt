@@ -8,7 +8,8 @@ import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -42,6 +43,7 @@ import hiiragi283.ragium.common.item.base.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
@@ -138,6 +140,10 @@ object RagiumItems {
     val WITHER_DOLl: HTSimpleDeferredItem = register("wither_doll")
 
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
+        fun register(prefix: HTPrefixLike, material: HTMaterialLike, name: String) {
+            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = register(name)
+        }
+
         // Dusts
         arrayOf(
             // Vanilla - Metal
@@ -159,17 +165,17 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE,
             RagiumMaterialKeys.RAGI_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
-        ).forEach { this[CommonMaterialPrefixes.DUST, it.asMaterialKey()] = register("${it.asMaterialName()}_dust") }
-        this[CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD] = register("sawdust")
-        this[CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT] = register("minced_meat")
+        ).forEach { register(CommonMaterialPrefixes.DUST, it.asMaterialKey(), "${it.asMaterialName()}_dust") }
+        register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "sawdust")
+        register(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT, "minced_meat")
         // Gems
-        this[CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE] = register("azure_shard")
+        register(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, "azure_shard")
         arrayOf(
             RagiumMaterialKeys.RAGI_CRYSTAL,
             RagiumMaterialKeys.CRIMSON_CRYSTAL,
             RagiumMaterialKeys.WARPED_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
-        ).forEach { this[CommonMaterialPrefixes.GEM, it] = register(it.name) }
+        ).forEach { register(CommonMaterialPrefixes.GEM, it, it.name) }
         // Ingots
         arrayOf(
             // Metals
@@ -183,7 +189,7 @@ object RagiumItems {
             RagiumMaterialKeys.CHOCOLATE,
             RagiumMaterialKeys.MEAT,
             RagiumMaterialKeys.COOKED_MEAT,
-        ).forEach { this[CommonMaterialPrefixes.INGOT, it] = register("${it.name}_ingot") }
+        ).forEach { register(CommonMaterialPrefixes.INGOT, it, "${it.name}_ingot") }
         // Nuggets
         arrayOf(
             RagiumMaterialKeys.RAGI_ALLOY,
@@ -192,40 +198,44 @@ object RagiumItems {
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
-        ).forEach { this[CommonMaterialPrefixes.NUGGET, it] = register("${it.name}_nugget") }
+        ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
         // Plates
-        this[CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC] = register("plastic_plate")
+        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
 
         // Fuels
-        this[CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL] = register("bamboo_charcoal")
+        register(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, "bamboo_charcoal")
         // Scraps
-        this[CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL] = register("deep_scrap")
+        register(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, "deep_scrap")
     }
 
     @JvmStatic
-    fun getMaterial(prefix: HTMaterialPrefix, material: HTMaterialLike): HTDeferredItem<*> = MATERIALS[prefix, material.asMaterialKey()]
-        ?: error("Unknown $prefix item for ${material.asMaterialName()}")
+    fun getMaterial(prefix: HTPrefixLike, material: HTMaterialLike): HTSimpleDeferredItem =
+        MATERIALS[prefix.asMaterialPrefix(), material.asMaterialKey()]
+            ?: error("Unknown $prefix item for ${material.asMaterialName()}")
 
     @JvmStatic
-    fun getDust(material: HTMaterialLike): HTDeferredItem<*> = getMaterial(CommonMaterialPrefixes.DUST, material)
+    fun getDust(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.DUST, material)
 
     @JvmStatic
-    fun getGem(material: HTMaterialLike): HTDeferredItem<*> = getMaterial(CommonMaterialPrefixes.GEM, material)
+    fun getGem(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.GEM, material)
 
     @JvmStatic
-    fun getIngot(material: HTMaterialLike): HTDeferredItem<*> = getMaterial(CommonMaterialPrefixes.INGOT, material)
+    fun getIngot(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.INGOT, material)
 
     @JvmStatic
-    fun getNugget(material: HTMaterialLike): HTDeferredItem<*> = getMaterial(CommonMaterialPrefixes.NUGGET, material)
+    fun getNugget(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.NUGGET, material)
 
     @JvmStatic
-    fun getPlate(material: HTMaterialLike): HTDeferredItem<*> = getMaterial(CommonMaterialPrefixes.PLATE, material)
+    fun getPlate(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.PLATE, material)
 
     @JvmStatic
     fun getScrap(material: HTMaterialLike): HTItemHolderLike = when (material.asMaterialKey()) {
         VanillaMaterialKeys.NETHERITE -> Items.NETHERITE_SCRAP.toHolderLike()
         else -> getMaterial(CommonMaterialPrefixes.SCRAP, material)
     }
+
+    @JvmStatic
+    fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredItem> = MATERIALS.row(prefix.asMaterialPrefix())
 
     @JvmField
     val COILS: Map<HTMaterialKey, HTSimpleDeferredItem> = arrayOf(RagiumMaterialKeys.RAGI_ALLOY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)

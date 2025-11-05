@@ -4,12 +4,15 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.material.getDefaultPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -20,7 +23,6 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -224,6 +226,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun material() {
+        val blockMap: Map<HTMaterialKey, HTSimpleDeferredBlock> = RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK)
+        val nuggetMap: Map<HTMaterialKey, HTSimpleDeferredItem> = RagiumItems.getMaterialMap(CommonMaterialPrefixes.NUGGET)
+
         for (key: HTMaterialKey in RagiumItems.MATERIALS.columnKeys) {
             val basePrefix: HTMaterialPrefix = RagiumPlatform.INSTANCE
                 .getMaterialDefinition(key)
@@ -231,7 +236,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 ?: continue
             val base: ItemLike = RagiumItems.MATERIALS[basePrefix, key] ?: continue
 
-            RagiumBlocks.MATERIALS[CommonMaterialPrefixes.STORAGE_BLOCK, key]?.let { storage: ItemLike ->
+            blockMap[key]?.let { storage: ItemLike ->
                 // Block -> Base
                 HTShapelessRecipeBuilder
                     .misc(base, 9)
@@ -246,7 +251,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_base")
             }
 
-            RagiumItems.MATERIALS[CommonMaterialPrefixes.NUGGET, key]?.let { nugget: ItemLike ->
+            nuggetMap[key]?.let { nugget: ItemLike ->
                 // Base -> Nugget
                 HTShapelessRecipeBuilder
                     .misc(nugget, 9)

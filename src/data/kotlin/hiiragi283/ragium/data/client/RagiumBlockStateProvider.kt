@@ -14,9 +14,9 @@ import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
@@ -58,7 +58,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.CEU)
 
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.STORAGE_BLOCK))
+            addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)
 
             add(RagiumBlocks.DEVICE_CASING)
         }.forEach(::simpleBlockAndItem)
@@ -82,8 +82,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
-        RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
-        RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.GLASS_BLOCK_TINTED).forEach(::translucentSimpleBlock)
+        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK).values.forEach(::cutoutSimpleBlock)
+        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK_TINTED).values.forEach(::translucentSimpleBlock)
 
         RagiumBlocks.COILS.values.forEach(::cubeColumn)
 

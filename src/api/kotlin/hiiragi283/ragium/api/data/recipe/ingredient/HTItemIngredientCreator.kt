@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe.ingredient
 
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -34,10 +34,10 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
     fun fromTagKeys(tagKeys: Iterable<TagKey<Item>>): HTItemIngredient = fromTagKeys(tagKeys, 1)
 
     // material
-    fun fromTagKey(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTItemIngredient =
+    fun fromTagKey(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTItemIngredient =
         fromTagKey(prefix.itemTagKey(material), count)
 
-    fun multiPrefixes(material: HTMaterialLike, vararg prefix: HTMaterialPrefix, count: Int = 1): HTItemIngredient =
+    fun multiPrefixes(material: HTMaterialLike, vararg prefix: HTPrefixLike, count: Int = 1): HTItemIngredient =
         fromTagKeys(prefix.map { it.itemTagKey(material) }, count)
 
     fun fuelOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient

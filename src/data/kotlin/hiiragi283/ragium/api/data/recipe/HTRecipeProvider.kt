@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -23,7 +24,6 @@ import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -143,7 +143,7 @@ sealed class HTRecipeProvider {
     protected fun ingotOrRod(material: HTMaterialLike): Ingredient =
         multiVariants(material, CommonMaterialPrefixes.INGOT, CommonMaterialPrefixes.ROD)
 
-    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTMaterialPrefix): Ingredient = prefixes
+    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTPrefixLike): Ingredient = prefixes
         .map { it.itemTagKey(material) }
         .map(Ingredient::TagValue)
         .stream()

@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCircuitTier
@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -250,7 +249,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
             resetComponent(crate)
 
-            val pair: Pair<HTMaterialPrefix, HTMaterialKey> = when (tier) {
+            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
                 HTCrateTier.SMALL -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.IRON
                 HTCrateTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
                 HTCrateTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
@@ -277,7 +276,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         for ((tier: HTDrumTier, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
             resetComponent(drum, RagiumDataComponents.FLUID_CONTENT)
 
-            val pair: Pair<HTMaterialPrefix, HTMaterialKey> = when (tier) {
+            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
                 HTDrumTier.SMALL -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.COPPER
                 HTDrumTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
                 HTDrumTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
@@ -317,7 +316,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTDrumTier.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
                 else -> continue
             }
-            val pair: Pair<HTMaterialPrefix, HTMaterialKey> = when (tier) {
+            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
                 HTDrumTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
                 HTDrumTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
                 HTDrumTier.HUGE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.NETHERITE

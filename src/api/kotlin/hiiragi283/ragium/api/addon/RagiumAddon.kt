@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.addon
 
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.network.HTPayloadRegistrar
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey
@@ -14,6 +15,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import java.util.function.Consumer
 
 /**
  * Ragiumのアドオン向けのインターフェース
@@ -48,6 +50,8 @@ interface RagiumAddon {
     fun registerPayloads(registrar: HTPayloadRegistrar) {}
 
     //    Extension    //
+
+    fun bindMaterialPrefixes(consumer: Consumer<HTPrefixLike>) {}
 
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {}
 
