@@ -48,5 +48,7 @@ interface HTExperienceTank :
         protected open fun getInsertRate(access: HTStorageAccess): Long = Long.MAX_VALUE
 
         protected open fun getExtractRate(access: HTStorageAccess): Long = Long.MAX_VALUE
+
+        override fun toString(): String = "HTExperienceTank(amount=${getAmount()}, capacity=${getCapacity()})"
     }
 }

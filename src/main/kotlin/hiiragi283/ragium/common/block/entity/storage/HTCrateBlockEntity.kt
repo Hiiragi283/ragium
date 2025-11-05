@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -36,7 +36,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         slot = builder.addSlot(
-            HTAccessConfig.BOTH,
+            HTSlotInfo.BOTH,
             HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack? ->
                 val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
                 HTItemHelper.processStorageCapacity(this.getLevel()?.random, enchantment, capacity)

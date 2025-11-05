@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
@@ -77,12 +77,12 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
             val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
             // input
             inputSlot = builder.addSlot(
-                HTAccessConfig.INPUT_ONLY,
+                HTSlotInfo.INPUT,
                 HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
             )
             // output
             outputSlot = builder.addSlot(
-                HTAccessConfig.OUTPUT_ONLY,
+                HTSlotInfo.OUTPUT,
                 HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
             )
             return builder.build()

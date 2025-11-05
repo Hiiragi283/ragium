@@ -51,5 +51,7 @@ interface HTEnergyBattery :
         protected open fun getInsertRate(access: HTStorageAccess): Int = Int.MAX_VALUE
 
         protected open fun getExtractRate(access: HTStorageAccess): Int = Int.MAX_VALUE
+
+        override fun toString(): String = "HTEnergyBattery(amount=${getAmount()}, capacity=${getCapacity()})"
     }
 }

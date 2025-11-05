@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
     final override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
-        builder.addSlot(HTAccessConfig.OUTPUT_ONLY, HTMachineEnergyBattery.output(listener, this))
+        builder.addSlot(HTSlotInfo.OUTPUT, HTMachineEnergyBattery.output(listener, this))
 
     protected val cacheMap: MutableMap<Direction, BlockCapabilityCache<IEnergyStorage, Direction?>> = hashMapOf()
 

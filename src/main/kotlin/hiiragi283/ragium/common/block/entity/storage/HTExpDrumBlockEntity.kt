@@ -4,8 +4,8 @@ import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicExperienceTankHolder
 import hiiragi283.ragium.common.util.HTExperienceHelper
@@ -24,7 +24,7 @@ class HTExpDrumBlockEntity(pos: BlockPos, state: BlockState) : HTDrumBlockEntity
 
     override fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder {
         val builder: HTBasicExperienceTankHolder.Builder = HTBasicExperienceTankHolder.builder(this)
-        expTank = builder.addSlot(HTAccessConfig.BOTH, FluidExperienceTank(tank))
+        expTank = builder.addSlot(HTSlotInfo.BOTH, FluidExperienceTank(tank))
         return builder.build()
     }
 

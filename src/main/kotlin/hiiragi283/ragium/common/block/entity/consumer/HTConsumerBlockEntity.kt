@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 abstract class HTConsumerBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
     final override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
-        builder.addSlot(HTAccessConfig.INPUT_ONLY, HTMachineEnergyBattery.input(listener, this))
+        builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
 
     //    Ticking    //
 

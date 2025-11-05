@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -28,7 +28,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
     override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
         val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        battery = builder.addSlot(HTAccessConfig.BOTH, createBattery(listener))
+        battery = builder.addSlot(HTSlotInfo.BOTH, createBattery(listener))
         return builder.build()
     }
 
@@ -41,12 +41,12 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
         // extract
         fillSlot = builder.addSlot(
-            HTAccessConfig.NONE,
+            HTSlotInfo.CATALYST,
             HTEnergyItemStackSlot.fill(this.battery, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
         )
         // insert
         drainSlot = builder.addSlot(
-            HTAccessConfig.NONE,
+            HTSlotInfo.CATALYST,
             HTEnergyItemStackSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
         )
         return builder.build()

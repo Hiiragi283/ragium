@@ -9,10 +9,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.experience.HTExperienceHandler
@@ -245,7 +241,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
-    final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(HTFluidCapabilities, direction)
+    final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(direction)
 
     // Energy
 
@@ -261,8 +257,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = energyHandlerManager?.getContainers(side)?.firstOrNull()
 
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        energyHandlerManager?.resolve(HTEnergyCapabilities, direction)
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = energyHandlerManager?.resolve(direction)
 
     // Experience
 
@@ -272,8 +267,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getExpTanks(side: Direction?): List<HTExperienceTank> = experienceHandlerManager?.getContainers(side) ?: listOf()
 
-    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? =
-        experienceHandlerManager?.resolve(HTExperienceCapabilities, direction)
+    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? = experienceHandlerManager?.resolve(direction)
 
     // Item
 
@@ -294,5 +288,5 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(HTItemCapabilities, direction)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
 }

@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.experience.tank.HTOrbExperienceTank
 import hiiragi283.ragium.common.storage.holder.HTBasicExperienceTankHolder
@@ -26,7 +26,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder {
         val builder: HTBasicExperienceTankHolder.Builder = HTBasicExperienceTankHolder.builder(this)
-        tank = builder.addSlot(HTAccessConfig.OUTPUT_ONLY, HTBasicExperienceTank.output(listener, Long.MAX_VALUE))
+        tank = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicExperienceTank.output(listener, Long.MAX_VALUE))
         return builder.build()
     }
 

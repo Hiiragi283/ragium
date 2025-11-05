@@ -497,7 +497,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.INPUT_ONLY, "Mode: Input")
         add(HTAccessConfig.OUTPUT_ONLY, "Mode: Output")
         add(HTAccessConfig.BOTH, "Mode: Both")
-        add(HTAccessConfig.NONE, "Mode: None")
+        add(HTAccessConfig.DISABLED, "Mode: Disabled")
     }
 
     private fun information() {

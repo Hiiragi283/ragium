@@ -503,7 +503,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
         add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
         add(HTAccessConfig.BOTH, "モード：双方")
-        add(HTAccessConfig.NONE, "モード：なし")
+        add(HTAccessConfig.DISABLED, "モード：無効")
     }
 
     private fun information() {

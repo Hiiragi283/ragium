@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
@@ -45,19 +45,19 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // input
         inputSlot = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
+            HTSlotInfo.INPUT,
             HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
         )
         // catalyst
         catalystSlot = builder.addSlot(
-            HTAccessConfig.NONE,
+            HTSlotInfo.CATALYST,
             HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
         // outputs
         outputSlots = intArrayOf(5, 6).flatMap { x: Int ->
             doubleArrayOf(0.5, 1.5).map { y: Double ->
                 builder.addSlot(
-                    HTAccessConfig.OUTPUT_ONLY,
+                    HTSlotInfo.OUTPUT,
                     HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
                 )
             }

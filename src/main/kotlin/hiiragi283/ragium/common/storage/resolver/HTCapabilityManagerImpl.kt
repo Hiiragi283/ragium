@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.storage.resolver
 
-import hiiragi283.ragium.api.storage.capability.HTMultiCapability
 import hiiragi283.ragium.api.storage.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
-import net.neoforged.neoforge.capabilities.BlockCapability
 
 /**
  * @see mekanism.common.capabilities.resolver.BasicSidedCapabilityResolver
@@ -18,11 +16,9 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any,
     private val handlers: MutableMap<Direction, HANDLER> = mutableMapOf()
     private var readOnlyHandler: HANDLER? = null
 
-    fun <T : Any, U : T> resolve(type: HTMultiCapability<T, U>, context: Direction?): T? = resolve(type.block, context)
-
-    override fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, side: Direction?): T? = when {
+    override fun <T : Any> resolve(side: Direction?): T? = when {
         getContainers(side).isEmpty() -> null
-        else -> resolveInternal(capability, side)
+        else -> resolveInternal(side)
     }
 
     override fun canHandle(): Boolean = holder != null
@@ -33,7 +29,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, CONTAINER : Any,
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <T : Any> resolveInternal(capability: BlockCapability<T, Direction?>, side: Direction?): T? {
+    private fun <T : Any> resolveInternal(side: Direction?): T? {
         if (side == null) {
             if (readOnlyHandler == null) {
                 readOnlyHandler = proxyCreator.create(baseHandler, null, holder)

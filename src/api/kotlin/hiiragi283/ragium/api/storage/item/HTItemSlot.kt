@@ -36,5 +36,7 @@ interface HTItemSlot : HTStackSlot<ImmutableItemStack> {
      */
     abstract class Basic :
         HTStackSlot.Basic<ImmutableItemStack>(),
-        HTItemSlot
+        HTItemSlot {
+        override fun toString(): String = "HTItemSlot(stack=${getStack()}, capacity=${getCapacity()})"
+    }
 }

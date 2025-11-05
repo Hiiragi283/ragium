@@ -25,5 +25,5 @@ interface HTHandlerProvider {
     /**
      * 指定した[direction]から[IEnergyStorage]を返します。
      */
-    fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
+    fun getEnergyStorage(direction: Direction?): IEnergyStorage?
 }

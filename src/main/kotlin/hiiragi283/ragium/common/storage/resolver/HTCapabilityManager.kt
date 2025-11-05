@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.storage.resolver
 
 import net.minecraft.core.Direction
-import net.neoforged.neoforge.capabilities.BlockCapability
 
 /**
  * 向きに応じたCapabilityを取得するインターフェース
@@ -17,7 +16,7 @@ interface HTCapabilityManager<CONTAINER : Any> {
      * @param side アクセスする面
      * @return 見つからない場合は`null`
      */
-    fun <T : Any> resolve(capability: BlockCapability<T, Direction?>, side: Direction?): T?
+    fun <T : Any> resolve(side: Direction?): T?
 
     /**
      * このCapabilityが運用可能か判定します。
