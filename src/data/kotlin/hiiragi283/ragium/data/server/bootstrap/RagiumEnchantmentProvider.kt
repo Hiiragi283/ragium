@@ -126,7 +126,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(25, 10),
                         4,
-                        EquipmentSlotGroup.CHEST,
+                        EquipmentSlotGroup.ANY,
                     ),
                 ).exclusiveWith(enchLookup.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
                 .withEffect(

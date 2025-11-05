@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.integration
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTPayloadRegistrar
 import hiiragi283.ragium.client.RagiumKeyMappings
@@ -14,18 +13,14 @@ import hiiragi283.ragium.common.accessory.HTDynamicLightingAccessory
 import hiiragi283.ragium.common.accessory.HTMagnetizationAccessory
 import hiiragi283.ragium.common.accessory.HTMobEffectAccessory
 import hiiragi283.ragium.common.util.HTPacketHelper
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesAPI
-import io.wispforest.accessories.api.AccessoriesCapability
 import io.wispforest.accessories.api.Accessory
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
 import io.wispforest.accessories.api.client.AccessoryRenderer
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.ExperienceOrb
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -33,27 +28,12 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.client.event.ClientTickEvent
 import net.neoforged.neoforge.common.NeoForge
-import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent
 
 object RagiumAccessoriesAddon : RagiumAddon {
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
         // Common
-        NeoForge.EVENT_BUS.addListener(::checkInvulnerability)
         // Client
         NeoForge.EVENT_BUS.addListener(::onClientTick)
-    }
-
-    @JvmStatic
-    private fun checkInvulnerability(event: EntityInvulnerabilityCheckEvent) {
-        val entity = event.entity
-        if (entity is LivingEntity) {
-            val stack: ItemStack = AccessoriesCapability
-                .get(entity)
-                ?.getFirstEquipped { stack -> stack.has(RagiumDataComponents.IMMUNE_DAMAGE_TYPES) }
-                ?.stack
-                ?: return
-            RagiumPlatform.INSTANCE.isInvulnerableToDamage(event.source, stack)?.let(event::setInvulnerable)
-        }
     }
 
     @JvmStatic

@@ -22,7 +22,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -108,8 +107,4 @@ interface RagiumPlatform {
     fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
 
     fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
-
-    //    Helper    //
-
-    fun isInvulnerableToDamage(source: DamageSource, stack: ItemStack): Boolean?
 }

@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
@@ -23,7 +22,6 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
@@ -254,21 +252,27 @@ object RagiumItems {
 
     //    Armors    //
 
-    @JvmField
-    val AZURE_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
-        variant.registerItem(REGISTER, RagiumEquipmentMaterials.AZURE_STEEL)
+    val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
+        fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
+            this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
+        }
+        // Azure, Deep
+        for (variant: HTArmorVariant in HTArmorVariant.entries) {
+            register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
+            register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+        }
     }
 
     @JvmField
-    val DEEP_ARMORS: Map<HTArmorVariant, HTDeferredItem<*>> = HTArmorVariant.entries.associateWith { variant: HTArmorVariant ->
-        variant.registerItem(REGISTER, RagiumEquipmentMaterials.DEEP_STEEL)
-    }
+    val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
+        HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
 
     @JvmStatic
-    fun getAzureArmor(variant: HTArmorVariant): HTDeferredItem<*> = AZURE_ARMORS[variant]!!
+    fun getArmor(variant: HTArmorVariant, material: HTMaterialLike): HTDeferredItem<*> = ARMORS[variant, material.asMaterialKey()]
+        ?: error("Unknown ${variant.variantName()} armor item for ${material.asMaterialName()}")
 
     @JvmStatic
-    fun getDeepArmor(variant: HTArmorVariant): HTDeferredItem<*> = DEEP_ARMORS[variant]!!
+    fun getArmorMap(material: HTMaterialLike): Map<HTArmorVariant, HTDeferredItem<*>> = ARMORS.column(material.asMaterialKey())
 
     //    Tools    //
 
@@ -287,9 +291,6 @@ object RagiumItems {
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val NIGHT_VISION_GOGGLES: HTSimpleDeferredItem = register("night_vision_goggles") { it.stacksTo(1) }
 
     // Azure
     @JvmField
@@ -390,10 +391,7 @@ object RagiumItems {
         ?: error("Unknown ${variant.variantName()} item for ${material.asMaterialName()}")
 
     @JvmStatic
-    private fun getAzureTool(variant: HTVanillaToolVariant): HTDeferredItem<*> = getTool(variant, RagiumMaterialKeys.AZURE_STEEL)
-
-    @JvmStatic
-    private fun getDeepTool(variant: HTVanillaToolVariant): HTDeferredItem<*> = getTool(variant, RagiumMaterialKeys.DEEP_STEEL)
+    fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
 
     //    Foods    //
 
@@ -601,14 +599,14 @@ object RagiumItems {
                 builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
             }
         }
-        setEnch(getAzureTool(HTVanillaToolVariant.AXE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTVanillaToolVariant.HOE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTVanillaToolVariant.PICKAXE), Enchantments.SILK_TOUCH)
-        setEnch(getAzureTool(HTVanillaToolVariant.SHOVEL), Enchantments.SILK_TOUCH)
 
-        setEnch(getDeepTool(HTVanillaToolVariant.PICKAXE), Enchantments.FORTUNE, 5)
-        setEnch(getDeepTool(HTVanillaToolVariant.AXE), RagiumEnchantments.STRIKE)
-        setEnch(getDeepTool(HTVanillaToolVariant.SWORD), RagiumEnchantments.NOISE_CANCELING, 5)
+        for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
+            setEnch(item, Enchantments.SILK_TOUCH)
+        }
+
+        setEnch(getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
+        setEnch(getTool(HTVanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
+        setEnch(getTool(HTVanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
         // Foods
         event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
@@ -617,14 +615,7 @@ object RagiumItems {
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
         // Other
-        event.modify(ECHO_STAR) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            builder.set(
-                RagiumDataComponents.IMMUNE_DAMAGE_TYPES,
-                HTKeyOrTagHelper.INSTANCE.create(RagiumModTags.DamageTypes.IS_SONIC),
-            )
-        }
-
+        setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
         event.modify(UNIVERSAL_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.COLOR, DyeColor.WHITE)
         }

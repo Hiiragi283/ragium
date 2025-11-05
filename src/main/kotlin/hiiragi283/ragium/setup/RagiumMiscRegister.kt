@@ -20,6 +20,7 @@ object RagiumMiscRegister {
         // Armor Material
         event.register(Registries.ARMOR_MATERIAL) { helper ->
             register(helper, RagiumEquipmentMaterials.AZURE_STEEL)
+            register(helper, RagiumEquipmentMaterials.RAGI_CRYSTAL)
             register(helper, RagiumEquipmentMaterials.DEEP_STEEL)
         }
         // Recipe Type
@@ -45,8 +46,12 @@ object RagiumMiscRegister {
     }
 
     @JvmStatic
-    private fun register(helper: RegisterEvent.RegisterHelper<ArmorMaterial>, material: HTEquipmentMaterial) {
-        val id: ResourceLocation = RagiumAPI.id(material.asMaterialName())
+    private fun register(
+        helper: RegisterEvent.RegisterHelper<ArmorMaterial>,
+        material: HTEquipmentMaterial,
+        name: String = material.asMaterialName(),
+    ) {
+        val id: ResourceLocation = RagiumAPI.id(name)
         helper.register(
             id,
             ArmorMaterial(
