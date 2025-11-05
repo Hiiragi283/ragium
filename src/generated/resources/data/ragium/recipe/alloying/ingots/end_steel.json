@@ -11,8 +11,8 @@
     {
       "type": "neoforge:or",
       "values": [
-        "#c:dusts/end_steel",
-        "#c:ingots/end_steel"
+        "#c:dusts/dark_steel",
+        "#c:ingots/dark_steel"
       ]
     },
     "#c:obsidians"

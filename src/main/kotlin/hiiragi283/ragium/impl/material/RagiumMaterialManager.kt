@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.material.attribute.HTMaterialAttribute
 import net.neoforged.neoforge.common.NeoForge
 
 object RagiumMaterialManager {
-    internal lateinit var definitions: Map<HTMaterialKey, HTMaterialDefinition>
+    internal var definitions: Map<HTMaterialKey, HTMaterialDefinition> = mapOf()
         private set
 
     @JvmStatic

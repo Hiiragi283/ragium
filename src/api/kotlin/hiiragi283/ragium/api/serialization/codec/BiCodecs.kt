@@ -14,15 +14,11 @@ object BiCodecs {
      * @param range 値の範囲
      * @return [range]に範囲を制限された[BiCodec]
      */
-    fun <B : ByteBuf, N> BiCodec<B, N>.ranged(range: ClosedRange<N>): BiCodec<B, N> where N : Number, N : Comparable<N> {
-        val range1: (N) -> Result<N> = { value: N ->
-            runCatching {
-                check(value in range) { "Value $value outside of range [$range]" }
-                value
-            }
+    fun <B : ByteBuf, N> BiCodec<B, N>.ranged(range: ClosedRange<N>): BiCodec<B, N> where N : Number, N : Comparable<N> =
+        this.validate { value: N ->
+            check(value in range) { "Value $value outside of range [$range]" }
+            value
         }
-        return this.flatXmap(range1, range1)
-    }
 
     /**
      * `0`以上の値を対象とする[Int]の[BiCodec]

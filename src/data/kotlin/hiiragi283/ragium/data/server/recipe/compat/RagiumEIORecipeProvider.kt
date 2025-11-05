@@ -52,7 +52,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_BA
             .alloying(
                 resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL),
                 itemCreator.fromTagKey(Tags.Items.END_STONES),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.END_STEEL),
+                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.DARK_STEEL),
                 itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
             ).save(output)
 

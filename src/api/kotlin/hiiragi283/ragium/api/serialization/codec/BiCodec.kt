@@ -16,6 +16,7 @@ import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Supplier
+import java.util.function.UnaryOperator
 
 /**
  * [Codec]と[StreamCodec]を束ねたデータクラス
@@ -253,6 +254,11 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     )
 
     fun validate(validator: Function<V, Result<V>>): BiCodec<B, V> = flatXmap(validator, validator)
+
+    fun validate(validator: UnaryOperator<V>): BiCodec<B, V> = flatXmap(
+        { it.runCatching(validator::apply) },
+        { it.runCatching(validator::apply) },
+    )
 
     fun <E : Any> dispatch(
         typeKey: String,
