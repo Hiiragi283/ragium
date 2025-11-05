@@ -1,6 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:turtle_spawn_egg",
+  "catalyst": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:turtle"
+  },
   "ingredient": {
     "count": 8,
     "items": "minecraft:seagrass"

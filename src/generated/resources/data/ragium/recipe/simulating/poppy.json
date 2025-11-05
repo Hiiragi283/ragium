@@ -1,6 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:iron_golem_spawn_egg",
+  "catalyst": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:iron_golem"
+  },
   "ingredient": "#c:fertilizers",
   "result": {
     "count": 1,

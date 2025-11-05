@@ -8,6 +8,6 @@ import net.minecraft.world.item.crafting.RecipeType
 interface HTFluidTransformRecipe :
     HTFluidRecipe<HTItemWithFluidRecipeInput>,
     HTItemIngredient.CountGetter,
-    HTFluidIngredient.CountGetter {
+    HTFluidIngredient.AmountGetter {
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.FLUID_TRANSFORM.get()
 }

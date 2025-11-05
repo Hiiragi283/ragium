@@ -1,6 +1,14 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:dragon_head",
+  "catalyst": [
+    {
+      "item": "minecraft:dragon_head"
+    },
+    {
+      "type": "ragium:entity_type",
+      "entities": "minecraft:ender_dragon"
+    }
+  ],
   "ingredient": "minecraft:glass_bottle",
   "result": {
     "count": 1,

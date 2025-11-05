@@ -1,6 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:warden_spawn_egg",
+  "catalyst": {
+    "type": "ragium:entity_type",
+    "entities": "#ragium:generate_resonant_debris"
+  },
   "ingredient": {
     "count": 8,
     "items": "minecraft:deepslate"

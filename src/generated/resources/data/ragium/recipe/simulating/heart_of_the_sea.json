@@ -1,6 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:elder_guardian_spawn_egg",
+  "catalyst": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:elder_guardian"
+  },
   "ingredient": "ragium:elder_heart",
   "result": {
     "count": 1,

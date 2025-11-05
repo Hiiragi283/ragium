@@ -7,13 +7,29 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
 /**
  * [HTItemIngredient]を返す[HTIngredientCreator]の拡張インターフェース
  * @see mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
  */
 interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> {
+    override fun fromSet(holderSet: HolderSet<Item>, amount: Int): HTItemIngredient = HTItemIngredient.of(holderSet, amount)
+
+    // Vanilla Ingredient
+    fun fromVanilla(vararg ingredients: Ingredient, count: Int = 1): HTItemIngredient =
+        fromVanilla(CompoundIngredient.of(*ingredients), count)
+
+    fun fromVanilla(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredient = fromVanilla(ingredient.toVanilla(), count)
+
+    fun fromVanilla(ingredient: Ingredient, count: Int = 1): HTItemIngredient {
+        require(!ingredient.isEmpty) { "Empty ingredient is not valid for HTItemIngredient" }
+        return HTItemIngredient.of(ingredient, count)
+    }
+
     // Default Count
     fun fromItem(item: ItemLike, count: Int = 1): HTItemIngredient = from(item.asItem(), count)
 
@@ -33,7 +49,7 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
 
     fun fromTagKeys(tagKeys: Iterable<TagKey<Item>>): HTItemIngredient = fromTagKeys(tagKeys, 1)
 
-    // material
+    // Material
     fun fromTagKey(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTItemIngredient =
         fromTagKey(prefix.itemTagKey(material), count)
 

@@ -1,10 +1,8 @@
 package hiiragi283.ragium.api.data.recipe.ingredient
 
 import hiiragi283.ragium.api.recipe.ingredient.HTIngredient
-import hiiragi283.ragium.api.serialization.codec.BiCodec
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
 
 /**
@@ -36,7 +34,4 @@ interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<TYPE, *>> {
     fun fromTagKeys(vararg tagKeys: TagKey<TYPE>, amount: Int): INGREDIENT = fromTagKeys(tagKeys.toList(), amount)
 
     fun fromTagKeys(tagKeys: Iterable<TagKey<TYPE>>, amount: Int): INGREDIENT
-
-    // Codec
-    fun codec(): BiCodec<RegistryFriendlyByteBuf, INGREDIENT>
 }
