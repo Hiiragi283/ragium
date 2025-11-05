@@ -28,7 +28,7 @@ fun interface HTItemHandler : HTSidedItemHandler {
         side: Direction?,
     ): ItemStack {
         val slot: HTItemSlot = getItemSlot(slot, side) ?: return stack
-        return slot.insert(stack.toImmutable(), action, HTStorageAccess.forHandler(side))?.unwrap() ?: stack
+        return slot.insert(stack.toImmutable(), action, HTStorageAccess.forHandler(side))?.unwrap() ?: ItemStack.EMPTY
     }
 
     override fun extractItem(
