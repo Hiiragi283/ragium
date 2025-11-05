@@ -18,6 +18,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumWashingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumEIORecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumImmersiveRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumKaleidoRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumMagitechRecipeProvider
@@ -48,6 +49,7 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumEIORecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumImmersiveRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumKaleidoRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMagitechRecipeProvider.buildRecipes(recipeOutput, holderLookup)

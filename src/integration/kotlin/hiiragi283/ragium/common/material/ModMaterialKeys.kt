@@ -43,7 +43,18 @@ object ModMaterialKeys {
     }
 
     enum class Alloys : HTMaterialLike {
-        // Immersive Engineering,
+        // Ender IO
+        CONDUCTIVE_ALLOY,
+        COPPER_ALLOY,
+        DARK_STEEL,
+        END_STEEL,
+        ENERGETIC_ALLOY,
+        PULSATING_ALLOY,
+        REDSTONE_ALLOY,
+        SOULARIUM,
+        VIBRANT_ALLOY,
+
+        // Immersive Engineering
         HOP_GRAPHITE,
 
         // Mekanism
@@ -74,6 +85,14 @@ object ModMaterialKeys {
 
         // Ars Nouveau
         SOURCE,
+
+        // Ender IO
+        ENDER_CRYSTAL,
+        ENTICING_CRYSTAL,
+        PRESCIENT_CRYSTAL,
+        PULSATING_CRYSTAL,
+        VIBRANT_CRYSTAL,
+        WEATHER_CRYSTAL,
 
         // EvilCraft
         DARK_GEM,

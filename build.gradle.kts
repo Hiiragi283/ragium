@@ -223,6 +223,15 @@ dependencies {
 
     implementation(libs.immersive.get().toString() + ":datagen")
     implementation(libs.mek.get().toString() + ":all")
+
+    listOf(
+        "endercore",
+        "enderio-base",
+        "enderio-machines",
+    ).forEach { name: String ->
+        implementation("com.enderio:$name:${libs.versions.ender.io.get()}")
+    }
+
     implementation(libs.oritech) {
         exclude(group = "curse.maven")
         exclude(group = "io.wispforest")
