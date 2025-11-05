@@ -1,12 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -25,7 +24,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         // Echo Shard
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
-                itemCreator.fromTagKey(HTItemMaterialVariant.GEM, HTVanillaMaterialType.AMETHYST),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
                 itemCreator.fromItem(Items.SCULK_CATALYST),
                 resultHelper.item(Items.ECHO_SHARD),
             ).save(output)
@@ -136,7 +135,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystToItemRecipeBuilder
             .simulating(
                 itemCreator.fromItem(RagiumItems.WITHER_DOLl),
-                itemCreator.fromTagKey(HTStorageMaterialVariant, RagiumMaterialType.IRIDESCENTIUM),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
                 resultHelper.item(Tags.Items.NETHER_STARS),
             ).save(output)
     }

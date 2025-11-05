@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.network
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTExperienceScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.storage.experience.IExperienceStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
@@ -32,8 +32,8 @@ data class HTUpdateExperienceStoragePacket private constructor(val pos: BlockPos
 
         @JvmStatic
         fun create(blockEntity: HTBlockEntity): HTUpdateExperienceStoragePacket? {
-            val storage: IExperienceStorage = blockEntity.getExperienceStorage(null) ?: return null
-            return HTUpdateExperienceStoragePacket(blockEntity.blockPos, storage.getExpStored())
+            val tank: HTExperienceTank = blockEntity.getExpTank(0, null) ?: return null
+            return HTUpdateExperienceStoragePacket(blockEntity.blockPos, tank.getAmount())
         }
     }
 

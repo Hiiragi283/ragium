@@ -37,7 +37,7 @@ class RagiumAlmostUnifiedPlugin : AlmostUnifiedPlugin {
                     HTKeyOrTagHelper.INSTANCE
                         .codec(Registries.ITEM)
                         .decode(JsonOps.INSTANCE, result.getAsJsonPrimitive(RecipeConstants.ID))
-                        .onSuccess { entry: HTKeyOrTagEntry<Item> ->
+                        .ifSuccess { entry: HTKeyOrTagEntry<Item> ->
                             changed = entry.map(
                                 { _: ResourceKey<Item> -> helper.unifyOutputItem(result) },
                                 { tagKey: TagKey<Item> -> helper.handleTagToItemReplacement(result, RecipeConstants.ID, tagKey) },

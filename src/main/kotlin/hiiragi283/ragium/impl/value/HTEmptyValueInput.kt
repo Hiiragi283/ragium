@@ -1,10 +1,10 @@
 package hiiragi283.ragium.impl.value
 
-import hiiragi283.ragium.api.serialization.codec.BiCodec
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 
 internal object HTEmptyValueInput : HTValueInput {
-    override fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? = null
+    override fun <T : Any> read(key: String, codec: Codec<T>): T? = null
 
     override fun child(key: String): HTValueInput? = null
 
@@ -14,10 +14,10 @@ internal object HTEmptyValueInput : HTValueInput {
 
     override fun childrenListOrEmpty(key: String): HTValueInput.ValueInputList = EmptyInputList
 
-    override fun <T : Any> list(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T>? = null
+    override fun <T : Any> list(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T>? = null
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T> = emptyTypedList()
+    override fun <T : Any> listOrEmpty(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T> = emptyTypedList()
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean = defaultValue
 

@@ -14,15 +14,11 @@ object BiCodecs {
      * @param range 値の範囲
      * @return [range]に範囲を制限された[BiCodec]
      */
-    fun <B : ByteBuf, N> BiCodec<B, N>.ranged(range: ClosedRange<N>): BiCodec<B, N> where N : Number, N : Comparable<N> {
-        val range1: (N) -> Result<N> = { value: N ->
-            runCatching {
-                check(value in range) { "Value $value outside of range [$range]" }
-                value
-            }
+    fun <B : ByteBuf, N> BiCodec<B, N>.ranged(range: ClosedRange<N>): BiCodec<B, N> where N : Number, N : Comparable<N> =
+        this.validate { value: N ->
+            check(value in range) { "Value $value outside of range [$range]" }
+            value
         }
-        return this.flatXmap(range1, range1)
-    }
 
     /**
      * `0`以上の値を対象とする[Int]の[BiCodec]
@@ -96,7 +92,7 @@ object BiCodecs {
 
     @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
-        NON_NEGATIVE_INT.comapFlatMap({ value: Int -> runCatching { values.get()[value] } }, Enum<V>::ordinal)
+        NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
 }
 
 /**
@@ -105,10 +101,7 @@ object BiCodecs {
  * @param V [X]を継承したクラス
  * @return [X]を対象とした[BiCodec]
  */
-inline fun <B : ByteBuf, reified X : Any, reified V : X> BiCodec<B, V>.downCast(): BiCodec<B, X> =
-    this.flatComapMap({ it as X }, { runCatching { it as V } })
-
-fun <T : Any> resultToData(): (Result<T>) -> DataResult<T> = Result<T>::toData
+inline fun <B : ByteBuf, reified X : Any, reified V : X> BiCodec<B, V>.downCast(): BiCodec<B, X> = this.flatXmap({ it as X }, { it as V })
 
 fun <T : Any> Result<T>.toData(): DataResult<T> = fold(DataResult<T>::success) { throwable: Throwable ->
     DataResult.error { throwable.message ?: "Thrown exception" }

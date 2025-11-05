@@ -12,7 +12,13 @@
   "ingredients": [
     {
       "count": 3,
-      "items": "#c:ingots/copper"
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/copper",
+          "#c:ingots/copper"
+        ]
+      }
     },
     {
       "type": "neoforge:or",

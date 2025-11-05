@@ -26,6 +26,7 @@ import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEntityTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
+import hiiragi283.ragium.impl.material.RagiumMaterialManager
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
@@ -47,6 +48,8 @@ object RagiumDatagen {
             add(RagiumAPI.BREWING_EFFECT_KEY, RagiumBrewingEffectProvider)
             add(RagiumAPI.SOLAR_POWER_KEY, RagiumSolarPowerProvider)
         }
+
+        RagiumMaterialManager.gatherAttributes()
 
         // server
         context.addProvider(

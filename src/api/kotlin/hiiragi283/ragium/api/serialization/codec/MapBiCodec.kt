@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.StreamCodec
 import java.util.function.BiFunction
 import java.util.function.Function
+import java.util.function.UnaryOperator
 
 /**
  * [MapCodec]と[StreamCodec]を束ねたデータクラス
@@ -136,10 +137,10 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
      * @param from [S]から[V]の[Result]にに変換するブロック
      * @return [S]を対象とする[MapBiCodec]
      */
-    fun <S : Any> flatXmap(to: Function<V, Result<S>>, from: Function<S, Result<V>>): MapBiCodec<B, S> = of(
-        codec.flatXmap(to.andThen(resultToData()), from.andThen(resultToData())),
-        streamCodec.flatMap(to, from),
+    fun <S : Any> flatXmap(to: Function<V, S>, from: Function<S, V>): MapBiCodec<B, S> = of(
+        codec.flatXmap({ it.runCatching(to::apply).toData() }, { it.runCatching(from::apply).toData() }),
+        streamCodec.map({ it.let(to::apply) }, { it.let(from::apply) }),
     )
 
-    fun validate(validator: Function<V, Result<V>>): MapBiCodec<B, V> = flatXmap(validator, validator)
+    fun validate(validator: UnaryOperator<V>): MapBiCodec<B, V> = flatXmap(validator::apply, validator::apply)
 }

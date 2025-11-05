@@ -71,7 +71,7 @@ object RagiumConst {
     //    Nbt    //
 
     const val ACCESS_CONFIG = "access_config"
-    const val LAST_RECIPE = "last_recipe"
+    const val ENCHANTMENT = "enchantment"
     const val OWNER = "owner"
 
     const val ITEM = "item"
@@ -84,6 +84,9 @@ object RagiumConst {
 
     const val AMOUNT = "amount"
     const val CAPACITY = "capacity"
+
+    const val BATTERIES = "batteries"
+    const val EXPERIENCES = "experiences"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 

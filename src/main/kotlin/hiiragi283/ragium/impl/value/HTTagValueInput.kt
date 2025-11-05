@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.value
 
-import hiiragi283.ragium.api.serialization.codec.BiCodec
+import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.serialization.resultOrNull
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -37,9 +38,9 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         //    HTNbtInput    //
 
-        override fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? {
+        override fun <T : Any> read(key: String, codec: Codec<T>): T? {
             val tagIn: Tag = compoundTag.get(key) ?: return null
-            return codec.decode(registryOps, tagIn).getOrNull()
+            return codec.parse(registryOps, tagIn).resultOrNull()
         }
 
         override fun child(key: String): HTValueInput? {
@@ -59,7 +60,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         override fun childrenListOrEmpty(key: String): HTValueInput.ValueInputList = childrenList(key) ?: HTEmptyValueInput.EmptyInputList
 
-        override fun <T : Any> list(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T>? {
+        override fun <T : Any> list(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T>? {
             val tagIn: ListTag = getTypedTag(key, ListTag.TYPE) ?: return null
             return when {
                 tagIn.isEmpty() -> null
@@ -67,7 +68,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
             }
         }
 
-        override fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): HTValueInput.TypedInputList<T> =
+        override fun <T : Any> listOrEmpty(key: String, codec: Codec<T>): HTValueInput.TypedInputList<T> =
             list(key, codec) ?: HTEmptyValueInput.emptyTypedList()
 
         override fun getBoolean(key: String, defaultValue: Boolean): Boolean {
@@ -137,7 +138,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         //    TypedInputList    //
 
-        private class TypedInputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: BiCodec<*, T>) :
+        private class TypedInputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
             HTValueInput.TypedInputList<T> {
             private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
 
@@ -146,7 +147,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
             override fun iterator(): Iterator<T> = list
                 .mapNotNull { tag: Tag ->
-                    codec.decode(registryOps, tag).getOrNull()
+                    codec.parse(registryOps, tag).resultOrNull()
                 }.iterator()
         }
     }

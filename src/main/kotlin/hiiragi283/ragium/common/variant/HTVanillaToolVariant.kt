@@ -1,100 +1,57 @@
 package hiiragi283.ragium.common.variant
 
-import hiiragi283.ragium.api.collection.ImmutableTable
-import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslationProvider
-import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
+import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.PickaxeItem
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
-import net.minecraft.world.item.Tier
 
 enum class HTVanillaToolVariant(
     private val enPattern: String,
     private val jaPattern: String,
     override val tagKeys: Iterable<TagKey<Item>>,
-) : HTToolVariant,
-    HTTranslationProvider {
+) : HTToolVariant {
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
-        override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-            register.registerItemWith("${material.materialName()}_shovel", tier, ::ShovelItem) {
-                it.attributes(DiggerItem.createAttributes(tier, 1.5f, -3f))
+        override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
+            register.registerItemWith("${material.asMaterialName()}_shovel", material, ::ShovelItem) {
+                it.attributes(DiggerItem.createAttributes(material, material.getShovelDamage(), material.getShovelAttackSpeed()))
             }
     },
     PICKAXE("%s Pickaxe", "%sのツルハシ", ItemTags.PICKAXES) {
-        override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-            register.registerItemWith("${material.materialName()}_pickaxe", tier, ::PickaxeItem) {
-                it.attributes(DiggerItem.createAttributes(tier, 1f, -2.8f))
+        override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
+            register.registerItemWith("${material.asMaterialName()}_pickaxe", material, ::PickaxeItem) {
+                it.attributes(DiggerItem.createAttributes(material, material.getPickaxeDamage(), material.getPickaxeAttackSpeed()))
             }
     },
     AXE("%s Axe", "%sの斧", ItemTags.AXES) {
-        override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-            register.registerItemWith("${material.materialName()}_axe", tier, ::AxeItem) {
-                it.attributes(DiggerItem.createAttributes(tier, 6f, -3.1f))
+        override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
+            register.registerItemWith("${material.asMaterialName()}_axe", material, ::AxeItem) {
+                it.attributes(DiggerItem.createAttributes(material, material.getAxeDamage(), material.getAxeAttackSpeed()))
             }
     },
     HOE("%s Hoe", "%sのクワ", ItemTags.HOES) {
-        override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-            register.registerItemWith("${material.materialName()}_hoe", tier, ::HoeItem) {
-                it.attributes(DiggerItem.createAttributes(tier, -2f, -1f))
+        override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
+            register.registerItemWith("${material.asMaterialName()}_hoe", material, ::HoeItem) {
+                it.attributes(DiggerItem.createAttributes(material, material.getHoeDamage(), material.getHoeAttackSpeed()))
             }
     },
     SWORD("%s Sword", "%sの剣", ItemTags.SWORDS) {
-        override fun registerItem(register: HTDeferredItemRegister, material: HTMaterialType, tier: Tier): HTDeferredItem<*> =
-            register.registerItemWith("${material.materialName()}_sword", tier, ::SwordItem) {
-                it.attributes(SwordItem.createAttributes(tier, 3f, -2.4f))
+        override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
+            register.registerItemWith("${material.asMaterialName()}_sword", material, ::SwordItem) {
+                it.attributes(SwordItem.createAttributes(material, material.getSwordDamage(), material.getSwordAttackSpeed()))
             }
     }, ;
 
     constructor(enPattern: String, jaPattern: String, tagKey: TagKey<Item>) : this(enPattern, jaPattern, listOf(tagKey))
-
-    companion object {
-        val TOOL_TABLE: ImmutableTable<HTVanillaToolVariant, HTVanillaMaterialType, Item> = buildTable {
-            // Wooden
-            this[SHOVEL, HTVanillaMaterialType.WOOD] = Items.WOODEN_SHOVEL
-            this[PICKAXE, HTVanillaMaterialType.WOOD] = Items.WOODEN_PICKAXE
-            this[AXE, HTVanillaMaterialType.WOOD] = Items.WOODEN_AXE
-            this[HOE, HTVanillaMaterialType.WOOD] = Items.WOODEN_HOE
-            this[SWORD, HTVanillaMaterialType.WOOD] = Items.WOODEN_SWORD
-            // Stone
-            // Iron
-            this[SHOVEL, HTVanillaMaterialType.IRON] = Items.IRON_SHOVEL
-            this[PICKAXE, HTVanillaMaterialType.IRON] = Items.IRON_PICKAXE
-            this[AXE, HTVanillaMaterialType.IRON] = Items.IRON_AXE
-            this[HOE, HTVanillaMaterialType.IRON] = Items.IRON_HOE
-            this[SWORD, HTVanillaMaterialType.IRON] = Items.IRON_SWORD
-            // Golden
-            this[SHOVEL, HTVanillaMaterialType.GOLD] = Items.GOLDEN_SHOVEL
-            this[PICKAXE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_PICKAXE
-            this[AXE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_AXE
-            this[HOE, HTVanillaMaterialType.GOLD] = Items.GOLDEN_HOE
-            this[SWORD, HTVanillaMaterialType.GOLD] = Items.GOLDEN_SWORD
-            // Diamond
-            this[SHOVEL, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_SHOVEL
-            this[PICKAXE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_PICKAXE
-            this[AXE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_AXE
-            this[HOE, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_HOE
-            this[SWORD, HTVanillaMaterialType.DIAMOND] = Items.DIAMOND_SWORD
-            // Netherite
-            this[SHOVEL, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_SHOVEL
-            this[PICKAXE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_PICKAXE
-            this[AXE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_AXE
-            this[HOE, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_HOE
-            this[SWORD, HTVanillaMaterialType.NETHERITE] = Items.NETHERITE_SWORD
-        }
-    }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
         HTLanguageType.EN_US -> enPattern

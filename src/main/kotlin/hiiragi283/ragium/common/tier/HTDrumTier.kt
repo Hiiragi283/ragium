@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.tier
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
+import hiiragi283.ragium.api.data.lang.HTLangPatternProvider
 import hiiragi283.ragium.api.data.lang.HTLanguageType
-import hiiragi283.ragium.api.data.lang.HTTranslationProvider
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tier.HTTierProvider
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
+import hiiragi283.ragium.common.entity.vehicle.HTMinecart
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -22,7 +23,7 @@ import hiiragi283.ragium.setup.RagiumItems
 
 enum class HTDrumTier(private val enPattern: String, private val jaPattern: String) :
     HTTierProvider,
-    HTTranslationProvider {
+    HTLangPatternProvider {
     SMALL("Small Drum", "小型ドラム"),
     MEDIUM("Medium Drum", "中型ドラム"),
     LARGE("Large Drum", "大型ドラム"),
@@ -43,6 +44,14 @@ enum class HTDrumTier(private val enPattern: String, private val jaPattern: Stri
     fun getBlockEntityType(): HTDeferredBlockEntityType<HTDrumBlockEntity> = RagiumBlockEntityTypes.DRUMS[this]!!
 
     fun getEntityType(): HTDeferredEntityType<HTDrumMinecart> = RagiumEntityTypes.DRUMS[this]!!
+
+    fun getMinecartFactory(): HTMinecart.Factory = when (this) {
+        SMALL -> HTMinecart.Factory(HTDrumMinecart::Small)
+        MEDIUM -> HTMinecart.Factory(HTDrumMinecart::Medium)
+        LARGE -> HTMinecart.Factory(HTDrumMinecart::Large)
+        HUGE -> HTMinecart.Factory(HTDrumMinecart::Huge)
+        CREATIVE -> HTMinecart.Factory(HTDrumMinecart::Creative)
+    }
 
     fun getMinecartItem(): HTSimpleDeferredItem = RagiumItems.DRUM_MINECARTS[this]!!
 

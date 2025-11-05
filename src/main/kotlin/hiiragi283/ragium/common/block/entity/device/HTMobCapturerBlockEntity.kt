@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -27,7 +27,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
     override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
         inputSlot = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
+            HTSlotInfo.INPUT,
             HTItemStackSlot.input(
                 listener,
                 HTSlotHelper.getSlotPosX(2),
@@ -37,7 +37,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
         )
         outputSlots = (0..<9).map { i: Int ->
             builder.addSlot(
-                HTAccessConfig.OUTPUT_ONLY,
+                HTSlotInfo.OUTPUT,
                 HTOutputItemStackSlot.create(
                     listener,
                     HTSlotHelper.getSlotPosX(4 + i % 3),

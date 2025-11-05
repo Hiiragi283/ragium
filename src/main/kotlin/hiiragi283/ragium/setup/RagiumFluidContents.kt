@@ -6,8 +6,7 @@ import hiiragi283.ragium.api.function.negate
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.fluid.HTFluidType
-import hiiragi283.ragium.common.material.RagiumMaterialType
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
@@ -164,7 +163,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(HTItemMaterialVariant.GEM, RagiumMaterialType.CRIMSON_CRYSTAL)
+                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             },
         )
 
@@ -175,7 +174,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(HTItemMaterialVariant.GEM, RagiumMaterialType.WARPED_CRYSTAL)
+                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             },
         )
 

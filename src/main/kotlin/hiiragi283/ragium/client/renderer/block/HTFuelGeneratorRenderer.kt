@@ -1,11 +1,13 @@
 package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
+import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.core.Direction
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
@@ -23,10 +25,12 @@ class HTFuelGeneratorRenderer(context: BlockEntityRendererProvider.Context) :
         packedLight: Int,
         packedOverlay: Int,
     ) {
+        val front: Direction = blockEntity.blockState.getAttributeFront() ?: return
         val renderType: RenderType = model.renderType(blockEntity.blockHolder)
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
-        poseStack.scale(-1f, -1f, 1f)
+        poseStack.scale(1f, -1f, -1f)
+        poseStack.mulPose(front.rotation)
         val time: Float = when {
             blockEntity.isActive -> blockEntity.ticks + partialTick
             else -> 0f

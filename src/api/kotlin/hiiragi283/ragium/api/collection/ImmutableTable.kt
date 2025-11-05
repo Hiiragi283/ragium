@@ -53,10 +53,7 @@ value class ImmutableTable<R : Any, C : Any, V : Any>(private val table: Table<R
     class Builder<R : Any, C : Any, V : Any>(initialRow: Int = 10, initialColumn: Int = 10) {
         private val values: Table<R, C, V> = HashBasedTable.create<R, C, V>(initialRow, initialColumn)
 
-        fun put(row: R, column: C, value: V): Builder<R, C, V> {
-            values.put(row, column, value)
-            return this
-        }
+        fun put(row: R, column: C, value: V): V? = values.put(row, column, value)
 
         operator fun set(row: R, column: C, value: V) {
             put(row, column, value)
@@ -65,6 +62,40 @@ value class ImmutableTable<R : Any, C : Any, V : Any>(private val table: Table<R
         fun putAll(table: ImmutableTable<R, C, V>): Builder<R, C, V> {
             table.forEach { (r: R, c: C, v: V) -> this.values.put(r, c, v) }
             return this
+        }
+
+        /**
+         * @see MutableMap.compute
+         */
+        fun compute(row: R, column: C, mapping: (R, C, V?) -> V?): V? {
+            val oldValue: V? = values.get(row, column)
+            val newValue: V? = mapping(row, column, oldValue)
+            values.put(row, column, newValue)
+            return newValue
+        }
+
+        /**
+         * @see MutableMap.computeIfPresent
+         */
+        fun computeIfPresent(row: R, column: C, mapping: (R, C, V) -> V?): V? {
+            val oldValue: V = values.get(row, column) ?: return null
+            val newValue: V? = mapping(row, column, oldValue)
+            values.put(row, column, newValue)
+            return newValue
+        }
+
+        /**
+         * @see MutableMap.computeIfAbsent
+         */
+        fun computeIfAbsent(row: R, column: C, mapping: (R, C) -> V): V {
+            val oldValue: V? = values.get(row, column)
+            if (oldValue == null) {
+                val newValue: V = mapping(row, column)
+                values.put(row, column, newValue)
+                return newValue
+            } else {
+                return oldValue
+            }
         }
 
         fun build(): ImmutableTable<R, C, V> = ImmutableTable(values)

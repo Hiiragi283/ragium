@@ -16,9 +16,10 @@ object RagiumReplicationAddon : RagiumAddon {
     val MATTER_REGISTER = HTDeferredMatterTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val MATTER_MAP: Map<RagiumEssenceType, HTDeferredMatterType<IMatterType>> = RagiumEssenceType.entries.associateWith { type ->
-        MATTER_REGISTER.registerType(type.materialName(), type.color, 128)
-    }
+    val MATTER_MAP: Map<RagiumEssenceType, HTDeferredMatterType<IMatterType>> =
+        RagiumEssenceType.entries.associateWith { type: RagiumEssenceType ->
+            MATTER_REGISTER.registerType(type.asMaterialName(), type.color, 128)
+        }
 
     @JvmStatic
     fun getMatterType(essence: RagiumEssenceType): HTDeferredMatterType<IMatterType> = MATTER_MAP[essence]!!

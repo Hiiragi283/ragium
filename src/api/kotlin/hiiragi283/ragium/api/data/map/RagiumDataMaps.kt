@@ -5,12 +5,17 @@ import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+
+typealias IdMapDataMap<R, V> = AdvancedDataMapType<R, Map<ResourceLocation, V>, MapDataMapValueRemover<R, V>>
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
@@ -38,6 +43,9 @@ interface RagiumDataMaps {
 
         @JvmField
         val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+
+        @JvmField
+        val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> = INSTANCE.materialRecipeType
     }
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
@@ -47,6 +55,8 @@ interface RagiumDataMaps {
     val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
+
+    val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData>
 
     /**
      * 指定した引数からデータを取得します。

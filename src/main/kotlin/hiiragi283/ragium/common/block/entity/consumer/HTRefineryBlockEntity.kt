@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -41,12 +41,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         // input
         inputSlot = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
+            HTSlotInfo.INPUT,
             HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0)),
         )
         // output
         outputSlot = builder.addSlot(
-            HTAccessConfig.OUTPUT_ONLY,
+            HTSlotInfo.OUTPUT,
             HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2)),
         )
         return builder.build()
@@ -60,11 +60,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
         inputTank = builder.addSlot(
-            HTAccessConfig.INPUT_ONLY,
+            HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity),
         )
         outputTank = builder.addSlot(
-            HTAccessConfig.OUTPUT_ONLY,
+            HTSlotInfo.OUTPUT,
             HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity),
         )
         return builder.build()

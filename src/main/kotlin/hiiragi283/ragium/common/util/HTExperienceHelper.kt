@@ -2,9 +2,14 @@ package hiiragi283.ragium.common.util
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.storage.experience.tank.HTExperienceHandlerItemWrapper
 import it.unimi.dsi.fastutil.longs.Long2LongArrayMap
 import net.minecraft.world.entity.player.Player
 import kotlin.math.max
@@ -13,6 +18,8 @@ import kotlin.math.max
  * @see me.desht.pneumaticcraft.common.util.EnchantmentUtils
  */
 object HTExperienceHelper {
+    //    Player    //
+
     @JvmStatic
     fun getPlayerExp(player: Player): Long =
         getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toLong()
@@ -62,24 +69,56 @@ object HTExperienceHelper {
         }
     }
 
-    fun moveExp(
-        from: HTExperienceStorage?,
-        to: HTExperienceStorage?,
+    //    Interaction    //
+
+    @JvmStatic
+    fun moveExperience(
+        from: HTExperienceTank?,
+        to: HTExperienceTank?,
         amount: Long = from?.getAmount() ?: 0,
         access: HTStorageAccess = HTStorageAccess.INTERNAL,
-    ): Long {
-        if (from == null || to == null || amount <= 0) return 0
-        val simulatedExtracted: Long = from.extractExp(amount, HTStorageAction.SIMULATE, access)
-        val simulatedInserted: Long = to.insertExp(simulatedExtracted, HTStorageAction.SIMULATE, access)
+    ): Long? {
+        if (from == null || to == null || amount <= 0) return null
+        val simulatedExtracted: Long = from.extract(amount, HTStorageAction.SIMULATE, access)
+        val simulatedInserted: Long = to.insert(simulatedExtracted, HTStorageAction.SIMULATE, access)
 
-        val extracted: Long = from.extractExp(simulatedInserted, HTStorageAction.EXECUTE, access)
-        val remainder: Long = to.insertExp(extracted, HTStorageAction.EXECUTE, access)
+        val extracted: Long = from.extract(simulatedInserted, HTStorageAction.EXECUTE, access)
+        val remainder: Long = to.insert(extracted, HTStorageAction.EXECUTE, access)
         if (remainder > 0) {
-            val leftover: Long = from.insertExp(remainder, HTStorageAction.EXECUTE, access)
+            val leftover: Long = from.insert(remainder, HTStorageAction.EXECUTE, access)
             if (leftover > 0) {
                 RagiumAPI.LOGGER.error("Experience storage $from did not accept leftover amount from $to! Voiding it.")
             }
         }
         return remainder
+    }
+
+    @JvmStatic
+    fun moveExperience(from: HTItemSlot, containerSetter: HTStackSetter<ImmutableItemStack>, to: HTExperienceTank): Boolean {
+        val stack: ImmutableItemStack = from.getStack() ?: return false
+        if (!HTExperienceCapabilities.hasCapability(stack)) return false
+        val wrapper: HTExperienceHandlerItemWrapper = HTExperienceHandlerItemWrapper.create(stack.copyWithAmount(1)) ?: return false
+        return moveExperience(from, containerSetter, wrapper, to)
+    }
+
+    @JvmStatic
+    fun moveExperience(
+        slot: HTItemSlot,
+        containerSetter: HTStackSetter<ImmutableItemStack>,
+        from: HTExperienceHandlerItemWrapper,
+        to: HTExperienceTank,
+    ): Boolean {
+        val result: Long? = moveExperience(from, to)
+        if (result != null) {
+            val container: ImmutableItemStack? = from.container
+            if (container != null) {
+                if (container.amount() == 1) {
+                    containerSetter.setStack(container)
+                } else {
+                    slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
+                }
+            }
+        }
+        return result != null
     }
 }

@@ -48,5 +48,7 @@ interface HTFluidTank : HTStackSlot<ImmutableFluidStack> {
      */
     abstract class Basic :
         HTStackSlot.Basic<ImmutableFluidStack>(),
-        HTFluidTank
+        HTFluidTank {
+        override fun toString(): String = "HTFluidTank(stack=${getStack()}, capacity=${getCapacity()})"
+    }
 }

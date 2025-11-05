@@ -4,14 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTAmountSetter
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.client.gui.component.HTEnergyStorageWidget
 import hiiragi283.ragium.client.gui.component.HTExperienceStorageWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.common.storage.energy.HTBasicEnergyStorage
-import hiiragi283.ragium.common.storage.experience.HTBasicExperienceStorage
+import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
+import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.core.BlockPos
@@ -58,28 +58,28 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
         HTFluidTankWidget.createSlot(tank, tank::setStackUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
 
     fun createEnergyWidget(
-        storage: HTEnergyStorage,
+        battery: HTEnergyBattery,
         amountSetter: HTAmountSetter.IntSized,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
     ): HTEnergyStorageWidget = HTEnergyStorageWidget(
-        storage,
+        battery,
         amountSetter,
         startX + x,
         startY + y,
     ).apply(::addRenderableWidget)
 
     fun createEnergyWidget(
-        storage: HTBasicEnergyStorage,
+        battery: HTBasicEnergyBattery,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
-    ): HTEnergyStorageWidget = createEnergyWidget(storage, storage::setAmountUnchecked, x, y)
+    ): HTEnergyStorageWidget = createEnergyWidget(battery, battery::setAmountUnchecked, x, y)
 
-    fun createExperienceTank(storage: HTBasicExperienceStorage, x: Int, y: Int): HTExperienceStorageWidget =
-        HTExperienceStorageWidget.createTank(storage, storage::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
+    fun createExperienceTank(tank: HTBasicExperienceTank, x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createTank(tank, tank::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
 
-    fun createExperienceSlot(storage: HTBasicExperienceStorage, x: Int, y: Int): HTExperienceStorageWidget =
-        HTExperienceStorageWidget.createSlot(storage, storage::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
+    fun createExperienceSlot(tank: HTBasicExperienceTank, x: Int, y: Int): HTExperienceStorageWidget =
+        HTExperienceStorageWidget.createSlot(tank, tank::setAmountUnchecked, startX + x, startY + y).apply(::addRenderableWidget)
 
     //    Impl    //
 

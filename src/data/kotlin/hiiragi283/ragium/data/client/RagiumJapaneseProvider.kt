@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceStorageProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -159,6 +159,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.TELEPAD, "テレパッド")
 
         add(RagiumBlocks.CEU, "C.E.U.")
+        // Storage
+        add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
     }
 
     private fun enchantment() {
@@ -501,7 +503,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
         add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
         add(HTAccessConfig.BOTH, "モード：双方")
-        add(HTAccessConfig.NONE, "モード：なし")
+        add(HTAccessConfig.DISABLED, "モード：無効")
     }
 
     private fun information() {
@@ -509,9 +511,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
 
         val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.QUARTZ), nonSilkTouch)
-        addInfo(RagiumBlocks.getGlass(HTVanillaMaterialType.SOUL), "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.QUARTZ), nonSilkTouch)
+        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.SOUL), "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
 
         addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         addInfo(RagiumItems.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
@@ -546,7 +548,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
-        add(HTExperienceStorageProvider.ForBlocks, "経験値ストレージ")
+        add(HTExperienceHandlerProvider.ForBlocks, "経験値")
         add(HTBlockOwnerProvider, "ブロックの所有者")
 
         add(RagiumTranslation.JADE_EXP_STORAGE, "経験値: %s")

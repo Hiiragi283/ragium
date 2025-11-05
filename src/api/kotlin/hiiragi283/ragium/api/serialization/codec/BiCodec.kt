@@ -8,8 +8,6 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.DataResultException
-import hiiragi283.ragium.api.function.andThen
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -17,7 +15,7 @@ import net.minecraft.util.ExtraCodecs
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
-import java.util.function.Supplier
+import java.util.function.UnaryOperator
 
 /**
  * [Codec]と[StreamCodec]を束ねたデータクラス
@@ -211,9 +209,9 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
     }
 
     // Encode & Decode
-    fun <T : Any> encode(ops: DynamicOps<T>, input: V): Result<T> = codec.encodeStart(ops, input).toResult()
+    fun <T : Any> encode(ops: DynamicOps<T>, input: V): DataResult<T> = codec.encodeStart(ops, input)
 
-    fun <T : Any> decode(ops: DynamicOps<T>, input: T): Result<V> = codec.parse(ops, input).toResult()
+    fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<V> = codec.parse(ops, input)
 
     fun encode(buf: B, input: V) {
         runCatching {
@@ -236,25 +234,19 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun <S : Any> xmap(to: Function<V, S>, from: Function<S, V>): BiCodec<B, S> = of(codec.xmap(to, from), streamCodec.map(to, from))
 
-    fun <S : Any> comapFlatMap(to: Function<V, Result<S>>, from: Function<S, V>): BiCodec<B, S> =
-        of(codec.comapFlatMap(to.andThen(resultToData()), from), streamCodec.comapFlatMap(to, from))
-
-    fun <S : Any> flatComapMap(to: Function<V, S>, from: Function<S, Result<V>>): BiCodec<B, S> =
-        of(codec.flatComapMap(to, from.andThen(resultToData())), streamCodec.flatComapMap(to, from))
-
     /**
      * 指定された[to]と[from]に基づいて，別の[BiCodec]に変換します。
      * @param S 変換後のコーデックの対象となるクラス
-     * @param to [V]から[S]の[Result]に変換するブロック
-     * @param from [S]から[V]の[Result]にに変換するブロック
+     * @param to [V]から[S]に変換するブロック
+     * @param from [S]から[V]に変換するブロック
      * @return [S]を対象とする[BiCodec]
      */
-    fun <S : Any> flatXmap(to: Function<V, Result<S>>, from: Function<S, Result<V>>): BiCodec<B, S> = of(
-        codec.flatXmap(to.andThen(resultToData()), from.andThen(resultToData())),
-        streamCodec.flatMap(to, from),
+    fun <S : Any> flatXmap(to: Function<V, S>, from: Function<S, V>): BiCodec<B, S> = of(
+        codec.flatXmap({ it.runCatching(to::apply).toData() }, { it.runCatching(from::apply).toData() }),
+        streamCodec.map({ it.let(to::apply) }, { it.let(from::apply) }),
     )
 
-    fun validate(validator: Function<V, Result<V>>): BiCodec<B, V> = flatXmap(validator, validator)
+    fun validate(validator: UnaryOperator<V>): BiCodec<B, V> = flatXmap(validator::apply, validator::apply)
 
     fun <E : Any> dispatch(
         typeKey: String,
@@ -290,11 +282,6 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 
     fun optionalFieldOf(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.optionalFieldOf(name, defaultValue), streamCodec)
-
-    fun optionalFieldOf(name: String, defaultValue: Supplier<V>): MapBiCodec<B, V> = optionalFieldOf(name).xmap(
-        { optional: Optional<V> -> optional.orElseGet(defaultValue) },
-        { value: V -> Optional.of(value).filter { valueIn: V -> value == valueIn } },
-    )
 
     fun optionalOrElseField(name: String, defaultValue: V): MapBiCodec<B, V> =
         MapBiCodec.of(codec.fieldOf(name).orElse(defaultValue), streamCodec)
@@ -346,6 +333,3 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
 
 private fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toOptional(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
-
-private fun <T : Any> DataResult<T>.toResult(exceptionSupplier: (String) -> Exception = ::DataResultException): Result<T> =
-    mapOrElse(Result.Companion::success, DataResult.Error<T>::message.andThen(exceptionSupplier).andThen(Result.Companion::failure))

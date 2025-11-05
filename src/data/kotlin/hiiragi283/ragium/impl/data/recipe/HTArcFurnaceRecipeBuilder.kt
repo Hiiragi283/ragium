@@ -6,8 +6,8 @@ import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
 import blusunrize.immersiveengineering.data.recipes.builder.IERecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.variant.HTMaterialVariant
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -24,11 +24,11 @@ class HTArcFurnaceRecipeBuilder private constructor() :
         private val builder: AlloyRecipeBuilder = AlloyRecipeBuilder.builder()
         private val builder1: ArcFurnaceRecipeBuilder = ArcFurnaceRecipeBuilder.builder()
 
-        fun input(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, count: Int = 1): HTArcFurnaceRecipeBuilder =
-            input(variant.itemTagKey(material), count)
+        fun input(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTArcFurnaceRecipeBuilder =
+            input(prefix.itemTagKey(material), count)
 
-        fun output(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, count: Int = 1): HTArcFurnaceRecipeBuilder =
-            output(variant.itemTagKey(material), count)
+        fun output(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTArcFurnaceRecipeBuilder =
+            output(prefix.itemTagKey(material), count)
 
         //    BaseHelpers    //
 

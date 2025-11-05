@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.recipe.ingredient
 
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
@@ -34,19 +34,15 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
     fun fromTagKeys(tagKeys: Iterable<TagKey<Item>>): HTItemIngredient = fromTagKeys(tagKeys, 1)
 
     // material
-    fun fromTagKey(variant: HTMaterialVariant.ItemTag, material: HTMaterialType, count: Int = 1): HTItemIngredient =
-        fromTagKey(variant.itemTagKey(material), count)
+    fun fromTagKey(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTItemIngredient =
+        fromTagKey(prefix.itemTagKey(material), count)
 
-    fun multiVariants(material: HTMaterialType, vararg variant: HTMaterialVariant.ItemTag, count: Int = 1): HTItemIngredient =
-        fromTagKeys(variant.map { it.itemTagKey(material) }, count)
+    fun multiPrefixes(material: HTMaterialLike, vararg prefix: HTMaterialPrefix, count: Int = 1): HTItemIngredient =
+        fromTagKeys(prefix.map { it.itemTagKey(material) }, count)
 
-    fun fuelOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient
+    fun fuelOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
 
-    fun gemOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient
+    fun gemOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
 
-    fun ingotOrDust(material: HTMaterialType, count: Int = 1): HTItemIngredient
-
-    fun gemOrDust(name: String, count: Int = 1): HTItemIngredient
-
-    fun ingotOrDust(name: String, count: Int = 1): HTItemIngredient
+    fun ingotOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
 }

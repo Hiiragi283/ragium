@@ -5,19 +5,19 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.createItemStack
-import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTMaterialDefinition
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.energy.HTEnergyStorage
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.variant.HTMaterialVariant
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
 import hiiragi283.ragium.common.util.HTAddonHelper
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
+import hiiragi283.ragium.impl.material.RagiumMaterialManager
+import hiiragi283.ragium.impl.material.RagiumMaterialRecipeManager
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeType
 import hiiragi283.ragium.impl.value.HTJsonValueInput
@@ -60,78 +60,18 @@ class RagiumPlatformImpl : RagiumPlatform {
         return addonCache
     }
 
-    private lateinit var mapCache: Map<HTMaterialType, HTMaterialVariant.ItemTag>
-
-    override fun getMaterialMap(): Map<HTMaterialType, HTMaterialVariant.ItemTag> {
-        if (!::mapCache.isInitialized) {
-            mapCache = buildMap {
-                val consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit =
-                    { type: HTMaterialType, variant: HTMaterialVariant.ItemTag ->
-                        check(put(type, variant) == null) { "Duplicate base variant for ${type.materialName()}" }
-                    }
-
-                setupMaterials(consumer)
-
-                for (addon: RagiumAddon in getAddons()) {
-                    addon.registerMaterial(consumer)
-                }
-            }
-        }
-        return mapCache
-    }
-
-    private fun setupMaterials(consumer: (HTMaterialType, HTMaterialVariant.ItemTag) -> Unit) {
-        // Vanilla
-        consumer(HTVanillaMaterialType.COPPER, HTItemMaterialVariant.INGOT)
-        consumer(HTVanillaMaterialType.IRON, HTItemMaterialVariant.INGOT)
-        consumer(HTVanillaMaterialType.GOLD, HTItemMaterialVariant.INGOT)
-        consumer(HTVanillaMaterialType.NETHERITE, HTItemMaterialVariant.INGOT)
-
-        consumer(HTVanillaMaterialType.LAPIS, HTItemMaterialVariant.GEM)
-        consumer(HTVanillaMaterialType.QUARTZ, HTItemMaterialVariant.GEM)
-        consumer(HTVanillaMaterialType.AMETHYST, HTItemMaterialVariant.GEM)
-        consumer(HTVanillaMaterialType.DIAMOND, HTItemMaterialVariant.GEM)
-        consumer(HTVanillaMaterialType.EMERALD, HTItemMaterialVariant.GEM)
-        consumer(HTVanillaMaterialType.ECHO, HTItemMaterialVariant.GEM)
-
-        consumer(HTVanillaMaterialType.COAL, HTItemMaterialVariant.FUEL)
-        consumer(HTVanillaMaterialType.CHARCOAL, HTItemMaterialVariant.FUEL)
-        consumer(HTVanillaMaterialType.REDSTONE, HTItemMaterialVariant.DUST)
-        consumer(HTVanillaMaterialType.OBSIDIAN, HTItemMaterialVariant.DUST)
-        consumer(HTVanillaMaterialType.WOOD, HTItemMaterialVariant.DUST)
-        // Ragium
-        consumer(RagiumMaterialType.RAGINITE, HTItemMaterialVariant.DUST)
-        consumer(RagiumMaterialType.CINNABAR, HTItemMaterialVariant.GEM)
-        consumer(RagiumMaterialType.SALTPETER, HTItemMaterialVariant.DUST)
-        consumer(RagiumMaterialType.SULFUR, HTItemMaterialVariant.DUST)
-
-        consumer(RagiumMaterialType.RAGI_CRYSTAL, HTItemMaterialVariant.GEM)
-        consumer(RagiumMaterialType.AZURE, HTItemMaterialVariant.GEM)
-        consumer(RagiumMaterialType.CRIMSON_CRYSTAL, HTItemMaterialVariant.GEM)
-        consumer(RagiumMaterialType.WARPED_CRYSTAL, HTItemMaterialVariant.GEM)
-        consumer(RagiumMaterialType.ELDRITCH_PEARL, HTItemMaterialVariant.GEM)
-
-        consumer(RagiumMaterialType.RAGI_ALLOY, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.ADVANCED_RAGI_ALLOY, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.AZURE_STEEL, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.DEEP_STEEL, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.GILDIUM, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.IRIDESCENTIUM, HTItemMaterialVariant.INGOT)
-
-        consumer(RagiumMaterialType.CHOCOLATE, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.MEAT, HTItemMaterialVariant.INGOT)
-        consumer(RagiumMaterialType.COOKED_MEAT, HTItemMaterialVariant.INGOT)
-
-        consumer(RagiumMaterialType.COAL_COKE, HTItemMaterialVariant.FUEL)
-        consumer(RagiumMaterialType.PLASTIC, HTItemMaterialVariant.PLATE)
-    }
-
     //    Item    //
 
     override fun createSoda(potion: PotionContents, count: Int): ItemStack =
         createItemStack(RagiumItems.ICE_CREAM_SODA, DataComponents.POTION_CONTENTS, potion, count)
 
+    //    Material    //
+
+    override fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition> = RagiumMaterialManager.definitions
+
     //    Recipe    //
+
+    override fun getMaterialRecipeManager(): HTMaterialRecipeManager = RagiumMaterialRecipeManager
 
     override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(
         finder: HTRecipeFinder<INPUT, RECIPE>,
@@ -148,7 +88,7 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler =
         server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_BUNDLE).getHandler(color)
 
-    override fun getEnergyNetwork(level: Level?): HTEnergyStorage? = when (level) {
+    override fun getEnergyNetwork(level: Level?): HTEnergyBattery? = when (level) {
         is ServerLevel -> level
         else -> level?.dimension()?.let(::getLevel)
     }?.getData(RagiumAttachmentTypes.ENERGY_NETWORK)

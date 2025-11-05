@@ -18,7 +18,6 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.inventory.slot.FluidInventorySlot
  * @see mekanism.common.inventory.slot.IFluidHandlerSlot
- * @see me.desht.pneumaticcraft.common.block.entity.AbstractPneumaticCraftBlockEntity.processFluidItem
  */
 open class HTFluidItemStackSlot protected constructor(
     protected val tank: HTFluidTank,

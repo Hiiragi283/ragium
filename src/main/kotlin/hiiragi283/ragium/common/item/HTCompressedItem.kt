@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
@@ -12,8 +13,8 @@ class HTCompressedItem(properties: Properties) : Item(properties) {
         ItemUtils.onContainerDestroyed(
             itemEntity,
             HTItemCapabilities
-                .getCapabilityStacks(itemEntity.item)
-                .filterNotNull()
+                .getItemSlots(itemEntity.item)
+                .mapNotNull(HTItemSlot::getStack)
                 .map(ImmutableItemStack::unwrap),
         )
     }

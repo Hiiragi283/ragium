@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.serialization.value
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -15,7 +16,18 @@ interface HTValueInput {
      * @param codec [T]のコーデック
      * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
      */
-    fun <T : Any> read(key: String, codec: BiCodec<*, T>): T?
+    fun <T : Any> read(key: String, codec: Codec<T>): T?
+
+    /**
+     * 指定した[key]に紐づいた値を返します。
+     * @param T 戻り値のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
+     */
+    fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? = read(key, codec.codec)
+
+    fun <T : Any> readOptional(key: String, codec: Codec<Optional<T>>): T? = read(key, codec)?.getOrNull()
 
     fun <T : Any> readOptional(key: String, codec: BiCodec<*, Optional<T>>): T? = read(key, codec)?.getOrNull()
 
@@ -56,7 +68,16 @@ interface HTValueInput {
      * @param codec [T]のコーデック
      * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
      */
-    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedInputList<T>?
+    fun <T : Any> list(key: String, codec: Codec<T>): TypedInputList<T>?
+
+    /**
+     * 指定した[key]から[ValueInputList]を返します。
+     * @param T [TypedInputList]の要素のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     * @return 指定した[key]に値がない，[codec]での変換に失敗した場合は`null`
+     */
+    fun <T : Any> list(key: String, codec: BiCodec<*, T>): TypedInputList<T>? = list(key, codec.codec)
 
     /**
      * 指定した[key]から[ValueInputList]を返します。
@@ -64,7 +85,15 @@ interface HTValueInput {
      * @param key 保存先のキー
      * @param codec [T]のコーデック
      */
-    fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): TypedInputList<T>
+    fun <T : Any> listOrEmpty(key: String, codec: Codec<T>): TypedInputList<T>
+
+    /**
+     * 指定した[key]から[ValueInputList]を返します。
+     * @param T [TypedInputList]の要素のクラス
+     * @param key 保存先のキー
+     * @param codec [T]のコーデック
+     */
+    fun <T : Any> listOrEmpty(key: String, codec: BiCodec<*, T>): TypedInputList<T> = listOrEmpty(key, codec.codec)
 
     // Primitives
 

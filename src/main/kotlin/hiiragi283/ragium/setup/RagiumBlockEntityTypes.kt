@@ -6,10 +6,10 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
+import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
@@ -45,6 +45,8 @@ import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEnti
 import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
@@ -275,15 +277,18 @@ object RagiumBlockEntityTypes {
     @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTDrumBlockEntity(tier.getBlock(), pos, state) }
+            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
         }
+
+    @JvmField
+    val EXP_DRUM: HTDeferredBlockEntityType<HTExpDrumBlockEntity> = registerTick("experience_drum", ::HTExpDrumBlockEntity)
 
     //    Event    //
 
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        for (holder: HTDeferredHolder<Block, *> in RagiumBlocks.REGISTER.firstEntries) {
+        for (holder: HTDeferredOnlyBlock<*> in RagiumBlocks.REGISTER.blockEntries) {
             val block: Block? = holder.get()
             if (block is HTTypedEntityBlock<*>) {
                 event.modify(block.getBlockEntityType().get(), block)
@@ -345,6 +350,7 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
             registerHandler(event, type.get())
         }
+        registerHandler(event, EXP_DRUM.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
@@ -354,6 +360,6 @@ object RagiumBlockEntityTypes {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
-        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceStorage)
+        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceHandler)
     }
 }

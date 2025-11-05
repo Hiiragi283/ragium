@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.storage.HTAmountSetter
-import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.text.addExperienceTooltip
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -18,7 +18,7 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTExperienceStorageWidget(
     private val background: (GuiGraphics, HTBounds) -> Unit,
-    private val storage: HTExperienceStorage,
+    private val tank: HTExperienceTank,
     private val amountSetter: HTAmountSetter.LongSized,
     x: Int,
     y: Int,
@@ -29,13 +29,13 @@ class HTExperienceStorageWidget(
     companion object {
         @JvmStatic
         fun createSlot(
-            storage: HTExperienceStorage,
+            tank: HTExperienceTank,
             amountSetter: HTAmountSetter.LongSized,
             x: Int,
             y: Int,
         ): HTExperienceStorageWidget = HTExperienceStorageWidget(
             { _, _ -> },
-            storage,
+            tank,
             amountSetter,
             x,
             y,
@@ -45,7 +45,7 @@ class HTExperienceStorageWidget(
 
         @JvmStatic
         fun createTank(
-            storage: HTExperienceStorage,
+            tank: HTExperienceTank,
             amountSetter: HTAmountSetter.LongSized,
             x: Int,
             y: Int,
@@ -63,7 +63,7 @@ class HTExperienceStorageWidget(
                     bounds.height + 2,
                 )
             },
-            storage,
+            tank,
             amountSetter,
             x,
             y,
@@ -72,7 +72,7 @@ class HTExperienceStorageWidget(
         )
     }
 
-    override fun shouldRender(): Boolean = !storage.isEmpty()
+    override fun shouldRender(): Boolean = !tank.isEmpty()
 
     override fun getSprite(): TextureAtlasSprite? = getSprite(vanillaId("block", "water_still"), InventoryMenu.BLOCK_ATLAS)
 
@@ -81,7 +81,7 @@ class HTExperienceStorageWidget(
     override fun getLevel(): Float = 1f
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addExperienceTooltip(storage, consumer)
+        addExperienceTooltip(tank, consumer)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
@@ -94,7 +94,7 @@ class HTExperienceStorageWidget(
         amountSetter.setAmount(amount)
     }
 
-    override fun getAmount(): Long = storage.getAmount()
+    override fun getAmount(): Long = tank.getAmount()
 
-    override fun getCapacity(): Long = storage.getCapacity()
+    override fun getCapacity(): Long = tank.getCapacity()
 }

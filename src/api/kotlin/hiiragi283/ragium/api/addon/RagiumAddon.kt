@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.addon
 
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.variant.HTMaterialVariant
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
@@ -15,7 +13,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import java.util.function.BiConsumer
 
 /**
  * Ragiumのアドオン向けのインターフェース
@@ -48,8 +45,6 @@ interface RagiumAddon {
     fun onClientSetup(event: FMLClientSetupEvent) {}
 
     //    Extension    //
-
-    fun registerMaterial(consumer: BiConsumer<HTMaterialType, HTMaterialVariant.ItemTag>) {}
 
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {}
 

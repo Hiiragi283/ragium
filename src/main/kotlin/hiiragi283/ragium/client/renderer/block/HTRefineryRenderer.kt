@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
-import hiiragi283.ragium.api.block.attribute.getAttributeDir
+import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.extension.translate
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
@@ -22,7 +22,7 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        val front: Direction = blockEntity.blockState.getAttributeDir() ?: return
+        val front: Direction = blockEntity.blockState.getAttributeFront() ?: return
         // input
         poseStack.pushPose()
         poseStack.translate(0.5f)

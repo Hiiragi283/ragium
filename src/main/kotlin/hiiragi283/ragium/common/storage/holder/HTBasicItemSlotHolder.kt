@@ -1,17 +1,16 @@
 package hiiragi283.ragium.common.storage.holder
 
-import hiiragi283.ragium.api.collection.ImmutableMultiMap
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import net.minecraft.core.Direction
 
 class HTBasicItemSlotHolder private constructor(
     configGetter: HTAccessConfigGetter?,
     slots: List<HTItemSlot>,
-    map: ImmutableMultiMap<HTAccessConfig, HTItemSlot>,
-) : HTSlottedCapabilityHolder<HTItemSlot>(configGetter, slots, map),
+    inputSlots: List<HTItemSlot>,
+    outputSlots: List<HTItemSlot>,
+) : HTSlottedCapabilityHolder<HTItemSlot>(configGetter, slots, inputSlots, outputSlots),
     HTItemSlotHolder {
     companion object {
         @JvmStatic

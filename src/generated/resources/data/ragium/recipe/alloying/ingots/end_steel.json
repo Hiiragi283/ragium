@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_base"
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    "#c:end_stones",
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/dark_steel",
+        "#c:ingots/dark_steel"
+      ]
+    },
+    "#c:obsidians"
+  ],
+  "result": {
+    "count": 1,
+    "id": "#c:ingots/end_steel"
+  }
+}

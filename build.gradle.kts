@@ -4,7 +4,7 @@ import org.slf4j.event.Level
 
 plugins {
     idea
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.2.20"
     alias(libs.plugins.neo.moddev)
     alias(libs.plugins.ktlint)
 }
@@ -223,6 +223,15 @@ dependencies {
 
     implementation(libs.immersive.get().toString() + ":datagen")
     implementation(libs.mek.get().toString() + ":all")
+
+    listOf(
+        "endercore",
+        "enderio-base",
+        "enderio-machines",
+    ).forEach { name: String ->
+        implementation("com.enderio:$name:${libs.versions.ender.io.get()}")
+    }
+
     implementation(libs.oritech) {
         exclude(group = "curse.maven")
         exclude(group = "io.wispforest")

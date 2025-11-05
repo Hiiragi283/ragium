@@ -35,10 +35,10 @@ fun Holder<Block>.getAllAttributes(): Collection<HTBlockAttribute> = this.value(
 fun Block.getAllAttributes(): Collection<HTBlockAttribute> = (this as? HTBlockWithType)?.type()?.getAll() ?: listOf()
 
 // direction
-fun BlockState.getAttributeDir(): Direction? = this.getAttribute<HTDirectionalBlockAttribute>()?.getDirection(this)
+fun BlockState.getAttributeFront(): Direction? = this.getAttribute<HTDirectionalBlockAttribute>()?.getDirection(this)
 
 // tier
-inline fun <reified TIER : HTTierProvider> Block.getAttributeTier(): TIER = getAttributeOrThrow<HTTierBlockAttribute<TIER>>().provider
+inline fun <reified TIER : HTTierProvider> Block.getAttributeTier(): TIER? = getAttribute<HTTierBlockAttribute<TIER>>()?.provider
 
 inline fun <reified TIER : HTTierProvider> Holder<Block>.getAttributeTier(): TIER =
     getAttributeOrThrow<HTTierBlockAttribute<TIER>>().provider

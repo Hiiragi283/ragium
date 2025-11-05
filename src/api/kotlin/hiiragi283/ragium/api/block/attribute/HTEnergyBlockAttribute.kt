@@ -7,8 +7,7 @@ import kotlin.math.max
  * @see mekanism.common.block.attribute.AttributeEnergy
  */
 @JvmRecord
-data class HTEnergyBlockAttribute(private val capacity: IntSupplier, private val usage: IntSupplier = IntSupplier { capacity.asInt * 20 }) :
-    HTBlockAttribute {
+data class HTEnergyBlockAttribute(private val usage: IntSupplier, private val capacity: IntSupplier) : HTBlockAttribute {
     fun getRawCapacity(): Int = capacity.asInt
 
     fun getUsage(): Int = usage.asInt

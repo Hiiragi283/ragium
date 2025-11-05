@@ -1,13 +1,13 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -40,9 +40,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     override fun generate() {
         RagiumBlocks.REGISTER
-            .firstEntries
+            .blockEntries
             .asSequence()
-            .map(HTDeferredHolder<Block, out Block>::get)
+            .map(HTDeferredOnlyBlock<*>::get)
             .forEach { block: Block ->
                 add(
                     block,
@@ -84,22 +84,22 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumBlocks.WARPED_WART)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (_, material: HTMaterialType, ore: HTDeferredBlock<*, *>) ->
-            val factory: (Block) -> LootTable.Builder = when (material) {
-                RagiumMaterialType.RAGINITE -> { block: Block ->
+        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: HTDeferredBlock<*, *>) ->
+            val factory: (Block) -> LootTable.Builder = when (key) {
+                RagiumMaterialKeys.RAGINITE -> { block: Block ->
                     createSilkTouchDispatchTable(
                         block,
                         applyExplosionDecay(
                             block,
                             LootItem
-                                .lootTableItem(RagiumItems.getDust(RagiumMaterialType.RAGINITE))
+                                .lootTableItem(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE))
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
                         ),
                     )
                 }
 
-                else -> { block: Block -> createOreDrop(block, RagiumItems.getGem(material).get()) }
+                else -> { block: Block -> createOreDrop(block, RagiumItems.getGem(key).get()) }
             }
             add(ore.get(), factory)
         }
@@ -108,7 +108,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             createSilkTouchDispatchTable(
                 block,
                 LootItem
-                    .lootTableItem(RagiumItems.getGem(RagiumMaterialType.AZURE))
+                    .lootTableItem(RagiumItems.getGem(RagiumMaterialKeys.AZURE))
                     .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4f)))
                     .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     .`when`(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES)))
@@ -117,7 +117,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             block,
                             LootItem
                                 .lootTableItem(
-                                    RagiumItems.getGem(RagiumMaterialType.AZURE),
+                                    RagiumItems.getGem(RagiumMaterialKeys.AZURE),
                                 ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2f))),
                         ),
                     ),

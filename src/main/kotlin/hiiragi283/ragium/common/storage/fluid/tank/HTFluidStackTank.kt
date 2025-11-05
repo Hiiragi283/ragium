@@ -31,11 +31,17 @@ open class HTFluidStackTank protected constructor(
         }
 
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
+        fun create(
+            listener: HTContentListener?,
+            capacity: Int,
+            canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
+            filter: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
+        ): HTFluidStackTank = HTFluidStackTank(
             validateCapacity(capacity),
-            HTPredicates.alwaysTrueBi(),
-            HTPredicates.alwaysTrueBi(),
-            HTPredicates.alwaysTrue(),
+            canExtract,
+            canInsert,
+            filter,
             listener,
         )
 
@@ -83,7 +89,7 @@ open class HTFluidStackTank protected constructor(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC)?.let(::setStackUnchecked)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(::setStackUnchecked)
     }
 
     final override fun onContentsChanged() {

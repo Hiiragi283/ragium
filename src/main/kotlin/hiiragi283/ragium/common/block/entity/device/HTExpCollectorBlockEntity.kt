@@ -1,16 +1,17 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
-import hiiragi283.ragium.api.serialization.value.HTValueInput
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
-import hiiragi283.ragium.api.storage.experience.HTExperienceStorage
-import hiiragi283.ragium.common.storage.experience.HTBasicExperienceStorage
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
+import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
+import hiiragi283.ragium.common.storage.experience.tank.HTOrbExperienceTank
+import hiiragi283.ragium.common.storage.holder.HTBasicExperienceTankHolder
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntitySelector
 import net.minecraft.world.entity.EntityType
@@ -20,19 +21,14 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(RagiumBlocks.EXP_COLLECTOR, pos, state) {
-    val expStorage: HTBasicExperienceStorage = HTBasicExperienceStorage.output(::setOnlySave, Long.MAX_VALUE)
+    lateinit var tank: HTBasicExperienceTank
+        private set
 
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        expStorage.serialize(output)
+    override fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder {
+        val builder: HTBasicExperienceTankHolder.Builder = HTBasicExperienceTankHolder.builder(this)
+        tank = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicExperienceTank.output(listener, Long.MAX_VALUE))
+        return builder.build()
     }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        expStorage.deserialize(input)
-    }
-
-    override fun getExperienceStorage(direction: Direction?): HTExperienceStorage = expStorage
 
     override fun onRemove(level: Level, pos: BlockPos) {
         super.onRemove(level, pos)
@@ -41,7 +37,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             pos.x.toDouble(),
             pos.y.toDouble(),
             pos.z.toDouble(),
-            expStorage.getAmountAsInt(),
+            tank.getAmountAsInt(),
         )
     }
 
@@ -60,8 +56,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         expOrbs
             .asSequence()
             .filter(ExperienceOrb::isAlive)
-            .mapNotNull { HTExperienceCapabilities.getStorage(it, null) }
-            .forEach { storage: HTExperienceStorage -> HTExperienceHelper.moveExp(storage, expStorage) }
+            .map(::HTOrbExperienceTank)
+            .forEach { tank: HTExperienceTank -> HTExperienceHelper.moveExperience(tank, this.tank) }
         return true
     }
 }

@@ -4,15 +4,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
-import hiiragi283.ragium.common.material.HTVanillaMaterialType
-import hiiragi283.ragium.common.material.RagiumMaterialType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTColoredVariant
-import hiiragi283.ragium.common.variant.HTItemMaterialVariant
-import hiiragi283.ragium.common.variant.HTStorageMaterialVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.Items
@@ -122,12 +122,12 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 resultHelper.item(RagiumBlocks.EXP_BERRIES),
                 itemCreator.fromTagKey(Tags.Items.FOODS_BERRY),
-                itemCreator.fromTagKey(HTItemMaterialVariant.GEM, RagiumMaterialType.ELDRITCH_PEARL, 4),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 4),
             ).save(output)
         // Blaze Powder
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                itemCreator.fromTagKey(HTItemMaterialVariant.DUST, RagiumMaterialType.SULFUR),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
                 fluidCreator.fromContent(RagiumFluidContents.EXPERIENCE, 250),
             ).addResult(resultHelper.item(Items.BLAZE_POWDER))
             .save(output)
@@ -210,7 +210,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
         // Budding Amethyst
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                itemCreator.fromTagKey(HTStorageMaterialVariant, HTVanillaMaterialType.AMETHYST),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST),
                 fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)
