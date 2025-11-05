@@ -37,7 +37,7 @@ data class HTCrushingMaterialRecipeData(private val prefix: HTMaterialPrefix, pr
                 .pulverizing(
                     helper.itemCreator.fromTagKey(prefix, key, inputCount),
                     helper.resultHelper.item(CommonMaterialPrefixes.DUST, key, outputCount),
-                ).saveSuffixed(helper.output, "_from_${prefix.name}")
+                ).saveSuffixed(helper.output, "_from_${prefix.getPath()}")
         }
     }
 }

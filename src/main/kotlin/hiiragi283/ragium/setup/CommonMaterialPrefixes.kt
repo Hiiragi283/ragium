@@ -1,12 +1,11 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTDeferredMaterialPrefixRegister
 
 object CommonMaterialPrefixes {
     @JvmField
-    val REGISTER = HTDeferredMaterialPrefixRegister(RagiumConst.COMMON)
+    val REGISTER = HTDeferredMaterialPrefixRegister()
 
     //    Block    //
 

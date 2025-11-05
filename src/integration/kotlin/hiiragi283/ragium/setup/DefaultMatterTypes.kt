@@ -6,30 +6,33 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toId
 
 object DefaultMatterTypes {
-    @JvmField
-    val EMPTY = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("empty"))
+    @JvmStatic
+    fun create(name: String): HTDeferredMatterType<IMatterType> = HTDeferredMatterType(RagiumConst.REPLICATION.toId(name))
 
     @JvmField
-    val METALLIC = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("metallic"))
+    val EMPTY: HTDeferredMatterType<IMatterType> = create("empty")
 
     @JvmField
-    val EARTH = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("earth"))
+    val METALLIC: HTDeferredMatterType<IMatterType> = create("metallic")
 
     @JvmField
-    val NETHER = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("nether"))
+    val EARTH: HTDeferredMatterType<IMatterType> = create("earth")
 
     @JvmField
-    val ORGANIC = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("organic"))
+    val NETHER: HTDeferredMatterType<IMatterType> = create("nether")
 
     @JvmField
-    val ENDER = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("ender"))
+    val ORGANIC: HTDeferredMatterType<IMatterType> = create("organic")
 
     @JvmField
-    val PRECIOUS = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("precious"))
+    val ENDER: HTDeferredMatterType<IMatterType> = create("ender")
 
     @JvmField
-    val QUANTUM = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("quantum"))
+    val PRECIOUS: HTDeferredMatterType<IMatterType> = create("precious")
 
     @JvmField
-    val LIVING = HTDeferredMatterType<IMatterType>(RagiumConst.REPLICATION.toId("living"))
+    val QUANTUM: HTDeferredMatterType<IMatterType> = create("quantum")
+
+    @JvmField
+    val LIVING: HTDeferredMatterType<IMatterType> = create("living")
 }

@@ -65,7 +65,10 @@ object RagiumAPI {
     @JvmField
     val MATERIAL_PREFIX_REGISTRY: Registry<HTMaterialPrefix> = RegistryBuilder(MATERIAL_PREFIX_KEY)
         .sync(true)
-        .create()
+        .onAdd { _, _, key: ResourceKey<HTMaterialPrefix>, prefix: HTMaterialPrefix ->
+            val id: ResourceLocation = key.location()
+            check(id.namespace == RagiumConst.COMMON) { "Only allowed `common` namespace for Material Prefix" }
+        }.create()
 
     @JvmField
     val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = ResourceKey.createRegistryKey(

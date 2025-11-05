@@ -55,7 +55,7 @@ class HTRawSmeltingMaterialRecipeData(
                         itemCreator.fromTagKey(prefix, key, inputCount),
                         itemCreator.fromTagKey(flux, fluxCount),
                     ).tagCondition(ingot)
-                    .saveSuffixed(output, "_from_${prefix.name}_with_${flux.location.path}")
+                    .saveSuffixed(output, "_from_${prefix.getPath()}_with_${flux.location.path}")
             }
         }
     }

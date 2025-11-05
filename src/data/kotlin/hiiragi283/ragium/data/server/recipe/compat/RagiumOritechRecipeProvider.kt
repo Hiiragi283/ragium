@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
 import rearth.oritech.api.recipe.CentrifugeRecipeBuilder
@@ -37,7 +38,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .result(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .time(20)
-            .export(output, RagiumConst.RAGI_CRYSTAL)
+            .export(output, RagiumMaterialKeys.RAGI_CRYSTAL)
     }
 
     @JvmStatic
@@ -46,7 +47,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .build()
             .input(gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL))
             .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX)
-        // .export(output, "eldritch_flux")
     }
 
     @JvmStatic
@@ -56,14 +56,14 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .input(ingotOrDust(VanillaMaterialKeys.COPPER))
             .result(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY))
-            .export(output, RagiumConst.RAGI_ALLOY)
+            .export(output, RagiumMaterialKeys.RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
             .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .input(ingotOrDust(VanillaMaterialKeys.GOLD))
             .result(RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
+            .export(output, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
@@ -77,14 +77,14 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .input(gemOrDust(RagiumMaterialKeys.AZURE))
             .input(ingotOrDust(VanillaMaterialKeys.IRON))
             .result(RagiumItems.getIngot(RagiumMaterialKeys.AZURE_STEEL))
-            .export(output, RagiumConst.AZURE_STEEL)
+            .export(output, RagiumMaterialKeys.AZURE_STEEL)
 
         FoundryRecipeBuilder
             .build()
             .input(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
             .input(ingotOrDust(RagiumMaterialKeys.AZURE_STEEL))
             .result(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
-            .export(output, RagiumConst.DEEP_STEEL)
+            .export(output, RagiumMaterialKeys.DEEP_STEEL)
     }
 
     @JvmStatic
@@ -93,7 +93,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .build()
             .input(CommonMaterialPrefixes.ORE, VanillaMaterialKeys.REDSTONE)
             .result(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE))
-            .export(output, "raginite")
+            .export(output, RagiumMaterialKeys.RAGINITE)
     }
 
     @JvmStatic
@@ -117,4 +117,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     fun OritechRecipeBuilder.fluidInput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidInput(content.commonTag)
 
     fun OritechRecipeBuilder.fluidOutput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidOutput(content.get())
+
+    fun OritechRecipeBuilder.export(output: RecipeOutput, material: HTMaterialLike) {
+        export(output, material.asMaterialName())
+    }
 }

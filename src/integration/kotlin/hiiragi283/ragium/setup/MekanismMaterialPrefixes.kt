@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMaterialPrefixRegister
 
 object MekanismMaterialPrefixes {
     @JvmField
-    val REGISTER = HTDeferredMaterialPrefixRegister(RagiumConst.MEKANISM)
+    val REGISTER = HTDeferredMaterialPrefixRegister()
 
     @JvmField
     val DIRTY_DUST: HTMaterialPrefix = REGISTER.register("dirty_dust")

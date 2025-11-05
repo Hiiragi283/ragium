@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.Block
 /**
  * タグのプレフィックスを表すクラス
  */
-data class HTMaterialPrefix(val name: String, private val commonTagPath: String, private val tagPath: String) {
+data class HTMaterialPrefix(private val commonTagPath: String, private val tagPath: String) : HTHolderLike {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTMaterialPrefix> = VanillaBiCodecs.registryBased(RagiumAPI.MATERIAL_PREFIX_REGISTRY)
@@ -43,4 +44,7 @@ data class HTMaterialPrefix(val name: String, private val commonTagPath: String,
     fun itemTagKey(name: String): TagKey<Item> = createTagKey(Registries.ITEM, name)
 
     fun toIngredient(material: HTMaterialLike): Ingredient = Ingredient.of(itemTagKey(material))
+
+    override fun getId(): ResourceLocation =
+        RagiumAPI.MATERIAL_PREFIX_REGISTRY.getKeyOrNull(this) ?: error("Unregistered material prefix: $this")
 }

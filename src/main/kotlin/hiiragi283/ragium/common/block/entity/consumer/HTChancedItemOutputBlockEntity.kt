@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.manager.createCache
-import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -84,11 +84,9 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         recipe: RECIPE,
     ) {
         // 実際にアウトプットに搬出する
-        for ((result: HTItemResult, chance: Float) in recipe.getResultItems(input)) {
-            if (chance > level.random.nextFloat()) {
-                val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess()) ?: continue
-                HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
-            }
+        for (result: HTChancedItemResult in recipe.getResultItems(input)) {
+            val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random) ?: continue
+            HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
         }
     }
 
