@@ -22,8 +22,8 @@ value class HTMaterialKey private constructor(val name: String) : HTMaterialLike
         }
 
         @JvmField
-        val CODEC: BiCodec<ByteBuf, HTMaterialKey> = BiCodec.STRING.comapFlatMap(
-            { name: String -> runCatching { of(name) } },
+        val CODEC: BiCodec<ByteBuf, HTMaterialKey> = BiCodec.STRING.flatXmap(
+            HTMaterialKey::of,
             HTMaterialKey::name,
         )
     }

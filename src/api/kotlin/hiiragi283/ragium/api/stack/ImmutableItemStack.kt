@@ -27,7 +27,7 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
             BiCodec.composite(
                 VanillaBiCodecs.holder(Registries.ITEM).fieldOf("id"),
                 ItemStack::getItemHolder,
-                BiCodecs.POSITIVE_INT.optionalFieldOf("count") { 1 },
+                BiCodecs.POSITIVE_INT.optionalOrElseField("count", 1),
                 ItemStack::getCount,
                 VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
                 ItemStack::getComponentsPatch,
@@ -36,10 +36,7 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, ImmutableItemStack> =
-            ITEM_STACK_CODEC.comapFlatMap(
-                { stack: ItemStack -> runCatching(stack::toImmutableOrThrow) },
-                ImmutableItemStack::stack,
-            )
+            ITEM_STACK_CODEC.flatXmap(ItemStack::toImmutableOrThrow, ImmutableItemStack::stack)
 
         @JvmStatic
         fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = ItemStack(item, count).toImmutableOrThrow()

@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
+import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -31,8 +31,16 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
     HTAccessConfigSetter {
     companion object {
         @JvmStatic
-        private val CONFIG_CODEC: BiCodec<FriendlyByteBuf, Map<Direction, HTAccessConfig>> =
-            BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfig.CODEC)
+        private val CONFIG_CODEC: BiCodec<ByteBuf, Map<Direction, HTAccessConfig>> =
+            BiCodecs
+                .mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfig.CODEC)
+                .validate { map: Map<Direction, HTAccessConfig> ->
+                    if (map.isEmpty() || map.all { (_, config) -> config == HTAccessConfig.BOTH }) {
+                        mapOf()
+                    } else {
+                        map
+                    }
+                }
     }
 
     override fun writeValue(output: HTValueOutput) {

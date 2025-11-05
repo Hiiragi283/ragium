@@ -92,7 +92,7 @@ object BiCodecs {
 
     @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
-        NON_NEGATIVE_INT.comapFlatMap({ value: Int -> runCatching { values.get()[value] } }, Enum<V>::ordinal)
+        NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
 }
 
 /**
@@ -101,10 +101,7 @@ object BiCodecs {
  * @param V [X]を継承したクラス
  * @return [X]を対象とした[BiCodec]
  */
-inline fun <B : ByteBuf, reified X : Any, reified V : X> BiCodec<B, V>.downCast(): BiCodec<B, X> =
-    this.flatComapMap({ it as X }, { runCatching { it as V } })
-
-fun <T : Any> resultToData(): (Result<T>) -> DataResult<T> = Result<T>::toData
+inline fun <B : ByteBuf, reified X : Any, reified V : X> BiCodec<B, V>.downCast(): BiCodec<B, X> = this.flatXmap({ it as X }, { it as V })
 
 fun <T : Any> Result<T>.toData(): DataResult<T> = fold(DataResult<T>::success) { throwable: Throwable ->
     DataResult.error { throwable.message ?: "Thrown exception" }
