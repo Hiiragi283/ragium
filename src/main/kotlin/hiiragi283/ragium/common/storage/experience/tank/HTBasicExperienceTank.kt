@@ -19,11 +19,11 @@ open class HTBasicExperienceTank(
     companion object {
         @JvmStatic
         fun input(listener: HTContentListener?, capacity: Long): HTBasicExperienceTank =
-            create(listener, capacity, HTStorageAccess.Companion.NOT_EXTERNAL, HTPredicates.alwaysTrue())
+            create(listener, capacity, HTStorageAccess.NOT_EXTERNAL, HTPredicates.alwaysTrue())
 
         @JvmStatic
         fun output(listener: HTContentListener?, capacity: Long): HTBasicExperienceTank =
-            create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.Companion.INTERNAL_ONLY)
+            create(listener, capacity, HTPredicates.alwaysTrue(), HTStorageAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(

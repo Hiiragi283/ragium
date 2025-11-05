@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.addon
 
+import hiiragi283.ragium.api.network.HTPayloadRegistrar
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
@@ -43,6 +44,8 @@ interface RagiumAddon {
      */
 
     fun onClientSetup(event: FMLClientSetupEvent) {}
+
+    fun registerPayloads(registrar: HTPayloadRegistrar) {}
 
     //    Extension    //
 

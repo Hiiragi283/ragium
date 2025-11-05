@@ -25,12 +25,14 @@ import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
 import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
@@ -106,4 +108,9 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     override fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
         HTTagValueOutput(lookup, compoundTag)
+
+    //    Helper    //
+
+    override fun isInvulnerableToDamage(source: DamageSource, stack: ItemStack): Boolean? =
+        stack.get(RagiumDataComponents.IMMUNE_DAMAGE_TYPES)?.map(source::`is`, source::`is`)
 }

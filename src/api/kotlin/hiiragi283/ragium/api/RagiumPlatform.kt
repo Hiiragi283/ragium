@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -23,7 +22,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -110,7 +109,7 @@ interface RagiumPlatform {
 
     fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
 
-    //    Accessory    //
+    //    Helper    //
 
-    fun getAccessoryCap(entity: LivingEntity): AccessoriesCapability? = AccessoriesCapability.get(entity)
+    fun isInvulnerableToDamage(source: DamageSource, stack: ItemStack): Boolean?
 }

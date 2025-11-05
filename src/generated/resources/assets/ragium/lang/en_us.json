@@ -1,7 +1,7 @@
 {
   "access.ragium.both": "Mode: Both",
+  "access.ragium.disabled": "Mode: Disabled",
   "access.ragium.input_only": "Mode: Input",
-  "access.ragium.none": "Mode: None",
   "access.ragium.output_only": "Mode: Output",
   "advancements.ragium.advanced_ragi_alloy.desc": "Get Advanced Ragi-Alloy Ingot",
   "advancements.ragium.advanced_ragi_alloy.title": "This is red, not orange!",
@@ -427,7 +427,6 @@
   "itemGroup.ragium.ingredients": "Ragium - Ingredients",
   "itemGroup.ragium.items": "Ragium - Items",
   "key.ragium.category": "Ragium",
-  "key.ragium.open_potion_bundle.desc": "Open Potion Bundle",
   "key.ragium.open_universal_bundle.desc": "Open Universal Bundle",
   "recipe_type.ragium.alloying": "Alloying",
   "recipe_type.ragium.compressing": "Compressing",

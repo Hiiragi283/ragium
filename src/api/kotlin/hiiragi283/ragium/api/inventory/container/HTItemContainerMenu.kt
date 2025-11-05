@@ -1,15 +1,15 @@
 package hiiragi283.ragium.api.inventory.container
 
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
 /**
- * [InteractionHand]と[ItemStack]を受け取る[HTContainerMenu]の拡張クラス
+ * [InteractionHand]と[ImmutableItemStack]を受け取る[HTContainerMenu]の拡張クラス
  * @see [mekanism.common.inventory.container.item.MekanismItemContainer]
  */
 abstract class HTItemContainerMenu(
@@ -23,15 +23,12 @@ abstract class HTItemContainerMenu(
         inventory,
     ) {
     protected val hand: Optional<InteractionHand> = context.hand
-    protected val stack: ItemStack = context.stack
+    protected val stack: ImmutableItemStack = context.stack
 
-    override fun stillValid(player: Player): Boolean {
-        if (stack.isEmpty) return false
-        return hand
-            .map { interactionHand: InteractionHand ->
-                player.getItemInHand(interactionHand).`is`(stack.item)
-            }.orElseGet {
-                RagiumPlatform.INSTANCE.getAccessoryCap(player)?.getFirstEquipped(stack.item) != null
-            }
-    }
+    override fun stillValid(player: Player): Boolean = hand
+        .map { interactionHand: InteractionHand ->
+            stack.isOf(player.getItemInHand(interactionHand).item)
+        }.orElseGet {
+            stack.isOf(RagiumModTags.Items.BYPASS_MENU_VALIDATION)
+        }
 }

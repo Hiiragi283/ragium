@@ -321,12 +321,13 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     private fun accessories(builder: HTTagBuilder<Item>) {
         builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        // builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
         builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
         builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
         builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
         builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
         builder.addAccessory(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
+
+        builder.add(RagiumModTags.Items.BYPASS_MENU_VALIDATION, RagiumItems.UNIVERSAL_BUNDLE)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {

@@ -11,6 +11,9 @@ import net.neoforged.fml.ModList
 @HTAddon
 class RagiumAddonProviders : RagiumAddon.Provider {
     override fun getAddons(modList: ModList): List<RagiumAddon> = buildSet {
+        if (modList.isLoaded(RagiumConst.ACCESSORIES)) {
+            add(RagiumAccessoriesAddon)
+        }
         if (modList.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
             add(RagiumFoodAddon)
             add(RagiumDelightAddon)
