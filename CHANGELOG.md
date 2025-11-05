@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.11.0
+
+## What's Changed
+* Add Experience Drum by @Hiiragi283 in https://github.com/Hiiragi283/ragium/pull/17
+* Redesign Energy & Experience Handler by @Hiiragi283 in https://github.com/Hiiragi283/ragium/pull/18
+* update zh_cn.json for v0.10.0 by @luoxueyasha in https://github.com/Hiiragi283/ragium/pull/19
+* Rework material system by @Hiiragi283 in https://github.com/Hiiragi283/ragium/pull/20
+* Add HTEquipmentMaterial by @Hiiragi283 in https://github.com/Hiiragi283/ragium/pull/25
+* Release v0.11 by @Hiiragi283 in https://github.com/Hiiragi283/ragium/pull/26
+
+**Full Changelog**: https://github.com/Hiiragi283/ragium/compare/v0.10.0_neo...v0.11.0
+
 ## v0.10.0
 
 ### API
