@@ -4,7 +4,7 @@ import org.slf4j.event.Level
 
 plugins {
     idea
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.2.20"
     alias(libs.plugins.neo.moddev)
     alias(libs.plugins.ktlint)
 }
