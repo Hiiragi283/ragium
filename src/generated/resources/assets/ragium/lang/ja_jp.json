@@ -1,7 +1,7 @@
 {
   "access.ragium.both": "モード：双方",
+  "access.ragium.disabled": "モード：無効",
   "access.ragium.input_only": "モード：搬入",
-  "access.ragium.none": "モード：なし",
   "access.ragium.output_only": "モード：搬出",
   "advancements.ragium.advanced_ragi_alloy.desc": "発展ラギ合金インゴットを手に入れる",
   "advancements.ragium.advanced_ragi_alloy.title": "赤色です。",
@@ -427,7 +427,6 @@
   "itemGroup.ragium.ingredients": "Ragium - 素材",
   "itemGroup.ragium.items": "Ragium - アイテム",
   "key.ragium.category": "Ragium",
-  "key.ragium.open_potion_bundle.desc": "ポーションバンドルを開く",
   "key.ragium.open_universal_bundle.desc": "共有バンドルを開く",
   "recipe_type.ragium.alloying": "合金",
   "recipe_type.ragium.compressing": "圧縮",

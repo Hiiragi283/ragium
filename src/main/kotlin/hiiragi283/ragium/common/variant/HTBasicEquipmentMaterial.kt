@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.variant
 
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -24,7 +24,7 @@ data class HTBasicEquipmentMaterial(
     private val incorrectBlockTag: TagKey<Block>,
     private val defenceMap: Map<ArmorItem.Type, Int>,
     private val armorMultiplier: Int,
-    private val repairPrefix: HTMaterialPrefix = CommonMaterialPrefixes.INGOT,
+    private val repairPrefix: HTPrefixLike = CommonMaterialPrefixes.INGOT,
     private val equipSound: Holder<SoundEvent> = SoundEvents.ARMOR_EQUIP_GENERIC,
     private val toughness: Float = 0f,
     private val resistance: Float = 0f,

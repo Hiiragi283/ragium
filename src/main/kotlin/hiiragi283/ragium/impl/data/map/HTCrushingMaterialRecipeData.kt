@@ -4,9 +4,10 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.minecraft.util.ExtraCodecs
 
 @JvmRecord
@@ -25,6 +26,8 @@ data class HTCrushingMaterialRecipeData(private val prefix: HTMaterialPrefix, pr
                 ).apply(instance, ::HTCrushingMaterialRecipeData)
         }
     }
+
+    constructor(prefix: HTPrefixLike, inputCount: Int, outputCount: Int) : this(prefix.asMaterialPrefix(), inputCount, outputCount)
 
     override fun type(): MapCodec<out HTMaterialRecipeData> = CODEC
 

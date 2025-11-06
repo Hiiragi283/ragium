@@ -7,7 +7,8 @@ import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
@@ -32,6 +33,7 @@ import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -204,7 +206,7 @@ object RagiumBlocks {
             // Misc
             CommonMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
-            this[CommonMaterialPrefixes.STORAGE_BLOCK, key] =
+            this[CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix(), key] =
                 REGISTER.registerSimple("${key.name}_block", properties)
         }
 
@@ -215,7 +217,7 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK, key] = REGISTER.registerSimple(
+            this[CommonMaterialPrefixes.GLASS_BLOCK.asMaterialPrefix(), key] = REGISTER.registerSimple(
                 "${key.name}_glass",
                 properties.apply { if (blastProof) strength(5f, 1200f) },
                 ::HTGlassBlock.partially1(canPlayerThrough),
@@ -233,7 +235,7 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK_TINTED, key] = REGISTER.registerSimple(
+            this[CommonMaterialPrefixes.GLASS_BLOCK_TINTED.asMaterialPrefix(), key] = REGISTER.registerSimple(
                 "tinted_${key.name}_glass",
                 properties.apply { if (blastProof) strength(5f, 1200f) },
                 ::HTTintedGlassBlock.partially1(canPlayerThrough),
@@ -246,8 +248,9 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getMaterial(prefix: HTMaterialPrefix, material: HTMaterialLike): HTSimpleDeferredBlock = MATERIALS[prefix, material.asMaterialKey()]
-        ?: error("Unknown $prefix block for ${material.asMaterialName()}")
+    fun getMaterial(prefix: HTPrefixLike, material: HTMaterialLike): HTSimpleDeferredBlock =
+        MATERIALS[prefix.asMaterialPrefix(), material.asMaterialKey()]
+            ?: error("Unknown $prefix block for ${material.asMaterialName()}")
 
     @JvmStatic
     fun getStorageBlock(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.STORAGE_BLOCK, material)
@@ -257,6 +260,9 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getTintedGlass(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.GLASS_BLOCK_TINTED, material)
+
+    @JvmStatic
+    fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
 
     @JvmField
     val COILS: Map<HTMaterialKey, HTBasicDeferredBlock<RotatedPillarBlock>> = arrayOf(

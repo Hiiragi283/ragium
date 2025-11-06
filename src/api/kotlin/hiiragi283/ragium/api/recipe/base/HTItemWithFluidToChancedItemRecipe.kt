@@ -9,4 +9,4 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
  */
 interface HTItemWithFluidToChancedItemRecipe :
     HTChancedItemRecipe<HTItemWithFluidRecipeInput>,
-    HTFluidIngredient.CountGetter
+    HTFluidIngredient.AmountGetter

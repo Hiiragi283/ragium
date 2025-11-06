@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
+import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import net.minecraft.core.registries.Registries
@@ -153,7 +154,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            RagiumItems.AZURE_ARMORS.values.forEach(output::accept)
+            output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.AZURE_STEEL))
             // Molten
@@ -166,7 +167,7 @@ object RagiumCreativeTabs {
             DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
             // Deep
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            RagiumItems.DEEP_ARMORS.values.forEach(output::accept)
+            output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
             output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
             output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.DEEP_STEEL))
             // Other

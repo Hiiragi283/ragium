@@ -40,7 +40,6 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
 
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
-        if (stack.isEmpty) return InteractionResultHolder.fail(stack)
         // 　シフト中はGUIを開く
         return when {
             player.isShiftKeyDown -> InteractionResultHolder(

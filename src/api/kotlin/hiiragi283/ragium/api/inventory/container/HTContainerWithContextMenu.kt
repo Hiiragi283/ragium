@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player
 
 /**
  * [C]を受け取る[HTContainerMenu]の拡張クラス
- * @see [mekanism.common.inventory.container.tile.MekanismTileContainer]
+ * @see mekanism.common.inventory.container.tile.MekanismTileContainer
  */
 abstract class HTContainerWithContextMenu<C : Any>(
     menuType: HTDeferredMenuType.WithContext<*, C>,

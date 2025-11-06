@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.variant.HTBasicEquipmentMaterial
 import net.minecraft.sounds.SoundEvents
@@ -82,6 +83,7 @@ object RagiumEquipmentMaterials {
             ArmorItem.Type.BODY to 11,
         ),
         armorMultiplier = 33,
+        repairPrefix = CommonMaterialPrefixes.GEM,
         equipSound = SoundEvents.ARMOR_EQUIP_DIAMOND,
         toughness = 2f,
     )

@@ -1,6 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:piglin_brute_spawn_egg",
+  "catalyst": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:piglin_brute"
+  },
   "ingredient": {
     "count": 64,
     "items": "minecraft:nether_bricks"

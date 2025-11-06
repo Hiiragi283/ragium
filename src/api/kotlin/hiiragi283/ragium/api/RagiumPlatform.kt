@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
@@ -13,7 +14,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import io.wispforest.accessories.api.AccessoriesCapability
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -23,7 +23,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -59,6 +58,8 @@ interface RagiumPlatform {
     fun getAllMaterials(): Set<HTMaterialKey> = getMaterialDefinitions().keys
 
     fun getMaterialDefinition(key: HTMaterialKey): HTMaterialDefinition = getMaterialDefinitions()[key] ?: HTMaterialDefinition.Empty
+
+    fun getPrefix(name: String): HTMaterialPrefix?
 
     //    Recipe    //
 
@@ -109,8 +110,4 @@ interface RagiumPlatform {
     fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput
 
     fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput
-
-    //    Accessory    //
-
-    fun getAccessoryCap(entity: LivingEntity): AccessoriesCapability? = AccessoriesCapability.get(entity)
 }

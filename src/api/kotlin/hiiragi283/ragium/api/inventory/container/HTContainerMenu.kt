@@ -113,7 +113,7 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: 
     }
 
     /**
-     * @see [AbstractContainerMenu.moveItemStackTo]
+     * @see AbstractContainerMenu.moveItemStackTo
      */
     protected fun moveItemStackTo(stack: ItemStack, slots: Iterable<Int>, reverseDirection: Boolean): Boolean {
         var flag = false

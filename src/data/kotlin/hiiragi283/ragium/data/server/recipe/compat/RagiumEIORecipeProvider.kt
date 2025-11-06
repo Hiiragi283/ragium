@@ -4,10 +4,10 @@ import com.enderio.base.common.tag.EIOTags
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.Tags
 

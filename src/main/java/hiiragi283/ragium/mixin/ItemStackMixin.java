@@ -37,7 +37,7 @@ public abstract class ItemStackMixin {
     private void ragium(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
         var damageResistant = ragium$self().get(RagiumDataComponents.DAMAGE_RESISTANT);
         if (damageResistant != null) {
-            cir.setReturnValue(!damageSource.is(damageResistant.getTypes()));
+            cir.setReturnValue(!damageResistant.getEntry().map(damageSource::is, damageSource::is));
         }
     }
 }

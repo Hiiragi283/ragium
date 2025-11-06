@@ -28,7 +28,7 @@ object BiCodecs {
 
     /**
      * `0`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC]
+     * @see mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC
      */
     @JvmField
     val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0..Long.MAX_VALUE)
@@ -41,7 +41,7 @@ object BiCodecs {
 
     /**
      * `1`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC]
+     * @see mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC
      */
     @JvmField
     val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1..Long.MAX_VALUE)

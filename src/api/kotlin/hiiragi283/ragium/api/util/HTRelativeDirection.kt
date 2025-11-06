@@ -5,7 +5,7 @@ import net.minecraft.util.StringRepresentable
 
 /**
  * 相対的な方角を管理するクラス
- * @see [Direction]
+ * @see Direction
  */
 enum class HTRelativeDirection : StringRepresentable {
     DOWN,

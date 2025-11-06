@@ -1,14 +1,13 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
-import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
-import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
@@ -44,8 +43,6 @@ import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
-import io.wispforest.accessories.api.client.AccessoryRenderer
 import net.minecraft.client.model.MinecartModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.renderer.BiomeColors
@@ -55,7 +52,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -96,17 +92,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun clientSetup(event: FMLClientSetupEvent) {
-        event.enqueueWork(::registerAccessories)
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
+            addon.onClientSetup(event)
+        }
 
         RagiumAPI.LOGGER.info("Loaded Client Setup!")
-    }
-
-    private fun registerAccessories() {
-        accessoryRenderer(RagiumItems.ECHO_STAR, ::HTBackAccessoryRenderer)
-        accessoryRenderer(RagiumItems.NIGHT_VISION_GOGGLES, ::HTGogglesAccessoryRenderer)
-        accessoryRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
-        accessoryRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
-        RagiumAPI.LOGGER.info("Registered Accessory Renderer!")
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
@@ -317,10 +307,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     //    Extensions    //
-
-    private fun accessoryRenderer(item: ItemLike, supplier: () -> AccessoryRenderer) {
-        AccessoriesRendererRegistry.registerRenderer(item.asItem(), supplier)
-    }
 
     private fun RegisterClientExtensionsEvent.liquid(content: HTFluidContent<*, *, *>, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.liquid(color), content.getType())

@@ -27,7 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
 
 /**
- * @see [net.minecraft.world.item.enchantment.Enchantments]
+ * @see net.minecraft.world.item.enchantment.Enchantments
  */
 object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantment> {
     override fun run(context: BootstrapContext<Enchantment>) {
@@ -126,7 +126,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(25, 10),
                         4,
-                        EquipmentSlotGroup.CHEST,
+                        EquipmentSlotGroup.ANY,
                     ),
                 ).exclusiveWith(enchLookup.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
                 .withEffect(

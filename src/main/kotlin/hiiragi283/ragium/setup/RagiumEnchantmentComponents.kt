@@ -17,15 +17,19 @@ object RagiumEnchantmentComponents {
     @JvmField
     val REGISTER = HTDeferredDataComponentRegister(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
+    @JvmStatic
+    fun <T> registerConditional(name: String, codec: Codec<T>): DataComponentType<List<ConditionalEffect<T>>> = REGISTER.registerType(
+        name,
+        ConditionalEffect.codec(codec, LootContextParamSets.ENCHANTED_ITEM).listOf(),
+        null,
+    )
+
     @JvmField
     val CAPACITY: DataComponentType<EnchantmentValueEffect> = REGISTER.registerType("capacity", EnchantmentValueEffect.CODEC, null)
 
     @JvmField
-    val RANGE: DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>> = REGISTER.registerType(
-        "range",
-        ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf(),
-        null,
-    )
+    val RANGE: DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>> =
+        registerConditional("range", EnchantmentValueEffect.CODEC)
 
     @JvmField
     val STRIKE: DataComponentType<Unit> = REGISTER.registerType("strike", Codec.unit(Unit.INSTANCE), null)

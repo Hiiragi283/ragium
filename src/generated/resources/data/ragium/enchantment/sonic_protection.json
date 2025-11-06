@@ -37,7 +37,7 @@
   },
   "primary_items": "#minecraft:enchantable/chest_armor",
   "slots": [
-    "chest"
+    "any"
   ],
   "supported_items": "#minecraft:enchantable/armor",
   "weight": 2

@@ -7,8 +7,8 @@ import net.minecraft.resources.ResourceLocation
 /**
  * レシピの完成品を表すインターフェース
  * @param STACK 完成品のクラス
- * @see [HTItemResult]
- * @see [HTFluidResult]
+ * @see HTItemResult
+ * @see HTFluidResult
  */
 interface HTRecipeResult<STACK : ImmutableStack<*, STACK>> {
     /**

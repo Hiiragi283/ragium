@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.material.HTMaterialDefinitionEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.addDefaultPrefix
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 

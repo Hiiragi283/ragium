@@ -9,14 +9,10 @@ import org.lwjgl.glfw.GLFW
 @OnlyIn(Dist.CLIENT)
 object RagiumKeyMappings {
     @JvmField
-    val OPEN_POTION_BUNDLE: HTKeyMapping = createKey("open_potion_bundle", GLFW.GLFW_KEY_P)
-
-    @JvmField
     val OPEN_UNIVERSAL_BUNDLE: HTKeyMapping = createKey("open_universal_bundle", GLFW.GLFW_KEY_U)
 
     @JvmField
     val KEYS: List<HTKeyMapping> = listOf(
-        OPEN_POTION_BUNDLE,
         OPEN_UNIVERSAL_BUNDLE,
     )
 

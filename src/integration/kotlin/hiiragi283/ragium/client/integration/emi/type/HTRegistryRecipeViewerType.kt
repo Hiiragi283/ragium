@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.ItemLike
 
 /**
- * @see [mekanism.client.recipe_viewer.type.RVRecipeTypeWrapper]
+ * @see mekanism.client.recipe_viewer.type.RVRecipeTypeWrapper
  */
 class HTRegistryRecipeViewerType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
     private val id: ResourceLocation,

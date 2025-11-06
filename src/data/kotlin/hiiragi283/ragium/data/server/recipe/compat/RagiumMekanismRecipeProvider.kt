@@ -1,20 +1,19 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
-import hiiragi283.ragium.setup.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
@@ -31,7 +30,6 @@ import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.common.registries.MekanismItems
 import mekanism.common.tags.MekanismTags
-import net.minecraft.resources.ResourceLocation
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MEKANISM) {
     override fun buildRecipeInternal() {
@@ -48,13 +46,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
                 val name: String = essenceType.asMaterialName()
-                val tagPrefix: HTMaterialPrefix = essenceType.basePrefix
-                val id: ResourceLocation = RagiumAPI.MATERIAL_PREFIX_REGISTRY.getKeyOrNull(tagPrefix) ?: continue
+                val tagPrefix: CommonMaterialPrefixes = essenceType.basePrefix
                 // Base -> Chemical
                 factory(
                     itemHelper.from(tagPrefix, essenceType.parent),
                     essenceType.asStack(10),
-                ).build(output, id("$prefix/$name/from_${id.path}"))
+                ).build(output, id("$prefix/$name/from_${tagPrefix.asPrefixName()}"))
                 // Enriched -> Chemical
                 factory(
                     itemHelper.from(MekanismMaterialPrefixes.ENRICHED, essenceType),
@@ -235,7 +232,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     private fun HTMaterialLike.asStack(size: Long): ChemicalStack = RagiumMekanismAddon.getChemical(this).asStack(size)
 
     @JvmStatic
-    private fun IItemStackIngredientCreator.from(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): ItemStackIngredient =
+    private fun IItemStackIngredientCreator.from(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): ItemStackIngredient =
         from(prefix.itemTagKey(material), count)
 
     @JvmStatic

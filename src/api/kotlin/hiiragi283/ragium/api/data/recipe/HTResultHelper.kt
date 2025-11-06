@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
@@ -69,7 +69,7 @@ interface HTResultHelper {
     /**
      * 指定した引数から[HTItemResult]を返します。
      */
-    fun item(prefix: HTMaterialPrefix, material: HTMaterialLike, count: Int = 1): HTItemResult = item(prefix.itemTagKey(material), count)
+    fun item(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTItemResult = item(prefix.itemTagKey(material), count)
 
     /**
      * 指定した引数から[HTItemResult]を返します。

@@ -80,6 +80,12 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Item
     @JvmField
+    val basicMagnetRange: HTDoubleConfigValue
+
+    @JvmField
+    val advancedMagnetRange: HTDoubleConfigValue
+
+    @JvmField
     val expBerriesValue: HTIntConfigValue
 
     @JvmField
@@ -217,6 +223,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Item
         builder.push("item")
+        basicMagnetRange = builder.definePositiveDouble("basicMagnetRange", 5.0, 0, Int.MAX_VALUE)
+        advancedMagnetRange = builder.definePositiveDouble("advancedMagnetRange", 8.0, 0, Int.MAX_VALUE)
         expBerriesValue = builder.definePositiveInt("expBerriesValue", 8)
         teleportKeyCost = builder.definePositiveInt("teleportKeyCost", 10)
         builder.pop()

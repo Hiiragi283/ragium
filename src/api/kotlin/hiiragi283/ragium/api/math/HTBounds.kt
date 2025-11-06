@@ -6,7 +6,7 @@ package hiiragi283.ragium.api.math
  * @param y y座標
  * @param width x軸方向の範囲
  * @param height y軸方向の範囲
- * @see [dev.emi.emi.api.widget.Bounds]
+ * @see dev.emi.emi.api.widget.Bounds
  */
 data class HTBounds(
     val x: Int,

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
@@ -73,7 +73,7 @@ interface HTRecipeBuilder : RecipeBuilder {
             }
         }
 
-        fun tagCondition(prefix: HTMaterialPrefix, material: HTMaterialLike): Prefixed = tagCondition(prefix.itemTagKey(material))
+        fun tagCondition(prefix: HTPrefixLike, material: HTMaterialLike): Prefixed = tagCondition(prefix.itemTagKey(material))
 
         fun tagCondition(tagKey: TagKey<Item>): Prefixed = addCondition(NotCondition(TagEmptyCondition(tagKey)))
 

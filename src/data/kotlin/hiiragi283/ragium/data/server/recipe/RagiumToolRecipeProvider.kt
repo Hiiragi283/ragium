@@ -3,13 +3,14 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -24,7 +25,6 @@ import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -143,7 +143,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun azureAndDeepSteel() {
         addEquipments(
-            RagiumItems.AZURE_ARMORS,
             RagiumMaterialKeys.AZURE_STEEL,
             VanillaMaterialKeys.IRON,
             RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
@@ -151,7 +150,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         addEquipments(
-            RagiumItems.DEEP_ARMORS,
             RagiumMaterialKeys.DEEP_STEEL,
             VanillaMaterialKeys.DIAMOND,
             RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
@@ -161,7 +159,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun addEquipments(
-        armors: Map<HTArmorVariant, HTDeferredItem<*>>,
         material: HTMaterialLike,
         beforeMaterial: HTMaterialLike,
         upgrade: HTDeferredItem<*>,
@@ -171,12 +168,12 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         addTemplate(upgrade, material)
         // Armor
         val beforeKey: HTMaterialKey = beforeMaterial.asMaterialKey()
-        for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in armors) {
+        for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in RagiumItems.getArmorMap(material)) {
             val beforeArmor: ItemLike = VanillaMaterialKeys.ARMOR_TABLE[variant, beforeKey] ?: continue
             upgradeFactory(armor, beforeArmor)
         }
         // Tool
-        for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.TOOLS.column(material.asMaterialKey())) {
+        for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.getToolMap(material)) {
             val beforeTool: ItemLike = when (variant) {
                 is HTVanillaToolVariant -> VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey]
                 is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeKey]
@@ -240,7 +237,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun forgeHammers() {
         fun hammer(key: HTMaterialLike): ItemLike = RagiumItems.getTool(HTHammerToolVariant, key)
 
-        fun crafting(prefix: HTMaterialPrefix, key: HTMaterialLike) {
+        fun crafting(prefix: HTPrefixLike, key: HTMaterialLike) {
             HTShapedRecipeBuilder
                 .equipment(hammer(key))
                 .pattern(

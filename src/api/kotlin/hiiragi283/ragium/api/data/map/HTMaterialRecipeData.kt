@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderSet
@@ -77,7 +77,7 @@ interface HTMaterialRecipeData {
     ) {
         fun getAllMaterials(): Set<HTMaterialKey> = RagiumPlatform.INSTANCE.getAllMaterials()
 
-        fun isPresentTag(prefix: HTMaterialPrefix, material: HTMaterialLike): Boolean = isPresentTag(prefix.itemTagKey(material))
+        fun isPresentTag(prefix: HTPrefixLike, material: HTMaterialLike): Boolean = isPresentTag(prefix.itemTagKey(material))
 
         fun isPresentTag(tagKey: TagKey<Item>): Boolean {
             val holderSet: Optional<HolderSet.Named<Item>> = access.lookupOrThrow(Registries.ITEM).get(tagKey)

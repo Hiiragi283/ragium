@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import java.awt.Color
 
 enum class RagiumEssenceType(val color: Color, private val enName: String, private val jpName: String) :
@@ -16,7 +14,7 @@ enum class RagiumEssenceType(val color: Color, private val enName: String, priva
     DEEP(Color(0x404d5a), "Deep Essence", "深層エッセンス"),
     ;
 
-    val basePrefix: HTMaterialPrefix get() = when (this) {
+    val basePrefix: CommonMaterialPrefixes get() = when (this) {
         RAGIUM -> CommonMaterialPrefixes.DUST
         AZURE -> CommonMaterialPrefixes.DUST
         DEEP -> CommonMaterialPrefixes.SCRAP

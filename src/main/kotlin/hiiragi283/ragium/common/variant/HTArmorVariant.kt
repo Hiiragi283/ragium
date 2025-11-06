@@ -25,8 +25,12 @@ enum class HTArmorVariant(
     BOOTS(ArmorItem.Type.BOOTS, "%s Boots", "%sのブーツ", ItemTags.FOOT_ARMOR),
     ;
 
-    fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<ArmorItem> = register.registerItem(
-        "${material.asMaterialName()}_${variantName()}",
+    fun registerItem(
+        register: HTDeferredItemRegister,
+        material: HTEquipmentMaterial,
+        name: String = "${material.asMaterialName()}_${variantName()}",
+    ): HTDeferredItem<ArmorItem> = register.registerItem(
+        name,
         {
             ArmorItem(
                 DeferredHolder.create(Registries.ARMOR_MATERIAL, RagiumAPI.id(material.asMaterialName())),

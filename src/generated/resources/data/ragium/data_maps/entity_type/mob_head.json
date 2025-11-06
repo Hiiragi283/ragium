@@ -6,6 +6,15 @@
     "minecraft:ender_dragon": {
       "head": "minecraft:dragon_head"
     },
+    "minecraft:enderman": {
+      "neoforge:conditions": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "enderio_base"
+        }
+      ],
+      "head": "enderio:enderman_head"
+    },
     "minecraft:piglin": {
       "head": "minecraft:piglin_head"
     },

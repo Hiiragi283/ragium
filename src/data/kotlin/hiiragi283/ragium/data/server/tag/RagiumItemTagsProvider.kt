@@ -1,24 +1,25 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.accessory.HTAccessorySlot
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -27,10 +28,10 @@ import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import io.wispforest.accessories.api.data.AccessoriesTags
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
@@ -95,11 +96,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
-    private fun copy(prefix: HTMaterialPrefix) {
-        copy(prefix.blockCommonTag, prefix.itemCommonTag)
+    private fun copy(prefix: HTPrefixLike) {
+        copy(prefix.createCommonTagKey(Registries.BLOCK), prefix.createCommonTagKey(Registries.ITEM))
     }
 
-    private fun copy(prefix: HTMaterialPrefix, material: HTMaterialLike) {
+    private fun copy(prefix: HTPrefixLike, material: HTMaterialLike) {
         copy(prefix.blockTagKey(material), prefix.itemTagKey(material))
     }
 
@@ -122,7 +123,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, Items.CHARCOAL.toHolderLike())
 
         val coalCoke: TagKey<Item> = CommonMaterialPrefixes.FUEL.itemTagKey(CommonMaterialKeys.COAL_COKE)
-        builder.addTag(CommonMaterialPrefixes.FUEL.itemCommonTag, coalCoke)
+        builder.addTag(CommonMaterialPrefixes.FUEL.createCommonTagKey(Registries.ITEM), coalCoke)
         builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
 
         builder.addMaterial(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO, Items.ECHO_SHARD.toHolderLike())
@@ -138,11 +139,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             CommonMaterialPrefixes.GEM to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.INGOT to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.FUEL to ItemTags.COALS,
-        )
+        ).mapKeys { (prefix: CommonMaterialPrefixes, _) -> prefix.asMaterialPrefix() }
     }
 
-    private fun fromTriples(builder: HTTagBuilder<Item>, triples: Iterable<Triple<HTMaterialPrefix, HTMaterialLike, HTHolderLike>>) {
-        triples.forEach { (prefix: HTMaterialPrefix, key: HTMaterialLike, item: HTHolderLike) ->
+    private fun fromTriples(builder: HTTagBuilder<Item>, triples: Iterable<Triple<HTPrefixLike, HTMaterialLike, HTHolderLike>>) {
+        triples.forEach { (prefix: HTPrefixLike, key: HTMaterialLike, item: HTHolderLike) ->
             builder.addMaterial(prefix, key, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: return@forEach
             builder.addTag(customTag, prefix.itemTagKey(key))
@@ -231,10 +232,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.STRIKE_ENCHANTABLE)
         // Armors
-        buildMultiMap {
-            putAll(RagiumItems.AZURE_ARMORS)
-            putAll(RagiumItems.DEEP_ARMORS)
-        }.forEach { (variant: HTArmorVariant, armor: HTHolderLike) -> builder.add(variant.tagKey, armor) }
+        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: HTDeferredItem<*>) ->
+            builder.add(variant.tagKey, item)
+        }
         // Tools
         RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
             for (tagKey: TagKey<Item> in variant.tagKeys) {
@@ -320,13 +320,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Integration    //
 
     private fun accessories(builder: HTTagBuilder<Item>) {
-        builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        // builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
-        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
-        builder.addAccessory(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
+        builder.add(AccessoriesTags.BACK_TAG, RagiumItems.ECHO_STAR)
+        builder.add(AccessoriesTags.BELT_TAG, RagiumItems.UNIVERSAL_BUNDLE)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.ADVANCED_MAGNET)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.DYNAMIC_LANTERN)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.MAGNET)
+        builder.add(AccessoriesTags.FACE_TAG, RagiumItems.NIGHT_VISION_GOGGLES)
+
+        builder.add(RagiumModTags.Items.BYPASS_MENU_VALIDATION, RagiumItems.UNIVERSAL_BUNDLE)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
@@ -335,11 +336,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike) =
+    private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike): HTTagBuilder<Item> =
         this.addTag(parent, child).add(child, holder)
 
-    private fun HTTagBuilder<Item>.addMaterial(prefix: HTMaterialPrefix, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
-        val itemCommonTag: TagKey<Item> = prefix.itemCommonTag
+    private fun HTTagBuilder<Item>.addMaterial(prefix: HTPrefixLike, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
+        val itemCommonTag: TagKey<Item> = prefix.createCommonTagKey(Registries.ITEM)
         val tagKey: TagKey<Item> = prefix.itemTagKey(key)
         return this.add(itemCommonTag, tagKey, holder)
     }
@@ -351,9 +352,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             }
         }
     }
-
-    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> =
-        this.add(slot.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

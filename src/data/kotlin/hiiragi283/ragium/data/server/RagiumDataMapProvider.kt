@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import com.enderio.base.common.init.EIOBlocks
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -8,8 +9,9 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
@@ -17,10 +19,10 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
@@ -28,17 +30,18 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.EnchantmentTags
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import java.util.function.Supplier
 
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
@@ -50,12 +53,15 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         compostables()
         furnaceFuels()
 
-        thermalFuels()
-        combustionFuels()
-        nuclearFuels()
         enchFactories()
 
         mobHead()
+
+        thermalFuels()
+        combustionFuels()
+        nuclearFuels()
+
+        armorEquip()
 
         materialRecipe()
     }
@@ -80,50 +86,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     //    Ragium    //
 
-    private fun thermalFuels() {
-        builder(RagiumDataMaps.THERMAL_FUEL)
-            .add("steam", 100)
-            .add(HTFluidContent.LAVA, 10)
-            .add("blaze_blood", 5)
-    }
-
-    private fun combustionFuels() {
-        builder(RagiumDataMaps.COMBUSTION_FUEL)
-            // lowest
-            .add(RagiumFluidContents.CRUDE_OIL, 100)
-            .add("oil", 100)
-            .add("creosote", 100)
-            // low
-            .add(InitFluids.CANOLA_OIL, HTFluidFuelData(50))
-            // medium
-            .add(RagiumFluidContents.NATURAL_GAS, 20)
-            .add("ethanol", 20)
-            .add("bioethanol", 20)
-            .add("lpg", 20)
-            .add(InitFluids.REFINED_CANOLA_OIL, HTFluidFuelData(20))
-            // high
-            .add(RagiumFluidContents.FUEL, 10)
-            .add("diesel", 10)
-            .add("biodiesel", 10)
-            .add(InitFluids.CRYSTALLIZED_OIL, HTFluidFuelData(10))
-            // highest
-            .add(RagiumFluidContents.CRIMSON_FUEL, 5)
-            .add("high_power_biodiesel", 5)
-            .add(InitFluids.EMPOWERED_OIL, HTFluidFuelData(5))
-    }
-
-    private fun nuclearFuels() {
-        builder(RagiumDataMaps.NUCLEAR_FUEL)
-            .add(RagiumFluidContents.GREEN_FUEL, 5)
-    }
-
     private fun enchFactories() {
         builder(RagiumDataMaps.ENCHANT_FUEL)
             .add(EnchantmentTags.TREASURE, LevelBasedValue.perLevel(3f), false)
             .add(EnchantmentTags.CURSE, LevelBasedValue.perLevel(-1f), false)
     }
-
-    //    Mob Head    //
 
     private fun mobHead() {
         builder(RagiumDataMaps.MOB_HEAD)
@@ -133,9 +100,51 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(EntityType.CREEPER, HTMobHead(Items.CREEPER_HEAD))
             .add(EntityType.ENDER_DRAGON, HTMobHead(Items.DRAGON_HEAD))
             .add(EntityType.PIGLIN, HTMobHead(Items.PIGLIN_HEAD))
+            // EIO Integration
+            .add(EntityType.ENDERMAN, HTMobHead(EIOBlocks.ENDERMAN_HEAD), ModLoadedCondition(RagiumConst.EIO_BASE))
     }
 
-    //    Material Recipe    //
+    private fun thermalFuels() {
+        builder(RagiumDataMaps.THERMAL_FUEL)
+            .add("steam", HTFluidFuelData(100))
+            .add(HTFluidContent.LAVA, HTFluidFuelData(10))
+            .add("blaze_blood", HTFluidFuelData(5))
+    }
+
+    private fun combustionFuels() {
+        builder(RagiumDataMaps.COMBUSTION_FUEL)
+            // lowest
+            .add(RagiumFluidContents.CRUDE_OIL, HTFluidFuelData(100))
+            .add("oil", HTFluidFuelData(100))
+            .add("creosote", HTFluidFuelData(100))
+            // low
+            .add(InitFluids.CANOLA_OIL.get(), HTFluidFuelData(50), ModLoadedCondition(RagiumConst.ACTUALLY))
+            // medium
+            .add(RagiumFluidContents.NATURAL_GAS, HTFluidFuelData(20))
+            .add("ethanol", HTFluidFuelData(20))
+            .add("bioethanol", HTFluidFuelData(20))
+            .add("lpg", HTFluidFuelData(20))
+            .add(InitFluids.REFINED_CANOLA_OIL.get(), HTFluidFuelData(20), ModLoadedCondition(RagiumConst.ACTUALLY))
+            // high
+            .add(RagiumFluidContents.FUEL, HTFluidFuelData(10))
+            .add("diesel", HTFluidFuelData(10))
+            .add("biodiesel", HTFluidFuelData(10))
+            .add(InitFluids.CRYSTALLIZED_OIL.get(), HTFluidFuelData(10), ModLoadedCondition(RagiumConst.ACTUALLY))
+            // highest
+            .add(RagiumFluidContents.CRIMSON_FUEL, HTFluidFuelData(5))
+            .add("high_power_biodiesel", HTFluidFuelData(5))
+            .add(InitFluids.EMPOWERED_OIL.get(), HTFluidFuelData(5), ModLoadedCondition(RagiumConst.ACTUALLY))
+    }
+
+    private fun nuclearFuels() {
+        builder(RagiumDataMaps.NUCLEAR_FUEL)
+            .add(RagiumFluidContents.GREEN_FUEL, HTFluidFuelData(5))
+    }
+
+    private fun armorEquip() {
+        builder(RagiumDataMaps.ARMOR_EQUIP)
+            .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1, ambient = true))
+    }
 
     private fun materialRecipe() {
         MapDataMapBuilder(builder(RagiumDataMaps.MATERIAL_RECIPE))
@@ -211,33 +220,29 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     //    Extensions    //
 
-    private fun <T : Any, R : Any> Builder<T, R>.add(holder: HTHolderLike, value: T): Builder<T, R> {
-        val id: ResourceLocation = holder.getId()
-        val conditions: Array<ModLoadedCondition> = id.namespace
-            .takeUnless(RagiumConst.BUILTIN_IDS::contains)
-            ?.let(::ModLoadedCondition)
-            .let(::listOfNotNull)
-            .toTypedArray()
-        return add(id, value, false, *conditions)
-    }
+    private fun <T : Any, R : Any> Builder<T, R>.addHolder(holder: HTHolderLike, value: T, vararg conditions: ICondition): Builder<T, R> =
+        add(holder.getId(), value, false, *conditions)
 
     // Item
-    private fun <T : Any> Builder<T, Item>.add(prefix: HTMaterialPrefix, key: HTMaterialLike, value: T): Builder<T, Item> =
+    private fun <T : Any> Builder<T, Item>.add(prefix: HTPrefixLike, key: HTMaterialLike, value: T): Builder<T, Item> =
         add(prefix.itemTagKey(key), value, false)
 
     // Fluid
-    private fun <T : Any> Builder<T, Fluid>.add(fluid: Supplier<out Fluid>, value: T): Builder<T, Fluid> =
-        add(fluid.get().toHolderLike(), value)
+    private fun <T : Any> Builder<T, Fluid>.add(fluid: Fluid, value: T, vararg conditions: ICondition): Builder<T, Fluid> =
+        addHolder(fluid.toHolderLike(), value, *conditions)
 
-    private fun Builder<HTFluidFuelData, Fluid>.add(content: HTFluidContent<*, *, *>, amount: Int): Builder<HTFluidFuelData, Fluid> =
-        add(content.commonTag, HTFluidFuelData(amount), false)
+    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
+        add(content.commonTag, value, false)
 
-    private fun Builder<HTFluidFuelData, Fluid>.add(path: String, amount: Int): Builder<HTFluidFuelData, Fluid> =
-        add(Registries.FLUID.createCommonTag(path), HTFluidFuelData(amount), false)
+    private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
+        add(Registries.FLUID.createCommonTag(path), value, false)
 
     // Entity Type
-    private fun <T : Any> Builder<T, EntityType<*>>.add(type: EntityType<*>, value: T): Builder<T, EntityType<*>> =
-        add(type.toHolderLike(), value)
+    private fun <T : Any> Builder<T, EntityType<*>>.add(
+        type: EntityType<*>,
+        value: T,
+        vararg conditions: ICondition,
+    ): Builder<T, EntityType<*>> = addHolder(type.toHolderLike(), value, *conditions)
 
     private class MapDataMapBuilder<R : Any, V : Any>(
         private val builder: AdvancedBuilder<Map<ResourceLocation, V>, R, MapDataMapValueRemover<R, V>>,
