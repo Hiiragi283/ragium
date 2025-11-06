@@ -49,10 +49,11 @@ object RagiumDataComponents {
     val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
 
     @JvmField
-    val INTRINSIC_ENCHANTMENT: DataComponentType<HTIntrinsicEnchantment> = REGISTER.registerType(
-        "intrinsic_enchantment",
-        HTIntrinsicEnchantment.CODEC,
-    )
+    val INTRINSIC_ENCHANTMENT: DataComponentType<HTIntrinsicEnchantment> =
+        REGISTER.registerType("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC)
+
+    @JvmField
+    val IS_ACTIVE: DataComponentType<Boolean> = REGISTER.registerType("is_active", BiCodec.BOOL)
 
     @JvmField
     val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)

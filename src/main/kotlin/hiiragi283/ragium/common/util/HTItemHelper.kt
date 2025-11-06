@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
@@ -92,11 +91,7 @@ object HTItemHelper {
     }
 
     @JvmStatic
-    fun processCollectorRange(
-        serverLevel: ServerLevel,
-        stack: ItemStack,
-        range: Double = RagiumConfig.COMMON.deviceCollectorEntityRange.asDouble,
-    ): Double {
+    fun processCollectorRange(serverLevel: ServerLevel, stack: ItemStack, range: Double): Double {
         val float = MutableFloat(range)
         EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
             modifyCollectorRange(holder.value(), serverLevel, level, stack, float)

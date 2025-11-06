@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.accessory.HTAccessorySlot
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
@@ -32,6 +31,7 @@ import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import io.wispforest.accessories.api.data.AccessoriesTags
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
@@ -320,12 +320,12 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Integration    //
 
     private fun accessories(builder: HTTagBuilder<Item>) {
-        builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
-        builder.addAccessory(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
+        builder.add(AccessoriesTags.BACK_TAG, RagiumItems.ECHO_STAR)
+        builder.add(AccessoriesTags.BELT_TAG, RagiumItems.UNIVERSAL_BUNDLE)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.ADVANCED_MAGNET)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.DYNAMIC_LANTERN)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.MAGNET)
+        builder.add(AccessoriesTags.FACE_TAG, RagiumItems.NIGHT_VISION_GOGGLES)
 
         builder.add(RagiumModTags.Items.BYPASS_MENU_VALIDATION, RagiumItems.UNIVERSAL_BUNDLE)
     }
@@ -336,7 +336,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike) =
+    private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike): HTTagBuilder<Item> =
         this.addTag(parent, child).add(child, holder)
 
     private fun HTTagBuilder<Item>.addMaterial(prefix: HTPrefixLike, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
@@ -352,9 +352,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             }
         }
     }
-
-    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> =
-        this.add(slot.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

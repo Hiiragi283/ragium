@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
@@ -55,21 +56,33 @@ object RagiumAPI {
 
     //    Registry    //
 
-    @JvmField
-    val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = ResourceKey.createRegistryKey(id("brewing_effect"))
+    @JvmStatic
+    private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(id(path))
 
-    @JvmField
-    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = ResourceKey.createRegistryKey(
-        id("material_recipe_type"),
-    )
-
-    @JvmField
-    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = RegistryBuilder(MATERIAL_RECIPE_TYPE_KEY)
+    @JvmStatic
+    private fun <T : Any> createRegistry(key: ResourceKey<Registry<T>>): Registry<T> = RegistryBuilder<T>(key)
         .sync(true)
         .create()
 
+    // Builtin
     @JvmField
-    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = ResourceKey.createRegistryKey(id("solar_power"))
+    val EQUIP_ACTION_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTEquipAction>>> = createKey("equip_action_type")
+
+    @JvmField
+    val EQUIP_ACTION_TYPE_REGISTRY: Registry<MapCodec<out HTEquipAction>> = createRegistry(EQUIP_ACTION_TYPE_KEY)
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = createKey("material_recipe_type")
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = createRegistry(MATERIAL_RECIPE_TYPE_KEY)
+
+    // Dynamic
+    @JvmField
+    val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = createKey("brewing_effect")
+
+    @JvmField
+    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = createKey("solar_power")
 
     //    Service    //
 

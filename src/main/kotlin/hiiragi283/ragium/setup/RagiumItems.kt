@@ -32,7 +32,9 @@ import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
+import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTMagnetItem
 import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTPotionSodaItem
 import hiiragi283.ragium.common.item.HTTeleportKeyItem
@@ -62,6 +64,7 @@ import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.common.variant.VanillaEquipmentMaterial
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -69,7 +72,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
@@ -79,7 +81,6 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import java.util.function.UnaryOperator
 
 object RagiumItems {
     @JvmField
@@ -97,51 +98,51 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = register("${RagiumConst.RAGI_ALLOY}_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("${RagiumConst.RAGI_ALLOY}_compound")
 
     @JvmField
-    val RAGI_COKE: HTSimpleDeferredItem = register("ragi_coke")
+    val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
 
     // Wood
     @JvmField
-    val COMPRESSED_SAWDUST: HTSimpleDeferredItem = register("compressed_sawdust")
+    val COMPRESSED_SAWDUST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("compressed_sawdust")
 
     @JvmField
-    val RESIN: HTSimpleDeferredItem = register("resin")
+    val RESIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("resin")
 
     // Oil
     @JvmField
-    val TAR: HTSimpleDeferredItem = register("tar")
+    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     // Nuclear Fuel
     @JvmField
-    val POTATO_SPROUTS: HTSimpleDeferredItem = register("potato_sprouts")
+    val POTATO_SPROUTS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("potato_sprouts")
 
     @JvmField
-    val GREEN_CAKE: HTSimpleDeferredItem = register("green_cake")
+    val GREEN_CAKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("green_cake")
 
     @JvmField
-    val GREEN_CAKE_DUST: HTSimpleDeferredItem = register("green_cake_dust")
+    val GREEN_CAKE_DUST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("green_cake_dust")
 
     @JvmField
-    val GREEN_PELLET: HTSimpleDeferredItem = register("green_pellet")
+    val GREEN_PELLET: HTSimpleDeferredItem = REGISTER.registerSimpleItem("green_pellet")
 
     // Misc
     @JvmField
-    val BASALT_MESH: HTSimpleDeferredItem = register("basalt_mesh")
+    val BASALT_MESH: HTSimpleDeferredItem = REGISTER.registerSimpleItem("basalt_mesh")
 
     @JvmField
-    val ECHO_STAR: HTSimpleDeferredItem = register("echo_star") { it.rarity(Rarity.UNCOMMON) }
+    val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") { it.rarity(Rarity.UNCOMMON) }
 
     @JvmField
-    val ELDER_HEART: HTSimpleDeferredItem = register("elder_heart") { it.rarity(Rarity.UNCOMMON) }
+    val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") { it.rarity(Rarity.UNCOMMON) }
 
     @JvmField
-    val WITHER_DOLl: HTSimpleDeferredItem = register("wither_doll")
+    val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         fun register(prefix: HTPrefixLike, material: HTMaterialLike, name: String) {
-            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = register(name)
+            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimpleItem(name)
         }
 
         // Dusts
@@ -239,7 +240,7 @@ object RagiumItems {
 
     @JvmField
     val COILS: Map<HTMaterialKey, HTSimpleDeferredItem> = arrayOf(RagiumMaterialKeys.RAGI_ALLOY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-        .associateWith { key: HTMaterialKey -> register("${key.name}_coil") }
+        .associateWith { key: HTMaterialKey -> REGISTER.registerSimpleItem("${key.name}_coil") }
 
     @JvmField
     val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
@@ -288,16 +289,18 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val WRENCH: HTSimpleDeferredItem = register("wrench") { it.stacksTo(1) }
+    val WRENCH: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wrench") { it.stacksTo(1) }
 
     @JvmField
-    val MAGNET: HTSimpleDeferredItem = register("ragi_magnet")
+    val MAGNET: HTSimpleDeferredItem =
+        REGISTER.registerItemWith("ragi_magnet", RagiumConfig.COMMON.basicMagnetRange, ::HTMagnetItem)
 
     @JvmField
-    val ADVANCED_MAGNET: HTSimpleDeferredItem = register("advanced_ragi_magnet")
+    val ADVANCED_MAGNET: HTSimpleDeferredItem =
+        REGISTER.registerItemWith("advanced_ragi_magnet", RagiumConfig.COMMON.advancedMagnetRange, ::HTMagnetItem)
 
     @JvmField
-    val DYNAMIC_LANTERN: HTSimpleDeferredItem = register("ragi_lantern")
+    val DYNAMIC_LANTERN: HTSimpleDeferredItem = REGISTER.registerItem("ragi_lantern", ::HTDynamicLanternItem)
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
@@ -353,7 +356,7 @@ object RagiumItems {
     val POTION_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("potion_bundle", ::HTPotionBundleItem)
 
     @JvmField
-    val SLOT_COVER: HTSimpleDeferredItem = register("slot_cover")
+    val SLOT_COVER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("slot_cover")
 
     @JvmField
     val TRADER_CATALOG: HTSimpleDeferredItem = REGISTER.registerItem("trader_catalog", ::HTTraderCatalogItem)
@@ -407,7 +410,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerFood(name: String, foodProperties: FoodProperties): HTSimpleDeferredItem =
-        register(name) { it.food(foodProperties) }
+        REGISTER.registerSimpleItem(name) { it.food(foodProperties) }
 
     @JvmField
     val ICE_CREAM: HTSimpleDeferredItem = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
@@ -435,7 +438,7 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val BOTTLED_BEE: HTSimpleDeferredItem = register("bottled_bee")
+    val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bottled_bee")
 
     @JvmField
     val AMBROSIA: HTSimpleDeferredItem = registerFood("ambrosia", RagiumFoods.AMBROSIA)
@@ -443,7 +446,7 @@ object RagiumItems {
     //    Machine Parts    //
 
     @JvmField
-    val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = register("gravitational_unit")
+    val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
 
     // Catalyst
     @JvmField
@@ -454,33 +457,33 @@ object RagiumItems {
 
     // LED
     @JvmField
-    val LUMINOUS_PASTE: HTSimpleDeferredItem = register("luminous_paste")
+    val LUMINOUS_PASTE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("luminous_paste")
 
     @JvmField
-    val LED: HTSimpleDeferredItem = register("led")
+    val LED: HTSimpleDeferredItem = REGISTER.registerSimpleItem("led")
 
     @JvmField
-    val SOLAR_PANEL: HTSimpleDeferredItem = register("solar_panel")
+    val SOLAR_PANEL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("solar_panel")
 
     // Redstone
     @JvmField
-    val REDSTONE_BOARD: HTSimpleDeferredItem = register("redstone_board")
+    val REDSTONE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("redstone_board")
 
     // Plastics
     @JvmField
-    val POLYMER_RESIN: HTSimpleDeferredItem = register("polymer_resin")
+    val POLYMER_RESIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("polymer_resin")
 
     @JvmField
-    val SYNTHETIC_FIBER: HTSimpleDeferredItem = register("synthetic_fiber")
+    val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
     @JvmField
-    val SYNTHETIC_LEATHER: HTSimpleDeferredItem = register("synthetic_leather")
+    val SYNTHETIC_LEATHER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_leather")
 
     @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = register("circuit_board")
+    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
-    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = register("advanced_circuit_board")
+    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("advanced_circuit_board")
 
     //    Vehicles    //
 
@@ -488,12 +491,6 @@ object RagiumItems {
     val DRUM_MINECARTS: Map<HTDrumTier, HTSimpleDeferredItem> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
         REGISTER.registerItemWith(tier.entityPath, tier, ::HTDrumWithMinecartItem)
     }
-
-    //    Extensions    //
-
-    @JvmStatic
-    private fun register(name: String, operator: UnaryOperator<Item.Properties> = UnaryOperator.identity()): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem(name, operator)
 
     //    Event    //
 

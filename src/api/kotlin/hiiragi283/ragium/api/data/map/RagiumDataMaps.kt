@@ -7,6 +7,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
@@ -30,6 +31,12 @@ interface RagiumDataMaps {
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
 
         @JvmField
+        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
+
+        @JvmField
+        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+
+        @JvmField
         val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
 
         @JvmField
@@ -39,22 +46,21 @@ interface RagiumDataMaps {
         val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
 
         @JvmField
-        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
-
-        @JvmField
-        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+        val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> = INSTANCE.armorEquipType
 
         @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> = INSTANCE.materialRecipeType
     }
 
+    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
+
+    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
+
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
     val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
 
-    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
-
-    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
+    val armorEquipType: DataMapType<Item, HTEquipAction>
 
     val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData>
 

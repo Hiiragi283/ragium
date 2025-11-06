@@ -100,6 +100,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
+        event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
@@ -134,12 +135,15 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.THERMAL_FUEL)
-        event.register(RagiumDataMaps.COMBUSTION_FUEL)
-        event.register(RagiumDataMaps.NUCLEAR_FUEL)
         event.register(RagiumDataMaps.ENCHANT_FUEL)
 
         event.register(RagiumDataMaps.MOB_HEAD)
+
+        event.register(RagiumDataMaps.THERMAL_FUEL)
+        event.register(RagiumDataMaps.COMBUSTION_FUEL)
+        event.register(RagiumDataMaps.NUCLEAR_FUEL)
+
+        event.register(RagiumDataMaps.ARMOR_EQUIP)
 
         event.register(RagiumDataMaps.MATERIAL_RECIPE)
 

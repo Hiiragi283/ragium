@@ -1,26 +1,19 @@
 package hiiragi283.ragium.common.integration
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTPayloadRegistrar
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
-import hiiragi283.ragium.common.accessory.HTDynamicLightingAccessory
-import hiiragi283.ragium.common.accessory.HTMagnetizationAccessory
-import hiiragi283.ragium.common.accessory.HTMobEffectAccessory
 import hiiragi283.ragium.common.util.HTPacketHelper
 import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesAPI
-import io.wispforest.accessories.api.Accessory
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
 import io.wispforest.accessories.api.client.AccessoryRenderer
-import net.minecraft.world.effect.MobEffects
-import net.minecraft.world.entity.ExperienceOrb
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -51,34 +44,17 @@ object RagiumAccessoriesAddon : RagiumAddon {
 
     @JvmStatic
     fun register() {
-        // Charm
-        register(RagiumItems.DYNAMIC_LANTERN, HTDynamicLightingAccessory)
-        register(
+        listOf(
+            // Charm
+            RagiumItems.DYNAMIC_LANTERN,
             RagiumItems.MAGNET,
-            HTMagnetizationAccessory.create { entity: ItemEntity, _ ->
-                // IEのコンベヤ上にいるアイテムは無視する
-                if (entity.persistentData.getBoolean(RagiumConst.PREVENT_ITEM_MAGNET)) return@create false
-                entity.isAlive && !entity.hasPickUpDelay()
-            },
-        )
-        register(
             RagiumItems.ADVANCED_MAGNET,
-            HTMagnetizationAccessory.create { entity: ExperienceOrb, _ ->
-                entity.isAlive && entity.value > 0
-            },
-        )
-
-        // Face
-        register(
+            // Face
             RagiumItems.NIGHT_VISION_GOGGLES,
-            HTMobEffectAccessory(MobEffects.NIGHT_VISION, -1, ambient = true),
-        )
+        ).forEach { item: HTDeferredItem<*> ->
+            AccessoriesAPI.registerAccessory(item.asItem(), RagiumAccessory)
+        }
         RagiumAPI.LOGGER.info("Registered Accessories!")
-    }
-
-    @JvmStatic
-    private fun register(item: ItemLike, accessory: Accessory) {
-        AccessoriesAPI.registerAccessory(item.asItem(), accessory)
     }
 
     //    Client    //

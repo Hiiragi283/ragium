@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -40,9 +41,15 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.SIMULATING)
             register(helper, RagiumRecipeTypes.WASHING)
         }
+
         // Ingredient Type
         event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
             helper.register(RagiumAPI.id("entity_type"), HTEntityTypeIngredient.TYPE)
+        }
+
+        // Armor Equip Type
+        event.register(RagiumAPI.EQUIP_ACTION_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id("mob_effect"), HTMobEffectEquipAction.CODEC)
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->

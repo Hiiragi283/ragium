@@ -37,7 +37,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         @JvmStatic
         fun of(holderSet: HolderSet<Item>, count: Int = 1): HTItemIngredient = HolderBased(holderSet, count)
-        
+
         @JvmStatic
         fun of(ingredient: Ingredient, count: Int = 1): HTItemIngredient = IngredientBased(ingredient, count)
     }
