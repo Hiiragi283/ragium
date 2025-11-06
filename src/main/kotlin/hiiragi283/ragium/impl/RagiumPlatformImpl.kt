@@ -76,7 +76,7 @@ class RagiumPlatformImpl : RagiumPlatform {
     private lateinit var prefixMap: Map<String, HTMaterialPrefix>
 
     override fun getPrefix(name: String): HTMaterialPrefix? {
-        if (::prefixMap.isInitialized) {
+        if (!::prefixMap.isInitialized) {
             prefixMap = buildMap {
                 val consumer = Consumer { prefix: HTPrefixLike ->
                     val prefix1: HTMaterialPrefix = prefix.asMaterialPrefix()

@@ -46,6 +46,7 @@ import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
@@ -88,6 +89,8 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        REGISTER.addAlias("meat_ingot", "raw_meat_ingot")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -168,7 +171,7 @@ object RagiumItems {
             RagiumMaterialKeys.ELDRITCH_PEARL,
         ).forEach { register(CommonMaterialPrefixes.DUST, it.asMaterialKey(), "${it.asMaterialName()}_dust") }
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "sawdust")
-        register(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT, "minced_meat")
+        register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "minced_meat")
         // Gems
         register(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, "azure_shard")
         arrayOf(
@@ -187,9 +190,9 @@ object RagiumItems {
             RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
             // Foods
-            RagiumMaterialKeys.CHOCOLATE,
-            RagiumMaterialKeys.MEAT,
-            RagiumMaterialKeys.COOKED_MEAT,
+            FoodMaterialKeys.CHOCOLATE,
+            FoodMaterialKeys.RAW_MEAT,
+            FoodMaterialKeys.COOKED_MEAT,
         ).forEach { register(CommonMaterialPrefixes.INGOT, it, "${it.name}_ingot") }
         // Nuggets
         arrayOf(
@@ -643,13 +646,13 @@ object RagiumItems {
             event.modify(item, iridescent)
         }
 
-        event.modify(getIngot(RagiumMaterialKeys.CHOCOLATE)) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(FoodMaterialKeys.CHOCOLATE)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
         }
-        event.modify(getIngot(RagiumMaterialKeys.MEAT)) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(FoodMaterialKeys.RAW_MEAT)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.BEEF)
         }
-        event.modify(getIngot(RagiumMaterialKeys.COOKED_MEAT)) { builder: DataComponentPatch.Builder ->
+        event.modify(getIngot(FoodMaterialKeys.COOKED_MEAT)) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.COOKED_BEEF)
         }
 

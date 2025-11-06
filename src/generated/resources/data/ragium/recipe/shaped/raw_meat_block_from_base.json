@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:ingots/meat"
+      "tag": "c:ingots/raw_meat"
     },
     "B": {
-      "item": "ragium:meat_ingot"
+      "item": "ragium:raw_meat_ingot"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:meat_block"
+    "id": "ragium:raw_meat_block"
   }
 }

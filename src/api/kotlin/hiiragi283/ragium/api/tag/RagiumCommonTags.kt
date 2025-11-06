@@ -59,27 +59,6 @@ object RagiumCommonTags {
         @JvmField
         val CROPS_WARPED_WART: TagKey<Item> = create("crops", "warped_wart")
 
-        // Foods
-        @JvmField
-        val FOODS_APPLE: TagKey<Item> = create("foods", "apple")
-
-        @JvmField
-        val FOODS_CHOCOLATE: TagKey<Item> = create("foods", RagiumConst.CHOCOLATE)
-
-        // Foods - Cherry
-        @JvmField
-        val FOODS_CHERRY: TagKey<Item> = create("foods", "cherry")
-
-        @JvmField
-        val FOODS_RAGI_CHERRY: TagKey<Item> = create("foods", RagiumConst.RAGI_CHERRY)
-
-        // Foods - Jam
-        @JvmField
-        val JAMS: TagKey<Item> = create("jams")
-
-        @JvmField
-        val JAMS_RAGI_CHERRY: TagKey<Item> = create("jams", RagiumConst.RAGI_CHERRY)
-
         // Obsidians
         @JvmField
         val OBSIDIANS_MYSTERIOUS: TagKey<Item> = create("obsidians", "mysterious")

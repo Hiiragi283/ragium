@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -177,14 +178,14 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
             // Foods
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.CHOCOLATE))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.CHOCOLATE))
 
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
-            output.accept(RagiumItems.getDust(RagiumMaterialKeys.MEAT))
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.MEAT))
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.COOKED_MEAT))
+            output.accept(RagiumItems.getDust(FoodMaterialKeys.RAW_MEAT))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.RAW_MEAT))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT))
             output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)

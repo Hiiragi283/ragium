@@ -23,7 +23,7 @@ abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTD
     ) {
     @Suppress("DEPRECATION")
     final override fun addTags(provider: HolderLookup.Provider) {
-        buildMultiMap { HTTagBuilder(this).apply(::addTags) }
+        buildMultiMap { HTTagBuilder(this@HTTagsProvider.registryKey, this).apply(::addTags) }
             .map
             .forEach { (tagKey: TagKey<T>, entries: Collection<Entry>) ->
                 entries

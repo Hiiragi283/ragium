@@ -10,8 +10,8 @@ import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 
 object HTMaterialTranslations {
@@ -59,7 +59,7 @@ object HTMaterialTranslations {
         }
 
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
-        register(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT, "Minced Meat", "ひき肉")
+        register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "Minced Meat", "ひき肉")
     }
 
     fun getLangName(material: HTMaterialLike): HTLangName? = (material as? HTLangName)

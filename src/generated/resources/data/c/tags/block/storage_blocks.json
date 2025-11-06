@@ -11,11 +11,11 @@
     "#c:storage_blocks/gildium",
     "#c:storage_blocks/glowstone",
     "#c:storage_blocks/iridescentium",
-    "#c:storage_blocks/meat",
     "#c:storage_blocks/plastic",
     "#c:storage_blocks/quartz",
     "#c:storage_blocks/ragi_alloy",
     "#c:storage_blocks/ragi_crystal",
+    "#c:storage_blocks/raw_meat",
     "#c:storage_blocks/warped_crystal"
   ]
 }

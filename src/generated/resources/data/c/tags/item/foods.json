@@ -2,8 +2,8 @@
   "values": [
     "#c:foods/apple",
     "#c:foods/chocolate",
-    "#c:ingots/cooked_meat",
-    "#c:ingots/meat",
+    "#c:foods/cooked_meat",
+    "#c:foods/raw_meat",
     "#c:jams",
     "ragium:ambrosia",
     "ragium:canned_cooked_meat",

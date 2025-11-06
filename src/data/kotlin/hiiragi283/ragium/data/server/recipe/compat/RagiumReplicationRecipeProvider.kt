@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.DefaultMatterTypes
@@ -91,12 +92,13 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         // Foods
         register(
             CommonMaterialPrefixes.DUST,
-            RagiumMaterialKeys.MEAT,
+            FoodMaterialKeys.RAW_MEAT,
             DefaultMatterTypes.LIVING.toValue(4.0),
             DefaultMatterTypes.ORGANIC.toValue(4.0),
         )
         register(
-            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
+            CommonMaterialPrefixes.FOOD,
+            FoodMaterialKeys.RAGI_CHERRY,
             DefaultMatterTypes.LIVING.toValue(4.0),
             DefaultMatterTypes.ORGANIC.toValue(4.0),
             RagiumReplicationAddon.getMatterType(RagiumEssenceType.RAGIUM).toValue(4.0),

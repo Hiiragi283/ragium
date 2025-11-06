@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.35,
   "ingredient": {
-    "tag": "c:ingots/meat"
+    "tag": "c:ingots/raw_meat"
   },
   "result": {
     "count": 1,

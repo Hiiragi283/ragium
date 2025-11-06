@@ -42,16 +42,6 @@ object RagiumMaterialKeys {
     @JvmStatic
     val IRIDESCENTIUM: HTMaterialKey = HTMaterialKey.of("iridescentium")
 
-    // Food
-    @JvmStatic
-    val CHOCOLATE: HTMaterialKey = HTMaterialKey.of("chocolate")
-
-    @JvmStatic
-    val MEAT: HTMaterialKey = HTMaterialKey.of("meat")
-
-    @JvmStatic
-    val COOKED_MEAT: HTMaterialKey = HTMaterialKey.of("cooked_meat")
-
     // Other
     @JvmStatic
     val BAMBOO_CHARCOAL: HTMaterialKey = HTMaterialKey.of("bamboo_charcoal")

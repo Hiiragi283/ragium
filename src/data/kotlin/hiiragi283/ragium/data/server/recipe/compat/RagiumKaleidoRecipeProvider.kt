@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
@@ -44,7 +44,7 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     private fun cherry() {
         HTChoppingBoardRecipeBuilder
             .create(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .setCutCount(1)
             .save(output)
     }

@@ -7,7 +7,7 @@
   ],
   "type": "replication:matter_value",
   "input": {
-    "tag": "c:dusts/meat"
+    "tag": "c:dusts/raw_meat"
   },
   "matter": [
     {

@@ -17,6 +17,7 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
 
     // Item
     DUST,
+    FOOD,
     GEM,
     GEAR,
     INGOT,
@@ -24,8 +25,11 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     PLATE,
     RAW_MATERIAL,
     ROD,
+
+    // Item - Custom
     CIRCUIT,
     FUEL,
+    JAM,
     SCRAP,
     ;
 

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -81,7 +82,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RAGI_CHERRY,
             RagiumAdvancements.RAGINITE,
             RagiumItems.RAGI_CHERRY,
-            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
+            CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY),
         )
         HTAdvancementBuilder
             .child(RagiumAdvancements.RAGI_CHERRY)

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -113,7 +114,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Raginite + Apple -> Ragi-Cherry
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(RagiumCommonTags.Items.FOODS_APPLE),
+                itemHelper.from(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE),
                 chemicalHelper.from(RagiumEssenceType.RAGIUM, 40),
                 RagiumItems.RAGI_CHERRY.toStack(),
                 false,

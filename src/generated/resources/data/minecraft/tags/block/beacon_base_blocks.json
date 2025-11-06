@@ -9,10 +9,10 @@
     "ragium:eldritch_pearl_block",
     "ragium:gildium_block",
     "ragium:iridescentium_block",
-    "ragium:meat_block",
     "ragium:plastic_block",
     "ragium:ragi_alloy_block",
     "ragium:ragi_crystal_block",
+    "ragium:raw_meat_block",
     "ragium:warped_crystal_block"
   ]
 }

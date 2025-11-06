@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
@@ -46,14 +47,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .washing(
                 itemCreator.fromTagKey(Tags.Items.CROPS_COCOA_BEAN),
                 fluidCreator.milk(250),
-            ).addResult(resultHelper.item(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.CHOCOLATE))
+            ).addResult(resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE))
             .saveSuffixed(output, "_from_milk")
 
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
                 fluidCreator.fromTagKey(RagiumCommonTags.Fluids.CHOCOLATES, 250),
-                resultHelper.item(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.CHOCOLATE),
+                resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE),
             ).save(output)
         // Melon Pie
         HTShapelessRecipeBuilder
@@ -80,7 +81,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.AMBROSIA),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CHOCOLATE, 64),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, FoodMaterialKeys.CHOCOLATE, 64),
                 itemCreator.fromItem(Items.HONEY_BLOCK, 64),
             ).save(output)
 
@@ -96,7 +97,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .misc(RagiumItems.RAGI_CHERRY, 8)
             .hollow8()
-            .define('A', RagiumCommonTags.Items.FOODS_APPLE)
+            .define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .save(output)
         // Fever Cherry
@@ -104,7 +105,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .misc(RagiumItems.FEVER_CHERRY)
             .hollow8()
             .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.GOLD)
-            .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .define('B', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .save(output)
     }
 
@@ -132,25 +133,25 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 itemCreator.fromTagKey(RagiumModTags.Items.RAW_MEAT),
-                resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT),
+                resultHelper.item(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
         // Meat Ingot
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT),
-                resultHelper.item(RagiumItems.getIngot(RagiumMaterialKeys.MEAT)),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
+                resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
 
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
                 fluidCreator.fromTagKey(RagiumCommonTags.Fluids.MEAT, 250),
-                resultHelper.item(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
+                resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
 
         HTCookingRecipeBuilder
-            .smeltingAndSmoking(RagiumItems.getIngot(RagiumMaterialKeys.COOKED_MEAT)) {
-                addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT)
+            .smeltingAndSmoking(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT)) {
+                addIngredient(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
                 setExp(0.35f)
                 save(output)
             }
@@ -158,7 +159,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .misc(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)
+            .define('A', CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
             .save(output)
     }
@@ -184,7 +185,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 " A ",
                 "BCB",
                 " D ",
-            ).define('A', RagiumCommonTags.Items.FOODS_CHOCOLATE)
+            ).define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
             .define('D', HTDecorationVariant.SPONGE_CAKE.slab)

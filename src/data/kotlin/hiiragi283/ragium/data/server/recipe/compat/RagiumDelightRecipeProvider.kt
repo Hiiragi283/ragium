@@ -4,10 +4,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
@@ -74,7 +74,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     private fun cherry() {
         HTCuttingBoardRecipeBuilder
             .create(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
         // Pie
@@ -85,7 +85,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
                 "BBB",
                 "CDC",
             ).define('A', Tags.Items.CROPS_WHEAT)
-            .define('B', RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .define('B', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .define('C', Items.SUGAR)
             .define('D', ModItems.PIE_CRUST.get())
             .save(output)
@@ -109,8 +109,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
                 200,
                 0.35f,
                 Items.GLASS_BOTTLE,
-            ).addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            ).addIngredient(CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY))
+            .addIngredient(CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY))
             .addIngredient(Items.SUGAR)
             .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
             .save(output)
@@ -121,7 +121,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
                 "ABA",
                 "ACA",
                 "CDC",
-            ).define('A', RagiumCommonTags.Items.JAMS_RAGI_CHERRY)
+            ).define('A', CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
             .define('B', Tags.Items.DRINKS_HONEY)
             .define('C', Tags.Items.FOODS_BREAD)
             .define('D', Items.BOWL)

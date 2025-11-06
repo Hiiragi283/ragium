@@ -34,6 +34,7 @@ import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -64,13 +65,15 @@ object RagiumBlocks {
         REGISTER.register(eventBus)
 
         // Eldritch Stone
-        REGISTER.addFirstAlias("polished_eldritch_stone", "eldritch_stone")
-        REGISTER.addFirstAlias("polished_eldritch_stone_bricks", "eldritch_stone_bricks")
+        REGISTER.addAlias("polished_eldritch_stone", "eldritch_stone")
+        REGISTER.addAlias("polished_eldritch_stone_bricks", "eldritch_stone_bricks")
 
         for (suffix: String in listOf("_slab", "_stairs", "_wall")) {
-            REGISTER.addFirstAlias("polished_eldritch_stone$suffix", "eldritch_stone$suffix")
-            REGISTER.addFirstAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
+            REGISTER.addAlias("polished_eldritch_stone$suffix", "eldritch_stone$suffix")
+            REGISTER.addAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
         }
+        // Raw Meat
+        REGISTER.addAlias("meat_block", "raw_meat_block")
     }
 
     @JvmStatic
@@ -200,9 +203,9 @@ object RagiumBlocks {
             RagiumMaterialKeys.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
             RagiumMaterialKeys.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
-            RagiumMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
-            RagiumMaterialKeys.MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
-            RagiumMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
+            FoodMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
+            FoodMaterialKeys.RAW_MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
+            FoodMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
             // Misc
             CommonMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->

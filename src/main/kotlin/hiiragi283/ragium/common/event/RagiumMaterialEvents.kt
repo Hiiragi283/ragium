@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.addDefaultPrefix
 import hiiragi283.ragium.api.material.addName
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import net.neoforged.bus.api.EventPriority
@@ -178,15 +179,15 @@ object RagiumMaterialEvents {
             addName("Iridescentium", "七色金")
         }
         // Food
-        event.modify(RagiumMaterialKeys.CHOCOLATE) {
+        event.modify(FoodMaterialKeys.CHOCOLATE) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Chocolate", "チョコレート")
         }
-        event.modify(RagiumMaterialKeys.MEAT) {
+        event.modify(FoodMaterialKeys.RAW_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Meat", "生肉")
+            addName("Raw Meat", "生肉")
         }
-        event.modify(RagiumMaterialKeys.COOKED_MEAT) {
+        event.modify(FoodMaterialKeys.COOKED_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Cooked Meat", "焼肉")
         }

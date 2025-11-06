@@ -9,15 +9,19 @@ import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.gui.component.HTWidget
 import hiiragi283.ragium.api.item.createItemStack
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.client.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
@@ -50,6 +54,14 @@ fun TagKey<*>.toEmi(amount: Int = 1): EmiIngredient = EmiIngredient
     .of(this, amount.toLong())
     .takeUnless(EmiIngredient::isEmpty)
     ?: createErrorStack("Empty Tag: ${this.location}")
+
+fun <T: Any> HTPrefixLike.toEmi(key: RegistryKey<T>, amount: Int = 1): EmiIngredient = this.createCommonTagKey(key).toEmi(amount)
+
+fun <T: Any> HTPrefixLike.toEmi(key: RegistryKey<T>, material: HTMaterialLike, amount: Int = 1): EmiIngredient = this.createTagKey(key, material).toEmi(amount)
+
+fun HTPrefixLike.toItemEmi(amount: Int = 1): EmiIngredient = toEmi(Registries.ITEM, amount)
+
+fun HTPrefixLike.toItemEmi(material: HTMaterialLike, amount: Int = 1): EmiIngredient = toEmi(Registries.ITEM, material, amount)
 
 // Result
 fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableItemStack::toEmi, ::createErrorStack)

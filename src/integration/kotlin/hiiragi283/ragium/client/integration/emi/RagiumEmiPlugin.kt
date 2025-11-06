@@ -24,7 +24,6 @@ import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.HTBrewingEffectEmiRecipe
@@ -43,6 +42,8 @@ import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.fluid.HTFluidType
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -116,7 +117,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 EmiCraftingRecipe(
                     listOf(
                         RagiumItems.ICE_CREAM.toEmi(),
-                        RagiumCommonTags.Items.FOODS_CHERRY.toEmi(),
+                        CommonMaterialPrefixes.FOOD.toItemEmi(FoodMaterialKeys.RAGI_CHERRY),
                         PotionContents.createItemStack(Items.POTION, holder).toEmi(),
                         Tags.Items.DYES_GREEN.toEmi(),
                     ),

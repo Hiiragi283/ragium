@@ -3,6 +3,6 @@
   "ingredient": "#ragium:raw_meat",
   "result": {
     "count": 1,
-    "id": "#c:dusts/meat"
+    "id": "#c:dusts/raw_meat"
   }
 }

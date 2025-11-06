@@ -4,9 +4,7 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -171,11 +169,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
-        builder.add(
-            Tags.Blocks.OBSIDIANS,
-            RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
-            RagiumBlocks.MYSTERIOUS_OBSIDIAN,
-        )
+        builder.addTags(Tags.Blocks.OBSIDIANS, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumBlocks.MYSTERIOUS_OBSIDIAN)
         builder.addTag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES)
         // Crop
         builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRIES)
@@ -199,17 +193,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     }
 
     //    Extensions    //
-
-    private fun HTTagBuilder<Block>.add(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
-        addTag(parent, child)
-        add(child, block)
-    }
-
-    private fun HTTagBuilder<Block>.addMaterial(prefix: HTPrefixLike, material: HTMaterialLike, block: HTHolderLike) {
-        val blockCommonTag: TagKey<Block> = prefix.createCommonTagKey(Registries.BLOCK)
-        val tagKey: TagKey<Block> = prefix.blockTagKey(material)
-        add(blockCommonTag, tagKey, block)
-    }
 
     private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, HTHolderLike>) {
         addBlocks(tagKey, blocks.values)

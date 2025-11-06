@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:storage_blocks/meat"
+      "tag": "c:storage_blocks/raw_meat"
     }
   ],
   "result": {
     "count": 9,
-    "id": "ragium:meat_ingot"
+    "id": "ragium:raw_meat_ingot"
   }
 }

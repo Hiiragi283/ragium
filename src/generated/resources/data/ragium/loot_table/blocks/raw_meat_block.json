@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:meat_block"
+          "name": "ragium:raw_meat_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/meat_block"
+  "random_sequence": "ragium:blocks/raw_meat_block"
 }
