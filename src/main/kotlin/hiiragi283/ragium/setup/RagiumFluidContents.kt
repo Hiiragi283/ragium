@@ -72,6 +72,10 @@ object RagiumFluidContents {
     //    Organic    //
 
     @JvmField
+    val MEAT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("meat", liquid())
+
+    @JvmField
     val ORGANIC_MUTAGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("organic_mutagen", liquid())
 

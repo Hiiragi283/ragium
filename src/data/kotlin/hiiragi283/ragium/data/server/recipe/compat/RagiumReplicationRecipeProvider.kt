@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -56,7 +55,8 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         )
         // Deep
         register(
-            RagiumCommonTags.Items.ORES_DEEP_SCRAP,
+            CommonMaterialPrefixes.ORE,
+            RagiumMaterialKeys.DEEP_SCRAP,
             DefaultMatterTypes.PRECIOUS.toValue(18.0),
             RagiumReplicationAddon.getMatterType(RagiumEssenceType.DEEP).toValue(18.0),
         )

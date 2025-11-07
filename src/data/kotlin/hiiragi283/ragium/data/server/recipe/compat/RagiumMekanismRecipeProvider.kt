@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -186,7 +185,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Ore -> Scrap
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumCommonTags.Items.ORES_DEEP_SCRAP),
+                itemHelper.from(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP),
                 RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL).toStack(2),
             ).build(output, id("processing/deep_steel/resonant_debris_to_scrap"))
 

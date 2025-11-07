@@ -193,6 +193,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
         machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
         altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
+        // machine(RagiumBlocks.SOLIDIFIER, advancedFrame, blackstone)
         machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)

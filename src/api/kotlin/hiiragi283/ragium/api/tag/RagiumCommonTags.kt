@@ -15,9 +15,6 @@ object RagiumCommonTags {
         val OBSIDIANS_MYSTERIOUS: TagKey<Block> = create("obsidians", "mysterious")
 
         @JvmField
-        val ORES_DEEP_SCRAP: TagKey<Block> = create(RagiumConst.ORES, "deep_scrap")
-
-        @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Block> = create("ores_in_ground", "end_stone")
 
         @JvmStatic
@@ -29,9 +26,6 @@ object RagiumCommonTags {
     object Fluids {
         @JvmField
         val CHOCOLATES: TagKey<Fluid> = create("chocolates")
-
-        @JvmField
-        val MEAT: TagKey<Fluid> = create("meat")
 
         @JvmStatic
         private fun create(path: String): TagKey<Fluid> = Registries.FLUID.createCommonTag(path)
@@ -62,10 +56,6 @@ object RagiumCommonTags {
         // Obsidians
         @JvmField
         val OBSIDIANS_MYSTERIOUS: TagKey<Item> = create("obsidians", "mysterious")
-
-        // Ores
-        @JvmField
-        val ORES_DEEP_SCRAP: TagKey<Item> = create(RagiumConst.ORES, "deep_scrap")
 
         @JvmStatic
         private fun create(path: String): TagKey<Item> = Registries.ITEM.createCommonTag(path)

@@ -195,6 +195,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.MEAT, "液体肉")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")

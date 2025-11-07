@@ -145,7 +145,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTFluidTransformRecipeBuilder
             .solidifying(
                 null,
-                fluidCreator.fromTagKey(RagiumCommonTags.Fluids.MEAT, 250),
+                fluidCreator.fromContent(RagiumFluidContents.MEAT, 250),
                 resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
 

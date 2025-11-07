@@ -48,6 +48,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val refineryOutputTankCapacity: HTIntConfigValue
 
     @JvmField
+    val solidifierTankCapacity: HTIntConfigValue
+
+    @JvmField
     val washerTankCapacity: HTIntConfigValue
 
     // Device
@@ -158,6 +161,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.push("output")
         refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop(2)
+
+        builder.push("solidifier")
+        solidifierTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
 
         builder.push("washer")
         washerTankCapacity = builder.definePositiveInt("tankCapacity", 8000)

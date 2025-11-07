@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
@@ -40,7 +42,8 @@ abstract class HTAdvancementGenerator {
             key,
             parent,
             RagiumItems.getMaterial(prefix, material),
-            prefix.itemTagKey(material),
+            prefix,
+            material,
             builderAction,
         )
     }
@@ -64,6 +67,25 @@ abstract class HTAdvancementGenerator {
             } else {
                 hasAnyItem(item)
             }
+        }
+    }
+
+    protected inline fun createSimple(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        item: HTItemHolderLike,
+        prefix: HTPrefixLike,
+        material: HTMaterialLike,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            hasAnyItem(prefix.itemTagKey(material))
         }
     }
 }

@@ -34,6 +34,16 @@ data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val en
         entryCache[tagKey] = Entry(id, false, type)
     }
 
+    fun addTag(tagKey: TagKey<T>, prefix: HTPrefixLike, type: DependType = DependType.REQUIRED): HTTagBuilder<T> =
+        addTag(tagKey, createCommonTag(prefix), type)
+
+    fun addTag(
+        tagKey: TagKey<T>,
+        prefix: HTPrefixLike,
+        material: HTMaterialLike,
+        type: DependType = DependType.REQUIRED,
+    ): HTTagBuilder<T> = addTag(tagKey, createTag(prefix, material), type)
+
     /**
      * 指定した[child]を[TagKey]に登録します。
      */

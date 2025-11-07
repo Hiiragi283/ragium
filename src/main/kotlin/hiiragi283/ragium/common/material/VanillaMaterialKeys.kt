@@ -63,6 +63,9 @@ object VanillaMaterialKeys {
     @JvmStatic
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
 
+    @JvmStatic
+    val NETHERITE_SCRAP: HTMaterialKey = HTMaterialKey.of("netherite_scrap")
+
     //    Item    //
 
     val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTMaterialKey, Item> = buildTable {

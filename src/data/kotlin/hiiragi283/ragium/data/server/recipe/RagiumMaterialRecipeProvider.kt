@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -26,8 +25,6 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -148,7 +145,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Deep Steel
         HTCookingRecipeBuilder
             .smeltingAndBlasting(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL)) {
-                addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+                addIngredient(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP)
                 save(output)
             }
 
@@ -329,11 +326,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         // Scraps
         mapOf(
-            Tags.Items.ORES_NETHERITE_SCRAP to VanillaMaterialKeys.NETHERITE,
-            RagiumCommonTags.Items.ORES_DEEP_SCRAP to RagiumMaterialKeys.DEEP_STEEL,
-        ).forEach { (ore: TagKey<Item>, scrap: HTMaterialKey) ->
+            VanillaMaterialKeys.NETHERITE_SCRAP to VanillaMaterialKeys.NETHERITE,
+            RagiumMaterialKeys.DEEP_SCRAP to RagiumMaterialKeys.DEEP_STEEL,
+        ).forEach { (ore: HTMaterialKey, scrap: HTMaterialKey) ->
             HTItemToChancedItemRecipeBuilder
-                .crushing(itemCreator.fromTagKey(ore))
+                .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, ore))
                 .addResult(resultHelper.item(CommonMaterialPrefixes.SCRAP, scrap, 2))
                 .saveSuffixed(output, "_from_ore")
         }

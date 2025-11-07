@@ -27,12 +27,9 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 //    EmiStack    //
-
-val EmiStack.fluid: Fluid? get() = this.key as? Fluid
 
 fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
@@ -55,9 +52,10 @@ fun TagKey<*>.toEmi(amount: Int = 1): EmiIngredient = EmiIngredient
     .takeUnless(EmiIngredient::isEmpty)
     ?: createErrorStack("Empty Tag: ${this.location}")
 
-fun <T: Any> HTPrefixLike.toEmi(key: RegistryKey<T>, amount: Int = 1): EmiIngredient = this.createCommonTagKey(key).toEmi(amount)
+fun <T : Any> HTPrefixLike.toEmi(key: RegistryKey<T>, amount: Int = 1): EmiIngredient = this.createCommonTagKey(key).toEmi(amount)
 
-fun <T: Any> HTPrefixLike.toEmi(key: RegistryKey<T>, material: HTMaterialLike, amount: Int = 1): EmiIngredient = this.createTagKey(key, material).toEmi(amount)
+fun <T : Any> HTPrefixLike.toEmi(key: RegistryKey<T>, material: HTMaterialLike, amount: Int = 1): EmiIngredient =
+    this.createTagKey(key, material).toEmi(amount)
 
 fun HTPrefixLike.toItemEmi(amount: Int = 1): EmiIngredient = toEmi(Registries.ITEM, amount)
 

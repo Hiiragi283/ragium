@@ -82,7 +82,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RAGI_CHERRY,
             RagiumAdvancements.RAGINITE,
             RagiumItems.RAGI_CHERRY,
-            CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY),
+            CommonMaterialPrefixes.FOOD,
+            FoodMaterialKeys.RAGI_CHERRY,
         )
         HTAdvancementBuilder
             .child(RagiumAdvancements.RAGI_CHERRY)
@@ -165,7 +166,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RESONANT_DEBRIS,
             RagiumAdvancements.SIMULATOR,
             RagiumBlocks.RESONANT_DEBRIS,
-            RagiumCommonTags.Items.ORES_DEEP_SCRAP,
+            CommonMaterialPrefixes.ORE,
+            RagiumMaterialKeys.DEEP_SCRAP,
         )
         createSimple(
             RagiumAdvancements.DEEP_STEEL,

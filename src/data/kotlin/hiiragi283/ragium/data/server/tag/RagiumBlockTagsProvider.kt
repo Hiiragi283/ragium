@@ -153,8 +153,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
                 builder.add(BlockTags.DRAGON_IMMUNE, ore)
             }
         }
-        builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
-        builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
+        builder.addMaterial(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
             builder.addMaterial(prefix, key, block)

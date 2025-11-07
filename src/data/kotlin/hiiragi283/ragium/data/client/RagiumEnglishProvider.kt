@@ -199,6 +199,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")

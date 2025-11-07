@@ -367,6 +367,9 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
+    /**
+     * @see dev.emi.emi.VanillaPlugin.addWorldInteraction
+     */
     private fun EmiRegistry.addFluidInteraction(output: ItemLike, source: HTFluidContent<*, *, *>, flowing: HTFluidContent<*, *, *>) {
         addInteraction(output.toEmi(), prefix = "fluid_interaction") {
             leftInput(source.toFluidEmi(1000).copyAsCatalyst())

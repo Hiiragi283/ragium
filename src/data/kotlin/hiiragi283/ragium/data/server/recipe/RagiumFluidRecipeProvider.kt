@@ -84,11 +84,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
         // Naphtha + Redstone -> Lubricant
-        distillation(
-            RagiumFluidContents.NAPHTHA to 1000,
-            resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000) to null,
-        )
+        HTFluidTransformRecipeBuilder
+            .refining(
+                fluidCreator.fromContent(RagiumFluidContents.NAPHTHA, 1000),
+                resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
+                null,
+            ).save(output)
         // Fuel + Crimson Crystal -> Crimson Fuel
         HTFluidTransformRecipeBuilder
             .mixing(

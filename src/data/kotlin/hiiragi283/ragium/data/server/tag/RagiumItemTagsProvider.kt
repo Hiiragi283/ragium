@@ -76,7 +76,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         for (key: HTMaterialKey in RagiumBlocks.ORES.columnKeys) {
             copy(CommonMaterialPrefixes.ORE, key)
         }
-        copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+        copy(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP)
 
         RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, _) ->
@@ -145,7 +145,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         for ((material: HTMaterialLike, item: HTHolderLike) in map) {
             builder.addMaterial(prefix, material, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: continue
-            builder.addTag(customTag, builder.createTag(prefix, material))
+            builder.addTag(customTag, prefix, material)
         }
     }
 
@@ -153,7 +153,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         table.forEach { (prefix: HTPrefixLike, key: HTMaterialLike, item: HTHolderLike) ->
             builder.addMaterial(prefix, key, item)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: return@forEach
-            builder.addTag(customTag, builder.createTag(prefix, key))
+            builder.addTag(customTag, prefix, key)
         }
     }
 
@@ -167,7 +167,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Crop
         builder.addTags(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
-        builder.addTag(Tags.Items.FOODS, builder.createCommonTag(CommonMaterialPrefixes.JAM))
+        builder.addTag(Tags.Items.FOODS, CommonMaterialPrefixes.JAM)
         builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
@@ -181,8 +181,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
 
-        builder.addTag(ItemTags.MEAT, ingot(FoodMaterialKeys.COOKED_MEAT))
-        builder.addTag(ItemTags.MEAT, ingot(FoodMaterialKeys.RAW_MEAT))
+        builder.addTag(ItemTags.MEAT, CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
+        builder.addTag(ItemTags.MEAT, CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
 
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_MEAT)
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
@@ -212,10 +212,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, ItemTags.SMELTS_TO_GLASS)
 
-        builder.addTag(
-            RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-            builder.createTag(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR),
-        )
+        builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR)
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Enchantments
@@ -290,7 +287,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
         builder.add(plastics, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
-        builder.addTag(RagiumModTags.Items.PLASTICS, builder.createTag(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC))
+        builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
         builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
@@ -306,10 +303,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             HTTagBuilder.DependType.OPTIONAL,
         )
         // Other
-        builder.addTag(
-            ItemTags.PIGLIN_LOVED,
-            builder.createTag(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
-        )
+        builder.addTag(ItemTags.PIGLIN_LOVED, CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         // WIP
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST)

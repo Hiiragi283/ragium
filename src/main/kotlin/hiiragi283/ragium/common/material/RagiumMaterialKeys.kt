@@ -7,6 +7,9 @@ object RagiumMaterialKeys {
     @JvmStatic
     val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
 
+    @JvmStatic
+    val DEEP_SCRAP: HTMaterialKey = HTMaterialKey.of("deep_scrap")
+
     // Gem
     @JvmStatic
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
