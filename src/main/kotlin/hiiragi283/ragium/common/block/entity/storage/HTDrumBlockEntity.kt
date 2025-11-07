@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -50,6 +51,8 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
         )
         return builder.build()
     }
+
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
 
     //    Save & Read    //
 

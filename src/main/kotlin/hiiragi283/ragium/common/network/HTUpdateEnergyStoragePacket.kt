@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.network
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.screen.HTEnergyScreen
 import hiiragi283.ragium.api.network.HTCustomPayload
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
@@ -11,7 +12,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 @ConsistentCopyVisibility
 @JvmRecord
@@ -32,8 +32,8 @@ data class HTUpdateEnergyStoragePacket private constructor(val pos: BlockPos, va
 
         @JvmStatic
         fun create(blockEntity: HTBlockEntity): HTUpdateEnergyStoragePacket? {
-            val storage: IEnergyStorage = blockEntity.getEnergyStorage(null) ?: return null
-            return HTUpdateEnergyStoragePacket(blockEntity.blockPos, storage.energyStored)
+            val battery: HTEnergyBattery = blockEntity.getEnergyBattery(blockEntity.getEnergySideFor()) ?: return null
+            return HTUpdateEnergyStoragePacket(blockEntity.blockPos, battery.getAmount())
         }
     }
 

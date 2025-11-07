@@ -35,7 +35,7 @@ class HTFuelGeneratorRenderer(context: BlockEntityRendererProvider.Context) :
             blockEntity.isActive -> blockEntity.ticks + partialTick
             else -> 0f
         }
-        model.render(poseStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, time, blockEntity.upgradeHandler.getTier())
+        model.render(poseStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, time, blockEntity.getComponentTier())
         poseStack.popPose()
     }
 }

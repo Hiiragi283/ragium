@@ -180,10 +180,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         if (hasFluidHandler()) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this))
         }
-        if (this.getEnergyStorage(null) != null) {
+        if (hasEnergyStorage()) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
         }
-        if (this.getExperienceHandler(null) != null) {
+        if (hasExperienceHandler()) {
             HTPacketHelper.sendToClient(level, blockPos, HTUpdateExperienceStoragePacket.create(this))
         }
     }
@@ -283,10 +283,14 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {
+    final override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {
         super.dropInventory(consumer)
-        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
+        if (doDropItems()) {
+            getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
+        }
     }
+
+    protected open fun doDropItems(): Boolean = hasItemHandler()
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
 }

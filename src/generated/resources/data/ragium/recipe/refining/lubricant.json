@@ -8,8 +8,5 @@
     "amount": 1000,
     "id": "ragium:lubricant"
   },
-  "item_result": {
-    "count": 1,
-    "id": "#c:dusts/redstone"
-  }
+  "item_ingredient": "#c:dusts/redstone"
 }

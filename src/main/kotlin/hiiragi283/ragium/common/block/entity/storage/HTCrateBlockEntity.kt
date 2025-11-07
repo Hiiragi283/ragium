@@ -13,14 +13,15 @@ import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTVariableItemStackSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import java.util.function.Consumer
 
 class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -45,7 +46,9 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         return builder.build()
     }
 
-    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {}
+    override fun doDropItems(): Boolean = false
+
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(slot)
 
     //    Save & Read    //
 

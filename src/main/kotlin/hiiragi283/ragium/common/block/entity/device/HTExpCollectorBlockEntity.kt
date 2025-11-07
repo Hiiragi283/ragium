@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.experience.tank.HTOrbExperienceTank
 import hiiragi283.ragium.common.storage.holder.HTBasicExperienceTankHolder
 import hiiragi283.ragium.common.util.HTExperienceHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -40,6 +41,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             tank.getAmountAsInt(),
         )
     }
+
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
 
     //    Ticking    //
 

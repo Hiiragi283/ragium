@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -48,8 +47,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -65,7 +63,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.CATALYST,
             HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
         )
-        return builder.build()
     }
 
     private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> = RecipeType.SMELTING.createCache()
@@ -96,7 +93,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         return MultiSmeltingRecipe(baseRecipe, outputCount)
     }
 
-    private fun getMaxParallel(): Int = when (upgradeHandler.getTier()) {
+    private fun getMaxParallel(): Int = when (getComponentTier()) {
         HTComponentTier.BASIC -> 2
         HTComponentTier.ADVANCED -> 4
         HTComponentTier.ELITE -> 8

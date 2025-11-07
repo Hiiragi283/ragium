@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -34,8 +33,7 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -51,7 +49,6 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.CATALYST,
             HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
         )
-        return builder.build()
     }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =

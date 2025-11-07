@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.getStorage
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -64,8 +63,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     protected lateinit var fuelSlot: HTFluidFuelItemStackSlot
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    final override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // fuel
         fuelSlot = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -78,7 +76,6 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
                 HTSlotHelper.getSlotPosY(1),
             ),
         )
-        return builder.build()
     }
 
     //    Ticking    //

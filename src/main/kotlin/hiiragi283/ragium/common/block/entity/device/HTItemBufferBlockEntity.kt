@@ -19,7 +19,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.ITEM_BUFFER, pos, state) {
     private lateinit var slots: List<HTItemSlot>
@@ -36,7 +35,7 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
+        HTStackSlotHelper.calculateRedstoneLevel(getItemSlots(getItemSideFor()))
 
     //    Ticking    //
 

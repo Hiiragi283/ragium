@@ -14,10 +14,12 @@ import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemStackSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -88,5 +90,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
             HTEnergyBatteryWrapper { RagiumPlatform.INSTANCE.getEnergyNetwork(this.getLevel()) }
 
         override val transferRate: Int = 1000
+
+        override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
+            HTStackSlotHelper.calculateRedstoneLevel(battery)
     }
 }

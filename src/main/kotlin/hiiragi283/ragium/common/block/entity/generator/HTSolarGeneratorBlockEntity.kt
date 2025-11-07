@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTSolarPower
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -10,6 +12,8 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(RagiumBlocks.SOLAR_PANEL_CONTROLLER, pos, state) {
+    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
+
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val multiplier: Float = getGenerationMultiplier(level, pos)
         if (multiplier < 0f) return false

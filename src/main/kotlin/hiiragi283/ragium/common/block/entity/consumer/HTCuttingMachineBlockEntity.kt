@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.manager.castRecipe
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
@@ -41,8 +40,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -62,7 +60,6 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
                 )
             }
         }
-        return builder.build()
     }
 
     //    Ticking    //

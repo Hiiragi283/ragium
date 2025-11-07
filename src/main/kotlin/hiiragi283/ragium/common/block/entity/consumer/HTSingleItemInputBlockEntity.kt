@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -73,8 +72,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         lateinit var outputSlot: HTItemStackSlot
             private set
 
-        override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-            val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
             // input
             inputSlot = builder.addSlot(
                 HTSlotInfo.INPUT,
@@ -85,7 +83,6 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
                 HTSlotInfo.OUTPUT,
                 HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
             )
-            return builder.build()
         }
 
         override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean = outputSlot
