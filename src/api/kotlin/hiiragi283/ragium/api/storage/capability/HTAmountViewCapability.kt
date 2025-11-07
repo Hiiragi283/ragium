@@ -11,9 +11,10 @@ import net.neoforged.neoforge.common.extensions.ILevelExtension
 /**
  * [HTAmountView]を取得する[HTMultiCapability]の拡張インターフェース
  */
-interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N : Number> :
+interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N> :
     HTMultiCapability<HANDLER, ITEM_HANDLER>,
-    HTAmountViewProvider<HANDLER, Direction, N> {
+    HTAmountViewProvider<HANDLER, Direction, N>
+    where N : Number, N : Comparable<N> {
     //    Block    //
 
     /**
@@ -74,5 +75,5 @@ interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N : Numb
 
     fun getCapabilityAmount(stack: ImmutableItemStack?, index: Int): N? = getCapabilityView(stack, index)?.getAmount()
 
-    interface Simple<HANDLER : Any, N : Number> : HTAmountViewCapability<HANDLER, HANDLER, N>
+    interface Simple<HANDLER : Any, N> : HTAmountViewCapability<HANDLER, HANDLER, N> where N : Number, N : Comparable<N>
 }

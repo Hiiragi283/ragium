@@ -64,7 +64,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                         4,
                         EquipmentSlotGroup.ANY,
                     ),
-                ).withEffect(RagiumEnchantmentComponents.RANGE, MultiplyValue(LevelBasedValue.perLevel(2f, 1f))),
+                ).withEffect(RagiumEnchantmentComponents.RANGE, MultiplyValue(LevelBasedValue.perLevel(1f, 0.5f))),
         )
         // Weapon
         register(

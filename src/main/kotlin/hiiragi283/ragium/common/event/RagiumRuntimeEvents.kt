@@ -138,6 +138,7 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun onEquipped(event: LivingEquipmentChangeEvent) {
+        if (!EquipmentSlotGroup.ARMOR.test(event.slot)) return
         val entity: LivingEntity = event.entity
         val from: ItemStack = event.from
         val to: ItemStack = event.to

@@ -6,7 +6,7 @@ import kotlin.math.max
 /**
  * 個数を保持するインターフェース
  */
-sealed interface HTAmountView<N : Number> {
+sealed interface HTAmountView<N> where N : Number, N : Comparable<N> {
     /**
      * このビューが保持している個数を返します。
      */

@@ -59,7 +59,6 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
     private fun setupNumberBox(y: Int): HTNumberEditBox.IntRanged {
         val editBox: HTNumberEditBox.IntRanged = addRenderableWidget(
             HTNumberEditBox.IntRanged(
-                { value: String -> value.toIntOrNull() ?: 0 },
                 font,
                 startX + HTSlotHelper.getSlotPosX(3),
                 startY + HTSlotHelper.getSlotPosY(y) - (4 * y),
