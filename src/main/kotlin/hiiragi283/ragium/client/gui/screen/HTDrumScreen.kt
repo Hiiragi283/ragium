@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -14,8 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 class HTDrumScreen(menu: HTBlockEntityContainerMenu<HTDrumBlockEntity>, inventory: Inventory, title: Component) :
-    HTBlockEntityContainerScreen<HTDrumBlockEntity>(menu, inventory, title),
-    HTFluidScreen {
+    HTBlockEntityContainerScreen<HTDrumBlockEntity>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/fuel_generator.png")
 
     private lateinit var fluidWidget: HTFluidWidget
@@ -24,8 +22,6 @@ class HTDrumScreen(menu: HTBlockEntityContainerMenu<HTDrumBlockEntity>, inventor
         super.init()
         fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
     }
-
-    //    HTFluidScreen    //
 
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

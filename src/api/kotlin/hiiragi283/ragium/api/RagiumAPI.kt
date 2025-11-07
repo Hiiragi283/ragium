@@ -6,8 +6,11 @@ import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
+import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.toId
 import net.minecraft.core.Registry
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.RegistryBuilder
@@ -76,6 +79,12 @@ object RagiumAPI {
 
     @JvmField
     val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = createRegistry(MATERIAL_RECIPE_TYPE_KEY)
+
+    @JvmField
+    val SLOT_TYPE_KEY: ResourceKey<Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>>> = createKey("syncable_slot_type")
+
+    @JvmField
+    val SLOT_TYPE_REGISTRY: Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>> = createRegistry(SLOT_TYPE_KEY)
 
     // Dynamic
     @JvmField

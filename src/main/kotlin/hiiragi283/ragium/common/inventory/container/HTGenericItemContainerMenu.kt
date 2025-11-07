@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
-import hiiragi283.ragium.api.inventory.container.HTItemContainerMenu
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemHandler

@@ -2,14 +2,13 @@ package hiiragi283.ragium.common.integration
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.network.HTPayloadRegistrar
+import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
-import hiiragi283.ragium.common.util.HTPacketHelper
 import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesAPI
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
@@ -21,6 +20,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.client.event.ClientTickEvent
 import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.network.PacketDistributor
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 
 object RagiumAccessoriesAddon : RagiumAddon {
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
@@ -32,7 +33,7 @@ object RagiumAccessoriesAddon : RagiumAddon {
     @JvmStatic
     private fun onClientTick(event: ClientTickEvent.Post) {
         if (RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE.consumeClick()) {
-            HTPacketHelper.sendToServer(HTOpenUniversalBundlePacket)
+            PacketDistributor.sendToServer(HTOpenUniversalBundlePacket)
         }
     }
 
@@ -77,7 +78,11 @@ object RagiumAccessoriesAddon : RagiumAddon {
         AccessoriesRendererRegistry.registerRenderer(item.asItem(), supplier)
     }
 
-    override fun registerPayloads(registrar: HTPayloadRegistrar) {
-        registrar.registerC2S(HTOpenUniversalBundlePacket.TYPE, HTOpenUniversalBundlePacket.STREAM_CODEC)
+    override fun registerPayloads(registrar: PayloadRegistrar) {
+        registrar.playToServer(
+            HTOpenUniversalBundlePacket.TYPE,
+            HTOpenUniversalBundlePacket.STREAM_CODEC,
+            HTPayloadHandlers::handleC2S,
+        )
     }
 }

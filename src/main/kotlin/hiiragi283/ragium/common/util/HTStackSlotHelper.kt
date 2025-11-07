@@ -101,8 +101,8 @@ object HTStackSlotHelper {
         ingredient: ToIntFunction<ImmutableItemStack>,
         action: HTStorageAction,
     ): Int {
-        val stackIn: ImmutableItemStack? = slot.getStack()
-        if (stackIn != null && stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
+        val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
+        if (stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
             if (action.execute) {
                 stackSetter.setStack(stackIn.getCraftingRemainingItem())
             }

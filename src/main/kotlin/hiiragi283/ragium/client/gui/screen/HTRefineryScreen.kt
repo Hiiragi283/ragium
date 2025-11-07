@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
@@ -19,8 +18,7 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
         menu,
         inventory,
         title,
-    ),
-    HTFluidScreen {
+    ) {
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget
 
@@ -39,8 +37,6 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
             ),
         )
     }
-
-    //    HTFluidScreen    //
 
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget, fluidWidget1)
 }

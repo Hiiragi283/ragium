@@ -4,8 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
+import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
+import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
+import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
+import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
+import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import net.minecraft.core.registries.Registries
@@ -50,6 +56,15 @@ object RagiumMiscRegister {
         // Armor Equip Type
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_KEY) { helper ->
             helper.register(RagiumAPI.id("mob_effect"), HTMobEffectEquipAction.CODEC)
+        }
+        // Slot Sync Type
+        event.register(RagiumAPI.SLOT_TYPE_KEY) { helper ->
+            helper.register(commonId("integer"), HTIntSyncPayload.STREAM_CODEC)
+            helper.register(commonId("long"), HTLongSyncPayload.STREAM_CODEC)
+
+            helper.register(vanillaId("fluid"), HTFluidSyncPayload.STREAM_CODEC)
+            
+            helper.register(RagiumAPI.id("teleport_pos"), HTTeleportPosSyncPayload.STREAM_CODEC)
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->

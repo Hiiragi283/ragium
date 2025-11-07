@@ -6,13 +6,10 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.network.HTPayloadRegistrar
+import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
-import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
-import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
@@ -45,6 +42,7 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -101,6 +99,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
+        event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
@@ -151,15 +150,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
-        val registrar = HTPayloadRegistrar(event.registrar(RagiumAPI.MOD_ID))
+        val registrar: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)
+        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleBoth)
+
         // Server -> Client
-        registrar.registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
-        registrar.registerS2C(HTUpdateEnergyStoragePacket.TYPE, HTUpdateEnergyStoragePacket.STREAM_CODEC)
-        registrar.registerS2C(HTUpdateExperienceStoragePacket.TYPE, HTUpdateExperienceStoragePacket.STREAM_CODEC)
-        registrar.registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
+        registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
         // Client -> Server
-        registrar.registerC2S(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC)
-        registrar.registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
+        registrar.playToServer(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC, HTPayloadHandlers::handleC2S)
 
         for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
             addon.registerPayloads(registrar)

@@ -2,15 +2,12 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
-import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
@@ -26,8 +23,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         menu,
         inventory,
         title,
-    ),
-    HTFluidScreen {
+    ) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/telepad.png")
 
     private lateinit var fluidWidget: HTFluidWidget
@@ -121,12 +117,8 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         val z: Int = editBoxZ.number
         val id: ResourceLocation = editBoxDim.value.let(ResourceLocation::tryParse) ?: return
         val dim: ResourceKey<Level> = Registries.DIMENSION.createKey(id)
-        val teleportPos = HTTeleportPos(dim, x, y, z)
-        blockEntity.updateDestination(teleportPos)
-        HTPacketHelper.sendToServer(HTUpdateTelepadPacket(blockEntity.blockPos, teleportPos))
+        this.blockEntity.teleportPos = HTTeleportPos(dim, x, y, z)
     }
-
-    //    HTFluidScreen    //
 
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

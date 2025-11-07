@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.gui.screen.HTPositionScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -14,7 +13,6 @@ import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import net.minecraft.client.gui.screens.MenuScreens
-import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -27,8 +25,7 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
         menu,
         inventory,
         title,
-    ),
-    HTPositionScreen {
+    ) {
     companion object {
         @JvmStatic
         fun <BE : HTBlockEntity> createSimple(
@@ -46,8 +43,6 @@ abstract class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     }
 
     val blockEntity: BE get() = menu.context
-
-    final override fun checkPosition(blockPos: BlockPos): Boolean = blockEntity.blockPos == blockPos
 
     //    Extensions    //
 
