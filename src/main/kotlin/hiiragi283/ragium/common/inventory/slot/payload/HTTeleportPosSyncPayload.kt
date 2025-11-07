@@ -29,7 +29,7 @@ data class HTTeleportPosSyncPayload(val value: Optional<HTTeleportPos>) : HTSync
     override fun setValue(menu: HTSyncableMenu, index: Int) {
         val slot: HTSyncableSlot? = menu.getTrackedSlot(index)
         if (slot is HTTeleportPosSyncSlot) {
-            slot.setHTTeleportPos(this.value.getOrNull())
+            slot.setTeleportPos(this.value.getOrNull())
         }
     }
 }

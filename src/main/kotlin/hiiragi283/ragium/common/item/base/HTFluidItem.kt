@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.item.base
 
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
-import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.addFluidTooltip
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
@@ -15,7 +14,7 @@ abstract class HTFluidItem(properties: Properties) : Item(properties) {
     override fun isBarVisible(stack: ItemStack): Boolean = HTFluidCapabilities.hasCapability(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
+        val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
         return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 

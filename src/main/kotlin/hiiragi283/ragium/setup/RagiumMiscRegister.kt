@@ -63,7 +63,7 @@ object RagiumMiscRegister {
             helper.register(commonId("long"), HTLongSyncPayload.STREAM_CODEC)
 
             helper.register(vanillaId("fluid"), HTFluidSyncPayload.STREAM_CODEC)
-            
+
             helper.register(RagiumAPI.id("teleport_pos"), HTTeleportPosSyncPayload.STREAM_CODEC)
         }
         // Material Recipe Type

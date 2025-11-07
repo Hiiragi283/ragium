@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.gui.component.HTEnergyWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
@@ -29,14 +28,12 @@ open class HTConsumerScreen<BE : HTConsumerBlockEntity>(
             }
     }
 
-    private lateinit var energyWidget: HTEnergyWidget
-
     override fun init() {
         super.init()
         // Progress Widget
         addProgressBar(::addRenderableOnly)
         // Energy Widget
-        energyWidget = createEnergyWidget(blockEntity.battery)
+        createEnergyWidget(blockEntity.battery)
     }
 
     protected open fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {

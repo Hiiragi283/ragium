@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
-import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.world.item.ItemStack
@@ -17,7 +17,7 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTBlockItem<
     override fun isBarVisible(stack: ItemStack): Boolean = HTFluidCapabilities.hasCapability(stack)
 
     override fun getBarWidth(stack: ItemStack): Int {
-        val view: HTStackView<ImmutableFluidStack> = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
+        val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return 0
         return (13f * view.getStoredLevelAsFloat()).roundToInt()
     }
 

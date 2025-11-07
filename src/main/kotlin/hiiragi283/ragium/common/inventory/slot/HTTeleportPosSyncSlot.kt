@@ -15,14 +15,14 @@ import java.util.function.Supplier
 class HTTeleportPosSyncSlot(private val getter: Supplier<HTTeleportPos?>, private val setter: Consumer<HTTeleportPos?>) : HTSyncableSlot {
     private var lastPosHash: Int = 0
 
-    fun getHTTeleportPos(): HTTeleportPos? = this.getter.get()
+    fun getTeleportPos(): HTTeleportPos? = this.getter.get()
 
-    fun setHTTeleportPos(pos: HTTeleportPos?) {
+    fun setTeleportPos(pos: HTTeleportPos?) {
         this.setter.accept(pos)
     }
 
     override fun getChange(): HTChangeType {
-        val current: HTTeleportPos? = this.getHTTeleportPos()
+        val current: HTTeleportPos? = this.getTeleportPos()
         val hash: Int = current?.hashCode() ?: 0
         return if (hash == this.lastPosHash) {
             HTChangeType.EMPTY
@@ -33,5 +33,5 @@ class HTTeleportPosSyncSlot(private val getter: Supplier<HTTeleportPos?>, privat
     }
 
     override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload =
-        HTTeleportPosSyncPayload(this.getHTTeleportPos())
+        HTTeleportPosSyncPayload(this.getTeleportPos())
 }
