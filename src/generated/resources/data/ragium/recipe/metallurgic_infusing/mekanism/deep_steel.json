@@ -7,20 +7,12 @@
   ],
   "type": "mekanism:metallurgic_infusing",
   "chemical_input": {
-    "amount": 320,
-    "chemical": "ragium:azure"
+    "amount": 160,
+    "chemical": "ragium:deep"
   },
   "item_input": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/netherite"
-      },
-      {
-        "tag": "c:ingots/netherite"
-      }
-    ],
-    "count": 1
+    "count": 1,
+    "tag": "c:ingots/azure_steel"
   },
   "output": {
     "count": 1,

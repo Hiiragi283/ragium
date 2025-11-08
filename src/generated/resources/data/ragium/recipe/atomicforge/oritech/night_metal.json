@@ -14,10 +14,10 @@
   "ingredients": [
     [
       {
-        "tag": "c:dusts/iron"
+        "tag": "c:dusts/gold"
       },
       {
-        "tag": "c:ingots/iron"
+        "tag": "c:ingots/gold"
       }
     ],
     {

@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -116,7 +117,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Deep Steel
         HTCookingRecipeBuilder
             .smeltingAndBlasting(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL)) {
-                addIngredient(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP)
+                addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
                 save(output)
             }
 
@@ -160,7 +161,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .misc(Items.GUNPOWDER, 3)
             .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
             .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
-            .addIngredient(fuelOrDust(VanillaMaterialKeys.CHARCOAL))
+            .addIngredient(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL)
             .saveSuffixed(output, "_with_hammer")
 
         HTCookingRecipeBuilder

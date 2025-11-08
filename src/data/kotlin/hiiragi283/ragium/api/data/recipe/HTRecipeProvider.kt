@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -36,7 +34,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -129,22 +126,6 @@ sealed class HTRecipeProvider {
     protected fun save(recipeId: ResourceLocation, recipe: Recipe<*>, vararg conditions: ICondition) {
         output.accept(recipeId, recipe, null, *conditions)
     }
-
-    // ingredient
-    protected fun fuelOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.FUEL)
-
-    protected fun gemOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM)
-
-    protected fun ingotOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.INGOT)
-
-    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTPrefixLike): Ingredient = prefixes
-        .map { it.itemTagKey(material) }
-        .map(Ingredient::TagValue)
-        .stream()
-        .let(Ingredient::fromValues)
 
     // recipe builders
     protected fun meltAndFreeze(

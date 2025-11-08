@@ -166,8 +166,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RESONANT_DEBRIS,
             RagiumAdvancements.SIMULATOR,
             RagiumBlocks.RESONANT_DEBRIS,
-            CommonMaterialPrefixes.ORE,
-            RagiumMaterialKeys.DEEP_SCRAP,
+            RagiumCommonTags.Items.ORES_DEEP_SCRAP,
         )
         createSimple(
             RagiumAdvancements.DEEP_STEEL,

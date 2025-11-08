@@ -113,8 +113,9 @@ object RagiumMekanismAddon : RagiumAddon {
     override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
         helper.ifMatchTab(RagiumCreativeTabs.INGREDIENTS) { event: BuildCreativeModeTabContentsEvent ->
             for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+                val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
                 event.insertAfter(
-                    RagiumItems.getMaterial(essenceType.basePrefix, essenceType.parent).toStack(),
+                    RagiumItems.getMaterial(basePrefix, baseMaterial).toStack(),
                     getEnrichedStack(essenceType),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
                 )

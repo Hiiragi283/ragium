@@ -1,10 +1,7 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "count": 2,
-      "items": "#c:dusts/advanced_ragi_alloy"
-    },
+    "#c:ingots/night_metal",
     "#c:dusts/ragi_crystal",
     "ragium:advanced_circuit_board"
   ],

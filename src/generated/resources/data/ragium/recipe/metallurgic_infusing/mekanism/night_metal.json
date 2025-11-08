@@ -8,23 +8,15 @@
   "type": "mekanism:metallurgic_infusing",
   "chemical_input": {
     "amount": 10,
-    "chemical": "ragium:azure"
+    "chemical": "mekanism:gold"
   },
   "item_input": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/amethyst"
-      },
-      {
-        "tag": "c:gems/amethyst"
-      }
-    ],
-    "count": 1
+    "count": 4,
+    "tag": "c:dusts/obsidian"
   },
   "output": {
     "count": 1,
-    "id": "ragium:azure_shard"
+    "id": "ragium:night_metal_ingot"
   },
   "per_tick_usage": false
 }

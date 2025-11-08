@@ -17,6 +17,9 @@ object RagiumCommonTags {
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Block> = create("ores_in_ground", "end_stone")
 
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Block> = create("ores", "deep_scrap")
+
         @JvmStatic
         private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
     }
@@ -45,6 +48,9 @@ object RagiumCommonTags {
 
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Item> = create("ores", "deep_scrap")
 
         @JvmField
         val PLASTIC: TagKey<Item> = create("plastic")

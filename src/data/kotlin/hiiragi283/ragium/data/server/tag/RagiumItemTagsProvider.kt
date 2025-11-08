@@ -76,7 +76,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         for (key: HTMaterialKey in RagiumBlocks.ORES.columnKeys) {
             copy(CommonMaterialPrefixes.ORE, key)
         }
-        copy(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP)
+        copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
         RagiumBlocks.MATERIALS.rowKeys.forEach(::copy)
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, _) ->

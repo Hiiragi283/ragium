@@ -66,9 +66,6 @@ object VanillaMaterialKeys {
     @JvmStatic
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
 
-    @JvmStatic
-    val NETHERITE_SCRAP: HTMaterialKey = HTMaterialKey.of("netherite_scrap")
-
     //    Item    //
 
     @JvmStatic

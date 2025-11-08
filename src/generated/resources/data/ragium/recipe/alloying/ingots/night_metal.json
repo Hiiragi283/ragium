@@ -4,8 +4,8 @@
     {
       "type": "neoforge:or",
       "values": [
-        "#c:dusts/iron",
-        "#c:ingots/iron"
+        "#c:dusts/gold",
+        "#c:ingots/gold"
       ]
     },
     {

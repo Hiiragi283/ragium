@@ -4,13 +4,14 @@ import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 data object VanillaMaterialRecipeData {
     //    Netherite    //
 
     @JvmField
     val NETHERITE_SCRAP: HTMaterialRecipeData = HTMaterialRecipeData.create {
-        addInput(CommonMaterialPrefixes.ORE, VanillaMaterialKeys.NETHERITE_SCRAP)
+        addInput(Tags.Items.ORES_NETHERITE_SCRAP)
 
         addOutput(Items.NETHERITE_SCRAP, 2)
         addOutput(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -62,7 +63,7 @@ data object RagiumMaterialRecipeData {
 
     @JvmField
     val DEEP_SCRAP: HTMaterialRecipeData = HTMaterialRecipeData.create {
-        addInput(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP)
+        addInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
         addOutput(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL))
         addOutput(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 2)
@@ -103,7 +104,7 @@ data object RagiumMaterialRecipeData {
 
     @JvmField
     val NIGHT_METAL: HTMaterialRecipeData = HTMaterialRecipeData.create {
-        ingotOrDust(VanillaMaterialKeys.IRON)
+        ingotOrDust(VanillaMaterialKeys.GOLD)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4)
 
