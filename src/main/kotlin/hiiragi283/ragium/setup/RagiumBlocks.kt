@@ -162,6 +162,7 @@ object RagiumBlocks {
 
     //    Materials    //
 
+    @JvmStatic
     val ORES: ImmutableTable<HTOreVariant, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         HTOreVariant.entries.forEach { variant: HTOreVariant ->
             val pattern: String = when (variant) {
@@ -187,6 +188,7 @@ object RagiumBlocks {
         }
     }
 
+    @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
@@ -200,6 +202,7 @@ object RagiumBlocks {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
             RagiumMaterialKeys.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
+            RagiumMaterialKeys.NIGHT_METAL to copyOf(Blocks.GOLD_BLOCK, MapColor.COLOR_BLACK),
             RagiumMaterialKeys.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
             RagiumMaterialKeys.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods

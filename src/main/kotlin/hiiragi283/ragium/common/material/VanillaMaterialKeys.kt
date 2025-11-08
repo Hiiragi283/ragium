@@ -58,6 +58,9 @@ object VanillaMaterialKeys {
     val SOUL: HTMaterialKey = HTMaterialKey.of("soul")
 
     @JvmStatic
+    val BLACKSTONE: HTMaterialKey = HTMaterialKey.of("blackstone")
+
+    @JvmStatic
     val OBSIDIAN: HTMaterialKey = HTMaterialKey.of("obsidian")
 
     @JvmStatic
@@ -68,6 +71,7 @@ object VanillaMaterialKeys {
 
     //    Item    //
 
+    @JvmStatic
     val ARMOR_TABLE: ImmutableTable<HTArmorVariant, HTMaterialKey, Item> = buildTable {
         // Iron
         this[HTArmorVariant.HELMET, IRON] = Items.IRON_HELMET
@@ -91,6 +95,7 @@ object VanillaMaterialKeys {
         this[HTArmorVariant.BOOTS, NETHERITE] = Items.NETHERITE_BOOTS
     }
 
+    @JvmStatic
     val TOOL_TABLE: ImmutableTable<HTVanillaToolVariant, HTMaterialKey, Item> = buildTable {
         // Wooden
         this[HTVanillaToolVariant.SHOVEL, WOOD] = Items.WOODEN_SHOVEL

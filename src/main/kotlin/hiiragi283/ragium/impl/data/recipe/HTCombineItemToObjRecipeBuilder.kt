@@ -18,7 +18,11 @@ class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(
     companion object {
         @JvmStatic
         fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTAlloyingRecipe> =
-            HTCombineItemToObjRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, listOf(*ingredients), result)
+            alloying(result, listOf(*ingredients))
+
+        @JvmStatic
+        fun alloying(result: HTItemResult, ingredients: List<HTItemIngredient>): HTCombineItemToObjRecipeBuilder<HTAlloyingRecipe> =
+            HTCombineItemToObjRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, ingredients, result)
 
         @JvmStatic
         fun enchanting(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTEnchantingRecipe> =

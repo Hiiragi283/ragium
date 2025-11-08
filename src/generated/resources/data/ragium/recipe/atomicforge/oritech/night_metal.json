@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "oritech"
+    }
+  ],
+  "type": "oritech:atomic_forge",
+  "fluidInput": {
+    "amount": 0,
+    "fluid": "minecraft:empty"
+  },
+  "fluidOutputs": [],
+  "ingredients": [
+    [
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:ingots/iron"
+      }
+    ],
+    {
+      "tag": "c:dusts/obsidian"
+    },
+    {
+      "tag": "c:dusts/blackstone"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "id": "ragium:night_metal_ingot"
+    }
+  ],
+  "time": 200
+}

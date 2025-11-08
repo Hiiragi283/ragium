@@ -5,14 +5,9 @@
     "A": {
       "item": "minecraft:deepslate_tiles"
     },
-    "B": [
-      {
-        "tag": "c:dusts/azure"
-      },
-      {
-        "tag": "c:gems/azure"
-      }
-    ]
+    "B": {
+      "tag": "c:gems/azure"
+    }
   },
   "pattern": [
     "AAA",

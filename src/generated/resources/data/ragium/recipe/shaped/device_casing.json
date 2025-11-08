@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:black_concrete"
+      "tag": "c:ingots/night_metal"
     },
     "B": {
       "tag": "c:ingots/iron"

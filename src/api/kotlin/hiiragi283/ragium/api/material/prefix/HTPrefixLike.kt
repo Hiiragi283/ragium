@@ -13,6 +13,8 @@ fun interface HTPrefixLike {
 
     fun asPrefixName(): String = asMaterialPrefix().name
 
+    fun isOf(prefix: HTPrefixLike): Boolean = this.asMaterialPrefix() == prefix.asMaterialPrefix()
+
     fun <T : Any> createCommonTagKey(key: RegistryKey<T>): TagKey<T> = asMaterialPrefix().createCommonTagKey(key)
 
     fun <T : Any> createTagKey(key: RegistryKey<T>, material: HTMaterialLike): TagKey<T> = createTagKey(key, material.asMaterialName())

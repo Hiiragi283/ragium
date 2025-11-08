@@ -12,9 +12,6 @@
   },
   "fluidOutputs": [],
   "ingredients": [
-    {
-      "tag": "c:dusts/raginite"
-    },
     [
       {
         "tag": "c:dusts/copper"
@@ -22,7 +19,10 @@
       {
         "tag": "c:ingots/copper"
       }
-    ]
+    ],
+    {
+      "tag": "c:dusts/raginite"
+    }
   ],
   "results": [
     {

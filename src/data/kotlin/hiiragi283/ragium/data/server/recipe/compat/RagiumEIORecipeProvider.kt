@@ -1,15 +1,11 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import com.enderio.base.common.tag.EIOTags
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.CommonMaterialKeys
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.ModMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import net.minecraft.tags.ItemTags
-import net.neoforged.neoforge.common.Tags
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.impl.data.recipe.HTAlloySmeltingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 
 object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_BASE) {
     override fun buildRecipeInternal() {
@@ -17,79 +13,26 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_BA
     }
 
     private fun alloys() {
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800).save(output)
+        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.COPPER),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL, 2),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(CommonMaterialKeys.COAL_COKE),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).saveSuffixed(output, "_from_coal_coke")
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL, 5600).save(output)
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK, 5600).saveSuffixed(output, "_alt")
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL),
-                itemCreator.fromTagKey(Tags.Items.END_STONES),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800).save(output)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400).save(output)
+    }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM),
-                itemCreator.fromTagKey(ItemTags.SOUL_FIRE_BASE_BLOCKS),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
+    @JvmStatic
+    private fun alloyFromData(data: HTMaterialRecipeData, energy: Int, exp: Float = 0.3f): HTAlloySmeltingRecipeBuilder {
+        val builder = HTAlloySmeltingRecipeBuilder(data.getOutputStack().toImmutableOrThrow())
+        // Inputs
+        data.getSizedIngredients().forEach(builder::addIngredient)
+        return builder.setEnergy(energy).setExp(exp)
     }
 }

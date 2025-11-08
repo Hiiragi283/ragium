@@ -5,14 +5,9 @@
     "A": {
       "tag": "c:ingots/advanced_ragi_alloy"
     },
-    "B": [
-      {
-        "tag": "c:ingots/azure_steel"
-      },
-      {
-        "tag": "c:rods/azure_steel"
-      }
-    ]
+    "B": {
+      "tag": "c:ingots/azure_steel"
+    }
   },
   "pattern": [
     " A ",

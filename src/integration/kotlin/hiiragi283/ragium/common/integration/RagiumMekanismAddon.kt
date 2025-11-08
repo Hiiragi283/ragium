@@ -61,6 +61,7 @@ object RagiumMekanismAddon : RagiumAddon {
     /**
      * @see RagiumItems.MATERIALS
      */
+    @JvmStatic
     val MATERIAL_ITEMS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         // Enriched
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {

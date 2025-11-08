@@ -170,6 +170,10 @@ object RagiumMaterialEvents {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Deep Steel", "深層鋼")
         }
+        event.modify(RagiumMaterialKeys.NIGHT_METAL) {
+            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addName("Night Metal", "夜金")
+        }
         event.modify(RagiumMaterialKeys.GILDIUM) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Gildium", "鍍金")

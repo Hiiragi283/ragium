@@ -10,11 +10,9 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
-import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
@@ -143,6 +141,7 @@ object RagiumItems {
     @JvmField
     val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
+    @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         fun register(prefix: HTPrefixLike, material: HTMaterialLike, name: String) {
             this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimpleItem(name)
@@ -159,6 +158,7 @@ object RagiumItems {
             VanillaMaterialKeys.AMETHYST,
             VanillaMaterialKeys.ECHO,
             // Vanilla - Other
+            VanillaMaterialKeys.BLACKSTONE,
             VanillaMaterialKeys.OBSIDIAN,
             // Common
             CommonMaterialKeys.Gems.CINNABAR,
@@ -187,6 +187,7 @@ object RagiumItems {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
             // Foods
@@ -200,6 +201,7 @@ object RagiumItems {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
@@ -233,10 +235,7 @@ object RagiumItems {
     fun getPlate(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.PLATE, material)
 
     @JvmStatic
-    fun getScrap(material: HTMaterialLike): HTItemHolderLike = when (material.asMaterialKey()) {
-        VanillaMaterialKeys.NETHERITE -> Items.NETHERITE_SCRAP.toHolderLike()
-        else -> getMaterial(CommonMaterialPrefixes.SCRAP, material)
-    }
+    fun getScrap(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.SCRAP, material)
 
     @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredItem> = MATERIALS.row(prefix.asMaterialPrefix())
@@ -266,6 +265,7 @@ object RagiumItems {
 
     //    Armors    //
 
+    @JvmStatic
     val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
         fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
             this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
@@ -374,6 +374,7 @@ object RagiumItems {
     @JvmField
     val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
+    @JvmStatic
     val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
         val consumer: (HTToolVariant, HTEquipmentMaterial) -> Unit = { variant: HTToolVariant, material: HTEquipmentMaterial ->
             this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)

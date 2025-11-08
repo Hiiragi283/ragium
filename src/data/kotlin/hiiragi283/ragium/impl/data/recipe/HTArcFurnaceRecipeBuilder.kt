@@ -6,8 +6,6 @@ import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
 import blusunrize.immersiveengineering.data.recipes.builder.IERecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -23,12 +21,6 @@ class HTArcFurnaceRecipeBuilder private constructor() :
         private var count = 0
         private val builder: AlloyRecipeBuilder = AlloyRecipeBuilder.builder()
         private val builder1: ArcFurnaceRecipeBuilder = ArcFurnaceRecipeBuilder.builder()
-
-        fun input(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTArcFurnaceRecipeBuilder =
-            input(prefix.itemTagKey(material), count)
-
-        fun output(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTArcFurnaceRecipeBuilder =
-            output(prefix.itemTagKey(material), count)
 
         //    BaseHelpers    //
 
@@ -48,7 +40,9 @@ class HTArcFurnaceRecipeBuilder private constructor() :
         }
 
         fun build(output: RecipeOutput, id: ResourceLocation) {
-            builder.setTime(200).build(output, id.withPrefix("alloying/"))
+            if (count <= 2) {
+                builder.setTime(200).build(output, id.withPrefix("alloying/"))
+            }
             builder1.setTime(200).setEnergy(102400).build(output, id.withPrefix("arc_furnace/alloy/"))
         }
     }

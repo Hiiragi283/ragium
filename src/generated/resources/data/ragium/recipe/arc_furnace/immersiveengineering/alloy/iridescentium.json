@@ -1,0 +1,43 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "immersiveengineering:arc_furnace",
+  "additives": [
+    {
+      "basePredicate": [
+        {
+          "tag": "c:dusts/eldritch_pearl"
+        },
+        {
+          "tag": "c:gems/eldritch_pearl"
+        }
+      ],
+      "count": 4
+    },
+    {
+      "tag": "c:nether_stars"
+    }
+  ],
+  "energy": 102400,
+  "input": {
+    "basePredicate": [
+      {
+        "tag": "c:dusts/night_metal"
+      },
+      {
+        "tag": "c:ingots/night_metal"
+      }
+    ],
+    "count": 4
+  },
+  "results": [
+    {
+      "tag": "c:ingots/iridescentium"
+    }
+  ],
+  "time": 200
+}

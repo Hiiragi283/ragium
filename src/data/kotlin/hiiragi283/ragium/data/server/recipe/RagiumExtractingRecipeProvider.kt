@@ -64,13 +64,13 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider.Direct() {
         // Charcoal -> Brown
         HTItemToObjRecipeBuilder
             .extracting(
-                itemCreator.fuelOrDust(VanillaMaterialKeys.CHARCOAL),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL),
                 resultHelper.item(Items.BROWN_DYE),
             ).saveSuffixed(output, "_from_charcoal")
         // Coal -> Black
         HTItemToObjRecipeBuilder
             .extracting(
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL),
                 resultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 

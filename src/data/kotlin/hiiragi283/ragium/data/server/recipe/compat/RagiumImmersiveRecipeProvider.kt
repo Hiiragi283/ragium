@@ -8,6 +8,7 @@ import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilde
 import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -19,10 +20,12 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 
 /**
  * @see blusunrize.immersiveengineering.data.recipes.MultiblockRecipes
@@ -49,59 +52,30 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         deepSteel()
 
         molten()
+        misc()
     }
 
     @JvmStatic
     private fun raginite() {
-        // Copper -> Ragi-Alloy
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .input(ingotOrDust(VanillaMaterialKeys.COPPER))
-            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2)
+        fromData(RagiumMaterialRecipeData.RAGI_ALLOY)
             .build(output, id(RagiumMaterialKeys.RAGI_ALLOY.name))
-        // Gold -> Advanced Ragi-Alloy
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .input(ingotOrDust(VanillaMaterialKeys.GOLD))
-            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4)
+        fromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
             .build(output, id(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY.name))
-        // Diamond -> Ragi-Crystal
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .input(gemOrDust(VanillaMaterialKeys.DIAMOND))
-            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 6)
+        fromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
             .build(output, id(RagiumMaterialKeys.RAGI_CRYSTAL.name))
     }
 
     @JvmStatic
     private fun azure() {
-        // Amethyst + Lapis -> Azure Shard
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, 2)
-            .input(gemOrDust(VanillaMaterialKeys.AMETHYST))
-            .input(gemOrDust(VanillaMaterialKeys.LAPIS))
+        fromData(RagiumMaterialRecipeData.AZURE_SHARD)
             .build(output, id(RagiumMaterialKeys.AZURE.name))
-        // Iron -> Azure Steel
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .input(ingotOrDust(VanillaMaterialKeys.IRON))
-            .input(gemOrDust(RagiumMaterialKeys.AZURE), 2)
+        fromData(RagiumMaterialRecipeData.AZURE_STEEL)
             .build(output, id(RagiumMaterialKeys.AZURE_STEEL.name))
     }
 
     @JvmStatic
     private fun deepSteel() {
-        // Azure Steel -> Deep Steel
-        HTArcFurnaceRecipeBuilder
-            .builder()
-            .output(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .input(ingotOrDust(RagiumMaterialKeys.AZURE_STEEL), 4)
-            .input(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 4)
+        fromData(RagiumMaterialRecipeData.DEEP_STEEL)
             .build(output, id(RagiumMaterialKeys.DEEP_STEEL.name))
     }
 
@@ -142,6 +116,19 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .catalyst(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .setEnergy(240)
             .build(output, id("refinery/eldritch_flux"))
+
+        fromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+            .build(output, id(RagiumMaterialKeys.ELDRITCH_PEARL.name))
+        fromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)
+            .build(output, id(RagiumMaterialKeys.ELDRITCH_PEARL.name).withSuffix("_alt"))
+    }
+
+    @JvmStatic
+    private fun misc() {
+        fromData(RagiumMaterialRecipeData.NIGHT_METAL)
+            .build(output, id(RagiumMaterialKeys.NIGHT_METAL.name))
+        fromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
+            .build(output, id(RagiumMaterialKeys.IRIDESCENTIUM.name))
     }
 
     //    Extension    //
@@ -152,4 +139,21 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         material: HTMaterialLike,
         count: Int = 1,
     ): BottlingMachineRecipeBuilder = output(prefix.itemTagKey(material), count)
+
+    @JvmStatic
+    private fun fromData(data: HTMaterialRecipeData): HTArcFurnaceRecipeBuilder {
+        val builder: HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder.builder()
+        // Inputs
+        for ((ingredient: Ingredient, count: Int) in data.getIngredients()) {
+            builder.input(ingredient, count)
+        }
+        // Output
+        data.getOutput { (item: Item?, tagKey: TagKey<Item>?, count: Int) ->
+            when {
+                tagKey != null -> builder.output(tagKey, count)
+                item != null -> builder.output(item, count)
+            }
+        }
+        return builder
+    }
 }

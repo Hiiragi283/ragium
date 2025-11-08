@@ -3,21 +3,9 @@
   "ingredients": [
     {
       "count": 2,
-      "items": {
-        "type": "neoforge:or",
-        "values": [
-          "#c:dusts/advanced_ragi_alloy",
-          "#c:ingots/advanced_ragi_alloy"
-        ]
-      }
+      "items": "#c:dusts/advanced_ragi_alloy"
     },
-    {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/ragi_crystal",
-        "#c:gems/ragi_crystal"
-      ]
-    },
+    "#c:dusts/ragi_crystal",
     "ragium:advanced_circuit_board"
   ],
   "result": {

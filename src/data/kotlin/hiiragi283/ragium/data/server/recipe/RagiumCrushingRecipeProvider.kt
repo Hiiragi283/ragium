@@ -99,6 +99,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         // Ragium
         HTItemToObjRecipeBuilder
             .pulverizing(
+                itemCreator.fromItem(Items.BLACKSTONE),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4),
+            ).saveSuffixed(output, "_from_block")
+
+        HTItemToObjRecipeBuilder
+            .pulverizing(
                 itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
                 resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_block")

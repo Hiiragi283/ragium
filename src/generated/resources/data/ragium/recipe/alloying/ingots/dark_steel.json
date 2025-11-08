@@ -1,8 +1,11 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio_base"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/dark_steel"
+      }
     }
   ],
   "type": "ragium:alloying",
@@ -24,7 +27,7 @@
         ]
       }
     },
-    "#c:obsidians"
+    "#c:obsidians/normal"
   ],
   "result": {
     "count": 1,

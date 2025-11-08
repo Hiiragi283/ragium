@@ -1,20 +1,23 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio_base"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/soularium"
+      }
     }
   ],
   "type": "ragium:alloying",
   "ingredients": [
-    "#minecraft:soul_fire_base_blocks",
     {
       "type": "neoforge:or",
       "values": [
         "#c:dusts/gold",
         "#c:ingots/gold"
       ]
-    }
+    },
+    "#minecraft:soul_fire_base_blocks"
   ],
   "result": {
     "count": 1,

@@ -44,7 +44,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Crude Oil
         HTItemToObjRecipeBuilder
             .melting(
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil

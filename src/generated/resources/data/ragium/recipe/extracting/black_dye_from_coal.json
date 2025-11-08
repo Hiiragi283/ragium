@@ -1,12 +1,6 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "type": "neoforge:or",
-    "values": [
-      "#c:dusts/coal",
-      "#c:fuels/coal"
-    ]
-  },
+  "ingredient": "#c:dusts/coal",
   "result": {
     "count": 1,
     "id": "minecraft:black_dye"

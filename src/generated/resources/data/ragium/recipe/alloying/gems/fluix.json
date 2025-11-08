@@ -7,13 +7,7 @@
   ],
   "type": "ragium:alloying",
   "ingredients": [
-    {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/certus_quartz",
-        "#c:gems/certus_quartz"
-      ]
-    },
+    "ae2:charged_certus_quartz_crystal",
     "#c:dusts/redstone",
     {
       "type": "neoforge:or",

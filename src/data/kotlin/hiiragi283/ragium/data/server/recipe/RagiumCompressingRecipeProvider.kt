@@ -45,7 +45,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Moss
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fromItems(Items.VINE, Items.MOSS_CARPET, count = 8),
+                itemCreator.fromItems(listOf(Items.VINE, Items.MOSS_CARPET), count = 8),
                 resultHelper.item(Items.MOSS_BLOCK),
             ).save(output)
         // Sculk
@@ -78,7 +78,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL, 64),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL, 64),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
             ).saveSuffixed(output, "_from_coal")
 

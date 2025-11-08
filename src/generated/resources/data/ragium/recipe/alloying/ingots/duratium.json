@@ -21,7 +21,7 @@
       "type": "neoforge:or",
       "values": [
         "#c:dusts/netherite",
-        "#c:ingots/netherite"
+        "#c:gems/netherite"
       ]
     }
   ],

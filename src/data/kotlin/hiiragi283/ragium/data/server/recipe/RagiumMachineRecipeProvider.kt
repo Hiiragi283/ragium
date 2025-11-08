@@ -191,18 +191,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.DEVICE_CASING)
             .cross8()
-            .define('A', Items.BLACK_CONCRETE)
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
             .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
             .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING, 4)
-            .cross8()
-            .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            .saveSuffixed(output, "_with_obsidian")
 
         // Basic
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)

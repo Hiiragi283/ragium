@@ -285,10 +285,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
         builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagBuilder.DependType.OPTIONAL)
 
-        val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
-        builder.add(plastics, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
+        builder.add(RagiumCommonTags.Items.PLASTIC, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
-        builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumModTags.Items.PLASTICS, RagiumCommonTags.Items.PLASTIC, HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
             PneumaticCraftTags.Items.PLASTIC_SHEETS,

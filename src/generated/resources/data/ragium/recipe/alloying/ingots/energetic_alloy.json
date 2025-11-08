@@ -1,13 +1,15 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio_base"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/energetic_alloy"
+      }
     }
   ],
   "type": "ragium:alloying",
   "ingredients": [
-    "#c:dusts/redstone",
     {
       "type": "neoforge:or",
       "values": [
@@ -15,6 +17,7 @@
         "#c:ingots/gold"
       ]
     },
+    "#c:dusts/redstone",
     "#c:dusts/glowstone"
   ],
   "result": {

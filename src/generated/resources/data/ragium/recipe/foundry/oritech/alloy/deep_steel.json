@@ -12,9 +12,6 @@
   },
   "fluidOutputs": [],
   "ingredients": [
-    {
-      "tag": "c:scraps/deep_steel"
-    },
     [
       {
         "tag": "c:dusts/azure_steel"
@@ -22,7 +19,10 @@
       {
         "tag": "c:ingots/azure_steel"
       }
-    ]
+    ],
+    {
+      "tag": "c:scraps/deep_steel"
+    }
   ],
   "results": [
     {

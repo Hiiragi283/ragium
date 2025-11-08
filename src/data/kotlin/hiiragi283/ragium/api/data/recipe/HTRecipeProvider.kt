@@ -140,9 +140,6 @@ sealed class HTRecipeProvider {
     protected fun ingotOrDust(material: HTMaterialLike): Ingredient =
         multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.INGOT)
 
-    protected fun ingotOrRod(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.INGOT, CommonMaterialPrefixes.ROD)
-
     protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTPrefixLike): Ingredient = prefixes
         .map { it.itemTagKey(material) }
         .map(Ingredient::TagValue)
