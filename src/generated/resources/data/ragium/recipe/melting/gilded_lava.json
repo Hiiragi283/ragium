@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:gilded_blackstone",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:gilded_lava"
-  }
-}

@@ -214,8 +214,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumFluidContents.GILDED_LAVA, "Gilded Lava")
     }
 
     private fun item() {
@@ -278,7 +276,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
         add(RagiumItems.LED, "Light Emitting Diode")
         add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
-        add(RagiumItems.PLATING_CATALYST, "Plating Catalyst")
         add(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
         add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         add(RagiumItems.REDSTONE_BOARD, "Redstone Board")

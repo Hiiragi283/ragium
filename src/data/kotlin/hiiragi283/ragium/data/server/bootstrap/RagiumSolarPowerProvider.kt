@@ -23,7 +23,7 @@ object RagiumSolarPowerProvider : RegistrySetBuilder.RegistryBootstrap<HTSolarPo
         register(context, Blocks.BEACON, 4f)
         register(context, Blocks.SHROOMLIGHT, 1f)
         register(context, CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.GLOWSTONE, 1f)
-        register(context, CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.GILDIUM, 4f)
+        register(context, CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM, 4f)
         register(context, Tags.Blocks.CLUSTERS, 2f)
     }
 

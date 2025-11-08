@@ -8,10 +8,8 @@ import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
@@ -147,19 +145,6 @@ object RagiumFluidContents {
         register("warped_sap", liquid())
 
     //    Molten    //
-
-    @JvmField
-    val GILDED_LAVA: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(
-            "gilded_lava",
-            molten(),
-            HTFluidType.create {
-                canVaporize = HTFluidType.IS_ULTRA_WARM
-                interactLevel = { level: Level, pos: BlockPos ->
-                    level.setBlockAndUpdate(pos, Blocks.GILDED_BLACKSTONE.defaultBlockState())
-                }
-            },
-        )
 
     @JvmField
     val CRIMSON_BLOOD: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =

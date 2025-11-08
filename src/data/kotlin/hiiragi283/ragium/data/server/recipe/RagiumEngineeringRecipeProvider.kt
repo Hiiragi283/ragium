@@ -102,14 +102,6 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun catalyst() {
-        // Plating Catalyst
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.PLATING_CATALYST)
-            .cross8()
-            .define('A', Tags.Items.RODS_BLAZE)
-            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.GILDIUM)
-            .define('C', Items.IRON_BARS)
-            .save(output)
         // Polymer Catalyst
         HTShapedRecipeBuilder
             .misc(RagiumItems.POLYMER_CATALYST)

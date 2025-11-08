@@ -210,8 +210,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumFluidContents.GILDED_LAVA, "金メッキされた溶岩")
     }
 
     private fun item() {
@@ -284,7 +282,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
-        add(RagiumItems.PLATING_CATALYST, "メッキ触媒")
         add(RagiumItems.POLYMER_CATALYST, "重合触媒")
         add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         add(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")

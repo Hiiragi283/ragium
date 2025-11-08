@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -18,9 +17,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
@@ -29,7 +26,6 @@ import hiiragi283.ragium.impl.data.recipe.material.OritechMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
@@ -157,29 +153,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         // Night Metal
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL).save(output)
-        // Day Quartz
-        // Gildium
-        HTItemToObjRecipeBuilder
-            .melting(
-                itemCreator.fromItem(Items.GILDED_BLACKSTONE),
-                resultHelper.fluid(RagiumFluidContents.GILDED_LAVA, 1000),
-            ).save(output)
-
-        HTFluidTransformRecipeBuilder
-            .refining(
-                fluidCreator.fromContent(RagiumFluidContents.GILDED_LAVA, 1000),
-                resultHelper.fluid(HTFluidContent.LAVA, 750),
-                null,
-                resultHelper.item(CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.GILDIUM),
-            ).save(output)
-
-        HTFluidTransformRecipeBuilder
-            .refining(
-                fluidCreator.fromContent(RagiumFluidContents.GILDED_LAVA, 1000),
-                resultHelper.fluid(HTFluidContent.LAVA, 750),
-                itemCreator.fromItem(RagiumItems.PLATING_CATALYST),
-                resultHelper.item(CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.GILDIUM, 3),
-            ).saveSuffixed(output, "_alt")
         // Iridescentium
         alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM).save(output)
         // Other

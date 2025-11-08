@@ -104,7 +104,6 @@ object RagiumCreativeTabs {
         output.acceptItems(RagiumItems.MATERIALS.values)
         // Ingredients
         output.accept(RagiumItems.TAR)
-        output.accept(RagiumItems.PLATING_CATALYST)
 
         output.accept(RagiumItems.POTATO_SPROUTS)
         output.accept(RagiumItems.GREEN_CAKE)

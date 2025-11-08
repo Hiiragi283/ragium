@@ -188,7 +188,6 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
             // Foods
             FoodMaterialKeys.CHOCOLATE,
@@ -202,7 +201,6 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.GILDIUM,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
         // Plates
@@ -453,9 +451,6 @@ object RagiumItems {
     val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
 
     // Catalyst
-    @JvmField
-    val PLATING_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("plating_catalyst", ::HTCatalystItem)
-
     @JvmField
     val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("polymer_catalyst", ::HTCatalystItem)
 

@@ -6,7 +6,7 @@
       "tag": "c:gems/diamond"
     },
     "B": {
-      "item": "minecraft:smooth_stone_slab"
+      "tag": "c:ingots/night_metal"
     },
     "C": {
       "tag": "c:chests/wooden"

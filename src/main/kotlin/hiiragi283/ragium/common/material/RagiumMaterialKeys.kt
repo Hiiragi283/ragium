@@ -43,9 +43,6 @@ object RagiumMaterialKeys {
     val NIGHT_METAL: HTMaterialKey = HTMaterialKey.of("night_metal")
 
     @JvmStatic
-    val GILDIUM: HTMaterialKey = HTMaterialKey.of("gildium")
-
-    @JvmStatic
     val IRIDESCENTIUM: HTMaterialKey = HTMaterialKey.of("iridescentium")
 
     // Other

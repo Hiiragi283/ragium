@@ -87,6 +87,9 @@ object RagiumMaterialEvents {
             addName("Soul", "ソウル")
         }
 
+        event.modify(VanillaMaterialKeys.BLACKSTONE) {
+            addName("Blackstone", "ブラックストーン")
+        }
         event.modify(VanillaMaterialKeys.OBSIDIAN) {
             addName("Obsidian", "黒曜石")
         }
@@ -173,10 +176,6 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.NIGHT_METAL) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Night Metal", "夜金")
-        }
-        event.modify(RagiumMaterialKeys.GILDIUM) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Gildium", "鍍金")
         }
         event.modify(RagiumMaterialKeys.IRIDESCENTIUM) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
