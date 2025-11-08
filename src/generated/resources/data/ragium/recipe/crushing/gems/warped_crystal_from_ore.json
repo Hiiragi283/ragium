@@ -1,7 +1,7 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pulverizing",
   "ingredient": "#c:ores/warped_crystal",
-  "results": {
+  "result": {
     "count": 2,
     "id": "#c:gems/warped_crystal"
   }

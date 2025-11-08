@@ -11,9 +11,9 @@ import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import net.minecraft.resources.ResourceLocation
 import java.util.*
 
-class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
+class HTFluidTransformRecipeBuilder(
     prefix: String,
-    private val factory: Factory<RECIPE>,
+    private val factory: Factory<*>,
     private val fluidIngredient: HTFluidIngredient,
     private val itemIngredient: Optional<HTItemIngredient>,
     private val itemResult: Optional<HTItemResult>,
@@ -25,7 +25,7 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
             itemIngredient: HTItemIngredient,
             fluidIngredient: HTFluidIngredient,
             fluidResult: HTFluidResult,
-        ): HTFluidTransformRecipeBuilder<HTRefiningRecipe> = HTFluidTransformRecipeBuilder(
+        ): HTFluidTransformRecipeBuilder = HTFluidTransformRecipeBuilder(
             RagiumConst.MIXING,
             ::HTRefiningRecipe,
             fluidIngredient,
@@ -40,7 +40,7 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
             fluidResult: HTFluidResult,
             itemIngredient: HTItemIngredient?,
             itemResult: HTItemResult?,
-        ): HTFluidTransformRecipeBuilder<HTRefiningRecipe> = HTFluidTransformRecipeBuilder(
+        ): HTFluidTransformRecipeBuilder = HTFluidTransformRecipeBuilder(
             RagiumConst.REFINING,
             ::HTRefiningRecipe,
             fluidIngredient,
@@ -54,7 +54,7 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
             itemIngredient: HTItemIngredient?,
             fluidIngredient: HTFluidIngredient,
             itemResult: HTItemResult,
-        ): HTFluidTransformRecipeBuilder<HTRefiningRecipe> = HTFluidTransformRecipeBuilder(
+        ): HTFluidTransformRecipeBuilder = HTFluidTransformRecipeBuilder(
             RagiumConst.SOLIDIFYING,
             ::HTRefiningRecipe,
             fluidIngredient,
@@ -70,7 +70,7 @@ class HTFluidTransformRecipeBuilder<RECIPE : HTFluidTransformRecipe>(
         else -> error("Either item or fluid result required!")
     }
 
-    override fun createRecipe(): RECIPE = factory.create(fluidIngredient, itemIngredient, itemResult, fluidResult)
+    override fun createRecipe(): HTFluidTransformRecipe = factory.create(fluidIngredient, itemIngredient, itemResult, fluidResult)
 
     fun interface Factory<RECIPE : HTFluidTransformRecipe> {
         fun create(

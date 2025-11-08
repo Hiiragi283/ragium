@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.recipes.RecipeOutput
@@ -101,6 +102,14 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     @JvmStatic
     private fun pulverize() {
+        // Vanilla
+        pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+            .export(output, "amethyst_dust")
+        pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
+            .export(output, "echo_dust")
+        pulverizerFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+            .export(output, "blackstone_dust")
+        // Ragium
         pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
             .export(output, "ragi_crystal_ore")
         pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)

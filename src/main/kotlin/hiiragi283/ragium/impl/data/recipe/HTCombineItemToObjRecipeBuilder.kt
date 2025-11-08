@@ -9,29 +9,29 @@ import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTCombineItemToObjRecipeBuilder<RECIPE : HTCombineItemToItemRecipe>(
+class HTCombineItemToObjRecipeBuilder(
     prefix: String,
-    private val factory: Factory<RECIPE>,
+    private val factory: Factory<*>,
     private val ingredients: List<HTItemIngredient>,
     private val result: HTItemResult,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
-        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTAlloyingRecipe> =
+        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder =
             alloying(result, listOf(*ingredients))
 
         @JvmStatic
-        fun alloying(result: HTItemResult, ingredients: List<HTItemIngredient>): HTCombineItemToObjRecipeBuilder<HTAlloyingRecipe> =
+        fun alloying(result: HTItemResult, ingredients: List<HTItemIngredient>): HTCombineItemToObjRecipeBuilder =
             HTCombineItemToObjRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, ingredients, result)
 
         @JvmStatic
-        fun enchanting(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder<HTEnchantingRecipe> =
+        fun enchanting(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder =
             HTCombineItemToObjRecipeBuilder(RagiumConst.ENCHANTING, ::HTEnchantingRecipe, listOf(*ingredients), result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): RECIPE = factory.create(ingredients, result)
+    override fun createRecipe(): HTCombineItemToItemRecipe = factory.create(ingredients, result)
 
     fun interface Factory<RECIPE : HTCombineItemToItemRecipe> {
         fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): RECIPE

@@ -9,9 +9,9 @@ import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import net.minecraft.resources.ResourceLocation
 import java.util.*
 
-class HTItemWithCatalystToItemRecipeBuilder<RECIPE : HTItemWithCatalystToItemRecipe>(
+class HTItemWithCatalystToItemRecipeBuilder(
     prefix: String,
-    private val factory: Factory<RECIPE>,
+    private val factory: Factory<*>,
     val ingredient: Optional<HTItemIngredient>,
     val catalyst: HTItemIngredient,
     val result: HTItemResult,
@@ -22,7 +22,7 @@ class HTItemWithCatalystToItemRecipeBuilder<RECIPE : HTItemWithCatalystToItemRec
             ingredient: HTItemIngredient?,
             catalyst: HTItemIngredient,
             result: HTItemResult,
-        ): HTItemWithCatalystToItemRecipeBuilder<HTSimulatingRecipe> = HTItemWithCatalystToItemRecipeBuilder(
+        ): HTItemWithCatalystToItemRecipeBuilder = HTItemWithCatalystToItemRecipeBuilder(
             RagiumConst.SIMULATING,
             ::HTSimulatingRecipe,
             Optional.ofNullable(ingredient),
@@ -33,7 +33,7 @@ class HTItemWithCatalystToItemRecipeBuilder<RECIPE : HTItemWithCatalystToItemRec
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): RECIPE = factory.create(ingredient, catalyst, result)
+    override fun createRecipe(): HTItemWithCatalystToItemRecipe = factory.create(ingredient, catalyst, result)
 
     fun interface Factory<RECIPE : HTItemWithCatalystToItemRecipe> {
         fun create(ingredient: Optional<HTItemIngredient>, catalyst: HTItemIngredient, result: HTItemResult): RECIPE

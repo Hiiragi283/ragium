@@ -6,11 +6,8 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 
-class HTItemToChancedItemRecipeBuilder(
-    prefix: String,
-    private val factory: Factory<out HTItemToChancedItemRecipe>,
-    val ingredient: HTItemIngredient,
-) : HTChancedItemRecipeBuilder<HTItemToChancedItemRecipe>(prefix) {
+class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Factory<*>, val ingredient: HTItemIngredient) :
+    HTChancedItemRecipeBuilder<HTItemToChancedItemRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
         fun crushing(ingredient: HTItemIngredient): HTItemToChancedItemRecipeBuilder =

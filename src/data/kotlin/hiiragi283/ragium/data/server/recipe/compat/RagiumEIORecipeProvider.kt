@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -53,6 +54,12 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
 
     @JvmStatic
     private fun sagMill() {
+        // Vanilla
+        sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST).save(output)
+        sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST).save(output)
+
+        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST).save(output)
+        // Ragium
         sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE).save(output)
 
         sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE).save(output)

@@ -101,7 +101,6 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
             itemCreator.fromItem(Items.GLASS_BOTTLE),
             Items.EXPERIENCE_BOTTLE.toHolderLike(),
             RagiumFluidContents.EXPERIENCE,
-            250,
         )
         // Exp Berries -> Liquid Exp
         HTItemToObjRecipeBuilder

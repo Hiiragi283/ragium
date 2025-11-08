@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
@@ -271,12 +270,17 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         pulverizeFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.WARPED_ORE)
+            .saveSuffixed(output, "_from_ore")
 
         // Scraps
         pulverizeFromData(VanillaMaterialRecipeData.NETHERITE_SCRAP)
+            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.DEEP_SCRAP)
+            .saveSuffixed(output, "_from_ore")
     }
 
     @JvmStatic
@@ -285,84 +289,43 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(VanillaMaterialRecipeData.NETHERITE).save(output)
 
         // Common
-        alloyFromData(CommonMaterialRecipeData.STEEL_COAL)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
-            .saveSuffixed(output, "_from_coal")
-        alloyFromData(CommonMaterialRecipeData.STEEL_COKE)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
-            .saveSuffixed(output, "_from_coke")
-        alloyFromData(CommonMaterialRecipeData.INVAR)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.INVAR)
-            .save(output)
-        alloyFromData(CommonMaterialRecipeData.ELECTRUM)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.ELECTRUM)
-            .save(output)
-        alloyFromData(CommonMaterialRecipeData.BRONZE)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRONZE)
-            .save(output)
-        alloyFromData(CommonMaterialRecipeData.BRASS)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRASS)
-            .save(output)
-        alloyFromData(CommonMaterialRecipeData.CONSTANTAN)
-            .tagCondition(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.CONSTANTAN)
-            .save(output)
+        alloyFromData(CommonMaterialRecipeData.STEEL_COAL, true).saveSuffixed(output, "_from_coal")
+        alloyFromData(CommonMaterialRecipeData.STEEL_COKE, true).saveSuffixed(output, "_from_coke")
+        alloyFromData(CommonMaterialRecipeData.INVAR, true).save(output)
+        alloyFromData(CommonMaterialRecipeData.ELECTRUM, true).save(output)
+        alloyFromData(CommonMaterialRecipeData.BRONZE, true).save(output)
+        alloyFromData(CommonMaterialRecipeData.BRASS, true).save(output)
+        alloyFromData(CommonMaterialRecipeData.CONSTANTAN, true).save(output)
 
         // EIO
-        alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.COPPER_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.DARK_STEEL)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COKE)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
-            .saveSuffixed(output, "_alt")
-        alloyFromData(EIOMaterialRecipeData.END_STEEL)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.ENERGETIC_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.PULSATING_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.REDSTONE_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.SOULARIUM)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM)
-            .save(output)
-        alloyFromData(EIOMaterialRecipeData.VIBRANT_ALLOY)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY)
-            .save(output)
+        alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.COPPER_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.DARK_STEEL, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COKE, true).saveSuffixed(output, "_alt")
+        alloyFromData(EIOMaterialRecipeData.END_STEEL, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.ENERGETIC_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.PULSATING_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.REDSTONE_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.SOULARIUM, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.VIBRANT_ALLOY, true).save(output)
 
         // Oritech
-        alloyFromData(OritechMaterialRecipeData.ADAMANT)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ADAMANT)
-            .save(output)
-        alloyFromData(OritechMaterialRecipeData.DURATIUM)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DURATIUM)
-            .save(output)
-        alloyFromData(OritechMaterialRecipeData.ENERGITE)
-            .tagCondition(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGITE)
-            .save(output)
+        alloyFromData(OritechMaterialRecipeData.ADAMANT, true).save(output)
+        alloyFromData(OritechMaterialRecipeData.DURATIUM, true).save(output)
+        alloyFromData(OritechMaterialRecipeData.ENERGITE, true).save(output)
     }
 
     @JvmStatic
-    fun alloyFromData(data: HTMaterialRecipeData): HTCombineItemToObjRecipeBuilder<*> = HTCombineItemToObjRecipeBuilder
-        .alloying(
-            data.getResult(resultHelper, 0),
-            data.getItemIngredients(itemCreator),
-        )
-
-    @JvmStatic
-    fun pulverizeFromData(data: HTMaterialRecipeData) {
-        HTItemToChancedItemRecipeBuilder
-            .crushing(data.getItemIngredient(0, itemCreator))
-            .addResult(data.getChancedResult(resultHelper, 0))
-            .saveSuffixed(output, "_from_ore")
-    }
+    private fun alloyFromData(data: HTMaterialRecipeData, applyCondition: Boolean = false): HTCombineItemToObjRecipeBuilder =
+        HTCombineItemToObjRecipeBuilder
+            .alloying(
+                data.getResult(resultHelper, 0),
+                data.getItemIngredients(itemCreator),
+            ).apply {
+                if (applyCondition) {
+                    data.outputs
+                        .mapNotNull(HTMaterialRecipeData.OutputEntry::tagKey)
+                        .forEach(this::tagCondition)
+                }
+            }
 }

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -174,7 +175,7 @@ sealed class HTRecipeProvider {
         empty: HTItemIngredient,
         filled: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
-        amount: Int,
+        amount: Int = 250,
     ) {
         // Melting
         HTItemToObjRecipeBuilder
@@ -275,4 +276,10 @@ sealed class HTRecipeProvider {
                 .save(output)
         }
     }
+
+    fun pulverizeFromData(data: HTMaterialRecipeData): HTItemToObjRecipeBuilder<HTItemResult> = HTItemToObjRecipeBuilder
+        .pulverizing(
+            data.getItemIngredient(0, itemCreator),
+            data.getResult(resultHelper, 0),
+        )
 }
