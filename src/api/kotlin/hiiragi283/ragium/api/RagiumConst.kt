@@ -52,6 +52,7 @@ object RagiumConst {
     const val CREATE = "create"
     const val EIO = "enderio"
     const val EIO_BASE = "enderio_base"
+    const val EIO_MACHINES = "enderio_machines"
     const val FARMERS_DELIGHT = "farmersdelight"
     const val FOREGOING = "industrialforegoing"
     const val IMMERSIVE = "immersiveengineering"

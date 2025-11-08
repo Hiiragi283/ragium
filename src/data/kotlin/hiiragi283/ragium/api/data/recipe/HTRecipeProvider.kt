@@ -57,7 +57,7 @@ sealed class HTRecipeProvider {
     /**
      * [HTResultHelper]のインスタンス
      */
-    val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
+    val resultHelper: HTResultHelper = HTResultHelper
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.addName
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import net.neoforged.bus.api.EventPriority
@@ -96,6 +97,14 @@ object RagiumMaterialEvents {
 
         event.modify(VanillaMaterialKeys.WOOD) {
             addName("Wood", "木")
+        }
+
+        // Elements
+        event.modify(RagiumEssenceType.RAGIUM.asMaterialKey()) {
+            addName("Ragium Essence", "ラギウムエッセンス")
+        }
+        event.modify(RagiumEssenceType.DEEP.asMaterialKey()) {
+            addName("Deep Essence", "深層エッセンス")
         }
 
         RagiumAPI.LOGGER.info("Modified Vanilla materials!")

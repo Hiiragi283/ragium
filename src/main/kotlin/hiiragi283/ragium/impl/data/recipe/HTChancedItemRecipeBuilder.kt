@@ -9,9 +9,16 @@ import net.minecraft.resources.ResourceLocation
 abstract class HTChancedItemRecipeBuilder<RECIPE : HTChancedItemRecipe<*>>(prefix: String) : HTRecipeBuilder.Prefixed(prefix) {
     protected val results: MutableList<HTChancedItemResult> = mutableListOf()
 
-    fun addResult(result: HTItemResult, chance: Float = 1f): HTChancedItemRecipeBuilder<RECIPE> = apply {
-        check(chance in (0f..1f)) { "Chance of result must be within 0f to 1f!" }
-        this.results.add(HTChancedItemResult(result, chance))
+    fun addResult(result: HTItemResult, chance: Float = 1f): HTChancedItemRecipeBuilder<RECIPE> =
+        addResult(HTChancedItemResult(result, chance))
+
+    fun addResult(result: HTChancedItemResult): HTChancedItemRecipeBuilder<RECIPE> = apply {
+        check(result.chance in (0f..1f)) { "Chance of result must be within 0f to 1f!" }
+        this.results.add(result)
+    }
+
+    fun addResults(results: Iterable<HTChancedItemResult>): HTChancedItemRecipeBuilder<RECIPE> = apply {
+        results.forEach(::addResult)
     }
 
     final override fun getPrimalId(): ResourceLocation = results[0].id

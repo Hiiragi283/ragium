@@ -61,7 +61,7 @@ interface HTMaterialRecipeData {
 
                 override fun advancement(): Advancement.Builder = Advancement.Builder.recipeAdvancement()
             }
-            generateRecipes(Helper(access, itemCreator, fluidCreator, HTResultHelper.INSTANCE, output))
+            generateRecipes(Helper(access, itemCreator, fluidCreator, HTResultHelper, output))
         }
     }
 

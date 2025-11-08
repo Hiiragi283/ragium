@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    }
+  ],
+  "type": "enderio:sag_milling",
+  "energy": 2400,
+  "input": {
+    "tag": "c:ores/raginite"
+  },
+  "outputs": [
+    {
+      "item": {
+        "count": 8,
+        "tag": "c:dusts/raginite"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 4,
+        "tag": "c:dusts/raginite"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 1,
+        "tag": "c:gems/ragi_crystal"
+      }
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import net.minecraft.tags.TagKey
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>, val output: OutputEntry) {
+data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>, val outputs: List<OutputEntry>) {
     companion object {
         @JvmStatic
         inline fun create(builderAction: Builder.() -> Unit): HTMaterialRecipeData = Builder().apply(builderAction).build()
@@ -57,27 +58,46 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
 
     fun <T> getInput(index: Int, factory: (InputEntry) -> T): T = getInputs(factory)[index]
 
-    fun getIngredient(index: Int): Pair<Ingredient, Int> = getIngredients()[index]
+    fun getIngredient(index: Int): Ingredient = getIngredients()[index].first
 
     fun getSizedIngredient(index: Int): SizedIngredient = getSizedIngredients()[index]
 
     fun getItemIngredient(index: Int, creator: HTItemIngredientCreator): HTItemIngredient = getItemIngredients(creator)[index]
 
-    // Output
-    inline fun <T> getOutput(factory: (OutputEntry) -> T): T = this.output.let(factory)
-
-    fun getOutputStack(): ItemStack = getOutput { (item: Item?, _, count: Int) ->
-        when (item != null) {
-            true -> ItemStack(item, count)
-            false -> error("Cannot create ItemStack from non-item output entry")
+    inline fun forIngredients(action: (Int, Pair<Ingredient, Int>) -> Unit) {
+        val ingredients: List<Pair<Ingredient, Int>> = getIngredients()
+        for (i: Int in ingredients.indices) {
+            action(i, ingredients[i])
         }
     }
 
-    fun getResult(helper: HTResultHelper): HTItemResult = getOutput { (item: Item?, tagKey: TagKey<Item>?, count: Int) ->
-        when {
-            tagKey != null -> helper.item(tagKey, count)
-            item != null -> helper.item(item, count)
-            else -> error("Cannot create HTItemResult from invalid output entry")
+    // Output
+    inline fun <T> getOutputs(factory: (OutputEntry) -> T): List<T> = this.outputs.map(factory)
+
+    fun getOutputStacks(): List<ItemStack> = getOutputs { (item: Item?, _, count: Int) ->
+        when (item != null) {
+            true -> ItemStack(item, count)
+            false -> null
+        }
+    }.filterNotNull()
+
+    fun getChancedResults(helper: HTResultHelper): List<HTChancedItemResult> =
+        getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
+            val result: HTItemResult = when {
+                tagKey != null -> helper.item(tagKey, count)
+                item != null -> helper.item(item, count)
+                else -> return@getOutputs null
+            }
+            HTChancedItemResult(result, chance)
+        }.filterNotNull()
+
+    fun getChancedResult(helper: HTResultHelper, index: Int): HTChancedItemResult = getChancedResults(helper)[index]
+
+    fun getResult(helper: HTResultHelper, index: Int): HTItemResult = getChancedResult(helper, index).base
+
+    inline fun forEachOutput(action: (Int, OutputEntry) -> Unit) {
+        for (i: Int in this.outputs.indices) {
+            action(i, this.outputs[i])
         }
     }
 
@@ -85,16 +105,18 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
     data class InputEntry(val entry: Either<List<Item>, List<TagKey<Item>>>, val count: Int)
 
     @JvmRecord
-    data class OutputEntry(val item: Item?, val tagKey: TagKey<Item>?, val count: Int)
+    data class OutputEntry(
+        val item: Item?,
+        val tagKey: TagKey<Item>?,
+        val count: Int,
+        val chance: Float,
+    )
 
     //    Builder    //
 
     class Builder {
         val inputs: MutableList<InputEntry> = mutableListOf()
-
-        var outputItem: Item? = null
-        var outputTagKey: TagKey<Item>? = null
-        var outputCount: Int = 1
+        val outputs: MutableList<OutputEntry> = mutableListOf()
 
         // Input
         fun addInput(vararg items: ItemLike, count: Int = 1): Builder = apply {
@@ -135,19 +157,32 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
         )
 
         // Output
-        fun addOutput(item: ItemLike, count: Int = 1): Builder = apply {
-            outputItem = item.asItem()
-            outputCount = count
+        fun addOutput(
+            item: ItemLike,
+            prefix: HTPrefixLike,
+            material: HTMaterialLike,
+            count: Int = 1,
+            chance: Float = 1f,
+        ): Builder = addOutput(item.asItem(), prefix.itemTagKey(material), count, chance)
+
+        fun addOutput(
+            prefix: HTPrefixLike,
+            material: HTMaterialLike,
+            count: Int = 1,
+            chance: Float = 1f,
+        ): Builder = addOutput(prefix.itemTagKey(material), count, chance)
+
+        fun addOutput(tagKey: TagKey<Item>, count: Int = 1, chance: Float = 1f): Builder = addOutput(null, tagKey, count, chance)
+
+        fun addOutput(
+            item: ItemLike?,
+            tagKey: TagKey<Item>?,
+            count: Int = 1,
+            chance: Float = 1f,
+        ): Builder = apply {
+            this.outputs.add(OutputEntry(item?.asItem(), tagKey, count, chance))
         }
 
-        fun addOutput(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): Builder =
-            addOutput(prefix.itemTagKey(material), count)
-
-        fun addOutput(tagKey: TagKey<Item>, count: Int = 1): Builder = apply {
-            outputTagKey = tagKey
-            outputCount = count
-        }
-
-        fun build(): HTMaterialRecipeData = HTMaterialRecipeData(inputs, OutputEntry(outputItem, outputTagKey, outputCount))
+        fun build(): HTMaterialRecipeData = HTMaterialRecipeData(inputs, outputs)
     }
 }

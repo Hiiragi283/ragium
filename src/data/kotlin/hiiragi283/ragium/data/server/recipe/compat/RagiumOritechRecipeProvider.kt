@@ -22,6 +22,7 @@ import rearth.oritech.api.recipe.FoundryRecipeBuilder
 import rearth.oritech.api.recipe.LaserRecipeBuilder
 import rearth.oritech.api.recipe.OritechRecipeBuilder
 import rearth.oritech.api.recipe.ParticleCollisionRecipeBuilder
+import rearth.oritech.api.recipe.PulverizerRecipeBuilder
 
 object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.ORITECH) {
     override fun buildRecipeInternal() {
@@ -30,6 +31,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundry()
         laser()
         particle()
+        pulverize()
     }
 
     @JvmStatic
@@ -97,6 +99,16 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, "deep_scrap")
     }
 
+    @JvmStatic
+    private fun pulverize() {
+        pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+            .export(output, "ragi_crystal_ore")
+        pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+            .export(output, "crimson_crystal_ore")
+        pulverizerFromData(RagiumMaterialRecipeData.WARPED_ORE)
+            .export(output, "warped_crystal_ore")
+    }
+
     //    Extension    //
 
     fun OritechRecipeBuilder.input(prefix: HTPrefixLike, material: HTMaterialLike): OritechRecipeBuilder =
@@ -113,26 +125,23 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     }
 
     @JvmStatic
-    fun atomicFromData(data: HTMaterialRecipeData): OritechRecipeBuilder {
-        val builder: OritechRecipeBuilder = AtomicForgeRecipeBuilder.build()
-        // Inputs
-        for ((ingredient: Ingredient, _) in data.getIngredients()) {
-            builder.input(ingredient)
-        }
-        // Output
-        builder.result(data.getOutputStack())
-        return builder
-    }
+    private fun atomicFromData(data: HTMaterialRecipeData): OritechRecipeBuilder = builderFromData(data, AtomicForgeRecipeBuilder.build())
 
     @JvmStatic
-    fun foundryFromData(data: HTMaterialRecipeData): OritechRecipeBuilder {
-        val builder: OritechRecipeBuilder = FoundryRecipeBuilder.build()
+    private fun foundryFromData(data: HTMaterialRecipeData): OritechRecipeBuilder = builderFromData(data, FoundryRecipeBuilder.build())
+
+    @JvmStatic
+    private fun pulverizerFromData(data: HTMaterialRecipeData): OritechRecipeBuilder =
+        builderFromData(data, PulverizerRecipeBuilder.build())
+
+    @JvmStatic
+    private fun builderFromData(data: HTMaterialRecipeData, builder: OritechRecipeBuilder): OritechRecipeBuilder {
         // Inputs
         for ((ingredient: Ingredient, _) in data.getIngredients()) {
             builder.input(ingredient)
         }
         // Output
-        builder.result(data.getOutputStack())
+        builder.result(data.getOutputStacks())
         return builder
     }
 }

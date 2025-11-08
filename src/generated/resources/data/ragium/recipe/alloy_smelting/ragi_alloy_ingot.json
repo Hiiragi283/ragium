@@ -2,7 +2,7 @@
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
-      "modid": "enderio_base"
+      "modid": "enderio_machines"
     }
   ],
   "type": "enderio:alloy_smelting",

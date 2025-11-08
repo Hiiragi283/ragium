@@ -231,12 +231,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR, 4), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
         // Raginite
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.RAGINITE))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 8))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4), 1 / 2f)
-            .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL, 1), 1 / 4f)
-            .saveSuffixed(output, "_from_ore")
+        with(RagiumMaterialRecipeData.RAGINITE_ORE) {
+            HTItemToChancedItemRecipeBuilder
+                .crushing(this.getItemIngredient(0, itemCreator))
+                .addResults(this.getChancedResults(resultHelper))
+                .saveSuffixed(output, "_from_ore")
+        }
 
         // Raws
         mapOf(
@@ -263,16 +263,16 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             VanillaMaterialKeys.QUARTZ to 4,
             VanillaMaterialKeys.DIAMOND to 2,
             VanillaMaterialKeys.EMERALD to 2,
-            // Ragium
-            RagiumMaterialKeys.RAGI_CRYSTAL to 2,
-            RagiumMaterialKeys.CRIMSON_CRYSTAL to 2,
-            RagiumMaterialKeys.WARPED_CRYSTAL to 2,
         ).forEach { (key: HTMaterialKey, count: Int) ->
             HTItemToChancedItemRecipeBuilder
                 .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, key))
                 .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, key, count))
                 .saveSuffixed(output, "_from_ore")
         }
+
+        pulverizeFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        pulverizeFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        pulverizeFromData(RagiumMaterialRecipeData.WARPED_ORE)
 
         // Scraps
         pulverizeFromData(VanillaMaterialRecipeData.NETHERITE_SCRAP)
@@ -354,7 +354,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     fun alloyFromData(data: HTMaterialRecipeData): HTCombineItemToObjRecipeBuilder<*> = HTCombineItemToObjRecipeBuilder
         .alloying(
-            data.getResult(resultHelper),
+            data.getResult(resultHelper, 0),
             data.getItemIngredients(itemCreator),
         )
 
@@ -362,7 +362,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     fun pulverizeFromData(data: HTMaterialRecipeData) {
         HTItemToChancedItemRecipeBuilder
             .crushing(data.getItemIngredient(0, itemCreator))
-            .addResult(data.getResult(resultHelper))
+            .addResult(data.getChancedResult(resultHelper, 0))
             .saveSuffixed(output, "_from_ore")
     }
 }

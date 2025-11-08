@@ -134,7 +134,7 @@ object RagiumFluidContents {
 
     @JvmField
     val SAP: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", liquid(), HTFluidType.solidify(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
+        register("sap", liquid(), HTFluidType.solidify(HTResultHelper.item(Items.SLIME_BALL)))
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -153,7 +153,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             },
         )
 
@@ -164,7 +164,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             },
         )
 

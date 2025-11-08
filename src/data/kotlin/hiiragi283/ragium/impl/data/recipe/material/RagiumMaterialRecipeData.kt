@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -13,12 +14,26 @@ data object RagiumMaterialRecipeData {
     //    Raginite    //
 
     @JvmField
+    val RAGINITE_ORE: HTMaterialRecipeData = HTMaterialRecipeData.create {
+        addInput(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.RAGINITE)
+
+        addOutput(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE), CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 8)
+        addOutput(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE), CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4, 1 / 2f)
+        addOutput(
+            RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL),
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.RAGI_CRYSTAL,
+            1,
+            1 / 4f,
+        )
+    }
+
+    @JvmField
     val RAGI_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         addInput(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
     }
 
     @JvmField
@@ -26,17 +41,22 @@ data object RagiumMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         addInput(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+        addOutput(
+            RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
+        )
     }
+
+    @JvmField
+    val RAGI_CRYSTAL_ORE: HTMaterialRecipeData = createGemOre(RagiumMaterialKeys.RAGI_CRYSTAL)
 
     @JvmField
     val RAGI_CRYSTAL: HTMaterialRecipeData = HTMaterialRecipeData.create {
         gemOrDust(VanillaMaterialKeys.DIAMOND)
         addInput(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 6)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
-        addOutput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
     }
 
     //    Azure    //
@@ -46,8 +66,7 @@ data object RagiumMaterialRecipeData {
         gemOrDust(VanillaMaterialKeys.AMETHYST)
         gemOrDust(VanillaMaterialKeys.LAPIS)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.AZURE), 2)
-        addOutput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, 2)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.AZURE), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, 2)
     }
 
     @JvmField
@@ -55,8 +74,7 @@ data object RagiumMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON)
         gemOrDust(RagiumMaterialKeys.AZURE, 2)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.AZURE_STEEL))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.AZURE_STEEL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
     }
 
     //    Deep    //
@@ -65,8 +83,7 @@ data object RagiumMaterialRecipeData {
     val DEEP_SCRAP: HTMaterialRecipeData = HTMaterialRecipeData.create {
         addInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
-        addOutput(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL))
-        addOutput(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 2)
+        addOutput(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL), CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 2)
     }
 
     @JvmField
@@ -74,9 +91,16 @@ data object RagiumMaterialRecipeData {
         ingotOrDust(RagiumMaterialKeys.AZURE_STEEL, 4)
         addInput(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 4)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
     }
+
+    //    Nether    //
+
+    @JvmField
+    val CRIMSON_ORE: HTMaterialRecipeData = createGemOre(RagiumMaterialKeys.CRIMSON_CRYSTAL)
+
+    @JvmField
+    val WARPED_ORE: HTMaterialRecipeData = createGemOre(RagiumMaterialKeys.WARPED_CRYSTAL)
 
     //    Eldritch    //
 
@@ -86,8 +110,7 @@ data object RagiumMaterialRecipeData {
         gemOrDust(RagiumMaterialKeys.CRIMSON_CRYSTAL)
         gemOrDust(RagiumMaterialKeys.WARPED_CRYSTAL)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL))
-        addOutput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
     }
 
     @JvmField
@@ -96,8 +119,7 @@ data object RagiumMaterialRecipeData {
         addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
         addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), 9)
-        addOutput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 9)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 9)
     }
 
     //    Other    //
@@ -108,8 +130,7 @@ data object RagiumMaterialRecipeData {
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
     }
 
     @JvmField
@@ -118,7 +139,13 @@ data object RagiumMaterialRecipeData {
         gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL, 4)
         addInput(Tags.Items.NETHER_STARS)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.IRIDESCENTIUM))
-        addOutput(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.IRIDESCENTIUM), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+    }
+
+    @JvmStatic
+    private fun createGemOre(material: HTMaterialLike): HTMaterialRecipeData = HTMaterialRecipeData.create {
+        addInput(CommonMaterialPrefixes.ORE, material)
+
+        addOutput(RagiumItems.getGem(material), CommonMaterialPrefixes.GEM, material, 2)
     }
 }

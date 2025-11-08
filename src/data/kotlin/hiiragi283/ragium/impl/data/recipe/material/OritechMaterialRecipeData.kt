@@ -13,8 +13,7 @@ data object OritechMaterialRecipeData {
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
         gemOrDust(VanillaMaterialKeys.DIAMOND)
 
-        addOutput(ItemContent.ADAMANT_INGOT, 2)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ADAMANT, 2)
+        addOutput(ItemContent.ADAMANT_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ADAMANT, 2)
     }
 
     @JvmField
@@ -22,8 +21,7 @@ data object OritechMaterialRecipeData {
         ingotOrDust(CommonMaterialKeys.Metals.PLATINUM)
         gemOrDust(VanillaMaterialKeys.NETHERITE)
 
-        addOutput(ItemContent.DURATIUM_INGOT, 2)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DURATIUM, 2)
+        addOutput(ItemContent.DURATIUM_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DURATIUM, 2)
     }
 
     @JvmField
@@ -31,7 +29,6 @@ data object OritechMaterialRecipeData {
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
         gemOrDust(ModMaterialKeys.Gems.FLUXITE)
 
-        addOutput(ItemContent.ENERGITE_INGOT, 2)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGITE, 2)
+        addOutput(ItemContent.ENERGITE_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGITE, 2)
     }
 }

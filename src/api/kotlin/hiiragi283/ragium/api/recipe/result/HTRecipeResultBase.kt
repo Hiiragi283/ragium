@@ -1,6 +1,5 @@
-package hiiragi283.ragium.impl.recipe.result
+package hiiragi283.ragium.api.recipe.result
 
-import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.RegistryKey
@@ -16,9 +15,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 
 abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>>(
-    protected val entry: HTKeyOrTagEntry<TYPE>,
-    protected val amount: Int,
-    protected val components: DataComponentPatch,
+    val entry: HTKeyOrTagEntry<TYPE>,
+    val amount: Int,
+    val components: DataComponentPatch,
 ) : HTRecipeResult<STACK> {
     companion object {
         @JvmStatic

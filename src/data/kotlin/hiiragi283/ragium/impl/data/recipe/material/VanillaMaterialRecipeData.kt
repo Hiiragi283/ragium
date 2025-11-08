@@ -13,8 +13,7 @@ data object VanillaMaterialRecipeData {
     val NETHERITE_SCRAP: HTMaterialRecipeData = HTMaterialRecipeData.create {
         addInput(Tags.Items.ORES_NETHERITE_SCRAP)
 
-        addOutput(Items.NETHERITE_SCRAP, 2)
-        addOutput(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)
+        addOutput(Items.NETHERITE_SCRAP, CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)
     }
 
     @JvmField
@@ -22,7 +21,8 @@ data object VanillaMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.GOLD, 4)
         addInput(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4)
 
-        addOutput(Items.NETHERITE_INGOT, 2)
-        addOutput(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2)
+        addOutput(Items.NETHERITE_INGOT, CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2)
     }
+
+    //    Other    //
 }

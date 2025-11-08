@@ -17,8 +17,7 @@ data object EIOMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
 
-        addOutput(EIOItems.CONDUCTIVE_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY)
+        addOutput(EIOItems.CONDUCTIVE_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY)
     }
 
     @JvmField
@@ -26,8 +25,7 @@ data object EIOMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         addInput(EIOTags.Items.SILICON)
 
-        addOutput(EIOItems.COPPER_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY)
+        addOutput(EIOItems.COPPER_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY)
     }
 
     @JvmField
@@ -36,8 +34,7 @@ data object EIOMaterialRecipeData {
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
-        addOutput(EIOItems.DARK_STEEL_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
+        addOutput(EIOItems.DARK_STEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
     }
 
     @JvmField
@@ -46,8 +43,7 @@ data object EIOMaterialRecipeData {
         fuelOrDust(CommonMaterialKeys.COAL_COKE)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
-        addOutput(EIOItems.DARK_STEEL_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
+        addOutput(EIOItems.DARK_STEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
     }
 
     @JvmField
@@ -56,8 +52,7 @@ data object EIOMaterialRecipeData {
         addInput(Tags.Items.END_STONES)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
-        addOutput(EIOItems.END_STEEL_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL)
+        addOutput(EIOItems.END_STEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL)
     }
 
     @JvmField
@@ -66,8 +61,7 @@ data object EIOMaterialRecipeData {
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE)
 
-        addOutput(EIOItems.ENERGETIC_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY)
+        addOutput(EIOItems.ENERGETIC_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY)
     }
 
     @JvmField
@@ -75,8 +69,7 @@ data object EIOMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON)
         addInput(Tags.Items.ENDER_PEARLS)
 
-        addOutput(EIOItems.PULSATING_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY)
+        addOutput(EIOItems.PULSATING_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY)
     }
 
     @JvmField
@@ -84,8 +77,7 @@ data object EIOMaterialRecipeData {
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
         addInput(EIOTags.Items.SILICON)
 
-        addOutput(EIOItems.REDSTONE_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY)
+        addOutput(EIOItems.REDSTONE_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY)
     }
 
     @JvmField
@@ -93,8 +85,7 @@ data object EIOMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         addInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
-        addOutput(EIOItems.SOULARIUM_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM)
+        addOutput(EIOItems.SOULARIUM_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM)
     }
 
     @JvmField
@@ -102,7 +93,6 @@ data object EIOMaterialRecipeData {
         ingotOrDust(ModMaterialKeys.Alloys.ENERGETIC_ALLOY)
         addInput(Tags.Items.ENDER_PEARLS)
 
-        addOutput(EIOItems.VIBRANT_ALLOY_INGOT)
-        addOutput(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY)
+        addOutput(EIOItems.VIBRANT_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY)
     }
 }
