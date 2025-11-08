@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.gui.component
 
+import hiiragi283.ragium.api.function.clamp
 import hiiragi283.ragium.api.gui.component.HTWidget
 import hiiragi283.ragium.api.math.HTBounds
 import net.minecraft.client.gui.Font
@@ -32,37 +33,42 @@ sealed class HTNumberEditBox<N, RANGE : ClosedRange<N>>(
     var number: N
         get() = getter.apply(this.value)
         set(value) {
-            this.value = value.toString()
+            this.value = value.clamp(range).toString()
         }
 
-    var range: RANGE? = null
+    var range: RANGE = getDefaultRange()
+
+    protected abstract fun getDefaultRange(): RANGE
 
     final override fun getBounds(): HTBounds = HTBounds(x, y, width, height)
 
     class IntRanged(
-        getter: Function<String, Int>,
         font: Font,
         x: Int,
         y: Int,
         width: Int,
         height: Int = font.lineHeight + 3,
-    ) : HTNumberEditBox<Int, IntRange>(getter, font, x, y, width, height)
+    ) : HTNumberEditBox<Int, IntRange>({ it.toIntOrNull() ?: 0 }, font, x, y, width, height) {
+        override fun getDefaultRange(): IntRange = Int.MIN_VALUE..Int.MAX_VALUE
+    }
 
     class LongRanged(
-        getter: Function<String, Long>,
         font: Font,
         x: Int,
         y: Int,
         width: Int,
         height: Int = font.lineHeight + 3,
-    ) : HTNumberEditBox<Long, LongRange>(getter, font, x, y, width, height)
+    ) : HTNumberEditBox<Long, LongRange>({ it.toLongOrNull() ?: 0 }, font, x, y, width, height) {
+        override fun getDefaultRange(): LongRange = Long.MIN_VALUE..Long.MAX_VALUE
+    }
 
     class DoubleRanged(
-        getter: Function<String, Double>,
         font: Font,
         x: Int,
         y: Int,
         width: Int,
         height: Int = font.lineHeight + 3,
-    ) : HTNumberEditBox<Double, ClosedFloatingPointRange<Double>>(getter, font, x, y, width, height)
+    ) : HTNumberEditBox<Double, ClosedFloatingPointRange<Double>>({ it.toDoubleOrNull() ?: 0.0 }, font, x, y, width, height) {
+        override fun getDefaultRange(): ClosedFloatingPointRange<Double> = Double.MIN_VALUE..Double.MAX_VALUE
+    }
 }

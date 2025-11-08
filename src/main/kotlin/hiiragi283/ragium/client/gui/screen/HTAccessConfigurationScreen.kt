@@ -5,8 +5,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
-import hiiragi283.ragium.common.util.HTPacketHelper
+import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Tooltip
@@ -20,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton
+import net.neoforged.neoforge.network.PacketDistributor
 
 @OnlyIn(Dist.CLIENT)
 class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: Inventory, title: Component) :
@@ -75,7 +75,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
             // Client update
             blockEntity.setAccessConfig(side, value)
             // Server update
-            HTPacketHelper.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
+            PacketDistributor.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
         }
 
         override fun renderWidget(

@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
-import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import java.util.function.IntFunction
@@ -43,7 +43,7 @@ class HTFluidFuelItemStackSlot private constructor(
             amountToFuel,
             { stack: ImmutableItemStack ->
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
-                for (view: HTStackView<ImmutableFluidStack> in HTFluidCapabilities.getFluidViews(stack)) {
+                for (view: HTFluidView in HTFluidCapabilities.getFluidViews(stack)) {
                     val stack: ImmutableFluidStack = view.getStack() ?: continue
                     if (tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
                 }

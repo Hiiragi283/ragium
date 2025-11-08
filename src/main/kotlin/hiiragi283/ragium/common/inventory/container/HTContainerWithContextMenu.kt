@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.inventory.container
+package hiiragi283.ragium.common.inventory.container
 
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType

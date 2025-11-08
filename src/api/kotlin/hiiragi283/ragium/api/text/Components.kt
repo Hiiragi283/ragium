@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -114,8 +114,8 @@ fun addFluidTooltip(
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
 }
 
-fun addFluidTooltip(views: Iterable<HTStackView<ImmutableFluidStack>>, consumer: Consumer<Component>, flag: TooltipFlag) {
-    for (view: HTStackView<ImmutableFluidStack> in views) {
+fun addFluidTooltip(views: Iterable<HTFluidView>, consumer: Consumer<Component>, flag: TooltipFlag) {
+    for (view: HTFluidView in views) {
         addFluidTooltip(view.getStack(), consumer, flag, false)
     }
 }

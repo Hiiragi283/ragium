@@ -23,15 +23,18 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
+import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
+import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
+import hiiragi283.ragium.common.inventory.slot.HTLongSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
+import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
+import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTExperienceHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
-import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -175,16 +178,32 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
     }
 
-    override fun sendPassivePacket(level: ServerLevel) {
-        super.sendPassivePacket(level)
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.addContainerTrackers
+     */
+    open fun addMenuTrackers(menu: HTContainerMenu) {
+        // Fluid Tanks
         if (hasFluidHandler()) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this))
+            for (tank: HTFluidTank in this.getFluidTanks(this.getFluidSideFor())) {
+                if (tank is HTFluidStackTank) {
+                    menu.track(HTFluidSyncSlot(tank))
+                }
+            }
         }
+        // Energy Battery
         if (hasEnergyStorage()) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
+            val battery: HTEnergyBattery? = this.getEnergyBattery(this.getEnergySideFor())
+            if (battery is HTBasicEnergyBattery) {
+                menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
+            }
         }
+        // Experience Tanks
         if (hasExperienceHandler()) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateExperienceStoragePacket.create(this))
+            for (tank: HTExperienceTank in this.getExpTanks(this.getExperienceSideFor())) {
+                if (tank is HTBasicExperienceTank) {
+                    menu.track(HTLongSyncSlot(tank::getAmount, tank::setAmountUnchecked))
+                }
+            }
         }
     }
 

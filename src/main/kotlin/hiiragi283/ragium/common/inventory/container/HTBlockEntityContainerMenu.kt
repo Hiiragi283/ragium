@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.inventory.container
 
-import hiiragi283.ragium.api.inventory.container.HTContainerWithContextMenu
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.world.entity.player.Inventory
@@ -18,6 +17,9 @@ open class HTBlockEntityContainerMenu<BE : HTBlockEntity>(
         context,
     ) {
     init {
+        // tracking slots
+        context.addMenuTrackers(this)
+        // block entity slots
         addSlots(context)
         // player inventory
         addPlayerInv(inventory)

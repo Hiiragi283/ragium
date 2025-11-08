@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.gui.component
 
-import hiiragi283.ragium.api.gui.component.HTExperienceWidget
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.storage.HTAmountSetter
+import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.text.addExperienceTooltip
 import net.minecraft.client.gui.GuiGraphics
@@ -16,7 +16,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTExperienceStorageWidget(
+class HTExperienceWidget(
     private val background: (GuiGraphics, HTBounds) -> Unit,
     private val tank: HTExperienceTank,
     private val amountSetter: HTAmountSetter.LongSized,
@@ -25,7 +25,7 @@ class HTExperienceStorageWidget(
     width: Int,
     height: Int,
 ) : HTSpriteWidget(x, y, width, height, Component.empty()),
-    HTExperienceWidget {
+    HTAmountView.LongSized {
     companion object {
         @JvmStatic
         fun createSlot(
@@ -33,7 +33,7 @@ class HTExperienceStorageWidget(
             amountSetter: HTAmountSetter.LongSized,
             x: Int,
             y: Int,
-        ): HTExperienceStorageWidget = HTExperienceStorageWidget(
+        ): HTExperienceWidget = HTExperienceWidget(
             { _, _ -> },
             tank,
             amountSetter,
@@ -49,7 +49,7 @@ class HTExperienceStorageWidget(
             amountSetter: HTAmountSetter.LongSized,
             x: Int,
             y: Int,
-        ): HTExperienceStorageWidget = HTExperienceStorageWidget(
+        ): HTExperienceWidget = HTExperienceWidget(
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
                     HTFluidWidget.TANK_ID,
@@ -90,7 +90,7 @@ class HTExperienceStorageWidget(
 
     //    HTExperienceWidget    //
 
-    override fun setAmount(amount: Long) {
+    fun setAmount(amount: Long) {
         amountSetter.setAmount(amount)
     }
 

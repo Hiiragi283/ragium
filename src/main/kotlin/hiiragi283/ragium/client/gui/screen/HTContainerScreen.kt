@@ -1,7 +1,8 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
-import hiiragi283.ragium.api.inventory.container.HTContainerMenu
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -40,6 +41,8 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: 
             HTBackgroundRenderable.tryRender(renderable, guiGraphics)
         }
     }
+
+    open fun getFluidWidgets(): List<HTFluidWidget> = listOf()
 
     //    Extensions    //
 

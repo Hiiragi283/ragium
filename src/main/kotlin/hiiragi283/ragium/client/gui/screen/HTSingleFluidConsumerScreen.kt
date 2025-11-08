@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.gui.screen.HTFluidScreen
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTChancedItemOutputBlockEntity
@@ -22,8 +21,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTConsumerScreen<BE>(texture, menu, inventory, title),
-    HTFluidScreen {
+) : HTConsumerScreen<BE>(texture, menu, inventory, title) {
     companion object {
         @JvmStatic
         fun chancedItemOutput(
@@ -58,8 +56,6 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
         super.init()
         fluidWidget = this.factory()
     }
-
-    //    HTFluidScreen    //
 
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

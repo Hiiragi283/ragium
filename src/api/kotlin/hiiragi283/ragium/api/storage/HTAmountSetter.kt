@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.storage
 /**
  * 数量を受け取る関数型インターフェース
  */
-sealed interface HTAmountSetter<N : Number> {
+sealed interface HTAmountSetter<N> where N : Number, N : Comparable<N> {
     fun setAmount(amount: N)
 
     /**

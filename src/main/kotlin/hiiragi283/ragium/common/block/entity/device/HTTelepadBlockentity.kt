@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
+import hiiragi283.ragium.common.inventory.slot.HTTeleportPosSyncSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
@@ -47,7 +49,11 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
     }
 
     var teleportPos: HTTeleportPos? = null
-        private set
+
+    override fun addMenuTrackers(menu: HTContainerMenu) {
+        super.addMenuTrackers(menu)
+        menu.track(HTTeleportPosSyncSlot(this::teleportPos) { this.teleportPos = it })
+    }
 
     fun updateDestination(teleportPos: HTTeleportPos) {
         if (RagiumPlatform.INSTANCE.getLevel(teleportPos.dimension) != null) {

@@ -1,22 +1,32 @@
-package hiiragi283.ragium.api.inventory.container
+package hiiragi283.ragium.common.inventory.container
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.inventory.container.HTSyncableMenu
+import hiiragi283.ragium.api.inventory.slot.HTChangeType
+import hiiragi283.ragium.api.inventory.slot.HTSyncableSlot
+import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.core.RegistryAccess
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.network.PacketDistributor
+import java.util.function.IntUnaryOperator
 import kotlin.math.min
 
-abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, inventory: Inventory) :
-    AbstractContainerMenu(menuType.get(), containerId) {
+abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, val inventory: Inventory) :
+    AbstractContainerMenu(menuType.get(), containerId),
+    HTSyncableMenu {
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
         val slotIn: Slot = slots.getOrNull(index) ?: return result
@@ -170,5 +180,56 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: 
         // 入りきらなかったstackは残る
         // 移動処理が一つでも行えればtrue
         return flag
+    }
+
+    //    Slot Sync    //
+
+    private val trackedSlots: MutableList<HTSyncableSlot> = mutableListOf()
+
+    /**
+     * @see mekanism.common.inventory.container.MekanismContainer.track
+     */
+    fun track(slot: HTSyncableSlot) {
+        trackedSlots.add(slot)
+    }
+
+    override fun getTrackedSlot(index: Int): HTSyncableSlot? = trackedSlots.getOrNull(index)
+
+    /**
+     * @see mekanism.common.inventory.container.MekanismContainer.broadcastChanges
+     */
+    override fun broadcastChanges() {
+        super.broadcastChanges()
+        val player: Player = inventory.player
+        val access: RegistryAccess = player.registryAccess()
+        if (player is ServerPlayer) {
+            for (i: Int in this.trackedSlots.indices) {
+                val slot: HTSyncableSlot = this.trackedSlots[i]
+                val changeType: HTChangeType = slot.getChange()
+                val payload: HTSyncablePayload = slot.createPayload(access, changeType) ?: continue
+                PacketDistributor.sendToPlayer(player, HTUpdateMenuPacket(containerId, i, payload))
+            }
+        }
+    }
+
+    /**
+     * @see mekanism.common.inventory.container.MekanismContainer.sendAllDataToRemote
+     */
+    override fun sendAllDataToRemote() {
+        super.sendAllDataToRemote()
+        sendInitialDataToClient(this.trackedSlots, IntUnaryOperator.identity())
+    }
+
+    private fun sendInitialDataToClient(trackedSlots: List<HTSyncableSlot>, operator: IntUnaryOperator) {
+        val player: Player = inventory.player
+        val access: RegistryAccess = player.registryAccess()
+        if (player is ServerPlayer) {
+            for (i: Int in trackedSlots.indices) {
+                val slot: HTSyncableSlot = trackedSlots[i]
+                slot.getChange()
+                val payload: HTSyncablePayload = slot.createPayload(access, HTChangeType.FULL) ?: continue
+                PacketDistributor.sendToPlayer(player, HTUpdateMenuPacket(containerId, operator.applyAsInt(i), payload))
+            }
+        }
     }
 }
