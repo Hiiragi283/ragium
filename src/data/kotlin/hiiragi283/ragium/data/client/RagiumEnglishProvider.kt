@@ -97,14 +97,17 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
+
         add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
-        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
+        add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
+
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
         add(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
+        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
 
         add(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
         add(RagiumBlocks.AZURE_TILES, "Azure Tiles")

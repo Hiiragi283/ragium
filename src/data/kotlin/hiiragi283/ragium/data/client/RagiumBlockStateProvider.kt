@@ -42,8 +42,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildSet {
-            add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
+            add(RagiumBlocks.SOOTY_COBBLESTONE)
+            add(RagiumBlocks.CRIMSON_SOIL)
 
             add(RagiumBlocks.ITEM_BUFFER)
 

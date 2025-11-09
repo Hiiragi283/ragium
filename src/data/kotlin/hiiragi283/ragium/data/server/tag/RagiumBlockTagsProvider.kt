@@ -64,6 +64,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         buildList {
             add(RagiumBlocks.AZURE_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
+            add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
 

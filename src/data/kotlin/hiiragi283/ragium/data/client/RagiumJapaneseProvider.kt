@@ -94,14 +94,17 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
+
         add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
-        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
+        add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
+
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
-        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み", "経験値ベリー")
         add(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み", "経験値ベリー")
+        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
 
         add(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
         add(RagiumBlocks.AZURE_TILES, "紺碧のタイル")

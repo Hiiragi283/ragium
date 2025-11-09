@@ -27,8 +27,10 @@ import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -152,6 +154,18 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_pellet")
 
         // Night Metal
+        HTShapedRecipeBuilder
+            .building(RagiumBlocks.SOOTY_COBBLESTONE, 8)
+            .hollow8()
+            .define('A', Tags.Items.COBBLESTONES_NORMAL)
+            .define('B', ItemTags.COALS)
+            .save(output)
+        HTCookingRecipeBuilder
+            .blasting(Items.BLACKSTONE)
+            .addIngredient(RagiumBlocks.SOOTY_COBBLESTONE)
+            .setTime(400)
+            .save(output)
+
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
         // Iridescentium
         alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)

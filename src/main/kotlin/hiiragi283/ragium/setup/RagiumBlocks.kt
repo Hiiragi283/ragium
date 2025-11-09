@@ -131,15 +131,21 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
+        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+
+    @JvmField
+    val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "sooty_cobblestone",
+        copyOf(Blocks.COBBLESTONE).mapColor(MapColor.COLOR_BLACK),
+    )
+
+    @JvmField
     val CRIMSON_SOIL: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
     )
-
-    @JvmField
-    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
-        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val WARPED_WART: HTDeferredBlock<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(
@@ -151,8 +157,8 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
+        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: HTBasicDeferredBlock<HTEnchantPowerBlock> =
