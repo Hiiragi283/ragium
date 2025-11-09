@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/dark_steel"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/steel",
+        "#c:ingots/steel"
+      ]
+    },
+    "#c:obsidians/normal"
+  ],
+  "result": {
+    "count": 1,
+    "id": "#c:ingots/dark_steel"
+  }
+}

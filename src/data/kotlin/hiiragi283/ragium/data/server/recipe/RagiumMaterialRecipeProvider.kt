@@ -295,6 +295,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // EIO
         alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY, true)
         alloyFromData(EIOMaterialRecipeData.COPPER_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.DARK_STEEL, true)
         alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COAL, true)
         alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COKE, true)
         alloyFromData(EIOMaterialRecipeData.END_STEEL, true)
@@ -306,6 +307,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         // Oritech
         alloyFromData(OritechMaterialRecipeData.ADAMANT, true)
+        alloyFromData(OritechMaterialRecipeData.BIOSTEEL, true)
         alloyFromData(OritechMaterialRecipeData.DURATIUM, true)
         alloyFromData(OritechMaterialRecipeData.ENERGITE, true)
     }

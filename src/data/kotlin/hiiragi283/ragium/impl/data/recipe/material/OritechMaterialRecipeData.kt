@@ -17,6 +17,14 @@ data object OritechMaterialRecipeData {
     }
 
     @JvmField
+    val BIOSTEEL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+        ingotOrDust(VanillaMaterialKeys.IRON)
+        addInput(ItemContent.BIOMASS)
+
+        addOutput(ItemContent.BIOSTEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.BIOSTEEL)
+    }
+
+    @JvmField
     val DURATIUM: HTMaterialRecipeData = HTMaterialRecipeData.create {
         ingotOrDust(CommonMaterialKeys.Metals.PLATINUM)
         gemOrDust(VanillaMaterialKeys.NETHERITE)
