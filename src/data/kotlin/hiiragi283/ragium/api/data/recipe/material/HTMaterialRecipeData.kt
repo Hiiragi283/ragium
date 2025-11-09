@@ -8,17 +8,25 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import java.util.function.UnaryOperator
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>, val outputs: List<OutputEntry>) {
+data class HTMaterialRecipeData private constructor(
+    val inputs: List<InputEntry>,
+    val outputs: List<OutputEntry>,
+    val operator: UnaryOperator<String>,
+) : HTHolderLike {
     companion object {
         @JvmStatic
         inline fun create(builderAction: Builder.() -> Unit): HTMaterialRecipeData = Builder().apply(builderAction).build()
@@ -101,6 +109,18 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
         }
     }
 
+    override fun getId(): ResourceLocation {
+        for ((item: Item?, tagKey: TagKey<Item>?) in outputs) {
+            when {
+                tagKey != null -> return tagKey.location
+                item != null -> return item.toHolderLike().getId()
+            }
+        }
+        error("Cannot create id from empty or invalid outputs")
+    }
+
+    fun getModifiedId(): ResourceLocation = getId().withPath(operator)
+
     @JvmRecord
     data class InputEntry(val entry: Either<List<Item>, List<TagKey<Item>>>, val count: Int)
 
@@ -115,8 +135,9 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
     //    Builder    //
 
     class Builder {
-        val inputs: MutableList<InputEntry> = mutableListOf()
-        val outputs: MutableList<OutputEntry> = mutableListOf()
+        private val inputs: MutableList<InputEntry> = mutableListOf()
+        private val outputs: MutableList<OutputEntry> = mutableListOf()
+        private var operator: UnaryOperator<String> = UnaryOperator.identity()
 
         // Input
         fun addInput(vararg items: ItemLike, count: Int = 1): Builder = apply {
@@ -183,6 +204,15 @@ data class HTMaterialRecipeData private constructor(val inputs: List<InputEntry>
             this.outputs.add(OutputEntry(item?.asItem(), tagKey, count, chance))
         }
 
-        fun build(): HTMaterialRecipeData = HTMaterialRecipeData(inputs, outputs)
+        // Operator
+        fun setPrefix(prefix: String): Builder = setModifier { "$prefix$it" }
+
+        fun setSuffix(suffix: String): Builder = setModifier { "$it$suffix" }
+
+        fun setModifier(operator: UnaryOperator<String>): Builder = apply {
+            this.operator = operator
+        }
+
+        fun build(): HTMaterialRecipeData = HTMaterialRecipeData(inputs, outputs, operator)
     }
 }

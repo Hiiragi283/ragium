@@ -12,6 +12,7 @@ data object CommonMaterialRecipeData {
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
 
         addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
+        setSuffix("_from_coal")
     }
 
     @JvmField
@@ -20,6 +21,7 @@ data object CommonMaterialRecipeData {
         fuelOrDust(CommonMaterialKeys.COAL_COKE)
 
         addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
+        setSuffix("_from_coke")
     }
 
     @JvmField

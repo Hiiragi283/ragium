@@ -41,7 +41,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
 
     @JvmStatic
     private fun alloyFromData(data: HTMaterialRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
-        "alloy_smelting",
+        RagiumConst.ALLOYING,
         AlloySmeltingRecipe(
             data.getSizedIngredients(),
             data.getOutputStacks()[0],
@@ -55,40 +55,42 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     @JvmStatic
     private fun sagMill() {
         // Vanilla
-        sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST).save(output)
-        sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST).save(output)
+        sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST)
 
-        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST).save(output)
+        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
         // Ragium
-        sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE).save(output)
+        sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 
-        sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE).save(output)
-        sagMillFromData(RagiumMaterialRecipeData.CRIMSON_ORE).save(output)
-        sagMillFromData(RagiumMaterialRecipeData.WARPED_ORE).save(output)
+        sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.WARPED_ORE)
     }
 
     @JvmStatic
-    private fun sagMillFromData(data: HTMaterialRecipeData, energy: Int = 2400): EIORecipeBuilder<*> = EIORecipeBuilder(
-        "sag_milling",
-        SagMillingRecipe(
-            data.getIngredient(0),
-            data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
-                when {
-                    tagKey != null -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false)
-                    item != null -> SagMillingRecipe.OutputItem.of(item, count, chance, false)
-                    else -> error("")
-                }
-            },
-            energy,
-            SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
-        ),
-    ) { recipe: SagMillingRecipe ->
-        recipe.outputs()[0].output.map(
-            { stack: ItemStack -> stack.toImmutableOrThrow().getId() },
-            { tagOutput: SagMillingRecipe.OutputItem.SizedTagOutput ->
-                tagOutput.itemTag.location
-            },
-        )
+    private fun sagMillFromData(data: HTMaterialRecipeData, energy: Int = 2400) {
+        EIORecipeBuilder(
+            "sag_milling",
+            SagMillingRecipe(
+                data.getIngredient(0),
+                data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
+                    when {
+                        tagKey != null -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false)
+                        item != null -> SagMillingRecipe.OutputItem.of(item, count, chance, false)
+                        else -> error("")
+                    }
+                },
+                energy,
+                SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
+            ),
+        ) { recipe: SagMillingRecipe ->
+            recipe.outputs()[0].output.map(
+                { stack: ItemStack -> stack.toImmutableOrThrow().getId() },
+                { tagOutput: SagMillingRecipe.OutputItem.SizedTagOutput ->
+                    tagOutput.itemTag.location
+                },
+            )
+        }.save(output)
     }
 
     //    Extensions    //

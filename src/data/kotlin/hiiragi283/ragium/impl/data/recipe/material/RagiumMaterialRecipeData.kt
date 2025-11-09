@@ -26,6 +26,7 @@ data object RagiumMaterialRecipeData {
             1,
             1 / 4f,
         )
+        setSuffix("_from_ore")
     }
 
     @JvmField
@@ -120,6 +121,7 @@ data object RagiumMaterialRecipeData {
         addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
 
         addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 9)
+        setSuffix("_bulk")
     }
 
     //    Other    //
@@ -147,5 +149,6 @@ data object RagiumMaterialRecipeData {
         addInput(CommonMaterialPrefixes.ORE, material)
 
         addOutput(RagiumItems.getGem(material), CommonMaterialPrefixes.GEM, material, 2)
+        setSuffix("_from_ore")
     }
 }

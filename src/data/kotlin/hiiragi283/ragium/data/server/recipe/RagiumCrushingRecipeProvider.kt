@@ -98,8 +98,8 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        pulverizeFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST).saveSuffixed(output, "_from_block")
-        pulverizeFromData(VanillaMaterialRecipeData.OBSIDIAN_DUST).saveSuffixed(output, "_from_block")
+        pulverizeFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+        pulverizeFromData(VanillaMaterialRecipeData.OBSIDIAN_DUST)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.GLOW_INK_SAC))

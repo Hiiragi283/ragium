@@ -14,6 +14,10 @@ import net.minecraft.world.level.material.Fluid
 fun interface HTHolderLike {
     fun getId(): ResourceLocation
 
+    fun getIdWithPrefix(prefix: String): ResourceLocation = getId().withPrefix(prefix)
+
+    fun getIdWithSuffix(suffix: String): ResourceLocation = getId().withSuffix(suffix)
+
     fun getPath(): String = getId().path
 
     @Suppress("DEPRECATION")

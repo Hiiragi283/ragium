@@ -14,6 +14,7 @@ import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition
+import java.util.function.UnaryOperator
 
 /**
  * Ragiumで使用する[RecipeBuilder]の拡張インターフェース
@@ -48,6 +49,13 @@ interface HTRecipeBuilder : RecipeBuilder {
      */
     fun saveSuffixed(recipeOutput: RecipeOutput, suffix: String) {
         save(recipeOutput, getPrimalId().withSuffix(suffix))
+    }
+
+    /**
+     * [getPrimalId]を[operator]で修飾したIDで登録します。
+     */
+    fun saveModified(recipeOutput: RecipeOutput, operator: UnaryOperator<String>) {
+        save(recipeOutput, getPrimalId().withPath(operator))
     }
 
     /**

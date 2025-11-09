@@ -111,9 +111,12 @@ sealed class HTRecipeProvider {
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
-        override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
-            in RagiumConst.BUILTIN_IDS -> RagiumAPI.wrapId(id)
-            else -> {
+        override fun modifyId(id: ResourceLocation): ResourceLocation {
+            val namespace: String = id.namespace
+            return if (namespace in RagiumConst.BUILTIN_IDS) {
+                val path: List<String> = id.path.split("/", limit = 2)
+                return RagiumAPI.id(path[0] + "/$modid/" + path[1])
+            } else {
                 val path: List<String> = id.path.split("/", limit = 2)
                 RagiumAPI.id(path[0] + "/$namespace/" + path[1])
             }
@@ -277,9 +280,11 @@ sealed class HTRecipeProvider {
         }
     }
 
-    fun pulverizeFromData(data: HTMaterialRecipeData): HTItemToObjRecipeBuilder<HTItemResult> = HTItemToObjRecipeBuilder
-        .pulverizing(
-            data.getItemIngredient(0, itemCreator),
-            data.getResult(resultHelper, 0),
-        )
+    fun pulverizeFromData(data: HTMaterialRecipeData) {
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                data.getItemIngredient(0, itemCreator),
+                data.getResult(resultHelper, 0),
+            ).saveModified(output, data.operator)
+    }
 }

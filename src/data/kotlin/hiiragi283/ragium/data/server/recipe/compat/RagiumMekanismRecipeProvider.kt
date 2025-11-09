@@ -218,10 +218,10 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                 false,
             ).build(output, id("metallurgic_infusing/night_metal"))
 
-        crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST).build(output, id("crushing/amethyst_to_dust"))
-        crushFromData(VanillaMaterialRecipeData.ECHO_DUST).build(output, id("crushing/echo_to_dust"))
+        crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        crushFromData(VanillaMaterialRecipeData.ECHO_DUST)
 
-        crushFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST).build(output, id("crushing/blackstone_to_dust"))
+        crushFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
     }
 
     //    Extensions    //
@@ -257,9 +257,11 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     }
 
     @JvmStatic
-    private fun crushFromData(data: HTMaterialRecipeData): ItemStackToItemStackRecipeBuilder = ItemStackToItemStackRecipeBuilder
-        .crushing(
-            itemHelper.from(data.getSizedIngredient(0)),
-            data.getOutputStacks()[0],
-        )
+    private fun crushFromData(data: HTMaterialRecipeData) {
+        ItemStackToItemStackRecipeBuilder
+            .crushing(
+                itemHelper.from(data.getSizedIngredient(0)),
+                data.getOutputStacks()[0],
+            ).build(output, data.getModifiedId().withPrefix("crushing/"))
+    }
 }

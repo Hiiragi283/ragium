@@ -60,7 +60,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 saveSuffixed(output, "_from_compound")
             }
 
-        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
 
         HTShapedRecipeBuilder
             .misc(RagiumItems.RAGI_COKE)
@@ -69,7 +69,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL)
             .save(output)
         // Advanced Ragi-Alloy
-        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY).save(output)
+        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
         // Ragi-Crystal
         HTShapedRecipeBuilder
             .misc(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
@@ -78,7 +78,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
             .save(output)
 
-        alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
     }
 
     @JvmStatic
@@ -91,9 +91,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS)
             .save(output)
 
-        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         // Azure Steel
-        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
     }
 
     @JvmStatic
@@ -107,8 +107,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .save(output)
 
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL).save(output)
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK).saveSuffixed(output, "_alt")
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)
     }
 
     @JvmStatic
@@ -152,9 +152,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_pellet")
 
         // Night Metal
-        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL).save(output)
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
         // Iridescentium
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM).save(output)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
         // Other
         HTShapelessRecipeBuilder
             .misc(Items.GUNPOWDER, 3)
@@ -270,53 +270,48 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         pulverizeFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
-            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.WARPED_ORE)
-            .saveSuffixed(output, "_from_ore")
 
         // Scraps
         pulverizeFromData(VanillaMaterialRecipeData.NETHERITE_SCRAP)
-            .saveSuffixed(output, "_from_ore")
         pulverizeFromData(RagiumMaterialRecipeData.DEEP_SCRAP)
-            .saveSuffixed(output, "_from_ore")
     }
 
     @JvmStatic
     private fun alloying() {
         // Vanilla
-        alloyFromData(VanillaMaterialRecipeData.NETHERITE).save(output)
+        alloyFromData(VanillaMaterialRecipeData.NETHERITE)
 
         // Common
-        alloyFromData(CommonMaterialRecipeData.STEEL_COAL, true).saveSuffixed(output, "_from_coal")
-        alloyFromData(CommonMaterialRecipeData.STEEL_COKE, true).saveSuffixed(output, "_from_coke")
-        alloyFromData(CommonMaterialRecipeData.INVAR, true).save(output)
-        alloyFromData(CommonMaterialRecipeData.ELECTRUM, true).save(output)
-        alloyFromData(CommonMaterialRecipeData.BRONZE, true).save(output)
-        alloyFromData(CommonMaterialRecipeData.BRASS, true).save(output)
-        alloyFromData(CommonMaterialRecipeData.CONSTANTAN, true).save(output)
+        alloyFromData(CommonMaterialRecipeData.STEEL_COAL, true)
+        alloyFromData(CommonMaterialRecipeData.STEEL_COKE, true)
+        alloyFromData(CommonMaterialRecipeData.INVAR, true)
+        alloyFromData(CommonMaterialRecipeData.ELECTRUM, true)
+        alloyFromData(CommonMaterialRecipeData.BRONZE, true)
+        alloyFromData(CommonMaterialRecipeData.BRASS, true)
+        alloyFromData(CommonMaterialRecipeData.CONSTANTAN, true)
 
         // EIO
-        alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.COPPER_ALLOY, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.DARK_STEEL, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COKE, true).saveSuffixed(output, "_alt")
-        alloyFromData(EIOMaterialRecipeData.END_STEEL, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.ENERGETIC_ALLOY, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.PULSATING_ALLOY, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.REDSTONE_ALLOY, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.SOULARIUM, true).save(output)
-        alloyFromData(EIOMaterialRecipeData.VIBRANT_ALLOY, true).save(output)
+        alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.COPPER_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COAL, true)
+        alloyFromData(EIOMaterialRecipeData.DARK_STEEL_COKE, true)
+        alloyFromData(EIOMaterialRecipeData.END_STEEL, true)
+        alloyFromData(EIOMaterialRecipeData.ENERGETIC_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.PULSATING_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.REDSTONE_ALLOY, true)
+        alloyFromData(EIOMaterialRecipeData.SOULARIUM, true)
+        alloyFromData(EIOMaterialRecipeData.VIBRANT_ALLOY, true)
 
         // Oritech
-        alloyFromData(OritechMaterialRecipeData.ADAMANT, true).save(output)
-        alloyFromData(OritechMaterialRecipeData.DURATIUM, true).save(output)
-        alloyFromData(OritechMaterialRecipeData.ENERGITE, true).save(output)
+        alloyFromData(OritechMaterialRecipeData.ADAMANT, true)
+        alloyFromData(OritechMaterialRecipeData.DURATIUM, true)
+        alloyFromData(OritechMaterialRecipeData.ENERGITE, true)
     }
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData, applyCondition: Boolean = false): HTCombineItemToObjRecipeBuilder =
+    private fun alloyFromData(data: HTMaterialRecipeData, applyCondition: Boolean = false) {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 data.getResult(resultHelper, 0),
@@ -327,5 +322,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                         .mapNotNull(HTMaterialRecipeData.OutputEntry::tagKey)
                         .forEach(this::tagCondition)
                 }
-            }
+            }.saveModified(output, data.operator)
+    }
 }

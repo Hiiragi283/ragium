@@ -47,11 +47,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, RagiumMaterialKeys.RAGI_CRYSTAL)
 
         atomicFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
-            .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
         atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-            .export(output, RagiumMaterialKeys.NIGHT_METAL)
         atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
-            .export(output, RagiumMaterialKeys.IRIDESCENTIUM)
     }
 
     @JvmStatic
@@ -65,19 +62,12 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     @JvmStatic
     private fun foundry() {
         foundryFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
-            .export(output, RagiumMaterialKeys.RAGI_ALLOY)
-
         foundryFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
-            .export(output, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
 
         foundryFromData(RagiumMaterialRecipeData.AZURE_SHARD)
-            .export(output, "azure_shard")
-
         foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
-            .export(output, RagiumMaterialKeys.AZURE_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
-            .export(output, RagiumMaterialKeys.DEEP_STEEL)
     }
 
     @JvmStatic
@@ -104,18 +94,12 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun pulverize() {
         // Vanilla
         pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
-            .export(output, "amethyst_dust")
         pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
-            .export(output, "echo_dust")
         pulverizerFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
-            .export(output, "blackstone_dust")
         // Ragium
         pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-            .export(output, "ragi_crystal_ore")
         pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
-            .export(output, "crimson_crystal_ore")
         pulverizerFromData(RagiumMaterialRecipeData.WARPED_ORE)
-            .export(output, "warped_crystal_ore")
     }
 
     //    Extension    //
@@ -134,23 +118,28 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     }
 
     @JvmStatic
-    private fun atomicFromData(data: HTMaterialRecipeData): OritechRecipeBuilder = builderFromData(data, AtomicForgeRecipeBuilder.build())
+    private fun atomicFromData(data: HTMaterialRecipeData) {
+        builderFromData(data, AtomicForgeRecipeBuilder.build())
+    }
 
     @JvmStatic
-    private fun foundryFromData(data: HTMaterialRecipeData): OritechRecipeBuilder = builderFromData(data, FoundryRecipeBuilder.build())
+    private fun foundryFromData(data: HTMaterialRecipeData) {
+        builderFromData(data, FoundryRecipeBuilder.build())
+    }
 
     @JvmStatic
-    private fun pulverizerFromData(data: HTMaterialRecipeData): OritechRecipeBuilder =
+    private fun pulverizerFromData(data: HTMaterialRecipeData) {
         builderFromData(data, PulverizerRecipeBuilder.build())
+    }
 
     @JvmStatic
-    private fun builderFromData(data: HTMaterialRecipeData, builder: OritechRecipeBuilder): OritechRecipeBuilder {
+    private fun builderFromData(data: HTMaterialRecipeData, builder: OritechRecipeBuilder) {
         // Inputs
         for ((ingredient: Ingredient, _) in data.getIngredients()) {
             builder.input(ingredient)
         }
         // Output
         builder.result(data.getOutputStacks())
-        return builder
+        builder.export(output, data.getModifiedId().path)
     }
 }

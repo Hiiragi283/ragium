@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
@@ -61,30 +60,22 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     @JvmStatic
     private fun raginite() {
         crushFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
-            .build(output, id("crusher/raginite_ore"))
         crushFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-            .build(output, id("crusher/ragi_crystal_ore"))
 
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
-            .build(output, id(RagiumMaterialKeys.RAGI_ALLOY.name))
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
-            .build(output, id(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY.name))
         alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
-            .build(output, id(RagiumMaterialKeys.RAGI_CRYSTAL.name))
     }
 
     @JvmStatic
     private fun azure() {
         alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
-            .build(output, id(RagiumMaterialKeys.AZURE.name))
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
-            .build(output, id(RagiumMaterialKeys.AZURE_STEEL.name))
     }
 
     @JvmStatic
     private fun deepSteel() {
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
-            .build(output, id(RagiumMaterialKeys.DEEP_STEEL.name))
     }
 
     @JvmStatic
@@ -106,18 +97,16 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
                 .output(sap.get(), RagiumConst.LOG_TO_SAP)
                 .input(log)
                 .setEnergy(6400)
-                .build(output, id("squeezer/${sap.getPath()}"))
+                .build(output, id("squeezing/${sap.getPath()}"))
             // sap -> molten
             RefineryRecipeBuilder
                 .builder()
                 .input(sap.commonTag, 1000)
                 .output(molten.get(), RagiumConst.SAP_TO_MOLTEN)
-                .build(output, id("refinery/${molten.getPath()}"))
+                .build(output, id("${RagiumConst.REFINING}/${molten.getPath()}"))
         }
         crushFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
-            .build(output, id("crusher/crimson_crystal_ore"))
         crushFromData(RagiumMaterialRecipeData.WARPED_ORE)
-            .build(output, id("crusher/warped_crystal_ore"))
 
         // Crimson + Warped -> Eldritch Flux
         RefineryRecipeBuilder
@@ -127,20 +116,16 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .input(RagiumFluidContents.DEW_OF_THE_WARP.toIngredient(100))
             .catalyst(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .setEnergy(240)
-            .build(output, id("refinery/eldritch_flux"))
+            .build(output, id("${RagiumConst.REFINING}/eldritch_flux"))
 
         alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
-            .build(output, id(RagiumMaterialKeys.ELDRITCH_PEARL.name))
         alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)
-            .build(output, id(RagiumMaterialKeys.ELDRITCH_PEARL.name).withSuffix("_alt"))
     }
 
     @JvmStatic
     private fun misc() {
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-            .build(output, id(RagiumMaterialKeys.NIGHT_METAL.name))
         alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
-            .build(output, id(RagiumMaterialKeys.IRIDESCENTIUM.name))
     }
 
     //    Extension    //
@@ -153,7 +138,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     ): BottlingMachineRecipeBuilder = output(prefix.itemTagKey(material), count)
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData): HTArcFurnaceRecipeBuilder {
+    private fun alloyFromData(data: HTMaterialRecipeData) {
         val builder: HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder.builder()
         // Inputs
         for ((ingredient: Ingredient, count: Int) in data.getIngredients()) {
@@ -166,11 +151,11 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
                 item != null -> builder.output(item, count)
             }
         }
-        return builder
+        builder.build(output, data.getModifiedId())
     }
 
     @JvmStatic
-    private fun crushFromData(data: HTMaterialRecipeData): CrusherRecipeBuilder {
+    private fun crushFromData(data: HTMaterialRecipeData) {
         val builder: CrusherRecipeBuilder = CrusherRecipeBuilder.builder()
         // Input
         builder.input(data.getIngredient(0))
@@ -188,6 +173,6 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
                 }
             }
         }
-        return builder
+        builder.build(output, data.getModifiedId().withPrefix("${RagiumConst.CRUSHING}/"))
     }
 }

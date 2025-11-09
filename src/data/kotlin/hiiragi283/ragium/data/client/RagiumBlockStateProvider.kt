@@ -131,7 +131,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                     2 -> 1
                     else -> 2
                 }
-                val id: ResourceLocation = RagiumBlocks.WARPED_WART.id.withSuffix("_stage$age")
+                val id: ResourceLocation = RagiumBlocks.WARPED_WART.getIdWithSuffix("_stage$age")
                 ConfiguredModel
                     .builder()
                     .modelFile(

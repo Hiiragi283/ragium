@@ -81,7 +81,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Items.END_CRYSTAL)
             .save(output)
         save(
-            gravityUnit.id.withPrefix("smithing/"),
+            gravityUnit.getIdWithPrefix("smithing/"),
             HTSmithingModifyRecipe(
                 Ingredient.of(gravityUnit),
                 Ingredient.of(),

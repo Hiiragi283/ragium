@@ -57,7 +57,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            withExistingParent(content.getId().withSuffix("_bucket").path, RagiumConst.NEOFORGE.toId("item", "bucket"))
+            withExistingParent(content.getIdWithSuffix("_bucket").path, RagiumConst.NEOFORGE.toId("item", "bucket"))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.get())
         }

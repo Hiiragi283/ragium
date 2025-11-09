@@ -29,12 +29,13 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val DARK_STEEL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val DARK_STEEL_COAL: HTMaterialRecipeData = HTMaterialRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
         addOutput(EIOItems.DARK_STEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
+        setSuffix("_with_coal")
     }
 
     @JvmField
@@ -44,6 +45,7 @@ data object EIOMaterialRecipeData {
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
         addOutput(EIOItems.DARK_STEEL_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL)
+        setSuffix("_with_coke")
     }
 
     @JvmField

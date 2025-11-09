@@ -6,6 +6,7 @@ import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
 import blusunrize.immersiveengineering.data.recipes.builder.IERecipeBuilder
+import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -41,8 +42,8 @@ class HTArcFurnaceRecipeBuilder private constructor() :
 
         fun build(output: RecipeOutput, id: ResourceLocation) {
             if (count <= 2) {
-                builder.setTime(200).build(output, id.withPrefix("alloying/"))
+                builder.setTime(200).build(output, id.withPrefix("${RagiumConst.ALLOYING}/"))
             }
-            builder1.setTime(200).setEnergy(102400).build(output, id.withPrefix("arc_furnace/alloy/"))
+            builder1.setTime(200).setEnergy(102400).build(output, id.withPrefix("arc_furnace/"))
         }
     }
