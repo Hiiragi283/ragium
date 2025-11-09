@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -23,7 +22,6 @@ import hiiragi283.ragium.setup.RagiumDelightFoods
 import hiiragi283.ragium.setup.RagiumEquipmentMaterials
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -103,12 +101,8 @@ object RagiumDelightAddon : RagiumAddon {
 
     override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
         helper.ifMatchTab(RagiumCreativeTabs.ITEMS) { event: BuildCreativeModeTabContentsEvent ->
-            for ((key, knife: HTDeferredItem<*>) in KNIFE_MAP) {
-                event.insertAfter(
-                    RagiumItems.getTool(HTHammerToolVariant, key).toStack(),
-                    knife.toStack(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-                )
+            for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in KNIFE_MAP) {
+                helper.insertAfter(event, RagiumItems.getHammer(key), knife)
             }
 
             helper.insertAfter(

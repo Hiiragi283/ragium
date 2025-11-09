@@ -15,11 +15,8 @@ import net.minecraft.world.item.PickaxeItem
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
 
-enum class HTVanillaToolVariant(
-    private val enPattern: String,
-    private val jaPattern: String,
-    override val tagKeys: Iterable<TagKey<Item>>,
-) : HTToolVariant {
+enum class VanillaToolVariant(private val enPattern: String, private val jaPattern: String, override val tagKeys: Iterable<TagKey<Item>>) :
+    HTToolVariant {
     SHOVEL("%s Shovel", "%sのシャベル", ItemTags.SHOVELS) {
         override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
             register.registerItemWith("${material.asMaterialName()}_shovel", material, ::ShovelItem) {

@@ -10,8 +10,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
@@ -24,7 +23,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun generate(registries: HolderLookup.Provider) {
         root(RagiumAdvancements.ROOT) {
             display {
-                setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY))
+                setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
                 title = Component.literal(RagiumAPI.MOD_NAME)
                 setDescFromKey(RagiumAdvancements.ROOT)
                 backGround = RagiumAPI.id("textures/block/${RagiumConst.IRIDESCENTIUM}_block.png")
@@ -118,7 +117,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
             RagiumAdvancements.RAGI_CRYSTAL,
-            RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
         ) { setGoal() }
         child(RagiumAdvancements.RAGI_TICKET, RagiumAdvancements.RAGI_CRYSTAL) {
             display {
@@ -146,7 +145,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         child(RagiumAdvancements.AZURE_GEARS, RagiumAdvancements.AZURE_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.AZURE_STEEL))
+                setIcon(RagiumItems.getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
@@ -176,7 +175,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         child(RagiumAdvancements.DEEP_GEARS, RagiumAdvancements.DEEP_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL))
+                setIcon(RagiumItems.getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL))
                 setTitleFromKey(RagiumAdvancements.DEEP_GEARS)
                 setDescFromKey(RagiumAdvancements.DEEP_GEARS)
                 setGoal()

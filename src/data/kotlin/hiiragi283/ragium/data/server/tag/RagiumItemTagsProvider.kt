@@ -28,7 +28,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -241,12 +241,12 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
                 builder.add(tagKey, item)
             }
 
-            if (variant == HTVanillaToolVariant.PICKAXE) {
+            if (variant == VanillaToolVariant.PICKAXE) {
                 builder.add(ItemTags.CLUSTER_MAX_HARVESTABLES, item)
             }
         }
 
-        builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.WRENCH)
+        builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 

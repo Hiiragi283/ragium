@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
@@ -18,9 +17,6 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
@@ -86,16 +82,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun raginite() {
         // Basic
-        HTShapedRecipeBuilder
-            .equipment(RagiumItems.WRENCH)
-            .pattern(
-                " A ",
-                " BA",
-                "B  ",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .save(output)
-
         HTShapedRecipeBuilder
             .equipment(RagiumItems.MAGNET)
             .pattern(
@@ -174,12 +160,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         }
         // Tool
         for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.getToolMap(material)) {
-            val beforeTool: ItemLike = when (variant) {
-                is HTVanillaToolVariant -> VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey]
-                is HTHammerToolVariant -> RagiumItems.TOOLS[variant, beforeKey]
-                is HTKnifeToolVariant -> RagiumDelightAddon.KNIFE_MAP[beforeKey]
-                else -> null
-            } ?: continue
+            val beforeTool: ItemLike = VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey] ?: continue
             upgradeFactory(tool, beforeTool)
         }
     }
@@ -235,11 +216,9 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun forgeHammers() {
-        fun hammer(key: HTMaterialLike): ItemLike = RagiumItems.getTool(HTHammerToolVariant, key)
-
         fun crafting(prefix: HTPrefixLike, key: HTMaterialLike) {
             HTShapedRecipeBuilder
-                .equipment(hammer(key))
+                .equipment(RagiumItems.getHammer(key))
                 .pattern(
                     " AA",
                     "BBA",
@@ -248,16 +227,12 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 .define('B', Tags.Items.RODS_WOODEN)
                 .save(output)
         }
-
-        crafting(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-        crafting(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
         crafting(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
 
-        createNetheriteUpgrade(hammer(VanillaMaterialKeys.NETHERITE), hammer(VanillaMaterialKeys.DIAMOND)).save(output)
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            hammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-            hammer(RagiumMaterialKeys.RAGI_ALLOY),
+            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
         ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }

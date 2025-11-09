@@ -251,7 +251,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.TELEPORT_KEY, "転位の鍵")
         add(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         add(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
-        add(RagiumItems.WRENCH, "らぎレンチ")
         // Food
         add(RagiumItems.ICE_CREAM, "アイスクリーム")
         add(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")

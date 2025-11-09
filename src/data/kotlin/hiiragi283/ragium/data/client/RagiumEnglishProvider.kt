@@ -255,7 +255,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.TELEPORT_KEY, "Teleport Key")
         add(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         add(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
-        add(RagiumItems.WRENCH, "Ragi-Wrench")
         // Food
         add(RagiumItems.ICE_CREAM, "Ice Cream")
         add(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")

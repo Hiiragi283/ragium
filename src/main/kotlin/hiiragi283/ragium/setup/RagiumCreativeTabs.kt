@@ -17,14 +17,12 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -143,20 +141,18 @@ object RagiumCreativeTabs {
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             // Raginite
-            output.accept(RagiumItems.WRENCH)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY))
+            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
             output.accept(RagiumItems.MAGNET)
 
             output.accept(RagiumItems.ADVANCED_MAGNET)
 
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL))
+            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL))
             output.accept(RagiumItems.DYNAMIC_LANTERN)
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.AZURE_STEEL))
+            output.acceptFromTable(RagiumItems.TOOLS, VanillaToolVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
             // Molten
             output.accept(RagiumItems.BLAST_CHARGE)
 
@@ -168,8 +164,7 @@ object RagiumCreativeTabs {
             // Deep
             output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
             output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.DEEP_STEEL))
+            output.acceptFromTable(RagiumItems.TOOLS, VanillaToolVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
             // Other
             output.accept(RagiumItems.DRILL)
 
@@ -254,22 +249,6 @@ object RagiumCreativeTabs {
         }
 
         val key: ResourceKey<CreativeModeTab> = event.tabKey
-        // 道具タブに鍛造ハンマーを追加する
-        if (key == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            insertAfter(
-                Items.IRON_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.IRON),
-            )
-            insertAfter(
-                Items.DIAMOND_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.DIAMOND),
-            )
-            insertAfter(
-                Items.NETHERITE_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.NETHERITE),
-            )
-        }
-
         if (BLOCKS.`is`(key)) {
             for (tier: HTDrumTier in HTDrumTier.entries) {
                 insertAfter(tier.getBlock(), tier.getMinecartItem())

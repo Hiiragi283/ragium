@@ -61,8 +61,7 @@ import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.common.variant.VanillaEquipmentMaterial
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -88,6 +87,7 @@ object RagiumItems {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("meat_ingot", "raw_meat_ingot")
+        REGISTER.addAlias("wrench", "ragi_alloy_hammer")
 
         REGISTER.register(eventBus)
 
@@ -290,9 +290,6 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val WRENCH: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wrench") { it.stacksTo(1) }
-
-    @JvmField
     val MAGNET: HTSimpleDeferredItem =
         REGISTER.registerItemWith("ragi_magnet", RagiumConfig.COMMON.basicMagnetRange, ::HTMagnetItem)
 
@@ -374,36 +371,31 @@ object RagiumItems {
 
     @JvmStatic
     val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
-        val consumer: (HTToolVariant, HTEquipmentMaterial) -> Unit = { variant: HTToolVariant, material: HTEquipmentMaterial ->
+        fun register(variant: HTToolVariant, material: HTEquipmentMaterial) {
             this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
         }
-
         // Hammer
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.IRON)
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.DIAMOND)
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.NETHERITE)
-
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.AZURE_STEEL)
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.DEEP_STEEL)
-
+        register(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
         this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
             "ragi_crystal_hammer",
             RagiumEquipmentMaterials.RAGI_CRYSTAL,
             HTDestructionHammerItem::create,
         )
         // Tools
-        for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
+        for (variant: VanillaToolVariant in VanillaToolVariant.entries) {
             // Azure
-            consumer(variant, RagiumEquipmentMaterials.AZURE_STEEL)
+            register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
             // Deep
-            consumer(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+            register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
         }
     }
 
     @JvmStatic
     fun getTool(variant: HTToolVariant, material: HTMaterialLike): HTDeferredItem<*> = TOOLS[variant, material.asMaterialKey()]
         ?: error("Unknown ${variant.variantName()} item for ${material.asMaterialName()}")
+
+    @JvmStatic
+    fun getHammer(material: HTMaterialLike): HTDeferredItem<*> = getTool(HTHammerToolVariant, material)
 
     @JvmStatic
     fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
@@ -610,9 +602,9 @@ object RagiumItems {
             setEnch(item, Enchantments.SILK_TOUCH)
         }
 
-        setEnch(getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
-        setEnch(getTool(HTVanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
-        setEnch(getTool(HTVanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
+        setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
+        setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
         // Foods
         event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
