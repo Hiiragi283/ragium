@@ -60,6 +60,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         fromVariantTable(RagiumItems.ARMORS)
         fromVariantTable(RagiumItems.TOOLS)
+        fromMapWithRow(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
 
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)

@@ -9,6 +9,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 
+/**
+ * @see net.neoforged.neoforge.registries.DeferredRegister.DataComponents
+ */
 class HTDeferredDataComponentRegister(registryKey: RegistryKey<DataComponentType<*>>, namespace: String) :
     HTDeferredRegister<DataComponentType<*>>(
         registryKey,

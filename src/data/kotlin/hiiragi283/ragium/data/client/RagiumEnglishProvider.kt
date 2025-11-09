@@ -235,9 +235,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
-        add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
-        add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
-
         add(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
         add(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
         add(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
@@ -475,6 +472,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
+
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "Night Metal Upgrade")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "Night Metal Equipment")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "Night Metal Ingot")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add golden armor, weapon, ot tool")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Night Metal Ingot")
 
         add(RagiumTranslation.ITEM_POTION, "Potion of %s")
 

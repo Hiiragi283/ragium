@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.almostreliable.unified.api.AlmostUnified
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -73,7 +74,7 @@ data object HTResultHelper {
      */
     @JvmStatic
     fun item(tagKey: TagKey<Item>, count: Int = 1): HTItemResult {
-        if (ModList.get().isLoaded("almostunified")) {
+        if (ModList.get().isLoaded(RagiumConst.ALMOST)) {
             val target: Item? = AlmostUnified.INSTANCE.getTagTargetItem(tagKey)
             if (target != null) {
                 return item(target, count)

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.integration.food
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
@@ -28,11 +27,11 @@ object RagiumFoodAddon : RagiumAddon {
 
     @JvmField
     val RAGI_CHERRY_PULP: HTSimpleDeferredItem =
-        registerFood("${RagiumConst.RAGI_CHERRY}_pulp", RagiumDelightFoods.RAGI_CHERRY_PULP)
+        registerFood("ragi_cherry_pulp", RagiumDelightFoods.RAGI_CHERRY_PULP)
 
     @JvmField
     val RAGI_CHERRY_JAM: HTSimpleDeferredItem =
-        registerFood("${RagiumConst.RAGI_CHERRY}_jam", RagiumDelightFoods.RAGI_CHERRY_JAM)
+        registerFood("ragi_cherry_jam", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //
 

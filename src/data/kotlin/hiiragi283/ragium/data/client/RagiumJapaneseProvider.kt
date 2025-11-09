@@ -231,9 +231,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool
-        add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
-        add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
-
         add(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
         add(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")
         add(RagiumItems.HUGE_DRUM_UPGRADE, "ドラム強化（特大）")
@@ -481,6 +478,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
+
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "夜金強化")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "夜金の装備品")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "夜金インゴット")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "金製の防具，武器，道具を置いてください")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "夜金インゴットを置いてください")
 
         add(RagiumTranslation.ITEM_POTION, "%sのポーション")
 

@@ -1,14 +1,11 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.collection.ImmutableTable
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toDescriptionKey
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -16,8 +13,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
-import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.VanillaToolVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -150,9 +145,11 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.DYNAMIC_LANTERN)
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
-            output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, VanillaToolVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
+            output.acceptEquipments(RagiumMaterialKeys.AZURE_STEEL)
+            // Deep
+            output.acceptEquipments(RagiumMaterialKeys.DEEP_STEEL)
+            // Night
+            output.acceptEquipments(RagiumMaterialKeys.NIGHT_METAL)
             // Molten
             output.accept(RagiumItems.BLAST_CHARGE)
 
@@ -161,10 +158,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ELDRITCH_EGG)
 
             DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
-            // Deep
-            output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            output.acceptFromTable(RagiumItems.ARMORS, HTArmorVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
-            output.acceptFromTable(RagiumItems.TOOLS, VanillaToolVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
             // Other
             output.accept(RagiumItems.DRILL)
 
@@ -213,14 +206,13 @@ object RagiumCreativeTabs {
             .build()
     }
 
-    fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
-        table: ImmutableTable<V, HTMaterialKey, HTDeferredItem<*>>,
-        variants: Iterable<V>,
-        key: HTMaterialLike,
-    ) {
-        variants
-            .mapNotNull(table.column(key.asMaterialKey())::get)
-            .forEach(this::accept)
+    fun CreativeModeTab.Output.acceptEquipments(material: HTMaterialLike) {
+        // Smithing Template
+        this.accept(RagiumItems.getSmithingTemplate(material))
+        // Armor
+        RagiumItems.getArmorMap(material).values.forEach(this::accept)
+        // Tool
+        RagiumItems.getToolMap(material).values.forEach(this::accept)
     }
 
     @JvmStatic

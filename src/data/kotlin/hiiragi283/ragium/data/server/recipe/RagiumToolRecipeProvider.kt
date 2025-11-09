@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
@@ -128,40 +127,49 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
-        addEquipments(
-            RagiumMaterialKeys.AZURE_STEEL,
-            VanillaMaterialKeys.IRON,
-            RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            ::addAzureSmithing,
-        )
-
-        addEquipments(
-            RagiumMaterialKeys.DEEP_STEEL,
-            VanillaMaterialKeys.DIAMOND,
-            RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            ::addDeepSmithing,
-        )
+        addEquipments(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
+        addEquipments(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
+        addEquipments(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
     }
 
     @JvmStatic
-    private fun addEquipments(
-        material: HTMaterialLike,
-        beforeMaterial: HTMaterialLike,
-        upgrade: HTDeferredItem<*>,
-        upgradeFactory: (ItemLike, ItemLike) -> Unit,
-    ) {
+    private fun addEquipments(material: HTMaterialLike, beforeKey: HTMaterialKey) {
         // Template
-        addTemplate(upgrade, material)
+        val upgrade: ItemLike = RagiumItems.getSmithingTemplate(material)
+        HTShapedRecipeBuilder
+            .equipment(upgrade)
+            .pattern(
+                "A A",
+                "A A",
+                " A ",
+            ).define('A', CommonMaterialPrefixes.INGOT, material)
+            .save(output)
+
+        HTShapelessRecipeBuilder
+            .equipment(upgrade, 2)
+            .addIngredient(upgrade)
+            .addIngredient(CommonMaterialPrefixes.INGOT, material)
+            .addIngredient(CommonMaterialPrefixes.INGOT, material)
+            .saveSuffixed(output, "_duplicate")
         // Armor
-        val beforeKey: HTMaterialKey = beforeMaterial.asMaterialKey()
-        for ((variant: HTArmorVariant, armor: HTDeferredItem<*>) in RagiumItems.getArmorMap(material)) {
+        for ((variant: HTArmorVariant, armor: ItemLike) in RagiumItems.getArmorMap(material)) {
             val beforeArmor: ItemLike = VanillaMaterialKeys.ARMOR_TABLE[variant, beforeKey] ?: continue
-            upgradeFactory(armor, beforeArmor)
+            HTSmithingRecipeBuilder
+                .create(armor)
+                .addIngredient(upgrade)
+                .addIngredient(beforeArmor)
+                .addIngredient(CommonMaterialPrefixes.INGOT, material)
+                .save(this.output)
         }
         // Tool
-        for ((variant: HTToolVariant, tool: HTDeferredItem<*>) in RagiumItems.getToolMap(material)) {
+        for ((variant: HTToolVariant, tool: ItemLike) in RagiumItems.getToolMap(material)) {
             val beforeTool: ItemLike = VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey] ?: continue
-            upgradeFactory(tool, beforeTool)
+            HTSmithingRecipeBuilder
+                .create(tool)
+                .addIngredient(upgrade)
+                .addIngredient(beforeTool)
+                .addIngredient(CommonMaterialPrefixes.INGOT, material)
+                .save(this.output)
         }
     }
 
@@ -309,45 +317,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     //    Extension    //
-
-    @JvmStatic
-    private fun addTemplate(template: ItemLike, key: HTMaterialLike) {
-        HTShapedRecipeBuilder
-            .equipment(template)
-            .pattern(
-                "A A",
-                "A A",
-                " A ",
-            ).define('A', CommonMaterialPrefixes.INGOT, key)
-            .save(output)
-
-        HTShapelessRecipeBuilder
-            .equipment(template, 2)
-            .addIngredient(template)
-            .addIngredient(CommonMaterialPrefixes.INGOT, key)
-            .addIngredient(CommonMaterialPrefixes.INGOT, key)
-            .saveSuffixed(output, "_duplicate")
-    }
-
-    @JvmStatic
-    private fun addAzureSmithing(output: ItemLike, ingredient: ItemLike) {
-        HTSmithingRecipeBuilder
-            .create(output)
-            .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(ingredient)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .save(this.output)
-    }
-
-    @JvmStatic
-    private fun addDeepSmithing(output: ItemLike, ingredient: ItemLike) {
-        HTSmithingRecipeBuilder
-            .create(output)
-            .addIngredient(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(ingredient)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .save(this.output)
-    }
 
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {

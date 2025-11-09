@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
@@ -99,7 +98,7 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("${RagiumConst.RAGI_ALLOY}_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
     val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
@@ -303,20 +302,6 @@ object RagiumItems {
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
-    // Azure
-    @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
-        "${RagiumConst.AZURE_STEEL}_upgrade_smithing_template",
-    ) { _ ->
-        HTSmithingTemplateItem(
-            RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS,
-            RagiumTranslation.AZURE_STEEL_UPGRADE,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
-        )
-    }
-
     @JvmField
     val DRILL: HTSimpleDeferredItem = REGISTER.registerItem("drill", ::HTDrillItem)
 
@@ -334,20 +319,6 @@ object RagiumItems {
 
     @JvmField
     val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("universal_bundle", ::HTUniversalBundleItem)
-
-    // Deep
-    @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
-        "${RagiumConst.DEEP_STEEL}_upgrade_smithing_template",
-    ) { _ ->
-        HTSmithingTemplateItem(
-            RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS,
-            RagiumTranslation.DEEP_STEEL_UPGRADE,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
-        )
-    }
 
     // Other
     @JvmField
@@ -383,10 +354,12 @@ object RagiumItems {
         )
         // Tools
         for (variant: VanillaToolVariant in VanillaToolVariant.entries) {
-            // Azure
+            // Azure Iron
             register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
-            // Deep
+            // Deep Steel
             register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+            // Night Metal
+            register(variant, RagiumEquipmentMaterials.NIGHT_METAL)
         }
     }
 
@@ -399,6 +372,27 @@ object RagiumItems {
 
     @JvmStatic
     fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
+
+    @JvmField
+    val SMITHING_TEMPLATES: Map<HTMaterialKey, HTSimpleDeferredItem> = listOf(
+        RagiumMaterialKeys.AZURE_STEEL,
+        RagiumMaterialKeys.DEEP_STEEL,
+        RagiumMaterialKeys.NIGHT_METAL,
+    ).associateWith { key: HTMaterialKey ->
+        REGISTER.register("${key.name}_upgrade_smithing_template") { _ ->
+            HTSmithingTemplateItem(
+                RagiumTranslation.valueOf("${key.name}_upgrade_applies_to".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_ingredients".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_base_slot_description".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_additions_slot_description".uppercase()),
+            )
+        }
+    }
+
+    @JvmStatic
+    fun getSmithingTemplate(material: HTMaterialLike): HTSimpleDeferredItem =
+        SMITHING_TEMPLATES[material.asMaterialKey()] ?: error("Unknown smithing template for ${material.asMaterialName()}")
 
     //    Foods    //
 
@@ -414,7 +408,7 @@ object RagiumItems {
 
     // Meat
     @JvmField
-    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_${RagiumConst.COOKED_MEAT}", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     // Sponge
     @JvmField
@@ -425,7 +419,7 @@ object RagiumItems {
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
     val FEVER_CHERRY: HTSimpleDeferredItem = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY)

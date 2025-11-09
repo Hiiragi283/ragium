@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.integration.food
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -42,14 +41,14 @@ object RagiumDelightAddon : RagiumAddon {
 
     @JvmField
     val RAGI_CHERRY_PIE: HTBasicDeferredBlock<PieBlock> = BLOCK_REGISTER.registerSimple(
-        "${RagiumConst.RAGI_CHERRY}_pie",
+        "ragi_cherry_pie",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> PieBlock(prop, RAGI_CHERRY_PIE_SLICE) },
     )
 
     @JvmField
     val RAGI_CHERRY_TOAST_BLOCK: HTBasicDeferredBlock<FeastBlock> = BLOCK_REGISTER.registerSimple(
-        "${RagiumConst.RAGI_CHERRY}_toast_block",
+        "ragi_cherry_toast_block",
         BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE),
         { prop: BlockBehaviour.Properties -> FeastBlock(prop, RAGI_CHERRY_TOAST, true) },
     )
@@ -78,11 +77,11 @@ object RagiumDelightAddon : RagiumAddon {
     // Food
     @JvmField
     val RAGI_CHERRY_PIE_SLICE: HTSimpleDeferredItem =
-        RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
+        RagiumFoodAddon.registerFood("ragi_cherry_pie_slice", RagiumDelightFoods.RAGI_CHERRY_PIE_SLICE)
 
     @JvmField
     val RAGI_CHERRY_TOAST: HTSimpleDeferredItem =
-        RagiumFoodAddon.registerFood("${RagiumConst.RAGI_CHERRY}_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
+        RagiumFoodAddon.registerFood("ragi_cherry_toast", RagiumDelightFoods.RAGI_CHERRY_JAM)
 
     //    RagiumAddon    //
 

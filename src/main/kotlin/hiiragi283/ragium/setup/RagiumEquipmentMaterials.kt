@@ -125,7 +125,7 @@ object RagiumEquipmentMaterials {
         axeDamage = 5f,
         axeAttackSpeed = -3f,
         durability = 256,
-        miningSpeed = 12f,
+        miningSpeed = 15f,
         baseAttackDamage = 3f,
         enchantability = 25,
         incorrectBlockTag = Tags.Blocks.NEEDS_NETHERITE_TOOL,

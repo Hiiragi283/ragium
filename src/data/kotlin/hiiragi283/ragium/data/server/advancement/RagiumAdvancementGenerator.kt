@@ -26,7 +26,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
                 title = Component.literal(RagiumAPI.MOD_NAME)
                 setDescFromKey(RagiumAdvancements.ROOT)
-                backGround = RagiumAPI.id("textures/block/${RagiumConst.IRIDESCENTIUM}_block.png")
+                backGround = RagiumAPI.id("textures/block/iridescentium_block.png")
                 showToast = false
                 showChat = false
             }
@@ -45,15 +45,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         child(RagiumAdvancements.CRAFTABLE_TEMPLATES, RagiumAdvancements.ROOT) {
             display {
-                setIcon(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+                setIcon(RagiumItems.getSmithingTemplate(RagiumMaterialKeys.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
                 setDescFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
             }
-            hasAnyItem(
-                "has_upgrade",
-                RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
-                RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            )
+            hasAnyItem("has_upgrade", RagiumItems.SMITHING_TEMPLATES.values)
         }
     }
 

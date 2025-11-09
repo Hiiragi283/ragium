@@ -359,8 +359,14 @@
   "item.ragium.mushroom_stew_bucket": "キノコシチュー入りバケツ",
   "item.ragium.naphtha_bucket": "ナフサ入りバケツ",
   "item.ragium.natural_gas_bucket": "天然ガス入りバケツ",
+  "item.ragium.night_metal_axe": "夜金の斧",
+  "item.ragium.night_metal_hoe": "夜金のクワ",
   "item.ragium.night_metal_ingot": "夜金インゴット",
   "item.ragium.night_metal_nugget": "夜金ナゲット",
+  "item.ragium.night_metal_pickaxe": "夜金のツルハシ",
+  "item.ragium.night_metal_shovel": "夜金のシャベル",
+  "item.ragium.night_metal_sword": "夜金の剣",
+  "item.ragium.night_metal_upgrade_smithing_template": "夜金強化",
   "item.ragium.night_vision_goggles": "暗視ゴーグル",
   "item.ragium.obsidian_dust": "黒曜石の粉",
   "item.ragium.organic_mutagen_bucket": "有機的変異原入りバケツ",
@@ -494,5 +500,10 @@
   "upgrade.deep_steel_upgrade.additions_slot_description": "深層鋼インゴットを置いてください",
   "upgrade.deep_steel_upgrade.applies_to": "深層鋼の装備品",
   "upgrade.deep_steel_upgrade.base_slot_description": "ダイヤモンド製の防具，武器，道具を置いてください",
-  "upgrade.deep_steel_upgrade.ingredients": "深層鋼インゴット"
+  "upgrade.deep_steel_upgrade.ingredients": "深層鋼インゴット",
+  "upgrade.night_metal_upgrade": "夜金強化",
+  "upgrade.night_metal_upgrade.additions_slot_description": "夜金インゴットを置いてください",
+  "upgrade.night_metal_upgrade.applies_to": "夜金の装備品",
+  "upgrade.night_metal_upgrade.base_slot_description": "金製の防具，武器，道具を置いてください",
+  "upgrade.night_metal_upgrade.ingredients": "夜金インゴット"
 }
