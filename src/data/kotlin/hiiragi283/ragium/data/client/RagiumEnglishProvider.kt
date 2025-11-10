@@ -9,8 +9,7 @@ import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
@@ -39,7 +38,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         text()
         information()
 
-        food()
         delight()
         jade()
     }
@@ -265,6 +263,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
+        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        add(RagiumItems.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
@@ -529,17 +530,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     //    Addon    //
 
-    private fun food() {
-        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
-        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
-    }
-
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
 
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
     }
 
     private fun jade() {

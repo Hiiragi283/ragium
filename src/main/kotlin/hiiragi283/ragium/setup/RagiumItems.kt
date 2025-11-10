@@ -202,11 +202,15 @@ object RagiumItems {
             RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
-        // Plates
-        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
 
+        // Doughs
+        register(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT, "wheat_dough")
+        // Flours
+        register(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, "wheat_flour")
         // Fuels
         register(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, "bamboo_charcoal")
+        // Plates
+        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
         // Scraps
         register(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, "deep_scrap")
     }
@@ -265,7 +269,7 @@ object RagiumItems {
     @JvmField
     val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
         HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
-    
+
     @JvmStatic
     val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
         fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
@@ -400,6 +404,7 @@ object RagiumItems {
     private fun registerFood(name: String, foodProperties: FoodProperties): HTSimpleDeferredItem =
         REGISTER.registerSimpleItem(name) { it.food(foodProperties) }
 
+    // Ice Cream
     @JvmField
     val ICE_CREAM: HTSimpleDeferredItem = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
@@ -420,6 +425,15 @@ object RagiumItems {
     // Cherry
     @JvmField
     val RAGI_CHERRY: HTSimpleDeferredItem = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
+
+    @JvmField
+    val RAGI_CHERRY_PULP: HTSimpleDeferredItem = registerFood("ragi_cherry_pulp", RagiumFoods.RAGI_CHERRY_PULP)
+
+    @JvmField
+    val RAGI_CHERRY_JAM: HTSimpleDeferredItem = registerFood("ragi_cherry_jam", RagiumFoods.RAGI_CHERRY_JAM)
+
+    @JvmField
+    val RAGI_CHERRY_TOAST: HTSimpleDeferredItem = registerFood("ragi_cherry_toast", RagiumFoods.RAGI_CHERRY_JAM)
 
     @JvmField
     val FEVER_CHERRY: HTSimpleDeferredItem = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY)
@@ -600,6 +614,10 @@ object RagiumItems {
         setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
         setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
         // Foods
+        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+        }
         event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }

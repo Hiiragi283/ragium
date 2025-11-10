@@ -195,6 +195,16 @@ object RagiumMaterialEvents {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Chocolate", "チョコレート")
         }
+
+        event.modify(FoodMaterialKeys.WARPED_WART) {
+            addDefaultPrefix(CommonMaterialPrefixes.CROP)
+            addName("Warped Wart", "歪んだウォート")
+        }
+        event.modify(FoodMaterialKeys.WHEAT) {
+            addDefaultPrefix(CommonMaterialPrefixes.CROP)
+            addName("Wheat", "小麦")
+        }
+
         event.modify(FoodMaterialKeys.RAW_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Raw Meat", "生肉")

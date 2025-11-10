@@ -88,6 +88,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         honey()
         meat()
         sponge()
+        wheat()
     }
 
     @JvmStatic
@@ -98,6 +99,21 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .hollow8()
             .define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .save(output)
+        // Ragi-Cherry Jam
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.RAGI_CHERRY_JAM)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
+            .addIngredient(Items.SUGAR)
+            .addIngredient(Items.GLASS_BOTTLE)
+            .save(output)
+        // Ragi-Cherry Toast
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.RAGI_CHERRY_TOAST, 2)
+            .addIngredient(Tags.Items.FOODS_BREAD)
+            .addIngredient(Tags.Items.FOODS_BREAD)
+            .addIngredient(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
             .save(output)
         // Fever Cherry
         HTShapedRecipeBuilder
@@ -204,5 +220,29 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .save(output)
+    }
+
+    @JvmStatic
+    private fun wheat() {
+        // Dough
+        HTShapelessRecipeBuilder
+            .misc(RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT), 3)
+            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
+            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
+            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
+            .addIngredient(Tags.Items.BUCKETS_WATER)
+            .save(output)
+
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT),
+                fluidCreator.water(250),
+            ).addResult(resultHelper.item(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT))
+            .save(output)
+        // Bread from dough
+        HTCookingRecipeBuilder.smeltingAndSmoking(Items.BREAD) {
+            addIngredient(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT)
+            saveSuffixed(output, "_from_dough")
+        }
     }
 }

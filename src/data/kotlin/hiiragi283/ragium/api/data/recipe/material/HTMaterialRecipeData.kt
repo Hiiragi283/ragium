@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -130,7 +131,9 @@ data class HTMaterialRecipeData private constructor(
         val tagKey: TagKey<Item>?,
         val count: Int,
         val chance: Float,
-    )
+    ) {
+        fun toImmutable(): ImmutableItemStack = ImmutableItemStack.of(checkNotNull(item), count)
+    }
 
     //    Builder    //
 

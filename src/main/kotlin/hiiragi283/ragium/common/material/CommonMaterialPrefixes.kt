@@ -16,6 +16,7 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     },
 
     // Item
+    CROP,
     DUST,
     FOOD,
     GEM,
@@ -28,6 +29,8 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
 
     // Item - Custom
     CIRCUIT,
+    DOUGH,
+    FLOUR,
     FUEL,
     JAM,
     SCRAP,

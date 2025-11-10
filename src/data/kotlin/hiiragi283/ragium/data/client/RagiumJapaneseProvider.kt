@@ -9,8 +9,7 @@ import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
@@ -39,7 +38,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         text()
         information()
 
-        food()
         delight()
         jade()
     }
@@ -261,6 +259,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
+        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
+        add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        add(RagiumItems.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
         add(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
@@ -535,17 +536,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     //    Addon    //
 
-    private fun food() {
-        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
-        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
-    }
-
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
 
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
     }
 
     private fun jade() {

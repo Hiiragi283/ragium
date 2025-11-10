@@ -35,32 +35,43 @@
       }
     },
     "ragium:crushing": {
+      "ragium:crop_to_flour": {
+        "type": "ragium:crushing",
+        "input_prefix": "crop",
+        "output_prefix": "flour"
+      },
       "ragium:fuel_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "fuel"
+        "input_prefix": "fuel",
+        "output_prefix": "dust"
       },
       "ragium:gem_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "gem"
+        "input_prefix": "gem",
+        "output_prefix": "dust"
       },
       "ragium:ingot_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "ingot"
+        "input_prefix": "ingot",
+        "output_prefix": "dust"
       },
       "ragium:plate_to_dust": {
         "type": "ragium:crushing",
-        "prefix": "plate"
+        "input_prefix": "plate",
+        "output_prefix": "dust"
       },
       "ragium:raw_to_dust": {
         "type": "ragium:crushing",
         "input_count": 3,
+        "input_prefix": "raw_material",
         "output_count": 4,
-        "prefix": "raw_material"
+        "output_prefix": "dust"
       },
       "ragium:rod_to_dust": {
         "type": "ragium:crushing",
         "input_count": 2,
-        "prefix": "rod"
+        "input_prefix": "rod",
+        "output_prefix": "dust"
       }
     }
   }

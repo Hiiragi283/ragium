@@ -181,6 +181,9 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
             output.accept(RagiumItems.RAGI_CHERRY)
+            output.accept(RagiumItems.RAGI_CHERRY_PULP)
+            output.accept(RagiumItems.RAGI_CHERRY_JAM)
+            output.accept(RagiumItems.RAGI_CHERRY_TOAST)
             output.accept(RagiumItems.FEVER_CHERRY)
 
             output.accept(RagiumItems.BOTTLED_BEE)

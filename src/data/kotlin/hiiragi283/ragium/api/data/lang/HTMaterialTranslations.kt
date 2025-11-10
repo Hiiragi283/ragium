@@ -36,6 +36,8 @@ object HTMaterialTranslations {
         register(CommonMaterialPrefixes.RAW_MATERIAL, "Raw %s", "%sの原石")
         register(CommonMaterialPrefixes.ROD, "%s Rod", "%s棒")
 
+        register(CommonMaterialPrefixes.DOUGH, "%s Dough", "%s粉の生地")
+        register(CommonMaterialPrefixes.FLOUR, "%s Flour", "%s粉")
         register(CommonMaterialPrefixes.FUEL, "%s", "%s")
         register(CommonMaterialPrefixes.SCRAP, "%s Scrap", "%sの欠片")
 

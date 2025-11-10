@@ -3,10 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
@@ -85,7 +85,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 "AB",
                 "BA",
-            ).define('A', RagiumCommonTags.Items.CROPS_WARPED_WART)
+            ).define('A', CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART)
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
         // Sponge Cake

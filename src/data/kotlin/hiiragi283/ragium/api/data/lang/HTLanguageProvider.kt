@@ -18,10 +18,10 @@ import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
