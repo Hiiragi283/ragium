@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -9,8 +10,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
@@ -139,20 +138,16 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun onEquipped(event: LivingEquipmentChangeEvent) {
         if (!EquipmentSlotGroup.ARMOR.test(event.slot)) return
-        val entity: LivingEntity = event.entity
+        val entity: Player = event.entity as? Player ?: return
         val from: ItemStack = event.from
         val to: ItemStack = event.to
         // 装着時
         if (from.isEmpty) {
-            if (to.`is`(RagiumItems.NIGHT_VISION_GOGGLES)) {
-                entity.addEffect(MobEffectInstance(MobEffects.NIGHT_VISION, -1, 0, true, true))
-            }
+            to.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP)?.onEquip(entity, to)
         }
         // 脱着時
         if (to.isEmpty) {
-            if (from.`is`(RagiumItems.NIGHT_VISION_GOGGLES)) {
-                entity.removeEffect(MobEffects.NIGHT_VISION)
-            }
+            from.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP)?.onUnequip(entity, from)
         }
     }
 

@@ -262,6 +262,10 @@ object RagiumItems {
 
     //    Armors    //
 
+    @JvmField
+    val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
+        HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
+    
     @JvmStatic
     val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
         fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
@@ -273,10 +277,6 @@ object RagiumItems {
             register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
         }
     }
-
-    @JvmField
-    val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
-        HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
 
     @JvmStatic
     fun getArmor(variant: HTArmorVariant, material: HTMaterialLike): HTDeferredItem<*> = ARMORS[variant, material.asMaterialKey()]

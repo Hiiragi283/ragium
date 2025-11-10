@@ -120,7 +120,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 "AAA",
                 "ABA",
-            ).define('A', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }
