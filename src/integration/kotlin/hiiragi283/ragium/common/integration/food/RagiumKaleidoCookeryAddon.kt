@@ -8,12 +8,10 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEquipmentMaterials
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.item.CreativeModeTab
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 
 object RagiumKaleidoCookeryAddon : RagiumAddon {
@@ -41,11 +39,7 @@ object RagiumKaleidoCookeryAddon : RagiumAddon {
     override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
         helper.ifMatchTab(RagiumCreativeTabs.ITEMS) { event: BuildCreativeModeTabContentsEvent ->
             for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in KNIFE_MAP) {
-                event.insertAfter(
-                    RagiumItems.getTool(HTHammerToolVariant, key).toStack(),
-                    knife.toStack(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-                )
+                helper.insertAfter(event, RagiumItems.getHammer(key), knife)
             }
         }
     }

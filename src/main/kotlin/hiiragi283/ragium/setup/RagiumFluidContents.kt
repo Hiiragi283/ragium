@@ -8,10 +8,8 @@ import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
@@ -136,7 +134,7 @@ object RagiumFluidContents {
 
     @JvmField
     val SAP: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", liquid(), HTFluidType.solidify(HTResultHelper.INSTANCE.item(Items.SLIME_BALL)))
+        register("sap", liquid(), HTFluidType.solidify(HTResultHelper.item(Items.SLIME_BALL)))
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -149,26 +147,13 @@ object RagiumFluidContents {
     //    Molten    //
 
     @JvmField
-    val GILDED_LAVA: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(
-            "gilded_lava",
-            molten(),
-            HTFluidType.create {
-                canVaporize = HTFluidType.IS_ULTRA_WARM
-                interactLevel = { level: Level, pos: BlockPos ->
-                    level.setBlockAndUpdate(pos, Blocks.GILDED_BLACKSTONE.defaultBlockState())
-                }
-            },
-        )
-
-    @JvmField
     val CRIMSON_BLOOD: HTFluidContent<HTFluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register(
             "crimson_blood",
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             },
         )
 
@@ -179,7 +164,7 @@ object RagiumFluidContents {
             molten(),
             HTFluidType.create {
                 canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.INSTANCE.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             },
         )
 

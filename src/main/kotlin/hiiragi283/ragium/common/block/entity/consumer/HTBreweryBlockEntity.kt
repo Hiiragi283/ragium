@@ -47,7 +47,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
             // ポーションに変換する
             val stack: ItemStack = findFirstPotion(input.item())
             if (stack.isEmpty) return listOf()
-            return HTResultHelper.INSTANCE
+            return HTResultHelper
                 .item(stack)
                 .let(::HTChancedItemResult)
                 .let(::listOf)

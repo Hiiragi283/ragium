@@ -62,6 +62,7 @@ object ModMaterialKeys {
 
         // Oritech
         ADAMANT,
+        BIOSTEEL,
         DURATIUM,
         ENERGITE,
         PROMETHEUM,

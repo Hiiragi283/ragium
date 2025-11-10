@@ -4,8 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -36,7 +35,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -60,7 +58,7 @@ sealed class HTRecipeProvider {
     /**
      * [HTResultHelper]のインスタンス
      */
-    val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
+    val resultHelper: HTResultHelper = HTResultHelper
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup
@@ -113,9 +111,12 @@ sealed class HTRecipeProvider {
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
-        override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
-            in RagiumConst.BUILTIN_IDS -> RagiumAPI.wrapId(id)
-            else -> {
+        override fun modifyId(id: ResourceLocation): ResourceLocation {
+            val namespace: String = id.namespace
+            return if (namespace in RagiumConst.BUILTIN_IDS) {
+                val path: List<String> = id.path.split("/", limit = 2)
+                return RagiumAPI.id(path[0] + "/$modid/" + path[1])
+            } else {
                 val path: List<String> = id.path.split("/", limit = 2)
                 RagiumAPI.id(path[0] + "/$namespace/" + path[1])
             }
@@ -129,25 +130,6 @@ sealed class HTRecipeProvider {
     protected fun save(recipeId: ResourceLocation, recipe: Recipe<*>, vararg conditions: ICondition) {
         output.accept(recipeId, recipe, null, *conditions)
     }
-
-    // ingredient
-    protected fun fuelOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.FUEL)
-
-    protected fun gemOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM)
-
-    protected fun ingotOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.INGOT)
-
-    protected fun ingotOrRod(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.INGOT, CommonMaterialPrefixes.ROD)
-
-    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTPrefixLike): Ingredient = prefixes
-        .map { it.itemTagKey(material) }
-        .map(Ingredient::TagValue)
-        .stream()
-        .let(Ingredient::fromValues)
 
     // recipe builders
     protected fun meltAndFreeze(
@@ -196,7 +178,7 @@ sealed class HTRecipeProvider {
         empty: HTItemIngredient,
         filled: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
-        amount: Int,
+        amount: Int = 250,
     ) {
         // Melting
         HTItemToObjRecipeBuilder
@@ -296,5 +278,13 @@ sealed class HTRecipeProvider {
                 .modCondition(type.getModId())
                 .save(output)
         }
+    }
+
+    fun pulverizeFromData(data: HTMaterialRecipeData) {
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                data.getItemIngredient(0, itemCreator),
+                data.getResult(resultHelper, 0),
+            ).saveModified(output, data.operator)
     }
 }

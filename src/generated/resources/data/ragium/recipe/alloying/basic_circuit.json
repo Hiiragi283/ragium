@@ -3,13 +3,7 @@
   "ingredients": [
     {
       "count": 2,
-      "items": {
-        "type": "neoforge:or",
-        "values": [
-          "#c:dusts/copper",
-          "#c:ingots/copper"
-        ]
-      }
+      "items": "#c:ingots/copper"
     },
     "#c:dusts/raginite",
     "ragium:circuit_board"

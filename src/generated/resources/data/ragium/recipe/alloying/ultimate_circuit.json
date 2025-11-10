@@ -1,14 +1,11 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    "#c:nuggets/iridescentium",
     {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/echo",
-        "#c:gems/echo"
-      ]
+      "count": 3,
+      "items": "#c:nuggets/iridescentium"
     },
+    "#c:dusts/echo",
     "ragium:advanced_circuit_board"
   ],
   "result": {

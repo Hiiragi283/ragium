@@ -1,15 +1,24 @@
 {
   "type": "ragium:alloying",
   "ingredients": [
-    "#c:storage_blocks/crimson_crystal",
-    "#c:storage_blocks/warped_crystal",
+    "#ragium:eldritch_pearl_binder",
     {
-      "count": 3,
-      "items": "#ragium:eldritch_pearl_binder"
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/crimson_crystal",
+        "#c:gems/crimson_crystal"
+      ]
+    },
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/warped_crystal",
+        "#c:gems/warped_crystal"
+      ]
     }
   ],
   "result": {
-    "count": 9,
+    "count": 1,
     "id": "#c:gems/eldritch_pearl"
   }
 }

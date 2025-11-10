@@ -11,16 +11,8 @@
     "chemical": "ragium:ragium"
   },
   "item_input": {
-    "type": "neoforge:compound",
-    "children": [
-      {
-        "tag": "c:dusts/diamond"
-      },
-      {
-        "tag": "c:gems/diamond"
-      }
-    ],
-    "count": 1
+    "count": 1,
+    "tag": "c:gems/diamond"
   },
   "output": {
     "count": 1,

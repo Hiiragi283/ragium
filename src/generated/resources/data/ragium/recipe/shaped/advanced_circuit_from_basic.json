@@ -8,14 +8,9 @@
     "B": {
       "tag": "c:dusts/raginite"
     },
-    "C": [
-      {
-        "tag": "c:dusts/lapis"
-      },
-      {
-        "tag": "c:gems/lapis"
-      }
-    ],
+    "C": {
+      "tag": "c:dusts/lapis"
+    },
     "D": {
       "tag": "c:circuits/basic"
     }

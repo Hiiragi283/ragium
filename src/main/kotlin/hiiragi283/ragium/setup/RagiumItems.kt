@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
@@ -10,11 +9,9 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
-import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
@@ -63,8 +60,7 @@ import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.common.variant.VanillaEquipmentMaterial
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -90,6 +86,7 @@ object RagiumItems {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("meat_ingot", "raw_meat_ingot")
+        REGISTER.addAlias("wrench", "ragi_alloy_hammer")
 
         REGISTER.register(eventBus)
 
@@ -101,7 +98,7 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("${RagiumConst.RAGI_ALLOY}_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
     val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
@@ -143,6 +140,7 @@ object RagiumItems {
     @JvmField
     val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
+    @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         fun register(prefix: HTPrefixLike, material: HTMaterialLike, name: String) {
             this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimpleItem(name)
@@ -159,6 +157,7 @@ object RagiumItems {
             VanillaMaterialKeys.AMETHYST,
             VanillaMaterialKeys.ECHO,
             // Vanilla - Other
+            VanillaMaterialKeys.BLACKSTONE,
             VanillaMaterialKeys.OBSIDIAN,
             // Common
             CommonMaterialKeys.Gems.CINNABAR,
@@ -187,7 +186,7 @@ object RagiumItems {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
-            RagiumMaterialKeys.GILDIUM,
+            RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
             // Foods
             FoodMaterialKeys.CHOCOLATE,
@@ -200,7 +199,7 @@ object RagiumItems {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
-            RagiumMaterialKeys.GILDIUM,
+            RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
         // Plates
@@ -233,10 +232,7 @@ object RagiumItems {
     fun getPlate(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.PLATE, material)
 
     @JvmStatic
-    fun getScrap(material: HTMaterialLike): HTItemHolderLike = when (material.asMaterialKey()) {
-        VanillaMaterialKeys.NETHERITE -> Items.NETHERITE_SCRAP.toHolderLike()
-        else -> getMaterial(CommonMaterialPrefixes.SCRAP, material)
-    }
+    fun getScrap(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.SCRAP, material)
 
     @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredItem> = MATERIALS.row(prefix.asMaterialPrefix())
@@ -266,6 +262,11 @@ object RagiumItems {
 
     //    Armors    //
 
+    @JvmField
+    val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
+        HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
+    
+    @JvmStatic
     val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
         fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
             this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
@@ -277,10 +278,6 @@ object RagiumItems {
         }
     }
 
-    @JvmField
-    val NIGHT_VISION_GOGGLES: HTDeferredItem<*> =
-        HTArmorVariant.HELMET.registerItem(REGISTER, RagiumEquipmentMaterials.RAGI_CRYSTAL, "night_vision_goggles")
-
     @JvmStatic
     fun getArmor(variant: HTArmorVariant, material: HTMaterialLike): HTDeferredItem<*> = ARMORS[variant, material.asMaterialKey()]
         ?: error("Unknown ${variant.variantName()} armor item for ${material.asMaterialName()}")
@@ -291,9 +288,6 @@ object RagiumItems {
     //    Tools    //
 
     // Raginite
-    @JvmField
-    val WRENCH: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wrench") { it.stacksTo(1) }
-
     @JvmField
     val MAGNET: HTSimpleDeferredItem =
         REGISTER.registerItemWith("ragi_magnet", RagiumConfig.COMMON.basicMagnetRange, ::HTMagnetItem)
@@ -307,20 +301,6 @@ object RagiumItems {
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
-    // Azure
-    @JvmField
-    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
-        "${RagiumConst.AZURE_STEEL}_upgrade_smithing_template",
-    ) { _ ->
-        HTSmithingTemplateItem(
-            RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS,
-            RagiumTranslation.AZURE_STEEL_UPGRADE,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
-            RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
-        )
-    }
 
     @JvmField
     val DRILL: HTSimpleDeferredItem = REGISTER.registerItem("drill", ::HTDrillItem)
@@ -339,20 +319,6 @@ object RagiumItems {
 
     @JvmField
     val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("universal_bundle", ::HTUniversalBundleItem)
-
-    // Deep
-    @JvmField
-    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: HTSimpleDeferredItem = REGISTER.register(
-        "${RagiumConst.DEEP_STEEL}_upgrade_smithing_template",
-    ) { _ ->
-        HTSmithingTemplateItem(
-            RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS,
-            RagiumTranslation.DEEP_STEEL_UPGRADE,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION,
-            RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
-        )
-    }
 
     // Other
     @JvmField
@@ -374,31 +340,26 @@ object RagiumItems {
     @JvmField
     val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
+    @JvmStatic
     val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
-        val consumer: (HTToolVariant, HTEquipmentMaterial) -> Unit = { variant: HTToolVariant, material: HTEquipmentMaterial ->
+        fun register(variant: HTToolVariant, material: HTEquipmentMaterial) {
             this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
         }
-
         // Hammer
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.IRON)
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.DIAMOND)
-        consumer(HTHammerToolVariant, VanillaEquipmentMaterial.NETHERITE)
-
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.AZURE_STEEL)
-        consumer(HTHammerToolVariant, RagiumEquipmentMaterials.DEEP_STEEL)
-
+        register(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
         this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
             "ragi_crystal_hammer",
             RagiumEquipmentMaterials.RAGI_CRYSTAL,
             HTDestructionHammerItem::create,
         )
         // Tools
-        for (variant: HTToolVariant in HTVanillaToolVariant.entries) {
-            // Azure
-            consumer(variant, RagiumEquipmentMaterials.AZURE_STEEL)
-            // Deep
-            consumer(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+        for (variant: VanillaToolVariant in VanillaToolVariant.entries) {
+            // Azure Iron
+            register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
+            // Deep Steel
+            register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+            // Night Metal
+            register(variant, RagiumEquipmentMaterials.NIGHT_METAL)
         }
     }
 
@@ -407,7 +368,31 @@ object RagiumItems {
         ?: error("Unknown ${variant.variantName()} item for ${material.asMaterialName()}")
 
     @JvmStatic
+    fun getHammer(material: HTMaterialLike): HTDeferredItem<*> = getTool(HTHammerToolVariant, material)
+
+    @JvmStatic
     fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
+
+    @JvmField
+    val SMITHING_TEMPLATES: Map<HTMaterialKey, HTSimpleDeferredItem> = listOf(
+        RagiumMaterialKeys.AZURE_STEEL,
+        RagiumMaterialKeys.DEEP_STEEL,
+        RagiumMaterialKeys.NIGHT_METAL,
+    ).associateWith { key: HTMaterialKey ->
+        REGISTER.register("${key.name}_upgrade_smithing_template") { _ ->
+            HTSmithingTemplateItem(
+                RagiumTranslation.valueOf("${key.name}_upgrade_applies_to".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_ingredients".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_base_slot_description".uppercase()),
+                RagiumTranslation.valueOf("${key.name}_upgrade_additions_slot_description".uppercase()),
+            )
+        }
+    }
+
+    @JvmStatic
+    fun getSmithingTemplate(material: HTMaterialLike): HTSimpleDeferredItem =
+        SMITHING_TEMPLATES[material.asMaterialKey()] ?: error("Unknown smithing template for ${material.asMaterialName()}")
 
     //    Foods    //
 
@@ -423,7 +408,7 @@ object RagiumItems {
 
     // Meat
     @JvmField
-    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_${RagiumConst.COOKED_MEAT}", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     // Sponge
     @JvmField
@@ -434,7 +419,7 @@ object RagiumItems {
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood(RagiumConst.RAGI_CHERRY, RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
     val FEVER_CHERRY: HTSimpleDeferredItem = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY)
@@ -452,9 +437,6 @@ object RagiumItems {
     val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
 
     // Catalyst
-    @JvmField
-    val PLATING_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("plating_catalyst", ::HTCatalystItem)
-
     @JvmField
     val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("polymer_catalyst", ::HTCatalystItem)
 
@@ -614,9 +596,9 @@ object RagiumItems {
             setEnch(item, Enchantments.SILK_TOUCH)
         }
 
-        setEnch(getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
-        setEnch(getTool(HTVanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
-        setEnch(getTool(HTVanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
+        setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
+        setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
         // Foods
         event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)

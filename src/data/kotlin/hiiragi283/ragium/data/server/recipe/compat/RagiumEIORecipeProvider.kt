@@ -1,95 +1,107 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import com.enderio.base.common.tag.EIOTags
+import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.CommonMaterialKeys
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.ModMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import net.minecraft.tags.ItemTags
-import net.neoforged.neoforge.common.Tags
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Recipe
 
-object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_BASE) {
+object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MACHINES) {
     override fun buildRecipeInternal() {
         alloys()
+        sagMill()
     }
 
+    //    Alloy    //
+
     private fun alloys() {
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800).save(output)
+        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.COPPER),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL, 2),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600).save(output)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(CommonMaterialKeys.COAL_COKE),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).saveSuffixed(output, "_from_coal_coke")
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL, 5600).save(output)
+        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK, 5600).saveSuffixed(output, "_alt")
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL),
-                itemCreator.fromTagKey(Tags.Items.END_STONES),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800).save(output)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400).save(output)
+    }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-            ).save(output)
+    @JvmStatic
+    private fun alloyFromData(data: HTMaterialRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
+        RagiumConst.ALLOYING,
+        AlloySmeltingRecipe(
+            data.getSizedIngredients(),
+            data.getOutputStacks()[0],
+            energy,
+            exp,
+        ),
+    ) { recipe: AlloySmeltingRecipe -> recipe.output().toImmutableOrThrow().getId() }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
+    //    Sag Mill    //
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
+    @JvmStatic
+    private fun sagMill() {
+        // Vanilla
+        sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM),
-                itemCreator.fromTagKey(ItemTags.SOUL_FIRE_BASE_BLOCKS),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-            ).save(output)
+        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+        // Ragium
+        sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
+        sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.WARPED_ORE)
+    }
+
+    @JvmStatic
+    private fun sagMillFromData(data: HTMaterialRecipeData, energy: Int = 2400) {
+        EIORecipeBuilder(
+            "sag_milling",
+            SagMillingRecipe(
+                data.getIngredient(0),
+                data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
+                    when {
+                        tagKey != null -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false)
+                        item != null -> SagMillingRecipe.OutputItem.of(item, count, chance, false)
+                        else -> error("")
+                    }
+                },
+                energy,
+                SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
+            ),
+        ) { recipe: SagMillingRecipe ->
+            recipe.outputs()[0].output.map(
+                { stack: ItemStack -> stack.toImmutableOrThrow().getId() },
+                { tagOutput: SagMillingRecipe.OutputItem.SizedTagOutput ->
+                    tagOutput.itemTag.location
+                },
+            )
+        }.save(output)
+    }
+
+    //    Extensions    //
+
+    private class EIORecipeBuilder<RECIPE : Recipe<*>>(
+        prefix: String,
+        private val recipe: RECIPE,
+        private val factory: (RECIPE) -> ResourceLocation,
+    ) : HTRecipeBuilder.Prefixed(prefix) {
+        override fun createRecipe(): RECIPE = recipe
+
+        override fun getPrimalId(): ResourceLocation = recipe.let(factory)
     }
 }

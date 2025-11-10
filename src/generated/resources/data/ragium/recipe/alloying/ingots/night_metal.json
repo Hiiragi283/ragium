@@ -1,0 +1,24 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    },
+    {
+      "count": 4,
+      "items": "#c:dusts/obsidian"
+    },
+    {
+      "count": 4,
+      "items": "#c:dusts/blackstone"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "#c:ingots/night_metal"
+  }
+}

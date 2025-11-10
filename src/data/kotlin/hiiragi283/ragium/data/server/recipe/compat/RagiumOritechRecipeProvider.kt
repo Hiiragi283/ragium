@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -9,16 +10,20 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
 import rearth.oritech.api.recipe.CentrifugeRecipeBuilder
 import rearth.oritech.api.recipe.FoundryRecipeBuilder
 import rearth.oritech.api.recipe.LaserRecipeBuilder
 import rearth.oritech.api.recipe.OritechRecipeBuilder
 import rearth.oritech.api.recipe.ParticleCollisionRecipeBuilder
+import rearth.oritech.api.recipe.PulverizerRecipeBuilder
 
 object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.ORITECH) {
     override fun buildRecipeInternal() {
@@ -27,64 +32,42 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundry()
         laser()
         particle()
+        pulverize()
     }
 
     @JvmStatic
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
-            .input(gemOrDust(VanillaMaterialKeys.DIAMOND))
+            .input(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
             .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .result(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .time(20)
             .export(output, RagiumMaterialKeys.RAGI_CRYSTAL)
+
+        atomicFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
+        atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
     private fun centrifuge() {
         CentrifugeRecipeBuilder
             .build()
-            .input(gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL))
+            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX)
     }
 
     @JvmStatic
     private fun foundry() {
-        FoundryRecipeBuilder
-            .build()
-            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .input(ingotOrDust(VanillaMaterialKeys.COPPER))
-            .result(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY))
-            .export(output, RagiumMaterialKeys.RAGI_ALLOY)
+        foundryFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
+        foundryFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
 
-        FoundryRecipeBuilder
-            .build()
-            .input(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .input(ingotOrDust(VanillaMaterialKeys.GOLD))
-            .result(RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            .export(output, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+        foundryFromData(RagiumMaterialRecipeData.AZURE_SHARD)
+        foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
 
-        FoundryRecipeBuilder
-            .build()
-            .input(gemOrDust(VanillaMaterialKeys.AMETHYST))
-            .input(gemOrDust(VanillaMaterialKeys.LAPIS))
-            .result(RagiumItems.getGem(RagiumMaterialKeys.AZURE), 2)
-            .export(output, "azure_shard")
-
-        FoundryRecipeBuilder
-            .build()
-            .input(gemOrDust(RagiumMaterialKeys.AZURE))
-            .input(ingotOrDust(VanillaMaterialKeys.IRON))
-            .result(RagiumItems.getIngot(RagiumMaterialKeys.AZURE_STEEL))
-            .export(output, RagiumMaterialKeys.AZURE_STEEL)
-
-        FoundryRecipeBuilder
-            .build()
-            .input(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
-            .input(ingotOrDust(RagiumMaterialKeys.AZURE_STEEL))
-            .result(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
-            .export(output, RagiumMaterialKeys.DEEP_STEEL)
+        foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
     }
 
     @JvmStatic
@@ -107,6 +90,18 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, "deep_scrap")
     }
 
+    @JvmStatic
+    private fun pulverize() {
+        // Vanilla
+        pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
+        pulverizerFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+        // Ragium
+        pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        pulverizerFromData(RagiumMaterialRecipeData.WARPED_ORE)
+    }
+
     //    Extension    //
 
     fun OritechRecipeBuilder.input(prefix: HTPrefixLike, material: HTMaterialLike): OritechRecipeBuilder =
@@ -120,5 +115,31 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     fun OritechRecipeBuilder.export(output: RecipeOutput, material: HTMaterialLike) {
         export(output, material.asMaterialName())
+    }
+
+    @JvmStatic
+    private fun atomicFromData(data: HTMaterialRecipeData) {
+        builderFromData(data, AtomicForgeRecipeBuilder.build())
+    }
+
+    @JvmStatic
+    private fun foundryFromData(data: HTMaterialRecipeData) {
+        builderFromData(data, FoundryRecipeBuilder.build())
+    }
+
+    @JvmStatic
+    private fun pulverizerFromData(data: HTMaterialRecipeData) {
+        builderFromData(data, PulverizerRecipeBuilder.build())
+    }
+
+    @JvmStatic
+    private fun builderFromData(data: HTMaterialRecipeData, builder: OritechRecipeBuilder) {
+        // Inputs
+        for ((ingredient: Ingredient, _) in data.getIngredients()) {
+            builder.input(ingredient)
+        }
+        // Output
+        builder.result(data.getOutputStacks())
+        builder.export(output, data.getModifiedId().path)
     }
 }

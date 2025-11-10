@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    }
+  ],
+  "type": "enderio:alloy_smelting",
+  "energy": 6400,
+  "experience": 0.3,
+  "inputs": [
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/night_metal"
+        },
+        {
+          "tag": "c:ingots/night_metal"
+        }
+      ],
+      "count": 4
+    },
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/eldritch_pearl"
+        },
+        {
+          "tag": "c:gems/eldritch_pearl"
+        }
+      ],
+      "count": 4
+    },
+    {
+      "count": 1,
+      "tag": "c:nether_stars"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ragium:iridescentium_ingot"
+  }
+}

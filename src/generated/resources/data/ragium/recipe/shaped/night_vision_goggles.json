@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/iron"
+      "tag": "c:ingots/night_metal"
     },
     "B": {
       "tag": "c:gems/ragi_crystal"

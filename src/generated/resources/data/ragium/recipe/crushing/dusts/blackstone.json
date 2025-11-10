@@ -1,0 +1,8 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": "minecraft:blackstone",
+  "result": {
+    "count": 4,
+    "id": "#c:dusts/blackstone"
+  }
+}

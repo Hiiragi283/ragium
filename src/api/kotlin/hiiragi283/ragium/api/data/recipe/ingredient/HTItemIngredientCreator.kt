@@ -20,8 +20,10 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
     override fun fromSet(holderSet: HolderSet<Item>, amount: Int): HTItemIngredient = HTItemIngredient.of(holderSet, amount)
 
     // Vanilla Ingredient
-    fun fromVanilla(vararg ingredients: Ingredient, count: Int = 1): HTItemIngredient =
-        fromVanilla(CompoundIngredient.of(*ingredients), count)
+    fun fromVanilla(vararg ingredients: Ingredient, count: Int = 1): HTItemIngredient = when (ingredients.size) {
+        1 -> fromVanilla(ingredients[0], count)
+        else -> fromVanilla(CompoundIngredient.of(*ingredients), count)
+    }
 
     fun fromVanilla(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredient = fromVanilla(ingredient.toVanilla(), count)
 
@@ -33,11 +35,9 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
     // Default Count
     fun fromItem(item: ItemLike, count: Int = 1): HTItemIngredient = from(item.asItem(), count)
 
-    fun fromItems(vararg items: ItemLike, count: Int = 1): HTItemIngredient = from(items.map(ItemLike::asItem), count)
+    fun fromItems(items: Iterable<ItemLike>, count: Int = 1): HTItemIngredient = from(items.map(ItemLike::asItem), count)
 
     fun fromHolder(holder: Holder<Item>): HTItemIngredient = fromHolder(holder, 1)
-
-    fun fromHolders(vararg holders: Holder<Item>): HTItemIngredient = fromHolders(*holders, amount = 1)
 
     fun fromHolders(holders: List<Holder<Item>>): HTItemIngredient = fromHolders(holders, amount = 1)
 
@@ -45,9 +45,7 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
 
     fun fromTagKey(tagKey: TagKey<Item>): HTItemIngredient = fromTagKey(tagKey, 1)
 
-    fun fromTagKeys(vararg tagKeys: TagKey<Item>): HTItemIngredient = fromTagKeys(*tagKeys, amount = 1)
-
-    fun fromTagKeys(tagKeys: Iterable<TagKey<Item>>): HTItemIngredient = fromTagKeys(tagKeys, 1)
+    fun fromTagKeys(tagKeys: List<TagKey<Item>>): HTItemIngredient = fromTagKeys(tagKeys, 1)
 
     // Material
     fun fromTagKey(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): HTItemIngredient =
@@ -55,10 +53,4 @@ interface HTItemIngredientCreator : HTIngredientCreator<Item, HTItemIngredient> 
 
     fun multiPrefixes(material: HTMaterialLike, vararg prefix: HTPrefixLike, count: Int = 1): HTItemIngredient =
         fromTagKeys(prefix.map { it.itemTagKey(material) }, count)
-
-    fun fuelOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
-
-    fun gemOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
-
-    fun ingotOrDust(material: HTMaterialLike, count: Int = 1): HTItemIngredient
 }

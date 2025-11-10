@@ -15,12 +15,12 @@ enum class MekanismMaterialPrefixes : HTPrefixLike {
         override val prefix: HTMaterialPrefix = HTMaterialPrefix(
             "enriched",
             "${RagiumConst.MEKANISM}:enriched",
-            "${RagiumAPI.MOD_ID}:enriched/%s",
+            tagPath = "${RagiumAPI.MOD_ID}:enriched/%s",
         )
     },
     ;
 
-    protected open val prefix: HTMaterialPrefix = HTMaterialPrefix(name.lowercase())
+    protected open val prefix: HTMaterialPrefix = HTMaterialPrefix(name.lowercase(), "${RagiumConst.MEKANISM}:${name.lowercase()}")
 
     override fun asMaterialPrefix(): HTMaterialPrefix = prefix
 }

@@ -131,15 +131,21 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
+        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+
+    @JvmField
+    val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "sooty_cobblestone",
+        copyOf(Blocks.COBBLESTONE).mapColor(MapColor.COLOR_BLACK),
+    )
+
+    @JvmField
     val CRIMSON_SOIL: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
     )
-
-    @JvmField
-    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
-        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val WARPED_WART: HTDeferredBlock<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(
@@ -151,8 +157,8 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
+        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: HTBasicDeferredBlock<HTEnchantPowerBlock> =
@@ -162,6 +168,7 @@ object RagiumBlocks {
 
     //    Materials    //
 
+    @JvmStatic
     val ORES: ImmutableTable<HTOreVariant, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         HTOreVariant.entries.forEach { variant: HTOreVariant ->
             val pattern: String = when (variant) {
@@ -187,6 +194,7 @@ object RagiumBlocks {
         }
     }
 
+    @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
@@ -200,7 +208,7 @@ object RagiumBlocks {
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
             RagiumMaterialKeys.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
-            RagiumMaterialKeys.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
+            RagiumMaterialKeys.NIGHT_METAL to copyOf(Blocks.GOLD_BLOCK, MapColor.COLOR_BLACK),
             RagiumMaterialKeys.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
             FoodMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),

@@ -191,18 +191,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .building(RagiumBlocks.DEVICE_CASING)
             .cross8()
-            .define('A', Items.BLACK_CONCRETE)
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
             .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
             .save(output)
-
-        HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING, 4)
-            .cross8()
-            .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            .saveSuffixed(output, "_with_obsidian")
 
         // Basic
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
@@ -263,7 +255,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ACA",
                     "ABA",
                 ).define('A', pair.first, pair.second)
-                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('C', Tags.Items.CHESTS_WOODEN)
                 .save(output)
         }
@@ -290,7 +282,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ACA",
                     "ABA",
                 ).define('A', pair.first, pair.second)
-                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('C', Tags.Items.BUCKETS_EMPTY)
                 .save(output)
         }
@@ -304,7 +296,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
                 "ABA",
             ).define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-            .define('B', Items.SMOOTH_STONE_SLAB)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
 
@@ -330,7 +322,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "C C",
                     "ABA",
                 ).define('A', pair.first, pair.second)
-                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('C', Tags.Items.GLASS_BLOCKS)
                 .save(output)
         }

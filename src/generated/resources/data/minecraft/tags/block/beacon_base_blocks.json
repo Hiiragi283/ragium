@@ -2,17 +2,14 @@
   "values": [
     "ragium:advanced_ragi_alloy_block",
     "ragium:azure_steel_block",
-    "ragium:chocolate_block",
-    "ragium:cooked_meat_block",
     "ragium:crimson_crystal_block",
     "ragium:deep_steel_block",
     "ragium:eldritch_pearl_block",
-    "ragium:gildium_block",
     "ragium:iridescentium_block",
+    "ragium:night_metal_block",
     "ragium:plastic_block",
     "ragium:ragi_alloy_block",
     "ragium:ragi_crystal_block",
-    "ragium:raw_meat_block",
     "ragium:warped_crystal_block"
   ]
 }

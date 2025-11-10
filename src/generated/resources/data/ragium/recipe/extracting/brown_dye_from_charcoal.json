@@ -1,12 +1,6 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "type": "neoforge:or",
-    "values": [
-      "#c:dusts/charcoal",
-      "#c:fuels/charcoal"
-    ]
-  },
+  "ingredient": "#c:dusts/charcoal",
   "result": {
     "count": 1,
     "id": "minecraft:brown_dye"

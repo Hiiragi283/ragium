@@ -1,12 +1,6 @@
 {
   "type": "ragium:melting",
-  "ingredient": {
-    "type": "neoforge:or",
-    "values": [
-      "#c:dusts/coal",
-      "#c:fuels/coal"
-    ]
-  },
+  "ingredient": "#c:dusts/coal",
   "result": {
     "amount": 125,
     "id": "ragium:crude_oil"

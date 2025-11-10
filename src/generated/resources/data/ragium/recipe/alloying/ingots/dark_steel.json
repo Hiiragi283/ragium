@@ -1,8 +1,11 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio_base"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/dark_steel"
+      }
     }
   ],
   "type": "ragium:alloying",
@@ -10,21 +13,11 @@
     {
       "type": "neoforge:or",
       "values": [
-        "#c:dusts/iron",
-        "#c:ingots/iron"
+        "#c:dusts/steel",
+        "#c:ingots/steel"
       ]
     },
-    {
-      "count": 2,
-      "items": {
-        "type": "neoforge:or",
-        "values": [
-          "#c:dusts/coal",
-          "#c:fuels/coal"
-        ]
-      }
-    },
-    "#c:obsidians"
+    "#c:obsidians/normal"
   ],
   "result": {
     "count": 1,

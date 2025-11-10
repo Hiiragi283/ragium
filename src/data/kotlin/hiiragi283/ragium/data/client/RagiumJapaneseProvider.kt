@@ -94,14 +94,17 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
+
         add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
-        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
+        add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
+
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
-        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み", "経験値ベリー")
         add(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.EXP_BERRIES, "経験値ベリーの茂み", "経験値ベリー")
+        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
 
         add(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
         add(RagiumBlocks.AZURE_TILES, "紺碧のタイル")
@@ -210,8 +213,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumFluidContents.GILDED_LAVA, "金メッキされた溶岩")
     }
 
     private fun item() {
@@ -233,9 +234,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool
-        add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
-        add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
-
         add(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
         add(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")
         add(RagiumItems.HUGE_DRUM_UPGRADE, "ドラム強化（特大）")
@@ -253,7 +251,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.TELEPORT_KEY, "転位の鍵")
         add(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         add(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
-        add(RagiumItems.WRENCH, "らぎレンチ")
         // Food
         add(RagiumItems.ICE_CREAM, "アイスクリーム")
         add(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
@@ -284,7 +281,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
-        add(RagiumItems.PLATING_CATALYST, "メッキ触媒")
         add(RagiumItems.POLYMER_CATALYST, "重合触媒")
         add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         add(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
@@ -485,6 +481,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
+
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "夜金強化")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "夜金の装備品")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "夜金インゴット")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "金製の防具，武器，道具を置いてください")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "夜金インゴットを置いてください")
 
         add(RagiumTranslation.ITEM_POTION, "%sのポーション")
 

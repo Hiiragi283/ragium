@@ -7,7 +7,8 @@
           {
             "items": [
               "ragium:azure_steel_upgrade_smithing_template",
-              "ragium:deep_steel_upgrade_smithing_template"
+              "ragium:deep_steel_upgrade_smithing_template",
+              "ragium:night_metal_upgrade_smithing_template"
             ]
           }
         ]

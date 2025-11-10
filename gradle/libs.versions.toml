@@ -27,7 +27,7 @@ magitech = "0.12.1"
 mek = "1.21.1-10.7.17.83"
 oritech = "0.19.3"
 pneuma = "8.2.13+mc1.21.1"
-replica = "1.21-1.2.1"
+replica = "1.21-1.2.3"
 rs2 = "2.0.0-beta.10"
 
 arch = "13.0.8"
@@ -78,7 +78,6 @@ mods-impl = [
     "immersive",
     "jade",
     "kc",
-    "magitech",
     "pneuma",
     "replica",
     # non-direct dependencies

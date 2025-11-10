@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/dark_steel"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
+    },
+    {
+      "count": 2,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:dusts/coal",
+          "#c:fuels/coal"
+        ]
+      }
+    },
+    "#c:obsidians/normal"
+  ],
+  "result": {
+    "count": 1,
+    "id": "#c:ingots/dark_steel"
+  }
+}

@@ -13,7 +13,7 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<Sin
     HTMultiOutputEmiRecipe<SingleItemRecipe>(category, holder) {
     init {
         addInput(HTItemIngredient.of(recipe.ingredients[0]))
-        addOutputs(HTResultHelper.INSTANCE.item(recipe.getResultItem(RagiumEmiPlugin.registryAccess)))
+        addOutputs(HTResultHelper.item(recipe.getResultItem(RagiumEmiPlugin.registryAccess)))
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

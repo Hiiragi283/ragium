@@ -14,9 +14,9 @@ fun Fluid.toHolderLike(): HTHolderLike = HTHolderLike.fromFluid(this)
 /**
  * `block/`で前置された[HTHolderLike.getId]
  */
-val HTHolderLike.blockId: ResourceLocation get() = getId().withPrefix("block/")
+val HTHolderLike.blockId: ResourceLocation get() = getIdWithPrefix("block/")
 
 /**
  * `item/`で前置された[HTHolderLike.getId]
  */
-val HTHolderLike.itemId: ResourceLocation get() = getId().withPrefix("item/")
+val HTHolderLike.itemId: ResourceLocation get() = getIdWithPrefix("item/")

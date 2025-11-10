@@ -1,6 +1,9 @@
 {
   "values": [
+    "ragium:chocolate_block",
+    "ragium:cooked_meat_block",
     "ragium:crimson_soil",
+    "ragium:raw_meat_block",
     "ragium:silt"
   ]
 }

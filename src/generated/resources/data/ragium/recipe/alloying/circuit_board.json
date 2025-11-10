@@ -2,13 +2,7 @@
   "type": "ragium:alloying",
   "ingredients": [
     "#ragium:plastics",
-    {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/quartz",
-        "#c:gems/quartz"
-      ]
-    }
+    "#c:dusts/quartz"
   ],
   "result": {
     "count": 4,

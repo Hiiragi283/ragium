@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    }
+  ],
+  "type": "enderio:sag_milling",
+  "energy": 2400,
+  "input": {
+    "tag": "c:gems/amethyst"
+  },
+  "outputs": [
+    {
+      "item": {
+        "count": 1,
+        "tag": "c:dusts/amethyst"
+      }
+    }
+  ]
+}

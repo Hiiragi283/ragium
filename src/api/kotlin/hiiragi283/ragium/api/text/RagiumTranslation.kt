@@ -26,6 +26,13 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION("upgrade", "deep_steel_upgrade", "base_slot_description"),
     DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION("upgrade", "deep_steel_upgrade", "additions_slot_description"),
 
+    // Night Metal Upgrade
+    NIGHT_METAL_UPGRADE("upgrade", "night_metal_upgrade"),
+    NIGHT_METAL_UPGRADE_APPLIES_TO("upgrade", "night_metal_upgrade", "applies_to"),
+    NIGHT_METAL_UPGRADE_INGREDIENTS("upgrade", "night_metal_upgrade", "ingredients"),
+    NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION("upgrade", "night_metal_upgrade", "base_slot_description"),
+    NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION("upgrade", "night_metal_upgrade", "additions_slot_description"),
+
     // Item Name
     ITEM_POTION("item", RagiumAPI.MOD_ID, "potion", "effect"),
 

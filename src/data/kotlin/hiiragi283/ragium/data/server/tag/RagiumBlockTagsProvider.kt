@@ -1,5 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.ragium.api.collection.ImmutableMultiMap
+import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
@@ -11,6 +13,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
@@ -32,6 +35,16 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             VanillaMaterialKeys.GLOWSTONE to Blocks.GLOWSTONE.toHolderLike(),
             VanillaMaterialKeys.QUARTZ to Blocks.QUARTZ_BLOCK.toHolderLike(),
         )
+
+        @JvmStatic
+        val STORAGE_BLOCK_TOOL: ImmutableMultiMap<HTMaterialKey, TagKey<Block>> = buildMultiMap {
+            this[FoodMaterialKeys.CHOCOLATE] = BlockTags.MINEABLE_WITH_PICKAXE
+            this[FoodMaterialKeys.CHOCOLATE] = BlockTags.MINEABLE_WITH_SHOVEL
+
+            this[FoodMaterialKeys.RAW_MEAT] = BlockTags.MINEABLE_WITH_SHOVEL
+
+            this[FoodMaterialKeys.COOKED_MEAT] = BlockTags.MINEABLE_WITH_SHOVEL
+        }
     }
 
     override fun addTags(builder: HTTagBuilder<Block>) {
@@ -51,6 +64,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         buildList {
             add(RagiumBlocks.AZURE_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
+            add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
 
@@ -117,8 +131,20 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CRATES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
+
+        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
+            if (prefix.isOf(CommonMaterialPrefixes.STORAGE_BLOCK)) {
+                val tagKeys: Collection<TagKey<Block>> = STORAGE_BLOCK_TOOL[key]
+                    .takeUnless(Collection<TagKey<Block>>::isEmpty)
+                    ?: listOf(BlockTags.MINEABLE_WITH_PICKAXE)
+                for (tagKey: TagKey<Block> in tagKeys) {
+                    builder.add(tagKey, block)
+                }
+            } else {
+                builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+            }
+        }
         // Shovel
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
@@ -153,12 +179,15 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
                 builder.add(BlockTags.DRAGON_IMMUNE, ore)
             }
         }
-        builder.addMaterial(CommonMaterialPrefixes.ORE, RagiumMaterialKeys.DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
+        builder.addTag(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
+        builder.add(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
         // Material
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
             builder.addMaterial(prefix, key, block)
-            if (prefix == CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix()) {
-                builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+            if (prefix.isOf(CommonMaterialPrefixes.STORAGE_BLOCK)) {
+                if (STORAGE_BLOCK_TOOL[key].isEmpty()) {
+                    builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+                }
             }
         }
 

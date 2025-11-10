@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/night_metal"
+    }
+  },
+  "pattern": [
+    "A A",
+    "A A",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:night_metal_upgrade_smithing_template"
+  }
+}

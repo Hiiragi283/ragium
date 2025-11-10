@@ -18,7 +18,7 @@ abstract class HTChancedItemRecipeBase<INPUT : RecipeInput> : HTChancedItemRecip
     final override fun getResultItems(input: INPUT): List<HTChancedItemResult> = results
 
     final override fun assembleItem(input: INPUT, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, results.getOrNull(0))
+        getItemResult(input, registries, results.getOrNull(0)?.base)
 
     final override fun isIncomplete(): Boolean =
         isIncompleteIngredient() || results.isEmpty() || results.all(HTChancedItemResult::hasNoMatchingStack)

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -34,7 +33,7 @@ object RagiumRecipeBiCodecs {
         .composite(
             ITEM_CODEC.listOf(2, 3).fieldOf("ingredients"),
             HTAlloyingRecipe::ingredients,
-            HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
+            HTItemResult.CODEC.fieldOf("result"),
             HTAlloyingRecipe::result,
             ::HTAlloyingRecipe,
         )
@@ -54,7 +53,7 @@ object RagiumRecipeBiCodecs {
         .composite(
             ITEM_CODEC.listOf(1, 3).fieldOf("ingredient"),
             HTEnchantingRecipe::ingredients,
-            HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
+            HTItemResult.CODEC.fieldOf("result"),
             HTEnchantingRecipe::result,
             ::HTEnchantingRecipe,
         )
@@ -65,7 +64,7 @@ object RagiumRecipeBiCodecs {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         ITEM_CODEC.fieldOf("ingredient"),
         HTItemToItemRecipe::ingredient,
-        HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
+        HTItemResult.CODEC.fieldOf("result"),
         HTItemToItemRecipe::result,
         factory::create,
     )
@@ -76,7 +75,7 @@ object RagiumRecipeBiCodecs {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         ITEM_CODEC.fieldOf("ingredient"),
         HTItemToFluidRecipe::ingredient,
-        HTResultHelper.INSTANCE.fluidCodec().fieldOf("result"),
+        HTFluidResult.CODEC.fieldOf("result"),
         HTItemToFluidRecipe::result,
         factory::create,
     )
@@ -89,7 +88,7 @@ object RagiumRecipeBiCodecs {
         HTItemWithCatalystToItemRecipe::ingredient,
         ITEM_CODEC.fieldOf("catalyst"),
         HTItemWithCatalystToItemRecipe::catalyst,
-        HTResultHelper.INSTANCE.itemCodec().fieldOf("result"),
+        HTItemResult.CODEC.fieldOf("result"),
         HTItemWithCatalystToItemRecipe::result,
         factory::create,
     )
@@ -115,9 +114,9 @@ object RagiumRecipeBiCodecs {
         HTFluidTransformRecipeBase::fluidIngredient,
         ITEM_CODEC.optionalFieldOf("item_ingredient"),
         HTFluidTransformRecipeBase::itemIngredient,
-        HTResultHelper.INSTANCE.itemCodec().optionalFieldOf("item_result"),
+        HTItemResult.CODEC.optionalFieldOf("item_result"),
         HTFluidTransformRecipeBase::itemResult,
-        HTResultHelper.INSTANCE.fluidCodec().optionalFieldOf("fluid_result"),
+        HTFluidResult.CODEC.optionalFieldOf("fluid_result"),
         HTFluidTransformRecipeBase::fluidResult,
         factory::create,
     )

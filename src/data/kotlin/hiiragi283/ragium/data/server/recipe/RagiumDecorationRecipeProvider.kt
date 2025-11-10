@@ -37,14 +37,14 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .building(RagiumBlocks.AZURE_TILES, 8)
             .hollow8()
             .define('A', Items.DEEPSLATE_TILES)
-            .define('B', gemOrDust(RagiumMaterialKeys.AZURE))
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE)
             .save(output)
         // Eldritch Stone
         HTShapedRecipeBuilder
             .building(RagiumBlocks.ELDRITCH_STONE, 8)
             .hollow8()
             .define('A', Tags.Items.END_STONES)
-            .define('B', gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL))
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -136,7 +136,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             HTShapedRecipeBuilder
                 .building(RagiumBlocks.getTintedGlass(key))
                 .hollow4()
-                .define('A', gemOrDust(VanillaMaterialKeys.AMETHYST))
+                .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
                 .define('B', CommonMaterialPrefixes.GLASS_BLOCK, key)
                 .save(output)
         }

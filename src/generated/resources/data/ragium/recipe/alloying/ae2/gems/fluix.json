@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredients": [
+    "ae2:charged_certus_quartz_crystal",
+    "#c:dusts/redstone",
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/quartz",
+        "#c:gems/quartz"
+      ]
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "#c:gems/fluix"
+  }
+}

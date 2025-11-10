@@ -114,4 +114,29 @@ object RagiumEquipmentMaterials {
         toughness = 3f,
         resistance = 0.2f,
     )
+
+    /**
+     * @see ArmorMaterials.GOLD
+     * @see Tiers.GOLD
+     */
+    @JvmField
+    val NIGHT_METAL = HTBasicEquipmentMaterial(
+        RagiumMaterialKeys.NIGHT_METAL,
+        axeDamage = 5f,
+        axeAttackSpeed = -3f,
+        durability = 256,
+        miningSpeed = 15f,
+        baseAttackDamage = 3f,
+        enchantability = 25,
+        incorrectBlockTag = Tags.Blocks.NEEDS_NETHERITE_TOOL,
+        defenceMap = mapOf(
+            ArmorItem.Type.BOOTS to 2,
+            ArmorItem.Type.LEGGINGS to 5,
+            ArmorItem.Type.CHESTPLATE to 6,
+            ArmorItem.Type.HELMET to 2,
+            ArmorItem.Type.BODY to 5,
+        ),
+        armorMultiplier = 15,
+        equipSound = SoundEvents.ARMOR_EQUIP_GOLD,
+    )
 }

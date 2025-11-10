@@ -39,7 +39,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             itemCreator.fromItem(Items.BOWL),
             Items.MUSHROOM_STEW.toHolderLike(),
             RagiumFluidContents.MUSHROOM_STEW,
-            250,
         )
 
         // Chocolate
@@ -123,7 +122,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             itemCreator.fromItem(Items.GLASS_BOTTLE),
             Items.HONEY_BOTTLE.toHolderLike(),
             RagiumFluidContents.HONEY,
-            250,
         )
     }
 

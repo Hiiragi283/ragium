@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -16,6 +15,9 @@ object RagiumCommonTags {
 
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Block> = create("ores_in_ground", "end_stone")
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Block> = create("ores", "deep_scrap")
 
         @JvmStatic
         private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
@@ -35,7 +37,7 @@ object RagiumCommonTags {
 
     object Items {
         @JvmField
-        val COAL_COKE: TagKey<Item> = create(RagiumConst.COAL_COKE)
+        val COAL_COKE: TagKey<Item> = create("coal_coke")
 
         @JvmField
         val FUELS_BIO: TagKey<Item> = create("fuels/bio")
@@ -45,6 +47,9 @@ object RagiumCommonTags {
 
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Item> = create("ores", "deep_scrap")
 
         @JvmField
         val PLASTIC: TagKey<Item> = create("plastic")

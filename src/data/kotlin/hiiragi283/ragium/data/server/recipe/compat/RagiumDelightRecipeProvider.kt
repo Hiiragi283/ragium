@@ -31,7 +31,6 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             itemCreator.fromItem(Items.GLASS_BOTTLE),
             ModItems.MILK_BOTTLE.toHolderLike(),
             HTFluidContent.MILK,
-            250,
         )
         // Rich soil
         HTItemWithFluidToChancedItemRecipeBuilder

@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:metallurgic_infusing",
+  "chemical_input": {
+    "amount": 10,
+    "chemical": "mekanism:gold"
+  },
+  "item_input": {
+    "count": 4,
+    "tag": "c:dusts/obsidian"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:night_metal_ingot"
+  },
+  "per_tick_usage": false
+}

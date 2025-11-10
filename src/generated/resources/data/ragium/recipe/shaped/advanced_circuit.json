@@ -2,14 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": [
-      {
-        "tag": "c:dusts/azure"
-      },
-      {
-        "tag": "c:gems/azure"
-      }
-    ],
+    "A": {
+      "tag": "c:dusts/azure"
+    },
     "B": {
       "tag": "c:ingots/gold"
     },

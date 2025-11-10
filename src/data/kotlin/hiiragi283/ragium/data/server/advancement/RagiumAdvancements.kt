@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.registry.createKey
 import net.minecraft.core.registries.Registries
@@ -13,25 +12,25 @@ object RagiumAdvancements {
 
     //    Raginite    //
 
-    val RAGINITE: HTAdvancementKey = create(RagiumConst.RAGINITE)
+    val RAGINITE: HTAdvancementKey = create("raginite")
 
-    val RAGI_CHERRY: HTAdvancementKey = create(RagiumConst.RAGI_CHERRY)
+    val RAGI_CHERRY: HTAdvancementKey = create("ragi_cherry")
 
-    val RAGI_CHERRY_TOAST: HTAdvancementKey = create(RagiumConst.RAGI_CHERRY + "_toast")
+    val RAGI_CHERRY_TOAST: HTAdvancementKey = create("ragi_cherry_toast")
 
-    val RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.RAGI_ALLOY)
+    val RAGI_ALLOY: HTAdvancementKey = create("ragi_alloy")
 
     val ALLOY_SMELTER: HTAdvancementKey = create("alloy_smelter")
 
     // Advanced
-    val ADV_RAGI_ALLOY: HTAdvancementKey = create(RagiumConst.ADVANCED_RAGI_ALLOY)
+    val ADV_RAGI_ALLOY: HTAdvancementKey = create("advanced_ragi_alloy")
 
     val MELTER: HTAdvancementKey = create("melter")
 
     // Elite
-    val RAGI_CRYSTAL: HTAdvancementKey = create(RagiumConst.RAGI_CRYSTAL)
+    val RAGI_CRYSTAL: HTAdvancementKey = create("ragi_crystal")
 
-    val RAGI_CRYSTAL_HAMMER: HTAdvancementKey = create(RagiumConst.RAGI_CRYSTAL + "_hammer")
+    val RAGI_CRYSTAL_HAMMER: HTAdvancementKey = create("ragi_crystal_hammer")
 
     val RAGI_TICKET: HTAdvancementKey = create("ragi_ticket")
 
@@ -39,7 +38,7 @@ object RagiumAdvancements {
 
     val AZURE_SHARD: HTAdvancementKey = create("azure_shard")
 
-    val AZURE_STEEL: HTAdvancementKey = create(RagiumConst.AZURE_STEEL)
+    val AZURE_STEEL: HTAdvancementKey = create("azure_steel")
 
     val AZURE_GEARS: HTAdvancementKey = create("azure_gears")
 
@@ -49,7 +48,7 @@ object RagiumAdvancements {
 
     val RESONANT_DEBRIS: HTAdvancementKey = create("resonant_debris")
 
-    val DEEP_STEEL: HTAdvancementKey = create(RagiumConst.DEEP_STEEL)
+    val DEEP_STEEL: HTAdvancementKey = create("deep_steel")
 
     val DEEP_GEARS: HTAdvancementKey = create("deep_gears")
 
@@ -57,13 +56,13 @@ object RagiumAdvancements {
 
     //    Crimson    //
 
-    val CRIMSON_CRYSTAL: HTAdvancementKey = create(RagiumConst.CRIMSON_CRYSTAL)
+    val CRIMSON_CRYSTAL: HTAdvancementKey = create("crimson_crystal")
 
     val CRIMSON_SOIL: HTAdvancementKey = create("crimson_soil")
 
     //    Warped    //
 
-    val WARPED_CRYSTAL: HTAdvancementKey = create(RagiumConst.WARPED_CRYSTAL)
+    val WARPED_CRYSTAL: HTAdvancementKey = create("warped_crystal")
 
     val DIM_ANCHOR: HTAdvancementKey = create("dimensional_anchor")
 
@@ -71,7 +70,7 @@ object RagiumAdvancements {
 
     //    Eldritch    //
 
-    val ELDRITCH_PEARL: HTAdvancementKey = create(RagiumConst.ELDRITCH_PEARL)
+    val ELDRITCH_PEARL: HTAdvancementKey = create("eldritch_pearl")
 
     val ELDRITCH_EGG: HTAdvancementKey = create("eldritch_egg")
 
@@ -79,7 +78,7 @@ object RagiumAdvancements {
 
     //    Iridescentium    //
 
-    val IRIDESCENTIUM: HTAdvancementKey = create(RagiumConst.IRIDESCENTIUM)
+    val IRIDESCENTIUM: HTAdvancementKey = create("iridescentium")
 
     val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")
 

@@ -3,21 +3,9 @@
   "ingredients": [
     {
       "count": 2,
-      "items": {
-        "type": "neoforge:or",
-        "values": [
-          "#c:dusts/gold",
-          "#c:ingots/gold"
-        ]
-      }
+      "items": "#c:ingots/gold"
     },
-    {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/azure",
-        "#c:gems/azure"
-      ]
-    },
+    "#c:dusts/azure",
     "ragium:circuit_board"
   ],
   "result": {

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:night_metal_upgrade_smithing_template"
+    },
+    {
+      "tag": "c:ingots/night_metal"
+    },
+    {
+      "tag": "c:ingots/night_metal"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:night_metal_upgrade_smithing_template"
+  }
+}

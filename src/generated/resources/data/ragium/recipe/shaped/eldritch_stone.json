@@ -5,14 +5,9 @@
     "A": {
       "tag": "c:end_stones"
     },
-    "B": [
-      {
-        "tag": "c:dusts/eldritch_pearl"
-      },
-      {
-        "tag": "c:gems/eldritch_pearl"
-      }
-    ]
+    "B": {
+      "tag": "c:gems/eldritch_pearl"
+    }
   },
   "pattern": [
     "AAA",

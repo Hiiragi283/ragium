@@ -97,14 +97,17 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
+
         add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
-        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
+        add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
+
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
-        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
         add(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.EXP_BERRIES, "Exp Berries Bush", "Exp Berries")
+        add(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
 
         add(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
         add(RagiumBlocks.AZURE_TILES, "Azure Tiles")
@@ -214,8 +217,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumFluidContents.GILDED_LAVA, "Gilded Lava")
     }
 
     private fun item() {
@@ -237,9 +238,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
-        add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
-        add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
-
         add(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
         add(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
         add(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
@@ -257,7 +255,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.TELEPORT_KEY, "Teleport Key")
         add(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         add(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
-        add(RagiumItems.WRENCH, "Ragi-Wrench")
         // Food
         add(RagiumItems.ICE_CREAM, "Ice Cream")
         add(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
@@ -278,7 +275,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
         add(RagiumItems.LED, "Light Emitting Diode")
         add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
-        add(RagiumItems.PLATING_CATALYST, "Plating Catalyst")
         add(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
         add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         add(RagiumItems.REDSTONE_BOARD, "Redstone Board")
@@ -479,6 +475,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
         add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
+
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "Night Metal Upgrade")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "Night Metal Equipment")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "Night Metal Ingot")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add golden armor, weapon, ot tool")
+        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Night Metal Ingot")
 
         add(RagiumTranslation.ITEM_POTION, "Potion of %s")
 
