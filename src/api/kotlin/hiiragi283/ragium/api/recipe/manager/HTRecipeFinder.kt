@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe.manager
 
-import hiiragi283.ragium.api.RagiumPlatform
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -28,6 +27,4 @@ fun interface HTRecipeFinder<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
         level: Level,
         lastRecipe: ResourceLocation?,
     ): RecipeHolder<RECIPE>?
-
-    fun createCache(): HTRecipeCache<INPUT, RECIPE> = RagiumPlatform.INSTANCE.createCache(this)
 }

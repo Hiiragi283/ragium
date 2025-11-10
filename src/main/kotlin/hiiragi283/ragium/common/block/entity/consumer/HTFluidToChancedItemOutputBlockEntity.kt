@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
@@ -45,7 +46,7 @@ abstract class HTFluidToChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE
             blockHolder: Holder<Block>,
             pos: BlockPos,
             state: BlockState,
-        ) : this(finder.createCache(), blockHolder, pos, state)
+        ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = cache.getFirstRecipe(input, level)
     }

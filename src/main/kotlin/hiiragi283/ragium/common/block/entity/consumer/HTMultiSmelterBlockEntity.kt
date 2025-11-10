@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.recipe.VanillaRecipeTypes
+import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -50,14 +50,20 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
-    private val smeltingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.SMELTING.createCache()
-    private val blastingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.BLASTING.createCache()
-    private val smokingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.SMOKING.createCache()
+    private val smeltingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
+        VanillaRecipeTypes.SMELTING,
+    )
+    private val blastingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
+        VanillaRecipeTypes.BLASTING,
+    )
+    private val smokingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
+        VanillaRecipeTypes.SMOKING,
+    )
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): Pair<HTVanillaCookingRecipe, Int>? {
-        val cache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = when (catalystSlot.getStack()?.value()) {
+        val cache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = when (catalystSlot.getStack()?.value()) {
             Items.BLAST_FURNACE -> blastingCache
             Items.SMOKER -> smokingCache
             else -> smeltingCache

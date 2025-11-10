@@ -55,6 +55,13 @@ object RagiumBlockTypes {
 
     //    Consumer    //
 
+    // Vanilla
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.AUTO_SMITHING_TABLE }
+        .addConsumerTier(HTMachineTier.BASIC)
+        .build()
+
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTMachineBlockType = HTMachineBlockType

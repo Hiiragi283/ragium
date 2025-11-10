@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTAutoSmithingTableBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
@@ -127,6 +128,13 @@ object RagiumBlockEntityTypes {
     )
 
     //    Consumer    //
+
+    // Vanilla
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
+        "auto_smithing_table",
+        ::HTAutoSmithingTableBlockEntity,
+    )
 
     // Basic
     @JvmField
@@ -313,6 +321,8 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Consumer
+        registerHandler(event, AUTO_SMITHING_TABLE.get())
+
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, BLOCK_BREAKER.get())
         registerHandler(event, COMPRESSOR.get())

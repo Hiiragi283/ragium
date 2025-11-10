@@ -10,8 +10,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
-import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -20,7 +18,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
 import hiiragi283.ragium.impl.material.RagiumMaterialRecipeManager
-import hiiragi283.ragium.impl.recipe.manager.HTSimpleRecipeCache
 import hiiragi283.ragium.impl.value.HTJsonValueInput
 import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
@@ -35,8 +32,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
@@ -94,10 +89,6 @@ class RagiumPlatformImpl : RagiumPlatform {
     //    Recipe    //
 
     override fun getMaterialRecipeManager(): HTMaterialRecipeManager = RagiumMaterialRecipeManager
-
-    override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(
-        finder: HTRecipeFinder<INPUT, RECIPE>,
-    ): HTRecipeCache<INPUT, RECIPE> = HTSimpleRecipeCache(finder)
 
     //    Server    //
 

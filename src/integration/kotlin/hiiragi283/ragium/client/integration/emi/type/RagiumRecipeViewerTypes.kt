@@ -22,6 +22,9 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
+/**
+ * @see mekanism.client.recipe_viewer.type.RecipeViewerRecipeType
+ */
 object RagiumRecipeViewerTypes {
     @JvmField
     val MACHINE_BOUNDS = HTBounds(HTSlotHelper.getSlotPosX(1) - 1, HTSlotHelper.getSlotPosY(0) - 1, 7 * 18, 3 * 18)

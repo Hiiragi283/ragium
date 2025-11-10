@@ -8,6 +8,7 @@ import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -99,6 +100,8 @@ class RagiumEmiPlugin : EmiPlugin {
         addGenerators(registry)
         addProcessors(registry)
         addInteractions(registry)
+
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMITHING, RagiumBlocks.AUTO_SMITHING_TABLE.toEmi())
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
@@ -309,7 +312,13 @@ class RagiumEmiPlugin : EmiPlugin {
         factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): HTEmiRecipeCategory = addRecipes(registry, registerCategory(registry, viewerType), recipes, factory)
 
-    private inline fun <CATEGORY : EmiRecipeCategory, INPUT : RecipeInput, BASE : Recipe<INPUT>, reified RECIPE : BASE, EMI_RECIPE : EmiRecipe> addFakeRecipes(
+    private inline fun <
+        CATEGORY : EmiRecipeCategory,
+        INPUT : RecipeInput,
+        BASE : Recipe<INPUT>,
+        reified RECIPE : BASE,
+        EMI_RECIPE : EmiRecipe,
+    > addFakeRecipes(
         registry: EmiRegistry,
         category: CATEGORY,
         viewerType: HTRecipeType<INPUT, BASE>,

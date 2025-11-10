@@ -423,6 +423,11 @@ object RagiumBlocks {
 
     //    Consumer    //
 
+    // Vanilla
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("auto_smithing_table", RagiumBlockTypes.AUTO_SMITHING_TABLE, machineProperty())
+
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
