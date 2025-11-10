@@ -34,11 +34,11 @@ object RagiumMiscRegister {
         }
         // Recipe Type
         event.register(Registries.RECIPE_TYPE) { helper ->
-            register(helper, RagiumRecipeTypes.SAWMILL)
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
+            register(helper, RagiumRecipeTypes.CUTTING)
             register(helper, RagiumRecipeTypes.ENCHANTING)
             register(helper, RagiumRecipeTypes.EXTRACTING)
             register(helper, RagiumRecipeTypes.FLUID_TRANSFORM)

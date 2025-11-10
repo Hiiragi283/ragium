@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
+import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 
 class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Factory<*>, val ingredient: HTItemIngredient) :
     HTChancedItemRecipeBuilder<HTItemToChancedItemRecipeBuilder>(prefix) {
@@ -12,6 +13,10 @@ class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Fact
         @JvmStatic
         fun crushing(ingredient: HTItemIngredient): HTItemToChancedItemRecipeBuilder =
             HTItemToChancedItemRecipeBuilder(RagiumConst.CRUSHING, ::HTCrushingRecipe, ingredient)
+
+        @JvmStatic
+        fun cutting(ingredient: HTItemIngredient): HTItemToChancedItemRecipeBuilder =
+            HTItemToChancedItemRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe, ingredient)
     }
 
     override fun createRecipe(): HTItemToChancedItemRecipe = factory.create(ingredient, results)

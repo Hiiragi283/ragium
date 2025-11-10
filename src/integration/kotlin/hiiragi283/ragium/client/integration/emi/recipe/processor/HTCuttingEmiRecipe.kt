@@ -1,19 +1,16 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
-import hiiragi283.ragium.client.integration.emi.RagiumEmiPlugin
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputEmiRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemToChancedItemRecipeBase
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.SingleItemRecipe
 
-class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<SingleItemRecipe>) :
-    HTMultiOutputEmiRecipe<SingleItemRecipe>(category, holder) {
+class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToChancedItemRecipeBase>) :
+    HTMultiOutputEmiRecipe<HTItemToChancedItemRecipeBase>(category, holder) {
     init {
-        addInput(HTItemIngredient.of(recipe.ingredients[0]))
-        addOutputs(HTResultHelper.item(recipe.getResultItem(RagiumEmiPlugin.registryAccess)))
+        addInput(recipe.ingredient)
+        recipe.results.forEach(::addChancedOutputs)
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

@@ -10,8 +10,8 @@ import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
@@ -77,7 +77,7 @@ object RagiumMenuTypes {
     val ALLOY_SMELTER: DeferredMachineMenu<HTAlloySmelterBlockEntity> = registerMachine("alloy_smelter")
 
     @JvmField
-    val CHANCED_ITEM_OUTPUT: DeferredMachineMenu<HTChancedItemOutputBlockEntity<*, *>> = registerMachine("chanced_item_output")
+    val CHANCED_ITEM_OUTPUT: DeferredMachineMenu<HTFluidToChancedItemOutputBlockEntity<*, *>> = registerMachine("chanced_item_output")
 
     @JvmField
     val COMPRESSOR: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("compressor")

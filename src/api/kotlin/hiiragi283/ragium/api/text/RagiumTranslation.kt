@@ -52,9 +52,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Key Mapping
     KEY_CATEGORY("key", RagiumAPI.MOD_ID, "category"),
 
-    // Recipe
-    RECIPE_CUTTING("recipe_type", RagiumAPI.MOD_ID, "cutting"),
-
     // Jade
     JADE_EXP_STORAGE("tooltip", RagiumAPI.MOD_ID, "experience_storage"),
     ;

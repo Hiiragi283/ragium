@@ -8,40 +8,12 @@ import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
-import hiiragi283.ragium.api.recipe.manager.HTRecipeType
-import hiiragi283.ragium.api.recipe.manager.toFindable
-import hiiragi283.ragium.api.recipe.manager.withPrefix
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
-import hiiragi283.ragium.api.text.RagiumTranslation
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeManager
-import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
-    @JvmField
-    val SAWMILL: HTDeferredRecipeType<SingleRecipeInput, SingleItemRecipe> = create(RagiumConst.SAWMILL)
-
-    @JvmField
-    val CUTTING: HTRecipeType<SingleRecipeInput, SingleItemRecipe> = object :
-        HTRecipeType<SingleRecipeInput, SingleItemRecipe> {
-        override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out SingleItemRecipe>> = buildList {
-            addAll(SAWMILL.getAllHolders(manager))
-            addAll(
-                RecipeType.STONECUTTING
-                    .toFindable()
-                    .getAllHolders(manager)
-                    .map { holder -> holder.withPrefix("/") },
-            )
-        }.asSequence()
-
-        override fun getText(): Component = RagiumTranslation.RECIPE_CUTTING.getText()
-    }
-
     // Machine
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe> = create(RagiumConst.ALLOYING)
@@ -51,6 +23,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CRUSHING)
+
+    @JvmField
+    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
     val ENCHANTING: HTDeferredRecipeType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe> = create(RagiumConst.ENCHANTING)

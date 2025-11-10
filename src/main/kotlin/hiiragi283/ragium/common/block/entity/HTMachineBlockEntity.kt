@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
@@ -37,6 +38,37 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
             }
             return null
         }
+
+        // Slot
+        @JvmStatic
+        protected fun singleInput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
+        )
+
+        @JvmStatic
+        protected fun singleCatalyst(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot =
+            builder.addSlot(
+                HTSlotInfo.CATALYST,
+                HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
+            )
+
+        @JvmStatic
+        protected fun singleOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
+        )
+
+        @JvmStatic
+        protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTItemStackSlot> =
+            intArrayOf(5, 6).flatMap { x: Int ->
+                doubleArrayOf(0.5, 1.5).map { y: Double ->
+                    builder.addSlot(
+                        HTSlotInfo.OUTPUT,
+                        HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
+                    )
+                }
+            }
     }
 
     // Energy

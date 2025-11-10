@@ -17,9 +17,9 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
@@ -257,24 +257,24 @@ sealed class HTRecipeProvider {
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks
-        HTSingleItemRecipeBuilder
-            .sawmill(planks, 6)
-            .addIngredient(type.log)
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromTagKey(type.log))
+            .addResult(resultHelper.item(planks, 6))
             .modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
         type.getSlab().ifPresent { slab ->
-            HTSingleItemRecipeBuilder
-                .sawmill(slab, 2)
-                .addIngredient(planks)
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(planks))
+                .addResult(resultHelper.item(slab, 2))
                 .modCondition(type.getModId())
                 .save(output)
         }
         // Planks -> Stairs
         type.getStairs().ifPresent { stairs ->
-            HTSingleItemRecipeBuilder
-                .sawmill(stairs)
-                .addIngredient(planks)
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(planks))
+                .addResult(resultHelper.item(stairs))
                 .modCondition(type.getModId())
                 .save(output)
         }

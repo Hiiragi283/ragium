@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "minecraft:birch_planks",
+  "results": {
+    "count": 1,
+    "id": "minecraft:birch_stairs"
+  }
+}

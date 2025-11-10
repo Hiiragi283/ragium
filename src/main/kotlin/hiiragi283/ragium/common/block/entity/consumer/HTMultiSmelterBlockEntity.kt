@@ -1,41 +1,32 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.createCache
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
+import hiiragi283.ragium.common.recipe.VanillaRecipeTypes
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.AbstractCookingRecipe
-import net.minecraft.world.item.crafting.BlastingRecipe
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.item.crafting.SmokingRecipe
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.min
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, HTMultiSmelterBlockEntity.MultiSmeltingRecipe>(
+    HTProcessorBlockEntity<SingleRecipeInput, Pair<HTVanillaCookingRecipe, Int>>(
         RagiumBlocks.MULTI_SMELTER,
         pos,
         state,
@@ -49,48 +40,41 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
-        inputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-        )
+        inputSlot = singleInput(builder, listener)
         // catalyst
         catalystSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
         // output
-        outputSlot = builder.addSlot(
-            HTSlotInfo.CATALYST,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
-        )
+        outputSlot = singleOutput(builder, listener)
     }
 
-    private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> = RecipeType.SMELTING.createCache()
-    private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> = RecipeType.BLASTING.createCache()
-    private val smokingCache: HTRecipeCache<SingleRecipeInput, SmokingRecipe> = RecipeType.SMOKING.createCache()
+    private val smeltingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.SMELTING.createCache()
+    private val blastingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.BLASTING.createCache()
+    private val smokingCache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = VanillaRecipeTypes.SMOKING.createCache()
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
-    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): MultiSmeltingRecipe? {
-        val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack()?.value()) {
+    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): Pair<HTVanillaCookingRecipe, Int>? {
+        val cache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = when (catalystSlot.getStack()?.value()) {
             Items.BLAST_FURNACE -> blastingCache
             Items.SMOKER -> smokingCache
             else -> smeltingCache
         }
-        val baseRecipe: AbstractCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
-        val result: ItemStack = baseRecipe.assemble(input, level.registryAccess())
-        if (result.isEmpty) return null
-        val resultMaxSize: Int = result.maxStackSize
+        val baseRecipe: HTVanillaCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
+        val result: ImmutableItemStack = baseRecipe.assembleItem(input, level.registryAccess()) ?: return null
+        val resultMaxSize: Int = result.maxStackSize()
 
         var inputCount: Int = min(inputSlot.getAmount(), getMaxParallel())
         val maxParallel: Int = min(inputCount, getMaxParallel())
-        var outputCount: Int = result.count * maxParallel
+        var outputCount: Int = result.amount() * maxParallel
         if (outputCount > resultMaxSize) {
             outputCount = resultMaxSize - (resultMaxSize % maxParallel)
             inputCount = outputCount / maxParallel
         }
         if (inputCount <= 0 || outputCount <= 0) return null
-        return MultiSmeltingRecipe(baseRecipe, outputCount)
+        return baseRecipe to outputCount
     }
 
     private fun getMaxParallel(): Int = when (getComponentTier()) {
@@ -102,34 +86,33 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         null -> 1
     }
 
-    override fun getRecipeTime(recipe: MultiSmeltingRecipe): Int = recipe.recipe.cookingTime
+    override fun getRecipeTime(recipe: Pair<HTVanillaCookingRecipe, Int>): Int = recipe.first.cookingTime
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: MultiSmeltingRecipe): Boolean =
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: Pair<HTVanillaCookingRecipe, Int>): Boolean {
+        val (recipe: HTVanillaCookingRecipe, outputCount: Int) = recipe
+        val result: ImmutableItemStack? = recipe.assembleItem(input, level.registryAccess())?.copyWithAmount(outputCount)
+        return outputSlot.insert(result, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+    }
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: MultiSmeltingRecipe,
+        recipe: Pair<HTVanillaCookingRecipe, Int>,
     ) {
         // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assemble(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        val (recipe: HTVanillaCookingRecipe, outputCount: Int) = recipe
+        val result: ImmutableItemStack? = recipe.assembleItem(input, level.registryAccess())?.copyWithAmount(outputCount)
+        outputSlot.insert(result, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputSlot, { stack: ImmutableItemStack ->
+            when {
+                recipe.ingredients[0].test(stack.unwrap()) -> outputCount
+                else -> 0
+            }
+        }, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
-    }
-
-    @JvmRecord
-    data class MultiSmeltingRecipe(val recipe: AbstractCookingRecipe, val count: Int) : HTItemIngredient.CountGetter {
-        fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-            recipe.assemble(input, registries).toImmutable()?.copyWithAmount(count)
-
-        override fun getRequiredCount(stack: ImmutableItemStack): Int = when {
-            recipe.ingredients[0].test(stack.unwrap()) -> count
-            else -> 0
-        }
     }
 }

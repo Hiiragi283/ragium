@@ -461,6 +461,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
+        add(RagiumRecipeTypes.CUTTING, "裁断")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
@@ -500,8 +501,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
         add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
-
-        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
 
         add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
         add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")

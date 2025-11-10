@@ -1,116 +1,92 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.castRecipe
-import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.recipe.VanillaRecipeTypes
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, SingleItemRecipe>(
+    HTChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
         RagiumBlocks.CUTTING_MACHINE,
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemStackSlot
-        private set
     lateinit var catalystSlot: HTItemStackSlot
         private set
-    lateinit var outputSlots: List<HTItemStackSlot>
-        private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        inputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-        )
-        // catalyst
-        catalystSlot = builder.addSlot(
-            HTSlotInfo.CATALYST,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
-        )
-        // outputs
-        outputSlots = intArrayOf(5, 6).flatMap { x: Int ->
-            doubleArrayOf(0.5, 1.5).map { y: Double ->
-                builder.addSlot(
-                    HTSlotInfo.OUTPUT,
-                    HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
-                )
-            }
-        }
+    override fun initCatalyst(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        catalystSlot = singleCatalyst(builder, listener)
     }
 
     //    Ticking    //
 
-    private val recipeCache = SingleItemCache()
-
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
-    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): SingleItemRecipe? =
-        recipeCache.getFirstRecipe(input, level)
+    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTItemToChancedItemRecipe? {
+        // Cutting from Ragium
+        val cuttingRecipe: HTItemToChancedItemRecipe? =
+            getFirstRecipe(input, level, RagiumRecipeTypes.CUTTING)
+        if (cuttingRecipe != null) return cuttingRecipe
+        // Cutting from Farmers Delight
+        // Stone Cutting from Vanilla
+        val stoneRecipe: HTItemToChancedItemRecipe? =
+            getFirstRecipe(input, level, VanillaRecipeTypes.STONECUTTING)
+        if (stoneRecipe != null) return stoneRecipe
+        return null
+    }
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: SingleItemRecipe): Boolean = HTStackSlotHelper
-        .insertStacks(
-            outputSlots,
-            recipe.assemble(input, level.registryAccess()).toImmutable(),
-            HTStorageAction.SIMULATE,
-        ) == null
+    private fun getFirstRecipe(
+        input: SingleRecipeInput,
+        level: Level,
+        recipeType: HTRecipeType<SingleRecipeInput, out HTItemToChancedItemRecipe>,
+    ): HTItemToChancedItemRecipe? = getFirstRecipe(input, level, recipeType.getAllRecipes(level.recipeManager))
+
+    private fun getFirstRecipe(
+        input: SingleRecipeInput,
+        level: Level,
+        recipes: Sequence<HTItemToChancedItemRecipe>,
+    ): HTItemToChancedItemRecipe? {
+        // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
+        var matchedHolder: HTItemToChancedItemRecipe? = null
+        for (recipe: HTItemToChancedItemRecipe in recipes) {
+            if (!recipe.matches(input, level)) continue
+            val result: ImmutableItemStack = recipe.assembleItem(input, level.registryAccess()) ?: continue
+            if (ItemStack.isSameItemSameComponents(catalystSlot.getItemStack(), result.unwrap())) {
+                matchedHolder = recipe
+                break
+            }
+        }
+        return matchedHolder
+    }
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: SingleItemRecipe,
+        recipe: HTItemToChancedItemRecipe,
     ) {
-        // 実際にアウトプットに搬出する
-        HTStackSlotHelper.insertStacks(
-            outputSlots,
-            recipe.assemble(input, level.registryAccess()).toImmutable(),
-            HTStorageAction.EXECUTE,
-        )
+        super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
         inputSlot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1f, 1f)
-    }
-
-    private inner class SingleItemCache : HTRecipeCache<SingleRecipeInput, SingleItemRecipe> {
-        override fun getFirstHolder(input: SingleRecipeInput, level: Level): RecipeHolder<SingleItemRecipe>? {
-            // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
-            var matchedHolder: RecipeHolder<SingleItemRecipe>? = null
-            for (holder: RecipeHolder<out SingleItemRecipe> in RagiumRecipeTypes.CUTTING.getAllHolders(level.recipeManager)) {
-                val recipe: SingleItemRecipe = holder.value
-                if (!recipe.matches(input, level)) continue
-                val result: ItemStack = recipe.assemble(input, level.registryAccess())
-                if (ItemStack.isSameItemSameComponents(catalystSlot.getItemStack(), result)) {
-                    matchedHolder = holder.castRecipe()
-                    break
-                }
-            }
-            return matchedHolder
-        }
     }
 }

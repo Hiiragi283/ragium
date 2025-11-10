@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.manager.createCache
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel

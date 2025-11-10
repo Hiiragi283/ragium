@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -42,10 +41,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             )
         }
         // output
-        outputSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
-        )
+        outputSlot = singleOutput(builder, listener)
     }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput = HTMultiItemRecipeInput.fromSlots(inputSlots)

@@ -4,22 +4,20 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
+import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
-import hiiragi283.ragium.impl.recipe.HTSawmillRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import net.minecraft.core.registries.Registries
@@ -56,27 +54,16 @@ object RagiumRecipeSerializers {
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 
     @JvmField
-    val SAWMILL: RecipeSerializer<HTSawmillRecipe> = register(
-        RagiumConst.SAWMILL,
-        MapBiCodec.composite(
-            BiCodec.STRING.optionalFieldOf("group", ""),
-            HTSawmillRecipe::getGroup,
-            VanillaBiCodecs.ingredient(false).fieldOf("ingredient"),
-            HTSawmillRecipe::ingredient1,
-            VanillaBiCodecs.ITEM_STACK_NON_EMPTY.fieldOf("result"),
-            HTSawmillRecipe::result1,
-            ::HTSawmillRecipe,
-        ),
-    )
-
-    @JvmField
     val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
         register("smithing_modify", HTSmithingModifyRecipe.CODEC)
 
     //    Machine    //
 
     @JvmField
-    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(RagiumConst.ALLOYING, RagiumRecipeBiCodecs.ALLOYING)
+    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
+        RagiumConst.ALLOYING,
+        RagiumRecipeBiCodecs.ALLOYING,
+    )
 
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
@@ -85,10 +72,22 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(RagiumConst.CRUSHING, RagiumRecipeBiCodecs.CRUSHING)
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(
+        RagiumConst.CRUSHING,
+        RagiumRecipeBiCodecs.itemToChanced(::HTCrushingRecipe),
+    )
 
     @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(RagiumConst.ENCHANTING, RagiumRecipeBiCodecs.ENCHANTING)
+    val CUTTING: RecipeSerializer<HTCuttingRecipe> = register(
+        RagiumConst.CUTTING,
+        RagiumRecipeBiCodecs.itemToChanced(::HTCuttingRecipe),
+    )
+
+    @JvmField
+    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(
+        RagiumConst.ENCHANTING,
+        RagiumRecipeBiCodecs.ENCHANTING,
+    )
 
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(

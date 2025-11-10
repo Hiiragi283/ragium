@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#minecraft:acacia_logs",
+  "results": {
+    "count": 6,
+    "id": "minecraft:acacia_planks"
+  }
+}

@@ -7,7 +7,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.crafting.RecipeInput
 
 /**
- * [hiiragi283.ragium.api.recipe.HTChancedItemRecipe]を実装した抽象クラス
+ * [HTChancedItemRecipe]を実装した抽象クラス
  */
 abstract class HTChancedItemRecipeBase<INPUT : RecipeInput> : HTChancedItemRecipe<INPUT> {
     /**

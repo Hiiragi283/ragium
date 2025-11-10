@@ -5,7 +5,8 @@
   "client": [],
   "mixins": [
     "ItemMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "SingleItemRecipeAccessor"
   ],
   "minVersion": "0.8"
 }

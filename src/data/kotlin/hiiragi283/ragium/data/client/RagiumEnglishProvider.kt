@@ -455,6 +455,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
+        add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
@@ -494,8 +495,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
         add(RagiumTranslation.TOOLTIP_SHOW_INFO, "Press Shift to show info")
         add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
-
-        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
 
         add(HTAccessConfig.INPUT_ONLY, "Mode: Input")
         add(HTAccessConfig.OUTPUT_ONLY, "Mode: Output")
