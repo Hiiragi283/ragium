@@ -15,6 +15,7 @@ import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
+import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
@@ -105,6 +106,12 @@ object RagiumRecipeSerializers {
     val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
         RagiumConst.MELTING,
         RagiumRecipeBiCodecs.itemToFluid(::HTMeltingRecipe),
+    )
+
+    @JvmField
+    val MIXING: RecipeSerializer<HTMixingRecipe> = register(
+        RagiumConst.MIXING,
+        RagiumRecipeBiCodecs.MIXING,
     )
 
     @JvmField

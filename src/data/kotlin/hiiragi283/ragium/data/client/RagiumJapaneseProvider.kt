@@ -10,6 +10,7 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
@@ -286,6 +287,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // add(RagiumItems.Molds.ROD, "成形型（棒材）")
         // add(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
+        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "ブロックの鋳型")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
+        
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
@@ -475,6 +480,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
         add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.WASHING, "洗浄")

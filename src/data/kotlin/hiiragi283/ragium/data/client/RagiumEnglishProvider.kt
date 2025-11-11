@@ -10,6 +10,7 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
@@ -44,7 +45,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
-        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "Easy upgrades done dirt cheap", "Craft any Upgrade Templates added by Ragium")
+        addAdvancement(
+            RagiumAdvancements.CRAFTABLE_TEMPLATES,
+            "Easy upgrades done dirt cheap",
+            "Craft any Upgrade Templates added by Ragium",
+        )
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Eat Ragi-Cherry")
@@ -281,6 +286,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
+        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "Block Mold")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "Gem Mold")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "Ingot Mold")
+        
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
@@ -470,6 +479,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.WASHING, "Washing")

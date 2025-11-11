@@ -14,6 +14,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
@@ -40,6 +41,20 @@ object RagiumRecipeBiCodecs {
             HTItemResult.CODEC.fieldOf("result"),
             HTEnchantingRecipe::result,
             ::HTEnchantingRecipe,
+        )
+
+    @JvmField
+    val MIXING: MapBiCodec<RegistryFriendlyByteBuf, HTMixingRecipe> = MapBiCodec
+        .composite(
+            HTItemIngredient.CODEC.listOf(0, 2).optionalFieldOf("item_ingredients", listOf()),
+            HTMixingRecipe::itemIngredients,
+            HTFluidIngredient.CODEC.listOf(1, 2).optionalFieldOf("fluid_ingredients", listOf()),
+            HTMixingRecipe::fluidIngredients,
+            HTItemResult.CODEC.optionalFieldOf("item_result"),
+            HTMixingRecipe::itemResult,
+            HTFluidResult.CODEC.optionalFieldOf("fluid_result"),
+            HTMixingRecipe::fluidResult,
+            ::HTMixingRecipe,
         )
 
     @JvmStatic

@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.integration.emi.type
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.recipe.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
@@ -11,7 +12,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
-import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -52,7 +53,7 @@ object RagiumRecipeViewerTypes {
 
     // Basic
     @JvmField
-    val ALLOYING: HTRegistryRecipeViewerType<HTMultiItemRecipeInput, HTCombineItemToItemRecipe> =
+    val ALLOYING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTCombineItemToItemRecipe> =
         machine(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
@@ -81,6 +82,10 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
+    val MIXING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTFluidRecipe<HTMultiRecipeInput>> =
+        machine(RagiumRecipeTypes.MIXING, RagiumBlocks.WASHER)
+
+    @JvmField
     val WASHING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
         machine(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
@@ -101,6 +106,6 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     @JvmField
-    val SIMULATING: HTRegistryRecipeViewerType<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe> =
+    val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTItemWithCatalystToItemRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)
 }

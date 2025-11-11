@@ -1,11 +1,11 @@
 {
-  "type": "ragium:washing",
+  "type": "ragium:fluid_transform",
   "fluid_ingredient": {
     "amount": 125,
     "fluids": "#c:natural_gas"
   },
   "item_ingredient": "ragium:polymer_catalyst",
-  "results": {
+  "item_result": {
     "count": 4,
     "id": "#ragium:polymer_resin"
   }

@@ -96,6 +96,8 @@ object RagiumCreativeTabs {
         // Materials
         output.acceptItems(RagiumItems.MATERIALS.values)
         // Ingredients
+        output.acceptItems(RagiumItems.MOLDS.values)
+
         output.accept(RagiumItems.TAR)
 
         output.accept(RagiumItems.POTATO_SPROUTS)

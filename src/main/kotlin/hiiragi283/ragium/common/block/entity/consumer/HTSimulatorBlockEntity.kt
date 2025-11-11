@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
+    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTItemWithCatalystToItemRecipe>(
         RagiumRecipeTypes.SIMULATING,
         RagiumBlocks.SIMULATOR,
         pos,
@@ -39,17 +39,16 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
-        HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput = HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiItemRecipeInput,
+        input: HTMultiRecipeInput,
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する

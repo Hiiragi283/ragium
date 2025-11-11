@@ -16,7 +16,7 @@ import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumItems
@@ -148,12 +148,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
 
         // Ethene + Catalyst -> HDPE
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
+        HTFluidTransformRecipeBuilder
+            .solidifying(
                 itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
                 fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
-            ).addResult(resultHelper.item(MekanismItems.HDPE_PELLET))
-            .save(output)
+                resultHelper.item(MekanismItems.HDPE_PELLET),
+            ).save(output)
     }
 
     @JvmStatic

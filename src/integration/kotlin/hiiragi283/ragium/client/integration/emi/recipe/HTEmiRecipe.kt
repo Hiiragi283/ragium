@@ -65,12 +65,12 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         inputs.add(ingredient ?: EmiStack.EMPTY)
     }
 
-    protected fun addCatalyst(ingredient: HTItemIngredient) {
-        addCatalyst(ingredient(ingredient))
+    protected fun addCatalyst(ingredient: HTItemIngredient?) {
+        addCatalyst(ingredient?.let(::catalyst))
     }
 
-    protected fun addCatalyst(ingredient: EmiIngredient) {
-        catalysts.add(ingredient)
+    protected fun addCatalyst(ingredient: EmiIngredient?) {
+        catalysts.add(ingredient ?: EmiStack.EMPTY)
     }
 
     protected fun addOutputs(result: HTItemResult?) {
@@ -104,14 +104,16 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         .map(
             { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
             { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
-        ).apply {
-            for (stack: EmiStack in emiStacks) {
-                val itemStack: ItemStack = stack.itemStack
-                if (itemStack.hasCraftingRemainingItem()) {
-                    stack.remainder = itemStack.craftingRemainingItem.toEmi()
-                }
+        )
+
+    protected fun catalyst(ingredient: HTItemIngredient): EmiIngredient = ingredient(ingredient).apply {
+        for (stack: EmiStack in emiStacks) {
+            val itemStack: ItemStack = stack.itemStack
+            if (itemStack.hasCraftingRemainingItem()) {
+                stack.remainder = itemStack.craftingRemainingItem.toEmi()
             }
         }
+    }
 
     protected fun ingredient(ingredient: HTFluidIngredient): EmiIngredient = ingredient
         .unwrap()

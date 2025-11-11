@@ -14,15 +14,13 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -42,12 +40,12 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             ).addResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid
-        HTFluidTransformRecipeBuilder
-            .mixing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                fluidCreator.water(1000),
-                resultHelper.fluid(IETags.fluidRedstoneAcid, 1000),
-            ).save(output)
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
+            .addIngredient(fluidCreator.water(1000))
+            .setResult(resultHelper.fluid(IETags.fluidRedstoneAcid, 1000))
+            .save(output)
 
         raginite()
         azure()
@@ -106,16 +104,6 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         }
         crushFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
         crushFromData(RagiumMaterialRecipeData.WARPED_ORE)
-
-        // Crimson + Warped -> Eldritch Flux
-        RefineryRecipeBuilder
-            .builder()
-            .output(RagiumFluidContents.ELDRITCH_FLUX.get(), 100)
-            .input(RagiumFluidContents.CRIMSON_BLOOD.toIngredient(100))
-            .input(RagiumFluidContents.DEW_OF_THE_WARP.toIngredient(100))
-            .catalyst(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
-            .setEnergy(240)
-            .build(output, id("${RagiumConst.REFINING}/eldritch_flux"))
 
         alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
         alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)

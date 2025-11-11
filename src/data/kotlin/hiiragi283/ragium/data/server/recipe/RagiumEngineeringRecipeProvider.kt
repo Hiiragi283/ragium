@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -22,6 +23,7 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -102,6 +104,15 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun catalyst() {
+        // Molds
+        for ((prefix: HTMaterialPrefix, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
+            HTShapedRecipeBuilder
+                .misc(mold)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('B', prefix.createCommonTagKey(Registries.ITEM))
+                .save(output)
+        }
         // Polymer Catalyst
         HTShapedRecipeBuilder
             .misc(RagiumItems.POLYMER_CATALYST)

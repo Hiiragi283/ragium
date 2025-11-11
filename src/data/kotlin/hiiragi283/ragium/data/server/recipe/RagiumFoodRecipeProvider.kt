@@ -16,6 +16,7 @@ import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -28,12 +29,12 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Mushroom Stew
-        HTFluidTransformRecipeBuilder
-            .mixing(
-                itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2),
-                fluidCreator.milk(250),
-                resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250),
-            ).save(output)
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2))
+            .addIngredient(fluidCreator.milk(250))
+            .setResult(resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250))
+            .save(output)
 
         extractAndInfuse(
             itemCreator.fromItem(Items.BOWL),
@@ -51,7 +52,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         HTFluidTransformRecipeBuilder
             .solidifying(
-                null,
+                itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.INGOT)),
                 fluidCreator.fromTagKey(RagiumCommonTags.Fluids.CHOCOLATES, 250),
                 resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE),
             ).save(output)
@@ -128,7 +129,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
-            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
+            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
             Items.HONEY_BLOCK.toHolderLike(),
             RagiumFluidContents.HONEY,
             1000,
@@ -158,7 +159,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         HTFluidTransformRecipeBuilder
             .solidifying(
-                null,
+                itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.INGOT)),
                 fluidCreator.fromContent(RagiumFluidContents.MEAT, 250),
                 resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
             ).save(output)

@@ -2,21 +2,21 @@
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
-      "modid": "immersiveengineering"
+      "modid": "actuallyadditions"
     }
   ],
   "type": "ragium:mixing",
   "fluid_ingredients": [
     {
       "amount": 1000,
-      "fluids": "#c:water"
+      "fluids": "actuallyadditions:refined_canola_oil"
     }
   ],
   "fluid_result": {
     "amount": 1000,
-    "id": "#c:redstone_acid"
+    "id": "actuallyadditions:crystallized_oil"
   },
   "item_ingredients": [
-    "#c:dusts/redstone"
+    "actuallyadditions:crystallized_canola_seed"
   ]
 }

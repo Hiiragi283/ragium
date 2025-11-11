@@ -4,7 +4,7 @@
     "amount": 1000,
     "fluids": "#c:water"
   },
-  "item_ingredient": "#c:glass_blocks",
+  "item_ingredient": "ragium:storage_block_mold",
   "item_result": {
     "count": 1,
     "id": "minecraft:ice"

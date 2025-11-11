@@ -456,6 +456,19 @@ object RagiumItems {
 
     // Catalyst
     @JvmField
+    val MOLDS: Map<HTMaterialPrefix, HTSimpleDeferredItem> = listOf(
+        CommonMaterialPrefixes.STORAGE_BLOCK,
+        CommonMaterialPrefixes.GEM,
+        CommonMaterialPrefixes.INGOT,
+    ).associate { prefixes: CommonMaterialPrefixes ->
+        prefixes.asMaterialPrefix() to REGISTER.registerItem("${prefixes.asPrefixName()}_mold", ::HTCatalystItem)
+    }
+    
+    @JvmStatic
+    fun getMold(prefix: HTPrefixLike): HTSimpleDeferredItem = 
+        MOLDS[prefix.asMaterialPrefix()] ?: error("Unknown mold for ${prefix.asPrefixName()}")
+
+    @JvmField
     val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("polymer_catalyst", ::HTCatalystItem)
 
     // LED

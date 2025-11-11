@@ -4,6 +4,7 @@
     "amount": 250,
     "fluids": "#c:chocolates"
   },
+  "item_ingredient": "ragium:ingot_mold",
   "item_result": {
     "count": 1,
     "id": "#c:ingots/chocolate"

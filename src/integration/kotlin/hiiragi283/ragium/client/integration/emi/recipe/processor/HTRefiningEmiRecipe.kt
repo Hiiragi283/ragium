@@ -9,11 +9,11 @@ import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTFluidTransformingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTFluidTransformRecipeBase>) :
+class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTFluidTransformRecipeBase>) :
     HTEmiHolderRecipe<HTFluidTransformRecipeBase>(category, holder) {
     init {
         addInput(recipe.fluidIngredient)
-        addInput(recipe.itemIngredient.getOrNull())
+        addCatalyst(recipe.itemIngredient.getOrNull())
 
         addOutputs(recipe.itemResult.getOrNull())
         addOutputs(recipe.fluidResult.getOrNull())
@@ -29,7 +29,7 @@ class HTFluidTransformingEmiRecipe(category: HTEmiRecipeCategory, holder: Recipe
                 getPosition(1),
                 getPosition(0),
             )
-        widgets.addSlot(input(1), getPosition(2.5), getPosition(0))
+        widgets.addSlot(catalyst(0), getPosition(2.5), getPosition(0))
         // Output
         widgets.addSlot(output(0), getPosition(3.5), getPosition(2))
         widgets
