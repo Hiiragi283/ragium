@@ -463,9 +463,9 @@ object RagiumItems {
     ).associate { prefixes: CommonMaterialPrefixes ->
         prefixes.asMaterialPrefix() to REGISTER.registerItem("${prefixes.asPrefixName()}_mold", ::HTCatalystItem)
     }
-    
+
     @JvmStatic
-    fun getMold(prefix: HTPrefixLike): HTSimpleDeferredItem = 
+    fun getMold(prefix: HTPrefixLike): HTSimpleDeferredItem =
         MOLDS[prefix.asMaterialPrefix()] ?: error("Unknown mold for ${prefix.asPrefixName()}")
 
     @JvmField

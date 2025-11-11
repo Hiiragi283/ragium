@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredients": [
+    {
+      "amount": 250,
+      "fluids": "#c:milk"
+    }
+  ],
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:chocolate"
+  },
+  "item_ingredients": [
+    "#c:crops/cocoa_bean"
+  ]
+}

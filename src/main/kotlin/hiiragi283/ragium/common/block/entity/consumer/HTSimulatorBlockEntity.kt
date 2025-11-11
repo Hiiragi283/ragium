@@ -39,7 +39,8 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput = HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
+        HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null

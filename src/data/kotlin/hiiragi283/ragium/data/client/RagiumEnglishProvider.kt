@@ -214,6 +214,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
@@ -289,7 +290,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "Block Mold")
         add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "Gem Mold")
         add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "Ingot Mold")
-        
+
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")

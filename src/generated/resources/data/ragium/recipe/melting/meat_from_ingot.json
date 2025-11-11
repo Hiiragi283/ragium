@@ -1,0 +1,8 @@
+{
+  "type": "ragium:melting",
+  "ingredient": "#c:ingots/raw_meat",
+  "result": {
+    "amount": 250,
+    "id": "ragium:meat"
+  }
+}

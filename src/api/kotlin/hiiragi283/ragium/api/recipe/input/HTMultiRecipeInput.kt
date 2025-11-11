@@ -16,7 +16,7 @@ data class HTMultiRecipeInput(val items: List<ImmutableItemStack?>, val fluids: 
         @JvmStatic
         fun fromSlots(vararg slots: HTItemSlot): HTMultiRecipeInput = fromSlots(slots.toList())
     }
-    
+
     override fun getItem(index: Int): ItemStack = items[index]?.unwrap() ?: ItemStack.EMPTY
 
     override fun size(): Int = items.size

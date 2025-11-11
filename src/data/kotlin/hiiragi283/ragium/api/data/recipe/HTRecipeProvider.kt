@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -31,8 +33,6 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Recipe
@@ -155,22 +155,23 @@ sealed class HTRecipeProvider {
 
     protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,
-        solid: TagKey<Item>,
+        prefix: HTPrefixLike,
+        material: HTMaterialLike,
         fluid: HTFluidContent<*, *, *>,
         amount: Int,
     ) {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
-                itemCreator.fromTagKey(solid),
+                itemCreator.fromTagKey(prefix, material),
                 resultHelper.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${solid.location.path}")
+            ).saveSuffixed(output, "_from_${prefix.asPrefixName()}")
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
                 catalyst,
                 fluidCreator.fromContent(fluid, amount),
-                resultHelper.item(solid),
+                resultHelper.item(prefix, material),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 

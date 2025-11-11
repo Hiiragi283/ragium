@@ -147,7 +147,8 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             // molten <-> gem
             meltAndFreeze(
                 itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.GEM)),
-                CommonMaterialPrefixes.GEM.itemTagKey(data),
+                CommonMaterialPrefixes.GEM,
+                data,
                 molten,
                 RagiumConst.MOLTEN_TO_GEM,
             )

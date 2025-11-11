@@ -205,6 +205,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MEAT, "液体肉")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
@@ -290,7 +291,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "ブロックの鋳型")
         add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
         add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
-        
+
         add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
