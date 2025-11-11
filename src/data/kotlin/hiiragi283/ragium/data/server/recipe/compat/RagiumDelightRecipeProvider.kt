@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
@@ -125,8 +125,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     }
 
     @JvmStatic
-    private fun cuttingFromData(data: HTMaterialRecipeData) {
-        val output: HTMaterialRecipeData.OutputEntry = data.outputs[0]
+    private fun cuttingFromData(data: HTRecipeData) {
+        val output: HTRecipeData.OutputEntry = data.outputs[0]
         HTCuttingBoardRecipeBuilder(output.toImmutable(), output.chance)
             .addIngredient(data.getIngredient(0))
             .addIngredient(CommonTags.TOOLS_KNIFE)

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -64,7 +64,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundryFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
         foundryFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
 
-        foundryFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
@@ -118,22 +117,22 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     }
 
     @JvmStatic
-    private fun atomicFromData(data: HTMaterialRecipeData) {
+    private fun atomicFromData(data: HTRecipeData) {
         builderFromData(data, AtomicForgeRecipeBuilder.build())
     }
 
     @JvmStatic
-    private fun foundryFromData(data: HTMaterialRecipeData) {
+    private fun foundryFromData(data: HTRecipeData) {
         builderFromData(data, FoundryRecipeBuilder.build())
     }
 
     @JvmStatic
-    private fun pulverizerFromData(data: HTMaterialRecipeData) {
+    private fun pulverizerFromData(data: HTRecipeData) {
         builderFromData(data, PulverizerRecipeBuilder.build())
     }
 
     @JvmStatic
-    private fun builderFromData(data: HTMaterialRecipeData, builder: OritechRecipeBuilder) {
+    private fun builderFromData(data: HTRecipeData, builder: OritechRecipeBuilder) {
         // Inputs
         for ((ingredient: Ingredient, _) in data.getIngredients()) {
             builder.input(ingredient)

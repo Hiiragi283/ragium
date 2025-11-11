@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:alloy_smelter",
+  "criteria": {
+    "has_c_ingots_night_metal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/night_metal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.night_metal.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:night_metal_ingot"
+    },
+    "title": {
+      "translate": "advancements.ragium.night_metal.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_c_ingots_night_metal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

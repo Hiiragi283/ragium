@@ -62,6 +62,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         buildList {
+            add(RagiumBlocks.BUDDING_AZURE)
             add(RagiumBlocks.AZURE_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
@@ -207,11 +208,13 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRIES)
         builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRIES)
         // Other
+        builder.add(BlockTags.CRYSTAL_SOUND_BLOCKS, RagiumBlocks.BUDDING_AZURE)
         builder.add(BlockTags.HOGLIN_REPELLENTS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(Tags.Blocks.BUDDING_BLOCKS, RagiumBlocks.BUDDING_AZURE)
 
         // WIP
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)

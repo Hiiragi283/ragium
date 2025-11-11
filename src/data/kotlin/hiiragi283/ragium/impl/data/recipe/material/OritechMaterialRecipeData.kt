@@ -1,6 +1,6 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
@@ -9,7 +9,7 @@ import rearth.oritech.init.ItemContent
 
 data object OritechMaterialRecipeData {
     @JvmField
-    val ADAMANT: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val ADAMANT: HTRecipeData = HTRecipeData.create {
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
         gemOrDust(VanillaMaterialKeys.DIAMOND)
 
@@ -17,7 +17,7 @@ data object OritechMaterialRecipeData {
     }
 
     @JvmField
-    val BIOSTEEL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val BIOSTEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         addInput(ItemContent.BIOMASS)
 
@@ -25,7 +25,7 @@ data object OritechMaterialRecipeData {
     }
 
     @JvmField
-    val DURATIUM: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val DURATIUM: HTRecipeData = HTRecipeData.create {
         ingotOrDust(CommonMaterialKeys.Metals.PLATINUM)
         gemOrDust(VanillaMaterialKeys.NETHERITE)
 
@@ -33,7 +33,7 @@ data object OritechMaterialRecipeData {
     }
 
     @JvmField
-    val ENERGITE: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val ENERGITE: HTRecipeData = HTRecipeData.create {
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
         gemOrDust(ModMaterialKeys.Gems.FLUXITE)
 

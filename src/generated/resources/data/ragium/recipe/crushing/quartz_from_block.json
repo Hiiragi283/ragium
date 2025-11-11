@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#c:storage_blocks/quartz",
-  "result": {
-    "count": 4,
-    "id": "minecraft:quartz"
-  }
-}

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -49,8 +49,8 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     }
 
     @JvmStatic
-    private fun choppingFromData(data: HTMaterialRecipeData) {
-        val output: HTMaterialRecipeData.OutputEntry = data.outputs[0]
+    private fun choppingFromData(data: HTRecipeData) {
+        val output: HTRecipeData.OutputEntry = data.outputs[0]
         HTChoppingBoardRecipeBuilder(output.toImmutable())
             .addIngredient(data.getIngredient(0))
             .setCutCount(output.count - 1)

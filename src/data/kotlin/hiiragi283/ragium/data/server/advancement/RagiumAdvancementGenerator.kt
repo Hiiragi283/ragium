@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -12,11 +13,19 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.advancements.critereon.BlockPredicate
+import net.minecraft.advancements.critereon.DamageSourcePredicate
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
+import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.PlayerTrigger
+import net.minecraft.advancements.critereon.TagPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
+import net.minecraft.tags.DamageTypeTags
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
@@ -36,6 +45,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         raginite()
         azure()
         deep()
+        nightMetal()
 
         crimson()
         warped()
@@ -93,7 +103,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         // Advanced
         createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            RagiumAdvancements.RAGI_ALLOY,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
         )
@@ -127,9 +137,25 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun azure() {
+        child(RagiumAdvancements.BUDDING_AZURE, RagiumAdvancements.ROOT) {
+            display {
+                setIcon(RagiumItems.BLUE_KNOWLEDGE)
+                setTitleFromKey(RagiumAdvancements.BUDDING_AZURE)
+                setDescFromKey(RagiumAdvancements.BUDDING_AZURE)
+            }
+            addCriterion(
+                "use_blue_knowledge",
+                ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
+                    LocationPredicate.Builder
+                        .location()
+                        .setBlock(BlockPredicate.Builder.block().of(Blocks.BUDDING_AMETHYST)),
+                    ItemPredicate.Builder.item().of(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR),
+                ),
+            )
+        }
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
-            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumAdvancements.BUDDING_AZURE,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.AZURE,
         )
@@ -179,11 +205,32 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.DEEP_STEEL))
         }
 
+        child(RagiumAdvancements.ECHO_STAR, RagiumAdvancements.DEEP_STEEL) {
+            display {
+                setIcon(RagiumItems.ECHO_STAR)
+                setTitleFromKey(RagiumAdvancements.ECHO_STAR)
+                setDescFromKey(RagiumAdvancements.ECHO_STAR)
+                setChallenge()
+            }
+            addCriterion(
+                "invulnerable_to_sonic_boom",
+                RagiumCriteriaTriggers.invulnerableTo(
+                    DamageSourcePredicate.Builder
+                        .damageType()
+                        .tag(TagPredicate.`is`(RagiumModTags.DamageTypes.IS_SONIC))
+                        .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY)),
+                ),
+            )
+        }
+    }
+
+    private fun nightMetal() {
         createSimple(
-            RagiumAdvancements.ECHO_STAR,
-            RagiumAdvancements.DEEP_STEEL,
-            RagiumItems.ECHO_STAR,
-        ) { setChallenge() }
+            RagiumAdvancements.NIGHT_METAL,
+            RagiumAdvancements.ALLOY_SMELTER,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.NIGHT_METAL,
+        )
     }
 
     private fun crimson() {

@@ -1,7 +1,6 @@
-package hiiragi283.ragium.api.data.recipe.material
+package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -23,14 +22,14 @@ import java.util.function.UnaryOperator
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTMaterialRecipeData private constructor(
+data class HTRecipeData private constructor(
     val inputs: List<InputEntry>,
     val outputs: List<OutputEntry>,
     val operator: UnaryOperator<String>,
 ) : HTHolderLike {
     companion object {
         @JvmStatic
-        inline fun create(builderAction: Builder.() -> Unit): HTMaterialRecipeData = Builder().apply(builderAction).build()
+        inline fun create(builderAction: Builder.() -> Unit): HTRecipeData = Builder().apply(builderAction).build()
     }
 
     // Input
@@ -132,7 +131,7 @@ data class HTMaterialRecipeData private constructor(
         val count: Int,
         val chance: Float,
     ) {
-        fun toImmutable(): ImmutableItemStack = ImmutableItemStack.of(checkNotNull(item), count)
+        fun toImmutable(): ImmutableItemStack = ImmutableItemStack.Companion.of(checkNotNull(item), count)
     }
 
     //    Builder    //
@@ -216,6 +215,6 @@ data class HTMaterialRecipeData private constructor(
             this.operator = operator
         }
 
-        fun build(): HTMaterialRecipeData = HTMaterialRecipeData(inputs, outputs, operator)
+        fun build(): HTRecipeData = HTRecipeData(inputs, outputs, operator)
     }
 }

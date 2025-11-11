@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -248,7 +248,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fromHolder(RagiumMekanismAddon.getChemical(material), amount.toLong())
 
     @JvmStatic
-    private fun enrichOreFromData(data: HTMaterialRecipeData, material: HTMaterialLike) {
+    private fun enrichOreFromData(data: HTRecipeData, material: HTMaterialLike) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(data.getSizedIngredient(0)),
@@ -257,7 +257,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     }
 
     @JvmStatic
-    private fun crushFromData(data: HTMaterialRecipeData) {
+    private fun crushFromData(data: HTRecipeData) {
         ItemStackToItemStackRecipeBuilder
             .crushing(
                 itemHelper.from(data.getSizedIngredient(0)),

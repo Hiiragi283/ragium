@@ -127,6 +127,22 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.BLUE_KNOWLEDGE)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
+            .define('C', Items.BOOK)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.BLUE_KNOWLEDGE)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+            .define('C', Items.ENCHANTED_BOOK)
+            .saveSuffixed(output, "_alt")
+
         addEquipments(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addEquipments(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addEquipments(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)

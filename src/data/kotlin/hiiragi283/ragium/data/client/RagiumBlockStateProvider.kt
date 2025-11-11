@@ -43,6 +43,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Simple Blocks
         buildSet {
             add(RagiumBlocks.SILT)
+
+            add(RagiumBlocks.BUDDING_AZURE)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             add(RagiumBlocks.CRIMSON_SOIL)
 

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -34,18 +33,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.COBWEB),
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
-
-        mapOf(
-            VanillaMaterialKeys.AMETHYST to Items.AMETHYST_SHARD,
-            VanillaMaterialKeys.GLOWSTONE to Items.GLOWSTONE_DUST,
-            VanillaMaterialKeys.QUARTZ to Items.QUARTZ,
-        ).forEach { (key: HTMaterialKey, result: Item) ->
-            HTItemToObjRecipeBuilder
-                .pulverizing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
-                    resultHelper.item(result, 4),
-                ).saveSuffixed(output, "_from_block")
-        }
 
         HTItemToObjRecipeBuilder
             .pulverizing(

@@ -63,6 +63,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         )
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
+        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "Dyed in blue", "Use Blue Knowledge to Budding Amethyst")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
@@ -73,6 +74,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.DEEP_GEARS, "Black Hazard", "Get any Deep Steel Tool or Armor")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
+        // Night Metal
+        addAdvancement(RagiumAdvancements.NIGHT_METAL, "Night of Knights", "Get Night Metal Ingot")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         addAdvancement(
@@ -96,6 +99,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
 
+        add(RagiumBlocks.BUDDING_AZURE, "Budding Azure")
         add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
@@ -247,6 +251,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
         add(RagiumItems.BLAST_CHARGE, "Blast Charge")
+        add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")

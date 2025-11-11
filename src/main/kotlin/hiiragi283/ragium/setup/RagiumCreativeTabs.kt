@@ -146,6 +146,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
             output.acceptEquipments(RagiumMaterialKeys.AZURE_STEEL)
+            output.accept(RagiumItems.BLUE_KNOWLEDGE)
             // Deep
             output.acceptEquipments(RagiumMaterialKeys.DEEP_STEEL)
             // Night

@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -219,6 +220,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 put(
                     RagiumAPI.id("crop_to_flour"),
                     HTCrushingMaterialRecipeData(CommonMaterialPrefixes.CROP, 1, CommonMaterialPrefixes.FLOUR, 1),
+                )
+
+                put(
+                    RagiumAPI.id("storage_block_to_dust"),
+                    HTBlockCrushingMaterialRecipeData,
                 )
             }
     }

@@ -1,15 +1,22 @@
 {
   "parent": "ragium:deep_steel",
   "criteria": {
-    "has_echo_star": {
+    "invulnerable_to_sonic_boom": {
       "conditions": {
-        "items": [
-          {
-            "items": "ragium:echo_star"
-          }
-        ]
+        "damage": {
+          "tags": [
+            {
+              "expected": true,
+              "id": "ragium:is_sonic"
+            },
+            {
+              "expected": false,
+              "id": "minecraft:bypasses_invulnerability"
+            }
+          ]
+        }
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "ragium:invulnerable_to"
     }
   },
   "display": {
@@ -27,7 +34,7 @@
   },
   "requirements": [
     [
-      "has_echo_star"
+      "invulnerable_to_sonic_boom"
     ]
   ],
   "sends_telemetry_event": true

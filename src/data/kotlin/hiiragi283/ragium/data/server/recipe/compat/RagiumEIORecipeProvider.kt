@@ -4,8 +4,8 @@ import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
@@ -27,7 +27,6 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800).save(output)
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600).save(output)
 
-        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200).save(output)
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800).save(output)
 
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600).save(output)
@@ -40,7 +39,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     }
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
+    private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
         RagiumConst.ALLOYING,
         AlloySmeltingRecipe(
             data.getSizedIngredients(),
@@ -68,7 +67,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     }
 
     @JvmStatic
-    private fun sagMillFromData(data: HTMaterialRecipeData, energy: Int = 2400) {
+    private fun sagMillFromData(data: HTRecipeData, energy: Int = 2400) {
         EIORecipeBuilder(
             "sag_milling",
             SagMillingRecipe(

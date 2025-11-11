@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:ragi_alloy",
+  "parent": "ragium:alloy_smelter",
   "criteria": {
     "has_c_ingots_advanced_ragi_alloy": {
       "conditions": {

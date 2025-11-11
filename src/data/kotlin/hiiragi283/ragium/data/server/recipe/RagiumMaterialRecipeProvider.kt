@@ -1,10 +1,13 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
+import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
@@ -92,8 +95,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS)
             .save(output)
-
-        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         // Azure Steel
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
     }
@@ -190,23 +191,30 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         val nuggetMap: Map<HTMaterialKey, HTSimpleDeferredItem> = RagiumItems.getMaterialMap(CommonMaterialPrefixes.NUGGET)
 
         for (key: HTMaterialKey in RagiumItems.MATERIALS.columnKeys) {
-            val basePrefix: HTMaterialPrefix = RagiumPlatform.INSTANCE
-                .getMaterialDefinition(key)
-                .getDefaultPrefix()
-                ?: continue
+            val definition: HTMaterialDefinition = RagiumPlatform.INSTANCE.getMaterialDefinition(key)
+            val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
             val base: ItemLike = RagiumItems.MATERIALS[basePrefix, key] ?: continue
 
             blockMap[key]?.let { storage: ItemLike ->
+                val storageBlock: HTStorageBlockMaterialAttribute = if (basePrefix.isOf(CommonMaterialPrefixes.INGOT)) {
+                    HTStorageBlockMaterialAttribute.THREE_BY_THREE
+                } else {
+                    definition.get<HTStorageBlockMaterialAttribute>() ?: return@let
+                }
                 // Block -> Base
                 HTShapelessRecipeBuilder
-                    .misc(base, 9)
+                    .misc(base, storageBlock.baseCount)
                     .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, key)
                     .saveSuffixed(output, "_from_block")
                 // Base -> Block
                 HTShapedRecipeBuilder
                     .building(storage)
-                    .hollow8()
-                    .define('A', basePrefix, key)
+                    .apply {
+                        when (storageBlock) {
+                            HTStorageBlockMaterialAttribute.TWO_BY_TWO -> pattern("AA", "AB")
+                            HTStorageBlockMaterialAttribute.THREE_BY_THREE -> hollow8()
+                        }
+                    }.define('A', basePrefix, key)
                     .define('B', base)
                     .saveSuffixed(output, "_from_base")
             }
@@ -327,7 +335,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData, applyCondition: Boolean = false) {
+    private fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 data.getResult(resultHelper, 0),
@@ -335,7 +343,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             ).apply {
                 if (applyCondition) {
                     data.outputs
-                        .mapNotNull(HTMaterialRecipeData.OutputEntry::tagKey)
+                        .mapNotNull(HTRecipeData.OutputEntry::tagKey)
                         .forEach(this::tagCondition)
                 }
             }.saveModified(output, data.operator)

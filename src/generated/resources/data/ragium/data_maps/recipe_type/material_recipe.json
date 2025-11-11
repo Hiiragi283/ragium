@@ -72,6 +72,9 @@
         "input_count": 2,
         "input_prefix": "rod",
         "output_prefix": "dust"
+      },
+      "ragium:storage_block_to_dust": {
+        "type": "ragium:crushing/storage_block"
       }
     }
   }

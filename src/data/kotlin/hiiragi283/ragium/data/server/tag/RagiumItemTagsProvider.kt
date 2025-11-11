@@ -93,6 +93,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(BlockTags.WALLS, ItemTags.WALLS)
         copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
 
+        copy(Tags.Blocks.CLUSTERS, Tags.Items.CLUSTERS)
+        copy(Tags.Blocks.BUDDING_BLOCKS, Tags.Items.BUDDING_BLOCKS)
+
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
@@ -302,6 +305,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Other
         builder.addTag(ItemTags.PIGLIN_LOVED, CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
+
+        builder.add(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR, RagiumItems.BLUE_KNOWLEDGE)
         // WIP
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)

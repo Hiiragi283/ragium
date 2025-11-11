@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -280,7 +280,7 @@ sealed class HTRecipeProvider {
         }
     }
 
-    fun pulverizeFromData(data: HTMaterialRecipeData) {
+    fun pulverizeFromData(data: HTRecipeData) {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 data.getItemIngredient(0, itemCreator),

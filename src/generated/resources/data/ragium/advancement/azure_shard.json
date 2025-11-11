@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:budding_azure",
   "criteria": {
     "has_c_gems_azure": {
       "conditions": {

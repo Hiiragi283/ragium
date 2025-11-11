@@ -64,6 +64,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         )
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
+        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "青に染まる", "青の知識を芽生えたアメジストに使う")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
@@ -74,6 +75,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.DEEP_GEARS, "黒き天災", "深層鋼インゴットで作られたツールか装備を手に入れる")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
+        // Night Metal
+        addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
@@ -93,6 +96,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
 
+        add(RagiumBlocks.BUDDING_AZURE, "芽生えた紺碧")
         add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
@@ -243,6 +247,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
         add(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
+        add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")

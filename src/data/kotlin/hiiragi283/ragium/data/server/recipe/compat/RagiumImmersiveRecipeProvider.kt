@@ -9,8 +9,8 @@ import blusunrize.immersiveengineering.data.recipes.builder.CrusherRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -69,7 +69,6 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     @JvmStatic
     private fun azure() {
-        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
     }
 
@@ -138,7 +137,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     ): BottlingMachineRecipeBuilder = output(prefix.itemTagKey(material), count)
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData) {
+    private fun alloyFromData(data: HTRecipeData) {
         val builder: HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder.builder()
         // Inputs
         for ((ingredient: Ingredient, count: Int) in data.getIngredients()) {
@@ -155,7 +154,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     }
 
     @JvmStatic
-    private fun crushFromData(data: HTMaterialRecipeData) {
+    private fun crushFromData(data: HTRecipeData) {
         val builder: CrusherRecipeBuilder = CrusherRecipeBuilder.builder()
         // Input
         builder.input(data.getIngredient(0))

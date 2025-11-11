@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "tag": "c:gems/azure"
+    },
+    "B": {
+      "item": "ragium:azure_shard"
+    }
+  },
+  "pattern": [
+    "AA",
+    "AB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_block"
+  }
+}

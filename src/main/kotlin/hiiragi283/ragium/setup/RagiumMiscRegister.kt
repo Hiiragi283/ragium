@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
+import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import net.minecraft.core.registries.Registries
@@ -68,6 +69,7 @@ object RagiumMiscRegister {
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id("crushing/storage_block"), HTBlockCrushingMaterialRecipeData.CODEC)
             helper.register(RagiumAPI.id("crushing"), HTCrushingMaterialRecipeData.CODEC)
             helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipeData.CODEC)
         }

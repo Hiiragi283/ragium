@@ -26,13 +26,6 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20),
             ).saveSuffixed(output, "_from_solidified_aa")
 
-        // Black Quartz
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(ActuallyTags.Items.STORAGE_BLOCKS_BLACK_QUARTZ),
-                resultHelper.item(ActuallyTags.Items.GEMS_BLACK_QUARTZ, 4),
-            ).save(output)
-
         canola()
     }
 

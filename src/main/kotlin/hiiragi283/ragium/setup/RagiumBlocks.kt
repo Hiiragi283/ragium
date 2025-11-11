@@ -13,7 +13,8 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.common.block.AzureClusterBlock
+import hiiragi283.ragium.common.block.HTAzureClusterBlock
+import hiiragi283.ragium.common.block.HTBuddingAzureBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
@@ -124,10 +125,17 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val BUDDING_AZURE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "budding_azure",
+        copyOf(Blocks.BUDDING_AMETHYST, MapColor.TERRACOTTA_BLUE),
+        ::HTBuddingAzureBlock,
+    )
+
+    @JvmField
     val AZURE_CLUSTER: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "azure_cluster",
         copyOf(Blocks.AMETHYST_CLUSTER, MapColor.TERRACOTTA_BLUE),
-        ::AzureClusterBlock,
+        ::HTAzureClusterBlock,
     )
 
     @JvmField
@@ -200,9 +208,10 @@ object RagiumBlocks {
         mapOf(
             // Gems
             RagiumMaterialKeys.RAGI_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.COLOR_PINK),
+            RagiumMaterialKeys.AZURE to copyOf(Blocks.AMETHYST_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.CRIMSON_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.CRIMSON_STEM),
             RagiumMaterialKeys.WARPED_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.WARPED_STEM),
-            RagiumMaterialKeys.ELDRITCH_PEARL to copyOf(Blocks.SHROOMLIGHT, MapColor.COLOR_PURPLE),
+            RagiumMaterialKeys.ELDRITCH_PEARL to copyOf(Blocks.AMETHYST_BLOCK),
             // Ingots
             RagiumMaterialKeys.RAGI_ALLOY to copyOf(Blocks.COPPER_BLOCK, MapColor.COLOR_RED),
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
