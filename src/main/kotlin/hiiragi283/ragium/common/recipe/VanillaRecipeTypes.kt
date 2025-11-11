@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.text.HTHasText
 import net.minecraft.network.chat.Component
@@ -27,10 +26,6 @@ object VanillaRecipeTypes {
     @JvmField
     val SMOKING: HTRecipeType.Findable<SingleRecipeInput, HTVanillaCookingRecipe> =
         VanillaTypeWrapper(RecipeType.SMOKING, ::HTVanillaCookingRecipe, Blocks.SMOKER::getName)
-
-    @JvmField
-    val STONECUTTING: HTRecipeType.Findable<SingleRecipeInput, HTItemToChancedItemRecipe> =
-        VanillaTypeWrapper(RecipeType.STONECUTTING, ::HTVanillaCuttingRecipe, Blocks.STONECUTTER::getName)
 
     //    Recipe Type    //
 

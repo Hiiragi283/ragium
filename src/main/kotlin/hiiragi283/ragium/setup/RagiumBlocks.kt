@@ -428,6 +428,10 @@ object RagiumBlocks {
     val AUTO_SMITHING_TABLE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("auto_smithing_table", RagiumBlockTypes.AUTO_SMITHING_TABLE, machineProperty())
 
+    @JvmField
+    val AUTO_STONECUTTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("auto_stonecutter", RagiumBlockTypes.AUTO_STONECUTTER, machineProperty())
+
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

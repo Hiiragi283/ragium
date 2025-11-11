@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAutoSmithingTableBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTAutoStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
@@ -134,6 +135,12 @@ object RagiumBlockEntityTypes {
     val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
         "auto_smithing_table",
         ::HTAutoSmithingTableBlockEntity,
+    )
+
+    @JvmField
+    val AUTO_STONECUTTER: HTDeferredBlockEntityType<HTAutoStonecutterBlockEntity> = registerTick(
+        "auto_stonecutter",
+        ::HTAutoStonecutterBlockEntity,
     )
 
     // Basic
@@ -322,6 +329,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Consumer
         registerHandler(event, AUTO_SMITHING_TABLE.get())
+        registerHandler(event, AUTO_STONECUTTER.get())
 
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, BLOCK_BREAKER.get())

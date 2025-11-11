@@ -62,6 +62,13 @@ object RagiumBlockTypes {
         .addConsumerTier(HTMachineTier.BASIC)
         .build()
 
+    @JvmField
+    val AUTO_STONECUTTER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.AUTO_STONECUTTER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addConsumerTier(HTMachineTier.BASIC)
+        .build()
+
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTMachineBlockType = HTMachineBlockType

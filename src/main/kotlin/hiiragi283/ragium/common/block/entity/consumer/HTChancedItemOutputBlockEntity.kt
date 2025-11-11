@@ -31,12 +31,9 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     final override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
-        initCatalyst(builder, listener)
         // outputs
         outputSlots = multiOutputs(builder, listener)
     }
-
-    protected open fun initCatalyst(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
 
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する

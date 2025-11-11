@@ -76,6 +76,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.NUCLEAR_REACTOR)
             // Consumers
             add(RagiumBlocks.AUTO_SMITHING_TABLE)
+            add(RagiumBlocks.AUTO_STONECUTTER)
 
             add(RagiumBlocks.ALLOY_SMELTER)
             add(RagiumBlocks.BLOCK_BREAKER)

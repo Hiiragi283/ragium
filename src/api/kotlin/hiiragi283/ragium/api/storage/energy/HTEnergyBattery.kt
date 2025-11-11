@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.storage.energy
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.storage.HTAmountSlot
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.item.HTAmountSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import kotlin.math.min
 
