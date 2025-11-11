@@ -46,7 +46,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 " A ",
                 "BBB",
-            ).define('A', Tags.Items.STRINGS)
+            ).define('A', RagiumItems.SYNTHETIC_FIBER)
             .define('B', Items.GLASS_BOTTLE)
             .save(output)
 

@@ -2,13 +2,15 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredRegister
-import hiiragi283.ragium.common.advancements.HTInvulnerableTrigger
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.CriterionTrigger
-import net.minecraft.advancements.critereon.DamageSourcePredicate
+import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.registries.Registries
 import java.util.Optional
 
+/**
+ * @see net.minecraft.advancements.CriteriaTriggers
+ */
 object RagiumCriteriaTriggers {
     @JvmField
     val REGISTER: HTDeferredRegister<CriterionTrigger<*>> =
@@ -21,15 +23,10 @@ object RagiumCriteriaTriggers {
     }
 
     @JvmField
-    val INVULNERABLE_TO: HTInvulnerableTrigger = register("invulnerable_to", HTInvulnerableTrigger())
+    val BEHEAD_MOB: PlayerTrigger = register("behead_mob", PlayerTrigger())
 
     //    Extensions    //
-    
-    @JvmStatic
-    fun invulnerableTo(): Criterion<HTInvulnerableTrigger.TriggerInstance> =
-        INVULNERABLE_TO.createCriterion(HTInvulnerableTrigger.TriggerInstance(Optional.empty(), Optional.empty()))
 
     @JvmStatic
-    fun invulnerableTo(damage: DamageSourcePredicate.Builder): Criterion<HTInvulnerableTrigger.TriggerInstance> =
-        INVULNERABLE_TO.createCriterion(HTInvulnerableTrigger.TriggerInstance(Optional.empty(), Optional.of(damage.build())))
+    fun beheadMob(): Criterion<PlayerTrigger.TriggerInstance> = BEHEAD_MOB.createCriterion(PlayerTrigger.TriggerInstance(Optional.empty()))
 }

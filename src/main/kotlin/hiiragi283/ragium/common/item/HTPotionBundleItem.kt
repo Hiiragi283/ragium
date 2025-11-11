@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
@@ -28,6 +30,9 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
             }
             if (result != stackIn && livingEntity is Player) {
                 HTItemDropHelper.giveStackTo(livingEntity, result)
+            }
+            if (livingEntity is ServerPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
             }
             return stack
         }

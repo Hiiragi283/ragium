@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.CriteriaTriggers
@@ -16,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
@@ -29,14 +27,12 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.EffectCure
 import net.neoforged.neoforge.common.EffectCures
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent
-import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
@@ -68,19 +64,21 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun onInteractBlock(event: PlayerInteractEvent.RightClickBlock) {
         val level: Level = event.level
-        if (level.isClientSide) return
 
         val pos: BlockPos = event.pos
         val state: BlockState = level.getBlockState(pos)
         val stack: ItemStack = event.itemStack
 
         if (state.`is`(Blocks.BUDDING_AMETHYST) && stack.`is`(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR)) {
-            level.setBlockAndUpdate(pos, RagiumBlocks.BUDDING_AZURE.get().defaultBlockState())
-            val player: Player = event.entity
-            if (player is ServerPlayer) {
-                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(player, pos, stack)
+            if (!level.isClientSide) {
+                val player: Player = event.entity
+                if (player is ServerPlayer) {
+                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(player, pos, stack)
+                }
+                level.setBlockAndUpdate(pos, RagiumBlocks.BUDDING_AZURE.get().defaultBlockState())
+                stack.consume(1, player)
             }
-            stack.consume(1, player)
+            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             event.isCanceled = true
         }
     }
@@ -205,14 +203,6 @@ object RagiumRuntimeEvents {
             event.isCanceled = true
         }
     }*/
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    fun invulnerableTo(event: EntityInvulnerabilityCheckEvent) {
-        val entity: Entity = event.entity
-        if (entity is ServerPlayer && event.isInvulnerable) {
-            RagiumCriteriaTriggers.INVULNERABLE_TO.trigger(entity, event.source)
-        }
-    }
 
     @SubscribeEvent
     fun onEffectRemove(event: MobEffectEvent.Remove) {

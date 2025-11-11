@@ -44,24 +44,24 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to ようこそ Ragium へ！")
-        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "こいつ…作れるぞ！", "Ragiumで追加された鍛冶型を作る")
+        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "いとも容易く作られる簡素な強化", "Ragiumで追加された鍛冶型を作る")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "レッドストーンではない", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
-        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを食べる")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "最後の朝食", "らぎチェリーのトーストタワーを手に入れる")
 
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
+        addAdvancement(RagiumAdvancements.AMBROSIA, "禁断の果実", "スティー…アンブロシアを食べる")
 
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "赤色です。", "発展ラギ合金インゴットを手に入れる")
-        addAdvancement(RagiumAdvancements.MELTER, "メルティーキッス", "溶融炉を手に入れる")
+        addAdvancement(RagiumAdvancements.MELTER, "溶融とあなた", "溶融炉を手に入れる")
+        addAdvancement(RagiumAdvancements.REFINERY, "リファイナリーでは…リファイナリーだこれ！", "精製機を手に入れる")
+        addAdvancement(RagiumAdvancements.PLASTIC, "Plus-Tic", "プラスチックを手に入れる")
+        addAdvancement(RagiumAdvancements.POTION_BUNDLE, "バンドルのバックポート", "ポーションバンドルを使う")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
-        addAdvancement(
-            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            "破壊の鉄槌",
-            "ラギクリスタリルの鍛造ハンマーを手に入れてあらゆるブロックを破壊する",
-        )
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "らぎ分解機", "ラギクリスタリルのハンマーを手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
         addAdvancement(RagiumAdvancements.BUDDING_AZURE, "青に染まる", "青の知識を芽生えたアメジストに使う")
@@ -72,7 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "「古代」の残骸", "共振の残骸を手に入れる")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
-        addAdvancement(RagiumAdvancements.DEEP_GEARS, "黒き天災", "深層鋼インゴットで作られたツールか装備を手に入れる")
+        addAdvancement(RagiumAdvancements.BEHEAD_MOB, "帯電なんていらない", "雷撃エンチャントが付与された武器でモブの頭を切り落とす")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Night Metal
@@ -84,6 +84,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだクリスタリルを手に入れる")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "リモートワーク", "次元アンカーを置いて，そのチャンクを常に読み込ませる")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "ロックオープン！", "転位の鍵を使い，紐づけた座標に飛ぶ")
+        addAdvancement(RagiumAdvancements.WARPED_WART, "Industrialなウォート", "歪んだウォートを食べる")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")

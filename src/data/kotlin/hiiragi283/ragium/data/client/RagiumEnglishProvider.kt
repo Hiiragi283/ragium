@@ -44,23 +44,24 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
-        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "This thing craftable...!", "Craft any Upgrade Templates added by Ragium")
+        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "Easy upgrades done dirt cheap", "Craft any Upgrade Templates added by Ragium")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
-        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Get Ragi-Cherry")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Eat Ragi-Cherry")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "The Last Breakfast", "Get Ragi-Cherry Toast Tower")
+
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
         addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
+        addAdvancement(RagiumAdvancements.AMBROSIA, "The Forbidden Fruit", "Eat Ste... Ambrosia")
 
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "This is red, not orange!", "Get Advanced Ragi-Alloy Ingot")
-        addAdvancement(RagiumAdvancements.MELTER, "Melty Kiss", "Get Melter")
+        addAdvancement(RagiumAdvancements.MELTER, "Melting with you", "Get Melter")
+        addAdvancement(RagiumAdvancements.REFINERY, "Not a Ref..., It's Refinery!", "Get Refinery")
+        addAdvancement(RagiumAdvancements.PLASTIC, "Plus-Tic", "Get Plastic")
+        addAdvancement(RagiumAdvancements.POTION_BUNDLE, "Backported Bundle", "Use Potion Bundle")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
-        addAdvancement(
-            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            "Hammer of Destruction",
-            "Get Ragi-Crystal Hammer to break ANY blocks!",
-        )
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "Ragi-Disassembler", "Get Ragi-Crystal Hammer")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
         addAdvancement(RagiumAdvancements.BUDDING_AZURE, "Dyed in blue", "Use Blue Knowledge to Budding Amethyst")
@@ -71,7 +72,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "Debris in the Ancient", "Get Resonant Debris")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
-        addAdvancement(RagiumAdvancements.DEEP_GEARS, "Black Hazard", "Get any Deep Steel Tool or Armor")
+        addAdvancement(RagiumAdvancements.BEHEAD_MOB, "Not more charged", "Behead mob by weapons with Strike enchantment")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
         // Night Metal
@@ -87,6 +88,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "Remote Work", "Place Dimensional Anchor to force loading the chunk")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "Lock Open!", "Use teleport key to teleport linked position")
+        addAdvancement(RagiumAdvancements.WARPED_WART, "Industrial Wart", "Eat Warped Wart")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")

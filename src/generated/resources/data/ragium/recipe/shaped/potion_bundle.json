@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:strings"
+      "item": "ragium:synthetic_fiber"
     },
     "B": {
       "item": "minecraft:glass_bottle"

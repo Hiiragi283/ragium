@@ -1,10 +1,10 @@
 {
-  "parent": "ragium:raginite",
+  "parent": "ragium:warped_crystal",
   "criteria": {
-    "use_ragi_cherry": {
+    "use_warped_wart": {
       "conditions": {
         "item": {
-          "items": "#c:foods/ragi_cherry"
+          "items": "ragium:warped_wart"
         }
       },
       "trigger": "minecraft:consume_item"
@@ -12,19 +12,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.ragi_cherry.desc"
+      "translate": "advancements.ragium.warped_wart.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_cherry"
+      "id": "ragium:warped_wart"
     },
     "title": {
-      "translate": "advancements.ragium.ragi_cherry.title"
+      "translate": "advancements.ragium.warped_wart.title"
     }
   },
   "requirements": [
     [
-      "use_ragi_cherry"
+      "use_warped_wart"
     ]
   ],
   "sends_telemetry_event": true

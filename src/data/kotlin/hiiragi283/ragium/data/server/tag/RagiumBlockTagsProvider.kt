@@ -217,7 +217,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(Tags.Blocks.BUDDING_BLOCKS, RagiumBlocks.BUDDING_AZURE)
 
         // WIP
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.BREWERY)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:plastic",
   "criteria": {
-    "has_c_gems_eldritch_pearl": {
+    "has_potion_bundle": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/eldritch_pearl"
+            "items": "ragium:potion_bundle"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.eldritch_pearl.desc"
+      "translate": "advancements.ragium.potion_bundle.desc"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:eldritch_pearl"
+      "id": "ragium:potion_bundle"
     },
     "title": {
-      "translate": "advancements.ragium.eldritch_pearl.title"
+      "translate": "advancements.ragium.potion_bundle.title"
     }
   },
   "requirements": [
     [
-      "has_c_gems_eldritch_pearl"
+      "has_potion_bundle"
     ]
   ],
   "sends_telemetry_event": true

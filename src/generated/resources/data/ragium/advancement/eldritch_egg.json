@@ -1,13 +1,13 @@
 {
   "parent": "ragium:eldritch_pearl",
   "criteria": {
-    "use_eldritch_egg": {
+    "capture_mob": {
       "conditions": {
         "item": {
           "items": "ragium:eldritch_egg"
         }
       },
-      "trigger": "minecraft:consume_item"
+      "trigger": "minecraft:player_interacted_with_entity"
     }
   },
   "display": {
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "use_eldritch_egg"
+      "capture_mob"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:refinery",
   "criteria": {
-    "has_c_gems_eldritch_pearl": {
+    "has_ragium_plastics": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/eldritch_pearl"
+            "items": "#ragium:plastics"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.eldritch_pearl.desc"
+      "translate": "advancements.ragium.plastic.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:eldritch_pearl"
+      "id": "ragium:plastic_plate"
     },
     "title": {
-      "translate": "advancements.ragium.eldritch_pearl.title"
+      "translate": "advancements.ragium.plastic.title"
     }
   },
   "requirements": [
     [
-      "has_c_gems_eldritch_pearl"
+      "has_ragium_plastics"
     ]
   ],
   "sends_telemetry_event": true
