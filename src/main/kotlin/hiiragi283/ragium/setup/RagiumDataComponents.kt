@@ -13,6 +13,8 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.text.HTSimpleTranslation
+import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.DyeColor
@@ -32,6 +34,9 @@ object RagiumDataComponents {
 
     @JvmField
     val DAMAGE_RESISTANT: DataComponentType<HTDamageResistant> = REGISTER.registerType("damage_resistant", HTDamageResistant.CODEC)
+
+    @JvmField
+    val DESCRIPTION: DataComponentType<HTTranslation> = REGISTER.registerType("description", HTSimpleTranslation.CODEC)
 
     @JvmField
     val DRINK_SOUND: DataComponentType<HTItemSoundEvent> = REGISTER.registerType("drinking_sound", HTItemSoundEvent.CODEC)

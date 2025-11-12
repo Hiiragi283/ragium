@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.tool
 
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder

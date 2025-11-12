@@ -53,7 +53,8 @@ data class HTBrewingEffect(val ingredient: Ingredient, val content: PotionConten
             content.allEffects
                 .firstOrNull()
                 ?.let(MobEffectInstance::getDescriptionId)
-                ?.let { id: String -> RagiumTranslation.ITEM_POTION.getComponent(Component.translatable(id)) }
+                ?.let(Component::translatable)
+                ?.let { id: Component -> RagiumTranslation.ITEM_POTION.translate(id) }
                 ?.let { name: Component -> stack.set(DataComponents.ITEM_NAME, name) }
         }
         return stack

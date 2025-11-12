@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -23,7 +24,6 @@ import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.PlayerInteractTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
-import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.Optional
@@ -33,7 +33,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         root(RagiumAdvancements.ROOT) {
             display {
                 setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
-                title = Component.literal(RagiumAPI.MOD_NAME)
+                title = RagiumTranslation.RAGIUM.translate()
                 setDescFromKey(RagiumAdvancements.ROOT)
                 backGround = RagiumAPI.id("textures/block/night_metal_block.png")
                 showToast = false

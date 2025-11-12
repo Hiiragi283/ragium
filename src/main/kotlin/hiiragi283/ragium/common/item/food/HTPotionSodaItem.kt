@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.food
 
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.ItemStack

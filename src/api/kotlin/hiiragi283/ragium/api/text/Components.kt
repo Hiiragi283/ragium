@@ -33,7 +33,7 @@ fun intText(value: Int): MutableComponent = longText(value.toLong())
 /**
  * フォーマットされた[Long]の[Component]を返します。
  */
-fun longText(value: Long): MutableComponent = Component.literal(NumberFormat.getNumberInstance().format(value))
+fun longText(value: Long): MutableComponent = Component.literal(NumberFormat.getIntegerInstance().format(value))
 
 /**
  * フォーマットされた[Float]の[Component]を返します。
@@ -66,7 +66,7 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 }
 
 private fun energyText(amount: Int, capacity: Int): MutableComponent =
-    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.getComponent(intText(amount), intText(capacity))
+    RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE.translate(intText(amount), intText(capacity))
 
 fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
 
@@ -75,7 +75,7 @@ fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
 }
 
 private fun experienceText(amount: Long, capacity: Long): MutableComponent =
-    RagiumTranslation.TOOLTIP_EXP_PERCENTAGE.getComponent(longText(amount), longText(capacity))
+    RagiumTranslation.TOOLTIP_EXP_PERCENTAGE.translate(longText(amount), longText(capacity))
 
 fun experienceText(tank: HTExperienceTank): MutableComponent = experienceText(tank.getAmount(), tank.getCapacity())
 
@@ -95,11 +95,11 @@ fun addFluidTooltip(
 ) {
     // Empty name if stack is empty
     if (stack == null) {
-        consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY.getComponent())
+        consumer.accept(RagiumTranslation.EMPTY.translate())
         return
     }
     // Fluid Name and Amount
-    consumer.accept(RagiumTranslation.TOOLTIP_FLUID_NAME.getComponent(stack.getText(), intText(stack.amount())))
+    consumer.accept(RagiumTranslation.STORED_MB.translate(stack, intText(stack.amount())))
     if (!inGui) return
     // Fluid id if advanced
     if (flag.isAdvanced) {
@@ -117,5 +117,13 @@ fun addFluidTooltip(
 fun addFluidTooltip(views: Iterable<HTFluidView>, consumer: Consumer<Component>, flag: TooltipFlag) {
     for (view: HTFluidView in views) {
         addFluidTooltip(view.getStack(), consumer, flag, false)
+    }
+}
+
+fun addDescription(translation: HTTranslation, tooltips: Consumer<Component>, flag: TooltipFlag) {
+    if (flag.hasShiftDown()) {
+        tooltips.accept(translation.translate())
+    } else {
+        tooltips.accept(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW))
     }
 }

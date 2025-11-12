@@ -1,22 +1,17 @@
 package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.common.text.HTSmithingTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.world.item.SmithingTemplateItem
 
-class HTSmithingTemplateItem(
-    appliesTo: HTTranslation,
-    ingredients: HTTranslation,
-    upgradeDescription: HTTranslation,
-    baseSlotDescription: HTTranslation,
-    additionsSlotDescription: HTTranslation,
-) : SmithingTemplateItem(
-        appliesTo.getColoredComponent(ChatFormatting.BLUE),
-        ingredients.getColoredComponent(ChatFormatting.BLUE),
-        upgradeDescription.getColoredComponent(ChatFormatting.GRAY),
-        baseSlotDescription.getComponent(),
-        additionsSlotDescription.getComponent(),
+class HTSmithingTemplateItem(translation: HTSmithingTranslation) :
+    SmithingTemplateItem(
+        translation.appliesTo.translateColored(ChatFormatting.BLUE),
+        translation.ingredients.translateColored(ChatFormatting.BLUE),
+        translation.upgradeDescription.translateColored(ChatFormatting.GRAY),
+        translation.baseSlotDescription.translate(),
+        translation.additionsSlotDescription.translate(),
         listOf(
             "item/empty_armor_slot_helmet",
             "item/empty_armor_slot_chestplate",

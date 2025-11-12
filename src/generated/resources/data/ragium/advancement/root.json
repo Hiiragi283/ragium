@@ -15,7 +15,9 @@
       "id": "ragium:ragi_alloy_hammer"
     },
     "show_toast": false,
-    "title": "Ragium"
+    "title": {
+      "translate": "constants.ragium.mod_name"
+    }
   },
   "requirements": [
     [

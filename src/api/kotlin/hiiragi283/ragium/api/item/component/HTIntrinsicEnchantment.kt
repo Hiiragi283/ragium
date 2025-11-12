@@ -50,8 +50,8 @@ data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val l
     override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
         getFullName(context.registries()).onSuccess { text: Component ->
             when {
-                flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.getComponent(text)
-                else -> RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW)
+                flag.hasShiftDown() -> RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.translate(text)
+                else -> RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW)
             }.let(consumer)
         }
     }

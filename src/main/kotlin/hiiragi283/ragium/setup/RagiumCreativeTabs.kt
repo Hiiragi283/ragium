@@ -5,16 +5,16 @@ import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
-import hiiragi283.ragium.api.registry.toDescriptionKey
-import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
@@ -43,7 +43,7 @@ object RagiumCreativeTabs {
         REGISTER.register("blocks") { id: ResourceLocation ->
             CreativeModeTab
                 .builder()
-                .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+                .title(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS.translate())
                 .icon { RagiumBlocks.PULVERIZER.toStack() }
                 .displayItems(RagiumBlocks.REGISTER.blockEntries)
                 .build()
@@ -89,6 +89,7 @@ object RagiumCreativeTabs {
     @JvmField
     val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
         "ingredients",
+        RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS,
         { RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY) },
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Fluid Buckets
@@ -132,6 +133,7 @@ object RagiumCreativeTabs {
     val ITEMS: HTSimpleDeferredHolder<CreativeModeTab> =
         register(
             "items",
+            RagiumCommonTranslation.CREATIVE_TAB_ITEMS,
             { RagiumItems.LOOT_TICKET },
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
@@ -199,12 +201,13 @@ object RagiumCreativeTabs {
     @JvmStatic
     private fun register(
         name: String,
+        title: HTTranslation,
         icon: Supplier<out ItemLike>,
         action: CreativeModeTab.DisplayItemsGenerator,
     ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
-            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+            .title(title.translate())
             .icon(icon::get.andThen(::ItemStack))
             .displayItems(action)
             .build()

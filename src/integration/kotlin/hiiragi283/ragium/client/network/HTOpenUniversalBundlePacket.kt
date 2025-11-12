@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.setup.RagiumItems
 import io.netty.buffer.ByteBuf
 import io.wispforest.accessories.api.AccessoriesCapability

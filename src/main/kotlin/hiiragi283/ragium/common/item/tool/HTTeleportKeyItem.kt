@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.storage.HTStorageAccess

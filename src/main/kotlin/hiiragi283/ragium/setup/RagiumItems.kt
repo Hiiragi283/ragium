@@ -20,27 +20,30 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
-import hiiragi283.ragium.common.item.HTBlastChargeItem
-import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
-import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.item.HTMagnetItem
-import hiiragi283.ragium.common.item.HTPotionBundleItem
-import hiiragi283.ragium.common.item.HTPotionSodaItem
-import hiiragi283.ragium.common.item.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.HTTierBasedItem
-import hiiragi283.ragium.common.item.HTTraderCatalogItem
-import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.base.HTSmithingTemplateItem
+import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
+import hiiragi283.ragium.common.item.food.HTIceCreamItem
+import hiiragi283.ragium.common.item.food.HTPotionBundleItem
+import hiiragi283.ragium.common.item.food.HTPotionSodaItem
+import hiiragi283.ragium.common.item.tool.HTBlastChargeItem
+import hiiragi283.ragium.common.item.tool.HTBottledBeeItem
+import hiiragi283.ragium.common.item.tool.HTCaptureEggItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
+import hiiragi283.ragium.common.item.tool.HTDynamicLanternItem
+import hiiragi283.ragium.common.item.tool.HTMagnetItem
+import hiiragi283.ragium.common.item.tool.HTTeleportKeyItem
+import hiiragi283.ragium.common.item.tool.HTTraderCatalogItem
+import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -54,6 +57,8 @@ import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.tank.HTComponentFluidTank
 import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
 import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
+import hiiragi283.ragium.common.text.HTSmithingTranslation
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -63,6 +68,7 @@ import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
@@ -386,13 +392,7 @@ object RagiumItems {
         RagiumMaterialKeys.NIGHT_METAL,
     ).associateWith { key: HTMaterialKey ->
         REGISTER.register("${key.name}_upgrade_smithing_template") { _ ->
-            HTSmithingTemplateItem(
-                RagiumTranslation.valueOf("${key.name}_upgrade_applies_to".uppercase()),
-                RagiumTranslation.valueOf("${key.name}_upgrade_ingredients".uppercase()),
-                RagiumTranslation.valueOf("${key.name}_upgrade".uppercase()),
-                RagiumTranslation.valueOf("${key.name}_upgrade_base_slot_description".uppercase()),
-                RagiumTranslation.valueOf("${key.name}_upgrade_additions_slot_description".uppercase()),
-            )
+            HTSmithingTemplateItem(HTSmithingTranslation(RagiumAPI.MOD_ID, key))
         }
     }
 
@@ -408,7 +408,7 @@ object RagiumItems {
 
     // Ice Cream
     @JvmField
-    val ICE_CREAM: HTSimpleDeferredItem = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
+    val ICE_CREAM: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream", ::HTIceCreamItem) { it.food(RagiumFoods.ICE_CREAM) }
 
     @JvmField
     val ICE_CREAM_SODA: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream_soda", ::HTPotionSodaItem)
@@ -438,14 +438,16 @@ object RagiumItems {
     val RAGI_CHERRY_TOAST: HTSimpleDeferredItem = registerFood("ragi_cherry_toast", RagiumFoods.RAGI_CHERRY_JAM)
 
     @JvmField
-    val FEVER_CHERRY: HTSimpleDeferredItem = registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY)
+    val FEVER_CHERRY: HTSimpleDeferredItem = REGISTER.registerSimpleItem("fever_cherry") {
+        it.food(RagiumFoods.FEVER_CHERRY).rarity(Rarity.EPIC)
+    }
 
     // Other
     @JvmField
-    val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bottled_bee")
+    val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerItem("bottled_bee", ::HTBottledBeeItem)
 
     @JvmField
-    val AMBROSIA: HTSimpleDeferredItem = registerFood("ambrosia", RagiumFoods.AMBROSIA)
+    val AMBROSIA: HTSimpleDeferredItem = REGISTER.registerItem("ambrosia", ::HTAmbrosiaItem) { it.food(RagiumFoods.AMBROSIA) }
 
     //    Machine Parts    //
 
@@ -611,41 +613,20 @@ object RagiumItems {
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        // Tools
+        fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
+            event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
+        }
+
+        fun setDesc(item: ItemLike, translation: HTTranslation) {
+            modify(item, RagiumDataComponents.DESCRIPTION, translation)
+        }
+
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
-            event.modify(item) { builder: DataComponentPatch.Builder ->
-                builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
-            }
+            modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
-        for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
-            setEnch(item, Enchantments.SILK_TOUCH)
-        }
-
-        setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
-        setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
-        setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
-        // Foods
-        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-        }
-        event.modify(FEVER_CHERRY) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
-        }
-        event.modify(AMBROSIA) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
-        }
-        // Other
-        setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
-        event.modify(UNIVERSAL_BUNDLE) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.COLOR, DyeColor.WHITE)
-        }
-
-        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
-        }
+        // Materials
+        setDesc(ELDER_HEART, RagiumCommonTranslation.ELDER_HEART)
 
         val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
@@ -658,15 +639,41 @@ object RagiumItems {
             event.modify(item, iridescent)
         }
 
-        event.modify(getIngot(FoodMaterialKeys.CHOCOLATE)) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
+        modify(getIngot(FoodMaterialKeys.CHOCOLATE), DataComponents.FOOD, RagiumFoods.CHOCOLATE)
+        modify(getIngot(FoodMaterialKeys.RAW_MEAT), DataComponents.FOOD, Foods.BEEF)
+        modify(getIngot(FoodMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+        // Tools
+        for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
+            setEnch(item, Enchantments.SILK_TOUCH)
         }
-        event.modify(getIngot(FoodMaterialKeys.RAW_MEAT)) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.FOOD, Foods.BEEF)
+
+        setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
+        setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
+        setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
+
+        setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
+        modify(UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR, DyeColor.WHITE)
+
+        setDesc(BLAST_CHARGE, RagiumCommonTranslation.BLAST_CHARGE)
+        setDesc(DYNAMIC_LANTERN, RagiumCommonTranslation.DYNAMIC_LANTERN)
+        setDesc(ELDRITCH_EGG, RagiumCommonTranslation.ELDRITCH_EGG)
+        setDesc(MAGNET, RagiumCommonTranslation.MAGNET)
+        setDesc(SLOT_COVER, RagiumCommonTranslation.SLOT_COVER)
+        setDesc(TRADER_CATALOG, RagiumCommonTranslation.TRADER_CATALOG)
+        // Foods
+        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
         }
-        event.modify(getIngot(FoodMaterialKeys.COOKED_MEAT)) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.FOOD, Foods.COOKED_BEEF)
+
+        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
+            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
         }
+
+        setDesc(AMBROSIA, RagiumCommonTranslation.AMBROSIA)
+        setDesc(ICE_CREAM, RagiumCommonTranslation.ICE_CREAM)
+        setDesc(RAGI_CHERRY, RagiumCommonTranslation.RAGI_CHERRY)
 
         RagiumAPI.LOGGER.info("Modified default item components!")
     }

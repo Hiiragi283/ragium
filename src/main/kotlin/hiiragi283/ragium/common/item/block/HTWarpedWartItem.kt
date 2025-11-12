@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.collection.randomOrNull
-import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.effect.MobEffectInstance
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
-class HTWarpedWartItem(block: HTWarpedWartBlock, properties: Properties) : HTBlockItem<HTWarpedWartBlock>(block, properties) {
+class HTWarpedWartItem(block: HTWarpedWartBlock, properties: Properties) : HTDescriptionBlockItem<HTWarpedWartBlock>(block, properties) {
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         livingEntity.activeEffects
             .map(MobEffectInstance::getEffect)

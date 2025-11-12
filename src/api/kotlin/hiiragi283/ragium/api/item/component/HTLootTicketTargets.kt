@@ -43,7 +43,7 @@ data class HTLootTicketTargets private constructor(private val lootTables: List<
             .asSequence()
             .map(ResourceKey<LootTable>::location)
             .map(ResourceLocation::toString)
-            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.getColoredComponent(ChatFormatting.YELLOW, it) }
+            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(ChatFormatting.YELLOW, it) }
             .forEach(consumer)
     }
 }
