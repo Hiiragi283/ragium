@@ -361,16 +361,22 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
 
-        // API
+        // API - Constants
+        add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
         add(RagiumTranslation.NONE, "None")
         add(RagiumTranslation.EMPTY, "Empty")
-
+        // API - Error
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: $1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: $1$s")
+        // API - Item
         add(RagiumTranslation.ITEM_POTION, $$"Potion of %1$s")
 
-        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, $$"%1$s / %2$s Exp")
+        add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
         add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
@@ -388,6 +394,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.CRATE, "Stores one type of item.")
         add(RagiumCommonTranslation.DRUM, "Stores one type of fluid.")
         add(RagiumCommonTranslation.EXP_DRUM, "Stores Experience Liquid and Experience for each.")
+
+        add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"Added %1$s FE into the energy network.")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"%1$s FE stored in the energy network.")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_SET, $$"Set amount of the energy network to %1$s FE.")
+
+        add(RagiumCommonTranslation.NO_DESTINATION, "Not found destination.")
+        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"Unknown dimension: %1$s")
+        add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"Fuel shortage: required %1$s mB")
 
         add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")
 

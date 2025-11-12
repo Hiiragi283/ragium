@@ -21,47 +21,48 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
+import java.util.function.Consumer
 
 @EventBusSubscriber(value = [Dist.CLIENT], modid = RagiumAPI.MOD_ID)
 object RagiumTooltipHandler {
     @SubscribeEvent
     fun onItemTooltip(event: ItemTooltipEvent) {
         val stack: ItemStack = event.itemStack
-        val tooltips: MutableList<Component> = event.toolTip
         val context: Item.TooltipContext = event.context
+        val consumer: Consumer<Component> = Consumer { event.toolTip.add(1, it) }
         val flag: TooltipFlag = event.flags
 
-        information(stack, tooltips, flag)
+        information(stack, consumer, flag)
         if (RagiumConfig.COMMON.showFoodEffect.asBoolean) {
-            food(stack, tooltips, event.context.tickRate())
+            food(stack, consumer, event.context.tickRate())
         }
-        workInProgress(stack, tooltips)
+        workInProgress(stack, consumer)
 
         RagiumDataComponents.REGISTER
             .asSequence()
             .mapNotNull(stack::get)
             .filterIsInstance<TooltipProvider>()
-            .forEach { provider: TooltipProvider -> provider.addToTooltip(context, tooltips::add, flag) }
+            .forEach { provider: TooltipProvider -> provider.addToTooltip(context, consumer, flag) }
     }
 
     @JvmStatic
-    private fun information(stack: ItemStack, tooltips: MutableList<Component>, flag: TooltipFlag) {
+    private fun information(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
         val translation: HTTranslation = stack.get(RagiumDataComponents.DESCRIPTION) ?: return
         if (flag.hasShiftDown()) {
-            tooltips.add(1, translation.translate())
+            consumer.accept(translation.translate())
         } else {
-            tooltips.add(1, RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW))
+            consumer.accept(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW))
         }
     }
 
     @JvmStatic
-    private fun food(stack: ItemStack, tooltips: MutableList<Component>, tickRate: Float) {
+    private fun food(stack: ItemStack, consumer: Consumer<Component>, tickRate: Float) {
         val food: FoodProperties = stack.getFoodProperties(null) ?: return
         val effects: List<FoodProperties.PossibleEffect> = food.effects
         if (effects.isNotEmpty()) {
             PotionContents.addPotionTooltip(
                 effects.map(FoodProperties.PossibleEffect::effect),
-                tooltips::add,
+                consumer,
                 1f,
                 tickRate,
             )
@@ -69,9 +70,9 @@ object RagiumTooltipHandler {
     }
 
     @JvmStatic
-    private fun workInProgress(stack: ItemStack, tooltips: MutableList<Component>) {
+    private fun workInProgress(stack: ItemStack, consumer: Consumer<Component>) {
         if (stack.`is`(RagiumModTags.Items.WIP)) {
-            tooltips.add(1, RagiumTranslation.TOOLTIP_WIP.translateColored(ChatFormatting.DARK_RED))
+            consumer.accept(RagiumTranslation.TOOLTIP_WIP.translateColored(ChatFormatting.DARK_RED))
         }
     }
 

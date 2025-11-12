@@ -6,10 +6,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTPotionBuilder
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.text.translatableText
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
@@ -50,12 +50,11 @@ data class HTBrewingEffect(val ingredient: Ingredient, val content: PotionConten
     fun toPotion(): ItemStack {
         val stack: ItemStack = createItemStack(Items.POTION, DataComponents.POTION_CONTENTS, content)
         if (content.potion.isEmpty) {
-            content.allEffects
-                .firstOrNull()
-                ?.let(MobEffectInstance::getDescriptionId)
-                ?.let(Component::translatable)
-                ?.let { id: Component -> RagiumTranslation.ITEM_POTION.translate(id) }
-                ?.let { name: Component -> stack.set(DataComponents.ITEM_NAME, name) }
+            val first: MobEffectInstance = content.allEffects.firstOrNull() ?: return stack
+            stack.set(
+                DataComponents.ITEM_NAME,
+                RagiumTranslation.ITEM_POTION.translate(translatableText(first.descriptionId)),
+            )
         }
         return stack
     }

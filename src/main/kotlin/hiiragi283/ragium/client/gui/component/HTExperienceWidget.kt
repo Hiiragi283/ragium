@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.experience.HTExperienceTank
-import hiiragi283.ragium.api.text.addExperienceTooltip
+import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
@@ -81,7 +81,7 @@ class HTExperienceWidget(
     override fun getLevel(): Float = 1f
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addExperienceTooltip(tank, consumer)
+        HTTextUtil.addExperienceTooltip(tank, consumer)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {

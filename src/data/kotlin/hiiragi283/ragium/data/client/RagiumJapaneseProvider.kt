@@ -362,15 +362,22 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
 
-        // API
+        // API - Constants
+        add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
         add(RagiumTranslation.NONE, "なし")
         add(RagiumTranslation.EMPTY, "空")
-
+        // API - Error
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: $1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: $1$s")
+        // API - Item
         add(RagiumTranslation.ITEM_POTION, $$"%1$sのポーション")
 
+        add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
         add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
@@ -390,6 +397,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管します。")
         add(RagiumCommonTranslation.DRUM, "1種類の液体を保管します。")
         add(RagiumCommonTranslation.EXP_DRUM, "液体経験値と経験値を相互に保管します。")
+
+        add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"エネルギーネットワークに%1$s FEを追加しました。")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"エネルギーネットワークに%1$s FEだけ保持しています。")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_SET, $$"エネルギーネットワークの量を%1$s FEに指定しました。")
+
+        add(RagiumCommonTranslation.NO_DESTINATION, "移動先が指定されていません。")
+        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"未知の次元です: %1$s")
+        add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"燃料不足: %1$s mB必要です。")
 
         add(RagiumCommonTranslation.ELDER_HEART, "エルダーガーディアンからドロップします。")
 

@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.text
 
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
@@ -11,14 +14,60 @@ import net.minecraft.network.chat.contents.TranslatableContents
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforgespi.language.IModInfo
+import java.util.function.Consumer
 
+/**
+ * @see mekanism.api.text.TextComponentUtil
+ * @see mekanism.common.util.text.TextUtils
+ */
 object HTTextUtil {
     @JvmStatic
-    private val TEXT_NULL: Component = Component.literal("null")
+    private val TEXT_NULL: Component = literalText("null")
+
+    @JvmStatic
+    fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
+        battery.let(::energyText).let(consumer::accept)
+    }
+
+    @JvmStatic
+    fun addExperienceTooltip(tank: HTExperienceTank, consumer: Consumer<Component>) {
+        tank.let(::experienceText).let(consumer::accept)
+    }
+
+    @JvmStatic
+    fun addFluidTooltip(
+        stack: ImmutableFluidStack?,
+        consumer: Consumer<Component>,
+        flag: TooltipFlag,
+        inGui: Boolean,
+    ) {
+        // Empty name if stack is empty
+        if (stack == null) {
+            consumer.accept(RagiumTranslation.EMPTY.translate())
+            return
+        }
+        // Fluid Name and Amount
+        consumer.accept(RagiumTranslation.STORED_MB.translate(stack, intText(stack.amount())))
+        if (!inGui) return
+        // Fluid id if advanced
+        if (flag.isAdvanced) {
+            consumer.accept(literalText(stack.holder().registeredName).withStyle(ChatFormatting.DARK_GRAY))
+        }
+        // Mod Name
+        val firstMod: IModInfo = ModList
+            .get()
+            .getModFileById(stack.getId().namespace)
+            .mods
+            .firstOrNull() ?: return
+        consumer.accept(literalText(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
+    }
 
     /**
      * @see mekanism.api.text.TextComponentUtil.smartTranslate
@@ -26,7 +75,7 @@ object HTTextUtil {
     @JvmStatic
     fun smartTranslate(key: String, vararg args: Any?): MutableComponent {
         if (args.isEmpty()) {
-            return Component.translatable(key)
+            return translatableText(key)
         } else {
             val formattedArgs: MutableList<Any> = mutableListOf()
             var cachedStyle: Style = Style.EMPTY
@@ -41,7 +90,7 @@ object HTTextUtil {
                     is Component -> current = arg.copy()
                     // Ragium
                     is HTHasText -> current = arg.getText().copy()
-                    is HTHasTranslationKey -> current = Component.translatable(arg.translationKey)
+                    is HTHasTranslationKey -> current = translatableText(arg.translationKey)
                     // Vanilla
                     is Block -> current = arg.name.copy()
                     is EntityType<*> -> current = arg.description.copy()
@@ -79,15 +128,15 @@ object HTTextUtil {
                         }
                     }
                     // Other
-                    is String -> current = Component.literal(arg)
+                    is String -> current = literalText(arg)
                     else -> if (!TranslatableContents.isAllowedPrimitiveArgument(arg)) {
-                        current = Component.literal(arg.toString())
+                        current = literalText(arg.toString())
                     }
                 }
 
                 if (!cachedStyle.isEmpty) {
                     if (current == null) {
-                        current = Component.literal(arg.toString())
+                        current = literalText(arg.toString())
                     }
                     formattedArgs += current.setStyle(cachedStyle)
                     cachedStyle = Style.EMPTY
@@ -105,7 +154,7 @@ object HTTextUtil {
                 }
             }
 
-            return Component.translatable(key, *formattedArgs.toTypedArray())
+            return translatableText(key, *formattedArgs.toTypedArray())
         }
     }
 

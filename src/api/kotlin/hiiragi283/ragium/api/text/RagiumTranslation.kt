@@ -10,15 +10,22 @@ import net.minecraft.Util
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Constants
     RAGIUM("constants", "mod_name"),
+    ERROR("constants", "error"),
+    INFINITE("constants", "infinite"),
+    NONE("constants", "none"),
+    EMPTY("constants", "empty"),
+
+    TRUE("constants", "true"),
+    FALSE("constants", "false"),
 
     // Block Type
     EMPTY_ENTRY("description", "empty"),
 
-    // Gui
-    INFINITE("gui", "infinite"),
-    NONE("gui", "none"),
-    EMPTY("gui", "empty"),
+    // Error
+    INVALID_PACKET_S2C("error", "invalid_packet.s2c"),
+    INVALID_PACKET_C2S("error", "invalid_packet.c2s"),
 
+    // GUI
     CAPACITY("gui", "capacity"),
     CAPACITY_MB("gui", "capacity.mb"),
     CAPACITY_FE("gui", "capacity.fe"),
@@ -27,14 +34,18 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     STORED_MB("gui", "stored.mb"),
     STORED_FE("gui", "stored.fe"),
 
+    FRACTION("gui", "fraction"),
+    PERCENTAGE("gui", "percentage"),
+
     // Item Name
     ITEM_POTION("item", "potion", "effect"),
 
     // Item Description
-    TOOLTIP_ENERGY_PERCENTAGE("tooltip", "energy_percentage"),
-    TOOLTIP_EXP_PERCENTAGE("tooltip", "experience_percentage"),
+    TOOLTIP_BLOCK_POS("tooltip", "block_pos"),
+    TOOLTIP_DIMENSION("tooltip", "dimension"),
     TOOLTIP_INTRINSIC_ENCHANTMENT("tooltip", "intrinsic_enchantment"),
     TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
+
     TOOLTIP_SHOW_DESCRIPTION("tooltip", "show_description"),
     TOOLTIP_SHOW_DETAILS("tooltip", "show_details"),
     TOOLTIP_WIP("tooltip", "work_in_progress"),

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.text.translatableText
 import hiiragi283.ragium.api.util.HTDslMarker
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.advancements.AdvancementType
@@ -30,11 +31,11 @@ class HTDisplayInfoBuilder {
     }
 
     fun setTitleFromKey(key: HTAdvancementKey): HTDisplayInfoBuilder = apply {
-        title = Component.translatable(key.titleKey)
+        title = translatableText(key.titleKey)
     }
 
     fun setDescFromKey(key: HTAdvancementKey): HTDisplayInfoBuilder = apply {
-        description = Component.translatable(key.descKey)
+        description = translatableText(key.descKey)
     }
 
     fun setGoal(): HTDisplayInfoBuilder = apply {

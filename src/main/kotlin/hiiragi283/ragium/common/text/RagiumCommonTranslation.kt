@@ -31,10 +31,20 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     DRUM("description", "drum"),
     EXP_DRUM("description", "experience_drum"),
 
+    // Command
+    COMMAND_ENERGY_ADD("command", "energy_network.add"),
+    COMMAND_ENERGY_GET("command", "energy_network.get"),
+    COMMAND_ENERGY_SET("command", "energy_network.set"),
+
     // Creative Mode Tab
     CREATIVE_TAB_BLOCKS("itemGroup", "blocks"),
     CREATIVE_TAB_INGREDIENTS("itemGroup", "ingredients"),
     CREATIVE_TAB_ITEMS("itemGroup", "items"),
+
+    // Error
+    NO_DESTINATION("error", "no_destination"),
+    UNKNOWN_DIMENSION("error", "unknown_dimension"),
+    FUEL_SHORTAGE("error", "fuel_shortage"),
 
     // Items - Materials
     ELDER_HEART("description", "elder_heart"),
@@ -51,7 +61,6 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     AMBROSIA("description", "ambrosia"),
     ICE_CREAM("description", "ice_cream"),
     RAGI_CHERRY("description", "ragi_cherry"),
-
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

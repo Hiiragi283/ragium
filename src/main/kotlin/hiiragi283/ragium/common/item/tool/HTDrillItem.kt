@@ -21,7 +21,7 @@ import net.neoforged.neoforge.common.ItemAbility
  * @see de.ellpeck.actuallyadditions.mod.items.DrillItem
  */
 class HTDrillItem(properties: Properties) :
-    HTEnergyItem.User(
+    HTEnergyItem(
         properties
             .stacksTo(1)
             .component(DataComponents.UNBREAKABLE, Unbreakable(false))
@@ -35,12 +35,12 @@ class HTDrillItem(properties: Properties) :
         val ACTIONS: List<ItemAbility> = listOf(ItemAbilities.PICKAXE_DIG, ItemAbilities.SHOVEL_DIG)
     }
 
-    override val energyUsage: Int = 160
+    val energyUsage: Int = 160
 
     override fun canPerformAction(stack: ItemStack, itemAbility: ItemAbility): Boolean = itemAbility in ACTIONS
 
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
-        val battery: HTEnergyBattery = getStorage(stack) ?: return 0f
+        val battery: HTEnergyBattery = getBattery(stack) ?: return 0f
         val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
         if (battery.extract(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
             return if (state.`is`(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)) super.getDestroySpeed(stack, state) else 1f
@@ -57,10 +57,10 @@ class HTDrillItem(properties: Properties) :
     ): Boolean {
         if (level.isClientSide) return false
         if (state.getDestroySpeed(level, pos) == 0f) return false
-        val battery: HTEnergyBattery = getStorage(stack) ?: return false
+        val battery: HTEnergyBattery = getBattery(stack) ?: return false
         val usage: Int = HTItemHelper.getFixedUsage(level, stack, energyUsage)
         if (battery.extract(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
-            extractEnergy(stack, usage, HTStorageAction.EXECUTE)
+            battery.extract(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             return true
         }
         return false

@@ -69,15 +69,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
 
-        add(RagiumTranslation.RAGIUM, "Ragium")
-
-        add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
-        add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
-        add(RagiumTranslation.CAPACITY_FE, $$"Capacity: %1$s FE")
-
-        add(RagiumTranslation.STORED, $$"%1$s: %2$s")
-        add(RagiumTranslation.STORED_MB, $$"%1$s: %2$s mB")
-        add(RagiumTranslation.STORED_FE, $$"%1$s: %2$s FE")
+        translations()
 
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
@@ -99,6 +91,26 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumReplicationAddon.MATTER_MAP) {
             add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
         }
+    }
+
+    private fun translations() {
+        // API - Constants
+        add(RagiumTranslation.RAGIUM, "Ragium")
+
+        add(RagiumTranslation.TRUE, "True")
+        add(RagiumTranslation.FALSE, "False")
+
+        // API - GUI
+        add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
+        add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
+        add(RagiumTranslation.CAPACITY_FE, $$"Capacity: %1$s FE")
+
+        add(RagiumTranslation.STORED, $$"%1$s: %2$s")
+        add(RagiumTranslation.STORED_MB, $$"%1$s: %2$s mB")
+        add(RagiumTranslation.STORED_FE, $$"%1$s: %2$s FE")
+
+        add(RagiumTranslation.FRACTION, $$"%1$s / %2$s")
+        add(RagiumTranslation.PERCENTAGE, $$"%1$s %")
     }
 
     // Collection

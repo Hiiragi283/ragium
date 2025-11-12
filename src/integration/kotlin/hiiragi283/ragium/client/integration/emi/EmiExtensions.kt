@@ -18,11 +18,11 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.text.literalText
 import hiiragi283.ragium.client.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -75,7 +75,7 @@ fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = this.commonTag.toEmi()
 
 private fun createErrorStack(throwable: Throwable): EmiStack = createErrorStack(throwable.message ?: "Failed to create EmiStack")
 
-fun createErrorStack(error: String): EmiStack = createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, Component.literal(error)).toEmi()
+fun createErrorStack(error: String): EmiStack = createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, literalText(error)).toEmi()
 
 //    Widget    //
 

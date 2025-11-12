@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.text
 
 import net.minecraft.ChatFormatting
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 
 /**
@@ -9,7 +8,7 @@ import net.minecraft.network.chat.MutableComponent
  * @see mekanism.api.text.ILangEntry
  */
 interface HTTranslation : HTHasTranslationKey {
-    fun translate(): MutableComponent = Component.translatable(this.translationKey)
+    fun translate(): MutableComponent = translatableText(this.translationKey)
 
     fun translate(vararg args: Any?): MutableComponent = HTTextUtil.smartTranslate(this.translationKey, *args)
 
