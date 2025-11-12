@@ -81,12 +81,5 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL, 64),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
             ).saveSuffixed(output, "_from_coal")
-
-        // Basalt Mesh
-        HTItemToObjRecipeBuilder
-            .compressing(
-                itemCreator.fromItem(Items.BASALT, 8),
-                resultHelper.item(RagiumItems.BASALT_MESH),
-            ).save(output)
     }
 }

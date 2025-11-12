@@ -1,10 +1,10 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.common.item.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -19,12 +19,12 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import java.util.function.Supplier
 
 object RagiumCreativeTabs {
     @JvmField
@@ -89,7 +89,7 @@ object RagiumCreativeTabs {
     @JvmField
     val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
         "ingredients",
-        "ragi_alloy_ingot",
+        { RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY) },
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
@@ -122,8 +122,6 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
         output.accept(RagiumItems.CIRCUIT_BOARD)
-        output.accept(RagiumItems.BASALT_MESH)
-        output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
 
         RagiumItems.COILS.values.forEach(output::accept)
         RagiumItems.CIRCUITS.values.forEach(output::accept)
@@ -134,7 +132,7 @@ object RagiumCreativeTabs {
     val ITEMS: HTSimpleDeferredHolder<CreativeModeTab> =
         register(
             "items",
-            "ragi_ticket",
+            { RagiumItems.LOOT_TICKET },
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             // Raginite
@@ -201,13 +199,13 @@ object RagiumCreativeTabs {
     @JvmStatic
     private fun register(
         name: String,
-        icon: String,
+        icon: Supplier<out ItemLike>,
         action: CreativeModeTab.DisplayItemsGenerator,
     ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
         CreativeModeTab
             .builder()
             .title(Component.translatable(id.toDescriptionKey("itemGroup")))
-            .icon(HTDeferredItem<Item>(RagiumAPI.id(icon))::toStack)
+            .icon(icon::get.andThen(::ItemStack))
             .displayItems(action)
             .build()
     }

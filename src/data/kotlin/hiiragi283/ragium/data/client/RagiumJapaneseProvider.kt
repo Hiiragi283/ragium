@@ -225,7 +225,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun item() {
         // Material
-        add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
@@ -292,7 +291,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
         add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
 
-        add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")

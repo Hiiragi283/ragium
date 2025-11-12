@@ -87,6 +87,7 @@ object RagiumItems {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("meat_ingot", "raw_meat_ingot")
         REGISTER.addAlias("wrench", "ragi_alloy_hammer")
+        REGISTER.addAlias("advanced_circuit_board", "circuit_board")
 
         REGISTER.register(eventBus)
 
@@ -128,9 +129,6 @@ object RagiumItems {
     val GREEN_PELLET: HTSimpleDeferredItem = REGISTER.registerSimpleItem("green_pellet")
 
     // Misc
-    @JvmField
-    val BASALT_MESH: HTSimpleDeferredItem = REGISTER.registerSimpleItem("basalt_mesh")
-
     @JvmField
     val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") { it.rarity(Rarity.UNCOMMON) }
 
@@ -497,9 +495,6 @@ object RagiumItems {
 
     @JvmField
     val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
-
-    @JvmField
-    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("advanced_circuit_board")
 
     //    Vehicles    //
 

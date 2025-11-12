@@ -132,13 +132,6 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
             ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
-                itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS, 2),
-                itemCreator.fromItem(RagiumItems.BASALT_MESH),
-            ).save(output)
         // Basic
         HTShapedRecipeBuilder
             .misc(RagiumItems.getCircuit(HTCircuitTier.BASIC))
@@ -200,7 +193,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ELITE)),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL),
-                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Ultimate
         HTCombineItemToObjRecipeBuilder
@@ -208,7 +201,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ULTIMATE)),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.IRIDESCENTIUM, 3),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO),
-                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
     }
 
