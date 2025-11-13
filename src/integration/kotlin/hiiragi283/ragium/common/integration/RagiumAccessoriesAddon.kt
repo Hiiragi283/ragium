@@ -4,10 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.accessory.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.accessory.HTGogglesAccessoryRenderer
+import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.setup.RagiumItems
 import io.wispforest.accessories.api.AccessoriesAPI

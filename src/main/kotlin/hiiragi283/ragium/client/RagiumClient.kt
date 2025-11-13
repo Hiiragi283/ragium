@@ -23,6 +23,7 @@ import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.client.renderer.block.HTCrateRenderer
@@ -304,7 +305,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
-        RagiumKeyMappings.KEYS.forEach(event::register)
+        event.register(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE)
 
         RagiumAPI.LOGGER.info("Registered Key Mappings!")
     }

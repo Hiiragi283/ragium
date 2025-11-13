@@ -487,7 +487,7 @@
   "itemGroup.ragium.ingredients": "Ragium - 素材",
   "itemGroup.ragium.items": "Ragium - アイテム",
   "key.ragium.category": "Ragium",
-  "key.ragium.open_universal_bundle.desc": "共有バンドルを開く",
+  "key.ragium.open_universal_bundle": "共有バンドルを開く",
   "recipe_type.ragium.alloying": "合金",
   "recipe_type.ragium.compressing": "圧縮",
   "recipe_type.ragium.crushing": "破砕",
