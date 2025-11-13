@@ -113,6 +113,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CEU)
             // Storage
+            add(RagiumBlocks.OPEN_CRATE)
+
             add(RagiumBlocks.EXP_DRUM)
         }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)

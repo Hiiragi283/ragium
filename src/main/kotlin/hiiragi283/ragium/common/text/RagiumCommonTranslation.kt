@@ -28,6 +28,8 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
 
     // Blocks - Storages
     CRATE("description", "crate"),
+    OPEN_CRATE("description", "open_crate"),
+
     DRUM("description", "drum"),
     EXP_DRUM("description", "experience_drum"),
 

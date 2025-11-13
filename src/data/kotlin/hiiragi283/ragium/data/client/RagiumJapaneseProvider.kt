@@ -168,6 +168,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
+        add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
+
         add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
     }
 

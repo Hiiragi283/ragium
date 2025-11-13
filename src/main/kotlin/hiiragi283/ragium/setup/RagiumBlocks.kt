@@ -55,7 +55,6 @@ import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
-import java.util.function.UnaryOperator
 
 object RagiumBlocks {
     @JvmField
@@ -95,8 +94,8 @@ object RagiumBlocks {
     fun registerSimpleEntity(
         name: String,
         blockType: HTEntityBlockType,
-        operator: UnaryOperator<BlockBehaviour.Properties>,
-    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, operator) })
+        properties: BlockBehaviour.Properties,
+    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, properties) })
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -591,6 +590,13 @@ object RagiumBlocks {
                 ::HTCrateBlockItem,
             )
         }
+
+    @JvmField
+    val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
+        "open_crate",
+        RagiumBlockTypes.OPEN_CRATE,
+        machineProperty(),
+    )
 
     @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlock<HTDrumBlock, HTDrumBlockItem>> =

@@ -177,6 +177,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
+        add(RagiumBlocks.OPEN_CRATE, "Open Crate")
+
         add(RagiumBlocks.EXP_DRUM, "Experience Drum")
     }
 

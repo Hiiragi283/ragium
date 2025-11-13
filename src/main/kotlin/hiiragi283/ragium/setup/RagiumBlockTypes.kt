@@ -276,6 +276,11 @@ object RagiumBlockTypes {
     }
 
     @JvmField
+    val OPEN_CRATE: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.OPEN_CRATE }
+        .build(RagiumCommonTranslation.OPEN_CRATE)
+
+    @JvmField
     val DRUMS: Map<HTDrumTier, HTEntityBlockType> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
         HTEntityBlockType
             .builder { tier.getBlockEntityType() }

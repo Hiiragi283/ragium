@@ -48,6 +48,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEnti
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -290,6 +291,9 @@ object RagiumBlockEntityTypes {
         }
 
     @JvmField
+    val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
+
+    @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
             registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
@@ -365,6 +369,7 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
             registerHandler(event, type.get())
         }
+        registerHandler(event, OPEN_CRATE.get())
         for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
             registerHandler(event, type.get())
         }

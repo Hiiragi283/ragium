@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.getStorage
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -82,7 +81,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // バッテリー内の電力を正面に自動搬出させる
-        val frontBattery: HTEnergyBattery? = getEnergyCache(level, pos, state.getAttributeFront())?.getStorage()
+        val frontBattery: HTEnergyBattery? = energyCache.getBattery(level, pos, state.getAttributeFront())
         HTEnergyHelper.moveEnergy(this.battery, frontBattery, this.battery::onContentsChanged)
         // スロット内のアイテムを液体に変換する
         fuelSlot.fillOrBurn()

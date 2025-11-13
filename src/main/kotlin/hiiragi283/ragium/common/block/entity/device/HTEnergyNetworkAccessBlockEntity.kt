@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.energy.HTEnergyCache
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -17,6 +18,7 @@ import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -69,6 +71,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     //    Creative    //
 
     class Creative(pos: BlockPos, state: BlockState) : HTEnergyNetworkAccessBlockEntity(RagiumBlocks.CEU, pos, state) {
+        private val energyCache: HTEnergyCache = HTEnergyCache()
+
         override fun createBattery(listener: HTContentListener): HTEnergyBattery =
             object : HTEnergyBattery, HTContentListener.Empty, HTValueSerializable.Empty {
                 override fun insert(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int = amount
@@ -81,6 +85,13 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
             }
 
         override val transferRate: Int = Int.MAX_VALUE
+
+        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+            for (direction: Direction in Direction.entries) {
+                energyCache.getBattery(level, pos, direction)?.insert(Int.MAX_VALUE, HTStorageAction.EXECUTE, HTStorageAccess.EXTERNAL)
+            }
+            return super.onUpdateServer(level, pos, state)
+        }
     }
 
     //    Simple    //
