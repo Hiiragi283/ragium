@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.text.HTTextResult
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -26,12 +27,12 @@ interface HTKeyOrTagEntry<T : Any> : HTHolderLike {
         map(Either<ResourceKey<T>, TagKey<T>>::left, Either<ResourceKey<T>, TagKey<T>>::right)
 
     /**
-     * 指定した[HolderLookup.Provider]から[Holder]の[Result]を返します。
+     * 指定した[HolderLookup.Provider]から[Holder]の[HTTextResult]を返します。
      */
-    fun getFirstHolder(provider: HolderLookup.Provider?): Result<Holder<T>>
+    fun getFirstHolder(provider: HolderLookup.Provider?): HTTextResult<Holder<T>>
 
     /**
-     * 指定した[HolderGetter]から[Holder]の[Result]を返します。
+     * 指定した[HolderGetter]から[Holder]の[HTTextResult]を返します。
      */
-    fun getFirstHolder(getter: HolderGetter<T>): Result<Holder<T>>
+    fun getFirstHolder(getter: HolderGetter<T>): HTTextResult<Holder<T>>
 }

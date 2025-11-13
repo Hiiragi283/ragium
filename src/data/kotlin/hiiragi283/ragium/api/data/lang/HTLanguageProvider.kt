@@ -107,7 +107,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         add(RagiumTranslation.STORED, $$"%1$s: %2$s")
         add(RagiumTranslation.STORED_MB, $$"%1$s: %2$s mB")
-        add(RagiumTranslation.STORED_FE, $$"%1$s: %2$s FE")
+        add(RagiumTranslation.STORED_FE, $$"%1$s FE")
 
         add(RagiumTranslation.FRACTION, $$"%1$s / %2$s")
         add(RagiumTranslation.PERCENTAGE, $$"%1$s %")

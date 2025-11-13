@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.text.intText
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyNetwork
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import net.minecraft.commands.CommandSourceStack
@@ -59,7 +58,7 @@ object RagiumCommand {
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
-        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_GET.translate(intText(amount)) }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_GET.translate(amount) }, true)
         return amount
     }
 
@@ -68,7 +67,7 @@ object RagiumCommand {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
         val received: Int = getEnergyNetwork(source)?.insert(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
-        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_ADD.translate(intText(received)) }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_ADD.translate(received) }, true)
         return received
     }
 
@@ -76,7 +75,7 @@ object RagiumCommand {
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
         (getEnergyNetwork(source) as? HTEnergyNetwork)?.setAmountUnchecked(value)
-        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_SET.translate(intText(value)) }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_SET.translate(value) }, true)
         return value
     }
 

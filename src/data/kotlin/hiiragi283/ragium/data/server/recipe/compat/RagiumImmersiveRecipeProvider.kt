@@ -132,12 +132,10 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             builder.input(ingredient, count)
         }
         // Outputs
-        data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int) ->
-            when {
-                tagKey != null -> builder.output(tagKey, count)
-                item != null -> builder.output(item, count)
-            }
-        }
+        data.getOutputs(
+            { tagKey: TagKey<Item>, count: Int, _ -> builder.output(tagKey, count) },
+            { item: Item, count: Int, _ -> builder.output(item, count) },
+        )
         builder.build(output, data.getModifiedId())
     }
 

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.text.HTTextResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -36,12 +37,12 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK
         )
     }
 
-    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): STACK
+    protected abstract fun createStack(holder: Holder<TYPE>, amount: Int, components: DataComponentPatch): HTTextResult<STACK>
 
     //    HTRecipeResult    //
 
     final override val id: ResourceLocation = entry.getId()
 
-    final override fun getStackResult(provider: HolderLookup.Provider?): Result<STACK> =
-        entry.getFirstHolder(provider).mapCatching { holder: Holder<TYPE> -> createStack(holder, amount, components) }
+    final override fun getStackResult(provider: HolderLookup.Provider?): HTTextResult<STACK> =
+        entry.getFirstHolder(provider).flatMap { holder: Holder<TYPE> -> createStack(holder, amount, components) }
 }

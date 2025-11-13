@@ -72,13 +72,10 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
             "sag_milling",
             SagMillingRecipe(
                 data.getIngredient(0),
-                data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
-                    when {
-                        tagKey != null -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false)
-                        item != null -> SagMillingRecipe.OutputItem.of(item, count, chance, false)
-                        else -> error("")
-                    }
-                },
+                data.getOutputs(
+                    { tagKey: TagKey<Item>, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false) },
+                    { item: Item, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(item, count, chance, false) },
+                ),
                 energy,
                 SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
             ),

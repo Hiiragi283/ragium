@@ -54,12 +54,13 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     return translatableText(location.toLanguageKey(ILevelExtension.TRANSLATION_PREFIX), location.toString())
 }
 
-private fun energyText(amount: Int, capacity: Int): MutableComponent =
-    RagiumTranslation.FRACTION.translate(intText(amount), intText(capacity))
+private fun energyText(amount: Int, capacity: Int): MutableComponent = RagiumTranslation.FRACTION.translate(
+    RagiumTranslation.STORED_FE.translate(amount),
+    RagiumTranslation.STORED_FE.translate(capacity),
+)
 
 fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
 
-private fun experienceText(amount: Long, capacity: Long): MutableComponent =
-    RagiumTranslation.FRACTION.translate(longText(amount), longText(capacity))
+private fun experienceText(amount: Long, capacity: Long): MutableComponent = RagiumTranslation.FRACTION.translate(amount, capacity)
 
 fun experienceText(tank: HTExperienceTank): MutableComponent = experienceText(tank.getAmount(), tank.getCapacity())

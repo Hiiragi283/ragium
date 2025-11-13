@@ -82,6 +82,15 @@ data class HTRecipeData private constructor(
     // Output
     inline fun <T> getOutputs(factory: (OutputEntry) -> T): List<T> = this.outputs.map(factory)
 
+    inline fun <T> getOutputs(onTagKey: (TagKey<Item>, Int, Float) -> T, onItem: (Item, Int, Float) -> T): List<T> =
+        this.outputs.mapNotNull { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
+            when {
+                tagKey != null -> onTagKey(tagKey, count, chance)
+                item != null -> onItem(item, count, chance)
+                else -> null
+            }
+        }
+
     fun getOutputStacks(): List<ItemStack> = getOutputs { (item: Item?, _, count: Int) ->
         when (item != null) {
             true -> ItemStack(item, count)
@@ -131,7 +140,7 @@ data class HTRecipeData private constructor(
         val count: Int,
         val chance: Float,
     ) {
-        fun toImmutable(): ImmutableItemStack = ImmutableItemStack.Companion.of(checkNotNull(item), count)
+        fun toImmutable(): ImmutableItemStack = ImmutableItemStack.of(checkNotNull(item), count)
     }
 
     //    Builder    //

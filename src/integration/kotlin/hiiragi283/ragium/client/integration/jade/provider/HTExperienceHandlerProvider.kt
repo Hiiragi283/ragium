@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.integration.jade.provider
 
 import hiiragi283.ragium.api.integration.jade.HTBasicJadeDataProvider
 import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
-import hiiragi283.ragium.api.text.longText
 import hiiragi283.ragium.client.text.RagiumClientTranslation
 import net.minecraft.ChatFormatting
 import snownee.jade.api.Accessor
@@ -23,7 +22,7 @@ sealed class HTExperienceHandlerProvider<ACCESSOR : Accessor<*>> :
         data: List<HTExperienceView>,
     ) {
         for (view: HTExperienceView in data) {
-            RagiumClientTranslation.JADE_EXP_STORAGE.translate(ChatFormatting.WHITE, longText(view.getAmount())).let(tooltip::add)
+            RagiumClientTranslation.JADE_EXP_STORAGE.translate(ChatFormatting.WHITE, view.getAmount()).let(tooltip::add)
         }
     }
 

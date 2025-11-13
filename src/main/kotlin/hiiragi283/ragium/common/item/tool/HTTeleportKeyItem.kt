@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
-import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.api.text.HTTextResult
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.text.intText
+import hiiragi283.ragium.api.text.levelText
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -65,13 +65,13 @@ class HTTeleportKeyItem(properties: Properties) : Item(properties.rarity(Rarity.
         // 実行者がプレイヤーの場合のみ実行
         if (livingEntity is ServerPlayer) {
             val player: ServerPlayer = livingEntity
-            val sound: SoundEvent = when (val result: TeleportResult = teleportPlayer1(stack, player)) {
-                is TeleportResult.Failed -> {
-                    player.displayClientMessage(result.message, true)
+            val sound: SoundEvent = teleportPlayer(stack, player).fold(
+                { SoundEvents.PLAYER_TELEPORT },
+                { message: Component ->
+                    player.displayClientMessage(message, true)
                     SoundEvents.OMINOUS_BOTTLE_DISPOSE
-                }
-                TeleportResult.Succeeded -> SoundEvents.PLAYER_TELEPORT
-            }
+                },
+            )
             // SEを鳴らす
             level.playSound(
                 null,
@@ -85,19 +85,19 @@ class HTTeleportKeyItem(properties: Properties) : Item(properties.rarity(Rarity.
         return super.finishUsingItem(stack, level, livingEntity)
     }
 
-    private fun teleportPlayer1(stack: ItemStack, player: ServerPlayer): TeleportResult {
+    private fun teleportPlayer(stack: ItemStack, player: ServerPlayer): HTTextResult<Unit> {
         val (dim: ResourceKey<Level>, pos: BlockPos) =
             stack.get(RagiumDataComponents.TELEPORT_POS)
-                ?: return TeleportResult.Failed(RagiumCommonTranslation.NO_DESTINATION)
+                ?: return HTTextResult.failure(RagiumCommonTranslation.NO_DESTINATION)
         val level: ServerLevel = player.server.getLevel(dim)
-            ?: return TeleportResult.Failed(RagiumCommonTranslation.UNKNOWN_DIMENSION)
+            ?: return HTTextResult.failure(RagiumCommonTranslation.UNKNOWN_DIMENSION)
         // 燃料を消費できなければスキップ
         val tank: HTFluidTank = HTFluidCapabilities.getFluidView(stack, 0) as? HTFluidTank
-            ?: return TeleportResult.Failed(RagiumTranslation.ERROR)
+            ?: return HTTextResult.failure(RagiumTranslation.ERROR)
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
         val toDrain: Int = HTItemHelper.getFixedUsage(player.serverLevel(), stack, usage)
         if ((tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() ?: 0) < toDrain) {
-            return TeleportResult.Failed(RagiumCommonTranslation.FUEL_SHORTAGE, intText(toDrain))
+            return HTTextResult.failure(RagiumCommonTranslation.FUEL_SHORTAGE.translate(toDrain))
         }
         // 実際にテレポートを行う
         if (player.connection.isAcceptingMessages) {
@@ -114,9 +114,9 @@ class HTTeleportKeyItem(properties: Properties) : Item(properties.rarity(Rarity.
             player.resetFallDistance()
             player.resetCurrentImpulseContext()
             CriteriaTriggers.CONSUME_ITEM.trigger(player, stack)
-            return TeleportResult.Succeeded
+            return HTTextResult.success(Unit)
         } else {
-            return TeleportResult.Failed(RagiumTranslation.ERROR)
+            return HTTextResult.failure(RagiumTranslation.ERROR)
         }
     }
 
@@ -135,33 +135,47 @@ class HTTeleportKeyItem(properties: Properties) : Item(properties.rarity(Rarity.
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
-        // Fluid Name
-        when (val stack: ImmutableFluidStack? = view.getStack()) {
-            null -> RagiumTranslation.EMPTY.translateColored(ChatFormatting.DARK_RED)
-            else -> RagiumTranslation.STORED_MB.translateColored(
-                ChatFormatting.LIGHT_PURPLE,
-                stack,
-                ChatFormatting.GRAY,
-                intText(stack.amount()),
+        if (flag.hasShiftDown()) {
+            val (dimension: ResourceKey<Level>, pos: BlockPos) = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return
+            tooltips.add(
+                RagiumTranslation.TOOLTIP_DIMENSION.translateColored(
+                    ChatFormatting.GRAY,
+                    ChatFormatting.WHITE,
+                    levelText(dimension),
+                ),
             )
-        }.let(tooltips::add)
-        // Tank Capacity
-        RagiumTranslation.CAPACITY_MB
-            .translateColored(
-                ChatFormatting.BLUE,
-                ChatFormatting.GRAY,
-                intText(view.getCapacity()),
-            ).let(tooltips::add)
-    }
+            tooltips.add(
+                RagiumTranslation.TOOLTIP_BLOCK_POS.translateColored(
+                    ChatFormatting.GRAY,
+                    ChatFormatting.WHITE,
+                    pos.x,
+                    ChatFormatting.WHITE,
+                    pos.y,
+                    ChatFormatting.WHITE,
+                    pos.z,
+                ),
+            )
+        } else {
+            val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
+            // Fluid Name
+            when (val stack: ImmutableFluidStack? = view.getStack()) {
+                null -> RagiumTranslation.EMPTY.translateColored(ChatFormatting.DARK_RED)
+                else -> RagiumTranslation.STORED_MB.translateColored(
+                    ChatFormatting.LIGHT_PURPLE,
+                    stack,
+                    ChatFormatting.GRAY,
+                    stack.amount(),
+                )
+            }.let(tooltips::add)
+            // Tank Capacity
+            RagiumTranslation.CAPACITY_MB
+                .translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    view.getCapacity(),
+                ).let(tooltips::add)
 
-    private sealed interface TeleportResult {
-        data object Succeeded : TeleportResult
-
-        data class Failed(val message: Component) : TeleportResult {
-            constructor(translation: HTTranslation) : this(translation.translateColored(ChatFormatting.RED))
-
-            constructor(translation: HTTranslation, vararg args: Any) : this(translation.translateColored(ChatFormatting.RED, *args))
+            tooltips.add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW))
         }
     }
 }

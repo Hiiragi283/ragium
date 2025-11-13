@@ -18,11 +18,13 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.text.literalText
+import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -50,7 +52,7 @@ fun ImmutableFluidStack?.toEmi(): EmiStack = this?.unwrap()?.toEmi() ?: EmiStack
 fun TagKey<*>.toEmi(amount: Int = 1): EmiIngredient = EmiIngredient
     .of(this, amount.toLong())
     .takeUnless(EmiIngredient::isEmpty)
-    ?: createErrorStack("Empty Tag: ${this.location}")
+    ?: createErrorStack(RagiumTranslation.EMPTY_TAG_KEY.translate(this))
 
 fun <T : Any> HTPrefixLike.toEmi(key: RegistryKey<T>, amount: Int = 1): EmiIngredient = this.createCommonTagKey(key).toEmi(amount)
 
@@ -73,9 +75,9 @@ fun HTFluidContent<*, *, *>.toFluidEmi(amount: Number): EmiStack = EmiStack.of(t
 
 fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = this.commonTag.toEmi()
 
-private fun createErrorStack(throwable: Throwable): EmiStack = createErrorStack(throwable.message ?: "Failed to create EmiStack")
+fun createErrorStack(translation: HTTranslation): EmiStack = createErrorStack(translation.translate())
 
-fun createErrorStack(error: String): EmiStack = createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, literalText(error)).toEmi()
+fun createErrorStack(message: Component): EmiStack = createItemStack(Items.BARRIER, DataComponents.CUSTOM_NAME, message).toEmi()
 
 //    Widget    //
 

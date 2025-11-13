@@ -368,8 +368,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.NONE, "なし")
         add(RagiumTranslation.EMPTY, "空")
         // API - Error
-        add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: $1$s")
-        add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: $1$s")
+        add(RagiumTranslation.EMPTY_TAG_KEY, $$"空のタグ: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
+        add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
+        add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
         // API - Item
         add(RagiumTranslation.ITEM_POTION, $$"%1$sのポーション")
 

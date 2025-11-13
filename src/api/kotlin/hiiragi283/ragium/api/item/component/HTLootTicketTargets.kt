@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
 import hiiragi283.ragium.api.collection.randomOrNull
-import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -14,10 +13,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.level.storage.loot.LootTable
+import java.util.function.Consumer
 
 @ConsistentCopyVisibility
-data class HTLootTicketTargets private constructor(private val lootTables: List<ResourceKey<LootTable>>) : HTTooltipProvider {
+data class HTLootTicketTargets private constructor(private val lootTables: List<ResourceKey<LootTable>>) : TooltipProvider {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTLootTicketTargets> = VanillaBiCodecs
@@ -38,12 +39,12 @@ data class HTLootTicketTargets private constructor(private val lootTables: List<
 
     fun getRandomLoot(random: RandomSource): ResourceKey<LootTable>? = lootTables.randomOrNull(random)
 
-    override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
+    override fun addToTooltip(context: Item.TooltipContext, tooltipAdder: Consumer<Component>, tooltipFlag: TooltipFlag) {
         lootTables
-            .asSequence()
             .map(ResourceKey<LootTable>::location)
             .map(ResourceLocation::toString)
-            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(ChatFormatting.YELLOW, it) }
-            .forEach(consumer)
+            .map {
+                RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(ChatFormatting.YELLOW, ChatFormatting.WHITE, it)
+            }.forEach(tooltipAdder)
     }
 }

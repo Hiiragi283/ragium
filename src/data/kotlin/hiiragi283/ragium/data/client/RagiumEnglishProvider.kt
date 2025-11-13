@@ -367,8 +367,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.NONE, "None")
         add(RagiumTranslation.EMPTY, "Empty")
         // API - Error
-        add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: $1$s")
-        add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: $1$s")
+        add(RagiumTranslation.EMPTY_TAG_KEY, $$"Empty tag key: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
+        add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
+        add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
         // API - Item
         add(RagiumTranslation.ITEM_POTION, $$"Potion of %1$s")
 
@@ -400,7 +403,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.COMMAND_ENERGY_SET, $$"Set amount of the energy network to %1$s FE.")
 
         add(RagiumCommonTranslation.NO_DESTINATION, "Not found destination.")
-        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"Unknown dimension: %1$s")
+        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"Missing dimension: %1$s")
         add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"Fuel shortage: required %1$s mB")
 
         add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")

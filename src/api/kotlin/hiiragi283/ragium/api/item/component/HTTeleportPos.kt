@@ -1,22 +1,14 @@
 package hiiragi283.ragium.api.item.component
 
-import hiiragi283.ragium.api.item.HTTooltipProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.text.intText
-import hiiragi283.ragium.api.text.levelText
 import io.netty.buffer.ByteBuf
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 
 @JvmInline
-value class HTTeleportPos(val globalPos: GlobalPos) : HTTooltipProvider {
+value class HTTeleportPos(val globalPos: GlobalPos) {
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTTeleportPos> = BiCodec
@@ -29,27 +21,6 @@ value class HTTeleportPos(val globalPos: GlobalPos) : HTTooltipProvider {
 
     val dimension: ResourceKey<Level> get() = globalPos.dimension
     val pos: BlockPos get() = globalPos.pos
-
-    override fun addToTooltip(context: Item.TooltipContext, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        consumer(
-            RagiumTranslation.TOOLTIP_DIMENSION.translate(
-                ChatFormatting.GRAY,
-                ChatFormatting.WHITE,
-                levelText(dimension),
-            ),
-        )
-        consumer(
-            RagiumTranslation.TOOLTIP_BLOCK_POS.translate(
-                ChatFormatting.GRAY,
-                ChatFormatting.WHITE,
-                intText(pos.x),
-                ChatFormatting.WHITE,
-                intText(pos.y),
-                ChatFormatting.WHITE,
-                intText(pos.z),
-            ),
-        )
-    }
 
     operator fun component1(): ResourceKey<Level> = dimension
 

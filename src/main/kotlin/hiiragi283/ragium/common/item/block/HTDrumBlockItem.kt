@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.text.intText
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.ChatFormatting
@@ -42,7 +41,7 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTDescriptio
                 ChatFormatting.LIGHT_PURPLE,
                 stack,
                 ChatFormatting.GRAY,
-                intText(stack.amount()),
+                stack.amount(),
             )
         }.let(tooltips::add)
         // Tank Capacity
@@ -55,7 +54,7 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTDescriptio
             else -> RagiumTranslation.CAPACITY_MB.translateColored(
                 ChatFormatting.BLUE,
                 ChatFormatting.GRAY,
-                intText(view.getCapacity()),
+                view.getCapacity(),
             )
         }.let(tooltips::add)
     }

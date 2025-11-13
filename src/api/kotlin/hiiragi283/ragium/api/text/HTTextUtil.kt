@@ -21,6 +21,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
+import java.text.NumberFormat
 import java.util.function.Consumer
 
 /**
@@ -30,6 +31,12 @@ import java.util.function.Consumer
 object HTTextUtil {
     @JvmStatic
     private val TEXT_NULL: Component = literalText("null")
+
+    @JvmStatic
+    private val INT_FORMAT: NumberFormat = NumberFormat.getIntegerInstance()
+
+    @JvmStatic
+    private val DOUBLE_FORMAT: NumberFormat = NumberFormat.getNumberInstance()
 
     @JvmStatic
     fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
@@ -54,7 +61,7 @@ object HTTextUtil {
             return
         }
         // Fluid Name and Amount
-        consumer.accept(RagiumTranslation.STORED_MB.translate(stack, intText(stack.amount())))
+        consumer.accept(RagiumTranslation.STORED_MB.translate(stack, stack.amount()))
         if (!inGui) return
         // Fluid id if advanced
         if (flag.isAdvanced) {
@@ -99,6 +106,12 @@ object HTTextUtil {
                     is Item -> current = arg.description.copy()
                     is ItemStack -> current = arg.hoverName.copy()
                     is Level -> current = arg.description.copy()
+                    // Primitive
+                    is Int -> current = literalText(INT_FORMAT.format(arg.toLong()))
+                    is Long -> current = literalText(INT_FORMAT.format(arg))
+                    is Float -> current = literalText(DOUBLE_FORMAT.format(arg.toDouble()))
+                    is Double -> current = literalText(DOUBLE_FORMAT.format(arg))
+                    is Boolean -> current = boolText(arg)
                     // Formatting
                     is TextColor -> {
                         if (cachedStyle.color == null) {
