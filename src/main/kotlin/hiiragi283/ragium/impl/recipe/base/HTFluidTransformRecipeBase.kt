@@ -29,11 +29,11 @@ abstract class HTFluidTransformRecipeBase : HTFluidTransformRecipe {
         return bool1 && bool2
     }
 
-    final override fun assembleItem(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, itemResult)
+    final override fun assembleItem(input: HTItemWithFluidRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, itemResult)
 
-    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ImmutableFluidStack? =
-        getFluidResult(input, registries, fluidResult)
+    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
+        getFluidResult(input, provider, fluidResult)
 
     final override fun isIncomplete(): Boolean {
         if (itemResult.isEmpty && fluidResult.isEmpty) return true

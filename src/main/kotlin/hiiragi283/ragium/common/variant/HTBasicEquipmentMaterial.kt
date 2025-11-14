@@ -55,7 +55,7 @@ data class HTBasicEquipmentMaterial(
 
     override fun getEnchantmentValue(): Int = enchantability
 
-    override fun getRepairIngredient(): Ingredient = repairPrefix.toIngredient(key)
+    override fun getRepairIngredient(): Ingredient = Ingredient.of(repairPrefix.itemTagKey(key))
 
     //    HTMaterialLike    //
 

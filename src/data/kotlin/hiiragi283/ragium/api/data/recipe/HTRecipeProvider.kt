@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.recipe.HTRecipeData
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -23,14 +23,11 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
@@ -51,9 +48,9 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val itemCreator: HTItemIngredientCreator by lazy { HTItemIngredientCreatorImpl(provider.lookupOrThrow(Registries.ITEM)) }
+    val itemCreator: HTItemIngredientCreator by lazy { RagiumPlatform.INSTANCE.createItemCreator(provider) }
 
-    val fluidCreator: HTFluidIngredientCreator by lazy { HTFluidIngredientCreatorImpl(provider.lookupOrThrow(Registries.FLUID)) }
+    val fluidCreator: HTFluidIngredientCreator by lazy { RagiumPlatform.INSTANCE.createFluidCreator(provider) }
 
     /**
      * [HTResultHelper]のインスタンス

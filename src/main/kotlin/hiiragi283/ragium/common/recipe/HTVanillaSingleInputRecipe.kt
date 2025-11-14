@@ -15,8 +15,8 @@ open class HTVanillaSingleInputRecipe(protected val recipe: Recipe<SingleRecipeI
 
     final override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
-    final override fun assembleItem(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        recipe.assemble(input, registries).toImmutable()
+    final override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        recipe.assemble(input, provider).toImmutable()
 
     final override fun isIncomplete(): Boolean = ingredient.hasNoItems()
 

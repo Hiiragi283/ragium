@@ -13,8 +13,8 @@ interface HTCombineItemToItemRecipe : HTMultiInputsToObjRecipe {
 
     override fun test(input: HTMultiRecipeInput): Boolean = HTMultiInputsToObjRecipe.hasMatchingSlots(ingredients, input.items)
 
-    override fun assembleItem(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, result)
+    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, result)
 
     override fun isIncomplete(): Boolean =
         ingredients.isEmpty() || ingredients.any(HTItemIngredient::hasNoMatchingStacks) || result.hasNoMatchingStack()

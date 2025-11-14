@@ -195,7 +195,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
         if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
-            return CommonMaterialPrefixes.STORAGE_BLOCK.toIngredient(CommonMaterialKeys.PLASTIC)
+            return Ingredient.of(CommonMaterialPrefixes.STORAGE_BLOCK.itemTagKey(CommonMaterialKeys.PLASTIC))
         }
         return buildList {
             add(variant.base)

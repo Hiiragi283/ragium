@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:poison"
   },
-  "ingredient": {
-    "item": "minecraft:spider_eye"
-  }
+  "ingredient": "minecraft:spider_eye"
 }

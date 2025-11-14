@@ -28,11 +28,11 @@ class HTMixingRecipe(
         return bool1 && bool2
     }
 
-    override fun assembleItem(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, itemResult)
+    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, itemResult)
 
-    override fun assembleFluid(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableFluidStack? =
-        getFluidResult(input, registries, fluidResult)
+    override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
+        getFluidResult(input, provider, fluidResult)
 
     override fun isIncomplete(): Boolean {
         val bool1: Boolean = itemIngredients.isEmpty() || itemIngredients.any(HTItemIngredient::hasNoMatchingStacks)

@@ -25,6 +25,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
 import java.util.function.Supplier
@@ -93,6 +94,15 @@ object VanillaBiCodecs {
             false -> Ingredient.CODEC_NONEMPTY
         },
         Ingredient.CONTENTS_STREAM_CODEC,
+    )
+
+    @JvmStatic
+    fun fluidIngredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(
+        when (allowEmpty) {
+            true -> FluidIngredient.CODEC
+            false -> FluidIngredient.CODEC_NON_EMPTY
+        },
+        FluidIngredient.STREAM_CODEC,
     )
 
     @JvmStatic

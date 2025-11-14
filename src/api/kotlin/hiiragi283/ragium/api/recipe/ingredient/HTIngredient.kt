@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.stack.ImmutableStack
-import net.minecraft.tags.TagKey
+import net.minecraft.core.HolderSet
 import java.util.function.Predicate
 
 /**
@@ -34,5 +34,5 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
      */
     fun hasNoMatchingStacks(): Boolean
 
-    fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>
+    fun unwrap(): Either<Pair<HolderSet<TYPE>, Int>, List<STACK>>
 }

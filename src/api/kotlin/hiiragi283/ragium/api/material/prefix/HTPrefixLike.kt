@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
 fun interface HTPrefixLike {
@@ -30,6 +29,4 @@ fun interface HTPrefixLike {
 
     @Deprecated("Use `itemTagKey(HTMaterialLike) instead`")
     fun itemTagKey(name: String): TagKey<Item> = createTagKey(Registries.ITEM, name)
-
-    fun toIngredient(material: HTMaterialLike): Ingredient = Ingredient.of(itemTagKey(material))
 }

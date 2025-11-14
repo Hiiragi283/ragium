@@ -7,18 +7,16 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import kotlin.to
 
 /**
- * [ImmutableFluidStack]向けの[HTIngredient]の拡張インターフェース
+ * [ImmutableFluidStack]向けの[HTIngredient]の実装クラス
  */
 sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, ImmutableFluidStack> {
     fun interface AmountGetter {
@@ -71,12 +69,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
 
         override fun hasNoMatchingStacks(): Boolean = holderSet.none()
 
-        override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> = holderSet.unwrap().map(
-            { Either.left(it to amount) },
-            { holders: List<Holder<Fluid>> ->
-                Either.right(holders.map { holder: Holder<Fluid> -> ImmutableFluidStack.of(holder.value(), amount) })
-            },
-        )
+        override fun unwrap(): Either<Pair<HolderSet<Fluid>, Int>, List<ImmutableFluidStack>> = Either.left(holderSet to amount)
 
         override fun copyWithAmount(amount: Int): HTFluidIngredient = HolderBased(holderSet, amount)
     }
@@ -99,7 +92,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
 
         override fun hasNoMatchingStacks(): Boolean = ingredient.hasNoFluids()
 
-        override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> =
+        override fun unwrap(): Either<Pair<HolderSet<Fluid>, Int>, List<ImmutableFluidStack>> =
             Either.right(ingredient.stacks.mapNotNull(FluidStack::toImmutable))
 
         override fun copyWithAmount(amount: Int): HTFluidIngredient = IngredientBased(ingredient, amount)

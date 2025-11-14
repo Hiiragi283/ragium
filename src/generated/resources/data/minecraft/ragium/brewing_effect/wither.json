@@ -5,14 +5,12 @@
         "duration": 900,
         "id": "minecraft:wither",
         "neoforge:cures": [
-          "milk",
-          "protected_by_totem"
+          "protected_by_totem",
+          "milk"
         ],
         "show_icon": true
       }
     ]
   },
-  "ingredient": {
-    "item": "minecraft:wither_rose"
-  }
+  "ingredient": "minecraft:wither_rose"
 }

@@ -5,14 +5,12 @@
         "duration": 3600,
         "id": "minecraft:haste",
         "neoforge:cures": [
-          "milk",
-          "protected_by_totem"
+          "protected_by_totem",
+          "milk"
         ],
         "show_icon": true
       }
     ]
   },
-  "ingredient": {
-    "item": "minecraft:golden_apple"
-  }
+  "ingredient": "minecraft:golden_apple"
 }

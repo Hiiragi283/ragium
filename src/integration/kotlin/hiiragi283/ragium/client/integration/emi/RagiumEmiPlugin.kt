@@ -219,7 +219,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 .entrySet()
                 .map { (key: ResourceKey<HTBrewingEffect>, effect: HTBrewingEffect) ->
                     key.location().withPrefix("/brewing/effect/") to
-                        HTEmiBrewingEffect(EmiIngredient.of(effect.ingredient), effect.toPotion().toEmi())
+                        HTEmiBrewingEffect(effect.ingredient.toEmi(), effect.toPotion().toEmi())
                 }.asSequence(),
             ::HTBrewingEffectEmiRecipe,
         )

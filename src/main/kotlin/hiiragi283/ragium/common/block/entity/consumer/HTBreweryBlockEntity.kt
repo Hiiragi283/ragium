@@ -65,8 +65,8 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun isIncomplete(): Boolean = false
 
-        override fun assembleItem(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-            getResultItems(input).getOrNull(0)?.getStackOrNull(registries)
+        override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+            getResultItems(input).getOrNull(0)?.getStackOrNull(provider)
 
         override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
 

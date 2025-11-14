@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.RegistryOps
 
-internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, private val jsonObject: JsonObject) : HTValueOutput {
-    private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
+internal class HTJsonValueOutput(private val provider: HolderLookup.Provider, private val jsonObject: JsonObject) : HTValueOutput {
+    private val registryOps: RegistryOps<JsonElement> = provider.createSerializationContext(JsonOps.INSTANCE)
 
     //    HTValueOutput    //
 
@@ -58,31 +58,32 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
     override fun child(key: String): HTValueOutput {
         val jsonIn = JsonObject()
         jsonObject.add(key, jsonIn)
-        return HTJsonValueOutput(lookup, jsonIn)
+        return HTJsonValueOutput(provider, jsonIn)
     }
 
     override fun childrenList(key: String): HTValueOutput.ValueOutputList {
         val list = JsonArray()
         jsonObject.add(key, list)
-        return ValueOutputList(lookup, list)
+        return ValueOutputList(provider, list)
     }
 
     override fun <T : Any> list(key: String, codec: Codec<T>): HTValueOutput.TypedOutputList<T> {
         val list = JsonArray()
         jsonObject.add(key, list)
-        return TypedOutputList(lookup, list, codec)
+        return TypedOutputList(provider, list, codec)
     }
 
     //    ValueOutputList    //
 
-    private class ValueOutputList(private val lookup: HolderLookup.Provider, private val list: JsonArray) : HTValueOutput.ValueOutputList {
+    private class ValueOutputList(private val provider: HolderLookup.Provider, private val list: JsonArray) :
+        HTValueOutput.ValueOutputList {
         override val isEmpty: Boolean
             get() = list.isEmpty
 
         override fun addChild(): HTValueOutput {
             val jsonIn = JsonObject()
             list.add(jsonIn)
-            return HTJsonValueOutput(lookup, jsonIn)
+            return HTJsonValueOutput(provider, jsonIn)
         }
 
         override fun discardLast() {
@@ -92,9 +93,9 @@ internal class HTJsonValueOutput(private val lookup: HolderLookup.Provider, priv
 
     //    TypedOutputList    //
 
-    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
+    private class TypedOutputList<T : Any>(provider: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
         HTValueOutput.TypedOutputList<T> {
-        private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
+        private val registryOps: RegistryOps<JsonElement> = provider.createSerializationContext(JsonOps.INSTANCE)
 
         override val isEmpty: Boolean
             get() = list.isEmpty

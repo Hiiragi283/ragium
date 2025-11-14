@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.material
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.collection.ImmutableMultiMap
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildMultiMap
@@ -13,8 +14,6 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.manager.castRecipe
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
@@ -81,8 +80,8 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
     fun onDataMapUpdated(event: DataMapsUpdatedEvent) {
         if (event.cause != DataMapsUpdatedEvent.UpdateCause.SERVER_RELOAD) return
         val registries: RegistryAccess = event.registries
-        itemCreator = HTItemIngredientCreatorImpl(registries.lookupOrThrow(Registries.ITEM))
-        fluidCreator = HTFluidIngredientCreatorImpl(registries.lookupOrThrow(Registries.FLUID))
+        itemCreator = RagiumPlatform.INSTANCE.createItemCreator(registries)
+        fluidCreator = RagiumPlatform.INSTANCE.createFluidCreator(registries)
 
         event.ifRegistry(Registries.RECIPE_TYPE) { registry: Registry<RecipeType<*>> ->
             val keyMap: Map<ResourceKey<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipeData>> =

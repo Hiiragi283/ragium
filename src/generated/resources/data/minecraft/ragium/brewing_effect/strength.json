@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:strength"
   },
-  "ingredient": {
-    "item": "minecraft:blaze_powder"
-  }
+  "ingredient": "minecraft:blaze_powder"
 }

@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:slow_falling"
   },
-  "ingredient": {
-    "item": "minecraft:phantom_membrane"
-  }
+  "ingredient": "minecraft:phantom_membrane"
 }

@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTPotionBuilder
 import hiiragi283.ragium.api.item.createItemStack
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.text.translatableText
 import net.minecraft.core.Holder
@@ -16,16 +17,17 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.Ingredient
 
 @JvmRecord
-data class HTBrewingEffect(val ingredient: Ingredient, val content: PotionContents) {
+data class HTBrewingEffect(val ingredient: HTItemIngredient, val content: PotionContents) {
     companion object {
         @JvmField
         val DIRECT_CODEC: Codec<HTBrewingEffect> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(HTBrewingEffect::ingredient),
+                    HTItemIngredient.CODEC.codec
+                        .fieldOf("ingredient")
+                        .forGetter(HTBrewingEffect::ingredient),
                     PotionContents.CODEC.fieldOf("content").forGetter(HTBrewingEffect::content),
                 ).apply(instance, ::HTBrewingEffect)
         }
@@ -43,9 +45,12 @@ data class HTBrewingEffect(val ingredient: Ingredient, val content: PotionConten
             .orElse(ItemStack.EMPTY)
     }
 
-    constructor(ingredient: Ingredient, potion: Holder<Potion>) : this(ingredient, PotionContents(potion))
+    constructor(ingredient: HTItemIngredient, potion: Holder<Potion>) : this(ingredient, PotionContents(potion))
 
-    constructor(ingredient: Ingredient, builderAction: HTPotionBuilder.() -> Unit) : this(ingredient, HTPotionBuilder.create(builderAction))
+    constructor(ingredient: HTItemIngredient, builderAction: HTPotionBuilder.() -> Unit) : this(
+        ingredient,
+        HTPotionBuilder.create(builderAction),
+    )
 
     fun toPotion(): ItemStack {
         val stack: ItemStack = createItemStack(Items.POTION, DataComponents.POTION_CONTENTS, content)

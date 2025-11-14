@@ -7,17 +7,15 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 
 /**
- * [ImmutableItemStack]向けの[HTIngredient]の拡張インターフェース
+ * [ImmutableItemStack]向けの[HTIngredient]の実装クラス
  */
 sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, ImmutableItemStack> {
     fun interface CountGetter {
@@ -88,12 +86,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         override fun hasNoMatchingStacks(): Boolean = holderSet.none()
 
-        override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> = holderSet.unwrap().map(
-            { Either.left(it to count) },
-            { holders: List<Holder<Item>> ->
-                Either.right(holders.map { holder: Holder<Item> -> ImmutableItemStack.of(holder.value(), count) })
-            },
-        )
+        override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> = Either.left(holderSet to count)
 
         override fun copyWithCount(count: Int): HTItemIngredient = HolderBased(holderSet, count)
     }
@@ -132,7 +125,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         override fun hasNoMatchingStacks(): Boolean = ingredient.isEmpty
 
-        override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> =
+        override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> =
             Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
 
         override fun copyWithCount(count: Int): HTItemIngredient = IngredientBased(ingredient, count)

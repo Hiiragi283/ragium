@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:luck"
   },
-  "ingredient": {
-    "tag": "c:gems/emerald"
-  }
+  "ingredient": "#c:gems/emerald"
 }

@@ -6,6 +6,6 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.world.level.material.Fluid
 
 @Suppress("DEPRECATION")
-class HTFluidIngredientCreatorImpl(getter: HolderGetter<Fluid>) :
+internal class HTFluidIngredientCreatorImpl(getter: HolderGetter<Fluid>) :
     HTIngredientCreatorBase<Fluid, HTFluidIngredient>(getter, Fluid::builtInRegistryHolder),
     HTFluidIngredientCreator

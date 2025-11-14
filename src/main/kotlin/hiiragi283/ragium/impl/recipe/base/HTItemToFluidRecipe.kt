@@ -15,6 +15,6 @@ abstract class HTItemToFluidRecipe(val ingredient: HTItemIngredient, val result:
 
     final override fun isIncomplete(): Boolean = ingredient.hasNoMatchingStacks() || result.hasNoMatchingStack()
 
-    final override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableFluidStack? =
-        getFluidResult(input, registries, result)
+    final override fun assembleFluid(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
+        getFluidResult(input, provider, result)
 }

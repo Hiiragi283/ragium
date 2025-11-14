@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:invisibility"
   },
-  "ingredient": {
-    "tag": "c:gems/amethyst"
-  }
+  "ingredient": "#c:gems/amethyst"
 }

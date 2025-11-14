@@ -23,8 +23,8 @@ interface HTItemWithCatalystToItemRecipe : HTMultiInputsToObjRecipe {
         return bool1 && bool2
     }
 
-    override fun assembleItem(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, result)
+    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, result)
 
     override fun isIncomplete(): Boolean {
         val bool1: Boolean = ingredient.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)

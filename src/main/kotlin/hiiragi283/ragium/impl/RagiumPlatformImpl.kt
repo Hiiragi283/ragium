@@ -4,6 +4,8 @@ import com.google.gson.JsonObject
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
+import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -16,6 +18,8 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.util.HTAddonHelper
+import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
+import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
 import hiiragi283.ragium.impl.material.RagiumMaterialRecipeManager
 import hiiragi283.ragium.impl.value.HTJsonValueInput
@@ -24,15 +28,18 @@ import hiiragi283.ragium.impl.value.HTTagValueInput
 import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.util.function.Consumer
@@ -90,6 +97,10 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     override fun getMaterialRecipeManager(): HTMaterialRecipeManager = RagiumMaterialRecipeManager
 
+    override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl(getter)
+
+    override fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl(getter)
+
     //    Server    //
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
@@ -104,15 +115,15 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     //    Storage    //
 
-    override fun createValueInput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput =
-        HTJsonValueInput.create(lookup, jsonObject)
+    override fun createValueInput(provider: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput =
+        HTJsonValueInput.create(provider, jsonObject)
 
-    override fun createValueOutput(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput =
-        HTJsonValueOutput(lookup, jsonObject)
+    override fun createValueOutput(provider: HolderLookup.Provider, jsonObject: JsonObject): HTValueOutput =
+        HTJsonValueOutput(provider, jsonObject)
 
-    override fun createValueInput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput =
-        HTTagValueInput.create(lookup, compoundTag)
+    override fun createValueInput(provider: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput =
+        HTTagValueInput.create(provider, compoundTag)
 
-    override fun createValueOutput(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
-        HTTagValueOutput(lookup, compoundTag)
+    override fun createValueOutput(provider: HolderLookup.Provider, compoundTag: CompoundTag): HTValueOutput =
+        HTTagValueOutput(provider, compoundTag)
 }

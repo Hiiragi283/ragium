@@ -6,6 +6,6 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.world.item.Item
 
 @Suppress("DEPRECATION")
-class HTItemIngredientCreatorImpl(getter: HolderGetter<Item>) :
+internal class HTItemIngredientCreatorImpl(getter: HolderGetter<Item>) :
     HTIngredientCreatorBase<Item, HTItemIngredient>(getter, Item::builtInRegistryHolder),
     HTItemIngredientCreator

@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:weakness"
   },
-  "ingredient": {
-    "item": "minecraft:bone"
-  }
+  "ingredient": "minecraft:bone"
 }

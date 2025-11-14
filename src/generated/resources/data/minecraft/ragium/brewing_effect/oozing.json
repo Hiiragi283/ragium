@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:oozing"
   },
-  "ingredient": {
-    "tag": "c:storage_blocks/slime"
-  }
+  "ingredient": "#c:storage_blocks/slime"
 }

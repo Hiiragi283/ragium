@@ -12,20 +12,13 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
-import hiiragi283.ragium.client.integration.emi.createErrorStack
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.level.material.Fluid
 
 /**
  * @see mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe
@@ -55,11 +48,11 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     protected fun output(index: Int): EmiStack = outputs.getOrNull(index) ?: EmiStack.EMPTY
 
     protected fun addInput(ingredient: HTItemIngredient?) {
-        addInput(ingredient?.let(::ingredient))
+        addInput(ingredient?.let(HTItemIngredient::toEmi))
     }
 
     protected fun addInput(ingredient: HTFluidIngredient?) {
-        addInput(ingredient?.let(::ingredient))
+        addInput(ingredient?.let(HTFluidIngredient::toEmi))
     }
 
     protected fun addInput(ingredient: EmiIngredient?) {
@@ -100,32 +93,13 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         }
     }
 
-    protected fun ingredient(ingredient: HTItemIngredient): EmiIngredient = ingredient
-        .unwrap()
-        .map(
-            { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
-            { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
-        )
-
-    protected fun catalyst(ingredient: HTItemIngredient): EmiIngredient = ingredient(ingredient).apply {
+    protected fun catalyst(ingredient: HTItemIngredient): EmiIngredient = ingredient.toEmi().apply {
         for (stack: EmiStack in emiStacks) {
             val itemStack: ItemStack = stack.itemStack
             if (itemStack.hasCraftingRemainingItem()) {
                 stack.remainder = itemStack.craftingRemainingItem.toEmi()
             }
         }
-    }
-
-    protected fun ingredient(ingredient: HTFluidIngredient): EmiIngredient = ingredient
-        .unwrap()
-        .map(
-            { (tagKey: TagKey<Fluid>, count: Int) -> tagKey.toEmi(count) },
-            { stacks: List<ImmutableFluidStack> -> stacks.map(ImmutableFluidStack::toEmi).let(::ingredient) },
-        )
-
-    private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {
-        stacks.isEmpty() -> createErrorStack(RagiumTranslation.EMPTY)
-        else -> EmiIngredient.of(stacks)
     }
 
     protected fun result(result: HTItemResult): EmiStack = result.toEmi()

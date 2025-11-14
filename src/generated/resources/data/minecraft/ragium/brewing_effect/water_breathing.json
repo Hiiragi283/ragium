@@ -2,7 +2,5 @@
   "content": {
     "potion": "minecraft:water_breathing"
   },
-  "ingredient": {
-    "item": "minecraft:pufferfish"
-  }
+  "ingredient": "minecraft:pufferfish"
 }

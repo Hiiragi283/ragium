@@ -14,6 +14,6 @@ abstract class HTItemToItemRecipe(val ingredient: HTItemIngredient, val result: 
 
     final override fun isIncomplete(): Boolean = ingredient.hasNoMatchingStacks() || result.hasNoMatchingStack()
 
-    final override fun assembleItem(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, result)
+    final override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, result)
 }

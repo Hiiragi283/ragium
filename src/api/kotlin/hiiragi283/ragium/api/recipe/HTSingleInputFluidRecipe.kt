@@ -7,5 +7,5 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 interface HTSingleInputFluidRecipe :
     HTSingleInputRecipe,
     HTFluidRecipe<SingleRecipeInput> {
-    override fun assembleItem(input: SingleRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? = null
+    override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = null
 }

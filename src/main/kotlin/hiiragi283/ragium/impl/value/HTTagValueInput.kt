@@ -13,17 +13,17 @@ import net.minecraft.nbt.Tag
 import net.minecraft.nbt.TagType
 import net.minecraft.resources.RegistryOps
 
-internal class HTTagValueInput private constructor(private val lookup: HolderLookup.Provider, private val compoundTag: CompoundTag) :
+internal class HTTagValueInput private constructor(private val provider: HolderLookup.Provider, private val compoundTag: CompoundTag) :
     HTValueInput {
         companion object {
             @JvmStatic
-            fun create(lookup: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput = when {
+            fun create(provider: HolderLookup.Provider, compoundTag: CompoundTag): HTValueInput = when {
                 compoundTag.isEmpty -> HTEmptyValueInput
-                else -> HTTagValueInput(lookup, compoundTag)
+                else -> HTTagValueInput(provider, compoundTag)
             }
         }
 
-        private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
+        private val registryOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
 
         private inline fun <reified T : Tag> getTypedTag(key: String, type: TagType<T>): T? {
             val tagIn: Tag = compoundTag.get(key) ?: return null
@@ -45,7 +45,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         override fun child(key: String): HTValueInput? {
             val tagIn: CompoundTag = getTypedTag(key, CompoundTag.TYPE) ?: return null
-            return create(lookup, tagIn)
+            return create(provider, tagIn)
         }
 
         override fun childOrEmpty(key: String): HTValueInput = child(key) ?: HTEmptyValueInput
@@ -54,7 +54,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
             val tagIn: ListTag = getTypedTag(key, ListTag.TYPE) ?: return null
             return when {
                 tagIn.isEmpty() -> null
-                else -> ValueInputList(lookup, tagIn)
+                else -> ValueInputList(provider, tagIn)
             }
         }
 
@@ -64,7 +64,7 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
             val tagIn: ListTag = getTypedTag(key, ListTag.TYPE) ?: return null
             return when {
                 tagIn.isEmpty() -> null
-                else -> TypedInputList(lookup, tagIn, codec)
+                else -> TypedInputList(provider, tagIn, codec)
             }
         }
 
@@ -125,22 +125,22 @@ internal class HTTagValueInput private constructor(private val lookup: HolderLoo
 
         //    ValueInputList    //
 
-        private class ValueInputList(private val lookup: HolderLookup.Provider, private val list: ListTag) : HTValueInput.ValueInputList {
+        private class ValueInputList(private val provider: HolderLookup.Provider, private val list: ListTag) : HTValueInput.ValueInputList {
             override val isEmpty: Boolean
                 get() = list.isEmpty()
 
             override fun iterator(): Iterator<HTValueInput> = list
                 .filterIsInstance<CompoundTag>()
                 .map { compoundTag: CompoundTag ->
-                    create(lookup, compoundTag)
+                    create(provider, compoundTag)
                 }.iterator()
         }
 
         //    TypedInputList    //
 
-        private class TypedInputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
+        private class TypedInputList<T : Any>(provider: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
             HTValueInput.TypedInputList<T> {
-            private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
+            private val registryOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
 
             override val isEmpty: Boolean
                 get() = list.isEmpty()
