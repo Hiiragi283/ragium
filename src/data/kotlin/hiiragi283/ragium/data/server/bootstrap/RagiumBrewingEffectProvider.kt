@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
-import hiiragi283.ragium.api.item.component.HTPotionBuilder
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.idOrThrow
@@ -48,7 +48,9 @@ object RagiumBrewingEffectProvider : RegistrySetBuilder.RegistryBootstrap<HTBrew
         register(context, itemCreator.fromTagKey(Tags.Items.STONES), Potions.INFESTED)
 
         // Custom - Vanilla
-        register(context, itemCreator.fromItem(Items.GOLDEN_APPLE)) { addEffect(MobEffects.DIG_SPEED, 3 * 60 * 20, 0) }
+        register(context, itemCreator.fromItem(Items.GOLDEN_APPLE)) {
+            add(HTMobEffectInstance(MobEffects.DIG_SPEED, 3 * 60 * 20, 0))
+        }
 
         mapOf(
             Items.POISONOUS_POTATO to MobEffects.CONFUSION,
@@ -56,7 +58,7 @@ object RagiumBrewingEffectProvider : RegistrySetBuilder.RegistryBootstrap<HTBrew
             Items.WITHER_ROSE to MobEffects.WITHER,
             Items.SHULKER_SHELL to MobEffects.LEVITATION,
         ).forEach { (item: Item, effect: Holder<MobEffect>) ->
-            register(context, itemCreator.fromItem(item)) { addEffect(effect, 45 * 20, 0) }
+            register(context, itemCreator.fromItem(item)) { add(HTMobEffectInstance(effect, 45 * 20, 0)) }
         }
     }
 
@@ -72,12 +74,10 @@ object RagiumBrewingEffectProvider : RegistrySetBuilder.RegistryBootstrap<HTBrew
     private fun register(
         context: BootstrapContext<HTBrewingEffect>,
         ingredient: HTItemIngredient,
-        builderAction: HTPotionBuilder.() -> Unit,
+        builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
     ) {
         val effect = HTBrewingEffect(ingredient, builderAction)
-        val firstEffect: Holder<MobEffect> = effect.content.allEffects
-            .first()
-            .effect
+        val firstEffect: Holder<MobEffect> = effect.getFirstEffect()?.effect ?: return
         context.register(RagiumAPI.BREWING_EFFECT_KEY.createKey(firstEffect.idOrThrow), effect)
     }
 }

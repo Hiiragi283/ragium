@@ -1,16 +1,9 @@
 {
-  "content": {
-    "custom_effects": [
-      {
-        "duration": 900,
-        "id": "minecraft:wither",
-        "neoforge:cures": [
-          "protected_by_totem",
-          "milk"
-        ],
-        "show_icon": true
-      }
-    ]
-  },
+  "contents": [
+    {
+      "duration": 900,
+      "effect": "minecraft:wither"
+    }
+  ],
   "ingredient": "minecraft:wither_rose"
 }

@@ -1,16 +1,9 @@
 {
-  "content": {
-    "custom_effects": [
-      {
-        "duration": 900,
-        "id": "minecraft:hunger",
-        "neoforge:cures": [
-          "protected_by_totem",
-          "milk"
-        ],
-        "show_icon": true
-      }
-    ]
-  },
+  "contents": [
+    {
+      "duration": 900,
+      "effect": "minecraft:hunger"
+    }
+  ],
   "ingredient": "minecraft:rotten_flesh"
 }

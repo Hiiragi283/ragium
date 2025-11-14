@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:night_vision"
-  },
+  "contents": "minecraft:night_vision",
   "ingredient": "minecraft:golden_carrot"
 }

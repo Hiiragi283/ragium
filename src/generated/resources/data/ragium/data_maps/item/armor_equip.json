@@ -3,14 +3,7 @@
     "ragium:night_vision_goggles": {
       "type": "ragium:mob_effect",
       "effect": {
-        "ambient": true,
-        "duration": -1,
-        "id": "minecraft:night_vision",
-        "neoforge:cures": [
-          "protected_by_totem",
-          "milk"
-        ],
-        "show_icon": true
+        "effect": "minecraft:night_vision"
       }
     }
   }

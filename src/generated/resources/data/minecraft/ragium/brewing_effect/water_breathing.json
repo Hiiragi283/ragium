@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:water_breathing"
-  },
+  "contents": "minecraft:water_breathing",
   "ingredient": "minecraft:pufferfish"
 }

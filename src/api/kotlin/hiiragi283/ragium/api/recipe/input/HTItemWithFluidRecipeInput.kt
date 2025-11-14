@@ -12,10 +12,12 @@ import net.neoforged.neoforge.fluids.FluidStack
  * [ItemStack]と[FluidStack]を受け取る[RecipeInput]の実装
  */
 @JvmRecord
-data class HTItemWithFluidRecipeInput(val item: ItemStack, val fluid: FluidStack) : RecipeInput {
+data class HTItemWithFluidRecipeInput(val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
     constructor(slot: HTItemSlot, tank: HTFluidTank) : this(slot.getItemStack(), tank.getFluidStack())
 
     override fun getItem(index: Int): ItemStack = item
+
+    override fun getFluid(index: Int): FluidStack = fluid
 
     override fun size(): Int = 1
 

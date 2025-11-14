@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:leaping"
-  },
+  "contents": "minecraft:leaping",
   "ingredient": "minecraft:rabbit_foot"
 }

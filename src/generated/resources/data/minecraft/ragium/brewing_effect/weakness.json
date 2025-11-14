@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:weakness"
-  },
+  "contents": "minecraft:weakness",
   "ingredient": "minecraft:bone"
 }

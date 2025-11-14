@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:turtle_master"
-  },
+  "contents": "minecraft:turtle_master",
   "ingredient": "minecraft:turtle_scute"
 }

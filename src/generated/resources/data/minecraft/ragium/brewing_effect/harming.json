@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:harming"
-  },
+  "contents": "minecraft:harming",
   "ingredient": "minecraft:fermented_spider_eye"
 }

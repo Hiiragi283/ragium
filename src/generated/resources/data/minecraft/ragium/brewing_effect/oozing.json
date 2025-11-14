@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:oozing"
-  },
+  "contents": "minecraft:oozing",
   "ingredient": "#c:storage_blocks/slime"
 }

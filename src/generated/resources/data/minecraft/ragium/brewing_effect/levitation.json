@@ -1,16 +1,9 @@
 {
-  "content": {
-    "custom_effects": [
-      {
-        "duration": 900,
-        "id": "minecraft:levitation",
-        "neoforge:cures": [
-          "protected_by_totem",
-          "milk"
-        ],
-        "show_icon": true
-      }
-    ]
-  },
+  "contents": [
+    {
+      "duration": 900,
+      "effect": "minecraft:levitation"
+    }
+  ],
   "ingredient": "minecraft:shulker_shell"
 }

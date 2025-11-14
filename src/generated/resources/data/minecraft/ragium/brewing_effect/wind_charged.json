@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:wind_charged"
-  },
+  "contents": "minecraft:wind_charged",
   "ingredient": "minecraft:wind_charge"
 }

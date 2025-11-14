@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:fire_resistance"
-  },
+  "contents": "minecraft:fire_resistance",
   "ingredient": "minecraft:magma_cream"
 }

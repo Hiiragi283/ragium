@@ -145,7 +145,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun armorEquip() {
         builder(RagiumDataMaps.ARMOR_EQUIP)
-            .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1, ambient = true))
+            .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
     }
 
     private fun materialRecipe() {

@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:swiftness"
-  },
+  "contents": "minecraft:swiftness",
   "ingredient": "minecraft:sugar"
 }

@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:slowness"
-  },
+  "contents": "minecraft:slowness",
   "ingredient": "#c:ingots/iron"
 }

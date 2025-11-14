@@ -1,6 +1,4 @@
 {
-  "content": {
-    "potion": "minecraft:infested"
-  },
+  "contents": "minecraft:infested",
   "ingredient": "#c:stones"
 }
