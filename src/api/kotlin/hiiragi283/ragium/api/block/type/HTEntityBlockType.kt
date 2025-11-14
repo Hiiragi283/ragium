@@ -14,7 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import java.util.function.IntSupplier
 import java.util.function.Supplier
 
-typealias HTEntityBlockTypeFactory<TYPE> = Function3<Supplier<HTDeferredBlockEntityType<*>>, HTTranslation, AttributeMap<HTBlockAttribute>, TYPE>
+typealias HTEntityBlockTypeFactory<TYPE> =
+    Function3<Supplier<HTDeferredBlockEntityType<*>>, HTTranslation, AttributeMap<HTBlockAttribute>, TYPE>
 
 /**
  * [BlockEntity]を保持するブロック向けの[HTBlockType]の拡張クラス
