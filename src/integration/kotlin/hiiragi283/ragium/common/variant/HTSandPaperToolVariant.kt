@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.variant
 
 import com.simibubi.create.AllTags
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
-import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import net.minecraft.tags.TagKey
@@ -13,7 +13,7 @@ object HTSandPaperToolVariant : HTToolVariant {
     override val tagKeys: Iterable<TagKey<Item>> get() = listOf(AllTags.AllItemTags.SANDPAPER.tag)
 
     @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
-    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTSimpleDeferredItem =
+    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial, name: String): HTDeferredItem<*> =
         throw UnsupportedOperationException()
 
     override fun variantName(): String = "sand_paper"

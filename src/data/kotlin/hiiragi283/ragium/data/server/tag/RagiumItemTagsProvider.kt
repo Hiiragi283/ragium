@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagDependType
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
@@ -240,16 +239,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.STRIKE_ENCHANTABLE)
-        // Armors
-        RagiumItems.ARMORS.forEach { (variant: HTArmorVariant, _, item: HTDeferredItem<*>) ->
-            builder.add(variant.tagKey, item)
-        }
-        // Tools
-        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
+        // Equipments
+        buildTable {
+            putAll(RagiumItems.ARMORS)
+            putAll(RagiumItems.TOOLS)
+        }.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
             for (tagKey: TagKey<Item> in variant.tagKeys) {
                 builder.add(tagKey, item)
             }
-
             if (variant == VanillaToolVariant.PICKAXE) {
                 builder.add(ItemTags.CLUSTER_MAX_HARVESTABLES, item)
             }

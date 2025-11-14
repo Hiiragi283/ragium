@@ -59,7 +59,7 @@ value class ImmutableTable<R : Any, C : Any, V : Any>(private val table: Table<R
             put(row, column, value)
         }
 
-        fun putAll(table: ImmutableTable<R, C, V>): Builder<R, C, V> {
+        fun putAll(table: ImmutableTable<out R, out C, out V>): Builder<R, C, V> {
             table.forEach { (r: R, c: C, v: V) -> this.values.put(r, c, v) }
             return this
         }

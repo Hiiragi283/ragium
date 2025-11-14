@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
@@ -131,16 +130,16 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTVariantKey, HTHasTranslationKey>) {
-        for ((variant: HTVariantKey, translationKey: HTHasTranslationKey) in map) {
-            add(translationKey, variant.translate(type, translatedName))
+    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTLangPatternProvider, HTHasTranslationKey>) {
+        for ((provider: HTLangPatternProvider, translationKey: HTHasTranslationKey) in map) {
+            add(translationKey, provider.translate(type, translatedName))
         }
     }
 
-    private fun fromVariantTable(table: ImmutableTable<out HTVariantKey, HTMaterialKey, out HTHasTranslationKey>) {
-        table.forEach { (variant: HTVariantKey, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
+    private fun fromVariantTable(table: ImmutableTable<out HTLangPatternProvider, HTMaterialKey, out HTHasTranslationKey>) {
+        table.forEach { (provider: HTLangPatternProvider, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
             val langName: HTLangName = HTMaterialTranslations.getLangName(key) ?: return@forEach
-            add(translationKey, variant.translate(type, langName))
+            add(translationKey, provider.translate(type, langName))
         }
     }
 

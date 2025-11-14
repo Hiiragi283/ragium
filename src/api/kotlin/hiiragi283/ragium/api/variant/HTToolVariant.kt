@@ -15,7 +15,12 @@ interface HTToolVariant : HTVariantKey {
      * 指定した引数からアイテムを登録します。
      * @param register アイテムのレジストリ
      * @param material 道具の素材
+     * @param name アイテムのID
      * @return 登録されたアイテムの[HTDeferredItem]
      */
-    fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*>
+    fun registerItem(
+        register: HTDeferredItemRegister,
+        material: HTEquipmentMaterial,
+        name: String = "${material.asMaterialName()}_${variantName()}",
+    ): HTDeferredItem<*>
 }
