@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
+import hiiragi283.ragium.api.data.tag.HTTagDependType
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -15,6 +16,7 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
@@ -27,6 +29,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -58,6 +61,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         categories(builder)
 
         accessories(builder)
+        create(builder)
         pneumatic(builder)
     }
 
@@ -123,7 +127,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             CommonMaterialPrefixes.FUEL,
             CommonMaterialKeys.COAL_COKE,
             RagiumCommonTags.Items.COAL_COKE,
-            HTTagBuilder.DependType.OPTIONAL,
+            HTTagDependType.OPTIONAL,
         )
         // Gems
         builder.addMaterial(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO, Items.ECHO_SHARD.toHolderLike())
@@ -131,7 +135,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Scraps
         builder.addMaterial(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, Items.NETHERITE_SCRAP.toHolderLike())
         // Mekanism Addon
-        fromTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS)
+        fromTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS, HTTagDependType.OPTIONAL)
     }
 
     companion object {
@@ -151,11 +155,15 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         }
     }
 
-    private fun fromTable(builder: HTTagBuilder<Item>, table: ImmutableTable<out HTPrefixLike, out HTMaterialLike, out HTHolderLike>) {
+    private fun fromTable(
+        builder: HTTagBuilder<Item>,
+        table: ImmutableTable<out HTPrefixLike, out HTMaterialLike, out HTHolderLike>,
+        type: HTTagDependType = HTTagDependType.REQUIRED,
+    ) {
         table.forEach { (prefix: HTPrefixLike, key: HTMaterialLike, item: HTHolderLike) ->
-            builder.addMaterial(prefix, key, item)
+            builder.addMaterial(prefix, key, item, type)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: return@forEach
-            builder.addTag(customTag, prefix, key)
+            builder.addTag(customTag, prefix, key, type)
         }
     }
 
@@ -198,12 +206,12 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT, ingot(FoodMaterialKeys.RAW_MEAT))
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT, ingot(FoodMaterialKeys.COOKED_MEAT))
         // Delight
-        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
-        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE, HTTagDependType.OPTIONAL)
+        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
 
         builder.addMaterial(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY_JAM)
         builder.add(ModTags.MEALS, RagiumItems.RAGI_CHERRY_TOAST)
-        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
     }
 
     //    Categories    //
@@ -284,23 +292,23 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .forEach { holder: HTHolderLike -> builder.add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, holder) }
 
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
-        builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagDependType.OPTIONAL)
 
         builder.add(RagiumCommonTags.Items.PLASTIC, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
         builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
-        builder.addTag(RagiumModTags.Items.PLASTICS, RagiumCommonTags.Items.PLASTIC, HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumModTags.Items.PLASTICS, RagiumCommonTags.Items.PLASTIC, HTTagDependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
             PneumaticCraftTags.Items.PLASTIC_SHEETS,
-            HTTagBuilder.DependType.OPTIONAL,
+            HTTagDependType.OPTIONAL,
         )
         // Fuels
         builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, RagiumItems.GREEN_PELLET)
-        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagDependType.OPTIONAL)
         builder.add(
             RagiumModTags.Items.IS_NUCLEAR_FUEL,
             ItemContent.SMALL_URANIUM_PELLET.toHolderLike(),
-            HTTagBuilder.DependType.OPTIONAL,
+            HTTagDependType.OPTIONAL,
         )
         // Other
         builder.addTag(ItemTags.PIGLIN_LOVED, CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
@@ -308,7 +316,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.add(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR, RagiumItems.BLUE_KNOWLEDGE)
         // WIP
-        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
@@ -328,6 +336,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.BYPASS_MENU_VALIDATION, RagiumItems.UNIVERSAL_BUNDLE)
     }
 
+    private fun create(builder: HTTagBuilder<Item>) {
+        builder.addTool(HTSandPaperToolVariant, RagiumCreateAddon.SAND_PAPER_MAP.values)
+    }
+
     private fun pneumatic(builder: HTTagBuilder<Item>) {
         builder.add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
     }
@@ -337,7 +349,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     private fun HTTagBuilder<Item>.addTool(variant: HTToolVariant, holders: Iterable<HTHolderLike>) {
         for (tagKey: TagKey<Item> in variant.tagKeys) {
             for (holder: HTHolderLike in holders) {
-                this.add(tagKey, holder)
+                this.add(tagKey, holder, HTTagDependType.OPTIONAL)
             }
         }
     }

@@ -24,6 +24,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.CreateMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.EIOMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.OritechMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -307,6 +308,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(CommonMaterialRecipeData.BRONZE, true)
         alloyFromData(CommonMaterialRecipeData.BRASS, true)
         alloyFromData(CommonMaterialRecipeData.CONSTANTAN, true)
+
+        // Create
+        alloyFromData(CreateMaterialRecipeData.ANDESITE_ALLOY, true)
 
         // EIO
         alloyFromData(EIOMaterialRecipeData.CONDUCTIVE_ALLOY, true)

@@ -1,6 +1,12 @@
 {
   "values": [
-    "ragium:ragi_alloy_kitchen_knife",
-    "ragium:ragi_crystal_kitchen_knife"
+    {
+      "id": "ragium:ragi_alloy_kitchen_knife",
+      "required": false
+    },
+    {
+      "id": "ragium:ragi_crystal_kitchen_knife",
+      "required": false
+    }
   ]
 }

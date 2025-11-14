@@ -65,6 +65,9 @@ object ModMaterialKeys {
     }
 
     enum class Alloys : HTMaterialLike {
+        // Create
+        ANDESITE_ALLOY,
+
         // Ender IO
         CONDUCTIVE_ALLOY,
         COPPER_ALLOY,

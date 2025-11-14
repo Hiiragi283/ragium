@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "tag": "c:ingots/iridescentium"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:iridescentium_sand_paper"
+  }
+}

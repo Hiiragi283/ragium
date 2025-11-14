@@ -2,9 +2,12 @@
   "values": [
     "ragium:bottled_bee",
     "ragium:drill",
-    "ragium:ragi_cherry_toast_block",
     "ragium:slot_cover",
     "ragium:solar_panel",
+    {
+      "id": "ragium:ragi_cherry_toast_block",
+      "required": false
+    },
     "#c:obsidians/mysterious",
     "ragium:brewery",
     "ragium:nuclear_reactor",

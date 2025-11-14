@@ -11,6 +11,9 @@ class RagiumAddonProviders : RagiumAddon.Provider {
         if (modList.isLoaded(RagiumConst.ACCESSORIES)) {
             add(RagiumAccessoriesAddon)
         }
+        if (modList.isLoaded(RagiumConst.CREATE)) {
+            add(RagiumCreateAddon)
+        }
         if (modList.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
             add(RagiumDelightAddon)
         }

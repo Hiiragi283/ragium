@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
@@ -30,6 +31,7 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey
@@ -71,6 +73,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         translations()
 
+        // Create
+        fromMapWithRow(HTSandPaperToolVariant, RagiumCreateAddon.SAND_PAPER_MAP)
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
         // Kaleido

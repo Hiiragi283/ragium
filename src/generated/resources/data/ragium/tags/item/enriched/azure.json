@@ -1,5 +1,8 @@
 {
   "values": [
-    "ragium:enriched_azure"
+    {
+      "id": "ragium:enriched_azure",
+      "required": false
+    }
   ]
 }

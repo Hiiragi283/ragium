@@ -15,6 +15,7 @@ aa = "1.3.20+mc1.21.1"
 accessories = "1.1.0-beta.52+1.21.1"
 ae2 = "19.2.17"
 almost = "1.21.1-1.3.0"
+create = "6.0.8-169"
 curious = "9.5.1+1.21.1"
 delight = "1.21.1-1.2.9"
 emi = "1.1.22+1.21.1"
@@ -23,20 +24,22 @@ fusion = "1.2.11b-neoforge-mc1.21"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.3+neoforge"
 kc = "1.1.0-neoforge+mc1.21.1"
-magitech = "0.12.1"
+#magitech = "0.12.1"
 mek = "1.21.1-10.7.17.83"
 oritech = "0.19.3"
 pneuma = "8.2.13+mc1.21.1"
 replica = "1.21-1.2.3"
-rs2 = "2.0.0-beta.10"
 
 arch = "13.0.8"
-ars = "5.10.5.1219"
-dire = "6369120"
+#ars = "5.10.5.1219"
+#dire = "6369120"
 enchdesc = "21.1.9"
+flywheel = "1.0.6-beta-37"
 guide = "21.1.15"
 owo = "0.12.15.1-beta.6+1.21"
-patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
+#patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
+registrate = "MC1.21-1.3.0+67"
+#rs2 = "2.0.0-beta.10"
 
 [libraries]
 
@@ -46,6 +49,7 @@ aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 accessories = { group = "io.wispforest", name = "accessories-neoforge", version.ref = "accessories" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 almost = { group = "com.almostreliable.mods", name = "almostunified-neoforge", version.ref = "almost" }
+create = { group = "com.simibubi.create", name = "create-1.21.1", version.ref = "create" }
 curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curious" }
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref = "emi" }
@@ -53,20 +57,22 @@ fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
-magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
+#magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
 
 arch = { group = "dev.architectury", name = "architectury-neoforge", version.ref = "arch" }
-ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
-dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
+#ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
+#dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 enchdesc = { group = "net.darkhax.enchdesc", name = "enchdesc-neoforge-1.21.1", version.ref = "enchdesc" }
+flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 owo = { group = "io.wispforest", name = "owo-lib-neoforge", version.ref = "owo" }
-patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
-rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
+#patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
+registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
+#rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
 
 [bundles]
 
@@ -83,12 +89,16 @@ mods-impl = [
     # non-direct dependencies
     "arch",
     "guide",
-    "owo"
+    "owo",
+    # create dependencies
+    "flywheel",
+    "registrate",
 ]
 
 mods-transitive = [
     "aa",
-    "accessories"
+    "accessories",
+    "create"
 ]
 
 mods-compile = []

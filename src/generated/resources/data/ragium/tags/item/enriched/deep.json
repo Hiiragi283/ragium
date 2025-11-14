@@ -1,5 +1,8 @@
 {
   "values": [
-    "ragium:enriched_deep"
+    {
+      "id": "ragium:enriched_deep",
+      "required": false
+    }
   ]
 }

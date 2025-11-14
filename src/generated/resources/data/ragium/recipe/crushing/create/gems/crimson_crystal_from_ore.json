@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "tag": "c:ores/crimson_crystal"
+    }
+  ],
+  "processing_time": 400,
+  "results": [
+    {
+      "count": 2,
+      "id": "ragium:crimson_crystal"
+    }
+  ]
+}

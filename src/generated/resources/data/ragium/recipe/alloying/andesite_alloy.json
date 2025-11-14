@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        "#c:nuggets/iron",
+        "#c:nuggets/zinc"
+      ]
+    },
+    "minecraft:andesite"
+  ],
+  "result": {
+    "count": 1,
+    "id": "create:andesite_alloy"
+  }
+}

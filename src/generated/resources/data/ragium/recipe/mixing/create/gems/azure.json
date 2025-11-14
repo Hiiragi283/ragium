@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "heat_requirement": "heated",
+  "ingredients": [
+    [
+      {
+        "tag": "c:dusts/amethyst"
+      },
+      {
+        "tag": "c:gems/amethyst"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/lapis"
+      },
+      {
+        "tag": "c:gems/lapis"
+      }
+    ]
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "ragium:azure_shard"
+    }
+  ]
+}

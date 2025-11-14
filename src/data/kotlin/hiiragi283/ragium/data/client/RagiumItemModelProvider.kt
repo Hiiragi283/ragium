@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
@@ -38,6 +39,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
 
+            // Create
+            addAll(RagiumCreateAddon.ITEM_REGISTER.entries)
             // Food
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumKaleidoCookeryAddon.ITEM_REGISTER.entries)

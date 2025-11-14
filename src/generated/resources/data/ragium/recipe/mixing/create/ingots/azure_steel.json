@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "heat_requirement": "heated",
+  "ingredients": [
+    [
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:ingots/iron"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/azure"
+      },
+      {
+        "tag": "c:gems/azure"
+      }
+    ]
+  ],
+  "results": [
+    {
+      "id": "ragium:azure_steel_ingot"
+    }
+  ]
+}

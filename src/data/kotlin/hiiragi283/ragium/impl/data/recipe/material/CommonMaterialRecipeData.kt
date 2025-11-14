@@ -50,10 +50,10 @@ data object CommonMaterialRecipeData {
 
     @JvmField
     val BRASS: HTRecipeData = HTRecipeData.create {
-        ingotOrDust(VanillaMaterialKeys.COPPER, 3)
+        ingotOrDust(VanillaMaterialKeys.COPPER)
         ingotOrDust(CommonMaterialKeys.Metals.ZINC)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRASS, 4)
+        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRASS, 2)
     }
 
     @JvmField

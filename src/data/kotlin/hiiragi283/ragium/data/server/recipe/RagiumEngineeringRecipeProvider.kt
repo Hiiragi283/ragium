@@ -58,6 +58,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 .define('B', parent)
                 .savePrefixed(output, "9x_")
         }
+        // Synthetic Book
+        HTShapelessRecipeBuilder
+            .misc(Items.BOOK)
+            .addIngredient(Items.PAPER)
+            .addIngredient(Items.PAPER)
+            .addIngredient(Items.PAPER)
+            .addIngredient(RagiumItems.SYNTHETIC_LEATHER)
+            .saveSuffixed(output, "_from_synthetic")
         // Blaze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
