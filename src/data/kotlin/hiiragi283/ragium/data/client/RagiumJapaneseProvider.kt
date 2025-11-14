@@ -225,6 +225,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun item() {
         // Material
+        add(RagiumItems.COAL_CHIP, "石炭チップ")
+        add(RagiumItems.COAL_CHUNK, "石炭の塊")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")

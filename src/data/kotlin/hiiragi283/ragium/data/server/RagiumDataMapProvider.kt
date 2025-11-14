@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
+import hiiragi283.ragium.impl.data.map.HTCompressingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -190,6 +191,15 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                         RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
                         6,
                     ),
+                )
+            }.getOrCreateMap(RagiumRecipeTypes.COMPRESSING) {
+                put(
+                    RagiumAPI.id("dust_to_gem"),
+                    HTCompressingMaterialRecipeData.dust(CommonMaterialPrefixes.GEM),
+                )
+                put(
+                    RagiumAPI.id("dust_to_fuel"),
+                    HTCompressingMaterialRecipeData.dust(CommonMaterialPrefixes.FUEL),
                 )
             }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
                 put(

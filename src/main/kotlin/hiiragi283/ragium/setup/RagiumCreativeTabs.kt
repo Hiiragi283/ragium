@@ -12,11 +12,9 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTDrumTier
+
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
@@ -40,7 +38,7 @@ object RagiumCreativeTabs {
 
     @JvmField
     val BLOCKS: HTSimpleDeferredHolder<CreativeModeTab> =
-        REGISTER.register("blocks") { id: ResourceLocation ->
+        REGISTER.register("blocks") { _ ->
             CreativeModeTab
                 .builder()
                 .title(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS.translate())
@@ -137,6 +135,7 @@ object RagiumCreativeTabs {
             { RagiumItems.LOOT_TICKET },
         ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
+            output.acceptItems(RagiumItems.DRUM_MINECARTS.values)
             // Raginite
             output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
             output.accept(RagiumItems.MAGNET)
@@ -204,7 +203,7 @@ object RagiumCreativeTabs {
         title: HTTranslation,
         icon: Supplier<out ItemLike>,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { _ ->
         CreativeModeTab
             .builder()
             .title(title.translate())
@@ -247,17 +246,12 @@ object RagiumCreativeTabs {
             )
         }
 
-        val key: ResourceKey<CreativeModeTab> = event.tabKey
-        if (BLOCKS.`is`(key)) {
-            for (tier: HTDrumTier in HTDrumTier.entries) {
-                insertAfter(tier.getBlock(), tier.getMinecartItem())
-            }
-        }
-
-        if (INGREDIENTS.`is`(key)) {
+        if (INGREDIENTS.`is`(event.tabKey)) {
             insertAfter(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE), RagiumItems.RAGI_COKE)
             insertBefore(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY), RagiumItems.RAGI_ALLOY_COMPOUND)
 
+            insertAfter(RagiumItems.getDust(VanillaMaterialKeys.COAL), RagiumItems.COAL_CHIP)
+            insertAfter(RagiumItems.COAL_CHIP, RagiumItems.COAL_CHUNK)
             insertAfter(RagiumItems.getDust(VanillaMaterialKeys.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
 

@@ -234,6 +234,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun item() {
         // Material
+        add(RagiumItems.COAL_CHIP, "Coal Chip")
+        add(RagiumItems.COAL_CHUNK, "Coal Chunk")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")

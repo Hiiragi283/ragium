@@ -2,10 +2,10 @@
   "type": "ragium:compressing",
   "ingredient": {
     "count": 8,
-    "items": "ragium:coal_chunk"
+    "items": "#c:dusts/coal"
   },
   "result": {
     "count": 1,
-    "id": "#c:gems/diamond"
+    "id": "ragium:coal_chip"
   }
 }

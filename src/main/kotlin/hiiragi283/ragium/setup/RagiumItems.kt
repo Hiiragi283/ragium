@@ -117,6 +117,13 @@ object RagiumItems {
     @JvmField
     val RESIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("resin")
 
+    // Diamond
+    @JvmField
+    val COAL_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("coal_chip")
+
+    @JvmField
+    val COAL_CHUNK: HTSimpleDeferredItem = REGISTER.registerSimpleItem("coal_chunk")
+
     // Oil
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
@@ -161,6 +168,7 @@ object RagiumItems {
             VanillaMaterialKeys.AMETHYST,
             VanillaMaterialKeys.ECHO,
             // Vanilla - Other
+            VanillaMaterialKeys.COAL,
             VanillaMaterialKeys.BLACKSTONE,
             VanillaMaterialKeys.OBSIDIAN,
             // Common

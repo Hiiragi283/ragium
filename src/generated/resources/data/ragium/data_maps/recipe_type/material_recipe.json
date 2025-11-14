@@ -34,6 +34,18 @@
         "prefix": "raw_material"
       }
     },
+    "ragium:compressing": {
+      "ragium:dust_to_fuel": {
+        "type": "ragium:compressing",
+        "input_prefix": "dust",
+        "output_prefix": "fuel"
+      },
+      "ragium:dust_to_gem": {
+        "type": "ragium:compressing",
+        "input_prefix": "dust",
+        "output_prefix": "gem"
+      }
+    },
     "ragium:crushing": {
       "ragium:crop_to_flour": {
         "type": "ragium:crushing",

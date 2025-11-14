@@ -2,8 +2,10 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -78,7 +80,20 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
         // Coal -> Diamond
         HTItemToObjRecipeBuilder
             .compressing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL, 64),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL, 8),
+                resultHelper.item(RagiumItems.COAL_CHIP),
+            ).save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.COAL_CHUNK)
+            .hollow8()
+            .define('A', RagiumItems.COAL_CHIP)
+            .define('B', CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.NIGHT_METAL)
+            .save(output)
+
+        HTItemToObjRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(RagiumItems.COAL_CHUNK, 8),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
             ).saveSuffixed(output, "_from_coal")
     }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
@@ -13,6 +14,7 @@ import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
 import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
+import hiiragi283.ragium.impl.data.map.HTCompressingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import net.minecraft.core.registries.Registries
@@ -70,8 +72,9 @@ object RagiumMiscRegister {
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
-            helper.register(RagiumAPI.id("crushing/storage_block"), HTBlockCrushingMaterialRecipeData.CODEC)
-            helper.register(RagiumAPI.id("crushing"), HTCrushingMaterialRecipeData.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingMaterialRecipeData.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingMaterialRecipeData.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingMaterialRecipeData.CODEC)
             helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipeData.CODEC)
         }
     }
