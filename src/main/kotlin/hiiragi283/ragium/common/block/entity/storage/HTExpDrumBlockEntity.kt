@@ -45,7 +45,7 @@ class HTExpDrumBlockEntity(pos: BlockPos, state: BlockState) : HTDrumBlockEntity
         HTValueSerializable.Empty {
         override fun setAmount(amount: Long) {
             val fluidAmount: Int = Ints.saturatedCast(amount * RagiumConfig.COMMON.expConversionRatio.asLong)
-            tank.setStackUnchecked(RagiumFluidContents.EXPERIENCE.toStorageStack(fluidAmount))
+            tank.setStackUnchecked(RagiumFluidContents.EXPERIENCE.toImmutableStack(fluidAmount))
         }
 
         override fun getAmount(): Long = tank.getAmount() / RagiumConfig.COMMON.expConversionRatio.asLong

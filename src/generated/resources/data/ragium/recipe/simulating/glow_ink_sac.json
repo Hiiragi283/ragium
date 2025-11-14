@@ -1,0 +1,11 @@
+{
+  "type": "ragium:simulating",
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:glow_ink_sac"
+  },
+  "required": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:glow_squid"
+  }
+}

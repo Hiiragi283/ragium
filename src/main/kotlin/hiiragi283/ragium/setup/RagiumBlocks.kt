@@ -534,10 +534,6 @@ object RagiumBlocks {
         registerMachineTier("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
 
     @JvmField
-    val MILK_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("milk_collector", RagiumBlockTypes.MILK_COLLECTOR, machineProperty())
-
-    @JvmField
     val WATER_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("water_collector", RagiumBlockTypes.WATER_COLLECTOR, machineProperty())
 
@@ -545,10 +541,6 @@ object RagiumBlocks {
     @JvmField
     val EXP_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
-
-    @JvmField
-    val LAVA_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("lava_collector", RagiumBlockTypes.LAVA_COLLECTOR, machineProperty())
 
     // Elite
     @JvmField

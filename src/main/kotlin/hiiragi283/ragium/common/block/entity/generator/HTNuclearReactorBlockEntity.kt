@@ -21,7 +21,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         else -> 0
     }
 
-    override fun getFuelStack(value: Int): ImmutableFluidStack? = RagiumFluidContents.GREEN_FUEL.toStorageStack(value)
+    override fun getFuelStack(value: Int): ImmutableFluidStack? = RagiumFluidContents.GREEN_FUEL.toImmutableStack(value)
 
     override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
         null -> 0

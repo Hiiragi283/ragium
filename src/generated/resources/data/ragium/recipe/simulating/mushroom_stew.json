@@ -1,0 +1,11 @@
+{
+  "type": "ragium:simulating",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:mushroom_stew"
+  },
+  "required": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:mooshroom"
+  }
+}

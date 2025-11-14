@@ -154,11 +154,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
-        add(RagiumBlocks.MILK_COLLECTOR, "搾乳機")
         add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
 
         add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
-        add(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
         add(RagiumBlocks.ENI, "E.N.I.")

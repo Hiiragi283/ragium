@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "neoforge:block/milk_still",
-    "layer1": "ragium:block/device_overlay"
-  }
-}

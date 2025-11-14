@@ -163,11 +163,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
-        add(RagiumBlocks.MILK_COLLECTOR, "Milk Collector")
         add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
 
         add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
-        add(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
         add(RagiumBlocks.ENI, "E.N.I.")

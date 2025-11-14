@@ -37,8 +37,6 @@ import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEnti
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
@@ -219,12 +217,6 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val MILK_COLLECTOR: HTDeferredBlockEntityType<HTMilkCollectorBlockEntity> = registerTick(
-        "milk_collector",
-        ::HTMilkCollectorBlockEntity,
-    )
-
-    @JvmField
     val WATER_COLLECTOR: HTDeferredBlockEntityType<HTWaterCollectorBlockEntity> = registerTick(
         "water_collector",
         ::HTWaterCollectorBlockEntity,
@@ -235,12 +227,6 @@ object RagiumBlockEntityTypes {
     val EXP_COLLECTOR: HTDeferredBlockEntityType<HTExpCollectorBlockEntity> = registerTick(
         "exp_collector",
         ::HTExpCollectorBlockEntity,
-    )
-
-    @JvmField
-    val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
-        "lava_collector",
-        ::HTLavaCollectorBlockEntity,
     )
 
     // Elite
@@ -347,11 +333,9 @@ object RagiumBlockEntityTypes {
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, ITEM_BUFFER.get())
-        registerHandler(event, MILK_COLLECTOR.get())
         registerHandler(event, WATER_COLLECTOR.get())
 
         registerHandler(event, EXP_COLLECTOR.get())
-        registerHandler(event, LAVA_COLLECTOR.get())
 
         registerHandler(event, ENI.get())
 

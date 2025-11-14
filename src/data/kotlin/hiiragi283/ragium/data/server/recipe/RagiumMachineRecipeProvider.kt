@@ -210,20 +210,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Tags.Items.CHESTS)
             .save(output)
 
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.MILK_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_MILK)
-            .save(output)
-
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.WATER_COLLECTOR, RagiumBlocks.DEVICE_CASING)
             .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)
         // Advanced
         createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
             .addIngredient(Items.HOPPER)
-            .save(output)
-
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.LAVA_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_LAVA)
             .save(output)
         // Elite
         createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)

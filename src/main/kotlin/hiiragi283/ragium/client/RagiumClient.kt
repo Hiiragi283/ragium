@@ -16,13 +16,13 @@ import hiiragi283.ragium.client.gui.screen.HTConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTExpCollectorScreen
-import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
 import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.gui.screen.HTWaterCollectorScreen
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
@@ -242,7 +242,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), HTSingleFluidConsumerScreen.Companion::extractor)
         event.register(RagiumMenuTypes.EXP_COLLECTOR.get(), ::HTExpCollectorScreen)
-        event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
+        event.register(RagiumMenuTypes.WATER_COLLECTOR.get(), ::HTWaterCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_BUFFER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_buffer"))
         event.register(RagiumMenuTypes.MELTER.get(), HTSingleFluidConsumerScreen.Companion::melter)

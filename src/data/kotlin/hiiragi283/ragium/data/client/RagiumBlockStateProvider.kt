@@ -209,12 +209,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.SIMULATOR, blackboxMachine, blackboxMachine)
 
         // Device
-        fun addFluidCollector(block: HTDeferredBlock<*, *>, fluid: ResourceLocation) {
-            layeredBlock(block, fluid, RagiumAPI.id("block", "device_overlay"))
-        }
-        addFluidCollector(RagiumBlocks.LAVA_COLLECTOR, vanillaId("block", "lava_still"))
-        addFluidCollector(RagiumBlocks.MILK_COLLECTOR, RagiumConst.NEOFORGE.toId("block", "milk_still"))
-        addFluidCollector(RagiumBlocks.WATER_COLLECTOR, vanillaId("block", "water_still"))
+        layeredBlock(
+            RagiumBlocks.WATER_COLLECTOR,
+            vanillaId("block", "water_still"),
+            RagiumAPI.id("block", "device_overlay"),
+        )
 
         // Storages
         for (crate: HTDeferredBlock<*, *> in RagiumBlocks.CRATES.values) {

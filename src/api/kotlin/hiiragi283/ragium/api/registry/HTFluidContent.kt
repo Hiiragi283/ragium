@@ -105,5 +105,5 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
 
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 
-    fun toStorageStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
+    fun toImmutableStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
 }

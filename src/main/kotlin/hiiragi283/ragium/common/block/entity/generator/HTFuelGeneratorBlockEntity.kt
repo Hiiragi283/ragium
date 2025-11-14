@@ -116,7 +116,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     ) : HTFuelGeneratorBlockEntity(blockHolder, pos, state) {
         override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
-        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toStorageStack(value)
+        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toImmutableStack(value)
 
         override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
             null -> 0

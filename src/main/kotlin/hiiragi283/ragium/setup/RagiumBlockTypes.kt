@@ -200,16 +200,9 @@ object RagiumBlockTypes {
         .build()
 
     @JvmField
-    val MILK_COLLECTOR: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.MILK_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
-        .addTier(HTMachineTier.BASIC)
-        .build()
-
-    @JvmField
     val WATER_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.WATER_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
+        .addMenu { RagiumMenuTypes.WATER_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
         .build()
 
@@ -218,13 +211,6 @@ object RagiumBlockTypes {
     val EXP_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.EXP_COLLECTOR }
         .addMenu { RagiumMenuTypes.EXP_COLLECTOR }
-        .addTier(HTMachineTier.ADVANCED)
-        .build()
-
-    @JvmField
-    val LAVA_COLLECTOR: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.LAVA_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.ADVANCED)
         .build()
 

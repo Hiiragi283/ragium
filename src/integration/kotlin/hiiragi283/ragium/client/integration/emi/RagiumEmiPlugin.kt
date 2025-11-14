@@ -228,20 +228,10 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addInteractions(registry: EmiRegistry) {
-        // Water Well
+        // Water Collector
         registry.addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
-        }
-        // Lava Well
-        registry.addInteraction(HTFluidContent.LAVA.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.LAVA_COLLECTOR.toEmi())
-            rightInput(EmiStack.EMPTY, false)
-        }
-        // Milk Drain
-        registry.addInteraction(HTFluidContent.MILK.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.MILK_COLLECTOR.toEmi())
-            rightInput(Items.COW_SPAWN_EGG.toEmi(), true)
         }
         // Exp Collector
         registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_generator") {
