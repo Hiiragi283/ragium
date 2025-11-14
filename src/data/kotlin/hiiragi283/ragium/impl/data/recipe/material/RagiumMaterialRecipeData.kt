@@ -69,7 +69,7 @@ data object RagiumMaterialRecipeData {
 
         addOutput(RagiumItems.getGem(RagiumMaterialKeys.AZURE), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, 2)
     }
-    
+
     @JvmField
     val AZURE_STEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
