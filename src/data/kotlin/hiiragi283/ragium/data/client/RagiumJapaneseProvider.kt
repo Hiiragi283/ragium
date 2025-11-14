@@ -5,17 +5,16 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
-import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.client.text.RagiumClientTranslation
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -37,35 +36,34 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         modTags()
         recipeType()
         text()
-        information()
 
-        food()
         delight()
         jade()
     }
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to ようこそ Ragium へ！")
-        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "こいつ…作れるぞ！", "Ragiumで追加された鍛冶型を作る")
+        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "いとも容易く作られる簡素な強化", "Ragiumで追加された鍛冶型を作る")
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "レッドストーンではない", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
-        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "双子の果物", "らぎチェリーを食べる")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "最後の朝食", "らぎチェリーのトーストタワーを手に入れる")
 
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
+        addAdvancement(RagiumAdvancements.AMBROSIA, "禁断の果実", "スティー…アンブロシアを食べる")
 
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "赤色です。", "発展ラギ合金インゴットを手に入れる")
-        addAdvancement(RagiumAdvancements.MELTER, "メルティーキッス", "溶融炉を手に入れる")
+        addAdvancement(RagiumAdvancements.MELTER, "溶融とあなた", "溶融炉を手に入れる")
+        addAdvancement(RagiumAdvancements.REFINERY, "リファイナリーでは…リファイナリーだこれ！", "精製機を手に入れる")
+        addAdvancement(RagiumAdvancements.PLASTIC, "Plus-Tic", "プラスチックを手に入れる")
+        addAdvancement(RagiumAdvancements.POTION_BUNDLE, "バンドルのバックポート", "ポーションバンドルを使う")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
-        addAdvancement(
-            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            "破壊の鉄槌",
-            "ラギクリスタリルの鍛造ハンマーを手に入れてあらゆるブロックを破壊する",
-        )
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "らぎ分解機", "ラギクリスタリルのハンマーを手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
+        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "青に染まる", "青の知識を芽生えたアメジストに使う")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
@@ -73,9 +71,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "「古代」の残骸", "共振の残骸を手に入れる")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
-        addAdvancement(RagiumAdvancements.DEEP_GEARS, "黒き天災", "深層鋼インゴットで作られたツールか装備を手に入れる")
+        addAdvancement(RagiumAdvancements.BEHEAD_MOB, "帯電なんていらない", "雷撃エンチャントが付与された武器でモブの頭を切り落とす")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
+        // Night Metal
+        addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
@@ -83,6 +83,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "安定した歪み", "歪んだクリスタリルを手に入れる")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "リモートワーク", "次元アンカーを置いて，そのチャンクを常に読み込ませる")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "ロックオープン！", "転位の鍵を使い，紐づけた座標に飛ぶ")
+        addAdvancement(RagiumAdvancements.WARPED_WART, "Industrialなウォート", "歪んだウォートを食べる")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")
@@ -95,6 +96,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
 
+        add(RagiumBlocks.BUDDING_AZURE, "芽生えた紺碧")
         add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
@@ -131,6 +133,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
         // Consumers
+        add(RagiumBlocks.AUTO_SMITHING_TABLE, "自動鍛冶台")
+        add(RagiumBlocks.AUTO_STONECUTTER, "自動石切台")
+
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.BLOCK_BREAKER, "採掘機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
@@ -163,6 +168,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
+        add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
+
         add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
     }
 
@@ -198,6 +205,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MEAT, "液体肉")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
@@ -217,7 +225,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun item() {
         // Material
-        add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
@@ -242,6 +249,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
         add(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
+        add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
@@ -261,6 +269,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
+        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
+        add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        add(RagiumItems.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
         add(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
@@ -276,7 +287,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // add(RagiumItems.Molds.ROD, "成形型（棒材）")
         // add(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
-        add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "玄武岩強化回路基板")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "ブロックの鋳型")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
+
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")
@@ -290,144 +304,16 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun itemGroup() {
-        addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - ブロック")
-        addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - 素材")
-        addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - アイテム")
+        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - ブロック")
+        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - 素材")
+        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - アイテム")
     }
 
     private fun keyMapping() {
-        add(RagiumTranslation.KEY_CATEGORY, "Ragium")
+        add(RagiumClientTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
+        add(RagiumClientTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
     }
-
-    /*private fun material() {
-        // Common
-        addMaterialKey(CommonMaterials.ALUMINA, "アルミナ")
-        addMaterialKey(CommonMaterials.ALUMINUM, "アルミニウム")
-        addMaterialKey(CommonMaterials.ANTIMONY, "アンチモン")
-        addMaterialKey(CommonMaterials.BERYLLIUM, "ベリリウム")
-        addMaterialKey(CommonMaterials.ASH, "灰")
-        addMaterialKey(CommonMaterials.BAUXITE, "ボーキサイト")
-        addMaterialKey(CommonMaterials.BRASS, "真鍮")
-        addMaterialKey(CommonMaterials.BRONZE, "青銅")
-        addMaterialKey(CommonMaterials.CADMIUM, "カドミウム")
-        addMaterialKey(CommonMaterials.CARBON, "炭素")
-        addMaterialKey(CommonMaterials.CHEESE, "チーズ")
-        addMaterialKey(CommonMaterials.CHOCOLATE, "チョコレート")
-        addMaterialKey(CommonMaterials.CHROMIUM, "クロム")
-        addMaterialKey(CommonMaterials.COAL_COKE, "石炭コークス")
-        addMaterialKey(CommonMaterials.CONSTANTAN, "コンスタンタン")
-        addMaterialKey(CommonMaterials.CRYOLITE, "氷晶石")
-        addMaterialKey(CommonMaterials.ELECTRUM, "琥珀金")
-        addMaterialKey(CommonMaterials.FLUORITE, "蛍石")
-        addMaterialKey(CommonMaterials.INVAR, "不変鋼")
-        addMaterialKey(CommonMaterials.IRIDIUM, "イリジウム")
-        addMaterialKey(CommonMaterials.LEAD, "鉛")
-        addMaterialKey(CommonMaterials.NICKEL, "ニッケル")
-        addMaterialKey(CommonMaterials.NIOBIUM, "ニオブ")
-        addMaterialKey(CommonMaterials.OSMIUM, "オスミウム")
-        addMaterialKey(CommonMaterials.PERIDOT, "ペリドット")
-        addMaterialKey(CommonMaterials.PLATINUM, "白金")
-        addMaterialKey(CommonMaterials.PLUTONIUM, "プルトニウム")
-        addMaterialKey(CommonMaterials.PYRITE, "金")
-        addMaterialKey(CommonMaterials.RUBY, "ルビー")
-        addMaterialKey(CommonMaterials.SALT, "塩")
-        addMaterialKey(CommonMaterials.SALTPETER, "硝石")
-        addMaterialKey(CommonMaterials.SAPPHIRE, "サファイア")
-        addMaterialKey(CommonMaterials.SILICON, "シリコン")
-        addMaterialKey(CommonMaterials.SILVER, "銀")
-        addMaterialKey(CommonMaterials.SOLDERING_ALLOY, "半田合金")
-        addMaterialKey(CommonMaterials.STAINLESS_STEEL, "ステンレス鋼")
-        addMaterialKey(CommonMaterials.STEEL, "スチール")
-        addMaterialKey(CommonMaterials.SULFUR, "硫黄")
-        addMaterialKey(CommonMaterials.TIN, "スズ")
-        addMaterialKey(CommonMaterials.SUPERCONDUCTOR, "超伝導体")
-        addMaterialKey(CommonMaterials.TITANIUM, "チタン")
-        addMaterialKey(CommonMaterials.TUNGSTEN, "タングステン")
-        addMaterialKey(CommonMaterials.URANIUM, "ウラニウム")
-        addMaterialKey(CommonMaterials.ZINC, "亜鉛")
-        // AA
-        addMaterialKey(IntegrationMaterials.BLACK_QUARTZ, "黒水晶")
-        // AE2
-        addMaterialKey(IntegrationMaterials.CERTUS_QUARTZ, "ケルタスクォーツ")
-        addMaterialKey(IntegrationMaterials.FLUIX, "フルーシュ")
-        // Create
-        addMaterialKey(IntegrationMaterials.ANDESITE_ALLOY, "安山岩合金")
-        addMaterialKey(IntegrationMaterials.CARDBOARD, "段ボール")
-        addMaterialKey(IntegrationMaterials.ROSE_QUARTZ, "ローズクォーツ")
-        // EIO
-        addMaterialKey(IntegrationMaterials.COPPER_ALLOY, "銅合金")
-        addMaterialKey(IntegrationMaterials.ENERGETIC_ALLOY, "エナジェティック合金")
-        addMaterialKey(IntegrationMaterials.VIBRANT_ALLOY, "ヴァイブラント合金")
-        addMaterialKey(IntegrationMaterials.REDSTONE_ALLOY, "レッドストーン合金")
-        addMaterialKey(IntegrationMaterials.CONDUCTIVE_ALLOY, "伝導合金")
-        addMaterialKey(IntegrationMaterials.PULSATING_ALLOY, "脈動合金")
-        addMaterialKey(IntegrationMaterials.DARK_STEEL, "ダークスチール")
-        addMaterialKey(IntegrationMaterials.SOULARIUM, "ソウラリウム")
-        addMaterialKey(IntegrationMaterials.END_STEEL, "エンドスチール")
-        // EvilCraft
-        addMaterialKey(IntegrationMaterials.DARK_GEM, "ダークジェム")
-        // IE
-        addMaterialKey(IntegrationMaterials.HOP_GRAPHITE, "高配向パイログラファイト")
-        // Mek
-        addMaterialKey(IntegrationMaterials.REFINED_GLOWSTONE, "精製グロウストーン")
-        addMaterialKey(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
-        // Twilight
-        addMaterialKey(IntegrationMaterials.CARMINITE, "カーミナイト")
-        addMaterialKey(IntegrationMaterials.FIERY_METAL, "灼熱の")
-        addMaterialKey(IntegrationMaterials.IRONWOOD, "樹鉄")
-        addMaterialKey(IntegrationMaterials.KNIGHTMETAL, "ナイトメタル")
-        addMaterialKey(IntegrationMaterials.STEELEAF, "葉鋼")
-        // Ragium
-        addMaterialKey(RagiumMaterials.ADVANCED_RAGI_ALLOY, "発展ラギ合金")
-        addMaterialKey(RagiumMaterials.AZURE_STEEL, "紺鉄")
-        addMaterialKey(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
-        addMaterialKey(RagiumMaterials.DEEP_STEEL, "深層鋼")
-        addMaterialKey(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
-        addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")
-        addMaterialKey(RagiumMaterials.RAGINITE, "ラギナイト")
-        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだクリスタリル")
-        // Vanilla
-        addMaterialKey(VanillaMaterials.AMETHYST, "アメシスト")
-        addMaterialKey(VanillaMaterials.CALCITE, "方解石")
-        addMaterialKey(VanillaMaterials.COAL, "石炭")
-        addMaterialKey(VanillaMaterials.COPPER, "銅")
-        addMaterialKey(VanillaMaterials.DIAMOND, "ダイアモンド")
-        addMaterialKey(VanillaMaterials.EMERALD, "エメラルド")
-        addMaterialKey(VanillaMaterials.ENDER_PEARL, "エンダーパール")
-        addMaterialKey(VanillaMaterials.GLOWSTONE, "グロウストーン")
-        addMaterialKey(VanillaMaterials.GOLD, "金")
-        addMaterialKey(VanillaMaterials.IRON, "鉄")
-        addMaterialKey(VanillaMaterials.LAPIS, "ラピス")
-        addMaterialKey(VanillaMaterials.NETHERITE, "ネザライト")
-        addMaterialKey(VanillaMaterials.NETHERITE_SCRAP, "ネザライトの欠片")
-        addMaterialKey(VanillaMaterials.OBSIDIAN, "黒曜石")
-        addMaterialKey(VanillaMaterials.QUARTZ, "水晶")
-        addMaterialKey(VanillaMaterials.REDSTONE, "レッドストーン")
-        addMaterialKey(VanillaMaterials.WOOD, "木材")
-    }
-
-    private fun tagPrefix() {
-        addTagPrefix(HTTagPrefixes.CLUMP, "%sの凝塊")
-        addTagPrefix(HTTagPrefixes.CRYSTAL, "%sの結晶")
-        addTagPrefix(HTTagPrefixes.DIRTY_DUST, "汚れた%sの粉")
-        addTagPrefix(HTTagPrefixes.DUST, "%sの粉")
-        addTagPrefix(HTTagPrefixes.GEAR, "%sの歯車")
-        addTagPrefix(HTTagPrefixes.GEM, "%s")
-        addTagPrefix(HTTagPrefixes.INGOT, "%sインゴット")
-        addTagPrefix(HTTagPrefixes.NUGGET, "%sのナゲット")
-        addTagPrefix(HTTagPrefixes.ORE, "%s鉱石")
-        addTagPrefix(HTTagPrefixes.PLATE, "%s板")
-        addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "%sの原石")
-        addTagPrefix(HTTagPrefixes.RAW_STORAGE, "%sの原石ブロック")
-        addTagPrefix(HTTagPrefixes.ROD, "%s棒")
-        addTagPrefix(HTTagPrefixes.SHARD, "%sの欠片")
-        addTagPrefix(HTTagPrefixes.SHEETMETAL, "%sの板金")
-        addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "%sブロック")
-        addTagPrefix(HTTagPrefixes.TINY_DUST, "小さな%sの粉")
-        addTagPrefix(HTTagPrefixes.WIRE, "%sのワイヤー")
-    }*/
 
     private fun modTags() {
         add(RagiumModTags.Blocks.LED_BLOCKS, "LEDブロック")
@@ -460,92 +346,91 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
+        add(RagiumRecipeTypes.CUTTING, "裁断")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
         add(RagiumRecipeTypes.MELTING, "融解")
+        add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.WASHING, "洗浄")
     }
 
     private fun text() {
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE, "紺鉄強化")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS, "紺鉄インゴット")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "鉄製の防具，武器，道具を置いてください")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
-
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE, "深層鋼強化")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO, "深層鋼の装備品")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
-
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "夜金強化")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "夜金の装備品")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "夜金インゴット")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "金製の防具，武器，道具を置いてください")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "夜金インゴットを置いてください")
-
-        add(RagiumTranslation.ITEM_POTION, "%sのポーション")
-
-        add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
-        add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
-        add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "空")
-        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")
-        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
-        add(RagiumTranslation.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
-        add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
-
-        add(RagiumTranslation.RECIPE_CUTTING, "裁断")
-
         add(HTAccessConfig.INPUT_ONLY, "モード：搬入")
         add(HTAccessConfig.OUTPUT_ONLY, "モード：搬出")
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
-    }
 
-    private fun information() {
-        addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
-        addInfo(RagiumBlocks.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
+        // API - Constants
+        add(RagiumTranslation.ERROR, "エラー")
+        add(RagiumTranslation.INFINITE, "無限")
+        add(RagiumTranslation.NONE, "なし")
+        add(RagiumTranslation.EMPTY, "空")
+        // API - Error
+        add(RagiumTranslation.EMPTY_TAG_KEY, $$"空のタグ: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
+        add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
+        add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
+        // API - Item
+        add(RagiumTranslation.ITEM_POTION, $$"%1$sのポーション")
 
-        val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.OBSIDIAN), "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.QUARTZ), nonSilkTouch)
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.SOUL), "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
+        add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
+        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
+        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
 
-        addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
-        addInfo(RagiumItems.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
-        addInfo(RagiumItems.ELDER_HEART, "エルダーガーディアンからドロップします。")
-        addInfo(
-            RagiumItems.ELDRITCH_EGG,
-            "右クリックで投げることができ，モブに当たるとスポーンエッグになります。",
-            "ドロップしたスポーンエッグは直接インベントリに入ります。",
-        )
-        addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
-        addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
-        addInfo(RagiumItems.DYNAMIC_LANTERN, "範囲内の暗所に光源を設置します。")
-        addInfo(RagiumItems.MAGNET, "範囲内のドロップアイテムを回収します。")
-        addInfo(RagiumItems.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
-        addInfo(RagiumItems.TRADER_CATALOG, "行商人からドロップします。")
+        add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
+        add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
+        add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
+        // Common
+        add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
+        add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")
+
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電します。")
+        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電します。")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "接続された太陽光パネルから発電します。")
+        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "エンチャント本や液体経験値から発電します。")
+        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "核燃料から発電します。")
+
+        add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブをスポーンエッグに変換します。")
+        add(RagiumCommonTranslation.CEU, "クリエイティブ用のバッテリー。")
+
+        add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管します。")
+        add(RagiumCommonTranslation.DRUM, "1種類の液体を保管します。")
+        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値と経験値を相互に保管します。")
+
+        add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"エネルギーネットワークに%1$s FEを追加しました。")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"エネルギーネットワークに%1$s FEだけ保持しています。")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_SET, $$"エネルギーネットワークの量を%1$s FEに指定しました。")
+
+        add(RagiumCommonTranslation.NO_DESTINATION, "移動先が指定されていません。")
+        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"未知の次元です: %1$s")
+        add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"燃料不足: %1$s mB必要です。")
+
+        add(RagiumCommonTranslation.ELDER_HEART, "エルダーガーディアンからドロップします。")
+
+        add(RagiumCommonTranslation.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
+        add(RagiumCommonTranslation.DYNAMIC_LANTERN, "範囲内の暗所に光源を設置します。")
+        add(RagiumCommonTranslation.ELDRITCH_EGG, "右クリックで投げることができ，モブに当たるとスポーンエッグになります。")
+        add(RagiumCommonTranslation.MAGNET, "範囲内のドロップアイテムを回収します。")
+        add(RagiumCommonTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
+        add(RagiumCommonTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
+
+        add(RagiumCommonTranslation.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")
+        add(RagiumCommonTranslation.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
     }
 
     //    Addon    //
-
-    private fun food() {
-        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
-        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
-    }
 
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
 
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
     }
 
     private fun jade() {
@@ -553,6 +438,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTExperienceHandlerProvider.ForBlocks, "経験値")
         add(HTBlockOwnerProvider, "ブロックの所有者")
 
-        add(RagiumTranslation.JADE_EXP_STORAGE, "経験値: %s")
+        add(RagiumClientTranslation.JADE_EXP_STORAGE, "経験値: %s")
     }
 }

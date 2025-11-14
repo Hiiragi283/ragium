@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.createErrorStack
 import hiiragi283.ragium.client.integration.emi.toEmi
@@ -65,12 +66,12 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         inputs.add(ingredient ?: EmiStack.EMPTY)
     }
 
-    protected fun addCatalyst(ingredient: HTItemIngredient) {
-        addCatalyst(ingredient(ingredient))
+    protected fun addCatalyst(ingredient: HTItemIngredient?) {
+        addCatalyst(ingredient?.let(::catalyst))
     }
 
-    protected fun addCatalyst(ingredient: EmiIngredient) {
-        catalysts.add(ingredient)
+    protected fun addCatalyst(ingredient: EmiIngredient?) {
+        catalysts.add(ingredient ?: EmiStack.EMPTY)
     }
 
     protected fun addOutputs(result: HTItemResult?) {
@@ -104,14 +105,16 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         .map(
             { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
             { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
-        ).apply {
-            for (stack: EmiStack in emiStacks) {
-                val itemStack: ItemStack = stack.itemStack
-                if (itemStack.hasCraftingRemainingItem()) {
-                    stack.remainder = itemStack.craftingRemainingItem.toEmi()
-                }
+        )
+
+    protected fun catalyst(ingredient: HTItemIngredient): EmiIngredient = ingredient(ingredient).apply {
+        for (stack: EmiStack in emiStacks) {
+            val itemStack: ItemStack = stack.itemStack
+            if (itemStack.hasCraftingRemainingItem()) {
+                stack.remainder = itemStack.craftingRemainingItem.toEmi()
             }
         }
+    }
 
     protected fun ingredient(ingredient: HTFluidIngredient): EmiIngredient = ingredient
         .unwrap()
@@ -121,7 +124,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         )
 
     private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {
-        stacks.isEmpty() -> createErrorStack("No matching stacks")
+        stacks.isEmpty() -> createErrorStack(RagiumTranslation.EMPTY)
         else -> EmiIngredient.of(stacks)
     }
 

@@ -31,15 +31,15 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var catalystSlot: HTItemStackSlot
         private set
     lateinit var outputSlot: HTItemStackSlot
         private set
 
     override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
-        inputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
+        catalystSlot = builder.addSlot(
+            HTSlotInfo.CATALYST,
             HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0)),
         )
         // output
@@ -70,7 +70,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(inputSlot, inputTank)
+        HTItemWithFluidRecipeInput(catalystSlot, inputTank)
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
@@ -94,12 +94,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insert(recipe.assembleItem(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkItemStack(
-            inputSlot,
-            inputSlot::setStackUnchecked,
-            recipe::getRequiredCount,
-            HTStorageAction.EXECUTE,
-        )
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)

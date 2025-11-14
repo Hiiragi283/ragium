@@ -8,7 +8,7 @@
   "type": "kaleidoscope_cookery:chopping_board",
   "cut_count": 1,
   "ingredient": {
-    "tag": "c:foods/ragi_cherry"
+    "item": "ragium:ragi_cherry"
   },
   "model_id": "ragium:ragi_cherry_pulp",
   "result": {

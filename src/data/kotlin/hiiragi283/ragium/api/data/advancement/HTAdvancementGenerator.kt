@@ -88,4 +88,21 @@ abstract class HTAdvancementGenerator {
             hasAnyItem(prefix.itemTagKey(material))
         }
     }
+
+    protected inline fun createUse(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        item: HTItemHolderLike,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            useItem(item)
+        }
+    }
 }

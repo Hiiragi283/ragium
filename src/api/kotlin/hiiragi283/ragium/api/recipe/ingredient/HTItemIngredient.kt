@@ -50,6 +50,8 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
     final override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (test(stack)) this.count else 0
 
+    abstract fun copyWithCount(count: Int): HTItemIngredient
+
     //    HolderBased    //
 
     private class HolderBased(private val holderSet: HolderSet<Item>, count: Int) : HTItemIngredient(count) {
@@ -92,6 +94,8 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
                 Either.right(holders.map { holder: Holder<Item> -> ImmutableItemStack.of(holder.value(), count) })
             },
         )
+
+        override fun copyWithCount(count: Int): HTItemIngredient = HolderBased(holderSet, count)
     }
 
     //    IngredientBased    //
@@ -130,5 +134,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> =
             Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
+
+        override fun copyWithCount(count: Int): HTItemIngredient = IngredientBased(ingredient, count)
     }
 }

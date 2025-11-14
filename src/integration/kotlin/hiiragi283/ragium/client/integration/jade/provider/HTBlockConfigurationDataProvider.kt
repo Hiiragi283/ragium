@@ -20,6 +20,6 @@ object HTBlockConfigurationDataProvider : HTBasicJadeDataProvider<BlockAccessor,
         config: IPluginConfig,
         data: HTAccessConfig,
     ) {
-        tooltip.add(data.getText())
+        tooltip.add(data.translate())
     }
 }

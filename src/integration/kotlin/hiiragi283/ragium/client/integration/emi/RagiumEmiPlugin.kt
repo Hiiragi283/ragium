@@ -8,6 +8,7 @@ import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -20,10 +21,10 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.manager.castRecipe
-import hiiragi283.ragium.api.recipe.manager.toFindable
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.HTBrewingEffectEmiRecipe
@@ -32,10 +33,11 @@ import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGenerator
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTFluidTransformingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
@@ -65,7 +67,9 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -97,6 +101,9 @@ class RagiumEmiPlugin : EmiPlugin {
         addGenerators(registry)
         addProcessors(registry)
         addInteractions(registry)
+
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMITHING, RagiumBlocks.AUTO_SMITHING_TABLE.toEmi())
+        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, RagiumBlocks.AUTO_STONECUTTER.toEmi())
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
@@ -128,9 +135,9 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Smithing
-        RecipeType.SMITHING
-            .toFindable()
-            .getAllRecipes(recipeManager())
+        recipeManager()
+            .getAllRecipesFor(RecipeType.SMITHING)
+            .map(RecipeHolder<SmithingRecipe>::value)
             .filterIsInstance<HTSmithingModifyRecipe>()
             .forEach { recipe: HTSmithingModifyRecipe ->
                 registry.addRecipe(
@@ -199,8 +206,9 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTCuttingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemToItemEmiRecipe)
         // Advanced
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.FLUID_TRANSFORM, ::HTFluidTransformingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.FLUID_TRANSFORM, ::HTRefiningEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
         addCategoryAndRecipes(
@@ -236,7 +244,7 @@ class RagiumEmiPlugin : EmiPlugin {
             rightInput(Items.COW_SPAWN_EGG.toEmi(), true)
         }
         // Exp Collector
-        registry.addInteraction(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()), prefix = "fluid_generator") {
+        registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(RagiumBlocks.EXP_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
@@ -254,9 +262,14 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Crude Oil + Lava -> Soul Sand
         registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidContent.LAVA)
-
         // Water + Eldritch Flux -> Eldritch Stone
         registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidContent.WATER, RagiumFluidContents.ELDRITCH_FLUX)
+
+        // Budding Azure
+        registry.addInteraction(RagiumBlocks.BUDDING_AZURE.toEmi()) {
+            leftInput(Blocks.BUDDING_AMETHYST.toEmi())
+            rightInput(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR.toEmi(), false)
+        }
     }
 
     //    Extension    //

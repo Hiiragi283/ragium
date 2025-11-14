@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
@@ -20,7 +21,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.BASIC)
-        .build()
+        .build(RagiumCommonTranslation.THERMAL_GENERATOR)
 
     // Advanced
     @JvmField
@@ -29,14 +30,14 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.ADVANCED)
-        .build()
+        .build(RagiumCommonTranslation.THERMAL_GENERATOR)
 
     // Elite
     @JvmField
     val SOLAR_PANEL_CONTROLLER: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.SOLAR_PANEL_CONTROLLER }
         .addGeneratorTier(HTMachineTier.ELITE)
-        .build()
+        .build(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER)
 
     // Ultimate
     @JvmField
@@ -45,15 +46,29 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.FUEL_GENERATOR }
         .addGeneratorTier(HTMachineTier.ULTIMATE)
-        .build()
+        .build(RagiumCommonTranslation.ENCHANTMENT_GENERATOR)
 
     @JvmField
     val NUCLEAR_REACTOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.NUCLEAR_REACTOR }
         .addGeneratorTier(HTMachineTier.ULTIMATE)
-        .build()
+        .build(RagiumCommonTranslation.NUCLEAR_REACTOR)
 
     //    Consumer    //
+
+    // Vanilla
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.AUTO_SMITHING_TABLE }
+        .addConsumerTier(HTMachineTier.BASIC)
+        .build()
+
+    @JvmField
+    val AUTO_STONECUTTER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.AUTO_STONECUTTER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addConsumerTier(HTMachineTier.BASIC)
+        .build()
 
     // Basic
     @JvmField
@@ -233,7 +248,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.MOB_CAPTURER }
         .addMenu { RagiumMenuTypes.MOB_CAPTURER }
         .addTier(HTMachineTier.ULTIMATE)
-        .build()
+        .build(RagiumCommonTranslation.MOB_CAPTURER)
 
     @JvmField
     val TELEPAD: HTEntityBlockType = HTEntityBlockType
@@ -248,7 +263,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.CEU }
         .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
         .addTier(HTMachineTier.CREATIVE)
-        .build()
+        .build(RagiumCommonTranslation.CEU)
 
     //    Storage    //
 
@@ -257,8 +272,13 @@ object RagiumBlockTypes {
         HTEntityBlockType
             .builder { tier.getBlockEntityType() }
             .addTier(tier)
-            .build()
+            .build(RagiumCommonTranslation.CRATE)
     }
+
+    @JvmField
+    val OPEN_CRATE: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.OPEN_CRATE }
+        .build(RagiumCommonTranslation.OPEN_CRATE)
 
     @JvmField
     val DRUMS: Map<HTDrumTier, HTEntityBlockType> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
@@ -266,12 +286,12 @@ object RagiumBlockTypes {
             .builder { tier.getBlockEntityType() }
             .addMenu { RagiumMenuTypes.DRUM }
             .addTier(tier)
-            .build()
+            .build(RagiumCommonTranslation.DRUM)
     }
 
     @JvmField
     val EXP_DRUM: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.EXP_DRUM }
         .addMenu { RagiumMenuTypes.DRUM }
-        .build()
+        .build(RagiumCommonTranslation.EXP_DRUM)
 }

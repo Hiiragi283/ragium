@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "minecraft:acacia_planks",
+  "results": {
+    "count": 1,
+    "id": "minecraft:acacia_stairs"
+  }
+}

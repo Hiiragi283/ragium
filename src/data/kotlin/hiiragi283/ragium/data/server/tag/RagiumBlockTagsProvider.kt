@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -62,6 +62,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         buildList {
+            add(RagiumBlocks.BUDDING_AZURE)
             add(RagiumBlocks.AZURE_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
@@ -75,6 +76,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             add(RagiumBlocks.NUCLEAR_REACTOR)
             // Consumers
+            add(RagiumBlocks.AUTO_SMITHING_TABLE)
+            add(RagiumBlocks.AUTO_STONECUTTER)
+
             add(RagiumBlocks.ALLOY_SMELTER)
             add(RagiumBlocks.BLOCK_BREAKER)
             add(RagiumBlocks.COMPRESSOR)
@@ -109,6 +113,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CEU)
             // Storage
+            add(RagiumBlocks.OPEN_CRATE)
+
             add(RagiumBlocks.EXP_DRUM)
         }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
@@ -204,14 +210,15 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRIES)
         builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRIES)
         // Other
+        builder.add(BlockTags.CRYSTAL_SOUND_BLOCKS, RagiumBlocks.BUDDING_AZURE)
         builder.add(BlockTags.HOGLIN_REPELLENTS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(Tags.Blocks.BUDDING_BLOCKS, RagiumBlocks.BUDDING_AZURE)
 
         // WIP
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.BREWERY)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)

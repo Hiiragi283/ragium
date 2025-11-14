@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.network
 
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.neoforge.network.handling.IPayloadContext
 
@@ -13,7 +13,7 @@ object HTPayloadHandlers {
                 val clientPlayer: AbstractClientPlayer = context.player() as? AbstractClientPlayer ?: return@enqueueWork
                 payload.handle(clientPlayer, Minecraft.getInstance())
             }.exceptionally { throwable: Throwable ->
-                context.disconnect(Component.literal("Failed to handle S2C packet: ${throwable.localizedMessage}"))
+                context.disconnect(RagiumTranslation.INVALID_PACKET_S2C.translate(throwable.localizedMessage))
                 null
             }
     }
@@ -24,7 +24,7 @@ object HTPayloadHandlers {
                 val serverPlayer: ServerPlayer = context.player() as? ServerPlayer ?: return@enqueueWork
                 payload.handle(serverPlayer, serverPlayer.server)
             }.exceptionally { throwable: Throwable ->
-                context.disconnect(Component.literal("Failed to handle C2S packet: ${throwable.localizedMessage}"))
+                context.disconnect(RagiumTranslation.INVALID_PACKET_C2S.translate(throwable.localizedMessage))
                 null
             }
     }

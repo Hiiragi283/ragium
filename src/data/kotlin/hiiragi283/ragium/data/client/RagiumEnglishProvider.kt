@@ -5,17 +5,16 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
-import hiiragi283.ragium.client.RagiumKeyMappings
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.client.text.RagiumClientTranslation
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -37,34 +36,38 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         modTags()
         recipeType()
         text()
-        information()
 
-        food()
         delight()
         jade()
     }
 
     private fun advancement() {
         addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
-        addAdvancement(RagiumAdvancements.CRAFTABLE_TEMPLATES, "This thing craftable...!", "Craft any Upgrade Templates added by Ragium")
+        addAdvancement(
+            RagiumAdvancements.CRAFTABLE_TEMPLATES,
+            "Easy upgrades done dirt cheap",
+            "Craft any Upgrade Templates added by Ragium",
+        )
         // Raginite
         addAdvancement(RagiumAdvancements.RAGINITE, "Not a Redstone", "Get Raginite Dust from Raginite Ores in underground")
-        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Get Ragi-Cherry")
+        addAdvancement(RagiumAdvancements.RAGI_CHERRY, "Food of twins", "Eat Ragi-Cherry")
         addAdvancement(RagiumAdvancements.RAGI_CHERRY_TOAST, "The Last Breakfast", "Get Ragi-Cherry Toast Tower")
+
         addAdvancement(RagiumAdvancements.RAGI_ALLOY, "0xFF003F", "Get Ragi-Alloy Ingot")
         addAdvancement(RagiumAdvancements.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
+        addAdvancement(RagiumAdvancements.AMBROSIA, "The Forbidden Fruit", "Eat Ste... Ambrosia")
 
         addAdvancement(RagiumAdvancements.ADV_RAGI_ALLOY, "This is red, not orange!", "Get Advanced Ragi-Alloy Ingot")
-        addAdvancement(RagiumAdvancements.MELTER, "Melty Kiss", "Get Melter")
+        addAdvancement(RagiumAdvancements.MELTER, "Melting with you", "Get Melter")
+        addAdvancement(RagiumAdvancements.REFINERY, "Not a Ref..., It's Refinery!", "Get Refinery")
+        addAdvancement(RagiumAdvancements.PLASTIC, "Plus-Tic", "Get Plastic")
+        addAdvancement(RagiumAdvancements.POTION_BUNDLE, "Backported Bundle", "Use Potion Bundle")
 
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
-        addAdvancement(
-            RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
-            "Hammer of Destruction",
-            "Get Ragi-Crystal Hammer to break ANY blocks!",
-        )
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "Ragi-Disassembler", "Get Ragi-Crystal Hammer")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
+        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "Dyed in blue", "Use Blue Knowledge to Budding Amethyst")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
@@ -72,9 +75,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "Debris in the Ancient", "Get Resonant Debris")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
-        addAdvancement(RagiumAdvancements.DEEP_GEARS, "Black Hazard", "Get any Deep Steel Tool or Armor")
+        addAdvancement(RagiumAdvancements.BEHEAD_MOB, "Not more charged", "Behead mob by weapons with Strike enchantment")
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
+        // Night Metal
+        addAdvancement(RagiumAdvancements.NIGHT_METAL, "Night of Knights", "Get Night Metal Ingot")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         addAdvancement(
@@ -86,6 +91,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
         addAdvancement(RagiumAdvancements.DIM_ANCHOR, "Remote Work", "Place Dimensional Anchor to force loading the chunk")
         addAdvancement(RagiumAdvancements.TELEPORT_KEY, "Lock Open!", "Use teleport key to teleport linked position")
+        addAdvancement(RagiumAdvancements.WARPED_WART, "Industrial Wart", "Eat Warped Wart")
         // Eldritch
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")
@@ -98,6 +104,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
 
+        add(RagiumBlocks.BUDDING_AZURE, "Budding Azure")
         add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
@@ -135,6 +142,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
         // Consumers
+        add(RagiumBlocks.AUTO_SMITHING_TABLE, "Auto Smithing Table")
+        add(RagiumBlocks.AUTO_STONECUTTER, "Auto Stonecutter")
+
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.BLOCK_BREAKER, "Block Breaker")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
@@ -167,6 +177,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
+        add(RagiumBlocks.OPEN_CRATE, "Open Crate")
+
         add(RagiumBlocks.EXP_DRUM, "Experience Drum")
     }
 
@@ -202,6 +214,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
@@ -221,7 +234,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun item() {
         // Material
-        add(RagiumItems.BASALT_MESH, "Basalt Mesh")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
@@ -246,6 +258,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
         add(RagiumItems.BLAST_CHARGE, "Blast Charge")
+        add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
@@ -265,12 +278,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
+        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        add(RagiumItems.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
-        add(RagiumItems.ADVANCED_CIRCUIT_BOARD, "Basalt-Reinforced Circuit Board")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "Block Mold")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "Gem Mold")
+        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "Ingot Mold")
+
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
         add(RagiumItems.LED, "Light Emitting Diode")
@@ -284,144 +303,16 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun itemGroup() {
-        addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - Blocks")
-        addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - Ingredients")
-        addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - Items")
+        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - Blocks")
+        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - Ingredients")
+        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - Items")
     }
 
     private fun keyMapping() {
-        add(RagiumTranslation.KEY_CATEGORY, "Ragium")
+        add(RagiumClientTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
+        add(RagiumClientTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
     }
-
-    /*private fun material() {
-        // Common
-        addMaterialKey(CommonMaterials.ALUMINA, "Alumina")
-        addMaterialKey(CommonMaterials.ALUMINUM, "Aluminum")
-        addMaterialKey(CommonMaterials.ANTIMONY, "Antimony")
-        addMaterialKey(CommonMaterials.BERYLLIUM, "Beryllium")
-        addMaterialKey(CommonMaterials.ASH, "Ash")
-        addMaterialKey(CommonMaterials.BAUXITE, "Bauxite")
-        addMaterialKey(CommonMaterials.BRASS, "Brass")
-        addMaterialKey(CommonMaterials.BRONZE, "Bronze")
-        addMaterialKey(CommonMaterials.CADMIUM, "Cadmium")
-        addMaterialKey(CommonMaterials.CARBON, "Carbon")
-        addMaterialKey(CommonMaterials.CHEESE, "Cheese")
-        addMaterialKey(CommonMaterials.CHOCOLATE, "Chocolate")
-        addMaterialKey(CommonMaterials.CHROMIUM, "Chromium")
-        addMaterialKey(CommonMaterials.COAL_COKE, "Coal Coke")
-        addMaterialKey(CommonMaterials.CONSTANTAN, "Constantan")
-        addMaterialKey(CommonMaterials.CRYOLITE, "Cryolite")
-        addMaterialKey(CommonMaterials.ELECTRUM, "Electrum")
-        addMaterialKey(CommonMaterials.FLUORITE, "Fluorite")
-        addMaterialKey(CommonMaterials.INVAR, "Invar")
-        addMaterialKey(CommonMaterials.IRIDIUM, "Iridium")
-        addMaterialKey(CommonMaterials.LEAD, "Lead")
-        addMaterialKey(CommonMaterials.NICKEL, "Nickel")
-        addMaterialKey(CommonMaterials.NIOBIUM, "Niobium")
-        addMaterialKey(CommonMaterials.OSMIUM, "Osmium")
-        addMaterialKey(CommonMaterials.PERIDOT, "Peridot")
-        addMaterialKey(CommonMaterials.PLATINUM, "Platinum")
-        addMaterialKey(CommonMaterials.PLUTONIUM, "Plutonium")
-        addMaterialKey(CommonMaterials.PYRITE, "Gold")
-        addMaterialKey(CommonMaterials.RUBY, "Ruby")
-        addMaterialKey(CommonMaterials.SALT, "Salt")
-        addMaterialKey(CommonMaterials.SALTPETER, "Saltpeter")
-        addMaterialKey(CommonMaterials.SAPPHIRE, "Sapphire")
-        addMaterialKey(CommonMaterials.SILICON, "Silicon")
-        addMaterialKey(CommonMaterials.SILVER, "Silver")
-        addMaterialKey(CommonMaterials.SOLDERING_ALLOY, "Soldering Alloy")
-        addMaterialKey(CommonMaterials.STAINLESS_STEEL, "Stainless Steel")
-        addMaterialKey(CommonMaterials.STEEL, "Steel")
-        addMaterialKey(CommonMaterials.SULFUR, "Sulfur")
-        addMaterialKey(CommonMaterials.SUPERCONDUCTOR, "Superconductor")
-        addMaterialKey(CommonMaterials.TIN, "Tin")
-        addMaterialKey(CommonMaterials.TITANIUM, "Titanium")
-        addMaterialKey(CommonMaterials.TUNGSTEN, "Tungsten")
-        addMaterialKey(CommonMaterials.URANIUM, "Uranium")
-        addMaterialKey(CommonMaterials.ZINC, "Zinc")
-        // AA
-        addMaterialKey(IntegrationMaterials.BLACK_QUARTZ, "Black Quartz")
-        // AE2
-        addMaterialKey(IntegrationMaterials.CERTUS_QUARTZ, "Certus Quartz")
-        addMaterialKey(IntegrationMaterials.FLUIX, "Fluix")
-        // Create
-        addMaterialKey(IntegrationMaterials.ANDESITE_ALLOY, "Andesite Alloy")
-        addMaterialKey(IntegrationMaterials.CARDBOARD, "Cardboard")
-        addMaterialKey(IntegrationMaterials.ROSE_QUARTZ, "Rose Quartz")
-        // EIO
-        addMaterialKey(IntegrationMaterials.COPPER_ALLOY, "Copper Alloy")
-        addMaterialKey(IntegrationMaterials.ENERGETIC_ALLOY, "Energetic Alloy")
-        addMaterialKey(IntegrationMaterials.VIBRANT_ALLOY, "Vibrant Alloy")
-        addMaterialKey(IntegrationMaterials.REDSTONE_ALLOY, "Redstone Alloy")
-        addMaterialKey(IntegrationMaterials.CONDUCTIVE_ALLOY, "Conductive Alloy")
-        addMaterialKey(IntegrationMaterials.PULSATING_ALLOY, "Pulsating Alloy")
-        addMaterialKey(IntegrationMaterials.DARK_STEEL, "Dark Steel")
-        addMaterialKey(IntegrationMaterials.SOULARIUM, "Soularium")
-        addMaterialKey(IntegrationMaterials.END_STEEL, "End Steel")
-        // EvilCraft
-        addMaterialKey(IntegrationMaterials.DARK_GEM, "Dark Gem")
-        // IE
-        addMaterialKey(IntegrationMaterials.HOP_GRAPHITE, "HOP Graphite")
-        // Mek
-        addMaterialKey(IntegrationMaterials.REFINED_GLOWSTONE, "Refined Glowstone")
-        addMaterialKey(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
-        // Twilight
-        addMaterialKey(IntegrationMaterials.CARMINITE, "Carminite")
-        addMaterialKey(IntegrationMaterials.FIERY_METAL, "Fiery")
-        addMaterialKey(IntegrationMaterials.IRONWOOD, "Ironwood")
-        addMaterialKey(IntegrationMaterials.KNIGHTMETAL, "Knightmetal")
-        addMaterialKey(IntegrationMaterials.STEELEAF, "Steeleaf")
-        // Ragium
-        addMaterialKey(RagiumMaterials.ADVANCED_RAGI_ALLOY, "Advanced Ragi-Alloy")
-        addMaterialKey(RagiumMaterials.AZURE_STEEL, "Azure Steel")
-        addMaterialKey(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
-        addMaterialKey(RagiumMaterials.DEEP_STEEL, "Deep Steel")
-        addMaterialKey(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
-        addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
-        addMaterialKey(RagiumMaterials.RAGINITE, "Raginite")
-        addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "Warped Crystal")
-        // Vanilla
-        addMaterialKey(VanillaMaterials.AMETHYST, "Amethyst")
-        addMaterialKey(VanillaMaterials.CALCITE, "Calcite")
-        addMaterialKey(VanillaMaterials.COAL, "Coal")
-        addMaterialKey(VanillaMaterials.COPPER, "Copper")
-        addMaterialKey(VanillaMaterials.DIAMOND, "Diamond")
-        addMaterialKey(VanillaMaterials.EMERALD, "Emerald")
-        addMaterialKey(VanillaMaterials.ENDER_PEARL, "Ender Pearl")
-        addMaterialKey(VanillaMaterials.GLOWSTONE, "Glowstone")
-        addMaterialKey(VanillaMaterials.GOLD, "Gold")
-        addMaterialKey(VanillaMaterials.IRON, "Iron")
-        addMaterialKey(VanillaMaterials.LAPIS, "Lapis")
-        addMaterialKey(VanillaMaterials.NETHERITE, "Netherite")
-        addMaterialKey(VanillaMaterials.NETHERITE_SCRAP, "Netherite Scrap")
-        addMaterialKey(VanillaMaterials.OBSIDIAN, "Obsidian")
-        addMaterialKey(VanillaMaterials.QUARTZ, "Quartz")
-        addMaterialKey(VanillaMaterials.REDSTONE, "Redstone")
-        addMaterialKey(VanillaMaterials.WOOD, "Wood")
-    }
-
-    private fun tagPrefix() {
-        addTagPrefix(HTTagPrefixes.CLUMP, "%s Clump")
-        addTagPrefix(HTTagPrefixes.CRYSTAL, "%s Crystal")
-        addTagPrefix(HTTagPrefixes.DIRTY_DUST, "Dirty %s Dust")
-        addTagPrefix(HTTagPrefixes.DUST, "%s Dust")
-        addTagPrefix(HTTagPrefixes.GEAR, "%s Gear")
-        addTagPrefix(HTTagPrefixes.GEM, "%s")
-        addTagPrefix(HTTagPrefixes.INGOT, "%s Ingot")
-        addTagPrefix(HTTagPrefixes.NUGGET, "%s Nugget")
-        addTagPrefix(HTTagPrefixes.ORE, "%s Ore")
-        addTagPrefix(HTTagPrefixes.PLATE, "%s Plate")
-        addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "Raw %s")
-        addTagPrefix(HTTagPrefixes.RAW_STORAGE, "Block of Raw %s")
-        addTagPrefix(HTTagPrefixes.ROD, "%s Rod")
-        addTagPrefix(HTTagPrefixes.SHARD, "%s Shard")
-        addTagPrefix(HTTagPrefixes.SHEETMETAL, "%s Sheetmetal")
-        addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "Block of %s")
-        addTagPrefix(HTTagPrefixes.TINY_DUST, "Tiny %s Dust")
-        addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
-    }*/
 
     private fun modTags() {
         add(RagiumModTags.Blocks.LED_BLOCKS, "LED Blocks")
@@ -454,92 +345,89 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
+        add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.WASHING, "Washing")
     }
 
     private fun text() {
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_APPLIES_TO, "Azure Steel Equipment")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_INGREDIENTS, "Azure Steel Ingot")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add iron armor, weapon, ot tool")
-        add(RagiumTranslation.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Azure Steel Ingot")
-
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE, "Deep Steel Upgrade")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_APPLIES_TO, "Deep Steel Equipment")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_INGREDIENTS, "Deep Steel Ingot")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
-        add(RagiumTranslation.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
-
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE, "Night Metal Upgrade")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_APPLIES_TO, "Night Metal Equipment")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_INGREDIENTS, "Night Metal Ingot")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add golden armor, weapon, ot tool")
-        add(RagiumTranslation.NIGHT_METAL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Night Metal Ingot")
-
-        add(RagiumTranslation.ITEM_POTION, "Potion of %s")
-
-        add(RagiumTranslation.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslation.TOOLTIP_EXP_PERCENTAGE, "%s / %s Exp")
-        add(RagiumTranslation.TOOLTIP_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslation.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
-        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")
-        add(RagiumTranslation.TOOLTIP_EFFECT_RANGE, "Effect Radius: %s blocks")
-        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
-        add(RagiumTranslation.TOOLTIP_SHOW_INFO, "Press Shift to show info")
-        add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
-
-        add(RagiumTranslation.RECIPE_CUTTING, "Cutting")
-
         add(HTAccessConfig.INPUT_ONLY, "Mode: Input")
         add(HTAccessConfig.OUTPUT_ONLY, "Mode: Output")
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
-    }
 
-    private fun information() {
-        addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
-        addInfo(RagiumBlocks.WARPED_WART, "Clear one bad effect randomly when eaten.")
+        // API - Constants
+        add(RagiumTranslation.ERROR, "Error")
+        add(RagiumTranslation.INFINITE, "Infinite")
+        add(RagiumTranslation.NONE, "None")
+        add(RagiumTranslation.EMPTY, "Empty")
+        // API - Error
+        add(RagiumTranslation.EMPTY_TAG_KEY, $$"Empty tag key: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: %1$s")
+        add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
+        add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
+        add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
+        // API - Item
+        add(RagiumTranslation.ITEM_POTION, $$"Potion of %1$s")
 
-        val nonSilkTouch = "Can be harvested without Silk Touch."
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.OBSIDIAN), "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.QUARTZ), nonSilkTouch)
-        addInfo(RagiumBlocks.getGlass(VanillaMaterialKeys.SOUL), "Only passable with Players.", "And $nonSilkTouch")
+        add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
+        add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
+        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
 
-        addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
-        addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
-        addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
-        addInfo(
-            RagiumItems.ELDRITCH_EGG,
-            "Can be throwable by right-click，and capture mobs when hit.",
-            "Dropped Spawn Egg will teleport your inventory.",
-        )
-        addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
-        addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
-        addInfo(RagiumItems.DYNAMIC_LANTERN, "Light up darkness in range.")
-        addInfo(RagiumItems.MAGNET, "Collect dropped items in the effective range")
-        addInfo(RagiumItems.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
-        addInfo(RagiumItems.TRADER_CATALOG, "Dropped from Wandering Trader.")
+        add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
+        add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
+        add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
+
+        // Common
+        add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
+        add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")
+
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "Generates energy from furnace fuels or hot fluids.")
+        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "Generates energy from fuel fluids.")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "Generates energy from connected solar panels.")
+        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "Generates energy from enchanted books or experience fluids.")
+        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "Generates energy from nuclear fuels.")
+
+        add(RagiumCommonTranslation.CRATE, "Stores one type of item.")
+        add(RagiumCommonTranslation.DRUM, "Stores one type of fluid.")
+        add(RagiumCommonTranslation.EXP_DRUM, "Stores Experience Liquid and Experience for each.")
+
+        add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"Added %1$s FE into the energy network.")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"%1$s FE stored in the energy network.")
+        add(RagiumCommonTranslation.COMMAND_ENERGY_SET, $$"Set amount of the energy network to %1$s FE.")
+
+        add(RagiumCommonTranslation.NO_DESTINATION, "Not found destination.")
+        add(RagiumCommonTranslation.UNKNOWN_DIMENSION, $$"Missing dimension: %1$s")
+        add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"Fuel shortage: required %1$s mB")
+
+        add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")
+
+        add(RagiumCommonTranslation.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
+        add(RagiumCommonTranslation.DYNAMIC_LANTERN, "Light up darkness in range.")
+        add(RagiumCommonTranslation.ELDRITCH_EGG, "Can be throwable by right-click，and capture mobs when hit.")
+        add(RagiumCommonTranslation.MAGNET, "Collect dropped items in the effective range")
+        add(RagiumCommonTranslation.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
+        add(RagiumCommonTranslation.TRADER_CATALOG, "Dropped from Wandering Trader. Right-click to trade with merchant.")
+
+        add(RagiumCommonTranslation.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
+        add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")
+        add(RagiumCommonTranslation.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
     }
 
     //    Addon    //
-
-    private fun food() {
-        add(RagiumFoodAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
-        add(RagiumFoodAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
-    }
 
     private fun delight() {
         add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
         add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
 
         add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
     }
 
     private fun jade() {
@@ -547,6 +435,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTExperienceHandlerProvider.ForBlocks, "Experience Handler")
         add(HTBlockOwnerProvider, "Block Owner")
 
-        add(RagiumTranslation.JADE_EXP_STORAGE, "Experience: %s")
+        add(RagiumClientTranslation.JADE_EXP_STORAGE, "Experience: %s")
     }
 }

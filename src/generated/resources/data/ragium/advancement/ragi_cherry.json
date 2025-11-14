@@ -1,15 +1,13 @@
 {
   "parent": "ragium:raginite",
   "criteria": {
-    "has_c_foods_ragi_cherry": {
+    "use_ragi_cherry": {
       "conditions": {
-        "items": [
-          {
-            "items": "#c:foods/ragi_cherry"
-          }
-        ]
+        "item": {
+          "items": "#c:foods/ragi_cherry"
+        }
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:consume_item"
     }
   },
   "display": {
@@ -26,7 +24,7 @@
   },
   "requirements": [
     [
-      "has_c_foods_ragi_cherry"
+      "use_ragi_cherry"
     ]
   ],
   "sends_telemetry_event": true

@@ -6,9 +6,6 @@ import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
-import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -27,9 +24,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLEnvironment
 import java.util.UUID
@@ -64,10 +58,6 @@ interface RagiumPlatform {
     //    Recipe    //
 
     fun getMaterialRecipeManager(): HTMaterialRecipeManager
-
-    fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> createCache(finder: HTRecipeFinder<INPUT, RECIPE>): HTRecipeCache<INPUT, RECIPE>
-
-    fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> wrapRecipeType(recipeType: RecipeType<RECIPE>): HTRecipeType.Findable<INPUT, RECIPE>
 
     //    Server    //
 

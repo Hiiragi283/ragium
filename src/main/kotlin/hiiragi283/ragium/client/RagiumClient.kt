@@ -23,6 +23,7 @@ import hiiragi283.ragium.client.gui.screen.HTItemToItemScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.client.renderer.block.HTCrateRenderer
@@ -185,6 +186,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
+        event.registerFluidType(
+            HTSimpleFluidExtensions(RagiumAPI.id("block", "chocolate")),
+            RagiumFluidContents.CHOCOLATE.getType(),
+        )
         event.liquid(RagiumFluidContents.MEAT, Color(0xcc3333))
         event.liquid(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
 
@@ -300,7 +305,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
-        RagiumKeyMappings.KEYS.forEach(event::register)
+        event.register(RagiumKeyMappings.OPEN_UNIVERSAL_BUNDLE)
 
         RagiumAPI.LOGGER.info("Registered Key Mappings!")
     }

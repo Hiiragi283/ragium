@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAllAttributes
 import hiiragi283.ragium.api.block.attribute.getAttribute
 import hiiragi283.ragium.api.block.type.HTBlockType
+import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.LevelAccessor
@@ -22,6 +23,7 @@ import java.util.function.UnaryOperator
  */
 open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties: Properties) :
     Block(hack(type, properties)),
+    HTBlockWithDescription,
     HTBlockWithType {
     companion object {
         @JvmStatic
@@ -44,8 +46,10 @@ open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties
         registerDefaultState(stateDefinition.any())
     }
 
+    final override fun getDescription(): HTTranslation = type().description
+
     @Suppress("USELESS_ELVIS")
-    override fun type(): HTBlockType = this.type ?: cacheType
+    final override fun type(): HTBlockType = this.type ?: cacheType
 
     final override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)

@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "c:ingots/night_metal"
     },
     "B": {
-      "tag": "c:glass_blocks/obsidian"
-    },
-    "C": {
       "tag": "c:circuits/elite"
     },
+    "C": {
+      "tag": "c:glass_blocks/obsidian"
+    },
     "D": {
-      "item": "minecraft:deepslate_tiles"
+      "tag": "c:ingots/night_metal"
     }
   },
   "pattern": [

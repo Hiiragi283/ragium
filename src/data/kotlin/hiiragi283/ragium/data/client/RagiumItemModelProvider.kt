@@ -9,10 +9,9 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -40,12 +39,11 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             removeAll(tools)
 
             // Food
-            addAll(RagiumFoodAddon.ITEM_REGISTER.entries)
+            addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
+            addAll(RagiumKaleidoCookeryAddon.ITEM_REGISTER.entries)
 
             removeAll(RagiumDelightAddon.KNIFE_MAP.values)
             removeAll(RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
-
-            remove(RagiumDelightAddon.RAGI_CHERRY_TOAST) // TODO
             // Mekanism
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.asSequence()

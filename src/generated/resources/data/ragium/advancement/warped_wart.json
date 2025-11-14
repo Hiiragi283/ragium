@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:warped_crystal",
+  "criteria": {
+    "use_warped_wart": {
+      "conditions": {
+        "item": {
+          "items": "ragium:warped_wart"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.warped_wart.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:warped_wart"
+    },
+    "title": {
+      "translate": "advancements.ragium.warped_wart.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_warped_wart"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

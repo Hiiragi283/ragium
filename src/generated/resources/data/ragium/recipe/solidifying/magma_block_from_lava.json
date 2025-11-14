@@ -4,7 +4,7 @@
     "amount": 125,
     "fluids": "#c:lava"
   },
-  "item_ingredient": "#c:glass_blocks",
+  "item_ingredient": "ragium:storage_block_mold",
   "item_result": {
     "count": 1,
     "id": "minecraft:magma_block"

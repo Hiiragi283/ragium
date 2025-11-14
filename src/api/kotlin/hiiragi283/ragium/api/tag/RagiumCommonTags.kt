@@ -4,7 +4,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 
 object RagiumCommonTags {
     //    Blocks    //
@@ -23,21 +22,14 @@ object RagiumCommonTags {
         private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
     }
 
-    //    Fluids    //
-
-    object Fluids {
-        @JvmField
-        val CHOCOLATES: TagKey<Fluid> = create("chocolates")
-
-        @JvmStatic
-        private fun create(path: String): TagKey<Fluid> = Registries.FLUID.createCommonTag(path)
-    }
-
     //    Items    //
 
     object Items {
         @JvmField
         val COAL_COKE: TagKey<Item> = create("coal_coke")
+
+        @JvmField
+        val BREAD_SLICES_WHEAT: TagKey<Item> = create("bread_slices/wheat")
 
         @JvmField
         val FUELS_BIO: TagKey<Item> = create("fuels/bio")
@@ -53,10 +45,6 @@ object RagiumCommonTags {
 
         @JvmField
         val PLASTIC: TagKey<Item> = create("plastic")
-
-        // Crops
-        @JvmField
-        val CROPS_WARPED_WART: TagKey<Item> = create("crops", "warped_wart")
 
         // Obsidians
         @JvmField

@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -28,15 +27,12 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleItemInputBlockEntity<HTSingleInputFluidRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
-    lateinit var outputSlot: HTItemSlot
+    lateinit var outputSlot: HTItemStackSlot
         private set
 
     override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
-        inputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-        )
+        inputSlot = singleInput(builder, listener)
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,

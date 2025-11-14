@@ -76,6 +76,7 @@ object RagiumConst {
     const val BREWING = "brewing"
     const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
+    const val CUTTING = "cutting"
     const val ENCHANTING = "enchanting"
     const val EXTRACTING = "extracting"
     const val FLUID_TRANSFORM = "fluid_transform"
@@ -86,6 +87,4 @@ object RagiumConst {
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
-
-    const val SAWMILL = "sawmill"
 }

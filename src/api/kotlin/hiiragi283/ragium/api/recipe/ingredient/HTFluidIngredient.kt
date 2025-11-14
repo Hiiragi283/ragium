@@ -51,6 +51,8 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
 
     final override fun getRequiredAmount(stack: ImmutableFluidStack): Int = if (test(stack)) this.amount else 0
 
+    abstract fun copyWithAmount(amount: Int): HTFluidIngredient
+
     //    HolderBased    //
 
     private class HolderBased(private val holderSet: HolderSet<Fluid>, amount: Int) : HTFluidIngredient(amount) {
@@ -75,6 +77,8 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
                 Either.right(holders.map { holder: Holder<Fluid> -> ImmutableFluidStack.of(holder.value(), amount) })
             },
         )
+
+        override fun copyWithAmount(amount: Int): HTFluidIngredient = HolderBased(holderSet, amount)
     }
 
     //    IngredientBased    //
@@ -97,5 +101,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
 
         override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> =
             Either.right(ingredient.stacks.mapNotNull(FluidStack::toImmutable))
+
+        override fun copyWithAmount(amount: Int): HTFluidIngredient = IngredientBased(ingredient, amount)
     }
 }

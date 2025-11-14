@@ -1,23 +1,18 @@
 package hiiragi283.ragium.api.text
 
 import net.minecraft.ChatFormatting
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 
 /**
  * 翻訳を保持するインターフェース
  * @see mekanism.api.text.ILangEntry
  */
-interface HTTranslation :
-    HTHasTranslationKey,
-    HTHasText {
-    override fun getText(): MutableComponent = Component.translatable(translationKey)
+interface HTTranslation : HTHasTranslationKey {
+    fun translate(): MutableComponent = translatableText(this.translationKey)
 
-    fun getComponent(): MutableComponent = getText()
+    fun translate(vararg args: Any?): MutableComponent = HTTextUtil.smartTranslate(this.translationKey, *args)
 
-    fun getComponent(vararg args: Any): MutableComponent = Component.translatable(translationKey, *args)
+    fun translateColored(color: ChatFormatting): MutableComponent = translate().withStyle(color)
 
-    fun getColoredComponent(color: ChatFormatting): MutableComponent = getComponent().withStyle(color)
-
-    fun getColoredComponent(color: ChatFormatting, vararg args: Any): MutableComponent = getComponent(*args).withStyle(color)
+    fun translateColored(color: ChatFormatting, vararg args: Any?): MutableComponent = translate(*args).withStyle(color)
 }

@@ -42,7 +42,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         tooltip = blockEntity.getAccessConfig(side).let(::createTooltip)
     }
 
-    private fun createTooltip(config: HTAccessConfig): Tooltip = config.translationKey.let(Component::translatable).let(Tooltip::create)
+    private fun createTooltip(config: HTAccessConfig): Tooltip = config.translate().let(Tooltip::create)
 
     override fun init() {
         super.init()

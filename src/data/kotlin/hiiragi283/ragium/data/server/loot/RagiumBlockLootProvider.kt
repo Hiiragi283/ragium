@@ -104,6 +104,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(ore.get(), factory)
         }
 
+        add(RagiumBlocks.BUDDING_AZURE.get(), noDrop())
         add(RagiumBlocks.AZURE_CLUSTER.get()) { block: Block ->
             createSilkTouchDispatchTable(
                 block,

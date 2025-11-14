@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -46,7 +46,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 " A ",
                 "BBB",
-            ).define('A', Tags.Items.STRINGS)
+            ).define('A', RagiumItems.SYNTHETIC_FIBER)
             .define('B', Items.GLASS_BOTTLE)
             .save(output)
 
@@ -127,6 +127,22 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azureAndDeepSteel() {
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.BLUE_KNOWLEDGE)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
+            .define('C', Items.BOOK)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .misc(RagiumItems.BLUE_KNOWLEDGE)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+            .define('C', Items.ENCHANTED_BOOK)
+            .saveSuffixed(output, "_alt")
+
         addEquipments(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addEquipments(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addEquipments(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)

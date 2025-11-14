@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.text.addEnergyTooltip
+import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -44,7 +44,7 @@ class HTEnergyWidget(
     override fun getLevel(): Float = battery.getStoredLevelAsFloat()
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addEnergyTooltip(battery, consumer)
+        HTTextUtil.addEnergyTooltip(battery, consumer)
     }
 
     //    HTEnergyWidget    //

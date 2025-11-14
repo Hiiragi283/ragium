@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.recipe.manager.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.text.HTHasTranslationKey
+import hiiragi283.ragium.api.text.translatableText
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -26,7 +27,7 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
 
     override val translationKey: String = id.toLanguageKey("recipe_type")
 
-    override fun getText(): Component = Component.translatable(translationKey)
+    override fun getText(): Component = translatableText(translationKey)
 
     override fun getRecipeFor(
         manager: RecipeManager,

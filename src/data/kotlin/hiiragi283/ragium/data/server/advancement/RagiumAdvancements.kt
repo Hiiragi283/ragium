@@ -22,10 +22,18 @@ object RagiumAdvancements {
 
     val ALLOY_SMELTER: HTAdvancementKey = create("alloy_smelter")
 
+    val AMBROSIA: HTAdvancementKey = create("ambrosia")
+
     // Advanced
     val ADV_RAGI_ALLOY: HTAdvancementKey = create("advanced_ragi_alloy")
 
     val MELTER: HTAdvancementKey = create("melter")
+
+    val REFINERY: HTAdvancementKey = create("refinery")
+
+    val PLASTIC: HTAdvancementKey = create("plastic")
+
+    val POTION_BUNDLE: HTAdvancementKey = create("potion_bundle")
 
     // Elite
     val RAGI_CRYSTAL: HTAdvancementKey = create("ragi_crystal")
@@ -35,6 +43,8 @@ object RagiumAdvancements {
     val RAGI_TICKET: HTAdvancementKey = create("ragi_ticket")
 
     //    Azure    //
+
+    val BUDDING_AZURE: HTAdvancementKey = create("budding_azure")
 
     val AZURE_SHARD: HTAdvancementKey = create("azure_shard")
 
@@ -50,9 +60,13 @@ object RagiumAdvancements {
 
     val DEEP_STEEL: HTAdvancementKey = create("deep_steel")
 
-    val DEEP_GEARS: HTAdvancementKey = create("deep_gears")
+    val BEHEAD_MOB: HTAdvancementKey = create("behead_mob")
 
     val ECHO_STAR: HTAdvancementKey = create("echo_star")
+
+    //    Night Metal    //
+
+    val NIGHT_METAL: HTAdvancementKey = create("night_metal")
 
     //    Crimson    //
 
@@ -67,6 +81,8 @@ object RagiumAdvancements {
     val DIM_ANCHOR: HTAdvancementKey = create("dimensional_anchor")
 
     val TELEPORT_KEY: HTAdvancementKey = create("teleport_key")
+
+    val WARPED_WART: HTAdvancementKey = create("warped_wart")
 
     //    Eldritch    //
 

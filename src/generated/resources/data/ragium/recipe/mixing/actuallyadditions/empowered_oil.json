@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:mixing",
+  "fluid_ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "actuallyadditions:crystallized_oil"
+    }
+  ],
+  "fluid_result": {
+    "amount": 1000,
+    "id": "actuallyadditions:empowered_oil"
+  },
+  "item_ingredients": [
+    "actuallyadditions:empowered_canola_seed"
+  ]
+}

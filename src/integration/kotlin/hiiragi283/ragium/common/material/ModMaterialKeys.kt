@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.material.HTMaterialDefinitionEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.addDefaultPrefix
+import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -13,7 +14,29 @@ object ModMaterialKeys {
     fun gatherDefinition(event: HTMaterialDefinitionEvent) {
         event.modify(Metals.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
         event.modify(Alloys.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
-        event.modify(Gems.entries) { addDefaultPrefix(CommonMaterialPrefixes.GEM) }
+        event.modify(Gems.entries) { gems: Gems ->
+            addDefaultPrefix(CommonMaterialPrefixes.GEM)
+            val storageBlock: HTStorageBlockMaterialAttribute = when (gems) {
+                Gems.BLACK_QUARTZ -> HTStorageBlockMaterialAttribute.TWO_BY_TWO
+                Gems.CERTUS_QUARTZ -> HTStorageBlockMaterialAttribute.TWO_BY_TWO
+                Gems.FLUIX -> HTStorageBlockMaterialAttribute.TWO_BY_TWO
+                Gems.SOURCE -> HTStorageBlockMaterialAttribute.TWO_BY_TWO
+                Gems.ENDER_CRYSTAL -> null
+                Gems.ENTICING_CRYSTAL -> null
+                Gems.PRESCIENT_CRYSTAL -> null
+                Gems.PULSATING_CRYSTAL -> null
+                Gems.VIBRANT_CRYSTAL -> null
+                Gems.WEATHER_CRYSTAL -> null
+                Gems.DARK_GEM -> HTStorageBlockMaterialAttribute.THREE_BY_THREE
+                Gems.DARK_POWER -> HTStorageBlockMaterialAttribute.THREE_BY_THREE
+                Gems.ARCANE_CRYSTAL -> null
+                Gems.CORRUPTED_ARCANE_CRYSTAL -> null
+                Gems.TOURMALINE -> null
+                Gems.FLUXITE -> HTStorageBlockMaterialAttribute.THREE_BY_THREE
+                Gems.CARMINITE -> null
+            } ?: return@modify
+            add(storageBlock)
+        }
     }
 
     enum class Metals : HTMaterialLike {

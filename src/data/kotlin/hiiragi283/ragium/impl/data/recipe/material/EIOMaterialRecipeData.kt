@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.data.recipe.material
 
 import com.enderio.base.common.init.EIOItems
 import com.enderio.base.common.tag.EIOTags
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.Tags
 
 data object EIOMaterialRecipeData {
     @JvmField
-    val CONDUCTIVE_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val CONDUCTIVE_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(ModMaterialKeys.Alloys.COPPER_ALLOY)
         ingotOrDust(VanillaMaterialKeys.IRON)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
@@ -21,7 +21,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val COPPER_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val COPPER_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         addInput(EIOTags.Items.SILICON)
 
@@ -29,7 +29,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val DARK_STEEL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val DARK_STEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(CommonMaterialKeys.Alloys.STEEL)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
 
@@ -37,7 +37,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val DARK_STEEL_COAL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val DARK_STEEL_COAL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
@@ -47,7 +47,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val DARK_STEEL_COKE: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val DARK_STEEL_COKE: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(CommonMaterialKeys.COAL_COKE)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
@@ -57,7 +57,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val END_STEEL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val END_STEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(ModMaterialKeys.Alloys.DARK_STEEL)
         addInput(Tags.Items.END_STONES)
         addInput(Tags.Items.OBSIDIANS_NORMAL)
@@ -66,7 +66,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val ENERGETIC_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val ENERGETIC_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE)
@@ -75,7 +75,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val PULSATING_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val PULSATING_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         addInput(Tags.Items.ENDER_PEARLS)
 
@@ -83,7 +83,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val REDSTONE_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val REDSTONE_ALLOY: HTRecipeData = HTRecipeData.create {
         addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
         addInput(EIOTags.Items.SILICON)
 
@@ -91,7 +91,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val SOULARIUM: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val SOULARIUM: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         addInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
@@ -99,7 +99,7 @@ data object EIOMaterialRecipeData {
     }
 
     @JvmField
-    val VIBRANT_ALLOY: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val VIBRANT_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(ModMaterialKeys.Alloys.ENERGETIC_ALLOY)
         addInput(Tags.Items.ENDER_PEARLS)
 

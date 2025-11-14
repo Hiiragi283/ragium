@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.type
 
+import com.mojang.datafixers.util.Function3
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
@@ -7,11 +8,14 @@ import hiiragi283.ragium.api.block.attribute.HTTierBlockAttribute
 import hiiragi283.ragium.api.collection.AttributeMap
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
+import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTTierProvider
 import net.minecraft.world.level.block.entity.BlockEntity
-import java.util.function.BiFunction
 import java.util.function.IntSupplier
 import java.util.function.Supplier
+
+typealias HTEntityBlockTypeFactory<TYPE> =
+    Function3<Supplier<HTDeferredBlockEntityType<*>>, HTTranslation, AttributeMap<HTBlockAttribute>, TYPE>
 
 /**
  * [BlockEntity]を保持するブロック向けの[HTBlockType]の拡張クラス
@@ -20,8 +24,9 @@ import java.util.function.Supplier
  */
 open class HTEntityBlockType(
     private val blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>,
+    description: HTTranslation,
     attributeMap: AttributeMap<HTBlockAttribute>,
-) : HTBlockType(attributeMap) {
+) : HTBlockType(description, attributeMap) {
     companion object {
         @JvmStatic
         fun builder(blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>): Builder.Impl<HTEntityBlockType> =
@@ -41,8 +46,8 @@ open class HTEntityBlockType(
      */
     abstract class Builder<TYPE : HTEntityBlockType, BUILDER : Builder<TYPE, BUILDER>>(
         private val blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>,
-        factory: BiFunction<Supplier<HTDeferredBlockEntityType<*>>, AttributeMap<HTBlockAttribute>, TYPE>,
-    ) : HTBlockType.Builder<TYPE, BUILDER>({ map: AttributeMap<HTBlockAttribute> -> factory.apply(blockEntityTypeGetter, map) }) {
+        factory: HTEntityBlockTypeFactory<TYPE>,
+    ) : HTBlockType.Builder<TYPE, BUILDER>(factory.curry().apply(blockEntityTypeGetter)) {
         /**
          * GUIを追加します。
          * @param C [HTDeferredMenuType.WithContext]におけるコンテキストのクラス
@@ -76,7 +81,7 @@ open class HTEntityBlockType(
          */
         class Impl<TYPE : HTEntityBlockType>(
             blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>,
-            factory: BiFunction<Supplier<HTDeferredBlockEntityType<*>>, AttributeMap<HTBlockAttribute>, TYPE>,
+            factory: HTEntityBlockTypeFactory<TYPE>,
         ) : Builder<TYPE, Impl<TYPE>>(blockEntityTypeGetter, factory)
     }
 }

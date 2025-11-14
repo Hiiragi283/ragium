@@ -1,17 +1,14 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -74,15 +71,9 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
 
         override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
             // input
-            inputSlot = builder.addSlot(
-                HTSlotInfo.INPUT,
-                HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-            )
+            inputSlot = singleInput(builder, listener)
             // output
-            outputSlot = builder.addSlot(
-                HTSlotInfo.OUTPUT,
-                HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
-            )
+            outputSlot = singleOutput(builder, listener)
         }
 
         override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean = outputSlot

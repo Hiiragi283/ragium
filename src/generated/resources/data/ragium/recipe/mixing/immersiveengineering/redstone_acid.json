@@ -5,14 +5,18 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "ragium:fluid_transform",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:water"
-  },
+  "type": "ragium:mixing",
+  "fluid_ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:water"
+    }
+  ],
   "fluid_result": {
     "amount": 1000,
     "id": "#c:redstone_acid"
   },
-  "item_ingredient": "#c:dusts/redstone"
+  "item_ingredients": [
+    "#c:dusts/redstone"
+  ]
 }

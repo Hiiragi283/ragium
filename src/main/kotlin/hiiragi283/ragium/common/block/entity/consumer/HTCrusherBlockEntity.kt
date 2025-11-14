@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedItemOutputBlockEntity.Cached<SingleRecipeInput, HTItemToChancedItemRecipe>(
+    HTFluidToChancedItemOutputBlockEntity.Cached<SingleRecipeInput, HTItemToChancedItemRecipe>(
         RagiumRecipeTypes.CRUSHING,
         RagiumBlocks.CRUSHER,
         pos,

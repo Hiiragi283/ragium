@@ -1,0 +1,48 @@
+package hiiragi283.ragium.impl.recipe
+
+import hiiragi283.ragium.api.recipe.HTFluidRecipe
+import hiiragi283.ragium.api.recipe.HTMultiInputsToObjRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.result.HTFluidResult
+import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+import java.util.Optional
+
+class HTMixingRecipe(
+    val itemIngredients: List<HTItemIngredient>,
+    val fluidIngredients: List<HTFluidIngredient>,
+    val itemResult: Optional<HTItemResult>,
+    val fluidResult: Optional<HTFluidResult>,
+) : HTFluidRecipe<HTMultiRecipeInput> {
+    override fun test(input: HTMultiRecipeInput): Boolean {
+        val bool1: Boolean = HTMultiInputsToObjRecipe.hasMatchingSlots(itemIngredients, input.items)
+        val bool2: Boolean = HTMultiInputsToObjRecipe.hasMatchingSlots(fluidIngredients, input.fluids)
+        return bool1 && bool2
+    }
+
+    override fun assembleItem(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, registries, itemResult)
+
+    override fun assembleFluid(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableFluidStack? =
+        getFluidResult(input, registries, fluidResult)
+
+    override fun isIncomplete(): Boolean {
+        val bool1: Boolean = itemIngredients.isEmpty() || itemIngredients.any(HTItemIngredient::hasNoMatchingStacks)
+        val bool2: Boolean = fluidIngredients.isEmpty() || fluidIngredients.any(HTFluidIngredient::hasNoMatchingStacks)
+        val bool3: Boolean = itemResult.map { it.hasNoMatchingStack() }.orElse(false)
+        val bool4: Boolean = fluidResult.map { it.hasNoMatchingStack() }.orElse(false)
+        return bool1 || bool2 || bool3 || bool4
+    }
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
+}

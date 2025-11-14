@@ -8,7 +8,7 @@
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
-      "tag": "c:foods/ragi_cherry"
+      "item": "ragium:ragi_cherry"
     }
   ],
   "result": [

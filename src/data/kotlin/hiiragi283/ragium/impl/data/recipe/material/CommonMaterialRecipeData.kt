@@ -1,13 +1,13 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 
 data object CommonMaterialRecipeData {
     @JvmField
-    val STEEL_COAL: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val STEEL_COAL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
 
@@ -16,7 +16,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val STEEL_COKE: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val STEEL_COKE: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(CommonMaterialKeys.COAL_COKE)
 
@@ -25,7 +25,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val INVAR: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val INVAR: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON, 2)
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
 
@@ -33,7 +33,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val ELECTRUM: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val ELECTRUM: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         ingotOrDust(CommonMaterialKeys.Metals.SILVER)
 
@@ -41,7 +41,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val BRONZE: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val BRONZE: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.COPPER, 3)
         ingotOrDust(CommonMaterialKeys.Metals.TIN)
 
@@ -49,7 +49,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val BRASS: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val BRASS: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.COPPER, 3)
         ingotOrDust(CommonMaterialKeys.Metals.ZINC)
 
@@ -57,7 +57,7 @@ data object CommonMaterialRecipeData {
     }
 
     @JvmField
-    val CONSTANTAN: HTMaterialRecipeData = HTMaterialRecipeData.create {
+    val CONSTANTAN: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
 

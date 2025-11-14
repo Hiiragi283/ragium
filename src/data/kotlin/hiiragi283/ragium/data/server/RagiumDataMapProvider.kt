@@ -16,11 +16,12 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
 import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -70,7 +71,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun compostables() {
         builder(NeoForgeDataMaps.COMPOSTABLES)
-            .add(RagiumCommonTags.Items.CROPS_WARPED_WART, Compostable(0.65f), false)
+            .add(CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART, Compostable(0.65f))
     }
 
     private fun furnaceFuels() {
@@ -193,27 +194,37 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
                 put(
                     RagiumAPI.id("ingot_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.INGOT, 1, 1),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.INGOT, 1, 1),
                 )
                 put(
                     RagiumAPI.id("gem_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.GEM, 1, 1),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.GEM, 1, 1),
                 )
                 put(
                     RagiumAPI.id("plate_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.PLATE, 1, 1),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.PLATE, 1, 1),
                 )
                 put(
                     RagiumAPI.id("raw_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.RAW_MATERIAL, 3, 4),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.RAW_MATERIAL, 3, 4),
                 )
                 put(
                     RagiumAPI.id("rod_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.ROD, 2, 1),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.ROD, 2, 1),
                 )
                 put(
                     RagiumAPI.id("fuel_to_dust"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.FUEL, 1, 1),
+                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.FUEL, 1, 1),
+                )
+
+                put(
+                    RagiumAPI.id("crop_to_flour"),
+                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.CROP, 1, CommonMaterialPrefixes.FLOUR, 1),
+                )
+
+                put(
+                    RagiumAPI.id("storage_block_to_dust"),
+                    HTBlockCrushingMaterialRecipeData,
                 )
             }
     }

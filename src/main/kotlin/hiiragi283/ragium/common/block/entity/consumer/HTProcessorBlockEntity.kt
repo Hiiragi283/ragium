@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
 import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.manager.createCache
+import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
@@ -79,7 +79,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
             blockHolder: Holder<Block>,
             pos: BlockPos,
             state: BlockState,
-        ) : this(finder.createCache(), blockHolder, pos, state)
+        ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }

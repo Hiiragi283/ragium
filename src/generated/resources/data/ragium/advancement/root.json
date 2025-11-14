@@ -6,7 +6,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "ragium:textures/block/iridescentium_block.png",
+    "background": "ragium:textures/block/night_metal_block.png",
     "description": {
       "translate": "advancements.ragium.root.desc"
     },
@@ -15,7 +15,9 @@
       "id": "ragium:ragi_alloy_hammer"
     },
     "show_toast": false,
-    "title": "Ragium"
+    "title": {
+      "translate": "constants.ragium.mod_name"
+    }
   },
   "requirements": [
     [

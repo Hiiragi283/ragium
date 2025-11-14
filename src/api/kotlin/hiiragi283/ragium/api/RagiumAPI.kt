@@ -26,11 +26,6 @@ object RagiumAPI {
      */
     const val MOD_ID = "ragium"
 
-    /**
-     * Ragiumの表示名
-     */
-    const val MOD_NAME = "Ragium"
-
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
 

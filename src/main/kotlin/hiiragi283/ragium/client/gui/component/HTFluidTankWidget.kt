@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getStillTexture
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
-import hiiragi283.ragium.api.text.addFluidTooltip
+import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
@@ -71,7 +71,7 @@ class HTFluidTankWidget(
     override fun getLevel(): Float = levelGetter(view)
 
     override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
-        addFluidTooltip(getStack(), consumer, flag, true)
+        HTTextUtil.addFluidTooltip(getStack(), consumer, flag, true)
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {

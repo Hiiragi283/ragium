@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
+    HTFluidToChancedItemOutputBlockEntity<SingleRecipeInput, HTItemToChancedItemRecipe>(
         RagiumBlocks.BREWERY,
         pos,
         state,

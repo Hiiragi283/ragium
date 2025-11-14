@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -16,7 +16,7 @@ import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumItems
@@ -148,12 +148,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
 
         // Ethene + Catalyst -> HDPE
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
+        HTFluidTransformRecipeBuilder
+            .solidifying(
                 itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
                 fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
-            ).addResult(resultHelper.item(MekanismItems.HDPE_PELLET))
-            .save(output)
+                resultHelper.item(MekanismItems.HDPE_PELLET),
+            ).save(output)
     }
 
     @JvmStatic
@@ -248,7 +248,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         fromHolder(RagiumMekanismAddon.getChemical(material), amount.toLong())
 
     @JvmStatic
-    private fun enrichOreFromData(data: HTMaterialRecipeData, material: HTMaterialLike) {
+    private fun enrichOreFromData(data: HTRecipeData, material: HTMaterialLike) {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(data.getSizedIngredient(0)),
@@ -257,7 +257,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     }
 
     @JvmStatic
-    private fun crushFromData(data: HTMaterialRecipeData) {
+    private fun crushFromData(data: HTRecipeData) {
         ItemStackToItemStackRecipeBuilder
             .crushing(
                 itemHelper.from(data.getSizedIngredient(0)),

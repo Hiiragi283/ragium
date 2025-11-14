@@ -1,20 +1,21 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.impl.data.recipe.HTCookingPotRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -22,7 +23,6 @@ import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
-import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 
 object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FARMERS_DELIGHT) {
     override fun buildRecipeInternal() {
@@ -71,11 +71,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cherry() {
-        HTCuttingBoardRecipeBuilder
-            .create(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
-            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
-            .addIngredient(CommonTags.TOOLS_KNIFE)
-            .save(output)
+        cuttingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         // Pie
         HTShapedRecipeBuilder
             .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
@@ -101,17 +97,13 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .define('A', RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE)
             .saveSuffixed(output, "_from_slice")
         // Jam
-        CookingPotRecipeBuilder
-            .cookingPotRecipe(
-                RagiumFoodAddon.RAGI_CHERRY_JAM,
-                1,
-                200,
-                0.35f,
-                Items.GLASS_BOTTLE,
-            ).addIngredient(CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY))
-            .addIngredient(CommonMaterialPrefixes.FOOD.itemTagKey(FoodMaterialKeys.RAGI_CHERRY))
+        HTCookingPotRecipeBuilder
+            .create(RagiumItems.RAGI_CHERRY_JAM, container = Items.GLASS_BOTTLE)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .addIngredient(Items.SUGAR)
-            .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
+            .setTab(CookingPotRecipeBookTab.MISC)
+            .setExp(0.35f)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -129,10 +121,15 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cake() {
-        HTCuttingBoardRecipeBuilder
-            .create(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
-            .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
+        cuttingFromData(FoodMaterialRecipeData.SWEET_BERRIES_CAKE_SLICE)
+    }
+
+    @JvmStatic
+    private fun cuttingFromData(data: HTRecipeData) {
+        val output: HTRecipeData.OutputEntry = data.outputs[0]
+        HTCuttingBoardRecipeBuilder(output.toImmutable(), output.chance)
+            .addIngredient(data.getIngredient(0))
             .addIngredient(CommonTags.TOOLS_KNIFE)
-            .save(output)
+            .save(this.output)
     }
 }

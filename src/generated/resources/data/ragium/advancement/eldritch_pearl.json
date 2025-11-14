@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:melter",
+  "parent": "ragium:alloy_smelter",
   "criteria": {
     "has_c_gems_eldritch_pearl": {
       "conditions": {

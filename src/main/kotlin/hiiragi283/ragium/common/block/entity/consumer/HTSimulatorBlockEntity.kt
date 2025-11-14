@@ -1,16 +1,13 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -20,7 +17,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiItemRecipeInput, HTItemWithCatalystToItemRecipe>(
+    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTItemWithCatalystToItemRecipe>(
         RagiumRecipeTypes.SIMULATING,
         RagiumBlocks.SIMULATOR,
         pos,
@@ -35,33 +32,24 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
-        inputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
-        )
+        inputSlot = singleInput(builder, listener)
         // catalyst
-        catalystSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
-        )
+        catalystSlot = singleCatalyst(builder, listener)
         // output
-        outputSlot = builder.addSlot(
-            HTSlotInfo.CATALYST,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
-        )
+        outputSlot = singleOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiItemRecipeInput =
-        HTMultiItemRecipeInput.fromSlots(inputSlot, catalystSlot)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
+        HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiItemRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTItemWithCatalystToItemRecipe): Boolean =
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiItemRecipeInput,
+        input: HTMultiRecipeInput,
         recipe: HTItemWithCatalystToItemRecipe,
     ) {
         // 実際にアウトプットに搬出する

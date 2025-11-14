@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "minecraft:enchantments",
+                "minecraft:hide_additional_tooltip"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "ragium:auto_smithing_table"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ragium:blocks/auto_smithing_table"
+}

@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.block.entity.consumer.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
@@ -25,10 +25,10 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
     companion object {
         @JvmStatic
         fun chancedItemOutput(
-            menu: HTBlockEntityContainerMenu<HTChancedItemOutputBlockEntity<*, *>>,
+            menu: HTBlockEntityContainerMenu<HTFluidToChancedItemOutputBlockEntity<*, *>>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidConsumerScreen<HTChancedItemOutputBlockEntity<*, *>> = HTSingleFluidConsumerScreen(
+        ): HTSingleFluidConsumerScreen<HTFluidToChancedItemOutputBlockEntity<*, *>> = HTSingleFluidConsumerScreen(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             RagiumAPI.id("textures/gui/container/crusher.png"),
             menu,

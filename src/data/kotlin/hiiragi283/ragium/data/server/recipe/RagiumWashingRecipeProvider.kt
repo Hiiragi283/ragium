@@ -15,6 +15,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
@@ -70,7 +71,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
 
         // Ice <-> Water
         meltAndFreeze(
-            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
+            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
             Items.ICE.toHolderLike(),
             HTFluidContent.WATER,
             1000,

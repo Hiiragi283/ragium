@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyNetwork
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
-import net.minecraft.network.chat.Component
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.RegisterCommandsEvent
@@ -58,7 +58,7 @@ object RagiumCommand {
     private fun getEnergy(context: CommandContext<CommandSourceStack>): Int {
         val source: CommandSourceStack = context.source
         val amount: Int = getEnergyNetwork(source)?.getAmount() ?: 0
-        source.sendSuccess({ Component.literal("$amount FE in the energy network") }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_GET.translate(amount) }, true)
         return amount
     }
 
@@ -67,7 +67,7 @@ object RagiumCommand {
         val source: CommandSourceStack = context.source
         val value: Int = IntegerArgumentType.getInteger(context, "value")
         val received: Int = getEnergyNetwork(source)?.insert(value, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL) ?: 0
-        source.sendSuccess({ Component.literal("Add $received FE into the energy network") }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_ADD.translate(received) }, true)
         return received
     }
 
@@ -75,7 +75,7 @@ object RagiumCommand {
     private fun setEnergy(context: CommandContext<CommandSourceStack>, value: Int): Int {
         val source: CommandSourceStack = context.source
         (getEnergyNetwork(source) as? HTEnergyNetwork)?.setAmountUnchecked(value)
-        source.sendSuccess({ Component.literal("Set amount of the energy network to $value FE") }, true)
+        source.sendSuccess({ RagiumCommonTranslation.COMMAND_ENERGY_SET.translate(value) }, true)
         return value
     }
 

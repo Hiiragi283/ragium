@@ -4,8 +4,8 @@ import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.material.HTMaterialRecipeData
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
@@ -40,7 +40,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     }
 
     @JvmStatic
-    private fun alloyFromData(data: HTMaterialRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
+    private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
         RagiumConst.ALLOYING,
         AlloySmeltingRecipe(
             data.getSizedIngredients(),
@@ -68,18 +68,15 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     }
 
     @JvmStatic
-    private fun sagMillFromData(data: HTMaterialRecipeData, energy: Int = 2400) {
+    private fun sagMillFromData(data: HTRecipeData, energy: Int = 2400) {
         EIORecipeBuilder(
             "sag_milling",
             SagMillingRecipe(
                 data.getIngredient(0),
-                data.getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
-                    when {
-                        tagKey != null -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false)
-                        item != null -> SagMillingRecipe.OutputItem.of(item, count, chance, false)
-                        else -> error("")
-                    }
-                },
+                data.getOutputs(
+                    { tagKey: TagKey<Item>, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false) },
+                    { item: Item, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(item, count, chance, false) },
+                ),
                 energy,
                 SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
             ),

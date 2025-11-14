@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALLY) {
@@ -25,13 +26,6 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 itemCreator.fromItem(ActuallyItems.SOLIDIFIED_EXPERIENCE),
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20),
             ).saveSuffixed(output, "_from_solidified_aa")
-
-        // Black Quartz
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(ActuallyTags.Items.STORAGE_BLOCKS_BLACK_QUARTZ),
-                resultHelper.item(ActuallyTags.Items.GEMS_BLACK_QUARTZ, 4),
-            ).save(output)
 
         canola()
     }
@@ -53,20 +47,18 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 null,
             ).save(output)
         // Refined -> Crystallized
-        HTFluidTransformRecipeBuilder
-            .refining(
-                fluidCreator.from(InitFluids.REFINED_CANOLA_OIL.get(), 1000),
-                resultHelper.fluid(InitFluids.CRYSTALLIZED_OIL, 1000),
-                itemCreator.fromItem(ActuallyItems.CRYSTALLIZED_CANOLA_SEED),
-                null,
-            ).save(output)
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromItem(ActuallyItems.CRYSTALLIZED_CANOLA_SEED))
+            .addIngredient(fluidCreator.from(InitFluids.REFINED_CANOLA_OIL.get(), 1000))
+            .setResult(resultHelper.fluid(InitFluids.CRYSTALLIZED_OIL, 1000))
+            .save(output)
         // Crystallized -> Empowered
-        HTFluidTransformRecipeBuilder
-            .refining(
-                fluidCreator.from(InitFluids.CRYSTALLIZED_OIL.get(), 1000),
-                resultHelper.fluid(InitFluids.EMPOWERED_OIL, 1000),
-                itemCreator.fromItem(ActuallyItems.EMPOWERED_CANOLA_SEED),
-                null,
-            ).save(output)
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromItem(ActuallyItems.EMPOWERED_CANOLA_SEED))
+            .addIngredient(fluidCreator.from(InitFluids.CRYSTALLIZED_OIL.get(), 1000))
+            .setResult(resultHelper.fluid(InitFluids.EMPOWERED_OIL, 1000))
+            .save(output)
     }
 }

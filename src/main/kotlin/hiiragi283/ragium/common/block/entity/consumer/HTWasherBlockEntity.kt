@@ -16,7 +16,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedItemOutputBlockEntity.Cached<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
+    HTFluidToChancedItemOutputBlockEntity.Cached<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
         RagiumRecipeTypes.WASHING,
         RagiumBlocks.WASHER,
         pos,
@@ -37,12 +37,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
-        HTStackSlotHelper.shrinkItemStack(
-            inputSlot,
-            inputSlot::setStackUnchecked,
-            recipe::getRequiredCount,
-            HTStorageAction.EXECUTE,
-        )
+        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1f, 0.25f)

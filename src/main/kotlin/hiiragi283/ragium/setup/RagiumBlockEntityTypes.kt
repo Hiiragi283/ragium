@@ -19,6 +19,8 @@ import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTAutoSmithingTableBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTAutoStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
@@ -46,6 +48,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEnti
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -127,6 +130,19 @@ object RagiumBlockEntityTypes {
     )
 
     //    Consumer    //
+
+    // Vanilla
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
+        "auto_smithing_table",
+        ::HTAutoSmithingTableBlockEntity,
+    )
+
+    @JvmField
+    val AUTO_STONECUTTER: HTDeferredBlockEntityType<HTAutoStonecutterBlockEntity> = registerTick(
+        "auto_stonecutter",
+        ::HTAutoStonecutterBlockEntity,
+    )
 
     // Basic
     @JvmField
@@ -275,6 +291,9 @@ object RagiumBlockEntityTypes {
         }
 
     @JvmField
+    val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
+
+    @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
             registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
@@ -313,6 +332,9 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Consumer
+        registerHandler(event, AUTO_SMITHING_TABLE.get())
+        registerHandler(event, AUTO_STONECUTTER.get())
+
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, BLOCK_BREAKER.get())
         registerHandler(event, COMPRESSOR.get())
@@ -347,6 +369,7 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
             registerHandler(event, type.get())
         }
+        registerHandler(event, OPEN_CRATE.get())
         for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
             registerHandler(event, type.get())
         }

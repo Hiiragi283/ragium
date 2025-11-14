@@ -16,7 +16,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedItemOutputBlockEntity.Cached<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
+    HTFluidToChancedItemOutputBlockEntity.Cached<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe>(
         RagiumRecipeTypes.PLANTING,
         RagiumBlocks.PLANTER,
         pos,

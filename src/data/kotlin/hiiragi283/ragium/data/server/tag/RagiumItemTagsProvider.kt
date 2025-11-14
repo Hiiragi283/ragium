@@ -15,10 +15,9 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -94,6 +93,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(BlockTags.WALLS, ItemTags.WALLS)
         copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
 
+        copy(Tags.Blocks.CLUSTERS, Tags.Items.CLUSTERS)
+        copy(Tags.Blocks.BUDDING_BLOCKS, Tags.Items.BUDDING_BLOCKS)
+
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
@@ -165,7 +167,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         fun ingot(key: HTMaterialLike): TagKey<Item> = builder.createTag(CommonMaterialPrefixes.INGOT, key)
 
         // Crop
-        builder.addTags(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
+        builder.addMaterial(CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
         builder.addTag(Tags.Items.FOODS, CommonMaterialPrefixes.JAM)
         builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
@@ -191,17 +193,16 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE, Items.APPLE.toHolderLike())
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE, ingot(FoodMaterialKeys.CHOCOLATE))
         builder.addMaterial(foodsFruit, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
+        builder.addMaterial(foodsFruit, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY_PULP)
 
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT, ingot(FoodMaterialKeys.RAW_MEAT))
         builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT, ingot(FoodMaterialKeys.COOKED_MEAT))
         // Delight
-        builder.addMaterial(foodsFruit, FoodMaterialKeys.RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_PULP)
-
         builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
         builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
 
-        builder.addMaterial(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_JAM)
-        builder.add(ModTags.MEALS, RagiumDelightAddon.RAGI_CHERRY_TOAST)
+        builder.addMaterial(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY_JAM)
+        builder.add(ModTags.MEALS, RagiumItems.RAGI_CHERRY_TOAST)
         builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
     }
 
@@ -304,8 +305,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Other
         builder.addTag(ItemTags.PIGLIN_LOVED, CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
+
+        builder.add(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR, RagiumItems.BLUE_KNOWLEDGE)
         // WIP
-        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST)
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)

@@ -4,10 +4,18 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 
 object FoodMaterialKeys {
     @JvmStatic
-    val APPLE: HTMaterialKey = HTMaterialKey.of("apple")
+    val CHOCOLATE: HTMaterialKey = HTMaterialKey.of("chocolate")
+
+    // Crops
+    @JvmStatic
+    val WARPED_WART: HTMaterialKey = HTMaterialKey.of("warped_wart")
 
     @JvmStatic
-    val CHOCOLATE: HTMaterialKey = HTMaterialKey.of("chocolate")
+    val WHEAT: HTMaterialKey = HTMaterialKey.of("wheat")
+
+    // Fruits
+    @JvmStatic
+    val APPLE: HTMaterialKey = HTMaterialKey.of("apple")
 
     @JvmStatic
     val RAGI_CHERRY: HTMaterialKey = HTMaterialKey.of("ragi_cherry")

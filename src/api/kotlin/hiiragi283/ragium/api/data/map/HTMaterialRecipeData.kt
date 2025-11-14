@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -76,6 +77,8 @@ interface HTMaterialRecipeData {
         val output: RecipeOutput,
     ) {
         fun getAllMaterials(): Set<HTMaterialKey> = RagiumPlatform.INSTANCE.getAllMaterials()
+
+        fun getDefinitions(): Map<HTMaterialKey, HTMaterialDefinition> = RagiumPlatform.INSTANCE.getMaterialDefinitions()
 
         fun isPresentTag(prefix: HTPrefixLike, material: HTMaterialLike): Boolean = isPresentTag(prefix.itemTagKey(material))
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.sounds.SoundEvents
@@ -11,7 +11,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
-class HTExpBerriesItem(block: HTExpBerriesBushBlock, properties: Properties) : HTBlockItem<HTExpBerriesBushBlock>(block, properties) {
+class HTExpBerriesItem(block: HTExpBerriesBushBlock, properties: Properties) :
+    HTDescriptionBlockItem<HTExpBerriesBushBlock>(block, properties) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
         val amount: Int = RagiumConfig.COMMON.expBerriesValue.asInt

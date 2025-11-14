@@ -1,17 +1,15 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import net.neoforged.neoforge.common.Tags
 
 object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KALEIDO_COOKERY) {
@@ -42,19 +40,20 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
     @JvmStatic
     private fun cherry() {
-        HTChoppingBoardRecipeBuilder
-            .create(RagiumFoodAddon.RAGI_CHERRY_PULP, 2)
-            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
-            .setCutCount(1)
-            .save(output)
+        choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
     }
 
     @JvmStatic
     private fun cake() {
-        HTChoppingBoardRecipeBuilder
-            .create(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
-            .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .setCutCount(6)
-            .save(output)
+        choppingFromData(FoodMaterialRecipeData.SWEET_BERRIES_CAKE_SLICE)
+    }
+
+    @JvmStatic
+    private fun choppingFromData(data: HTRecipeData) {
+        val output: HTRecipeData.OutputEntry = data.outputs[0]
+        HTChoppingBoardRecipeBuilder(output.toImmutable())
+            .addIngredient(data.getIngredient(0))
+            .setCutCount(output.count - 1)
+            .save(this.output)
     }
 }

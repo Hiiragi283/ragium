@@ -1,12 +1,16 @@
 {
-  "type": "ragium:fluid_transform",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:water"
-  },
+  "type": "ragium:mixing",
+  "fluid_ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:water"
+    }
+  ],
   "fluid_result": {
     "amount": 1000,
     "id": "ragium:organic_mutagen"
   },
-  "item_ingredient": "#c:foods/food_poisoning"
+  "item_ingredients": [
+    "#c:foods/food_poisoning"
+  ]
 }

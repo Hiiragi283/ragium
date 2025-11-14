@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:naphtha"
+    }
+  ],
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:lubricant"
+  },
+  "item_ingredients": [
+    "#c:dusts/redstone"
+  ]
+}

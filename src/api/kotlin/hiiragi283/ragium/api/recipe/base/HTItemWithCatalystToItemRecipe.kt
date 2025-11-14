@@ -1,20 +1,20 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTMultiItemToObjRecipe
+import hiiragi283.ragium.api.recipe.HTMultiInputsToObjRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.input.HTMultiItemRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
-interface HTItemWithCatalystToItemRecipe : HTMultiItemToObjRecipe {
+interface HTItemWithCatalystToItemRecipe : HTMultiInputsToObjRecipe {
     val ingredient: Optional<HTItemIngredient>
     val catalyst: HTItemIngredient
     val result: HTItemResult
 
-    override fun test(input: HTMultiItemRecipeInput): Boolean {
+    override fun test(input: HTMultiRecipeInput): Boolean {
         val stackIn: ItemStack = input.getItem(0)
         val bool1: Boolean = ingredient
             .map { ingredient: HTItemIngredient -> ingredient.testOnlyType(stackIn) }
@@ -23,7 +23,7 @@ interface HTItemWithCatalystToItemRecipe : HTMultiItemToObjRecipe {
         return bool1 && bool2
     }
 
-    override fun assembleItem(input: HTMultiItemRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
+    override fun assembleItem(input: HTMultiRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
         getItemResult(input, registries, result)
 
     override fun isIncomplete(): Boolean {

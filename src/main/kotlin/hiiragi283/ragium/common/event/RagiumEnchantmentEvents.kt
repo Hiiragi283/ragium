@@ -5,9 +5,12 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -33,12 +36,12 @@ object RagiumEnchantmentEvents {
         val source: DamageSource = event.source
         // サーバー側のみで実行する
         if (level.isClientSide) return
-        generateResonantDebris(entity, level)
+        generateResonantDebris(entity, level, source)
         lootMobHead(entity, level, source)
     }
 
     @JvmStatic
-    private fun generateResonantDebris(entity: LivingEntity, level: Level) {
+    private fun generateResonantDebris(entity: LivingEntity, level: Level, source: DamageSource) {
         // 対象が共振の残骸を生成しない場合はスキップ
         if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
         // 半径4 m以内のブロックに対して変換を試みる
@@ -64,6 +67,11 @@ object RagiumEnchantmentEvents {
             RagiumDataMaps.INSTANCE
                 .getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
                 .let(entity::spawnAtLocation)
+
+            val attacker: Entity? = source.entity
+            if (attacker is ServerPlayer) {
+                RagiumCriteriaTriggers.BEHEAD_MOB.trigger(attacker)
+            }
         }
     }
 }
