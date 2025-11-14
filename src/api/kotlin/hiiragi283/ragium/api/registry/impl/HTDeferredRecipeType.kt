@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.translatableText

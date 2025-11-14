@@ -1,0 +1,75 @@
+package hiiragi283.ragium.common.block.entity.consumer
+
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.multi.HTMultiOutputsRecipe
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
+import net.minecraft.core.RegistryAccess
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+
+abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOutputsRecipe<INPUT>> :
+    HTProcessorBlockEntity.Cached<INPUT, RECIPE> {
+    constructor(
+        recipeCache: HTRecipeCache<INPUT, RECIPE>,
+        blockHolder: Holder<Block>,
+        pos: BlockPos,
+        state: BlockState,
+    ) : super(recipeCache, blockHolder, pos, state)
+
+    constructor(
+        finder: HTRecipeFinder<INPUT, RECIPE>,
+        blockHolder: Holder<Block>,
+        pos: BlockPos,
+        state: BlockState,
+    ) : super(finder, blockHolder, pos, state)
+
+    lateinit var outputTank: HTFluidStackTank
+        private set
+
+    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        // output
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidStackTank.output(listener, ::getTankCapacity))
+        return builder.build()
+    }
+
+    protected abstract fun getTankCapacity(): Int
+
+    lateinit var outputSlot: HTItemStackSlot
+        protected set
+
+    final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
+        val access: RegistryAccess = level.registryAccess()
+        val bool1: Boolean =
+            outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        val bool2: Boolean =
+            outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        return bool1 && bool2
+    }
+
+    override fun completeRecipe(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        input: INPUT,
+        recipe: RECIPE,
+    ) {
+        // 実際にアウトプットに搬出する
+        val access: RegistryAccess = level.registryAccess()
+        outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+    }
+}

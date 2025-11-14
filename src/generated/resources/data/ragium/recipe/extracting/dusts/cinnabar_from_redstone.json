@@ -1,8 +1,8 @@
 {
   "type": "ragium:extracting",
-  "ingredient": "#c:storage_blocks/redstone",
-  "result": {
+  "item_result": {
     "count": 3,
     "id": "#c:dusts/cinnabar"
-  }
+  },
+  "required": "#c:storage_blocks/redstone"
 }

@@ -229,7 +229,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerScreens(event: RegisterMenuScreensEvent) {
         event.registerConsumer(RagiumMenuTypes.ALLOY_SMELTER)
         event.registerConsumer(RagiumMenuTypes.CUTTING_MACHINE)
-        event.registerConsumer(RagiumMenuTypes.SIMULATOR)
         event.registerConsumer(RagiumMenuTypes.SINGLE_ITEM)
         event.registerConsumer(RagiumMenuTypes.SMELTER)
 
@@ -241,7 +240,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.COMPRESSOR.get(), HTItemToItemScreen.Companion::compressor)
         event.register(RagiumMenuTypes.DRUM.get(), ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR.get(), HTItemToItemScreen.Companion::extractor)
+        event.register(RagiumMenuTypes.EXTRACTOR.get(), HTSingleFluidConsumerScreen.Companion::extractor)
         event.register(RagiumMenuTypes.EXP_COLLECTOR.get(), ::HTExpCollectorScreen)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR.get(), ::HTFuelGeneratorScreen)
@@ -250,6 +249,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MOB_CAPTURER.get(), HTBlockEntityContainerScreen.Companion.createSimple("item_collector"))
         event.register(RagiumMenuTypes.PULVERIZER.get(), HTItemToItemScreen.Companion::pulverizer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)
+        event.register(RagiumMenuTypes.SIMULATOR.get(), HTSingleFluidConsumerScreen.Companion::simulator)
         event.register(RagiumMenuTypes.TELEPAD.get(), ::HTTelepadScreen)
 
         RagiumAPI.LOGGER.info("Registered Screens!")

@@ -1,0 +1,8 @@
+{
+  "type": "ragium:extracting",
+  "fluid_result": {
+    "amount": 125,
+    "id": "ragium:sap"
+  },
+  "required": "#minecraft:logs_that_burn"
+}

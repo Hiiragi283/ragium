@@ -36,6 +36,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val crusherTankCapacity: HTIntConfigValue
 
     @JvmField
+    val extractorTankCapacity: HTIntConfigValue
+
+    @JvmField
     val melterTankCapacity: HTIntConfigValue
 
     @JvmField
@@ -48,7 +51,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val refineryOutputTankCapacity: HTIntConfigValue
 
     @JvmField
-    val solidifierTankCapacity: HTIntConfigValue
+    val simulatorTankCapacity: HTIntConfigValue
 
     @JvmField
     val washerTankCapacity: HTIntConfigValue
@@ -146,6 +149,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         crusherTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
+        builder.push("extractor")
+        extractorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
+
         builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
@@ -162,8 +169,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop(2)
 
-        builder.push("solidifier")
-        solidifierTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.push("simulator")
+        simulatorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
         builder.push("washer")

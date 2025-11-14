@@ -11,7 +11,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -99,14 +99,16 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
     private fun exp() {
         // Exp Bottle
         extractAndInfuse(
-            itemCreator.fromItem(Items.GLASS_BOTTLE),
+            Items.GLASS_BOTTLE,
             Items.EXPERIENCE_BOTTLE.toHolderLike(),
             RagiumFluidContents.EXPERIENCE,
         )
         // Exp Berries -> Liquid Exp
-        HTItemToObjRecipeBuilder
-            .melting(
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromItem(RagiumBlocks.EXP_BERRIES),
+                null,
+                null,
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),
             ).saveSuffixed(output, "_from_berries")
 

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extracting",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:experience"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  },
+  "required": "minecraft:experience_bottle"
+}

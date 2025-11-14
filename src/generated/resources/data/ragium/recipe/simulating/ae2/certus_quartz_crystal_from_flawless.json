@@ -6,9 +6,9 @@
     }
   ],
   "type": "ragium:simulating",
-  "catalyst": "ae2:flawless_budding_quartz",
-  "result": {
+  "item_result": {
     "count": 4,
     "id": "ae2:certus_quartz_crystal"
-  }
+  },
+  "required": "ae2:flawless_budding_quartz"
 }

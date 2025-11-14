@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -37,6 +39,19 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
         )
 
         @JvmStatic
+        fun extractor(
+            menu: HTBlockEntityContainerMenu<HTExtractorBlockEntity>,
+            inventory: Inventory,
+            title: Component,
+        ): HTSingleFluidConsumerScreen<HTExtractorBlockEntity> = HTSingleFluidConsumerScreen(
+            { createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)) },
+            RagiumAPI.id("textures/gui/container/extractor.png"),
+            menu,
+            inventory,
+            title,
+        )
+
+        @JvmStatic
         fun melter(
             menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>,
             inventory: Inventory,
@@ -44,6 +59,19 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
         ): HTSingleFluidConsumerScreen<HTMelterBlockEntity> = HTSingleFluidConsumerScreen(
             { createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             RagiumAPI.id("textures/gui/container/melter.png"),
+            menu,
+            inventory,
+            title,
+        )
+
+        @JvmStatic
+        fun simulator(
+            menu: HTBlockEntityContainerMenu<HTSimulatorBlockEntity>,
+            inventory: Inventory,
+            title: Component,
+        ): HTSingleFluidConsumerScreen<HTSimulatorBlockEntity> = HTSingleFluidConsumerScreen(
+            { createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)) },
+            RagiumAPI.id("textures/gui/container/simulator.png"),
             menu,
             inventory,
             title,

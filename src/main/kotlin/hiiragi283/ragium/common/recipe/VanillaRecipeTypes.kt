@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.text.HTHasText
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

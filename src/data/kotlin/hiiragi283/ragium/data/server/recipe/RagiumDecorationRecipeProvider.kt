@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -18,9 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.block.StairBlock
-import net.minecraft.world.level.block.WallBlock
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
@@ -146,10 +143,10 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun registerBuildings(variant: HTDecorationVariant) {
-        val base: HTDeferredBlock<*, *> = variant.base
-        val slab: HTDeferredBlock<SlabBlock, *> = variant.slab
-        val stairs: HTDeferredBlock<StairBlock, *> = variant.stairs
-        val wall: HTDeferredBlock<WallBlock, *> = variant.wall
+        val base: ItemLike = variant.base
+        val slab: ItemLike = variant.slab
+        val stairs: ItemLike = variant.stairs
+        val wall: ItemLike = variant.wall
         // Base -> Slab
         HTShapedRecipeBuilder
             .building(slab, 6)

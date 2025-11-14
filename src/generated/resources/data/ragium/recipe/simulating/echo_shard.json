@@ -1,9 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:sculk_catalyst",
-  "ingredient": "#c:gems/amethyst",
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "minecraft:echo_shard"
-  }
+  },
+  "optional": "#c:gems/amethyst",
+  "required": "minecraft:sculk_catalyst"
 }

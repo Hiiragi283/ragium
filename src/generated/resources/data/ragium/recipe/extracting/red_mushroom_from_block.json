@@ -1,8 +1,8 @@
 {
   "type": "ragium:extracting",
-  "ingredient": "minecraft:red_mushroom_block",
-  "result": {
+  "item_result": {
     "count": 3,
     "id": "minecraft:red_mushroom"
-  }
+  },
+  "required": "minecraft:red_mushroom_block"
 }

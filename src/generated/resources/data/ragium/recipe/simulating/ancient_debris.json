@@ -1,15 +1,15 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "type": "ragium:entity_type",
-    "entities": "minecraft:piglin_brute"
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:ancient_debris"
   },
-  "ingredient": {
+  "optional": {
     "count": 64,
     "items": "minecraft:nether_bricks"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:ancient_debris"
+  "required": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:piglin_brute"
   }
 }

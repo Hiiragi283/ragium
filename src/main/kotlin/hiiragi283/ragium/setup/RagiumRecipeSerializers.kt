@@ -93,7 +93,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
         RagiumConst.EXTRACTING,
-        RagiumRecipeBiCodecs.itemToItem(::HTExtractingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTExtractingRecipe),
     )
 
     @JvmField
@@ -129,7 +129,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
-        RagiumRecipeBiCodecs.itemWithCatalystToItem(::HTSimulatingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTSimulatingRecipe),
     )
 
     @JvmField

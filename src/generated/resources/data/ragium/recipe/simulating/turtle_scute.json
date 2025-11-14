@@ -1,15 +1,15 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "type": "ragium:entity_type",
-    "entities": "minecraft:turtle"
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:turtle_scute"
   },
-  "ingredient": {
+  "optional": {
     "count": 8,
     "items": "minecraft:seagrass"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:turtle_scute"
+  "required": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:turtle"
   }
 }

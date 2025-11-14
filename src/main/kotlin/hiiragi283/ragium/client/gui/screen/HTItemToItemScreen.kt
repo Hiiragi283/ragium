@@ -34,19 +34,6 @@ class HTItemToItemScreen(
         )
 
         @JvmStatic
-        fun extractor(
-            menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
-            inventory: Inventory,
-            title: Component,
-        ): HTItemToItemScreen = HTItemToItemScreen(
-            RagiumAPI.id("textures/gui/container/extractor.png"),
-            HTProgressWidget::arrow,
-            menu,
-            inventory,
-            title,
-        )
-
-        @JvmStatic
         fun pulverizer(
             menu: HTBlockEntityContainerMenu<HTSingleItemInputBlockEntity<*>>,
             inventory: Inventory,

@@ -12,8 +12,8 @@ import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.recipe.manager.HTMaterialRecipeManager
-import hiiragi283.ragium.api.recipe.manager.castRecipe
+import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
+import hiiragi283.ragium.api.recipe.castRecipe
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries

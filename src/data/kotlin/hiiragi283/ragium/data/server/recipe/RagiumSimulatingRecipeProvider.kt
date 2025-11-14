@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -23,14 +23,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
 
     override fun buildRecipeInternal() {
         // Amethyst
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
                 itemCreator.fromItem(Items.BUDDING_AMETHYST),
                 resultHelper.item(Items.AMETHYST_SHARD, 4),
             ).save(output)
         // Echo Shard
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
                 itemCreator.fromItem(Items.SCULK_CATALYST),
@@ -43,7 +43,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     fun mobExtracting() {
         // Armadillo Scute
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.ARMADILLO)),
@@ -51,14 +51,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Honeycomb
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
                 itemCreator.fromItem(Items.BEE_NEST),
                 resultHelper.item(Items.HONEYCOMB),
             ).save(output)
         // Honey Bottle
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.GLASS_BOTTLE),
                 itemCreator.fromItem(Items.BEE_NEST),
@@ -66,7 +66,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Egg
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromTagKey(Tags.Items.SEEDS),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.CHICKEN)),
@@ -74,7 +74,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Heart of the Sea
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(RagiumItems.ELDER_HEART),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.ELDER_GUARDIAN)),
@@ -83,7 +83,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
 
         // Dragon Breath
 
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.GLASS_BOTTLE),
                 itemCreator.fromVanilla(
@@ -94,7 +94,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Poppy
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromTagKey(Tags.Items.FERTILIZERS),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.IRON_GOLEM)),
@@ -102,7 +102,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Ancient Debris
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.NETHER_BRICKS, 64),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.PIGLIN_BRUTE)),
@@ -110,7 +110,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Wool
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.SHEEP)),
@@ -118,7 +118,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Turtle Scute
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.SEAGRASS, 8),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.TURTLE)),
@@ -126,7 +126,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         // Resonant Debris
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.DEEPSLATE, 8),
                 itemCreator.fromVanilla(
@@ -146,7 +146,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .save(output)
 
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(RagiumItems.WITHER_DOLl),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),

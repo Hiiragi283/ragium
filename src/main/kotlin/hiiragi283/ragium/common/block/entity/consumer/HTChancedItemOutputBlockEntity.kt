@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
-import hiiragi283.ragium.api.recipe.HTChancedItemRecipe
-import hiiragi283.ragium.api.recipe.manager.HTRecipeCache
-import hiiragi283.ragium.api.recipe.manager.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.chance.HTChancedItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -53,7 +53,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         recipe: RECIPE,
     ) {
         // 実際にアウトプットに搬出する
-        for (result: HTChancedItemResult in recipe.getResultItems(input)) {
+        for (result: HTItemResultWithChance in recipe.getResultItems(input)) {
             val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random) ?: continue
             HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
         }

@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:extracting",
+  "fluid_result": {
+    "amount": 160,
+    "id": "ragium:experience"
+  },
+  "required": "actuallyadditions:solidified_experience"
+}

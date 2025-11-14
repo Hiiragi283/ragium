@@ -1,12 +1,12 @@
 {
   "type": "ragium:simulating",
-  "catalyst": {
-    "type": "ragium:entity_type",
-    "entities": "minecraft:chicken"
-  },
-  "ingredient": "#c:seeds",
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "minecraft:egg"
+  },
+  "optional": "#c:seeds",
+  "required": {
+    "type": "ragium:entity_type",
+    "entities": "minecraft:chicken"
   }
 }

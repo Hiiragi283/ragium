@@ -1,9 +1,9 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
+import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 
@@ -22,6 +22,6 @@ class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Fact
     override fun createRecipe(): HTItemToChancedItemRecipe = factory.create(ingredient, results)
 
     fun interface Factory<RECIPE : HTItemToChancedItemRecipe> {
-        fun create(ingredient: HTItemIngredient, results: List<HTChancedItemResult>): RECIPE
+        fun create(ingredient: HTItemIngredient, results: List<HTItemResultWithChance>): RECIPE
     }
 }

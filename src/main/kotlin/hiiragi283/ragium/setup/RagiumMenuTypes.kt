@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
@@ -89,7 +90,7 @@ object RagiumMenuTypes {
     val CUTTING_MACHINE: DeferredMachineMenu<HTCuttingMachineBlockEntity> = registerMachine("cutting_machine")
 
     @JvmField
-    val EXTRACTOR: DeferredMachineMenu<HTSingleItemInputBlockEntity<*>> = registerMachine("extractor")
+    val EXTRACTOR: DeferredMachineMenu<HTExtractorBlockEntity> = registerMachine("extractor")
 
     @JvmField
     val EXP_COLLECTOR: DeferredBEMenu<HTExpCollectorBlockEntity> = registerBE("exp_collector")

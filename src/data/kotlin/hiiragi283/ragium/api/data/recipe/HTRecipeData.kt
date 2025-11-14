@@ -4,8 +4,8 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
@@ -98,17 +98,17 @@ data class HTRecipeData private constructor(
         }
     }.filterNotNull()
 
-    fun getChancedResults(helper: HTResultHelper): List<HTChancedItemResult> =
+    fun getChancedResults(helper: HTResultHelper): List<HTItemResultWithChance> =
         getOutputs { (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
             val result: HTItemResult = when {
                 tagKey != null -> helper.item(tagKey, count)
                 item != null -> helper.item(item, count)
                 else -> return@getOutputs null
             }
-            HTChancedItemResult(result, chance)
+            HTItemResultWithChance(result, chance)
         }.filterNotNull()
 
-    fun getChancedResult(helper: HTResultHelper, index: Int): HTChancedItemResult = getChancedResults(helper)[index]
+    fun getChancedResult(helper: HTResultHelper, index: Int): HTItemResultWithChance = getChancedResults(helper)[index]
 
     fun getResult(helper: HTResultHelper, index: Int): HTItemResult = getChancedResult(helper, index).base
 

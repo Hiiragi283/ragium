@@ -1,0 +1,8 @@
+{
+  "type": "ragium:extracting",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:warped_sap"
+  },
+  "required": "#minecraft:warped_stems"
+}

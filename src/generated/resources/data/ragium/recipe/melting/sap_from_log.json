@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#minecraft:logs_that_burn",
-  "result": {
-    "amount": 125,
-    "id": "ragium:sap"
-  }
-}

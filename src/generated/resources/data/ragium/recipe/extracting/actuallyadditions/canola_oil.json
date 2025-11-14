@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:extracting",
+  "fluid_result": {
+    "amount": 80,
+    "id": "actuallyadditions:canola_oil"
+  },
+  "required": "#c:crops/canola"
+}

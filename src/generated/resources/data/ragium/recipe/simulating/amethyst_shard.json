@@ -1,8 +1,8 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "minecraft:budding_amethyst",
-  "result": {
+  "item_result": {
     "count": 4,
     "id": "minecraft:amethyst_shard"
-  }
+  },
+  "required": "minecraft:budding_amethyst"
 }

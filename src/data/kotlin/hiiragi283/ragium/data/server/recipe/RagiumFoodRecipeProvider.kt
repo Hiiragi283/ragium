@@ -35,7 +35,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         extractAndInfuse(
-            itemCreator.fromItem(Items.BOWL),
+            Items.BOWL,
             Items.MUSHROOM_STEW.toHolderLike(),
             RagiumFluidContents.MUSHROOM_STEW,
         )
@@ -135,7 +135,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
         // Honey Bottle <-> Honey
         extractAndInfuse(
-            itemCreator.fromItem(Items.GLASS_BOTTLE),
+            Items.GLASS_BOTTLE,
             Items.HONEY_BOTTLE.toHolderLike(),
             RagiumFluidContents.HONEY,
         )

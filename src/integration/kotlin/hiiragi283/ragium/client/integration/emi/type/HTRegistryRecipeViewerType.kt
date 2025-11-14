@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.emi.type
 
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.recipe.manager.HTRecipeType
+import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack

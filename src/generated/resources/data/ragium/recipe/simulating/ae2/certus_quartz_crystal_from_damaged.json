@@ -6,9 +6,9 @@
     }
   ],
   "type": "ragium:simulating",
-  "catalyst": "ae2:damaged_budding_quartz",
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "ae2:certus_quartz_crystal"
-  }
+  },
+  "required": "ae2:damaged_budding_quartz"
 }

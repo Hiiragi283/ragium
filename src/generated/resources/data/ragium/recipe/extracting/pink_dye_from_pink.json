@@ -1,8 +1,8 @@
 {
   "type": "ragium:extracting",
-  "ingredient": "#c:raw_materials/dyes/pink",
-  "result": {
+  "item_result": {
     "count": 2,
     "id": "minecraft:pink_dye"
-  }
+  },
+  "required": "#c:raw_materials/dyes/pink"
 }

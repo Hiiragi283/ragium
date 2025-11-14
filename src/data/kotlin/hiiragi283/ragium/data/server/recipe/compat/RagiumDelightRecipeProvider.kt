@@ -28,7 +28,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     override fun buildRecipeInternal() {
         // Milk
         extractAndInfuse(
-            itemCreator.fromItem(Items.GLASS_BOTTLE),
+            Items.GLASS_BOTTLE,
             ModItems.MILK_BOTTLE.toHolderLike(),
             HTFluidContent.MILK,
         )

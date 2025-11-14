@@ -1,16 +1,15 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
@@ -19,6 +18,7 @@ import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToChancedItemRecipeBase
 import hiiragi283.ragium.impl.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemToItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemWithFluidToChancedItemRecipeBase
 import net.minecraft.network.RegistryFriendlyByteBuf
 
@@ -80,15 +80,17 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmStatic
-    fun <R : HTItemWithCatalystToItemRecipe> itemWithCatalystToItem(
-        factory: HTItemWithCatalystToItemRecipeBuilder.Factory<R>,
+    fun <R : HTItemWithCatalystRecipe> itemWithCatalystToMulti(
+        factory: HTItemWithCatalystRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.optionalFieldOf("ingredient"),
-        HTItemWithCatalystToItemRecipe::ingredient,
-        HTItemIngredient.CODEC.fieldOf("catalyst"),
-        HTItemWithCatalystToItemRecipe::catalyst,
-        HTItemResult.CODEC.fieldOf("result"),
-        HTItemWithCatalystToItemRecipe::result,
+        HTItemIngredient.CODEC.fieldOf("required"),
+        HTItemWithCatalystRecipe::required,
+        HTItemIngredient.CODEC.optionalFieldOf("optional"),
+        HTItemWithCatalystRecipe::optional,
+        HTItemResult.CODEC.optionalFieldOf("item_result"),
+        HTItemWithCatalystRecipe::itemResult,
+        HTFluidResult.CODEC.optionalFieldOf("fluid_result"),
+        HTItemWithCatalystRecipe::fluidResult,
         factory::create,
     )
 
@@ -98,7 +100,7 @@ object RagiumRecipeBiCodecs {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf("ingredient"),
         HTItemToChancedItemRecipeBase::ingredient,
-        HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
+        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf("results"),
         HTItemToChancedItemRecipeBase::results,
         factory::create,
     )
@@ -111,7 +113,7 @@ object RagiumRecipeBiCodecs {
         HTItemWithFluidToChancedItemRecipeBase::ingredient,
         HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
         HTItemWithFluidToChancedItemRecipeBase::fluidIngredient,
-        HTChancedItemResult.CODEC.listOrElement(1, 4).fieldOf("results"),
+        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf("results"),
         HTItemWithFluidToChancedItemRecipeBase::results,
         factory::create,
     )

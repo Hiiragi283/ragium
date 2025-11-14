@@ -21,6 +21,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
@@ -173,21 +174,23 @@ sealed class HTRecipeProvider {
     }
 
     protected fun extractAndInfuse(
-        empty: HTItemIngredient,
+        empty: ItemLike,
         filled: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
         amount: Int = 250,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder
-            .melting(
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromItem(filled),
+                resultHelper.item(empty),
+                null,
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${filled.getPath()}")
         // Washing
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                empty,
+                itemCreator.fromItem(empty),
                 fluidCreator.fromContent(fluid, amount),
             ).addResult(resultHelper.item(filled))
             .saveSuffixed(output, "_from_${fluid.getPath()}")

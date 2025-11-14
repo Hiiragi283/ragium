@@ -1,9 +1,9 @@
 {
   "type": "ragium:simulating",
-  "catalyst": "#c:storage_blocks/iridescentium",
-  "ingredient": "ragium:wither_doll",
-  "result": {
+  "item_result": {
     "count": 1,
     "id": "#c:nether_stars"
-  }
+  },
+  "optional": "ragium:wither_doll",
+  "required": "#c:storage_blocks/iridescentium"
 }

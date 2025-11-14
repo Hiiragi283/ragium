@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
@@ -18,7 +18,7 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -74,11 +74,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
-        val registries: HolderLookup.Provider = level.registryAccess()
+        val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean =
-            outputSlot.insert(recipe.assembleItem(input, registries), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+            outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
         val bool2: Boolean =
-            outputTank.insert(recipe.assembleFluid(input, registries), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+            outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
         return bool1 && bool2
     }
 
@@ -90,9 +90,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTFluidTransformRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        val registries: HolderLookup.Provider = level.registryAccess()
-        outputSlot.insert(recipe.assembleItem(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        outputTank.insert(recipe.assembleFluid(input, registries), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        val access: RegistryAccess = level.registryAccess()
+        outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす

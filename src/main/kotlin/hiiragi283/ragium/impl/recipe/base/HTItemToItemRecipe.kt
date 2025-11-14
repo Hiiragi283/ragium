@@ -1,12 +1,15 @@
 package hiiragi283.ragium.impl.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
+/**
+ * [HTSingleInputRecipe]の抽象クラス
+ */
 abstract class HTItemToItemRecipe(val ingredient: HTItemIngredient, val result: HTItemResult) : HTSingleInputRecipe {
     override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
 

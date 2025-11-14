@@ -1,8 +1,8 @@
 {
   "type": "ragium:extracting",
-  "ingredient": "#c:raw_materials/dyes/magenta",
-  "result": {
+  "item_result": {
     "count": 2,
     "id": "minecraft:magenta_dye"
-  }
+  },
+  "required": "#c:raw_materials/dyes/magenta"
 }

@@ -1,8 +1,8 @@
 {
   "type": "ragium:extracting",
-  "ingredient": "#c:raw_materials/dyes/lime",
-  "result": {
+  "item_result": {
     "count": 2,
     "id": "minecraft:lime_dye"
-  }
+  },
+  "required": "#c:raw_materials/dyes/lime"
 }

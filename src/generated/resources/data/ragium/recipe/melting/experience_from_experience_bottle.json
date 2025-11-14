@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:experience_bottle",
-  "result": {
-    "amount": 250,
-    "id": "ragium:experience"
-  }
-}

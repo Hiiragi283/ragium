@@ -4,9 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.registry.HTBrewingEffect
-import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
+import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
@@ -42,14 +41,14 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Recipe    //
 
-    private object BrewingRecipe : HTItemToChancedItemRecipe, HTSingleInputRecipe {
-        override fun getResultItems(input: SingleRecipeInput): List<HTChancedItemResult> {
+    private object BrewingRecipe : HTItemToChancedItemRecipe {
+        override fun getResultItems(input: SingleRecipeInput): List<HTItemResultWithChance> {
             // ポーションに変換する
             val stack: ItemStack = findFirstPotion(input.item())
             if (stack.isEmpty) return listOf()
             return HTResultHelper
                 .item(stack)
-                .let(::HTChancedItemResult)
+                .let(::HTItemResultWithChance)
                 .let(::listOf)
         }
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe.input
 
-import hiiragi283.ragium.api.recipe.HTMultiInputsToObjRecipe
+import hiiragi283.ragium.api.recipe.multi.HTMultiInputsToObjRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot

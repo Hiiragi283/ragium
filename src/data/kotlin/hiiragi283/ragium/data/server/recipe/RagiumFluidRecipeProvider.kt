@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -118,9 +119,11 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_bio")
 
         // XX Log -> Wood Dust + Sap
-        HTItemToObjRecipeBuilder
-            .melting(
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN),
+                null,
+                null,
                 resultHelper.fluid(RagiumFluidContents.SAP, 125),
             ).saveSuffixed(output, "_from_log")
         // Sap -> Resin
@@ -156,9 +159,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             val log: TagKey<Item> = data.log ?: continue
             val sap: HTFluidContent<*, *, *> = data.sap ?: continue
             // log -> sap
-            HTItemToObjRecipeBuilder
-                .melting(itemCreator.fromTagKey(log), resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP))
-                .saveSuffixed(output, "_from_stems")
+            HTItemWithCatalystRecipeBuilder
+                .extracting(
+                    itemCreator.fromTagKey(log),
+                    null,
+                    null,
+                    resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP),
+                ).saveSuffixed(output, "_from_stems")
             // sap -> molten
             distillation(sap to 1000, null, resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN) to null)
         }
@@ -190,7 +197,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             ).addResult(resultHelper.item(Items.POISONOUS_POTATO))
             .save(output)
         // Potato Sprouts
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .extracting(
                 itemCreator.fromItem(Items.POISONOUS_POTATO),
                 resultHelper.item(RagiumItems.POTATO_SPROUTS),

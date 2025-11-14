@@ -3,9 +3,9 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTPlanterBlockEntity
@@ -168,14 +169,7 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTSingleInputRecipe>> = registerTick(
-        "extractor",
-        HTSingleItemInputBlockEntity.createSimple(
-            SoundEvents.SPONGE_ABSORB,
-            1f to 0.5f,
-            RagiumRecipeTypes.EXTRACTING,
-        ),
-    )
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
     val PULVERIZER: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTItemToChancedItemRecipe>> = registerTick(

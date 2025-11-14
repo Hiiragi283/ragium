@@ -1,10 +1,10 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.base.HTItemWithFluidToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
+import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTChancedItemResult
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 
@@ -27,6 +27,6 @@ class HTItemWithFluidToChancedItemRecipeBuilder(
     override fun createRecipe(): HTItemWithFluidToChancedItemRecipe = factory.create(ingredient, fluidIngredient, results)
 
     fun interface Factory<RECIPE : HTItemWithFluidToChancedItemRecipe> {
-        fun create(ingredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, results: List<HTChancedItemResult>): RECIPE
+        fun create(ingredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, results: List<HTItemResultWithChance>): RECIPE
     }
 }

@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
