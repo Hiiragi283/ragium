@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    }
+  ],
+  "type": "enderio:alloy_smelting",
+  "energy": 3200,
+  "experience": 0.3,
+  "inputs": [
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/amethyst"
+        },
+        {
+          "tag": "c:gems/amethyst"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:dusts/lapis"
+        },
+        {
+          "tag": "c:gems/lapis"
+        }
+      ],
+      "count": 1
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "ragium:azure_shard"
+  }
+}

@@ -67,6 +67,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     @JvmStatic
     private fun azure() {
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
     }
 

@@ -64,6 +64,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundryFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
         foundryFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
 
+        foundryFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)

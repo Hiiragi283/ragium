@@ -27,6 +27,7 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800).save(output)
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600).save(output)
 
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200).save(output)
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800).save(output)
 
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600).save(output)

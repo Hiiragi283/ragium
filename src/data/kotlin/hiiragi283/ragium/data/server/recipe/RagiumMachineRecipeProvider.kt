@@ -319,33 +319,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
 
-        // Upgrades
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val upgrade: ItemLike = when (tier) {
-                HTDrumTier.MEDIUM -> RagiumItems.MEDIUM_DRUM_UPGRADE
-                HTDrumTier.LARGE -> RagiumItems.LARGE_DRUM_UPGRADE
-                HTDrumTier.HUGE -> RagiumItems.HUGE_DRUM_UPGRADE
-                else -> continue
-            }
-            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
-                HTDrumTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTDrumTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
-                HTDrumTier.HUGE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.NETHERITE
-                else -> continue
-            }
-
-            HTShapedRecipeBuilder
-                .misc(upgrade)
-                .pattern(
-                    "ABA",
-                    "C C",
-                    "ABA",
-                ).define('A', pair.first, pair.second)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('C', Tags.Items.GLASS_BLOCKS)
-                .save(output)
-        }
-
         // Minecarts
         for (tier: HTDrumTier in HTDrumTier.entries) {
             HTShapelessRecipeBuilder

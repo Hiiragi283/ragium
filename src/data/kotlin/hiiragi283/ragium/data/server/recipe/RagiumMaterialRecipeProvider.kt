@@ -88,13 +88,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun azure() {
-        // Azure Shard
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.getGem(RagiumMaterialKeys.AZURE), 2)
-            .mosaic4()
-            .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
-            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS)
-            .save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         // Azure Steel
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
     }
