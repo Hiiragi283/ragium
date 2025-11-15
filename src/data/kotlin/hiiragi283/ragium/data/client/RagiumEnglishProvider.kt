@@ -142,6 +142,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
         // Consumers
+        add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Smelter")
         add(RagiumBlocks.AUTO_SMITHING_TABLE, "Auto Smithing Table")
         add(RagiumBlocks.AUTO_STONECUTTER, "Auto Stonecutter")
 
@@ -389,15 +390,34 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
         add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")
 
-        add(RagiumCommonTranslation.THERMAL_GENERATOR, "Generates energy from furnace fuels or hot fluids.")
-        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "Generates energy from fuel fluids.")
-        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "Generates energy from connected solar panels.")
-        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "Generates energy from enchanted books or experience fluids.")
-        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "Generates energy from nuclear fuels.")
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels or hot fluids.")
+        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "A machine which generates energy from connected solar panels.")
+        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "A machine which generates energy from enchanted books or experience fluids.")
+        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "A machine which generates energy from nuclear fuels.")
 
-        add(RagiumCommonTranslation.CRATE, "Stores one type of item.")
-        add(RagiumCommonTranslation.DRUM, "Stores one type of fluid.")
-        add(RagiumCommonTranslation.EXP_DRUM, "Stores Experience Liquid and Experience for each.")
+        add(RagiumCommonTranslation.ALLOY_SMELTER, "A machine which smelts multiple items into one.")
+        add(RagiumCommonTranslation.BLOCK_BREAKER, "A machine which mines the block in front.")
+        add(RagiumCommonTranslation.CUTTING_MACHINE, "A machine which cut item into another one.")
+        add(RagiumCommonTranslation.COMPRESSOR, "A machine which compresses item into another one.")
+        add(RagiumCommonTranslation.EXTRACTOR, "A machine which extracts item or fluid from input items.")
+        add(RagiumCommonTranslation.PULVERIZER, "A machine which pulverizes item into another one.")
+
+        add(RagiumCommonTranslation.CRUSHER, "An upgraded version of the Pulverizer which also produces byproducts.")
+        add(RagiumCommonTranslation.MELTER, "A machine which melts item into fluid.")
+        add(RagiumCommonTranslation.MIXER, "A machine which mixes multiple items and fluids.")
+        add(RagiumCommonTranslation.REFINERY, "A machine which transform fluid into another.")
+        add(RagiumCommonTranslation.WASHER, "A machine which washes item with fluid.")
+
+        add(RagiumCommonTranslation.BREWERY, "A machine which brews potion from item and fluid.")
+        add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
+        add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
+        add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
+
+        add(RagiumCommonTranslation.CRATE, "A storage which stores one type of item.")
+        add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
+        add(RagiumCommonTranslation.DRUM, "A storage which stores one type of fluid.")
+        add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores Experience Liquid and Experience for each.")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"Added %1$s FE into the energy network.")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"%1$s FE stored in the energy network.")

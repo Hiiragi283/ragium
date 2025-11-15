@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.NonNullList
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -17,6 +18,8 @@ open class HTVanillaSingleInputRecipe(protected val recipe: Recipe<SingleRecipeI
 
     final override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         recipe.assemble(input, provider).toImmutable()
+
+    override fun getIngredients(): NonNullList<Ingredient> = recipe.ingredients
 
     final override fun isIncomplete(): Boolean = ingredient.hasNoItems()
 

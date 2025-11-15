@@ -133,6 +133,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
         // Consumers
+        add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
         add(RagiumBlocks.AUTO_SMITHING_TABLE, "自動鍛冶台")
         add(RagiumBlocks.AUTO_STONECUTTER, "自動石切台")
 
@@ -389,18 +390,37 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
         add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")
 
-        add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電します。")
-        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電します。")
-        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "接続された太陽光パネルから発電します。")
-        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "エンチャント本や液体経験値から発電します。")
-        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "核燃料から発電します。")
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電する機械です。")
+        add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "接続された太陽光パネルから発電する機械です。")
+        add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "エンチャント本や液体経験値から発電する機械です。")
+        add(RagiumCommonTranslation.NUCLEAR_REACTOR, "核燃料から発電する機械です。")
+
+        add(RagiumCommonTranslation.ALLOY_SMELTER, "複数のアイテムを一つのアイテムに焼き上げる機械です。")
+        add(RagiumCommonTranslation.BLOCK_BREAKER, "正面のブロックを採掘する機械です。")
+        add(RagiumCommonTranslation.CUTTING_MACHINE, "アイテムを切断して別のアイテムにする機械です。")
+        add(RagiumCommonTranslation.COMPRESSOR, "アイテムを圧縮して別のアイテムにする機械です。")
+        add(RagiumCommonTranslation.EXTRACTOR, "アイテムから別のアイテムと液体を抽出する機械です。")
+        add(RagiumCommonTranslation.PULVERIZER, "アイテムを粉砕して別のアイテムにする機械です。")
+
+        add(RagiumCommonTranslation.CRUSHER, "粉砕機の上位版で，副産物も生産する機械です。")
+        add(RagiumCommonTranslation.MELTER, "アイテムを融かして液体にする機械です。")
+        add(RagiumCommonTranslation.MIXER, "複数のアイテムと液体を混合する機械です。")
+        add(RagiumCommonTranslation.REFINERY, "液体を別の液体に変換する機械です。")
+        add(RagiumCommonTranslation.WASHER, "アイテムを液体で洗浄する機械です。")
+
+        add(RagiumCommonTranslation.BREWERY, "アイテムと液体からポーションを醸造する機械です。")
+        add(RagiumCommonTranslation.MULTI_SMELTER, "複数のアイテムをまとめて精錬する機械です。")
+        add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
+        add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
         add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブをスポーンエッグに変換します。")
         add(RagiumCommonTranslation.CEU, "クリエイティブ用のバッテリー。")
 
-        add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管します。")
-        add(RagiumCommonTranslation.DRUM, "1種類の液体を保管します。")
-        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値と経験値を相互に保管します。")
+        add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管するストレージです。")
+        add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
+        add(RagiumCommonTranslation.DRUM, "1種類の液体を保管するストレージです。")
+        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値と経験値を相互に保管するストレージです。")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"エネルギーネットワークに%1$s FEを追加しました。")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"エネルギーネットワークに%1$s FEだけ保持しています。")

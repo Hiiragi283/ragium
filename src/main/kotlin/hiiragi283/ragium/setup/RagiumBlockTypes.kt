@@ -58,6 +58,14 @@ object RagiumBlockTypes {
 
     // Vanilla
     @JvmField
+    val ELECTRIC_FURNACE: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.ELECTRIC_FURNACE }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addConsumerTier(HTMachineTier.BASIC)
+        .addMenu { RagiumMenuTypes.SMELTER }
+        .build()
+
+    @JvmField
     val AUTO_SMITHING_TABLE: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.AUTO_SMITHING_TABLE }
         .addConsumerTier(HTMachineTier.BASIC)
@@ -77,7 +85,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.ALLOY_SMELTER }
-        .build()
+        .build(RagiumCommonTranslation.ALLOY_SMELTER)
 
     @JvmField
     val BLOCK_BREAKER: HTMachineBlockType = HTMachineBlockType
@@ -85,7 +93,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.SINGLE_ITEM }
-        .build()
+        .build(RagiumCommonTranslation.BLOCK_BREAKER)
 
     @JvmField
     val CUTTING_MACHINE: HTMachineBlockType = HTMachineBlockType
@@ -93,7 +101,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.CUTTING_MACHINE }
-        .build()
+        .build(RagiumCommonTranslation.CUTTING_MACHINE)
 
     @JvmField
     val COMPRESSOR: HTMachineBlockType = HTMachineBlockType
@@ -101,7 +109,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.COMPRESSOR }
-        .build()
+        .build(RagiumCommonTranslation.COMPRESSOR)
 
     @JvmField
     val EXTRACTOR: HTMachineBlockType = HTMachineBlockType
@@ -109,7 +117,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.EXTRACTOR }
-        .build()
+        .build(RagiumCommonTranslation.EXTRACTOR)
 
     @JvmField
     val PULVERIZER: HTMachineBlockType = HTMachineBlockType
@@ -117,7 +125,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.PULVERIZER }
-        .build()
+        .build(RagiumCommonTranslation.PULVERIZER)
 
     // Advanced
 
@@ -127,7 +135,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
         .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
-        .build()
+        .build(RagiumCommonTranslation.CRUSHER)
 
     @JvmField
     val MELTER: HTMachineBlockType = HTMachineBlockType
@@ -135,7 +143,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
         .addMenu { RagiumMenuTypes.MELTER }
-        .build()
+        .build(RagiumCommonTranslation.MELTER)
 
     @JvmField
     val REFINERY: HTMachineBlockType = HTMachineBlockType
@@ -143,7 +151,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
         .addMenu { RagiumMenuTypes.REFINERY }
-        .build()
+        .build(RagiumCommonTranslation.REFINERY)
 
     @JvmField
     val WASHER: HTMachineBlockType = HTMachineBlockType
@@ -151,7 +159,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
         .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
-        .build()
+        .build(RagiumCommonTranslation.WASHER)
 
     // Elite
 
@@ -161,7 +169,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
-        .build()
+        .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField
     val MULTI_SMELTER: HTMachineBlockType = HTMachineBlockType
@@ -169,7 +177,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.SMELTER }
-        .build()
+        .build(RagiumCommonTranslation.MULTI_SMELTER)
 
     @JvmField
     val PLANTER: HTMachineBlockType = HTMachineBlockType
@@ -177,7 +185,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
-        .build()
+        .build(RagiumCommonTranslation.PLANTER)
 
     @JvmField
     val SIMULATOR: HTMachineBlockType = HTMachineBlockType
@@ -185,7 +193,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.SIMULATOR }
-        .build()
+        .build(RagiumCommonTranslation.SIMULATOR)
 
     // Ultimate
 

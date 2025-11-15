@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
+import hiiragi283.ragium.common.block.entity.consumer.base.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

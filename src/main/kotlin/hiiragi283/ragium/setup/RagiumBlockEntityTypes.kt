@@ -25,14 +25,15 @@ import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.HTElectricFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -131,6 +132,12 @@ object RagiumBlockEntityTypes {
     //    Consumer    //
 
     // Vanilla
+    @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTElectricFurnaceBlockEntity> = registerTick(
+        "electric_furnace",
+        ::HTElectricFurnaceBlockEntity,
+    )
+
     @JvmField
     val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
         "auto_smithing_table",
@@ -312,6 +319,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Consumer
+        registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, AUTO_SMITHING_TABLE.get())
         registerHandler(event, AUTO_STONECUTTER.get())
 

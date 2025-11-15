@@ -102,6 +102,11 @@ class RagiumEmiPlugin : EmiPlugin {
         addProcessors(registry)
         addInteractions(registry)
 
+        for (block: ItemLike in listOf(RagiumBlocks.ELECTRIC_FURNACE, RagiumBlocks.MULTI_SMELTER)) {
+            registry.addWorkstation(VanillaEmiRecipeCategories.BLASTING, block.toEmi())
+            registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
+            registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, block.toEmi())
+        }
         registry.addWorkstation(VanillaEmiRecipeCategories.SMITHING, RagiumBlocks.AUTO_SMITHING_TABLE.toEmi())
         registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, RagiumBlocks.AUTO_STONECUTTER.toEmi())
         // Functions

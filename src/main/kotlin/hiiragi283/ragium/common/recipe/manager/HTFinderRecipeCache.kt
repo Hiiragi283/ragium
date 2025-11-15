@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
 
-internal class HTFinderRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(private val finder: HTRecipeFinder<INPUT, RECIPE>) :
+class HTFinderRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(private val finder: HTRecipeFinder<INPUT, RECIPE>) :
     HTRecipeCache<INPUT, RECIPE> {
     private var lastRecipe: ResourceLocation? = null
 

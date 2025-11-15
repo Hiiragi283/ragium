@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks

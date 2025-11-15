@@ -1,12 +1,14 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.consumer.base
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -20,7 +22,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> : HTProcessorBlockEntity.Cached<SingleRecipeInput, RECIPE> {
+abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
     companion object {
         @JvmStatic
         fun <RECIPE : HTSingleInputRecipe> createSimple(
@@ -32,24 +35,29 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         }
     }
 
-    /*constructor(
-        recipeCache: HTRecipeCache<SingleRecipeInput, RECIPE>,
-        variant: HTMachineVariant,
-        pos: BlockPos,
-        state: BlockState,
-    ) : super(recipeCache, variant, pos, state)*/
-
-    constructor(
-        finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
-        blockHolder: Holder<Block>,
-        pos: BlockPos,
-        state: BlockState,
-    ) : super(finder, blockHolder, pos, state)
-
     lateinit var inputSlot: HTItemStackSlot
         protected set
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
+
+    //    Cached    //
+
+    abstract class Cached<RECIPE : Recipe<SingleRecipeInput>>(
+        private val recipeCache: HTRecipeCache<SingleRecipeInput, RECIPE>,
+        blockHolder: Holder<Block>,
+        pos: BlockPos,
+        state: BlockState,
+    ) : HTSingleItemInputBlockEntity<RECIPE>(blockHolder, pos, state) {
+        constructor(
+            finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
+            blockHolder: Holder<Block>,
+            pos: BlockPos,
+            state: BlockState,
+        ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
+
+        final override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): RECIPE? =
+            recipeCache.getFirstRecipe(input, level)
+    }
 
     //    Simple    //
 
@@ -60,7 +68,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Recipe<SingleRecipeInput>> 
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTSingleItemInputBlockEntity<RECIPE>(
+    ) : Cached<RECIPE>(
             recipeType,
             blockHolder,
             pos,

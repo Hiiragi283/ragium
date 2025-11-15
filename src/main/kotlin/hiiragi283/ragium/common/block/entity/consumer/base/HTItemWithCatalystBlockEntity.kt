@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.consumer.base
 
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.inventory.HTSlotHelper

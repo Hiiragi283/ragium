@@ -41,6 +41,7 @@ class HTMixingRecipe(
     override fun isIncomplete(): Boolean {
         val bool1: Boolean = itemIngredients.isEmpty() || itemIngredients.any(HTItemIngredient::hasNoMatchingStacks)
         val bool2: Boolean = fluidIngredients.isEmpty() || fluidIngredients.any(HTFluidIngredient::hasNoMatchingStacks)
+        if (itemResult.isEmpty && fluidResult.isEmpty) return true
         val bool3: Boolean = itemResult.map { it.hasNoMatchingStack() }.orElse(false)
         val bool4: Boolean = fluidResult.map { it.hasNoMatchingStack() }.orElse(false)
         return bool1 || bool2 || bool3 || bool4

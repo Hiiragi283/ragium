@@ -12,12 +12,12 @@ import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.base.HTAbstractSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
@@ -111,7 +111,7 @@ object RagiumMenuTypes {
     val REFINERY: DeferredMachineMenu<HTRefineryBlockEntity> = registerMachine("refinery")
 
     @JvmField
-    val SMELTER: DeferredMachineMenu<HTMultiSmelterBlockEntity> = registerMachine("smelter")
+    val SMELTER: DeferredMachineMenu<HTAbstractSmelterBlockEntity<*>> = registerMachine("smelter")
 
     @JvmField
     val SIMULATOR: DeferredMachineMenu<HTSimulatorBlockEntity> = registerMachine("simulator")

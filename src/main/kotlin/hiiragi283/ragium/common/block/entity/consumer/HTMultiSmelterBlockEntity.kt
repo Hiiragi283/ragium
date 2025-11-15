@@ -1,18 +1,12 @@
 package hiiragi283.ragium.common.block.entity.consumer
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.storage.item.toRecipeInput
-import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.consumer.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
-import hiiragi283.ragium.common.recipe.VanillaRecipeTypes
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
-import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -20,54 +14,18 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.min
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, Pair<HTVanillaCookingRecipe, Int>>(
+    HTAbstractSmelterBlockEntity<Pair<HTVanillaCookingRecipe, Int>>(
         RagiumBlocks.MULTI_SMELTER,
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemStackSlot
-        private set
-    lateinit var catalystSlot: HTItemStackSlot
-        private set
-    lateinit var outputSlot: HTItemStackSlot
-        private set
-
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        inputSlot = singleInput(builder, listener)
-        // catalyst
-        catalystSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
-        )
-        // output
-        outputSlot = singleOutput(builder, listener)
-    }
-
-    private val smeltingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
-        VanillaRecipeTypes.SMELTING,
-    )
-    private val blastingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
-        VanillaRecipeTypes.BLASTING,
-    )
-    private val smokingCache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = HTFinderRecipeCache(
-        VanillaRecipeTypes.SMOKING,
-    )
-
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
-
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): Pair<HTVanillaCookingRecipe, Int>? {
-        val cache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = when (catalystSlot.getStack()?.value()) {
-            Items.BLAST_FURNACE -> blastingCache
-            Items.SMOKER -> smokingCache
-            else -> smeltingCache
-        }
+        val cache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = getRecipeCache()
         val baseRecipe: HTVanillaCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
         val result: ImmutableItemStack = baseRecipe.assembleItem(input, level.registryAccess()) ?: return null
         val resultMaxSize: Int = result.maxStackSize()

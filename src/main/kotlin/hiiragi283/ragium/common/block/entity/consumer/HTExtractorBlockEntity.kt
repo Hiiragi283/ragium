@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.consumer
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.common.block.entity.consumer.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -18,7 +19,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override fun getTankCapacity(): Int = RagiumConfig.COMMON.extractorTankCapacity.asInt
+    override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.extractorTankCapacity.asInt
 
     override fun completeRecipe(
         level: ServerLevel,

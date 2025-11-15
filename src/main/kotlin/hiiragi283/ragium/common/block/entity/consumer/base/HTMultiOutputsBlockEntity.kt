@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.consumer.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
@@ -41,12 +41,16 @@ abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOu
 
     final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        // input
+        initInputTanks(builder, listener)
         // output
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidStackTank.output(listener, ::getTankCapacity))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidStackTank.output(listener, ::getOutputTankCapacity))
         return builder.build()
     }
 
-    protected abstract fun getTankCapacity(): Int
+    protected open fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
+
+    protected abstract fun getOutputTankCapacity(): Int
 
     lateinit var outputSlot: HTItemStackSlot
         protected set

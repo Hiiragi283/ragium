@@ -1,7 +1,8 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.consumer.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -12,7 +13,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * レシピの処理を行う機械に使用される[HTConsumerBlockEntity]の拡張クラス
+ * レシピの処理を行う機械に使用される[hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity]の拡張クラス
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */

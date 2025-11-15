@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

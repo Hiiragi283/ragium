@@ -21,6 +21,23 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     NUCLEAR_REACTOR("description", "nuclear_reactor"),
 
     // Blocks - Consumers
+    ALLOY_SMELTER("description", "alloy_smelter"),
+    BLOCK_BREAKER("description", "block_breaker"),
+    CUTTING_MACHINE("description", "cutting_machine"),
+    COMPRESSOR("description", "compressor"),
+    EXTRACTOR("description", "extractor"),
+    PULVERIZER("description", "pulverizer"),
+
+    CRUSHER("description", "crusher"),
+    MELTER("description", "melter"),
+    MIXER("description", "mixer"),
+    REFINERY("description", "refinery"),
+    WASHER("description", "washer"),
+
+    BREWERY("description", "brewery"),
+    MULTI_SMELTER("description", "multi_smelter"),
+    PLANTER("description", "planter"),
+    SIMULATOR("description", "simulator"),
 
     // Blocks - Devices
     MOB_CAPTURER("description", "mob_capturer"),

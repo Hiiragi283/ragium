@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig

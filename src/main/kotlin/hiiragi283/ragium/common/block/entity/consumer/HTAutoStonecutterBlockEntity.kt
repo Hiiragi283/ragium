@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.consumer.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -22,13 +22,11 @@ import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAutoStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, StonecutterRecipe>(
+    HTSingleItemInputBlockEntity<StonecutterRecipe>(
         RagiumBlocks.AUTO_STONECUTTER,
         pos,
         state,
     ) {
-    lateinit var inputSlot: HTItemStackSlot
-        private set
     lateinit var catalystSlot: HTItemStackSlot
         private set
     lateinit var outputSlots: List<HTItemStackSlot>
@@ -39,8 +37,6 @@ class HTAutoStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         catalystSlot = singleCatalyst(builder, listener)
         outputSlots = multiOutputs(builder, listener)
     }
-
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
 
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
         // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
