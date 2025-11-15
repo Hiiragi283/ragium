@@ -1,8 +1,0 @@
-{
-  "type": "ragium:extracting",
-  "fluid_result": {
-    "amount": 50,
-    "id": "ragium:experience"
-  },
-  "required": "ragium:exp_berries"
-}

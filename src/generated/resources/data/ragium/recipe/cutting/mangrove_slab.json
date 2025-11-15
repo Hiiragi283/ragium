@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "minecraft:mangrove_planks",
-  "results": {
-    "count": 2,
-    "id": "minecraft:mangrove_slab"
-  }
-}

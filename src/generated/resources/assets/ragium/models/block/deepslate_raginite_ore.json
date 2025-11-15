@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "minecraft:block/deepslate",
-    "layer1": "ragium:block/raginite"
-  }
-}

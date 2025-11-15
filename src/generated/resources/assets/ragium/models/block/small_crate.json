@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "ragium:block/crate_top",
-    "side": "ragium:block/small_crate_side"
-  }
-}

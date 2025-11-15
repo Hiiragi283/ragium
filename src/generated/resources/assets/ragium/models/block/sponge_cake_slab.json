@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "ragium:block/sponge_cake",
-    "side": "ragium:block/sponge_cake",
-    "top": "ragium:block/sponge_cake"
-  }
-}

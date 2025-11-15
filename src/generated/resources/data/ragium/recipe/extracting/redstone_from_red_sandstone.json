@@ -1,8 +1,0 @@
-{
-  "type": "ragium:extracting",
-  "item_result": {
-    "count": 1,
-    "id": "minecraft:redstone"
-  },
-  "required": "#c:sandstone/red_blocks"
-}

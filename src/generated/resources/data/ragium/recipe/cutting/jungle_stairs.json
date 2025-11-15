@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "minecraft:jungle_planks",
-  "results": {
-    "count": 1,
-    "id": "minecraft:jungle_stairs"
-  }
-}

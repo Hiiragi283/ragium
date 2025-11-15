@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:ores/quartz",
-  "results": {
-    "count": 4,
-    "id": "#c:gems/quartz"
-  }
-}

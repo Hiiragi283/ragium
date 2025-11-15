@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "minecraft:spruce_planks",
-  "results": {
-    "count": 1,
-    "id": "minecraft:spruce_stairs"
-  }
-}

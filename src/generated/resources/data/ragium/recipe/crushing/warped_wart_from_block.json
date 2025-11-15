@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "minecraft:warped_wart_block",
-  "result": {
-    "count": 3,
-    "id": "ragium:warped_wart"
-  }
-}

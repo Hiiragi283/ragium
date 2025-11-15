@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:gems/warped_crystal",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:dew_of_the_warp"
-  }
-}

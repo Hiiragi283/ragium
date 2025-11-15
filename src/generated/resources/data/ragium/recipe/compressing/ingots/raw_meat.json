@@ -1,8 +1,0 @@
-{
-  "type": "ragium:compressing",
-  "ingredient": "#c:dusts/raw_meat",
-  "result": {
-    "count": 1,
-    "id": "#c:ingots/raw_meat"
-  }
-}

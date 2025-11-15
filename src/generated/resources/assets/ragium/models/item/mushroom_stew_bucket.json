@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "ragium:mushroom_stew",
-  "loader": "neoforge:fluid_container"
-}

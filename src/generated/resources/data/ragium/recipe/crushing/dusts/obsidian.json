@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#c:obsidians/normal",
-  "result": {
-    "count": 4,
-    "id": "#c:dusts/obsidian"
-  }
-}

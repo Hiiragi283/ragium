@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:honey_block",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:honey"
-  }
-}

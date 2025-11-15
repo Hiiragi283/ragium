@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "ragium:block/azure_tiles",
-    "side": "ragium:block/azure_tiles",
-    "top": "ragium:block/azure_tiles"
-  }
-}

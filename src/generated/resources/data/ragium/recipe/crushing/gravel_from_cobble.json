@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:cobblestones",
-  "results": {
-    "count": 1,
-    "id": "minecraft:gravel"
-  }
-}

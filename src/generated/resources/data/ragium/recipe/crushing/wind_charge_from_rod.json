@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#c:rods/breeze",
-  "result": {
-    "count": 6,
-    "id": "minecraft:wind_charge"
-  }
-}

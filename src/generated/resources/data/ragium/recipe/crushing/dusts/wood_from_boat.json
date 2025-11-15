@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#minecraft:boats",
-  "result": {
-    "count": 5,
-    "id": "#c:dusts/wood"
-  }
-}

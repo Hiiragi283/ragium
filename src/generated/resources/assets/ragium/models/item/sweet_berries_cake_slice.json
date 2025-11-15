@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ragium:item/sweet_berries_cake_slice"
-  }
-}

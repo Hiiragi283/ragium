@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "minecraft:prismarine_bricks",
-  "result": {
-    "count": 9,
-    "id": "minecraft:prismarine_shard"
-  }
-}

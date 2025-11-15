@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:cherry_logs",
-  "results": {
-    "count": 6,
-    "id": "minecraft:cherry_planks"
-  }
-}

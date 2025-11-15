@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "minecraft:packed_ice",
-  "result": {
-    "count": 9,
-    "id": "minecraft:ice"
-  }
-}

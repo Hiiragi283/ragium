@@ -1,8 +1,0 @@
-{
-  "type": "ragium:extracting",
-  "fluid_result": {
-    "amount": 500,
-    "id": "ragium:crimson_sap"
-  },
-  "required": "#minecraft:crimson_stems"
-}

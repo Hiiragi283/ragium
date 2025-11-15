@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:dusts/coal",
-  "result": {
-    "amount": 125,
-    "id": "ragium:crude_oil"
-  }
-}

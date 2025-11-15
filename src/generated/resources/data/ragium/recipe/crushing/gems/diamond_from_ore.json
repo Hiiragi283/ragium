@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:ores/diamond",
-  "results": {
-    "count": 2,
-    "id": "#c:gems/diamond"
-  }
-}

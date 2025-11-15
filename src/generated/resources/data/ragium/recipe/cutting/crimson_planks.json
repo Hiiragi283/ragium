@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:crimson_stems",
-  "results": {
-    "count": 6,
-    "id": "minecraft:crimson_planks"
-  }
-}

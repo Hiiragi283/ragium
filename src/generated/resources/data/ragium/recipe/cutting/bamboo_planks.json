@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:bamboo_blocks",
-  "results": {
-    "count": 6,
-    "id": "minecraft:bamboo_planks"
-  }
-}

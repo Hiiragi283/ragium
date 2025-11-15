@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:jungle_logs",
-  "results": {
-    "count": 6,
-    "id": "minecraft:jungle_planks"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "item_result": {
-    "count": 1,
-    "id": "#c:nether_stars"
-  },
-  "optional": "ragium:wither_doll",
-  "required": "#c:storage_blocks/iridescentium"
-}

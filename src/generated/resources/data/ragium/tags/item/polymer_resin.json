@@ -1,9 +1,0 @@
-{
-  "values": [
-    "ragium:polymer_resin",
-    {
-      "id": "oritech:polymer_resin",
-      "required": false
-    }
-  ]
-}

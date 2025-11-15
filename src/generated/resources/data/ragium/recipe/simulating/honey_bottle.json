@@ -1,9 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "item_result": {
-    "count": 1,
-    "id": "minecraft:honey_bottle"
-  },
-  "optional": "minecraft:glass_bottle",
-  "required": "minecraft:bee_nest"
-}

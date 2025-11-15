@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:ingots/chocolate",
-  "result": {
-    "amount": 250,
-    "id": "ragium:chocolate"
-  }
-}
