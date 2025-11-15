@@ -32,6 +32,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             addAll(RagiumItems.REGISTER.entries)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.POTION_DROP)
 
             remove(RagiumItems.BLAST_CHARGE)
             remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
@@ -56,6 +57,9 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         withExistingParent(RagiumItems.RAGI_ALLOY_COMPOUND.getPath(), vanillaId("item", "generated"))
             .texture("layer0", "minecraft:item/copper_ingot")
             .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+
+        withExistingParent(RagiumItems.POTION_DROP.getPath(), vanillaId("item", "generated"))
+            .texture("layer0", "minecraft:item/ghast_tear")
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             withExistingParent(content.getIdWithSuffix("_bucket").path, RagiumConst.NEOFORGE.toId("item", "bucket"))

@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.block.entity.consumer.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTElectricFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTAbstractSmelterBlockEntity<HTVanillaCookingRecipe>(TODO(), pos, state) {
+    HTAbstractSmelterBlockEntity<HTVanillaCookingRecipe>(RagiumBlocks.ELECTRIC_FURNACE, pos, state) {
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTVanillaCookingRecipe? =
         getRecipeCache().getFirstRecipe(input, level)
 
@@ -30,7 +30,7 @@ class HTElectricFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, { 1 }, HTStorageAction.EXECUTE)
+        inputSlot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1f)
     }

@@ -505,27 +505,6 @@ object RagiumBlocks {
 
     // Ultimate
 
-    //    Parts    //
-
-    @JvmField
-    val WOODEN_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("wooden_casing", copyOf(Blocks.NOTE_BLOCK))
-
-    @JvmField
-    val STONE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("stone_casing", copyOf(Blocks.COBBLESTONE))
-
-    @JvmField
-    val REINFORCED_STONE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("reinforced_stone_casing", copyOf(Blocks.COBBLED_DEEPSLATE))
-
-    @JvmField
-    val CASINGS: List<HTSimpleDeferredBlock> = listOf(
-        WOODEN_CASING,
-        STONE_CASING,
-        REINFORCED_STONE_CASING,
-    )
-
     //    Device    //
 
     @JvmField

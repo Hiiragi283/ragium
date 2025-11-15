@@ -26,9 +26,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.loading.FMLEnvironment
@@ -44,12 +41,6 @@ interface RagiumPlatform {
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
-
-    //    Item    //
-
-    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(PotionContents(potion), count)
-
-    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack
 
     //    Material    //
 

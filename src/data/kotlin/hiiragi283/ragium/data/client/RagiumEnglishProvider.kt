@@ -129,9 +129,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         // Parts
         add(RagiumBlocks.DEVICE_CASING, "Device Casing")
-        add(RagiumBlocks.STONE_CASING, "Stone Casing")
-        add(RagiumBlocks.REINFORCED_STONE_CASING, "Reinforced Stone Casing")
-        add(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
 
@@ -209,6 +206,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun fluid() {
+        addFluid(RagiumFluidContents.AWKWARD_WATER, "Awkward Water")
         addFluid(RagiumFluidContents.HONEY, "Honey")
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
@@ -238,6 +236,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
         add(RagiumItems.RESIN, "Resin")
@@ -344,6 +343,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun recipeType() {
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
@@ -375,8 +375,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
         // API - Item
-        add(RagiumTranslation.ITEM_POTION, $$"Potion of %1$s")
-
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")

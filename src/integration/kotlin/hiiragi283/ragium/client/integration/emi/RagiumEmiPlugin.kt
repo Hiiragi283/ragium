@@ -13,24 +13,21 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.castRecipe
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
-import hiiragi283.ragium.client.integration.emi.recipe.HTBrewingEffectEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.HTSmithingModifyEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
@@ -47,6 +44,7 @@ import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
+import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -55,13 +53,13 @@ import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
@@ -113,6 +111,10 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
         registry.setDefaultComparison(
+            RagiumItems.POTION_DROP.get(),
+            Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) },
+        )
+        registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )
@@ -123,18 +125,31 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addCustomRecipe(registry: EmiRegistry) {
         // Crafting
         EmiPort.getPotionRegistry().holdersSequence().forEach { holder: Holder<Potion> ->
-            registry.addRecipeSafe(
-                holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
-            ) { id: ResourceLocation ->
+            val id: ResourceLocation = holder.idOrThrow
+            registry.addRecipeSafe(id.withPrefix("/shapeless/${RagiumAPI.MOD_ID}/ice_cream_soda/")) { id1 ->
                 EmiCraftingRecipe(
                     listOf(
                         RagiumItems.ICE_CREAM.toEmi(),
                         CommonMaterialPrefixes.FOOD.toItemEmi(FoodMaterialKeys.RAGI_CHERRY),
-                        PotionContents.createItemStack(Items.POTION, holder).toEmi(),
+                        HTPotionHelper.createPotion(Items.POTION, holder).toEmi(),
                         Tags.Items.DYES_GREEN.toEmi(),
                     ),
-                    RagiumPlatform.INSTANCE.createSoda(holder).toEmi(),
-                    id,
+                    HTPotionHelper.createPotion(RagiumItems.ICE_CREAM_SODA, holder).toEmi(),
+                    id1,
+                    true,
+                )
+            }
+            registry.addRecipeSafe(id.withPrefix("/shapeless/${RagiumAPI.MOD_ID}/potion/")) { id1 ->
+                EmiCraftingRecipe(
+                    listOf(
+                        HTPotionHelper.createPotion(RagiumItems.POTION_DROP, holder).toEmi(),
+                        Items.GLASS_BOTTLE.toEmi(),
+                        Items.GLASS_BOTTLE.toEmi(),
+                        Items.GLASS_BOTTLE.toEmi(),
+                        Items.GLASS_BOTTLE.toEmi(),
+                    ),
+                    HTPotionHelper.createPotion(Items.POTION, holder, 4).toEmi(),
+                    id1,
                     true,
                 )
             }
@@ -216,18 +231,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
-        addCategoryAndRecipes(
-            registry,
-            RagiumRecipeViewerTypes.BREWING,
-            registryAccess
-                .registryOrThrow(RagiumAPI.BREWING_EFFECT_KEY)
-                .entrySet()
-                .map { (key: ResourceKey<HTBrewingEffect>, effect: HTBrewingEffect) ->
-                    key.location().withPrefix("/brewing/effect/") to
-                        HTEmiBrewingEffect(effect.ingredient.toEmi(), effect.toPotion().toEmi())
-                }.asSequence(),
-            ::HTBrewingEffectEmiRecipe,
-        )
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
     }

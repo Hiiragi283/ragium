@@ -39,6 +39,7 @@ object RagiumMiscRegister {
         event.register(Registries.RECIPE_TYPE) { helper ->
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
+            register(helper, RagiumRecipeTypes.BREWING)
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.CUTTING)

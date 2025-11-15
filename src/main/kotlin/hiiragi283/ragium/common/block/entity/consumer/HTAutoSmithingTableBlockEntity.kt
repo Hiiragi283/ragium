@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.block.entity.consumer.base.HTProcessorBlockEntit
 import hiiragi283.ragium.common.recipe.manager.VanillaRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -69,7 +68,7 @@ class HTAutoSmithingTableBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insert(recipe.assemble(input, level.registryAccess()).toImmutable(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
         for (slot: HTItemStackSlot in inputSlots) {
-            HTStackSlotHelper.shrinkStack(slot, { 1 }, HTStorageAction.EXECUTE)
+            slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5f, 0.5f)

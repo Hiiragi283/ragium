@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
-import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.toId
@@ -82,9 +81,6 @@ object RagiumAPI {
     val SLOT_TYPE_REGISTRY: Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>> = createRegistry(SLOT_TYPE_KEY)
 
     // Dynamic
-    @JvmField
-    val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = createKey("brewing_effect")
-
     @JvmField
     val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = createKey("solar_power")
 

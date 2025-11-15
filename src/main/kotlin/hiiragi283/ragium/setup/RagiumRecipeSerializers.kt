@@ -7,8 +7,10 @@ import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.HTPotionDropRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
@@ -55,6 +57,10 @@ object RagiumRecipeSerializers {
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 
     @JvmField
+    val POTION_DROP: RecipeSerializer<HTPotionDropRecipe> =
+        register("potion_drop", SimpleCraftingRecipeSerializer(::HTPotionDropRecipe))
+
+    @JvmField
     val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
         register("smithing_modify", HTSmithingModifyRecipe.CODEC)
 
@@ -64,6 +70,12 @@ object RagiumRecipeSerializers {
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
         RagiumConst.ALLOYING,
         RagiumRecipeBiCodecs.ALLOYING,
+    )
+
+    @JvmField
+    val BREWING: RecipeSerializer<HTBrewingRecipe> = register(
+        RagiumConst.BREWING,
+        RagiumRecipeBiCodecs.BREWING,
     )
 
     @JvmField

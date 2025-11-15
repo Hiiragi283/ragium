@@ -40,9 +40,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     FRACTION("gui", "fraction"),
     PERCENTAGE("gui", "percentage"),
 
-    // Item Name
-    ITEM_POTION("item", "potion", "effect"),
-
     // Item Description
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),
     TOOLTIP_DIMENSION("tooltip", "dimension"),

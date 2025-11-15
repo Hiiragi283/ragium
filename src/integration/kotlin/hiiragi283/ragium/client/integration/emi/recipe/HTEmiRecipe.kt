@@ -17,7 +17,6 @@ import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 
 /**
@@ -60,7 +59,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     }
 
     protected fun addCatalyst(ingredient: HTItemIngredient?) {
-        addCatalyst(ingredient?.let(::catalyst))
+        addCatalyst(ingredient?.let(HTItemIngredient::toEmi))
     }
 
     protected fun addCatalyst(ingredient: EmiIngredient?) {
@@ -90,15 +89,6 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         } else {
             outputs.addAll(stacks)
             renderOutputs.add(EmiIngredient.of(stacks))
-        }
-    }
-
-    protected fun catalyst(ingredient: HTItemIngredient): EmiIngredient = ingredient.toEmi().apply {
-        for (stack: EmiStack in emiStacks) {
-            val itemStack: ItemStack = stack.itemStack
-            if (itemStack.hasCraftingRemainingItem()) {
-                stack.remainder = itemStack.craftingRemainingItem.toEmi()
-            }
         }
     }
 

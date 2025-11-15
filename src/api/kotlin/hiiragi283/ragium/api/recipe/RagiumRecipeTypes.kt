@@ -22,6 +22,9 @@ object RagiumRecipeTypes {
     val ALLOYING: HTDeferredRecipeType<HTMultiRecipeInput, HTMultiItemsToItemRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
+    val BREWING: HTDeferredRecipeType<SingleRecipeInput, HTSingleInputRecipe> = create(RagiumConst.BREWING)
+
+    @JvmField
     val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTSingleInputRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField

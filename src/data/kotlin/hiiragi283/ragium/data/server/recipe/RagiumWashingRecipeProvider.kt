@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
@@ -17,7 +18,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 
@@ -81,7 +81,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
             .washing(
                 itemCreator.fromItem(Items.GLASS_BOTTLE),
                 fluidCreator.water(250),
-            ).addResult(resultHelper.item(PotionContents.createItemStack(Items.POTION, Potions.WATER)))
+            ).addResult(resultHelper.item(HTPotionHelper.createPotion(Items.POTION, Potions.WATER)))
             .save(output, RagiumAPI.id("water_bottle"))
 
         // Concretes

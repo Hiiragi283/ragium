@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
-import hiiragi283.ragium.client.integration.emi.data.HTEmiBrewingEffect
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.world.item.crafting.Recipe
@@ -90,15 +89,8 @@ object RagiumRecipeViewerTypes {
 
     // Elite
     @JvmField
-    val BREWING: HTFakeRecipeViewerType<HTEmiBrewingEffect> = HTFakeRecipeViewerType.create(
-        RagiumBlocks.BREWERY,
-        HTBounds(
-            0,
-            0,
-            4 * 18,
-            1 * 18,
-        ),
-    )
+    val BREWING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
+        machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
     val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =

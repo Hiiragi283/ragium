@@ -51,7 +51,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
@@ -172,17 +174,28 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             },
             RagiumItems.UNIVERSAL_BUNDLE,
         )
+        // Potion Drop
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                if (tint == 0) {
+                    stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color
+                } else {
+                    -1
+                }
+            },
+            RagiumItems.POTION_DROP,
+        )
 
         RagiumAPI.LOGGER.info("Registered ItemColor!")
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
+        event.liquid(RagiumFluidContents.AWKWARD_WATER, Color(-0xc7a23a))
         event.registerFluidType(
             HTSimpleFluidExtensions(vanillaId("block", "honey_block_top")),
             RagiumFluidContents.HONEY.getType(),
         )
-
         event.liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 

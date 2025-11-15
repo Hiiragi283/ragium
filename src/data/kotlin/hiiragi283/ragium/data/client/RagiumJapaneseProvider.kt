@@ -120,9 +120,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
         // Parts
         add(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
-        add(RagiumBlocks.STONE_CASING, "石材筐体")
-        add(RagiumBlocks.REINFORCED_STONE_CASING, "強化石材筐体")
-        add(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "火力発電機")
 
@@ -200,6 +197,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun fluid() {
+        addFluid(RagiumFluidContents.AWKWARD_WATER, "奇妙な水")
         addFluid(RagiumFluidContents.HONEY, "蜂蜜")
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
@@ -229,6 +227,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.RESIN, "樹脂")
@@ -345,6 +344,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun recipeType() {
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
         add(RagiumRecipeTypes.CUTTING, "裁断")
@@ -376,8 +376,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
         // API - Item
-        add(RagiumTranslation.ITEM_POTION, $$"%1$sのポーション")
-
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")

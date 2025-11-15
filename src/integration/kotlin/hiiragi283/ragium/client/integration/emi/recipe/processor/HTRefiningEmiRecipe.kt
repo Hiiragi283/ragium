@@ -29,7 +29,7 @@ class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
                 getPosition(1),
                 getPosition(0),
             )
-        widgets.addSlot(catalyst(0), getPosition(2.5), getPosition(0))
+        widgets.addSlot(catalyst(0), getPosition(2.5), getPosition(0)).catalyst(true)
         // Output
         widgets.addSlot(output(0), getPosition(3.5), getPosition(2))
         widgets

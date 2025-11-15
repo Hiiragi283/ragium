@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.data.server.recipe.RagiumBrewingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
@@ -32,6 +33,7 @@ import net.minecraft.data.recipes.RecipeProvider
 
 class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.output, context.registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        RagiumBrewingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)

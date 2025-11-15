@@ -168,7 +168,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BREWERY }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
+        .addMenu { RagiumMenuTypes.SINGLE_ITEM }
         .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField

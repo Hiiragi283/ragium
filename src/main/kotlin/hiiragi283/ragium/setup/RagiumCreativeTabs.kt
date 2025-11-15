@@ -13,11 +13,14 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
+import hiiragi283.ragium.common.util.HTPotionHelper
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
@@ -45,43 +48,6 @@ object RagiumCreativeTabs {
                 .displayItems(RagiumBlocks.REGISTER.blockEntries)
                 .build()
         }
-
-    /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-        // Natural Resources
-        output.accept(RagiumBlocks.ASH_LOG)
-        output.accept(RagiumBlocks.SILT)
-        output.accept(RagiumBlocks.CRIMSON_SOIL)
-        output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-
-        RagiumBlocks.ORES.values.forEach(output::accept)
-        output.accept(RagiumBlocks.RESONANT_DEBRIS)
-        // Storage Blocks
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
-        // Machines
-        output.acceptItems<HTGeneratorVariant>()
-
-        output.acceptItems(RagiumBlocks.FRAMES)
-        output.acceptItems<HTMachineVariant>()
-
-        output.acceptItems(RagiumBlocks.CASINGS)
-        output.acceptItems<HTDeviceVariant>()
-
-        output.acceptItems<HTDrumVariant>()
-        output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
-        output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
-        output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
-        // Decorations
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            output.accept(variant.base)
-            output.accept(variant.slab)
-            output.accept(variant.stairs)
-            output.accept(variant.wall)
-        }
-
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
-        output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
-    }*/
 
     @JvmField
     val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
@@ -132,7 +98,7 @@ object RagiumCreativeTabs {
             "items",
             RagiumCommonTranslation.CREATIVE_TAB_ITEMS,
             { RagiumItems.LOOT_TICKET },
-        ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
             output.acceptItems(RagiumItems.DRUM_MINECARTS.values)
             // Raginite
@@ -163,6 +129,14 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.DRILL)
 
             output.accept(RagiumItems.POTION_BUNDLE)
+            parameters
+                .holders()
+                .lookupOrThrow(Registries.POTION)
+                .listElements()
+                .forEach { holder: Holder.Reference<Potion> ->
+                    output.accept(HTPotionHelper.createPotion(RagiumItems.POTION_DROP, holder))
+                }
+
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
             // Foods

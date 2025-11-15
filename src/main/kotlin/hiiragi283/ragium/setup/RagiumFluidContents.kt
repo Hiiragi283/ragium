@@ -53,6 +53,9 @@ object RagiumFluidContents {
     //    Vanilla    //
 
     @JvmField
+    val AWKWARD_WATER: HTSimpleFluidContent = register("awkward_water", liquid())
+
+    @JvmField
     val HONEY: HTSimpleFluidContent = register("honey", liquid())
 
     @JvmField
