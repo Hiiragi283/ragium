@@ -37,6 +37,7 @@ import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.common.registries.MekanismChemicals
 import mekanism.common.registries.MekanismItems
 import mekanism.common.tags.MekanismTags
+import net.minecraft.world.item.crafting.Ingredient
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MEKANISM) {
     override fun buildRecipeInternal() {
@@ -249,19 +250,21 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
     @JvmStatic
     private fun enrichOreFromData(data: HTRecipeData, material: HTMaterialLike) {
+        val (ingredient: Ingredient, count: Int) = data.getSizedItemIngredients()[0]
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(data.getSizedIngredient(0)),
-                data.getOutputStacks()[0],
+                itemHelper.from(ingredient, count),
+                data.getItemStacks()[0].first,
             ).build(output, id("processing/${material.asMaterialName()}/from_ore"))
     }
 
     @JvmStatic
     private fun crushFromData(data: HTRecipeData) {
+        val (ingredient: Ingredient, count: Int) = data.getSizedItemIngredients()[0]
         ItemStackToItemStackRecipeBuilder
             .crushing(
-                itemHelper.from(data.getSizedIngredient(0)),
-                data.getOutputStacks()[0],
+                itemHelper.from(ingredient, count),
+                data.getItemStacks()[0].first,
             ).build(output, data.getModifiedId().withPrefix("crushing/"))
     }
 }

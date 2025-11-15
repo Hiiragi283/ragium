@@ -15,6 +15,7 @@ import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
@@ -135,11 +136,13 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     @JvmStatic
     private fun builderFromData(data: HTRecipeData, builder: OritechRecipeBuilder) {
         // Inputs
-        for ((ingredient: Ingredient, _) in data.getIngredients()) {
+        for ((ingredient: Ingredient, _) in data.getSizedItemIngredients()) {
             builder.input(ingredient)
         }
         // Output
-        builder.result(data.getOutputStacks())
+        for ((stack: ItemStack) in data.getItemStacks()) {
+            builder.result(stack)
+        }
         builder.export(output, data.getModifiedId().path)
     }
 }

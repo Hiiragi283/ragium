@@ -284,8 +284,8 @@ sealed class HTRecipeProvider {
     fun pulverizeFromData(data: HTRecipeData) {
         HTItemToObjRecipeBuilder
             .pulverizing(
-                data.getItemIngredient(0, itemCreator),
-                data.getResult(resultHelper, 0),
+                data.getItemIngredients(itemCreator)[0],
+                data.getItemResults()[0].first,
             ).saveModified(output, data.operator)
     }
 }

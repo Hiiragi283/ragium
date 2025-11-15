@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -10,6 +11,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
+import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.Tags
 
 object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KALEIDO_COOKERY) {
@@ -50,9 +52,9 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
     @JvmStatic
     private fun choppingFromData(data: HTRecipeData) {
-        val output: HTRecipeData.OutputEntry = data.outputs[0]
-        HTChoppingBoardRecipeBuilder(output.toImmutable())
-            .addIngredient(data.getIngredient(0))
+        val (output: ItemStack) = data.getItemStacks()[0]
+        HTChoppingBoardRecipeBuilder(output.toImmutableOrThrow())
+            .addIngredient(data.getSizedItemIngredients()[0].first)
             .setCutCount(output.count - 1)
             .save(this.output)
     }

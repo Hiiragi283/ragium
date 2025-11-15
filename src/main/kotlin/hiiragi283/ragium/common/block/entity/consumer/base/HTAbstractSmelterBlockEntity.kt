@@ -28,7 +28,7 @@ abstract class HTAbstractSmelterBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
         // catalyst
         catalystSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTItemStackSlot.Companion.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
         // output
         outputSlot = singleOutput(builder, listener)

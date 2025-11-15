@@ -15,13 +15,13 @@ data object RagiumAccessory : Accessory {
     }
 
     override fun onEquip(stack: ItemStack, reference: SlotReference) {
-        val equipAction: HTEquipAction = stack.itemHolder.getData(RagiumDataMaps.Companion.ARMOR_EQUIP) ?: return
+        val equipAction: HTEquipAction = stack.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP) ?: return
         val entity: Player = reference.entity() as? Player ?: return
         equipAction.onEquip(entity, stack)
     }
 
     override fun onUnequip(stack: ItemStack, reference: SlotReference) {
-        val equipAction: HTEquipAction = stack.itemHolder.getData(RagiumDataMaps.Companion.ARMOR_EQUIP) ?: return
+        val equipAction: HTEquipAction = stack.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP) ?: return
         val entity: Player = reference.entity() as? Player ?: return
         equipAction.onUnequip(entity, stack)
     }

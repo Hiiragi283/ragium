@@ -7,13 +7,16 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MACHINES) {
     override fun buildRecipeInternal() {
@@ -43,8 +46,10 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
     private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
         RagiumConst.ALLOYING,
         AlloySmeltingRecipe(
-            data.getSizedIngredients(),
-            data.getOutputStacks()[0],
+            data.getSizedItemIngredients().map { (ingredient: Ingredient, count: Int) ->
+                SizedIngredient(ingredient, count)
+            },
+            data.getItemStacks()[0].first,
             energy,
             exp,
         ),
@@ -72,11 +77,13 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         EIORecipeBuilder(
             "sag_milling",
             SagMillingRecipe(
-                data.getIngredient(0),
-                data.getOutputs(
-                    { tagKey: TagKey<Item>, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(tagKey, count, chance, false) },
-                    { item: Item, count: Int, chance: Float -> SagMillingRecipe.OutputItem.of(item, count, chance, false) },
-                ),
+                data.getSizedItemIngredients()[0].first,
+                data.itemOutputs.map { (entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) ->
+                    entry.map(
+                        { item: Item -> SagMillingRecipe.OutputItem.of(item, amount, chance, false) },
+                        { tagKey: TagKey<Item> -> SagMillingRecipe.OutputItem.of(tagKey, amount, chance, false) },
+                    )
+                },
                 energy,
                 SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
             ),

@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -22,6 +23,7 @@ import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -73,11 +75,12 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
             val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
             builder.duration(400)
             // Input
-            builder.require(data.getIngredient(0))
+            builder.require(data.getSizedItemIngredients()[0].first)
             // Output
-            data.getOutputs { (item: Item?, _, count: Int, chance: Float) ->
+            for ((entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) in data.itemOutputs) {
+                val item: Item? = entry.getLeft()
                 if (item != null) {
-                    builder.output(chance, item, count)
+                    builder.output(chance, item, amount)
                 }
             }
             builder.build(output)
@@ -95,13 +98,13 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fun fromData(data: HTRecipeData, heat: HeatCondition = HeatCondition.NONE) {
             val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
             // Inputs
-            for ((ingredient: Ingredient, count: Int) in data.getIngredients()) {
+            for ((ingredient: Ingredient, count: Int) in data.getSizedItemIngredients()) {
                 repeat(count) {
                     builder.require(ingredient)
                 }
             }
             // Output
-            builder.output(data.getOutputStacks()[0])
+            builder.output(data.getItemStacks()[0].first)
             builder.requiresHeat(heat)
             builder.build(output)
         }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -18,6 +19,7 @@ import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
@@ -126,9 +128,9 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cuttingFromData(data: HTRecipeData) {
-        val output: HTRecipeData.OutputEntry = data.outputs[0]
-        HTCuttingBoardRecipeBuilder(output.toImmutable(), output.chance)
-            .addIngredient(data.getIngredient(0))
+        val (output: ItemStack, chance: Float) = data.getItemStacks()[0]
+        HTCuttingBoardRecipeBuilder(output.toImmutableOrThrow(), chance)
+            .addIngredient(data.getSizedItemIngredients()[0].first)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(this.output)
     }

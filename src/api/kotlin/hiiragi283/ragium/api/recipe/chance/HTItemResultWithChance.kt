@@ -16,14 +16,16 @@ import net.minecraft.util.RandomSource
 data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
     companion object {
         @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.Companion.composite(
-            HTItemResult.Companion.CODEC.toMap(),
+        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.composite(
+            HTItemResult.CODEC.toMap(),
             HTItemResultWithChance::base,
-            BiCodec.Companion.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
+            BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
             HTItemResultWithChance::chance,
             ::HTItemResultWithChance,
         )
     }
+
+    constructor(pair: Pair<HTItemResult, Float>) : this(pair.first, pair.second)
 
     constructor(base: HTItemResult) : this(base, 1f)
 

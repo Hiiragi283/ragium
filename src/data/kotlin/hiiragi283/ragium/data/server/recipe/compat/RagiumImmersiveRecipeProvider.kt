@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -24,7 +25,6 @@ import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 
 /**
@@ -129,14 +129,16 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     private fun alloyFromData(data: HTRecipeData) {
         val builder: HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder.builder()
         // Inputs
-        for ((ingredient: Ingredient, count: Int) in data.getIngredients()) {
+        for ((ingredient: Ingredient, count: Int) in data.getSizedItemIngredients()) {
             builder.input(ingredient, count)
         }
         // Outputs
-        data.getOutputs(
-            { tagKey: TagKey<Item>, count: Int, _ -> builder.output(tagKey, count) },
-            { item: Item, count: Int, _ -> builder.output(item, count) },
-        )
+        for ((entry: Ior<Item, TagKey<Item>>, count: Int) in data.itemOutputs) {
+            entry.map(
+                { item: Item -> builder.output(item, count) },
+                { tagKey: TagKey<Item> -> builder.output(tagKey, count) },
+            )
+        }
         builder.build(output, data.getModifiedId())
     }
 
@@ -144,19 +146,21 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     private fun crushFromData(data: HTRecipeData) {
         val builder: CrusherRecipeBuilder = CrusherRecipeBuilder.builder()
         // Input
-        builder.input(data.getIngredient(0))
+        builder.input(data.getSizedItemIngredients()[0].first)
         // Outputs
-        data.forEachOutput { i: Int, (item: Item?, tagKey: TagKey<Item>?, count: Int, chance: Float) ->
+        val outputs: List<HTRecipeData.OutputEntry<Item>> = data.itemOutputs
+        for (i: Int in outputs.indices) {
+            val (entry: Ior<Item, TagKey<Item>>, count: Int, chance: Float) = outputs[i]
             when (i) {
-                0 -> when {
-                    tagKey != null -> builder.output(tagKey, count)
-                    item != null -> builder.output(item, count)
-                }
+                0 -> entry.map(
+                    { item: Item -> builder.output(item, count) },
+                    { tagKey: TagKey<Item> -> builder.output(tagKey, count) },
+                )
 
-                else -> when {
-                    tagKey != null -> builder.addSecondary(IngredientWithSize(tagKey, count), chance)
-                    item != null -> builder.addSecondary(IngredientWithSize.of(ItemStack(item, count)), chance)
-                }
+                else -> entry.map(
+                    { item: Item -> builder.addSecondary(IngredientWithSize(Ingredient.of(item), count), chance) },
+                    { tagKey: TagKey<Item> -> builder.addSecondary(IngredientWithSize(tagKey, count), chance) },
+                )
             }
         }
         builder.build(output, data.getModifiedId().withPrefix("${RagiumConst.CRUSHING}/"))

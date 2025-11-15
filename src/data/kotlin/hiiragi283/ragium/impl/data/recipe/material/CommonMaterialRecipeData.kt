@@ -11,7 +11,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(VanillaMaterialKeys.COAL, 2)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
         setSuffix("_from_coal")
     }
 
@@ -20,7 +20,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON)
         fuelOrDust(CommonMaterialKeys.COAL_COKE)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.STEEL)
         setSuffix("_from_coke")
     }
 
@@ -29,7 +29,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.IRON, 2)
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.INVAR, 3)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.INVAR, 3)
     }
 
     @JvmField
@@ -37,7 +37,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.GOLD)
         ingotOrDust(CommonMaterialKeys.Metals.SILVER)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.ELECTRUM, 2)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.ELECTRUM, 2)
     }
 
     @JvmField
@@ -45,7 +45,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.COPPER, 3)
         ingotOrDust(CommonMaterialKeys.Metals.TIN)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRONZE, 4)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRONZE, 4)
     }
 
     @JvmField
@@ -53,7 +53,7 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         ingotOrDust(CommonMaterialKeys.Metals.ZINC)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRASS, 2)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.BRASS, 2)
     }
 
     @JvmField
@@ -61,6 +61,6 @@ data object CommonMaterialRecipeData {
         ingotOrDust(VanillaMaterialKeys.COPPER)
         ingotOrDust(CommonMaterialKeys.Metals.NICKEL)
 
-        addOutput(CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.CONSTANTAN, 2)
+        addOutput(null, CommonMaterialPrefixes.INGOT, CommonMaterialKeys.Alloys.CONSTANTAN, 2)
     }
 }

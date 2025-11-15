@@ -10,10 +10,12 @@ import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -32,6 +34,8 @@ import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -249,8 +253,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Raginite
         with(RagiumMaterialRecipeData.RAGINITE_ORE) {
             HTItemToChancedItemRecipeBuilder
-                .crushing(this.getItemIngredient(0, itemCreator))
-                .addResults(this.getChancedResults(resultHelper))
+                .crushing(this.getItemIngredients(itemCreator)[0])
+                .addResults(this.getItemResults().map(::HTItemResultWithChance))
                 .saveSuffixed(output, "_from_ore")
         }
 
@@ -336,13 +340,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
         HTCombineItemToObjRecipeBuilder
             .alloying(
-                data.getResult(resultHelper, 0),
+                data.getItemResults()[0].first,
                 data.getItemIngredients(itemCreator),
             ).apply {
                 if (applyCondition) {
-                    data.outputs
-                        .mapNotNull(HTRecipeData.OutputEntry::tagKey)
-                        .forEach(this::tagCondition)
+                    for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
+                        entry.getRight()?.let(this::tagCondition)
+                    }
                 }
             }.saveModified(output, data.operator)
     }
