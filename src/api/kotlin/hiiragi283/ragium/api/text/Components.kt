@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
@@ -60,7 +59,3 @@ private fun energyText(amount: Int, capacity: Int): MutableComponent = RagiumTra
 )
 
 fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())
-
-private fun experienceText(amount: Long, capacity: Long): MutableComponent = RagiumTranslation.FRACTION.translate(amount, capacity)
-
-fun experienceText(tank: HTExperienceTank): MutableComponent = experienceText(tank.getAmount(), tank.getCapacity())

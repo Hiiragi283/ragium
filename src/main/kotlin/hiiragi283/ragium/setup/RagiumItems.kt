@@ -13,11 +13,9 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.text.HTTranslation
@@ -52,8 +50,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storage.energy.battery.HTComponentEnergyBattery
-import hiiragi283.ragium.common.storage.experience.HTBottleExperienceHandler
-import hiiragi283.ragium.common.storage.experience.HTComponentExperienceHandler
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storage.fluid.tank.HTComponentFluidTank
 import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
@@ -77,7 +73,6 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
@@ -576,14 +571,6 @@ object RagiumItems {
             DRILL,
         )
 
-        // Exp
-        event.registerItem(
-            HTExperienceCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTBottleExperienceHandler(stack) },
-            Items.GLASS_BOTTLE,
-            Items.EXPERIENCE_BOTTLE,
-        )
-
         RagiumAPI.LOGGER.info("Registered item capabilities!")
     }
 
@@ -610,15 +597,6 @@ object RagiumItems {
         event.registerItem(
             HTEnergyCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, getter(stack)) },
-            *items,
-        )
-    }
-
-    @JvmStatic
-    fun registerExp(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTExperienceTank, vararg items: ItemLike) {
-        event.registerItem(
-            HTExperienceCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentExperienceHandler(stack, getter(stack)) },
             *items,
         )
     }

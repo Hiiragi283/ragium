@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.client.text.RagiumClientTranslation
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -418,7 +417,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管するストレージです。")
         add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
         add(RagiumCommonTranslation.DRUM, "1種類の液体を保管するストレージです。")
-        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値と経験値を相互に保管するストレージです。")
+        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値だけを保管するストレージです。")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"エネルギーネットワークに%1$s FEを追加しました。")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"エネルギーネットワークに%1$s FEだけ保持しています。")
@@ -453,7 +452,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
-        add(HTExperienceHandlerProvider.ForBlocks, "経験値")
         add(HTBlockOwnerProvider, "ブロックの所有者")
 
         add(RagiumClientTranslation.JADE_EXP_STORAGE, "経験値: %s")

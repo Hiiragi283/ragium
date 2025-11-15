@@ -25,7 +25,7 @@ class HTDrumBlockItem(block: HTDrumBlock, properties: Properties) : HTDescriptio
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        val tier: HTDrumTier = getTier() ?: return
+        val tier: HTDrumTier? = getTier()
         val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
         // Fluid Name
         val stack: ImmutableFluidStack? = view.getStack()

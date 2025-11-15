@@ -1,13 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
-import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
-import hiiragi283.ragium.common.storage.experience.tank.HTOrbExperienceTank
-import hiiragi283.ragium.common.storage.holder.HTBasicExperienceTankHolder
+import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -21,16 +15,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity.Tickable(RagiumBlocks.EXP_COLLECTOR, pos, state) {
-    lateinit var tank: HTBasicExperienceTank
-        private set
-
-    override fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder {
-        val builder: HTBasicExperienceTankHolder.Builder = HTBasicExperienceTankHolder.builder(this)
-        tank = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicExperienceTank.output(listener, Long.MAX_VALUE))
-        return builder.build()
-    }
-
+    HTFluidCollectorBlockEntity(RagiumBlocks.EXP_COLLECTOR, pos, state) {
     override fun onRemove(level: Level, pos: BlockPos) {
         super.onRemove(level, pos)
         ExperienceOrb(
@@ -38,15 +23,12 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             pos.x.toDouble(),
             pos.y.toDouble(),
             pos.z.toDouble(),
-            tank.getAmountAsInt(),
-        )
+            HTExperienceHelper.expAmountFromFluid(tank.getAmount()),
+        ).let(level::addFreshEntity)
     }
-
-    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
 
     //    Ticking    //
 
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 範囲内のExp Orbを取得する
         val expOrbs: List<ExperienceOrb> = level.getEntities(
@@ -59,8 +41,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         expOrbs
             .asSequence()
             .filter(ExperienceOrb::isAlive)
-            .map(::HTOrbExperienceTank)
-            .forEach { tank: HTExperienceTank -> HTExperienceHelper.moveExperience(tank, this.tank) }
+            .map(::HTExpOrbTank)
+            .forEach { tank: HTExpOrbTank -> HTStackSlotHelper.moveStack(tank, this.tank) }
         return true
     }
 }

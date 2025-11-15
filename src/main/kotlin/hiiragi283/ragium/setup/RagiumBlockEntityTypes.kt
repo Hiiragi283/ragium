@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
@@ -307,8 +306,6 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        event.setProxyable(HTExperienceCapabilities.block)
-
         // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
 
@@ -369,6 +366,5 @@ object RagiumBlockEntityTypes {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
-        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceHandler)
     }
 }

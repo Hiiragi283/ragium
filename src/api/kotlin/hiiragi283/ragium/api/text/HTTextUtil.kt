@@ -1,8 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package hiiragi283.ragium.api.text
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
@@ -18,9 +20,11 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.fml.ModContainer
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
+import org.apache.commons.lang3.text.WordUtils
 import java.text.NumberFormat
 import java.util.function.Consumer
 
@@ -38,14 +42,26 @@ object HTTextUtil {
     @JvmStatic
     private val DOUBLE_FORMAT: NumberFormat = NumberFormat.getNumberInstance()
 
+    /**
+     * @see dev.emi.emi.platform.neoforge.EmiAgnosNeoForge.getModNameAgnos
+     */
+    @JvmStatic
+    fun getModName(modId: String): String = when (modId) {
+        RagiumConst.COMMON -> "Common"
+        else ->
+            ModList
+                .get()
+                .getModContainerById(modId)
+                .map(ModContainer::getModInfo)
+                .map(IModInfo::getDisplayName)
+                .orElse(WordUtils.capitalizeFully(modId.replace(oldChar = '_', newChar = ' ')))
+    }
+
+    //    Tooltips    //
+
     @JvmStatic
     fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
         battery.let(::energyText).let(consumer::accept)
-    }
-
-    @JvmStatic
-    fun addExperienceTooltip(tank: HTExperienceTank, consumer: Consumer<Component>) {
-        tank.let(::experienceText).let(consumer::accept)
     }
 
     @JvmStatic
@@ -68,12 +84,7 @@ object HTTextUtil {
             consumer.accept(literalText(stack.holder().registeredName).withStyle(ChatFormatting.DARK_GRAY))
         }
         // Mod Name
-        val firstMod: IModInfo = ModList
-            .get()
-            .getModFileById(stack.getId().namespace)
-            .mods
-            .firstOrNull() ?: return
-        consumer.accept(literalText(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
+        consumer.accept(literalText(getModName(stack.getId().namespace)).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
     }
 
     /**

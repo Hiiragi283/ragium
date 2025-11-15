@@ -4,13 +4,6 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -20,26 +13,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.FluidTags
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.state.BlockState
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity.Tickable(RagiumBlocks.WATER_COLLECTOR, pos, state) {
-    lateinit var tank: HTVariableFluidStackTank
-        private set
-
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        tank = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
-        )
-        return builder.build()
-    }
-
-    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
-
+    HTFluidCollectorBlockEntity(RagiumBlocks.WATER_COLLECTOR, pos, state) {
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {

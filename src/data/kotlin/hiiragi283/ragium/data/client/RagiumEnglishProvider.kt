@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTExperienceHandlerProvider
 import hiiragi283.ragium.client.text.RagiumClientTranslation
 import hiiragi283.ragium.common.integration.RagiumDelightAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -415,7 +414,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.CRATE, "A storage which stores one type of item.")
         add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
         add(RagiumCommonTranslation.DRUM, "A storage which stores one type of fluid.")
-        add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores Experience Liquid and Experience for each.")
+        add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores only Experience Liquid.")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"Added %1$s FE into the energy network.")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"%1$s FE stored in the energy network.")
@@ -450,7 +449,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
-        add(HTExperienceHandlerProvider.ForBlocks, "Experience Handler")
         add(HTBlockOwnerProvider, "Block Owner")
 
         add(RagiumClientTranslation.JADE_EXP_STORAGE, "Experience: %s")

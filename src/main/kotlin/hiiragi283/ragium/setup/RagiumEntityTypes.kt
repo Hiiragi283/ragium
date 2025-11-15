@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.entity.HTBlastCharge
@@ -86,6 +85,5 @@ object RagiumEntityTypes {
         event.registerEntity(HTItemCapabilities.entity, type1, HTHandlerProvider::getItemHandler)
         event.registerEntity(HTFluidCapabilities.entity, type1, HTHandlerProvider::getFluidHandler)
         event.registerEntity(HTEnergyCapabilities.entity, type1, HTHandlerProvider::getEnergyStorage)
-        event.registerEntity(HTExperienceCapabilities.entity, type1, HTHandlerProvider::getExperienceHandler)
     }
 }

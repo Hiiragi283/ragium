@@ -19,11 +19,10 @@ import hiiragi283.ragium.common.block.entity.consumer.base.HTAbstractSmelterBloc
 import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.consumer.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
-import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
@@ -93,7 +92,7 @@ object RagiumMenuTypes {
     val EXTRACTOR: DeferredMachineMenu<HTExtractorBlockEntity> = registerMachine("extractor")
 
     @JvmField
-    val EXP_COLLECTOR: DeferredBEMenu<HTExpCollectorBlockEntity> = registerBE("exp_collector")
+    val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
 
     @JvmField
     val ITEM_BUFFER: DeferredBEMenu<HTItemBufferBlockEntity> = registerBE("item_buffer")
@@ -121,9 +120,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")
-
-    @JvmField
-    val WATER_COLLECTOR: DeferredBEMenu<HTWaterCollectorBlockEntity> = registerBE("water_collector")
 
     //    Extensions    //
 

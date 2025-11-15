@@ -210,7 +210,7 @@ object RagiumBlockTypes {
     @JvmField
     val WATER_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.WATER_COLLECTOR }
-        .addMenu { RagiumMenuTypes.WATER_COLLECTOR }
+        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
         .build()
 
@@ -218,7 +218,7 @@ object RagiumBlockTypes {
     @JvmField
     val EXP_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.EXP_COLLECTOR }
-        .addMenu { RagiumMenuTypes.EXP_COLLECTOR }
+        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.ADVANCED)
         .build()
 

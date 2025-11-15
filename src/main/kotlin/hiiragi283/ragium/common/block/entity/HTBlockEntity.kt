@@ -11,13 +11,9 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
-import hiiragi283.ragium.api.storage.experience.HTExperienceHandler
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
-import hiiragi283.ragium.api.storage.experience.IExperienceHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
-import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -26,13 +22,10 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
 import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
-import hiiragi283.ragium.common.inventory.slot.HTLongSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
-import hiiragi283.ragium.common.storage.experience.tank.HTBasicExperienceTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
-import hiiragi283.ragium.common.storage.resolver.HTExperienceHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
@@ -70,7 +63,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     ),
     Nameable,
     HTEnergyHandler,
-    HTExperienceHandler,
     HTFluidHandler,
     HTHandlerProvider,
     HTItemHandler,
@@ -197,14 +189,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
                 menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
             }
         }
-        // Experience Tanks
-        if (hasExperienceHandler()) {
-            for (tank: HTExperienceTank in this.getExpTanks(this.getExperienceSideFor())) {
-                if (tank is HTBasicExperienceTank) {
-                    menu.track(HTLongSyncSlot(tank::getAmount, tank::setAmountUnchecked))
-                }
-            }
-        }
     }
 
     //    Nameable    //
@@ -232,7 +216,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected val fluidHandlerManager: HTFluidHandlerManager?
     protected val energyHandlerManager: HTEnergyStorageManager?
-    protected val experienceHandlerManager: HTExperienceHandlerManager?
     protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
@@ -240,7 +223,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         energyHandlerManager = initializeEnergyHandler(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
-        experienceHandlerManager = initializeExperienceHandler(::setOnlySave)?.let { HTExperienceHandlerManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
 
@@ -277,16 +259,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun getEnergyBattery(side: Direction?): HTEnergyBattery? = energyHandlerManager?.getContainers(side)?.firstOrNull()
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = energyHandlerManager?.resolve(direction)
-
-    // Experience
-
-    protected open fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder? = null
-
-    final override fun hasExperienceHandler(): Boolean = experienceHandlerManager?.canHandle() ?: false
-
-    final override fun getExpTanks(side: Direction?): List<HTExperienceTank> = experienceHandlerManager?.getContainers(side) ?: listOf()
-
-    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? = experienceHandlerManager?.resolve(direction)
 
     // Item
 
