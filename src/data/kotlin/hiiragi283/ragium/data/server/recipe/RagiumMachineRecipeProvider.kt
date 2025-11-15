@@ -59,6 +59,28 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', Items.BLAST_FURNACE)
             .save(output)
         // Elite
+        for (tier: HTCircuitTier in HTCircuitTier.entries) {
+            HTShapedRecipeBuilder
+                .misc(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
+                .pattern(
+                    "AAA",
+                    "BCB",
+                ).define('A', RagiumItems.SOLAR_PANEL)
+                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('C', CommonMaterialPrefixes.CIRCUIT, tier)
+                .savePrefixed(output, "${tier.asMaterialName()}_")
+        }
+
+        HTShapedRecipeBuilder
+            .misc(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            .pattern(
+                "AAA",
+                " B ",
+                "CCC",
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .save(output)
         // Ultimate
         HTShapedRecipeBuilder
             .misc(RagiumBlocks.ENCHANTMENT_GENERATOR)

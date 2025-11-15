@@ -1,12 +1,14 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
+import hiiragi283.ragium.api.block.type.HTBlockType
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
+import net.minecraft.world.phys.shapes.Shapes
 
 /**
  * @see mekanism.common.registries.MekanismBlockTypes
@@ -33,6 +35,12 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.THERMAL_GENERATOR)
 
     // Elite
+    @JvmField
+    val SOLAR_PANEL_UNIT: HTBlockType = HTBlockType
+        .builder()
+        .addShape(Shapes.box(0.0, 0.0, 0.0, 1.0, 1 / 4.0, 1.0))
+        .build(RagiumCommonTranslation.SOLAR_PANEL_UNIT)
+
     @JvmField
     val SOLAR_PANEL_CONTROLLER: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.SOLAR_PANEL_CONTROLLER }

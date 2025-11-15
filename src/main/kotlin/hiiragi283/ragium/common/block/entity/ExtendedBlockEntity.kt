@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -20,7 +18,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.network.PacketDistributor
-import java.util.function.Consumer
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -54,12 +51,18 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     @Suppress("DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
         super.setBlockState(blockState)
-        afterUpdateState(blockState)
+        updatedState(blockState)
     }
 
     final override fun setLevel(level: Level) {
         super.setLevel(level)
-        afterLevelInit(level)
+        updateLevel(level, blockPos)
+    }
+
+    final override fun setRemoved() {
+        super.setRemoved()
+        val level: Level = this.level ?: return
+        onRemove(level, blockPos)
     }
 
     //    HTContentListener    //
@@ -102,12 +105,17 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * [BlockEntity.setBlockState]の後で呼び出されます。
      */
-    open fun afterUpdateState(state: BlockState) {}
+    open fun updatedState(state: BlockState) {}
 
     /**
      * [BlockEntity.setLevel]の後で呼び出されます。
      */
-    open fun afterLevelInit(level: Level) {}
+    open fun updateLevel(level: Level, pos: BlockPos) {}
+
+    /**
+     * [BlockEntity.setRemoved]の後で呼び出されます。
+     */
+    open fun onRemove(level: Level, pos: BlockPos) {}
 
     /**
      * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
@@ -115,15 +123,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      */
     open fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
         buf.writeBlockPos(getBlockPos())
-    }
-
-    /**
-     * ブロックが破壊されたときにインベントリの中身をドロップします。
-     */
-    open fun dropInventory(consumer: Consumer<ImmutableItemStack>) {}
-
-    open fun onRemove(level: Level, pos: BlockPos) {
-        dropInventory { stack: ImmutableItemStack -> HTItemDropHelper.dropStackAt(level, pos, stack) }
     }
 
     /**

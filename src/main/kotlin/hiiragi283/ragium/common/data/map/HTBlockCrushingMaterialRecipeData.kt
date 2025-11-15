@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl.data.map
+package hiiragi283.ragium.common.data.map
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import kotlin.collections.iterator
 
 data object HTBlockCrushingMaterialRecipeData : HTMaterialRecipeData {
     @JvmField

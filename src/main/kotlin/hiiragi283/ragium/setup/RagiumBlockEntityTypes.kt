@@ -43,7 +43,7 @@ import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
@@ -110,9 +110,9 @@ object RagiumBlockEntityTypes {
 
     // Elite
     @JvmField
-    val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = registerTick(
+    val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarPanelControllerBlockEntity> = registerTick(
         "solar_panel_controller",
-        ::HTSolarGeneratorBlockEntity,
+        ::HTSolarPanelControllerBlockEntity,
     )
 
     // Ultimate

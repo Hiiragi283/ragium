@@ -17,7 +17,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 
 object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
@@ -91,10 +90,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.GLASS_BOTTLE),
-                itemCreator.fromVanilla(
-                    Ingredient.of(Items.DRAGON_HEAD),
-                    HTEntityTypeIngredient.of(EntityType.ENDER_DRAGON),
-                ),
+                itemCreator.fromItem(Items.DRAGON_HEAD),
                 resultHelper.item(Items.DRAGON_BREATH),
             ).save(output)
         // Undying Totem

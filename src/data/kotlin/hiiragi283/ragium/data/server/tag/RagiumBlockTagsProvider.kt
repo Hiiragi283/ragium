@@ -70,6 +70,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.COMBUSTION_GENERATOR)
 
+            add(RagiumBlocks.SOLAR_PANEL_UNIT)
             add(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
 
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
@@ -217,7 +218,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
         // WIP
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }

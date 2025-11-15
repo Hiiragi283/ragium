@@ -1,21 +1,21 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
-import com.enderio.base.api.soul.Soul
-import com.enderio.base.common.init.EIODataComponents
-import com.enderio.base.common.init.EIOItems
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.item.createItemStack
+import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.IngredientType
 import java.util.stream.Stream
@@ -41,19 +41,19 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
     }
 
     override fun test(stack: ItemStack): Boolean {
+        // Custom Matching
+        val matches: Boolean? = stack.itemHolder
+            .getData(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+            ?.getEntityType(stack)
+            ?.`is`(holderSet)
+        if (matches != null) return matches
+        // Default Matching
         for (holder: Holder<EntityType<*>> in holderSet) {
             val egg: SpawnEggItem = SpawnEggItem.byId(holder.value()) ?: continue
             if (stack.`is`(egg)) {
                 return true
             }
         }
-        if (ModList.get().isLoaded(RagiumConst.EIO_BASE)) {
-            val matchSoul: Boolean? = stack.get(EIODataComponents.SOUL)?.entityType()?.`is`(holderSet)
-            if (matchSoul == true) {
-                return true
-            }
-        }
-
         return false
     }
 
@@ -62,9 +62,15 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
             val entityType: EntityType<*> = holder.value()
             // Spawn Egg
             SpawnEggItem.byId(entityType)?.let(::ItemStack)?.let(this::add)
-            // Soul vial if Ender IO loaded
-            if (ModList.get().isLoaded(RagiumConst.EIO_BASE)) {
-                add(createItemStack(EIOItems.SOUL_VIAL, EIODataComponents.SOUL, Soul.of(entityType)))
+            // Custom Stacks
+            val registry: DefaultedRegistry<Item> = BuiltInRegistries.ITEM
+            val dataMap: Map<ResourceKey<Item>, HTSubEntityTypeIngredient> = registry.getDataMap(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+            for ((key: ResourceKey<Item>, ingredient: HTSubEntityTypeIngredient) in dataMap) {
+                registry
+                    .getHolder(key)
+                    .map { item: Holder.Reference<Item> -> ingredient.getPreviewStack(item, holder) }
+                    .filter { stack: ItemStack -> !stack.isEmpty }
+                    .ifPresent(this::add)
             }
         }
     }.stream()

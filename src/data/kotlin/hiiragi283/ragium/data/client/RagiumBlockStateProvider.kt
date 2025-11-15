@@ -185,6 +185,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
         builtIn(RagiumBlocks.COMBUSTION_GENERATOR, advancedCasing)
+        altModelBlock(RagiumBlocks.SOLAR_PANEL_UNIT)
         builtIn(RagiumBlocks.ENCHANTMENT_GENERATOR, ultimateMachine)
 
         // Processor
@@ -261,10 +262,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
     // Block
     private fun simpleBlockAndItem(block: HTDeferredBlock<*, *>, model: ModelFile = cubeAll(block.get())) {
         simpleBlockWithItem(block.get(), model)
-    }
-
-    private inline fun simpleBlockAndItem(block: HTDeferredBlock<*, *>, factory: (HTDeferredBlock<*, *>) -> ModelFile) {
-        simpleBlockAndItem(block, factory(block))
     }
 
     private fun layeredBlock(block: HTDeferredBlock<*, *>, layer0: ResourceLocation, layer1: ResourceLocation) {

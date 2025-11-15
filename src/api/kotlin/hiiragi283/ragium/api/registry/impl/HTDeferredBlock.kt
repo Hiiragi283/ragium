@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.HTDoubleDeferredHolder
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -12,6 +13,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 typealias HTBasicDeferredBlock<BLOCK> = HTDeferredBlock<BLOCK, HTBlockItem<BLOCK>>
+
+typealias HTDescriptionDeferredBlock<BLOCK> = HTDeferredBlock<BLOCK, HTDescriptionBlockItem<BLOCK>>
 
 typealias HTSimpleDeferredBlock = HTBasicDeferredBlock<Block>
 

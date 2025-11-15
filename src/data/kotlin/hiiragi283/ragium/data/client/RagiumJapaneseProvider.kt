@@ -124,6 +124,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
 
+        add(RagiumBlocks.SOLAR_PANEL_UNIT, "太陽光パネルユニット")
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "太陽光パネルコントローラー")
 
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
@@ -389,7 +390,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電する機械です。")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")
-        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "接続された太陽光パネルから発電する機械です。")
+        add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "太陽光パネルコントローラーと組み合わせて使用します。")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "9x9の範囲にある太陽光パネルユニットの台数から発電する機械です。")
         add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "エンチャント本や液体経験値から発電する機械です。")
         add(RagiumCommonTranslation.NUCLEAR_REACTOR, "核燃料から発電する機械です。")
 

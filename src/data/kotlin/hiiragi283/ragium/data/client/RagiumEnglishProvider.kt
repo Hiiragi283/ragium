@@ -133,6 +133,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
 
+        add(RagiumBlocks.SOLAR_PANEL_UNIT, "Solar Panel Unit")
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "Solar Panel Controller")
 
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
@@ -389,7 +390,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels or hot fluids.")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")
-        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "A machine which generates energy from connected solar panels.")
+        add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "A unit to use with Solar Panel Controller.")
+        add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "A machine which generates energy from connected Solar Panel Units.")
         add(RagiumCommonTranslation.ENCHANTMENT_GENERATOR, "A machine which generates energy from enchanted books or experience fluids.")
         add(RagiumCommonTranslation.NUCLEAR_REACTOR, "A machine which generates energy from nuclear fuels.")
 

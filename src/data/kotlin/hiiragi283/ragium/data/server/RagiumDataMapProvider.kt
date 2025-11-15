@@ -1,12 +1,14 @@
 package hiiragi283.ragium.data.server
 
 import com.enderio.base.common.init.EIOBlocks
+import com.enderio.base.common.init.EIOItems
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
@@ -18,13 +20,14 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipeData
+import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipeData
+import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipeData
+import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipeData
+import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.map.HTBlockCrushingMaterialRecipeData
-import hiiragi283.ragium.impl.data.map.HTCompressingMaterialRecipeData
-import hiiragi283.ragium.impl.data.map.HTCrushingMaterialRecipeData
-import hiiragi283.ragium.impl.data.map.HTRawSmeltingMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
@@ -64,6 +67,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         nuclearFuels()
 
         armorEquip()
+        subEntityIngredient()
 
         materialRecipe()
     }
@@ -146,6 +150,19 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun armorEquip() {
         builder(RagiumDataMaps.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
+    }
+
+    private fun subEntityIngredient() {
+        builder(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+            .addHolder(Items.DRAGON_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.ENDER_DRAGON))
+            .addHolder(Items.SNIFFER_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.SNIFFER))
+            // EIO
+            .add(
+                EIOItems.SOUL_VIAL,
+                HTSoulVialEntityIngredient,
+                false,
+                ModLoadedCondition(RagiumConst.EIO_BASE),
+            )
     }
 
     private fun materialRecipe() {

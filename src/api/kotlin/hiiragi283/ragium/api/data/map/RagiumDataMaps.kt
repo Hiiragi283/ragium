@@ -49,6 +49,9 @@ interface RagiumDataMaps {
         val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> = INSTANCE.armorEquipType
 
         @JvmField
+        val SUB_ENTITY_INGREDIENT: DataMapType<Item, HTSubEntityTypeIngredient> = INSTANCE.subEntityIngredientType
+
+        @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> = INSTANCE.materialRecipeType
     }
 
@@ -61,6 +64,7 @@ interface RagiumDataMaps {
     val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
 
     val armorEquipType: DataMapType<Item, HTEquipAction>
+    val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient>
 
     val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData>
 
@@ -82,6 +86,15 @@ interface RagiumDataMaps {
     ): DATA?
 
     /**
+     * 指定した値からエンチャントでドロップするモブの頭を取得します。
+     */
+    fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
+        getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
+
+    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
+        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
+
+    /**
      * 指定した値から火力発電機の液体燃料の消費量を取得します。
      */
     fun getThermalFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
@@ -98,13 +111,4 @@ interface RagiumDataMaps {
      */
     fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
-
-    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
-        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
-
-    /**
-     * 指定した値からエンチャントでドロップするモブの頭を取得します。
-     */
-    fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
-        getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
 }

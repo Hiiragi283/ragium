@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.IdMapDataMap
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
@@ -50,6 +51,8 @@ class RagiumDataMapsImpl : RagiumDataMaps {
     override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
 
     override val armorEquipType: DataMapType<Item, HTEquipAction> = create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
+    override val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient> =
+        create("sub_entity_ingredient", Registries.ITEM, HTSubEntityTypeIngredient.CODEC)
 
     override val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> =
         AdvancedDataMapType

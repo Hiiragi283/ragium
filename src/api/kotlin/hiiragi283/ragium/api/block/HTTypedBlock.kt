@@ -2,18 +2,22 @@ package hiiragi283.ragium.api.block
 
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTShapeBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAllAttributes
 import hiiragi283.ragium.api.block.attribute.getAttribute
 import hiiragi283.ragium.api.block.type.HTBlockType
 import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
 import java.util.function.UnaryOperator
 
 /**
@@ -59,6 +63,13 @@ open class HTTypedBlock<TYPE : HTBlockType>(protected val type: TYPE, properties
             }
         }
     }
+
+    final override fun getShape(
+        state: BlockState,
+        level: BlockGetter,
+        pos: BlockPos,
+        context: CollisionContext,
+    ): VoxelShape = type().get<HTShapeBlockAttribute>()?.shape ?: super.getShape(state, level, pos, context)
 
     final override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
         var state: BlockState = super.getStateForPlacement(context) ?: return null

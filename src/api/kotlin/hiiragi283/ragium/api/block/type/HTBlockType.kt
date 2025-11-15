@@ -1,10 +1,12 @@
 package hiiragi283.ragium.api.block.type
 
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTShapeBlockAttribute
 import hiiragi283.ragium.api.collection.AttributeMap
 import hiiragi283.ragium.api.collection.MutableAttributeMap
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
+import net.minecraft.world.phys.shapes.VoxelShape
 import java.util.function.BiFunction
 
 /**
@@ -72,6 +74,8 @@ open class HTBlockType(val description: HTTranslation, private val attributeMap:
             }
             return self()
         }
+
+        fun addShape(shape: VoxelShape): BUILDER = add(HTShapeBlockAttribute(shape))
 
         /**
          * 指定された[attributes]を追加します。
