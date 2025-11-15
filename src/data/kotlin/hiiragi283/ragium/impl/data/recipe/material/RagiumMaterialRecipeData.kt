@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -7,7 +8,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.Tags
 
 data object RagiumMaterialRecipeData {
@@ -95,33 +98,118 @@ data object RagiumMaterialRecipeData {
         addOutput(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
     }
 
-    //    Nether    //
+    //    Crimson    //
 
     @JvmField
     val CRIMSON_ORE: HTRecipeData = createGemOre(RagiumMaterialKeys.CRIMSON_CRYSTAL)
 
     @JvmField
+    val CRIMSON_SAP: HTRecipeData = HTRecipeData.create {
+        addInput(ItemTags.CRIMSON_STEMS)
+
+        addOutput(RagiumFluidContents.CRIMSON_SAP, RagiumConst.LOG_TO_SAP)
+
+        setSuffix("_from_stem")
+    }
+
+    @JvmField
+    val CRIMSON_BLOOD: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.CRIMSON_SAP, 1000)
+
+        addOutput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.SAP_TO_MOLTEN)
+
+        setSuffix("_from_sap")
+    }
+
+    @JvmField
+    val CRIMSON_CRYSTAL: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.MOLTEN_TO_GEM)
+
+        addOutput(
+            RagiumItems.getGem(RagiumMaterialKeys.CRIMSON_CRYSTAL),
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.CRIMSON_CRYSTAL,
+        )
+    }
+
+    //    Warped    //
+
+    @JvmField
     val WARPED_ORE: HTRecipeData = createGemOre(RagiumMaterialKeys.WARPED_CRYSTAL)
+
+    @JvmField
+    val WARPED_SAP: HTRecipeData = HTRecipeData.create {
+        addInput(ItemTags.WARPED_STEMS)
+
+        addOutput(RagiumFluidContents.WARPED_SAP, RagiumConst.LOG_TO_SAP)
+
+        setSuffix("_from_stem")
+    }
+
+    @JvmField
+    val DEW_OF_THE_WARP: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.WARPED_SAP, 1000)
+
+        addOutput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.SAP_TO_MOLTEN)
+
+        setSuffix("_from_sap")
+    }
+
+    @JvmField
+    val WARPED_CRYSTAL: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.MOLTEN_TO_GEM)
+
+        addOutput(
+            RagiumItems.getGem(RagiumMaterialKeys.WARPED_CRYSTAL),
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.WARPED_CRYSTAL,
+        )
+    }
 
     //    Eldritch    //
 
     @JvmField
-    val ELDRITCH_PEARL: HTRecipeData = HTRecipeData.create {
+    val ELDRITCH_FLUX: HTRecipeData = HTRecipeData.create {
         addInput(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
-        gemOrDust(RagiumMaterialKeys.CRIMSON_CRYSTAL)
-        gemOrDust(RagiumMaterialKeys.WARPED_CRYSTAL)
+        addInput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.MOLTEN_TO_GEM / 2)
+        addInput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.MOLTEN_TO_GEM / 2)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+        addOutput(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM)
     }
 
     @JvmField
-    val ELDRITCH_PEARL_BULK: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, count = 3)
-        addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-        addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+    val ELDRITCH_FLUX_CRIMSON: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, count = 2)
+        gemOrDust(RagiumMaterialKeys.CRIMSON_CRYSTAL)
+        addInput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.MOLTEN_TO_GEM)
 
-        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 9)
-        setSuffix("_bulk")
+        addOutput(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM * 2)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+
+        setSuffix("_crimson")
+    }
+
+    @JvmField
+    val ELDRITCH_FLUX_WARPED: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, count = 2)
+        gemOrDust(RagiumMaterialKeys.WARPED_CRYSTAL)
+        addInput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.MOLTEN_TO_GEM)
+
+        addOutput(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM * 2)
+        addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+
+        setSuffix("_warped")
+    }
+
+    @JvmField
+    val ELDRITCH_PEARL: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM)
+
+        addOutput(
+            RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL),
+            CommonMaterialPrefixes.GEM,
+            RagiumMaterialKeys.ELDRITCH_PEARL,
+        )
     }
 
     //    Other    //

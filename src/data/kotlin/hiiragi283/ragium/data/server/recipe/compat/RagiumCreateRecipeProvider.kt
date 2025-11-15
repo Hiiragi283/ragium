@@ -25,8 +25,9 @@ import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CREATE) {
     override fun buildRecipeInternal() {
@@ -75,7 +76,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
             val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
             builder.duration(400)
             // Input
-            builder.require(data.getSizedItemIngredients()[0].first)
+            builder.require(data.getIngredients()[0])
             // Output
             for ((entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) in data.itemOutputs) {
                 val item: Item? = entry.getLeft()
@@ -98,13 +99,18 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fun fromData(data: HTRecipeData, heat: HeatCondition = HeatCondition.NONE) {
             val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
             // Inputs
-            for ((ingredient: Ingredient, count: Int) in data.getSizedItemIngredients()) {
-                repeat(count) {
-                    builder.require(ingredient)
+            for (ingredient: SizedIngredient in data.getSizedItemIngredients()) {
+                repeat(ingredient.count()) {
+                    builder.require(ingredient.ingredient())
                 }
             }
+            data.getSizedFluidIngredients().forEach(builder::require)
             // Output
-            builder.output(data.getItemStacks()[0].first)
+            for ((stack: ItemStack) in data.getItemStacks()) {
+                builder.output(stack)
+            }
+            data.getFluidStacks().forEach(builder::output)
+
             builder.requiresHeat(heat)
             builder.build(output)
         }
@@ -117,8 +123,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
         fromData(RagiumMaterialRecipeData.DEEP_STEEL, HeatCondition.SUPERHEATED)
 
-        fromData(RagiumMaterialRecipeData.ELDRITCH_PEARL, HeatCondition.SUPERHEATED)
-        fromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK, HeatCondition.SUPERHEATED)
+        fromData(RagiumMaterialRecipeData.ELDRITCH_FLUX, HeatCondition.SUPERHEATED)
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
         fromData(RagiumMaterialRecipeData.IRIDESCENTIUM, HeatCondition.SUPERHEATED)

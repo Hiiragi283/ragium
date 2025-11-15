@@ -130,8 +130,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     private fun cuttingFromData(data: HTRecipeData) {
         val (output: ItemStack, chance: Float) = data.getItemStacks()[0]
         HTCuttingBoardRecipeBuilder(output.toImmutableOrThrow(), chance)
-            .addIngredient(data.getSizedItemIngredients()[0].first)
+            .addIngredient(data.getIngredients()[0])
             .addIngredient(CommonTags.TOOLS_KNIFE)
-            .save(this.output)
+            .save(this.output, data.getModifiedId())
     }
 }

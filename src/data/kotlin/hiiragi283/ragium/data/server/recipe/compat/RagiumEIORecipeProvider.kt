@@ -2,58 +2,50 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
+import com.enderio.machines.common.blocks.vat.FermentingRecipe
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.Recipe
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MACHINES) {
     override fun buildRecipeInternal() {
         alloys()
         sagMill()
+        fermenting()
     }
 
     //    Alloy    //
 
     private fun alloys() {
-        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800).save(output)
-        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800)
+        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600)
 
-        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200).save(output)
-        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800)
 
-        alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600).save(output)
+        alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600)
 
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL, 5600).save(output)
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK, 5600).saveSuffixed(output, "_alt")
-
-        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800).save(output)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400).save(output)
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400)
     }
 
     @JvmStatic
-    private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f): EIORecipeBuilder<*> = EIORecipeBuilder(
-        RagiumConst.ALLOYING,
-        AlloySmeltingRecipe(
-            data.getSizedItemIngredients().map { (ingredient: Ingredient, count: Int) ->
-                SizedIngredient(ingredient, count)
-            },
-            data.getItemStacks()[0].first,
-            energy,
-            exp,
-        ),
-    ) { recipe: AlloySmeltingRecipe -> recipe.output().toImmutableOrThrow().getId() }
+    private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f) {
+        save(
+            data.getModifiedId().withPrefix("${RagiumConst.ALLOYING}/"),
+            AlloySmeltingRecipe(
+                data.getSizedItemIngredients(),
+                data.getItemStacks()[0].first,
+                energy,
+                exp,
+            ),
+        )
+    }
 
     //    Sag Mill    //
 
@@ -74,10 +66,10 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
 
     @JvmStatic
     private fun sagMillFromData(data: HTRecipeData, energy: Int = 2400) {
-        EIORecipeBuilder(
-            "sag_milling",
+        save(
+            data.getModifiedId().withPrefix("sag_milling/"),
             SagMillingRecipe(
-                data.getSizedItemIngredients()[0].first,
+                data.getIngredients()[0],
                 data.itemOutputs.map { (entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) ->
                     entry.map(
                         { item: Item -> SagMillingRecipe.OutputItem.of(item, amount, chance, false) },
@@ -87,25 +79,34 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
                 energy,
                 SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
             ),
-        ) { recipe: SagMillingRecipe ->
-            recipe.outputs()[0].output.map(
-                { stack: ItemStack -> stack.toImmutableOrThrow().getId() },
-                { tagOutput: SagMillingRecipe.OutputItem.SizedTagOutput ->
-                    tagOutput.itemTag.location
-                },
-            )
-        }.save(output)
+        )
     }
 
-    //    Extensions    //
+    //    Vat    //
 
-    private class EIORecipeBuilder<RECIPE : Recipe<*>>(
-        prefix: String,
-        private val recipe: RECIPE,
-        private val factory: (RECIPE) -> ResourceLocation,
-    ) : HTRecipeBuilder.Prefixed(prefix) {
-        override fun createRecipe(): RECIPE = recipe
+    @JvmStatic
+    private fun fermenting() {
+        fermentFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
+        fermentFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
+    }
 
-        override fun getPrimalId(): ResourceLocation = recipe.let(factory)
+    @JvmStatic
+    private fun fermentFromData(data: HTRecipeData, ticks: Int = 200) {
+        save(
+            data.getModifiedId().withPrefix("fermenting/"),
+            FermentingRecipe(
+                data.getSizedFluidIngredients()[0],
+                data.itemInputs[0]
+                    .entry
+                    .right()
+                    .orElse(listOf())[0],
+                data.itemInputs[1]
+                    .entry
+                    .right()
+                    .orElse(listOf())[0],
+                data.getFluidStacks()[0],
+                ticks,
+            ),
+        )
     }
 }

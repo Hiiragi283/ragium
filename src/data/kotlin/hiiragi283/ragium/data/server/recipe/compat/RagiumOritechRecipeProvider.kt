@@ -1,25 +1,27 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.material.Fluid
 import rearth.oritech.api.recipe.AtomicForgeRecipeBuilder
-import rearth.oritech.api.recipe.CentrifugeRecipeBuilder
+import rearth.oritech.api.recipe.CoolerRecipeBuilder
 import rearth.oritech.api.recipe.FoundryRecipeBuilder
 import rearth.oritech.api.recipe.LaserRecipeBuilder
 import rearth.oritech.api.recipe.OritechRecipeBuilder
@@ -29,7 +31,7 @@ import rearth.oritech.api.recipe.PulverizerRecipeBuilder
 object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.ORITECH) {
     override fun buildRecipeInternal() {
         atomicForge()
-        centrifuge()
+        cooler()
         foundry()
         laser()
         particle()
@@ -46,18 +48,25 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .result(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .time(20)
             .export(output, RagiumMaterialKeys.RAGI_CRYSTAL)
-
-        atomicFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        
+        AtomicForgeRecipeBuilder
+            .build()
+            .input(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
+            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .result(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL))
+            .time(20)
+            .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
+        
         atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
         atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
-    private fun centrifuge() {
-        CentrifugeRecipeBuilder
-            .build()
-            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .fluidOutput(RagiumFluidContents.ELDRITCH_FLUX)
+    private fun cooler() {
+        coolerFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
+        coolerFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
+        coolerFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
     }
 
     @JvmStatic
@@ -110,10 +119,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     fun OritechRecipeBuilder.result(item: HTItemHolderLike, count: Int = 1): OritechRecipeBuilder = result(item.toStack(count))
 
-    fun OritechRecipeBuilder.fluidInput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidInput(content.commonTag)
-
-    fun OritechRecipeBuilder.fluidOutput(content: HTFluidContent<*, *, *>): OritechRecipeBuilder = fluidOutput(content.get())
-
     fun OritechRecipeBuilder.export(output: RecipeOutput, material: HTMaterialLike) {
         export(output, material.asMaterialName())
     }
@@ -121,6 +126,11 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     @JvmStatic
     private fun atomicFromData(data: HTRecipeData) {
         builderFromData(data, AtomicForgeRecipeBuilder.build())
+    }
+
+    @JvmStatic
+    private fun coolerFromData(data: HTRecipeData) {
+        builderFromData(data, CoolerRecipeBuilder.build())
     }
 
     @JvmStatic
@@ -136,13 +146,26 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     @JvmStatic
     private fun builderFromData(data: HTRecipeData, builder: OritechRecipeBuilder) {
         // Inputs
-        for ((ingredient: Ingredient, _) in data.getSizedItemIngredients()) {
-            builder.input(ingredient)
+        data.getIngredients().forEach(builder::input)
+
+        data.fluidInputs.getOrNull(0)?.let { (entry: Either<List<Fluid>, List<TagKey<Fluid>>>, amount: Int) ->
+            entry
+                .mapBoth(List<Fluid>::first, List<TagKey<Fluid>>::first)
+                .map(
+                    { builder.fluidInput(it, amount / 1000f) },
+                    { builder.fluidInput(it, amount / 1000f) },
+                )
         }
-        // Output
+        // Outputs
         for ((stack: ItemStack) in data.getItemStacks()) {
             builder.result(stack)
         }
+
+        data.fluidOutputs.getOrNull(0)?.let { (entry: Ior<Fluid, TagKey<Fluid>>, amount: Int, _) ->
+            val fluid: Fluid = entry.getLeft() ?: return@let
+            builder.fluidOutput(fluid, amount / 1000f)
+        }
+
         builder.export(output, data.getModifiedId().path)
     }
 }

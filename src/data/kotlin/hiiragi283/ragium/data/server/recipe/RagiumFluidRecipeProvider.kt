@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
@@ -18,11 +17,10 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -133,50 +131,79 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125) to null,
         )
 
-        // Crimson Crystal -> Blaze Powder
+        // Crimson Crystal
+        extractFromData(RagiumMaterialRecipeData.CRIMSON_SAP)
+        refiningFromData(RagiumMaterialRecipeData.CRIMSON_BLOOD)
+        solidifyFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
+
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             .save(output)
+        // Warped Crystal
+        extractFromData(RagiumMaterialRecipeData.WARPED_SAP)
+        refiningFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
+        solidifyFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
 
-        // Warped Crystal -> Elder Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
             .save(output)
 
-        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTFluidContent<*, *, *> = data.molten
-            // molten <-> gem
-            meltAndFreeze(
-                itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.GEM)),
-                CommonMaterialPrefixes.GEM,
-                data,
-                molten,
-                RagiumConst.MOLTEN_TO_GEM,
-            )
+        // Eldritch Pearl
+        mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX)
+        solidifyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+    }
 
-            val log: TagKey<Item> = data.log ?: continue
-            val sap: HTFluidContent<*, *, *> = data.sap ?: continue
-            // log -> sap
-            HTItemWithCatalystRecipeBuilder
-                .extracting(
-                    itemCreator.fromTagKey(log),
-                    null,
-                    null,
-                    resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP),
-                ).saveSuffixed(output, "_from_stems")
-            // sap -> molten
-            distillation(sap to 1000, null, resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN) to null)
-        }
+    @JvmStatic
+    private fun extractFromData(data: HTRecipeData) {
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
+                data.getItemIngredients(itemCreator)[0],
+                data.getItemResults().getOrNull(0)?.first,
+                null,
+                data.getFluidResults().getOrNull(0),
+            ).save(output, data.getModifiedId())
+    }
 
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(itemCreator.fromTagKey(RagiumModTags.Items.ELDRITCH_PEARL_BINDER))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.MOLTEN_TO_GEM))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.MOLTEN_TO_GEM))
-            .setResult(resultHelper.fluid(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM))
-            .save(output)
+    @JvmStatic
+    private fun refiningFromData(data: HTRecipeData) {
+        HTFluidTransformRecipeBuilder
+            .refining(
+                data.getFluidIngredients(fluidCreator)[0],
+                data.getFluidResults()[0],
+                null,
+                data.getItemResults().getOrNull(0)?.first,
+            ).save(output, data.getModifiedId())
+    }
+
+    @JvmStatic
+    private fun solidifyFromData(data: HTRecipeData) {
+        HTFluidTransformRecipeBuilder
+            .solidifying(
+                data.getItemIngredients(itemCreator).getOrNull(0),
+                data.getFluidIngredients(fluidCreator)[0],
+                data.getItemResults()[0].first,
+            ).save(output, data.getModifiedId())
+    }
+
+    @JvmStatic
+    private fun mixFromData(data: HTRecipeData) {
+        val builder: HTMixingRecipeBuilder = HTMixingRecipeBuilder.create()
+        // Inputs
+        data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
+        data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
+        // Outputs
+        data
+            .getItemResults()
+            .getOrNull(0)
+            ?.first
+            ?.let(builder::setResult)
+        data
+            .getFluidResults()
+            .getOrNull(0)
+            ?.let(builder::setResult)
+        builder.save(output, data.getModifiedId())
     }
 
     @JvmStatic

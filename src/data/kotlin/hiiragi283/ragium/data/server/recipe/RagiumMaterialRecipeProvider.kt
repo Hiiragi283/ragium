@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -44,7 +43,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         raginite()
         azure()
-        eldritch()
         deepSteel()
         miscMaterials()
 
@@ -96,21 +94,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         // Azure Steel
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
-    }
-
-    @JvmStatic
-    private fun eldritch() {
-        // Eldritch Pearl
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL))
-            .cross4()
-            .define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
-            .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
-            .save(output)
-
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)
     }
 
     @JvmStatic

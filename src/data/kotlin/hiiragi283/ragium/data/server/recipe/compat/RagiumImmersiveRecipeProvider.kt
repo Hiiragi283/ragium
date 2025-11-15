@@ -4,6 +4,7 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.api.crafting.IngredientWithSize
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
+import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
 import blusunrize.immersiveengineering.data.recipes.builder.BottlingMachineRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.CrusherRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilder
@@ -11,12 +12,8 @@ import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilde
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTArcFurnaceRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -26,6 +23,8 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 /**
  * @see blusunrize.immersiveengineering.data.recipes.MultiblockRecipes
@@ -47,90 +46,63 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .setResult(resultHelper.fluid(IETags.fluidRedstoneAcid, 1000))
             .save(output)
 
-        raginite()
-        azure()
-        deepSteel()
-
+        alloy()
+        crush()
+        
         molten()
-        misc()
     }
 
     @JvmStatic
-    private fun raginite() {
-        crushFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
-        crushFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-
+    private fun alloy() {
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
         alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
-    }
 
-    @JvmStatic
-    private fun azure() {
         alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD)
         alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL)
-    }
 
-    @JvmStatic
-    private fun deepSteel() {
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
+
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
+    }
+    
+    @JvmStatic
+    private fun crush() {
+        crushFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
+        crushFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        crushFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        crushFromData(RagiumMaterialRecipeData.WARPED_ORE)
     }
 
     @JvmStatic
     private fun molten() {
-        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTFluidContent<*, *, *> = data.molten
-            // molten -> gem
-            BottlingMachineRecipeBuilder
-                .builder()
-                .output(CommonMaterialPrefixes.GEM, data)
-                .fluidInput(molten.commonTag, RagiumConst.MOLTEN_TO_GEM)
-                .build(output, id("bottling/${data.asMaterialName()}"))
-
-            val log: TagKey<Item> = data.log ?: continue
-            val sap: HTFluidContent<*, *, *> = data.sap ?: continue
-            // log -> sap
-            SqueezerRecipeBuilder
-                .builder()
-                .output(sap.get(), RagiumConst.LOG_TO_SAP)
-                .input(log)
-                .setEnergy(6400)
-                .build(output, id("squeezing/${sap.getPath()}"))
-            // sap -> molten
-            RefineryRecipeBuilder
-                .builder()
-                .input(sap.commonTag, 1000)
-                .output(molten.get(), RagiumConst.SAP_TO_MOLTEN)
-                .build(output, id("${RagiumConst.REFINING}/${molten.getPath()}"))
-        }
+        // Crimson
         crushFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+
+        squeezeFromData(RagiumMaterialRecipeData.CRIMSON_SAP)
+        refineFromData(RagiumMaterialRecipeData.CRIMSON_BLOOD)
+        bottleFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
+        // Warped
         crushFromData(RagiumMaterialRecipeData.WARPED_ORE)
 
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
-        alloyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL_BULK)
-    }
-
-    @JvmStatic
-    private fun misc() {
-        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
+        squeezeFromData(RagiumMaterialRecipeData.WARPED_SAP)
+        refineFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
+        bottleFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
+        // Eldritch
     }
 
     //    Extension    //
 
     @JvmStatic
-    private fun BottlingMachineRecipeBuilder.output(
-        prefix: HTPrefixLike,
-        material: HTMaterialLike,
-        count: Int = 1,
-    ): BottlingMachineRecipeBuilder = output(prefix.itemTagKey(material), count)
+    private fun <T> BaseHelpers.ItemInput<T>.input(ingredient: SizedIngredient): T = input(ingredient.ingredient(), ingredient.count())
 
     @JvmStatic
     private fun alloyFromData(data: HTRecipeData) {
         val builder: HTArcFurnaceRecipeBuilder = HTArcFurnaceRecipeBuilder.builder()
         // Inputs
-        for ((ingredient: Ingredient, count: Int) in data.getSizedItemIngredients()) {
-            builder.input(ingredient, count)
+        for (ingredient: SizedIngredient in data.getSizedItemIngredients()) {
+            builder.input(ingredient)
         }
         // Outputs
         for ((entry: Ior<Item, TagKey<Item>>, count: Int) in data.itemOutputs) {
@@ -143,10 +115,31 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     }
 
     @JvmStatic
+    private fun bottleFromData(data: HTRecipeData) {
+        val builder: BottlingMachineRecipeBuilder = BottlingMachineRecipeBuilder.builder()
+        // Input
+        val fluidInput: HTRecipeData.InputEntry<Fluid> = data.fluidInputs.getOrNull(0) ?: return
+        val fluidTag: TagKey<Fluid> = fluidInput
+            .entry
+            .right()
+            .orElse(listOf())
+            .getOrNull(0) ?: return
+        builder.fluidInput(fluidTag, fluidInput.amount)
+        // Output
+        data.itemOutputs[0].let { (entry: Ior<Item, TagKey<Item>>, amount: Int, _) ->
+            entry.map(
+                { item: Item -> builder.output(item, amount) },
+                { tagKey: TagKey<Item> -> builder.output(tagKey, amount) },
+            )
+        }
+        builder.build(output, data.getModifiedId().withPrefix("bottling/"))
+    }
+
+    @JvmStatic
     private fun crushFromData(data: HTRecipeData) {
         val builder: CrusherRecipeBuilder = CrusherRecipeBuilder.builder()
         // Input
-        builder.input(data.getSizedItemIngredients()[0].first)
+        builder.input(data.getIngredients()[0])
         // Outputs
         val outputs: List<HTRecipeData.OutputEntry<Item>> = data.itemOutputs
         for (i: Int in outputs.indices) {
@@ -164,5 +157,25 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             }
         }
         builder.build(output, data.getModifiedId().withPrefix("${RagiumConst.CRUSHING}/"))
+    }
+
+    @JvmStatic
+    private fun refineFromData(data: HTRecipeData) {
+        RefineryRecipeBuilder
+            .builder()
+            .input(data.getSizedFluidIngredients()[0])
+            .input(data.getSizedFluidIngredients().getOrNull(1))
+            .output(data.getFluidStacks()[0])
+            .build(output, data.getModifiedId().withPrefix("${RagiumConst.REFINING}/"))
+    }
+
+    @JvmStatic
+    private fun squeezeFromData(data: HTRecipeData, energy: Int = 6400) {
+        SqueezerRecipeBuilder
+            .builder()
+            .output(data.getFluidStacks()[0])
+            .input(data.getSizedItemIngredients()[0])
+            .setEnergy(energy)
+            .build(output, data.getModifiedId().withPrefix("squeezing/"))
     }
 }

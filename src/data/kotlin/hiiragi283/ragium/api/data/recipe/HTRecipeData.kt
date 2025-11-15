@@ -10,9 +10,11 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.api.util.toIor
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -21,9 +23,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.UnaryOperator
 
 @ConsistentCopyVisibility
@@ -60,22 +64,33 @@ data class HTRecipeData private constructor(
 
     fun getModifiedId(): ResourceLocation = getId().withPath(operator)
 
-    // Inputs
-    fun getSizedItemIngredients(): List<Pair<Ingredient, Int>> =
-        itemInputs.map { (entry: Either<List<Item>, List<TagKey<Item>>>, count: Int) ->
-            entry.map(
-                { items: List<Item> -> Ingredient.of(items.stream().map(::ItemStack)) },
-                { tagKeys: List<TagKey<Item>> ->
-                    when (tagKeys.size) {
-                        1 -> Ingredient.of(tagKeys[0])
-                        else -> Ingredient.fromValues(tagKeys.map(Ingredient::TagValue).stream())
-                    }
-                },
-            ) to count
-        }
+    fun swap(): HTRecipeData = HTRecipeData(
+        itemOutputs.map(OutputEntry<Item>::toInput),
+        fluidOutputs.map(OutputEntry<Fluid>::toInput),
+        itemInputs.map(InputEntry<Item>::toOutput),
+        fluidInputs.map(InputEntry<Fluid>::toOutput),
+        operator,
+    )
 
-    fun getSizedFluidIngredients(): List<Pair<FluidIngredient, Int>> =
-        fluidInputs.map { (entry: Either<List<Fluid>, List<TagKey<Fluid>>>, count: Int) ->
+    // Inputs
+    private fun toIngredient(entry: Either<List<Item>, List<TagKey<Item>>>): Ingredient = entry.map(
+        { items: List<Item> -> Ingredient.of(items.stream().map(::ItemStack)) },
+        { tagKeys: List<TagKey<Item>> ->
+            when (tagKeys.size) {
+                1 -> Ingredient.of(tagKeys[0])
+                else -> Ingredient.fromValues(tagKeys.map(Ingredient::TagValue).stream())
+            }
+        },
+    )
+
+    fun getIngredients(): List<Ingredient> = itemInputs.map { (entry: Either<List<Item>, List<TagKey<Item>>>) -> toIngredient(entry) }
+
+    fun getSizedItemIngredients(): List<SizedIngredient> = itemInputs
+        .map { (entry: Either<List<Item>, List<TagKey<Item>>>, count: Int) -> toIngredient(entry) to count }
+        .map { (ingredient: Ingredient, count: Int) -> SizedIngredient(ingredient, count) }
+
+    fun getSizedFluidIngredients(): List<SizedFluidIngredient> = fluidInputs
+        .map { (entry: Either<List<Fluid>, List<TagKey<Fluid>>>, count: Int) ->
             entry.map(
                 { fluids: List<Fluid> -> CompoundFluidIngredient(fluids.map(FluidIngredient::single)) },
                 { tagKeys: List<TagKey<Fluid>> ->
@@ -85,7 +100,7 @@ data class HTRecipeData private constructor(
                     }
                 },
             ) to count
-        }
+        }.map { (ingredient: FluidIngredient, count: Int) -> SizedFluidIngredient(ingredient, count) }
 
     fun getItemIngredients(creator: HTItemIngredientCreator): List<HTItemIngredient> =
         itemInputs.map { (entry: Either<List<Item>, List<TagKey<Item>>>, amount: Int) ->
@@ -100,7 +115,7 @@ data class HTRecipeData private constructor(
             )
         }
 
-    fun getFluidIngredients(creator: HTFluidIngredientCreator): List<HTFluidIngredient?> =
+    fun getFluidIngredients(creator: HTFluidIngredientCreator): List<HTFluidIngredient> =
         fluidInputs.map { (entry: Either<List<Fluid>, List<TagKey<Fluid>>>, amount: Int) ->
             entry.map(
                 { fluids: List<Fluid> -> creator.from(fluids, amount) },
@@ -122,6 +137,15 @@ data class HTRecipeData private constructor(
             @JvmStatic
             fun <T : Any> tagKeys(tagKeys: List<TagKey<T>>, amount: Int): InputEntry<T> = InputEntry(Either.right(tagKeys), amount)
         }
+
+        fun toOutput(): OutputEntry<T> = OutputEntry(
+            entry
+                .toIor()
+                .mapLeft(List<T>::first)
+                .mapRight(List<TagKey<T>>::first),
+            amount,
+            1f,
+        )
     }
 
     // Outputs
@@ -133,14 +157,13 @@ data class HTRecipeData private constructor(
         }
     }
 
-    fun getFluidStacks(): List<Pair<FluidStack, Float>> =
-        fluidOutputs.map { (entry: Ior<Fluid, TagKey<Fluid>>, amount: Int, chance: Float) ->
-            val fluid: Fluid? = entry.getLeft()
-            when {
-                fluid != null -> FluidStack(fluid, amount) to chance
-                else -> error("Cannot create FluidStack from no fluid output entry")
-            }
+    fun getFluidStacks(): List<FluidStack> = fluidOutputs.map { (entry: Ior<Fluid, TagKey<Fluid>>, amount: Int, _) ->
+        val fluid: Fluid? = entry.getLeft()
+        when {
+            fluid != null -> FluidStack(fluid, amount)
+            else -> error("Cannot create FluidStack from no fluid output entry")
         }
+    }
 
     fun getItemResults(): List<Pair<HTItemResult, Float>> =
         itemOutputs.map { (entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) ->
@@ -150,16 +173,25 @@ data class HTRecipeData private constructor(
             ) to chance
         }
 
-    fun getFluidResults(): List<Pair<HTFluidResult, Float>> =
-        fluidOutputs.map { (entry: Ior<Fluid, TagKey<Fluid>>, amount: Int, chance: Float) ->
-            entry.map(
-                { fluid: Fluid -> HTResultHelper.fluid(fluid, amount) },
-                { tagKey: TagKey<Fluid> -> HTResultHelper.fluid(tagKey, amount) },
-            ) to chance
-        }
+    fun getFluidResults(): List<HTFluidResult> = fluidOutputs.map { (entry: Ior<Fluid, TagKey<Fluid>>, amount: Int, _) ->
+        entry.map(
+            { fluid: Fluid -> HTResultHelper.fluid(fluid, amount) },
+            { tagKey: TagKey<Fluid> -> HTResultHelper.fluid(tagKey, amount) },
+        )
+    }
 
     @JvmRecord
-    data class OutputEntry<T : Any>(val entry: Ior<T, TagKey<T>>, val amount: Int, val chance: Float)
+    data class OutputEntry<T : Any>(val entry: Ior<T, TagKey<T>>, val amount: Int, val chance: Float) {
+        fun toInput(): InputEntry<T> = InputEntry(
+            entry
+                .mapLeft(::listOf)
+                .mapRight(::listOf)
+                .unwrap()
+                .left()
+                .get(),
+            amount,
+        )
+    }
 
     //    Builder    //
 
@@ -212,6 +244,8 @@ data class HTRecipeData private constructor(
             fluidInputs.add(InputEntry.types(listOf(fluid), amount = amount))
         }
 
+        fun addInput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addInput(content.commonTag, amount)
+
         fun addInput(tagKey: TagKey<Fluid>, amount: Int): Builder = apply {
             fluidInputs.add(InputEntry.tagKeys(listOf(tagKey), amount = amount))
         }
@@ -250,6 +284,25 @@ data class HTRecipeData private constructor(
                 }
             }
             itemOutputs.add(OutputEntry(entry, count, chance))
+        }
+
+        fun addOutput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addOutput(content.get(), content.commonTag, amount)
+
+        fun addOutput(fluid: Fluid?, tagKey: TagKey<Fluid>?, amount: Int): Builder = apply {
+            val entry: Ior<Fluid, TagKey<Fluid>> = if (fluid != null) {
+                if (tagKey != null) {
+                    Ior.Both(fluid, tagKey)
+                } else {
+                    Ior.Left(fluid)
+                }
+            } else {
+                if (tagKey != null) {
+                    Ior.Right(tagKey)
+                } else {
+                    error("Either fluid or tag key required for output!")
+                }
+            }
+            fluidOutputs.add(OutputEntry(entry, amount, 1f))
         }
 
         // Operator

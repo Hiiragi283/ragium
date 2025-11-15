@@ -54,8 +54,8 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     private fun choppingFromData(data: HTRecipeData) {
         val (output: ItemStack) = data.getItemStacks()[0]
         HTChoppingBoardRecipeBuilder(output.toImmutableOrThrow())
-            .addIngredient(data.getSizedItemIngredients()[0].first)
+            .addIngredient(data.getIngredients()[0])
             .setCutCount(output.count - 1)
-            .save(this.output)
+            .save(this.output, data.getModifiedId())
     }
 }
