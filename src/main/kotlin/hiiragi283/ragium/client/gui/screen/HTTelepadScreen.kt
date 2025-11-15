@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTTeleportPos
@@ -18,14 +17,12 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
 import org.lwjgl.glfw.GLFW
 
-class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
-    HTBlockEntityContainerScreen<HTTelepadBlockentity>(
-        menu,
-        inventory,
-        title,
-    ) {
-    override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/telepad.png")
-
+class HTTelepadScreen(
+    texture: ResourceLocation,
+    menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>,
+    inventory: Inventory,
+    title: Component,
+) : HTBlockEntityContainerScreen<HTTelepadBlockentity>(texture, menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
 
     private lateinit var editBoxX: HTNumberEditBox.IntRanged

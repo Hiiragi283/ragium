@@ -12,7 +12,6 @@ import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
@@ -24,13 +23,12 @@ import net.neoforged.neoforge.network.PacketDistributor
 @OnlyIn(Dist.CLIENT)
 class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: Inventory, title: Component) :
     HTContainerScreen<HTAccessConfigurationMenu>(
+        null,
         menu,
         inventory,
         title,
     ) {
     private val blockEntity: HTConfigurableBlockEntity = menu.context
-
-    override val texture: ResourceLocation? = null
 
     private fun addButton(side: Direction, x: Int, y: Int): ConfigButton = ConfigButton(
         blockEntity.blockPos,

@@ -1,24 +1,23 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, inventory: Inventory, title: Component) :
-    HTConsumerScreen<HTRefineryBlockEntity>(
-        RagiumAPI.id("textures/gui/container/refinery.png"),
-        menu,
-        inventory,
-        title,
-    ) {
+class HTRefineryScreen(
+    texture: ResourceLocation,
+    menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>,
+    inventory: Inventory,
+    title: Component,
+) : HTConsumerScreen<HTRefineryBlockEntity>(texture, menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget
 

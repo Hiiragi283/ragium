@@ -12,13 +12,11 @@ import net.minecraft.world.entity.player.Inventory
  * @see net.minecraft.client.gui.screens.inventory.ContainerScreen
  */
 class HTGenericScreen<MENU>(menu: MENU, inventory: Inventory, title: Component) :
-    HTContainerScreen<MENU>(menu, inventory, title) where MENU : HTContainerMenu, MENU : HTGenericContainerRows {
+    HTContainerScreen<MENU>(null, menu, inventory, title) where MENU : HTContainerMenu, MENU : HTGenericContainerRows {
     companion object {
         @JvmStatic
         private val TEXTURE_ID: ResourceLocation = vanillaId("textures/gui/container/generic_54.png")
     }
-
-    override val texture: ResourceLocation? = null
 
     val rows: Int = menu.rows
 

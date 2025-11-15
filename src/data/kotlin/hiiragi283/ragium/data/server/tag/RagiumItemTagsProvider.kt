@@ -316,7 +316,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
-        builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.SOLAR_PANEL)
     }
 

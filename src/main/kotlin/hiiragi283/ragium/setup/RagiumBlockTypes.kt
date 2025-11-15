@@ -134,7 +134,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.CRUSHER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
-        .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
+        .addMenu { RagiumMenuTypes.CRUSHER }
         .build(RagiumCommonTranslation.CRUSHER)
 
     @JvmField
@@ -158,7 +158,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.WASHER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ADVANCED)
-        .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
+        .addMenu { RagiumMenuTypes.WASHER }
         .build(RagiumCommonTranslation.WASHER)
 
     // Elite
@@ -168,7 +168,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BREWERY }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.SINGLE_ITEM }
+        .addMenu { RagiumMenuTypes.BREWERY }
         .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField
@@ -184,7 +184,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.PLANTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addConsumerTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.CHANCED_ITEM_OUTPUT }
+        .addMenu { RagiumMenuTypes.PLANTER }
         .build(RagiumCommonTranslation.PLANTER)
 
     @JvmField

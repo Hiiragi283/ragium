@@ -13,10 +13,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: Inventory, title: Component) :
-    AbstractContainerScreen<MENU>(menu, inventory, title) {
-    abstract val texture: ResourceLocation?
-
+abstract class HTContainerScreen<MENU : HTContainerMenu>(
+    val texture: ResourceLocation?,
+    menu: MENU,
+    inventory: Inventory,
+    title: Component,
+) : AbstractContainerScreen<MENU>(menu, inventory, title) {
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,

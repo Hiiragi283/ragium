@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
@@ -13,10 +12,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBlockEntity>, inventory: Inventory, title: Component) :
-    HTBlockEntityContainerScreen<HTFluidCollectorBlockEntity>(menu, inventory, title) {
-    override val texture: ResourceLocation = RagiumAPI.id("textures/gui/container/fluid_collector.png")
-
+class HTFluidCollectorScreen(
+    texture: ResourceLocation,
+    menu: HTBlockEntityContainerMenu<HTFluidCollectorBlockEntity>,
+    inventory: Inventory,
+    title: Component,
+) : HTBlockEntityContainerScreen<HTFluidCollectorBlockEntity>(texture, menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
 
     override fun init() {
