@@ -26,14 +26,14 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         // input
         poseStack.pushPose()
         poseStack.translate(0.5f)
-        rotate(poseStack, front)
+        rotateY(poseStack, front)
         poseStack.translate(0.01f, -0.5f, 0.01f)
         drawFluid(blockEntity.inputTank, poseStack, bufferSource, packedLight, packedOverlay)
         poseStack.popPose()
         // output
         poseStack.pushPose()
         poseStack.translate(0.5f)
-        rotate(poseStack, front)
+        rotateY(poseStack, front)
         poseStack.translate(0.01f - 0.5f, -0.5f, 0.01f)
         drawFluid(blockEntity.outputTank, poseStack, bufferSource, packedLight, packedOverlay)
         poseStack.popPose()

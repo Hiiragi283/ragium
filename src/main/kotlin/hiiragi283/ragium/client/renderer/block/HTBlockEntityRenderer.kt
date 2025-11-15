@@ -21,13 +21,13 @@ abstract class HTBlockEntityRenderer<BE : BlockEntity>(protected val context: Bl
          * @see blusunrize.immersiveengineering.client.render.tile.IEBlockEntityRenderer.ROTATE_FOR_FACING
          */
         @JvmField
-        val ROTATION: Map<Direction, Quaternionf> = Direction.entries.associateWith { direction: Direction ->
+        val ROTATE_Y: Map<Direction, Quaternionf> = Direction.entries.associateWith { direction: Direction ->
             Quaternionf().rotateY(Mth.DEG_TO_RAD * (180 - direction.toYRot()))
         }
 
         @JvmStatic
-        fun rotate(poseStack: PoseStack, direction: Direction) {
-            poseStack.mulPose(ROTATION[direction]!!)
+        fun rotateY(poseStack: PoseStack, direction: Direction) {
+            poseStack.mulPose(ROTATE_Y[direction]!!)
         }
     }
 }
