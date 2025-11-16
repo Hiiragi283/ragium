@@ -1,8 +1,13 @@
 package hiiragi283.ragium.common.item.tool
 
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.entity.HTBlastCharge
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.setup.RagiumDataComponents
+import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
 import net.minecraft.core.Position
+import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
@@ -13,6 +18,7 @@ import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ProjectileItem
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 
 class HTBlastChargeItem(properties: Properties) :
@@ -50,5 +56,24 @@ class HTBlastChargeItem(properties: Properties) :
         val charge = HTBlastCharge(level, pos.x(), pos.y(), pos.z())
         charge.item = stack
         return charge
+    }
+
+    override fun appendHoverText(
+        stack: ItemStack,
+        context: TooltipContext,
+        tooltips: MutableList<Component>,
+        flag: TooltipFlag,
+    ) {
+        if (flag.hasShiftDown()) {
+            tooltips.add(RagiumCommonTranslation.BLAST_CHARGE.translate())
+        } else {
+            RagiumTranslation.TOOLTIP_BLAST_POWER
+                .translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    stack.getOrDefault(RagiumDataComponents.BLAST_POWER, 4f),
+                ).let(tooltips::add)
+            RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW).let(tooltips::add)
+        }
     }
 }

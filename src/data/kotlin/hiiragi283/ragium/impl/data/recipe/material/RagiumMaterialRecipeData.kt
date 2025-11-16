@@ -3,6 +3,7 @@ package hiiragi283.ragium.impl.data.recipe.material
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -122,15 +123,7 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmField
-    val CRIMSON_CRYSTAL: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.MOLTEN_TO_GEM)
-
-        addOutput(
-            RagiumItems.getGem(RagiumMaterialKeys.CRIMSON_CRYSTAL),
-            CommonMaterialPrefixes.GEM,
-            RagiumMaterialKeys.CRIMSON_CRYSTAL,
-        )
-    }
+    val CRIMSON_CRYSTAL: HTRecipeData = createGemCast(RagiumMaterialKeys.CRIMSON_CRYSTAL, RagiumFluidContents.CRIMSON_BLOOD)
 
     //    Warped    //
 
@@ -156,15 +149,7 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmField
-    val WARPED_CRYSTAL: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.MOLTEN_TO_GEM)
-
-        addOutput(
-            RagiumItems.getGem(RagiumMaterialKeys.WARPED_CRYSTAL),
-            CommonMaterialPrefixes.GEM,
-            RagiumMaterialKeys.WARPED_CRYSTAL,
-        )
-    }
+    val WARPED_CRYSTAL: HTRecipeData = createGemCast(RagiumMaterialKeys.WARPED_CRYSTAL, RagiumFluidContents.DEW_OF_THE_WARP)
 
     //    Eldritch    //
 
@@ -202,15 +187,7 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmField
-    val ELDRITCH_PEARL: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumFluidContents.ELDRITCH_FLUX, RagiumConst.MOLTEN_TO_GEM)
-
-        addOutput(
-            RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL),
-            CommonMaterialPrefixes.GEM,
-            RagiumMaterialKeys.ELDRITCH_PEARL,
-        )
-    }
+    val ELDRITCH_PEARL: HTRecipeData = createGemCast(RagiumMaterialKeys.ELDRITCH_PEARL, RagiumFluidContents.ELDRITCH_FLUX)
 
     //    Other    //
 
@@ -238,5 +215,18 @@ data object RagiumMaterialRecipeData {
 
         addOutput(RagiumItems.getGem(material), CommonMaterialPrefixes.GEM, material, 2)
         setSuffix("_from_ore")
+    }
+
+    @JvmStatic
+    private fun createGemCast(material: HTMaterialLike, fluid: HTFluidContent<*, *, *>): HTRecipeData = HTRecipeData.create {
+        addInput(fluid, RagiumConst.MOLTEN_TO_GEM)
+
+        setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.GEM))
+
+        addOutput(
+            RagiumItems.getGem(material),
+            CommonMaterialPrefixes.GEM,
+            material,
+        )
     }
 }

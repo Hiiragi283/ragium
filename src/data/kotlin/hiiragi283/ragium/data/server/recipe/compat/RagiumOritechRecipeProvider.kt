@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumItems
@@ -48,22 +49,25 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .result(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .time(20)
             .export(output, RagiumMaterialKeys.RAGI_CRYSTAL)
-        
+
         AtomicForgeRecipeBuilder
             .build()
             .input(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .input(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             .result(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL))
             .time(20)
             .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
-        
+
         atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
         atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
     private fun cooler() {
+        coolerFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
+        coolerFromData(FoodMaterialRecipeData.RAW_MEAT_INGOT)
+
         coolerFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
         coolerFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
         coolerFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)

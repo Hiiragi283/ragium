@@ -132,6 +132,6 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         HTCuttingBoardRecipeBuilder(output.toImmutableOrThrow(), chance)
             .addIngredient(data.getIngredients()[0])
             .addIngredient(CommonTags.TOOLS_KNIFE)
-            .save(this.output, data.getModifiedId())
+            .saveModified(this.output, data.operator)
     }
 }

@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTPotionDropRecipe
 import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
+import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
@@ -63,6 +64,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
         register("smithing_modify", HTSmithingModifyRecipe.CODEC)
+
+    @JvmField
+    val UPGRADE_BLAST_CHARGE: RecipeSerializer<HTUpgradeBlastChargeRecipe> =
+        register("upgrade_blast_charge", SimpleCraftingRecipeSerializer(::HTUpgradeBlastChargeRecipe))
 
     //    Machine    //
 

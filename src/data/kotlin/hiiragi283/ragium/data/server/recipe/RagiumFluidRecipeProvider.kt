@@ -134,7 +134,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Crimson Crystal
         extractFromData(RagiumMaterialRecipeData.CRIMSON_SAP)
         refiningFromData(RagiumMaterialRecipeData.CRIMSON_BLOOD)
-        solidifyFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
+        meltAndFreeze(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
 
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
@@ -143,7 +143,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
         // Warped Crystal
         extractFromData(RagiumMaterialRecipeData.WARPED_SAP)
         refiningFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
-        solidifyFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
+        meltAndFreeze(RagiumMaterialRecipeData.WARPED_CRYSTAL)
 
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
@@ -152,7 +152,8 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
 
         // Eldritch Pearl
         mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX)
-        solidifyFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+
+        meltAndFreeze(RagiumMaterialRecipeData.ELDRITCH_PEARL)
     }
 
     @JvmStatic
@@ -163,7 +164,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 data.getItemResults().getOrNull(0)?.first,
                 null,
                 data.getFluidResults().getOrNull(0),
-            ).save(output, data.getModifiedId())
+            ).saveModified(output, data.operator)
     }
 
     @JvmStatic
@@ -174,17 +175,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
                 data.getFluidResults()[0],
                 null,
                 data.getItemResults().getOrNull(0)?.first,
-            ).save(output, data.getModifiedId())
-    }
-
-    @JvmStatic
-    private fun solidifyFromData(data: HTRecipeData) {
-        HTFluidTransformRecipeBuilder
-            .solidifying(
-                data.getItemIngredients(itemCreator).getOrNull(0),
-                data.getFluidIngredients(fluidCreator)[0],
-                data.getItemResults()[0].first,
-            ).save(output, data.getModifiedId())
+            ).saveModified(output, data.operator)
     }
 
     @JvmStatic
@@ -203,7 +194,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider.Direct() {
             .getFluidResults()
             .getOrNull(0)
             ?.let(builder::setResult)
-        builder.save(output, data.getModifiedId())
+        builder.saveModified(output, data.operator)
     }
 
     @JvmStatic

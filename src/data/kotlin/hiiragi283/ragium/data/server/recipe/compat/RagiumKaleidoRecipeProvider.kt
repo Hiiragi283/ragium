@@ -56,6 +56,6 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
         HTChoppingBoardRecipeBuilder(output.toImmutableOrThrow())
             .addIngredient(data.getIngredients()[0])
             .setCutCount(output.count - 1)
-            .save(this.output, data.getModifiedId())
+            .saveModified(this.output, data.operator)
     }
 }

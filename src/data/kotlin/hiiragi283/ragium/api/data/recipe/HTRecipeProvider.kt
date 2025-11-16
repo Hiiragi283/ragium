@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -151,26 +149,21 @@ sealed class HTRecipeProvider {
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
-    protected fun meltAndFreeze(
-        catalyst: HTItemIngredient?,
-        prefix: HTPrefixLike,
-        material: HTMaterialLike,
-        fluid: HTFluidContent<*, *, *>,
-        amount: Int,
-    ) {
-        // Melting
-        HTItemToObjRecipeBuilder
-            .melting(
-                itemCreator.fromTagKey(prefix, material),
-                resultHelper.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${prefix.asPrefixName()}")
+    protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
-                catalyst,
-                fluidCreator.fromContent(fluid, amount),
-                resultHelper.item(prefix, material),
-            ).saveSuffixed(output, "_from_${fluid.getPath()}")
+                data.catalyst?.let(itemCreator::fromItem),
+                data.getFluidIngredients(fluidCreator)[0],
+                data.getItemResults()[0].first,
+            ).saveModified(output, data.operator)
+        // Melting
+        val data1: HTRecipeData = data.swap()
+        HTItemToObjRecipeBuilder
+            .melting(
+                data1.getItemIngredients(itemCreator)[0],
+                data1.getFluidResults()[0],
+            ).saveModified(output, data.operator)
     }
 
     protected fun extractAndInfuse(

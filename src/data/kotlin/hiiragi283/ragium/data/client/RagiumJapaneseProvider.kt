@@ -380,6 +380,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"爆発力: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")

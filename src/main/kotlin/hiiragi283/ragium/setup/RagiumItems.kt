@@ -644,7 +644,7 @@ object RagiumItems {
         setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
         modify(UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR, DyeColor.WHITE)
 
-        setDesc(BLAST_CHARGE, RagiumCommonTranslation.BLAST_CHARGE)
+        modify(BLAST_CHARGE, RagiumDataComponents.BLAST_POWER, 4f)
         setDesc(DYNAMIC_LANTERN, RagiumCommonTranslation.DYNAMIC_LANTERN)
         setDesc(ELDRITCH_EGG, RagiumCommonTranslation.ELDRITCH_EGG)
         setDesc(MAGNET, RagiumCommonTranslation.MAGNET)

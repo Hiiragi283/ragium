@@ -17,6 +17,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuil
 import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -48,13 +49,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.fluid(RagiumFluidContents.CHOCOLATE, 250))
             .save(output)
 
-        meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.INGOT)),
-            CommonMaterialPrefixes.INGOT,
-            FoodMaterialKeys.CHOCOLATE,
-            RagiumFluidContents.CHOCOLATE,
-            250,
-        )
+        meltAndFreeze(FoodMaterialRecipeData.CHOCOLATE_INGOT)
         // Melon Pie
         HTShapelessRecipeBuilder
             .misc(RagiumItems.MELON_PIE)
@@ -156,13 +151,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
 
-        meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.INGOT)),
-            CommonMaterialPrefixes.INGOT,
-            FoodMaterialKeys.RAW_MEAT,
-            RagiumFluidContents.MEAT,
-            250,
-        )
+        meltAndFreeze(FoodMaterialRecipeData.RAW_MEAT_INGOT)
 
         HTCookingRecipeBuilder
             .smeltingAndSmoking(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT)) {

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -12,6 +13,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
@@ -146,6 +148,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         addEquipments(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addEquipments(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addEquipments(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
+
+        HTShapedRecipeBuilder
+            .misc(Items.HEAVY_CORE)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
+            .define('C', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.NIGHT_METAL)
+            .save(output)
     }
 
     @JvmStatic
@@ -198,6 +208,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', Tags.Items.GUNPOWDERS)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             .save(output)
+
+        save(
+            RagiumAPI.id("shapeless/upgrade_blast_charge"),
+            HTUpgradeBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
+        )
         // Warped
         HTShapedRecipeBuilder
             .equipment(RagiumItems.TELEPORT_KEY)

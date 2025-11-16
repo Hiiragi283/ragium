@@ -379,6 +379,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"Power: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")

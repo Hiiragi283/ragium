@@ -35,6 +35,7 @@ import java.util.function.UnaryOperator
 data class HTRecipeData private constructor(
     val itemInputs: List<InputEntry<Item>>,
     val fluidInputs: List<InputEntry<Fluid>>,
+    val catalyst: Item?,
     val itemOutputs: List<OutputEntry<Item>>,
     val fluidOutputs: List<OutputEntry<Fluid>>,
     val operator: UnaryOperator<String>,
@@ -67,6 +68,7 @@ data class HTRecipeData private constructor(
     fun swap(): HTRecipeData = HTRecipeData(
         itemOutputs.map(OutputEntry<Item>::toInput),
         fluidOutputs.map(OutputEntry<Fluid>::toInput),
+        catalyst,
         itemInputs.map(InputEntry<Item>::toOutput),
         fluidInputs.map(InputEntry<Fluid>::toOutput),
         operator,
@@ -187,8 +189,7 @@ data class HTRecipeData private constructor(
                 .mapLeft(::listOf)
                 .mapRight(::listOf)
                 .unwrap()
-                .left()
-                .get(),
+                .map({ it }, { (_, tagKeys: List<TagKey<T>>) -> Either.right(tagKeys) }),
             amount,
         )
     }
@@ -198,6 +199,7 @@ data class HTRecipeData private constructor(
     class Builder {
         private val itemInputs: MutableList<InputEntry<Item>> = mutableListOf()
         private val fluidInputs: MutableList<InputEntry<Fluid>> = mutableListOf()
+        private var catalyst: Item? = null
         private val itemOutputs: MutableList<OutputEntry<Item>> = mutableListOf()
         private val fluidOutputs: MutableList<OutputEntry<Fluid>> = mutableListOf()
         private var operator: UnaryOperator<String> = UnaryOperator.identity()
@@ -248,6 +250,11 @@ data class HTRecipeData private constructor(
 
         fun addInput(tagKey: TagKey<Fluid>, amount: Int): Builder = apply {
             fluidInputs.add(InputEntry.tagKeys(listOf(tagKey), amount = amount))
+        }
+
+        // Catalyst
+        fun setCatalyst(catalyst: ItemLike?): Builder = apply {
+            this.catalyst = catalyst?.asItem()
         }
 
         // Output
@@ -314,6 +321,6 @@ data class HTRecipeData private constructor(
             this.operator = operator
         }
 
-        fun build(): HTRecipeData = HTRecipeData(itemInputs, fluidInputs, itemOutputs, fluidOutputs, operator)
+        fun build(): HTRecipeData = HTRecipeData(itemInputs, fluidInputs, catalyst, itemOutputs, fluidOutputs, operator)
     }
 }
