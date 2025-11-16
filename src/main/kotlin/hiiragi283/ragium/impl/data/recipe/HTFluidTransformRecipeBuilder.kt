@@ -18,7 +18,7 @@ class HTFluidTransformRecipeBuilder(
     private val itemIngredient: Optional<HTItemIngredient>,
     private val itemResult: Optional<HTItemResult>,
     private val fluidResult: Optional<HTFluidResult>,
-) : HTRecipeBuilder.Prefixed(prefix) {
+) : HTRecipeBuilder<HTFluidTransformRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
         fun refining(

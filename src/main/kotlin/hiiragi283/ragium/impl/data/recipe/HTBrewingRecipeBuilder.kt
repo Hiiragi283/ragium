@@ -14,7 +14,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 
 class HTBrewingRecipeBuilder private constructor(val ingredient: HTItemIngredient, val content: PotionContents) :
-    HTRecipeBuilder.Prefixed(RagiumConst.BREWING) {
+    HTRecipeBuilder<HTBrewingRecipeBuilder>(RagiumConst.BREWING) {
         companion object {
             @JvmStatic
             fun create(ingredient: HTItemIngredient, potion: Holder<Potion>): HTBrewingRecipeBuilder =

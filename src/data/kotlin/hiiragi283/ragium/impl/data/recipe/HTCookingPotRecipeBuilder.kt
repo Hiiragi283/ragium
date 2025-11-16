@@ -25,7 +25,7 @@ class HTCookingPotRecipeBuilder(stack: ImmutableItemStack, private val container
             HTCookingPotRecipeBuilder(ImmutableItemStack.of(item, count), container?.let(ImmutableItemStack::of))
     }
 
-    private var groupName: String? = null
+    private var group: String? = null
     private var tab: CookingPotRecipeBookTab? = null
     private var ingredients: MutableList<Ingredient> = mutableListOf()
     private var time: Int = 20 * 10
@@ -35,8 +35,8 @@ class HTCookingPotRecipeBuilder(stack: ImmutableItemStack, private val container
         this.ingredients.add(ingredient)
     }
 
-    override fun group(groupName: String?): HTCookingPotRecipeBuilder = apply {
-        this.groupName = groupName
+    fun setGroup(group: String?): HTCookingPotRecipeBuilder = apply {
+        this.group = group
     }
 
     fun setTab(tab: CookingPotRecipeBookTab): HTCookingPotRecipeBuilder = apply {
@@ -52,7 +52,7 @@ class HTCookingPotRecipeBuilder(stack: ImmutableItemStack, private val container
     }
 
     override fun createRecipe(output: ItemStack): CookingPotRecipe = CookingPotRecipe(
-        groupName ?: "",
+        group ?: "",
         tab,
         ingredients.let(NonNullList<Ingredient>::copyOf),
         output,

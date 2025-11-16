@@ -174,8 +174,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapelessRecipeBuilder
             .equipment(upgrade, 2)
             .addIngredient(upgrade)
-            .addIngredient(CommonMaterialPrefixes.INGOT, material)
-            .addIngredient(CommonMaterialPrefixes.INGOT, material)
+            .addIngredients(CommonMaterialPrefixes.INGOT, material, 2)
             .saveSuffixed(output, "_duplicate")
         // Armor
         for ((variant: HTArmorVariant, armor: ItemLike) in RagiumItems.getArmorMap(material)) {

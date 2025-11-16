@@ -2,8 +2,12 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTIngredientRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.NonNullList
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -37,16 +41,29 @@ class HTShapelessRecipeBuilder(private val category: CraftingBookCategory, stack
         ingredients.add(ingredient)
     }
 
+    fun addIngredients(prefix: HTPrefixLike, key: HTMaterialLike, count: Int): HTShapelessRecipeBuilder =
+        addIngredients(prefix.itemTagKey(key), count)
+
+    fun addIngredients(tagKey: TagKey<Item>, count: Int): HTShapelessRecipeBuilder = addIngredients(Ingredient.of(tagKey), count)
+
+    fun addIngredients(vararg items: ItemLike, count: Int): HTShapelessRecipeBuilder = addIngredients(Ingredient.of(*items), count)
+
+    fun addIngredients(ingredient: Ingredient, count: Int): HTShapelessRecipeBuilder = apply {
+        repeat(count) {
+            addIngredient(ingredient)
+        }
+    }
+
     //    RecipeBuilder    //
 
-    private var groupName: String? = null
+    private var group: String? = null
 
-    override fun group(groupName: String?): HTShapelessRecipeBuilder = apply {
-        this.groupName = groupName
+    fun setGroup(group: String?): HTShapelessRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): ShapelessRecipe = ShapelessRecipe(
-        groupName ?: "",
+        group ?: "",
         category,
         output,
         ingredients,

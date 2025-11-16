@@ -79,14 +79,14 @@ class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: I
 
     //    RecipeBuilder    //
 
-    private var groupName: String? = null
+    private var group: String? = null
 
-    override fun group(groupName: String?): HTShapedRecipeBuilder = apply {
-        this.groupName = groupName
+    fun setGroup(group: String?): HTShapedRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): ShapedRecipe = ShapedRecipe(
-        groupName ?: "",
+        group ?: "",
         category,
         ShapedRecipePattern.of(symbols, patterns),
         output,

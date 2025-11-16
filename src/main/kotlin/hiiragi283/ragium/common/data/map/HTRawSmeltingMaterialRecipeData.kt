@@ -55,16 +55,14 @@ class HTRawSmeltingMaterialRecipeData(
         val resultHelper: HTResultHelper = helper.resultHelper
         val output: RecipeOutput = helper.output
         for (key: HTMaterialKey in helper.getAllMaterials()) {
-            val ingot: TagKey<Item> = CommonMaterialPrefixes.INGOT.itemTagKey(key)
             if (!helper.isPresentTag(CommonMaterialPrefixes.INGOT, key)) continue
             if (helper.isPresentTag(prefix, key)) {
                 HTCombineItemToObjRecipeBuilder
                     .alloying(
-                        resultHelper.item(ingot, outputCount),
+                        resultHelper.item(CommonMaterialPrefixes.INGOT, key, outputCount),
                         itemCreator.fromTagKey(prefix, key, inputCount),
                         itemCreator.fromTagKey(flux, fluxCount),
-                    ).tagCondition(ingot)
-                    .saveSuffixed(output, "_from_${prefix.name}_with_${flux.location.path}")
+                    ).saveSuffixed(output, "_from_${prefix.name}_with_${flux.location.path}")
             }
         }
     }

@@ -17,8 +17,8 @@ class HTSingleItemRecipeBuilder(prefix: String, private val factory: SingleItemR
 
     private var group: String? = null
 
-    override fun group(groupName: String?): HTSingleItemRecipeBuilder = apply {
-        this.group = groupName
+    fun setGroup(group: String?): HTSingleItemRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): SingleItemRecipe = factory.create(

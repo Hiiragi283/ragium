@@ -46,8 +46,8 @@ class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
 
     private var group: String? = null
 
-    override fun group(groupName: String?): HTCuttingBoardRecipeBuilder = apply {
-        this.group = groupName
+    fun setGroup(group: String?): HTCuttingBoardRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): CuttingBoardRecipe = CuttingBoardRecipe(

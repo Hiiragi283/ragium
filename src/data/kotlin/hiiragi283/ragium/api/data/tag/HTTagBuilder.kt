@@ -14,7 +14,7 @@ import net.minecraft.tags.TagKey
  * 登録した[TagKey]をソートして生成するビルダー
  */
 @JvmRecord
-data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val entryCache: ImmutableMultiMap.Builder<TagKey<T>, Entry>) {
+data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val entryCache: ImmutableMultiMap.Builder<TagKey<T>, TagEntry>) {
     /**
      * 指定した[ResourceKey]を[TagKey]に登録します。
      */
@@ -31,7 +31,10 @@ data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val en
      * 指定した[ResourceLocation]を[TagKey]に登録します。
      */
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache[tagKey] = Entry(id, false, type)
+        entryCache[tagKey] = when (type) {
+            HTTagDependType.REQUIRED -> TagEntry.element(id)
+            HTTagDependType.OPTIONAL -> TagEntry.optionalElement(id)
+        }
     }
 
     fun addTag(tagKey: TagKey<T>, prefix: HTPrefixLike, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<T> =
@@ -48,7 +51,10 @@ data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val en
      * 指定した[child]を[TagKey]に登録します。
      */
     fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<T> = apply {
-        entryCache[tagKey] = Entry(child.location, true, type)
+        entryCache[tagKey] = when (type) {
+            HTTagDependType.REQUIRED -> TagEntry.tag(child.location)
+            HTTagDependType.OPTIONAL -> TagEntry.optionalTag(child.location)
+        }
     }
 
     fun addTags(
@@ -83,36 +89,4 @@ data class HTTagBuilder<T : Any>(val registryKey: RegistryKey<T>, private val en
     fun createCommonTag(prefix: HTPrefixLike): TagKey<T> = prefix.createCommonTagKey(registryKey)
 
     fun createTag(prefix: HTPrefixLike, material: HTMaterialLike): TagKey<T> = prefix.createTagKey(registryKey, material)
-
-    /**
-     * ビルダーのエントリを管理するクラス
-     * @param id このエントリのID
-     * @param isTag このエントリがタグ向けかどうかのフラグ
-     * @param type 依存関係の種類
-     */
-    @JvmRecord
-    data class Entry(val id: ResourceLocation, val isTag: Boolean, val type: HTTagDependType) {
-        companion object {
-            @JvmField
-            val COMPARATOR: Comparator<Entry> = Comparator
-                .comparing(Entry::isTag, Comparator.reverseOrder())
-                .thenComparing(Entry::type)
-                .thenComparing(Entry::id)
-        }
-
-        /**
-         * バニラの[TagEntry]に変換します。
-         */
-        fun toTagEntry(): TagEntry = if (isTag) {
-            when (type) {
-                HTTagDependType.OPTIONAL -> TagEntry.optionalTag(id)
-                HTTagDependType.REQUIRED -> TagEntry.tag(id)
-            }
-        } else {
-            when (type) {
-                HTTagDependType.OPTIONAL -> TagEntry.optionalElement(id)
-                HTTagDependType.REQUIRED -> TagEntry.element(id)
-            }
-        }
-    }
 }

@@ -61,9 +61,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Synthetic Book
         HTShapelessRecipeBuilder
             .misc(Items.BOOK)
-            .addIngredient(Items.PAPER)
-            .addIngredient(Items.PAPER)
-            .addIngredient(Items.PAPER)
+            .addIngredients(Items.PAPER, count = 3)
             .addIngredient(RagiumItems.SYNTHETIC_LEATHER)
             .saveSuffixed(output, "_from_synthetic")
         // Blaze Rod

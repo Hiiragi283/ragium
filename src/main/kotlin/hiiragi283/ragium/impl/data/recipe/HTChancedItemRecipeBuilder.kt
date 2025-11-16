@@ -6,11 +6,8 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.resources.ResourceLocation
 
 abstract class HTChancedItemRecipeBuilder<BUILDER : HTChancedItemRecipeBuilder<BUILDER>>(prefix: String) :
-    HTRecipeBuilder.Prefixed(prefix) {
+    HTRecipeBuilder<BUILDER>(prefix) {
     protected val results: MutableList<HTItemResultWithChance> = mutableListOf()
-
-    @Suppress("UNCHECKED_CAST")
-    private fun self(): BUILDER = this as BUILDER
 
     fun addResult(result: HTItemResult, chance: Float = 1f): BUILDER = addResult(HTItemResultWithChance(result, chance))
 

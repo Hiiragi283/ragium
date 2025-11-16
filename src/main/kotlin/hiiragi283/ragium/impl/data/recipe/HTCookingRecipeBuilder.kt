@@ -68,8 +68,8 @@ class HTCookingRecipeBuilder(
         this.exp = max(0f, exp)
     }
 
-    override fun group(groupName: String?): HTCookingRecipeBuilder = apply {
-        this.group = groupName
+    fun setGroup(group: String?): HTCookingRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): AbstractCookingRecipe =

@@ -3,10 +3,10 @@ package hiiragi283.ragium.api.data.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.data.tag.HTTagBuilder.Entry
 import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.tags.TagsProvider
+import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 import kotlin.collections.forEach
 
@@ -21,17 +21,23 @@ abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTD
         RagiumAPI.MOD_ID,
         context.fileHelper,
     ) {
+    companion object {
+        @JvmField
+        val COMPARATOR: Comparator<TagEntry> = Comparator
+            .comparing(TagEntry::isTag, Comparator.reverseOrder())
+            .thenComparing(TagEntry::isRequired)
+            .thenComparing(TagEntry::getId)
+    }
+
     @Suppress("DEPRECATION")
     final override fun addTags(provider: HolderLookup.Provider) {
         buildMultiMap { HTTagBuilder(this@HTTagsProvider.registryKey, this).apply(::addTags) }
             .map
-            .forEach { (tagKey: TagKey<T>, entries: Collection<Entry>) ->
+            .forEach { (tagKey: TagKey<T>, entries: Collection<TagEntry>) ->
                 entries
-                    .sortedWith(Entry.COMPARATOR)
+                    .sortedWith(COMPARATOR)
                     .toSet()
-                    .forEach { entry: Entry ->
-                        tag(tagKey).add(entry.toTagEntry())
-                    }
+                    .forEach { entry: TagEntry -> tag(tagKey).add(entry) }
             }
     }
 

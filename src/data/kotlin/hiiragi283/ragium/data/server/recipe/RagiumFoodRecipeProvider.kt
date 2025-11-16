@@ -98,16 +98,14 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Ragi-Cherry Jam
         HTShapelessRecipeBuilder
             .misc(RagiumItems.RAGI_CHERRY_JAM)
-            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
-            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
+            .addIngredients(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY, 2)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
             .save(output)
         // Ragi-Cherry Toast
         HTShapelessRecipeBuilder
             .misc(RagiumItems.RAGI_CHERRY_TOAST, 2)
-            .addIngredient(Tags.Items.FOODS_BREAD)
-            .addIngredient(Tags.Items.FOODS_BREAD)
+            .addIngredients(Tags.Items.FOODS_BREAD, 2)
             .addIngredient(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
             .save(output)
         // Fever Cherry
@@ -202,13 +200,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         HTShapelessRecipeBuilder
             .misc(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredients(RagiumItems.SWEET_BERRIES_CAKE_SLICE, count = 7)
             .save(output)
     }
 
@@ -217,9 +209,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Dough
         HTShapelessRecipeBuilder
             .misc(RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT), 3)
-            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
-            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
-            .addIngredient(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
+            .addIngredients(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, 3)
             .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)
 

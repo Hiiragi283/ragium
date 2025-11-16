@@ -17,7 +17,7 @@ class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>>(
     private val factory: Factory<RESULT, *>,
     val ingredient: HTItemIngredient,
     val result: RESULT,
-) : HTRecipeBuilder.Prefixed(prefix) {
+) : HTRecipeBuilder<HTItemToObjRecipeBuilder<RESULT>>(prefix) {
     companion object {
         @JvmStatic
         fun compressing(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult> =

@@ -14,7 +14,7 @@ class HTCombineItemToObjRecipeBuilder(
     private val factory: Factory<*>,
     private val ingredients: List<HTItemIngredient>,
     private val result: HTItemResult,
-) : HTRecipeBuilder.Prefixed(prefix) {
+) : HTRecipeBuilder<HTCombineItemToObjRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
         fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder =

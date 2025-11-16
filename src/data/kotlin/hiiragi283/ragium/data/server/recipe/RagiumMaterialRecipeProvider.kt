@@ -107,14 +107,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         HTShapelessRecipeBuilder
             .misc(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
-            .addIngredient(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
-            .addIngredient(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
-            .addIngredient(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
-            .addIngredient(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .addIngredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .addIngredients(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 4)
+            .addIngredients(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL, 4)
             .save(output)
 
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)

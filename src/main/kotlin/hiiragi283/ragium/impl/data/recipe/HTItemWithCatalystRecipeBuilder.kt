@@ -19,7 +19,7 @@ class HTItemWithCatalystRecipeBuilder(
     val optional: HTItemIngredient?,
     val itemResult: HTItemResult?,
     val fluidResult: HTFluidResult?,
-) : HTRecipeBuilder.Prefixed(prefix) {
+) : HTRecipeBuilder<HTItemWithCatalystRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
         fun extracting(

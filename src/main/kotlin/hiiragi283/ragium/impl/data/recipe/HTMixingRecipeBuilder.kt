@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTMixingRecipeBuilder : HTRecipeBuilder.Prefixed(RagiumConst.MIXING) {
+class HTMixingRecipeBuilder : HTRecipeBuilder<HTMixingRecipeBuilder>(RagiumConst.MIXING) {
     companion object {
         @JvmStatic
         fun create(): HTMixingRecipeBuilder = HTMixingRecipeBuilder()
