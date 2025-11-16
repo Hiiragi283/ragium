@@ -32,7 +32,7 @@ class HTAutoStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = singleInput(builder, listener)
         catalystSlot = singleCatalyst(builder, listener)
         outputSlots = multiOutputs(builder, listener)

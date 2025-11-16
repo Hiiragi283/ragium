@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
@@ -20,10 +19,8 @@ import net.minecraft.world.level.block.state.BlockState
 class HTOpenCrateBlockEntity(pos: BlockPos, state: BlockState) : HTConfigurableBlockEntity(RagiumBlocks.OPEN_CRATE, pos, state) {
     private lateinit var slot: HTItemSlot
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         slot = builder.addSlot(HTSlotInfo.INPUT, OpenItemSlot())
-        return builder.build()
     }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false

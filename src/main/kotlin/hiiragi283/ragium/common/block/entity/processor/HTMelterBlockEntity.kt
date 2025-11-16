@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.single.HTSingleInputFluidRecipe
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
@@ -31,7 +30,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
         // output
@@ -44,13 +43,12 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputTank: HTVariableFluidStackTank
         private set
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity),
         )
-        return builder.build()
     }
 
     //    Ticking    //

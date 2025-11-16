@@ -22,7 +22,7 @@ abstract class HTAbstractSmelterBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    final override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
         // catalyst

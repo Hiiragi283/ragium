@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -18,13 +17,12 @@ abstract class HTFluidCollectorBlockEntity(blockHolder: Holder<Block>, pos: Bloc
     lateinit var tank: HTVariableFluidStackTank
         private set
 
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // output
         tank = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
         )
-        return builder.build()
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =

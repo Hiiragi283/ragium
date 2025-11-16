@@ -21,7 +21,7 @@ import net.minecraft.world.item.crafting.SmithingRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAutoSmithingTableBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<SmithingRecipeInput, SmithingRecipe>(
+    HTEnergizedProcessorBlockEntity.Cached<SmithingRecipeInput, SmithingRecipe>(
         VanillaRecipeCache(RecipeType.SMITHING),
         RagiumBlocks.AUTO_SMITHING_TABLE,
         pos,
@@ -32,7 +32,7 @@ class HTAutoSmithingTableBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlots = (1..3).map { i: Int ->
             builder.addSlot(

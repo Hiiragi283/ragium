@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -23,13 +23,13 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+) : HTEnergizedProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
     lateinit var inputSlot: HTItemStackSlot
         private set
     lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
-    final override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
         // outputs

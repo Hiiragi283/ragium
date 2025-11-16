@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
@@ -26,10 +24,8 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
     lateinit var tank: HTFluidStackTank
         private set
 
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         tank = builder.addSlot(HTSlotInfo.BOTH, createTank(listener))
-        return builder.build()
     }
 
     protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
@@ -37,8 +33,8 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
     lateinit var slot: HTItemStackSlot
         private set
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        // input
         slot = builder.addSlot(
             HTSlotInfo.CATALYST,
             HTItemStackSlot.create(
@@ -49,7 +45,6 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
                 canInsert = HTPredicates.manualOnly(),
             ),
         )
-        return builder.build()
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)

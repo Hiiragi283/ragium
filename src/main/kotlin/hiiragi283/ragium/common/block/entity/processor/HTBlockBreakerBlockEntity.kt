@@ -27,11 +27,11 @@ import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<BlockPos, HTBlockBreakerBlockEntity.MiningRecipe>(RagiumBlocks.BLOCK_BREAKER, pos, state) {
+    HTEnergizedProcessorBlockEntity<BlockPos, HTBlockBreakerBlockEntity.MiningRecipe>(RagiumBlocks.BLOCK_BREAKER, pos, state) {
     lateinit var toolSlot: HTItemSlot.Basic
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         toolSlot = builder.addSlot(HTSlotInfo.INPUT, PlayerHandSlot())
     }
 
@@ -49,24 +49,24 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): BlockPos? = blockState.getAttributeFront()?.let(pos::relative)
 
     override fun getMatchedRecipe(input: BlockPos, level: ServerLevel): MiningRecipe? {
+        val state: BlockState = level.getBlockState(input)
         val player: ServerPlayer = this.fakePlayer ?: return null
         val tool: ImmutableItemStack = this.toolSlot.getStack() ?: return null
-        return MiningRecipe(level.getBlockState(input), player, tool)
+        return when {
+            // 採掘速度が0未満の場合はスキップ
+            state.getDestroySpeed(level, input) < 0 -> null
+            // 採掘できない場合はスキップ
+            !state.canHarvestBlock(level, input, player) -> null
+            else -> MiningRecipe(state, player, tool)
+        }
     }
 
     override fun getRecipeTime(recipe: MiningRecipe): Int = 20 * 3
 
+    // イベントがキャンセルされた場合はスキップ
     override fun canProgressRecipe(level: ServerLevel, input: BlockPos, recipe: MiningRecipe): Boolean {
         val (state: BlockState, player: ServerPlayer) = recipe
-        return when {
-            // 採掘速度が0未満の場合はスキップ
-            state.getDestroySpeed(level, input) < 0 -> false
-            // 採掘できない場合はスキップ
-            !state.canHarvestBlock(level, input, player) -> false
-            // イベントがキャンセルされた場合はスキップ
-            CommonHooks.fireBlockBreak(level, GameType.SURVIVAL, player, input, state).isCanceled -> false
-            else -> true
-        }
+        return !CommonHooks.fireBlockBreak(level, GameType.SURVIVAL, player, input, state).isCanceled
     }
 
     override fun completeRecipe(

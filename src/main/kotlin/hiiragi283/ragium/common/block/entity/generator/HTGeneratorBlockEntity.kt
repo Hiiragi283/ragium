@@ -12,12 +12,18 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * 電力を生産する設備に使用される[HTMachineBlockEntity.Energized]の拡張クラス
+ * 電力を生産する設備に使用される[HTMachineBlockEntity]の拡張クラス
  */
 abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity.Energized(blockHolder, pos, state) {
-    final override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
-        builder.addSlot(HTSlotInfo.OUTPUT, HTMachineEnergyBattery.output(listener, this))
+    HTMachineBlockEntity(blockHolder, pos, state) {
+    lateinit var battery: HTMachineEnergyBattery<*>
+        protected set
+
+    final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
+        battery = builder.addSlot(HTSlotInfo.OUTPUT, HTMachineEnergyBattery.output(listener, this))
+    }
+
+    protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyGeneratorRate(base) ?: base
 
     protected val energyCache: HTEnergyCache = HTEnergyCache()
 }

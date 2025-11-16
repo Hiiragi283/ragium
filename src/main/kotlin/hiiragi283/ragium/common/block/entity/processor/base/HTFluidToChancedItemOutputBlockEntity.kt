@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.processor.base
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.chance.HTChancedItemRecipe
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
@@ -24,11 +23,9 @@ abstract class HTFluidToChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE
     lateinit var inputTank: HTFluidStackTank
         private set
 
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(HTSlotInfo.INPUT, createTank(listener))
-        return builder.build()
     }
 
     protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank

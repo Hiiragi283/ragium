@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
+    HTEnergizedProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
     companion object {
         @JvmStatic
         fun <RECIPE : HTSingleInputRecipe> createSimple(
@@ -78,7 +78,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
         lateinit var outputSlot: HTItemStackSlot
             private set
 
-        override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
             // input
             inputSlot = singleInput(builder, listener)
             // output

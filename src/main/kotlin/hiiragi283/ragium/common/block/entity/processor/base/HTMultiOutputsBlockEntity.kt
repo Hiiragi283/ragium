@@ -5,10 +5,9 @@ import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.multi.HTMultiOutputsRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOutputsRecipe<INPUT>> :
-    HTProcessorBlockEntity.Cached<INPUT, RECIPE> {
+    HTEnergizedProcessorBlockEntity.Cached<INPUT, RECIPE> {
     constructor(
         recipeCache: HTRecipeCache<INPUT, RECIPE>,
         blockHolder: Holder<Block>,
@@ -40,13 +39,11 @@ abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOu
     lateinit var outputTank: HTFluidStackTank
         private set
 
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         initInputTanks(builder, listener)
         // output
         outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidStackTank.output(listener, ::getOutputTankCapacity))
-        return builder.build()
     }
 
     protected open fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}

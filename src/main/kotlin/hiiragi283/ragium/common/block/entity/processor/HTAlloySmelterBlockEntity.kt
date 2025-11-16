@@ -21,7 +21,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTMultiItemsToItemRecipe>(
+    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTMultiItemsToItemRecipe>(
         RagiumRecipeTypes.ALLOYING,
         RagiumBlocks.ALLOY_SMELTER,
         pos,
@@ -32,7 +32,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlots = (1..3).map { i: Int ->
             builder.addSlot(

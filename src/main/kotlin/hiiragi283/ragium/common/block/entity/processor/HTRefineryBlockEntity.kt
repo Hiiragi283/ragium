@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -25,7 +24,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
+    HTEnergizedProcessorBlockEntity.Cached<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
         RagiumRecipeTypes.FLUID_TRANSFORM,
         RagiumBlocks.REFINERY,
         pos,
@@ -36,7 +35,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         catalystSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
@@ -54,17 +53,17 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var outputTank: HTVariableFluidStackTank
         private set
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity),
         )
+        // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity),
         )
-        return builder.build()
     }
 
     //    Ticking    //

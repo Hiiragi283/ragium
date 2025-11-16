@@ -42,6 +42,7 @@ data class HTUpdateMenuPacket(val containerId: Int, val index: Int, val payload:
         val container: HTContainerMenu = player.containerMenu as? HTContainerMenu ?: return
         if (container.containerId == this.containerId) {
             payload.setValue(container, index)
+            RagiumAPI.LOGGER.info("Menu data was synced from server!")
         }
     }
 
@@ -49,6 +50,7 @@ data class HTUpdateMenuPacket(val containerId: Int, val index: Int, val payload:
         val container: HTContainerMenu = player.containerMenu as? HTContainerMenu ?: return
         if (container.containerId == this.containerId) {
             payload.setValue(container, index)
+            RagiumAPI.LOGGER.info("Menu data was synced from client!")
         }
     }
 }

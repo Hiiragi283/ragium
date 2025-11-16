@@ -7,9 +7,16 @@ import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
+import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.api.util.access.HTAccessConfigGetter
 import hiiragi283.ragium.api.util.access.HTAccessConfigSetter
+import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -54,6 +61,30 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
         super.readValue(input)
         input.read(RagiumConst.ACCESS_CONFIG, CONFIG_CODEC)?.forEach(accessConfigCache::put)
     }
+
+    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        initializeFluidTanks(builder, listener)
+        return builder.build()
+    }
+
+    protected open fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
+
+    final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+        initializeEnergyBattery(builder, listener)
+        return builder.build()
+    }
+
+    protected open fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
+
+    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        initializeItemSlots(builder, listener)
+        return builder.build()
+    }
+
+    protected open fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
 
     //    HTAccessConfiguration    //
 

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import java.util.function.Predicate
 
 /**
@@ -28,7 +28,7 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
             blockEntity.blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>()
 
         @JvmStatic
-        fun <BE : HTProcessorBlockEntity<*, *>> input(listener: HTContentListener?, blockEntity: BE): HTMachineEnergyBattery<BE> {
+        fun <BE : HTEnergizedProcessorBlockEntity<*, *>> input(listener: HTContentListener?, blockEntity: BE): HTMachineEnergyBattery<BE> {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)
             return HTMachineEnergyBattery(
                 attribute.getCapacity(),
@@ -68,7 +68,7 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
     fun getBaseCapacity(): Int = super.getCapacity()
 
     fun consume(): Int {
-        if (blockEntity !is HTProcessorBlockEntity<*, *>) return 0
+        if (blockEntity !is HTEnergizedProcessorBlockEntity<*, *>) return 0
         val simulated: Int = this.extract(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
         return when {
             simulated >= currentEnergyPerTick -> this.extract(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

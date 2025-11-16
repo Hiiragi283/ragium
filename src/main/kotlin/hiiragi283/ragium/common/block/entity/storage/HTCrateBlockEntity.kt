@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
@@ -34,8 +33,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
     lateinit var slot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         slot = builder.addSlot(
             HTSlotInfo.BOTH,
             HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack? ->
@@ -43,7 +41,6 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
                 HTItemHelper.processStorageCapacity(this.getLevel()?.random, enchantment, capacity)
             }, 0, 0),
         )
-        return builder.build()
     }
 
     override fun doDropItems(): Boolean = false

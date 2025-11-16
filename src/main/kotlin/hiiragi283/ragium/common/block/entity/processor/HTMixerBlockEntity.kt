@@ -39,7 +39,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var secondInputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         firstInputSlot = builder.addSlot(
             HTSlotInfo.INPUT,

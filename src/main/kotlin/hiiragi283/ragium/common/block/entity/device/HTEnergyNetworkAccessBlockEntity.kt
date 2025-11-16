@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.energy.HTEnergyCache
@@ -30,10 +28,8 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     lateinit var battery: HTEnergyBattery
         private set
 
-    override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
-        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+    final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
         battery = builder.addSlot(HTSlotInfo.BOTH, createBattery(listener))
-        return builder.build()
     }
 
     protected abstract fun createBattery(listener: HTContentListener): HTEnergyBattery
@@ -41,8 +37,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
     private lateinit var fillSlot: HTEnergyItemStackSlot
     private lateinit var drainSlot: HTEnergyItemStackSlot
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // extract
         fillSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
@@ -53,7 +48,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
             HTSlotInfo.CATALYST,
             HTEnergyItemStackSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
         )
-        return builder.build()
     }
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {

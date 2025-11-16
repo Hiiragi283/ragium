@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTSolarPanelControllerBlockEntity(pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntity(RagiumBlocks.SOLAR_PANEL_CONTROLLER, pos, state) {
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         if (this.ticks % 20 != 0) return false

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
@@ -35,8 +34,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var inputTank: HTFluidStackTank
         private set
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -46,13 +44,12 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 canInsert = RagiumFluidContents.AWKWARD_WATER::isOf,
             ),
         )
-        return builder.build()
     }
 
     lateinit var outputSlot: HTItemStackSlot
         private set
 
-    override fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
         // output

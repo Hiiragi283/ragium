@@ -6,12 +6,9 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
-import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
@@ -76,9 +73,9 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     fun getComponentTier(): HTComponentTier? = upgradeSlots[3].getStack()?.let(::getComponentTier)
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
+    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        initializeItemHandler(builder, listener)
+        initializeItemSlots(builder, listener)
         upgradeSlots = (0..3).map { i: Int ->
             val filter: (ImmutableItemStack) -> Boolean = when (i) {
                 3 -> { stack -> getComponentTier(stack) != null }
@@ -98,8 +95,6 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         }
         return builder.build()
     }
-
-    protected abstract fun initializeItemHandler(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -127,29 +122,4 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     }
 
     protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
-
-    //    Energized    //
-
-    /**
-     * 電力を扱う設備に使用される[HTMachineBlockEntity]の拡張クラス
-     */
-    abstract class Energized(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(blockHolder, pos, state) {
-        //    Energy Storage    //
-
-        lateinit var battery: HTMachineEnergyBattery<*>
-            private set
-
-        final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder {
-            val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-            battery = createBattery(builder, listener)
-            return builder.build()
-        }
-
-        protected abstract fun createBattery(
-            builder: HTBasicEnergyBatteryHolder.Builder,
-            listener: HTContentListener,
-        ): HTMachineEnergyBattery<*>
-
-        protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyProcessorRate(base) ?: base
-    }
 }
