@@ -129,7 +129,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
-        // Consumers
+        // Processors
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
         add(RagiumBlocks.AUTO_SMITHING_TABLE, "自動鍛冶台")
         add(RagiumBlocks.AUTO_STONECUTTER, "自動石切台")

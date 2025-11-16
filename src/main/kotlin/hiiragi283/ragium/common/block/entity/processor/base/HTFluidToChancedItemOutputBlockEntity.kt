@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.consumer.base
+package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder

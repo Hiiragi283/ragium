@@ -1,11 +1,11 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
-import hiiragi283.ragium.common.block.entity.consumer.base.HTChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -23,7 +23,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
 
     override fun completeRecipe(
         level: ServerLevel,

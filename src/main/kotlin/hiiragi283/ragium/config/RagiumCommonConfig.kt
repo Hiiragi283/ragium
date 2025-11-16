@@ -28,7 +28,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
 
-    // Consumer
+    // Processor
     @JvmField
     val breweryTankCapacity: HTIntConfigValue
 

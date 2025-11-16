@@ -51,12 +51,12 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     @Suppress("DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
         super.setBlockState(blockState)
-        updatedState(blockState)
+        onUpdatedState(blockState)
     }
 
     final override fun setLevel(level: Level) {
         super.setLevel(level)
-        updateLevel(level, blockPos)
+        onUpdateLevel(level, blockPos)
     }
 
     final override fun setRemoved() {
@@ -105,12 +105,12 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * [BlockEntity.setBlockState]の後で呼び出されます。
      */
-    open fun updatedState(state: BlockState) {}
+    open fun onUpdatedState(state: BlockState) {}
 
     /**
      * [BlockEntity.setLevel]の後で呼び出されます。
      */
-    open fun updateLevel(level: Level, pos: BlockPos) {}
+    open fun onUpdateLevel(level: Level, pos: BlockPos) {}
 
     /**
      * [BlockEntity.setRemoved]の後で呼び出されます。

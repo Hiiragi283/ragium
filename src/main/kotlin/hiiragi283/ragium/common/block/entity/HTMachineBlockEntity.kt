@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * 電力を扱う設備に使用される[HTConfigurableBlockEntity]の拡張クラス
+ * 機械全般に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -71,22 +71,6 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
             }
     }
 
-    // Energy
-    lateinit var battery: HTMachineEnergyBattery<*>
-        private set
-
-    final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder {
-        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        battery = createBattery(builder, listener)
-        return builder.build()
-    }
-
-    protected abstract fun createBattery(
-        builder: HTBasicEnergyBatteryHolder.Builder,
-        listener: HTContentListener,
-    ): HTMachineEnergyBattery<*>
-
-    // Item
     lateinit var upgradeSlots: List<HTItemStackSlot>
         private set
 
@@ -144,7 +128,28 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
 
-    //    Energy Storage    //
+    //    Energized    //
 
-    protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyProcessorRate(base) ?: base
+    /**
+     * 電力を扱う設備に使用される[HTMachineBlockEntity]の拡張クラス
+     */
+    abstract class Energized(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(blockHolder, pos, state) {
+        //    Energy Storage    //
+
+        lateinit var battery: HTMachineEnergyBattery<*>
+            private set
+
+        final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder {
+            val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+            battery = createBattery(builder, listener)
+            return builder.build()
+        }
+
+        protected abstract fun createBattery(
+            builder: HTBasicEnergyBatteryHolder.Builder,
+            listener: HTContentListener,
+        ): HTMachineEnergyBattery<*>
+
+        protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyProcessorRate(base) ?: base
+    }
 }

@@ -21,7 +21,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     ENCHANTMENT_GENERATOR("description", "enchantment_generator"),
     NUCLEAR_REACTOR("description", "nuclear_reactor"),
 
-    // Blocks - Consumers
+    // Blocks - Processors
     ALLOY_SMELTER("description", "alloy_smelter"),
     BLOCK_BREAKER("description", "block_breaker"),
     CUTTING_MACHINE("description", "cutting_machine"),

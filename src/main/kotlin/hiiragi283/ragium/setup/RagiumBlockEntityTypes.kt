@@ -17,22 +17,6 @@ import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTAutoSmithingTableBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTAutoStonecutterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTElectricFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTPlanterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTWasherBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
@@ -44,6 +28,22 @@ import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntit
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAutoSmithingTableBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAutoStonecutterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTElectricFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
@@ -128,7 +128,7 @@ object RagiumBlockEntityTypes {
         ::HTNuclearReactorBlockEntity,
     )
 
-    //    Consumer    //
+    //    Processor    //
 
     // Vanilla
     @JvmField
@@ -315,7 +315,7 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
-        // Consumer
+        // Processor
         registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, AUTO_SMITHING_TABLE.get())
         registerHandler(event, AUTO_STONECUTTER.get())

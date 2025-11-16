@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -17,7 +17,7 @@ class HTRefineryScreen(
     menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>,
     inventory: Inventory,
     title: Component,
-) : HTConsumerScreen<HTRefineryBlockEntity>(texture, menu, inventory, title) {
+) : HTProcessorScreen<HTRefineryBlockEntity>(texture, menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
     private lateinit var fluidWidget1: HTFluidWidget
 

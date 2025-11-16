@@ -1,9 +1,9 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.common.block.entity.consumer.base.HTItemWithCatalystBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -12,14 +12,14 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
-class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
+class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemWithCatalystBlockEntity(
-        RagiumRecipeTypes.SIMULATING,
-        RagiumBlocks.SIMULATOR,
+        RagiumRecipeTypes.EXTRACTING,
+        RagiumBlocks.EXTRACTOR,
         pos,
         state,
     ) {
-    override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.simulatorTankCapacity.asInt
+    override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.extractorTankCapacity.asInt
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -30,6 +30,6 @@ class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // SEを鳴らす
-        level.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 0.5f, 1f)
+        level.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1f, 0.5f)
     }
 }

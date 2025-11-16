@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState
  */
 class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(RagiumBlockEntityTypes.DIM_ANCHOR, pos, state) {
-    override fun updateLevel(level: Level, pos: BlockPos) {
-        super.updateLevel(level, pos)
+    override fun onUpdateLevel(level: Level, pos: BlockPos) {
+        super.onUpdateLevel(level, pos)
         forceChunk(level, pos)
     }
 

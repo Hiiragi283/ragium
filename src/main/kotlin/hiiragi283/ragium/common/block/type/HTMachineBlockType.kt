@@ -43,7 +43,7 @@ class HTMachineBlockType(
         /**
          * 処理機械として，ティアを追加します。
          */
-        fun addConsumerTier(tier: HTMachineTier): Builder = addTier(tier)
+        fun addProcessorTier(tier: HTMachineTier): Builder = addTier(tier)
             .addEnergy(
                 RagiumConfig.COMMON.energyUsage[tier]!!,
                 RagiumConfig.COMMON.energyCapacity[tier]!!,

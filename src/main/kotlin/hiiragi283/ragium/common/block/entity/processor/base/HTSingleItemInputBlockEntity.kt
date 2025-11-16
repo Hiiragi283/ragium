@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.consumer.base
+package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -38,7 +39,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
     lateinit var inputSlot: HTItemStackSlot
         protected set
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = inputSlot.toRecipeInput()
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
 
     //    Cached    //
 

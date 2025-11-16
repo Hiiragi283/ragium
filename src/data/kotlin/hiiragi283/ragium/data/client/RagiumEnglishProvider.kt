@@ -138,7 +138,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
-        // Consumers
+        // Processors
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Smelter")
         add(RagiumBlocks.AUTO_SMITHING_TABLE, "Auto Smithing Table")
         add(RagiumBlocks.AUTO_STONECUTTER, "Auto Stonecutter")

@@ -13,14 +13,14 @@ import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
-import hiiragi283.ragium.client.gui.screen.HTConsumerScreen
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
+import hiiragi283.ragium.client.gui.screen.HTProcessorScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
-import hiiragi283.ragium.client.gui.screen.HTSingleFluidConsumerScreen
+import hiiragi283.ragium.client.gui.screen.HTSingleFluidProcessorScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
@@ -246,27 +246,27 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTGenericScreen)
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
-        event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTConsumerScreen)
-        event.register(RagiumMenuTypes.BREWERY, HTSingleFluidConsumerScreen.Companion::brewery)
-        event.register(RagiumMenuTypes.COMPRESSOR, ::HTConsumerScreen)
-        event.register(RagiumMenuTypes.CRUSHER, HTSingleFluidConsumerScreen.Companion::chancedItemOutput)
-        event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTConsumerScreen)
+        event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::brewery)
+        event.register(RagiumMenuTypes.COMPRESSOR, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.CRUSHER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
+        event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidConsumerScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FUEL_GENERATOR, ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_BUFFER, ::HTBlockEntityContainerScreen)
-        event.register(RagiumMenuTypes.MELTER, HTSingleFluidConsumerScreen.Companion::melter)
+        event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MOB_CAPTURER, ::HTBlockEntityContainerScreen)
-        event.register(RagiumMenuTypes.PLANTER, HTSingleFluidConsumerScreen.Companion::chancedItemOutput)
-        event.register(RagiumMenuTypes.PULVERIZER, ::HTConsumerScreen)
+        event.register(RagiumMenuTypes.PLANTER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
+        event.register(RagiumMenuTypes.PULVERIZER, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SIMULATOR, HTSingleFluidConsumerScreen.Companion::itemWithCatalyst)
-        event.register(RagiumMenuTypes.SINGLE_ITEM, ::HTConsumerScreen)
-        event.register(RagiumMenuTypes.SMELTER, ::HTConsumerScreen)
+        event.register(RagiumMenuTypes.SIMULATOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.SINGLE_ITEM, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.SMELTER, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
-        event.register(RagiumMenuTypes.WASHER, HTSingleFluidConsumerScreen.Companion::chancedItemOutput)
+        event.register(RagiumMenuTypes.WASHER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
 
         RagiumAPI.LOGGER.info("Registered Screens!")
     }

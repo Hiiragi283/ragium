@@ -29,7 +29,7 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
-import hiiragi283.ragium.common.block.consumer.HTRefineryBlock
+import hiiragi283.ragium.common.block.processor.HTRefineryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
@@ -443,7 +443,7 @@ object RagiumBlocks {
         machineProperty().noOcclusion(),
     )
 
-    //    Consumer    //
+    //    Processor    //
 
     // Vanilla
     @JvmField

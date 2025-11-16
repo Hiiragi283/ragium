@@ -1,10 +1,10 @@
-package hiiragi283.ragium.common.block.entity.consumer
+package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.common.block.entity.consumer.base.HTAbstractSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.tier.HTComponentTier

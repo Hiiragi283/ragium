@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * 電力を生産する設備に使用される[HTMachineBlockEntity]の拡張クラス
+ * 電力を生産する設備に使用される[HTMachineBlockEntity.Energized]の拡張クラス
  */
 abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(blockHolder, pos, state) {
+    HTMachineBlockEntity.Energized(blockHolder, pos, state) {
     final override fun createBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener): HTMachineEnergyBattery<*> =
         builder.addSlot(HTSlotInfo.OUTPUT, HTMachineEnergyBattery.output(listener, this))
 

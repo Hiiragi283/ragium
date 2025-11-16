@@ -3,11 +3,11 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTConsumerBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.base.HTFluidToChancedItemOutputBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.base.HTItemWithCatalystBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -16,13 +16,13 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
-    private val factory: HTSingleFluidConsumerScreen<BE>.() -> HTFluidTankWidget,
+class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>>(
+    private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
     texture: ResourceLocation,
     menu: HTBlockEntityContainerMenu<BE>,
     inventory: Inventory,
     title: Component,
-) : HTConsumerScreen<BE>(texture, menu, inventory, title) {
+) : HTProcessorScreen<BE>(texture, menu, inventory, title) {
     companion object {
         @JvmStatic
         fun brewery(
@@ -30,7 +30,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             menu: HTBlockEntityContainerMenu<HTBreweryBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidConsumerScreen<HTBreweryBlockEntity> = HTSingleFluidConsumerScreen(
+        ): HTSingleFluidProcessorScreen<HTBreweryBlockEntity> = HTSingleFluidProcessorScreen(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             texture,
             menu,
@@ -44,7 +44,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidConsumerScreen<BE> = HTSingleFluidConsumerScreen(
+        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             texture,
             menu,
@@ -58,7 +58,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidConsumerScreen<BE> = HTSingleFluidConsumerScreen(
+        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
             { createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)) },
             texture,
             menu,
@@ -72,7 +72,7 @@ class HTSingleFluidConsumerScreen<BE : HTConsumerBlockEntity>(
             menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidConsumerScreen<HTMelterBlockEntity> = HTSingleFluidConsumerScreen(
+        ): HTSingleFluidProcessorScreen<HTMelterBlockEntity> = HTSingleFluidProcessorScreen(
             { createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             texture,
             menu,
