@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.inventory.slot.payload
 import hiiragi283.ragium.api.inventory.container.HTSyncableMenu
 import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.util.wrapOptional
+import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import java.util.Optional
@@ -28,6 +28,6 @@ data class HTFluidSyncPayload(val stack: Optional<ImmutableFluidStack>) : HTSync
 
     @Suppress("UNCHECKED_CAST")
     override fun setValue(menu: HTSyncableMenu, index: Int) {
-        (menu.getTrackedSlot(index) as? HTStackSetter<ImmutableFluidStack>)?.setStack(this.stack.getOrNull())
+        (menu.getTrackedSlot(index) as? HTFluidSyncSlot)?.setStack(this.stack.getOrNull())
     }
 }

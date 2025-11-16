@@ -57,7 +57,7 @@ interface HTMaterialRecipeData {
                     val id1: ResourceLocation = id.withPrefix("/material/")
                     check(idCache.add(id1)) { "Duplicated material recipe: $id1" }
                     add(RecipeHolder(id1, recipe))
-                    RagiumAPI.LOGGER.info("Added material recipe {}", id1)
+                    RagiumAPI.LOGGER.debug("Added material recipe {}", id1)
                 }
 
                 override fun advancement(): Advancement.Builder = Advancement.Builder.recipeAdvancement()

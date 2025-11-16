@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.client.gui.component.HTEnergyWidget
@@ -12,6 +11,7 @@ import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
+import java.util.function.IntConsumer
 
 open class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
     texture: ResourceLocation,
@@ -36,7 +36,7 @@ open class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
 
     fun createEnergyWidget(
         battery: HTEnergyBattery,
-        amountSetter: HTAmountSetter.IntSized,
+        amountSetter: IntConsumer,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
     ): HTEnergyWidget = HTEnergyWidget(

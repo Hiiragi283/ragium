@@ -7,11 +7,14 @@ import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import net.minecraft.core.RegistryAccess
 import java.util.function.LongConsumer
 import java.util.function.LongSupplier
+import kotlin.reflect.KMutableProperty0
 
 /**
  * @see mekanism.common.inventory.container.sync.SyncableLong
  */
 class HTLongSyncSlot(private val getter: LongSupplier, private val setter: LongConsumer) : HTSyncableSlot {
+    constructor(property: KMutableProperty0<Long>) : this(property::get, property::set)
+
     private var lastValue: Long = 0
 
     fun getAmount(): Long = this.getter.asLong

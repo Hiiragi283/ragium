@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTAmountView
-import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -26,6 +25,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.Optional
+import java.util.function.Consumer
 import java.util.function.ToIntFunction
 
 object HTStackSlotHelper {
@@ -97,14 +97,14 @@ object HTStackSlotHelper {
     @JvmStatic
     fun shrinkItemStack(
         slot: HTItemSlot,
-        stackSetter: HTStackSetter<ImmutableItemStack>,
+        stackSetter: Consumer<ImmutableItemStack?>,
         ingredient: ToIntFunction<ImmutableItemStack>,
         action: HTStorageAction,
     ): Int {
         val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
         if (stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
             if (action.execute) {
-                stackSetter.setStack(stackIn.getCraftingRemainingItem())
+                stackSetter.accept(stackIn.getCraftingRemainingItem())
             }
             return 0
         } else {
@@ -251,7 +251,7 @@ object HTStackSlotHelper {
     }
 
     @JvmStatic
-    fun moveFluid(from: HTItemSlot, containerSetter: HTStackSetter<ImmutableItemStack>, to: HTFluidTank): Boolean {
+    fun moveFluid(from: HTItemSlot, containerSetter: Consumer<ImmutableItemStack?>, to: HTFluidTank): Boolean {
         val stack: ImmutableItemStack = from.getStack() ?: return false
         if (!HTFluidCapabilities.hasCapability(stack)) return false
         val wrapper: HTFluidHandlerItemWrapper = HTFluidHandlerItemWrapper.create(stack.copyWithAmount(1)) ?: return false
@@ -261,7 +261,7 @@ object HTStackSlotHelper {
     @JvmStatic
     fun moveFluid(
         slot: HTItemSlot,
-        containerSetter: HTStackSetter<ImmutableItemStack>,
+        containerSetter: Consumer<ImmutableItemStack?>,
         from: HTFluidHandlerItemWrapper,
         to: HTFluidTank,
     ): Boolean {
@@ -270,7 +270,7 @@ object HTStackSlotHelper {
             val container: ImmutableItemStack? = from.container
             if (container != null) {
                 if (container.amount() == 1) {
-                    containerSetter.setStack(container)
+                    containerSetter.accept(container)
                 } else {
                     slot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.MANUAL)
                 }

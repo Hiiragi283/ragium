@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.inventory
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
-import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -12,6 +11,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.Optional
+import java.util.function.Consumer
 import kotlin.math.min
 
 /**
@@ -22,7 +22,7 @@ open class HTContainerItemSlot(
     val slot: HTItemSlot,
     x: Int,
     y: Int,
-    private val stackSetter: HTStackSetter<ImmutableItemStack>,
+    private val stackSetter: Consumer<ImmutableItemStack?>,
     private val manualFilter: (ImmutableItemStack, HTStorageAccess) -> Boolean,
     val slotType: Type,
 ) : Slot(emptyContainer, 0, x, y) {
@@ -46,7 +46,7 @@ open class HTContainerItemSlot(
     override fun hasItem(): Boolean = slot.getStack() != null
 
     override fun set(stack: ItemStack) {
-        stackSetter.setStack(stack.toImmutable())
+        stackSetter.accept(stack.toImmutable())
         setChanged()
     }
 

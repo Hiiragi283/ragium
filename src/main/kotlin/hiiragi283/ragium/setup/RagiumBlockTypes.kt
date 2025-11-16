@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
-import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.level.block.Block
 
 /**
  * @see mekanism.common.registries.MekanismBlockTypes
@@ -38,7 +38,7 @@ object RagiumBlockTypes {
     @JvmField
     val SOLAR_PANEL_UNIT: HTBlockType = HTBlockType
         .builder()
-        .addShape(Shapes.box(0.0, 0.0, 0.0, 1.0, 1 / 4.0, 1.0))
+        .addShape(Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0))
         .build(RagiumCommonTranslation.SOLAR_PANEL_UNIT)
 
     @JvmField

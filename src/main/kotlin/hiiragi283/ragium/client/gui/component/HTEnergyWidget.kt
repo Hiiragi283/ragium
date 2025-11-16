@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.storage.HTAmountSetter
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.HTTextUtil
@@ -12,11 +11,12 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
+import java.util.function.IntConsumer
 
 @OnlyIn(Dist.CLIENT)
 class HTEnergyWidget(
     private val battery: HTEnergyBattery,
-    private val amountSetter: HTAmountSetter.IntSized,
+    private val amountSetter: IntConsumer,
     x: Int,
     y: Int,
 ) : HTSpriteWidget(x, y, 16, 18 * 3 - 2, Component.empty()),
@@ -50,7 +50,7 @@ class HTEnergyWidget(
     //    HTEnergyWidget    //
 
     fun setAmount(amount: Int) {
-        amountSetter.setAmount(amount)
+        amountSetter.accept(amount)
     }
 
     override fun getAmount(): Int = battery.getAmount()

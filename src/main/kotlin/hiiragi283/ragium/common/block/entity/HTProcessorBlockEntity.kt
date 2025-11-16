@@ -24,8 +24,8 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     override fun addMenuTrackers(menu: HTContainerMenu) {
         super.addMenuTrackers(menu)
         // Progress
-        menu.track(HTIntSyncSlot(::usedEnergy::get, ::usedEnergy::set))
-        menu.track(HTIntSyncSlot(::requiredEnergy::get, ::requiredEnergy::set))
+        menu.track(HTIntSyncSlot(::usedEnergy))
+        menu.track(HTIntSyncSlot(::requiredEnergy))
     }
 
     val progress: Float

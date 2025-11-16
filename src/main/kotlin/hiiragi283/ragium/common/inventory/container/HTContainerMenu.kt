@@ -24,6 +24,9 @@ import net.neoforged.neoforge.network.PacketDistributor
 import java.util.function.IntUnaryOperator
 import kotlin.math.min
 
+/**
+ * @see mekanism.common.inventory.container.MekanismContainer
+ */
 abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, val inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId),
     HTSyncableMenu {
